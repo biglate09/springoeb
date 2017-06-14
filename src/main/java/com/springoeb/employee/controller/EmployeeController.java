@@ -110,10 +110,29 @@ public class EmployeeController {
     //----------------------------------------------------------------------------------------------------------//
 
     @RequestMapping("/workhistory")
-    public String toEmployeeWorkHistory(Model model) {
-        List<WorkHistory> workHistories = workHistoryService.findAll();
+    public String toEmployeeWorkHistory(Model model,HttpSession session) {
+        Branch b = (Branch)session.getAttribute("branch");
+        int branchNo = b.getBranchNo();
+        List<WorkHistory> workHistories = workHistoryService.findAll(branchNo);
+        List<Employee> employees = employeeService.findByBranchNo(branchNo);
         model.addAttribute("workHistories",workHistories);
+        model.addAttribute("employees",employees);
         return "/WEB-INF/empworkhist.jsp";
+    }
+
+    @GetMapping("/manageworkhistory")
+    public void save(@ModelAttribute("workHistory") WorkHistory workHistory,HttpServletResponse res) throws IOException {
+        workHistoryService.save(workHistory);
+        res.sendRedirect("/employee/workhistory");
+    }
+
+    @Transactional
+    @GetMapping("/deleteworkhistory/{workHistNo}")
+    public void removeByWorkHistNo(@PathVariable("workHistNo") int workHistNo,HttpServletResponse res,HttpSession session) throws IOException {
+        Branch b = (Branch)session.getAttribute("branch");
+        int branchNo = b.getBranchNo();
+        workHistoryService.removeByWorkHist(workHistNo,branchNo);
+        res.sendRedirect("/employee/workhistory");
     }
 
     //----------------------------------------------------------------------------------------------------------//

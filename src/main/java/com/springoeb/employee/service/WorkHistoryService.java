@@ -12,7 +12,15 @@ public class WorkHistoryService {
     @Autowired
     public WorkHistoryRepository workHistoryRepository;
 
-    public List<WorkHistory> findAll(){
-        return workHistoryRepository.findAll();
+    public List<WorkHistory> findAll(int branchNo){
+        return workHistoryRepository.findByEmployee_BranchNo(branchNo);
+    }
+
+    public void removeByWorkHist(int workHistNo,int branchNo){
+        workHistoryRepository.removeByWorkHistNoAndEmployee_BranchNo(workHistNo,branchNo);
+    }
+
+    public void save(WorkHistory workHistory){
+        workHistoryRepository.save(workHistory);
     }
 }

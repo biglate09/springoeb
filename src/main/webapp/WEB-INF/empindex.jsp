@@ -310,10 +310,6 @@
 <jsp:include page="include/bottomenv.jsp"/>
 <%--<script src="/handmade/empindex.js"></script>--%>
 <script>
-    $(document).ready(function () {
-
-    });
-
     function editEmp(empNo) {
         $.ajax({
             type: "GET",

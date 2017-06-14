@@ -1,6 +1,8 @@
 <%@ taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt" %>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 <%@page contentType="text/html" pageEncoding="UTF-8" %>
+<%@page import="com.springoeb.employee.model.Employee" %>
+<c:set scope="page" var="contextPath" value="${pageContext.request.contextPath}"/>
 <!DOCTYPE html>
 <html>
 <head>
@@ -30,6 +32,15 @@
                             </div>
                             <div class="x_content">
                                 <form class="form-horizontal" action="FilterWorkByDateServlet" method="POST">
+                                    <p>
+                                        <a href="javascript:void(0)" data-toggle="modal" data-target="#addWorkHist"
+                                           class="btn btn-success btn-sm"><i class="fa fa-plus-circle"></i>&nbsp;
+                                            เพิ่มทำงาน</a>
+                                        <button type="submit" name="submit" value="del" href="javascript:void(0)"
+                                                class="btn btn-danger btn-sm" disabled><i class="fa fa-trash"></i>&nbsp;
+                                            ลบที่เลือก
+                                        </button>
+                                    </p>
                                     <fieldset>
                                         <div class="control-group show-grid">
                                             <p id="text-before-calendar">เลือกวันที่ต้องการแสดง</p>
@@ -52,48 +63,51 @@
                             <table id="datatable" class="table table-striped table-bordered">
                                 <thead>
                                 <tr>
-                                    <th>วัน/เดือน/ปี</th>
-                                    <th>ชื่อ</th>
-                                    <th>เวลาเข้างาน</th>
-                                    <th>เวลาออกงาน</th>
-                                    <th>ชั่วโมงงาน</th>
-                                    <th>ค่าจ้างวันนี้</th>
-
+                                    <th style="text-align:center;width:14.28%;">วัน/เดือน/ปี</th>
+                                    <th style="text-align:center;width:14.28%;">ชื่อ</th>
+                                    <th style="text-align:center;width:14.28%;">เวลาเข้างาน</th>
+                                    <th style="text-align:center;width:14.28%;">เวลาออกงาน</th>
+                                    <th style="text-align:center;width:14.28%;">ชั่วโมงงาน</th>
+                                    <th style="text-align:center;width:14.28%;">ค่าจ้างวันนี้</th>
+                                    <th style="text-align:center;width:14.28%;">ตัวเลือก</th>
                                 </tr>
                                 </thead>
 
                                 <tbody>
                                 <c:forEach items="${workHistories}" var="wh">
-                                    <tr>
+                                    <tr style="text-align:center;">
                                         <td>
-                                            <fmt:formatDate pattern="dd/MM/yyyy" value="${wh.work_start}"/>
-                                        </td>
-                                        <td style="text-align:center;">
-                                                ${wh.empName}
+                                            <fmt:formatDate pattern="dd/MM/yyyy" value="${wh.workStart}"/>
                                         </td>
                                         <td>
-                                            <fmt:formatNumber type="number" pattern="00.00"
-                                                              value="${Math.floor(wh.
-                                                              fromTime/60)+(wh.fromTime%60)/100}"/>
-                                            น.
-                                        </td style="text-align: center
-                                        ;">
-                                        <td>
-                                            <fmt:formatNumber type="number" pattern="00.00"
-                                                              value="${Math.floor(wh.toTime/60)+(wh.toTime%60)/100}"/>
-                                            น.
+                                                ${wh.employee.empName}
                                         </td>
-                                        <td style="text-align:center;">
+                                        <td>
+                                            <fmt:formatDate pattern="HH:mm" value="${wh.workStart}"/> น.
+                                        </td>
+                                        <td>
+                                            <fmt:formatDate pattern="HH:mm" value="${wh.workEnd}"/> น.
+                                        </td>
+                                        <td>
                                             <fmt:formatNumber type="number" pattern="#0"
-                                                              value="${Math.floor(((wh.toTime - wh.fromTime)/60))}"/>
+                                                              value="${Math.floor(wh.workHour)}"/>
                                             ชั่วโมง
-                                            <fmt:formatNumber type="number" pattern="#0"
-                                                              value="${Math.floor(((wh.toTime - wh.fromTime)%60))}"/>
+                                            <fmt:formatNumber type="number" pattern="00"
+                                                              value="${(wh.workHour%1)*60}"/>
                                             นาที
                                         </td>
-                                        <td style="text-align:center;">
-                                            <fmt:formatNumber type="number" pattern="##,###0.00"
-                                                              value="${wh.workingPay}"/> ฿
+                                        <td>
+                                            <fmt:formatNumber type="number" pattern="#,###,###0.00"
+                                                              value="${wh.workPay}"/> ฿
+                                        </td>
+                                        <td>
+                                            <a onclick="editEmp(${e.empNo})" class="btn btn-warning btn-sm"
+                                               href="javascript:void(0)" data-toggle="modal"
+                                               data-target="#editEmp"><i class="fa fa-pencil"></i>&nbsp;
+                                                แก้ไข </a>
+                                            <a href="${contextPath}/employee/deleteworkhistory/${wh.workHistNo}" )
+                                               class="btn btn-danger btn-sm" href="javascript:void(0)"><i
+                                                    class="fa fa-trash"></i>&nbsp; ลบ</a>
                                         </td>
                                     </tr>
                                 </c:forEach>
@@ -102,11 +116,86 @@
                         </div>
                     </div>
                 </div>
+                <!-- modal ADD WORK HIST -->
+                <div class="modal fade" id="addWorkHist" role="dialog">
+                    <div class="modal-dialog">
+                        <!-- เนือหาของ Modal ทั้งหมด -->
+                        <div class="modal-content">
+                            <!-- ส่วนหัวของ Modal -->
+                            <div class="modal-header">
+                                <!-- ปุ่มกดปิด (X) ตรงส่วนหัวของ Modal -->
+                                <button type="button" class="close" data-dismiss="modal">&times;</button>
+                                <h4 class="modal-title">เพิ่มประวัติการทำงาน</h4>
+                            </div>
+                            <!-- ส่วนเนื้อหาของ Modal -->
+                            <div class="modal-body">
+                                <form class="form-horizontal form-label-left input_mask"
+                                      action="${pageContext}/employee/manageemployeeposition" method="POST"
+                                      modelAttribute="workHistory">
+                                    <div class="form-group">
+                                        <div class="col-md-6 col-sm-6 col-xs-12 form-group has-feedback">
+                                            <select name="empNo" class="form-control" required>
+                                                <c:forEach items="${employees}" var="e">
+                                                    <option value="${e.empNo}">${e.empName}</option>
+                                                </c:forEach>
+                                            </select>
+                                        </div>
+                                        <div class="col-md-6 col-sm-6 col-xs-12 form-group has-feedback"
+                                             style="text-align: center;">
+                                            อัตราค่าจ้าง : <fmt:formatNumber value="${employees[0].pay}"
+                                                                             pattern="#,###,##0.00"/>
+                                            / ${employees[0].payType == Employee.HOUR ? 'ชั่วโมง' : 'วัน'}
+                                        </div>
+                                        <div class="col-md-6 col-sm-6 col-xs-12 form-group has-feedback"
+                                             style="text-align: center;clear:both;">
+                                            <input type="date" id="workdate" class="form-control" name="workStart"
+                                                   required>
+                                            <span class="fa fa-calendar form-control-feedback right"
+                                                  aria-hidden="true"></span>
+                                        </div>
+                                        <div class="col-md-6 col-sm-6 col-xs-12 form-group has-feedback"
+                                             style="text-align: center;">
+                                            <input type="text" class="form-control" name="workHour"
+                                                   required>
+                                            ชั่วโมง
+                                            <input type="text" class="form-control" name="workHour"
+                                                   required>
+                                            นาที
+                                        </div>
+                                    </div>
+                                    <div class="modal-footer">
+                                        <!-- ปุ่มกดปิด (Close) ตรงส่วนล่างของ Modal -->
+                                        <div class="col-md-9 col-sm-9 col-xs-12 col-md-offset-3">
+                                            <button type="submit" class="btn btn-success">ตกลง</button>
+                                            <button type="button" class="btn btn-default" data-dismiss="modal">
+                                                ยกเลิก
+                                            </button>
+                                        </div>
+                                    </div>
+                                </form>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <!-- modal ADD WORK HIST -->
             </div>
         </div>
     </div>
 </div>
 </div>
 <jsp:include page="include/bottomenv.jsp"/>
+<script>
+    $(document).ready(function () {
+        var d = new Date();
+        var year = d.getFullYear();
+        var month = d.getMonth()+1;
+        if(month < 9){
+            month = "0" + month;
+        }
+        var date = d.getDate();
+        var dateformat = year+"-"+month+"-"+date;
+        $("#workdate").val(dateformat);
+    });
+</script>
 </body>
 </html>
