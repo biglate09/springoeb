@@ -1,12 +1,11 @@
 package com.springoeb.employee.model;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.sun.istack.internal.Nullable;
 
-import javax.persistence.CascadeType;
-import javax.persistence.Entity;
-import javax.persistence.Id;
-import javax.persistence.OneToMany;
-import java.util.List;
+import javax.persistence.*;
+import java.util.Set;
+import java.util.Set;
 
 /**
  * Created by bighead on 6/9/17.
@@ -14,19 +13,34 @@ import java.util.List;
 @Entity
 public class Employee {
     @Id
+    private int empNo;
     private String empName;
     @Nullable
     private String empTel;
     private String empType; // Full-time,Part-time,Training
     private String payType; // วัน,ชั่วโมง
     private double pay;
+    private String empGender;
     private int branchNo;
-    @OneToMany(mappedBy = "employee", cascade = CascadeType.ALL)
-    private List<EmployeeTable> employeeTables;
-    @OneToMany(mappedBy = "employee", cascade = CascadeType.ALL)
-    private List<EmployeePay> employeePays;
-    @OneToMany(mappedBy = "employee", cascade = CascadeType.ALL)
-    private List<WorkHistory> workHistories;
+    @JsonIgnore
+    @OneToMany(fetch = FetchType.LAZY, mappedBy = "employee")
+    private Set<EmployeePay> employeePays;
+
+    public static int FULL_TIME = 1;
+    public static int PART_TIME = 2;
+    public static int TRAINING = 3;
+    public static int HOUR = 1;
+    public static int DAY = 2;
+    public static String MALE = "M";
+    public static String FEMALE = "F";
+
+    public int getEmpNo() {
+        return empNo;
+    }
+
+    public void setEmpNo(int empNo) {
+        this.empNo = empNo;
+    }
 
     public String getEmpName() {
         return empName;
@@ -76,42 +90,19 @@ public class Employee {
         this.branchNo = branchNo;
     }
 
-    public List<EmployeeTable> getEmployeeTables() {
-        return employeeTables;
-    }
-
-    public void setEmployeeTables(List<EmployeeTable> employeeTables) {
-        this.employeeTables = employeeTables;
-    }
-
-    public List<EmployeePay> getEmployeePays() {
+    public Set<EmployeePay> getEmployeePays() {
         return employeePays;
     }
 
-    public void setEmployeePays(List<EmployeePay> employeePays) {
+    public void setEmployeePays(Set<EmployeePay> employeePays) {
         this.employeePays = employeePays;
     }
 
-    public List<WorkHistory> getWorkHistories() {
-        return workHistories;
+    public String getEmpGender() {
+        return empGender;
     }
 
-    public void setWorkHistories(List<WorkHistory> workHistories) {
-        this.workHistories = workHistories;
-    }
-
-    @Override
-    public String toString() {
-        return "Employee{" +
-                "empName='" + empName + '\'' +
-                ", empTel='" + empTel + '\'' +
-                ", empType='" + empType + '\'' +
-                ", payType='" + payType + '\'' +
-                ", pay=" + pay +
-                ", branchNo=" + branchNo +
-                ", employeeTables=" + employeeTables +
-                ", employeePays=" + employeePays +
-                ", workHistories=" + workHistories +
-                '}';
+    public void setEmpGender(String empGender) {
+        this.empGender = empGender;
     }
 }

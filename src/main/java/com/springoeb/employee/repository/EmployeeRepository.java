@@ -11,5 +11,8 @@ import java.util.List;
  */
 @Repository
 public interface EmployeeRepository extends CrudRepository<Employee,Integer>{
-    List<Employee> findAll();
+    List<Employee> findByBranchNo(int branchNo);
+    void removeByEmpNoAndBranchNo(int empNo,int branchNo);
+    Employee findByEmpNoAndBranchNo(int empNo,int branchNo);
+    List<Employee> findByEmpNameIgnoreCaseAndBranchNo(String empName,int branchNo);
 }

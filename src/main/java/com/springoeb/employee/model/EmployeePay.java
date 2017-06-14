@@ -1,9 +1,8 @@
 package com.springoeb.employee.model;
 
-import javax.persistence.Entity;
-import javax.persistence.Id;
-import javax.persistence.JoinColumn;
-import javax.persistence.ManyToOne;
+import org.springframework.stereotype.Component;
+
+import javax.persistence.*;
 import java.sql.Date;
 
 /**
@@ -15,8 +14,9 @@ public class EmployeePay {
     private int empPayNo;
     private double pay;
     private Date date;
+
     @ManyToOne
-    @JoinColumn(name = "emp_no")
+    @JoinColumn(name = "empNo")
     private Employee employee;
 
     public int getEmpPayNo() {
@@ -49,15 +49,5 @@ public class EmployeePay {
 
     public void setEmployee(Employee employee) {
         this.employee = employee;
-    }
-
-    @Override
-    public String toString() {
-        return "EmployeePay{" +
-                "empPayNo=" + empPayNo +
-                ", pay=" + pay +
-                ", date=" + date +
-                ", employee=" + employee +
-                '}';
     }
 }

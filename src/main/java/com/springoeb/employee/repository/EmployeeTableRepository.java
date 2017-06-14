@@ -12,4 +12,5 @@ import java.util.List;
 @Repository
 public interface EmployeeTableRepository extends CrudRepository<EmployeeTable,Integer> {
     List<EmployeeTable> findAll();
+//    List<EmployeeTable> find
 }

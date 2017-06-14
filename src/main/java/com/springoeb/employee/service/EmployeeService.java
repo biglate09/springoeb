@@ -15,7 +15,30 @@ public class EmployeeService {
     @Autowired
     private EmployeeRepository employeeRepository;
 
-    public List<Employee> getAll(){
-        return employeeRepository.findAll();
+    public List<Employee> findByBranchNo(int branchNo){
+        List<Employee> employees = employeeRepository.findByBranchNo(branchNo);
+        return employees;
+    }
+
+    public Employee findByEmpNoAndBranchNo(int empNo,int branchNo){
+        Employee employee = employeeRepository.findByEmpNoAndBranchNo(empNo,branchNo);
+        return employee;
+    }
+
+    public void save(Employee employee){
+        employeeRepository.save(employee);
+    }
+
+    public void removeByEmpNoAndBranchNo(int empNo,int branchNo){
+        employeeRepository.removeByEmpNoAndBranchNo(empNo,branchNo);
+    }
+
+    public boolean chkDuplicateEmpName(String empName,int branchNo){
+        List<Employee> employees = employeeRepository.findByEmpNameIgnoreCaseAndBranchNo(empName,branchNo);
+        if(employees.size() > 0) {
+            return true;
+        }else{
+            return false;
+        }
     }
 }

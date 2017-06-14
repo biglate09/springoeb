@@ -72,10 +72,10 @@ CREATE TABLE `employee_position` (
 -- --------------------------------------------------------
 
 --
--- Table structure for table `employee_timetable`
+-- Table structure for table `employee_table`
 --
 
-CREATE TABLE `employee_timetable` (
+CREATE TABLE `employee_table` (
   `emp_time_no` int(8) NOT NULL,
   `date` date NOT NULL,
   `time_start` time NOT NULL,
@@ -122,12 +122,12 @@ ALTER TABLE `employee_position`
   ADD PRIMARY KEY (`emp_pos_no`);
 
 --
--- Indexes for table `employee_timetable`
+-- Indexes for table `employee_table`
 --
-ALTER TABLE `employee_timetable`
+ALTER TABLE `employee_table`
   ADD PRIMARY KEY (`emp_time_no`),
   ADD KEY `emp_no` (`emp_no`),
-  ADD KEY `employee_timetable_ibfk_2` (`emp_pos_no`);
+  ADD KEY `employee_table_ibfk_2` (`emp_pos_no`);
 
 --
 -- Indexes for table `work_history`
@@ -156,9 +156,9 @@ ALTER TABLE `employee_pay`
 ALTER TABLE `employee_position`
   MODIFY `emp_pos_no` int(8) NOT NULL AUTO_INCREMENT;
 --
--- AUTO_INCREMENT for table `employee_timetable`
+-- AUTO_INCREMENT for table `employee_table`
 --
-ALTER TABLE `employee_timetable`
+ALTER TABLE `employee_table`
   MODIFY `emp_time_no` int(8) NOT NULL AUTO_INCREMENT;
 --
 -- AUTO_INCREMENT for table `work_history`
@@ -176,11 +176,11 @@ ALTER TABLE `employee_pay`
   ADD CONSTRAINT `employee_pay_ibfk_1` FOREIGN KEY (`emp_no`) REFERENCES `employee` (`emp_no`) ON DELETE CASCADE ON UPDATE CASCADE;
 
 --
--- Constraints for table `employee_timetable`
+-- Constraints for table `employee_table`
 --
-ALTER TABLE `employee_timetable`
-  ADD CONSTRAINT `employee_timetable_ibfk_1` FOREIGN KEY (`emp_no`) REFERENCES `employee` (`emp_no`) ON DELETE CASCADE ON UPDATE CASCADE,
-  ADD CONSTRAINT `employee_timetable_ibfk_2` FOREIGN KEY (`emp_pos_no`) REFERENCES `employee_position` (`emp_pos_no`) ON DELETE CASCADE ON UPDATE CASCADE;
+ALTER TABLE `employee_table`
+  ADD CONSTRAINT `employee_table_ibfk_1` FOREIGN KEY (`emp_no`) REFERENCES `employee` (`emp_no`) ON DELETE CASCADE ON UPDATE CASCADE,
+  ADD CONSTRAINT `employee_table_ibfk_2` FOREIGN KEY (`emp_pos_no`) REFERENCES `employee_position` (`emp_pos_no`) ON DELETE CASCADE ON UPDATE CASCADE;
 
 --
 -- Constraints for table `work_history`

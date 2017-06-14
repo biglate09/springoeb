@@ -1,3 +1,3 @@
 <%
-    response.sendRedirect("employee/index");
+    response.sendRedirect("/employee/index");
 %>

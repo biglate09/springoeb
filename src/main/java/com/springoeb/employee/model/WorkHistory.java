@@ -4,18 +4,20 @@ import javax.persistence.Entity;
 import javax.persistence.Id;
 import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
-import java.sql.Date;
+import java.io.Serializable;
+import java.sql.Timestamp;
 
 /**
  * Created by bighead on 6/9/17.
  */
 @Entity
-public class WorkHistory {
+public class WorkHistory implements Serializable{
     @Id
     private int workHistNo;
-    private Date workStart;
-    private Date workEnd;
-    private double workPay;
+    private Timestamp workStart;
+    private Timestamp workEnd;
+    private Double workPay;
+    private Double workHour;
     @ManyToOne
     @JoinColumn(name = "emp_no")
     private Employee employee;
@@ -28,28 +30,36 @@ public class WorkHistory {
         this.workHistNo = workHistNo;
     }
 
-    public Date getWorkStart() {
+    public Timestamp getWorkStart() {
         return workStart;
     }
 
-    public void setWorkStart(Date workStart) {
+    public void setWorkStart(Timestamp workStart) {
         this.workStart = workStart;
     }
 
-    public Date getWorkEnd() {
+    public Timestamp getWorkEnd() {
         return workEnd;
     }
 
-    public void setWorkEnd(Date workEnd) {
+    public void setWorkEnd(Timestamp workEnd) {
         this.workEnd = workEnd;
     }
 
-    public double getWorkPay() {
+    public Double getWorkPay() {
         return workPay;
     }
 
-    public void setWorkPay(double workPay) {
+    public void setWorkPay(Double workPay) {
         this.workPay = workPay;
+    }
+
+    public Double getWorkHour() {
+        return workHour;
+    }
+
+    public void setWorkHour(Double workHour) {
+        this.workHour = workHour;
     }
 
     public Employee getEmployee() {
@@ -58,16 +68,5 @@ public class WorkHistory {
 
     public void setEmployee(Employee employee) {
         this.employee = employee;
-    }
-
-    @Override
-    public String toString() {
-        return "WorkHistory{" +
-                "workHistNo=" + workHistNo +
-                ", workStart=" + workStart +
-                ", workEnd=" + workEnd +
-                ", workPay=" + workPay +
-                ", employee=" + employee +
-                '}';
     }
 }
