@@ -13,6 +13,6 @@ import java.util.List;
  */
 @Repository
 public interface WorkHistoryRepository extends CrudRepository<WorkHistory,Integer>{
-    List<WorkHistory> findByEmployee_BranchNo(int branchNo);
+    List<WorkHistory> findByEmployee_BranchNoOrderByWorkDateDescWorkHistNoDesc(int branchNo);
     void removeByWorkHistNoAndEmployee_BranchNo(int workHistNo,int branchNo);
 }

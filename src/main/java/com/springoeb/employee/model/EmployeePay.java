@@ -1,9 +1,11 @@
 package com.springoeb.employee.model;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import org.springframework.stereotype.Component;
 
 import javax.persistence.*;
 import java.sql.Date;
+import java.sql.Timestamp;
 
 /**
  * Created by bighead on 6/9/17.
@@ -13,10 +15,14 @@ public class EmployeePay {
     @Id
     private int empPayNo;
     private double pay;
-    private Date date;
+    private Timestamp date;
 
+    @Column(name = "emp_no",updatable = true,insertable = true)
+    private int empNo;
+
+    @JsonIgnore
     @ManyToOne
-    @JoinColumn(name = "empNo")
+    @JoinColumn(name = "emp_no",updatable = false,insertable = false)
     private Employee employee;
 
     public int getEmpPayNo() {
@@ -35,11 +41,11 @@ public class EmployeePay {
         this.pay = pay;
     }
 
-    public Date getDate() {
+    public Timestamp getDate() {
         return date;
     }
 
-    public void setDate(Date date) {
+    public void setDate(Timestamp date) {
         this.date = date;
     }
 
@@ -49,5 +55,22 @@ public class EmployeePay {
 
     public void setEmployee(Employee employee) {
         this.employee = employee;
+    }
+
+    public int getEmpNo() {
+        return empNo;
+    }
+
+    public void setEmpNo(int empNo) {
+        this.empNo = empNo;
+    }
+
+    @Override
+    public String toString() {
+        return "EmployeePay{" +
+                "empPayNo=" + empPayNo +
+                ", pay=" + pay +
+                ", date=" + date +
+                '}';
     }
 }

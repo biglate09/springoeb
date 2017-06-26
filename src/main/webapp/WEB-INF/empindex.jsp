@@ -1,7 +1,8 @@
 <%@ taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt" %>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 <%@ page import="com.springoeb.employee.model.Employee" %>
-<%@page contentType="text/html" pageEncoding="UTF-8" %>
+<%@ page contentType="text/html" pageEncoding="UTF-8" %>
+<c:set var="contextPath" value="${pageContext.request.contextPath}" />
 <!DOCTYPE html>
 <html>
 <head>
@@ -38,12 +39,12 @@
                                         ลบที่เลือก
                                     </button>
                                 </p>
-                                <table id="datatable-checkbox"
+                                <table id="datatable-employee"
                                        class="table table-striped table-bordered bulk_action1">
                                     <thead>
                                     <tr>
-                                        <th><input title="checkall" type="checkbox" class="flat" id="check-all-1"
-                                                   disabled></th>
+                                        <%--<th><input title="checkall" type="checkbox" class="flat" id="check-all-1"--%>
+                                                   <%--disabled></th>--%>
                                         <th style="width:20%;text-align:center;">ชื่อ</th>
                                         <th style="width:20%;text-align:center;">ประเภท</th>
                                         <th style="width:20%;text-align:center;">ประเภทการจ้าง</th>
@@ -54,10 +55,10 @@
                                     <tbody>
                                     <c:forEach items="${employees}" var="e" varStatus="vs">
                                     <tr id="tr${e.empNo}" style="text-align:center;">
-                                        <td>
-                                            <input type="checkbox" name="tabdle_records" value="${e.empNo}" class="flat"
-                                                   disabled>
-                                        </td>
+                                        <%--<td>--%>
+                                            <%--<input type="checkbox" name="tabdle_records" value="${e.empNo}" class="flat"--%>
+                                                   <%--disabled>--%>
+                                        <%--</td>--%>
                                         <td>
                                             <a href="javascript:void(0)" onclick="editEmp(${e.empNo})"
                                                data-toggle="modal"
@@ -69,8 +70,8 @@
                                         <td>
                                             ราย${e.payType == Employee.HOUR ? 'ชั่วโมง' : 'วัน'}
                                         </td>
-                                        <td>
-                                            <fmt:formatNumber value="${e.pay}" pattern="#,###,###.00"/> บาท
+                                        <td data-order="${e.payType==Employee.HOUR?e.pay*8:e.pay}">
+                                            <fmt:formatNumber value="${e.pay}" pattern="#,###,##0.00"/> บาท
                                             / ${e.payType == Employee.HOUR ? 'ชั่วโมง' : 'วัน'}
                                         </td>
                                         <td>
@@ -78,7 +79,7 @@
                                                href="javascript:void(0)" data-toggle="modal"
                                                data-target="#editEmp"><i class="fa fa-pencil"></i>&nbsp;
                                                 แก้ไข </a>
-                                            <a href="${pageContext}/employee/deleteemployee/${e.empNo}" )
+                                            <a href="${contextPath}/employee/deleteemployee/${e.empNo}" )
                                                class="btn btn-danger btn-sm" href="javascript:void(0)"><i
                                                     class="fa fa-trash"></i>&nbsp; ลบ</a>
                                         </td>
@@ -104,7 +105,7 @@
                             <!-- ส่วนเนื้อหาของ Modal -->
                             <div class="modal-body">
                                 <form class="form-horizontal form-label-left input_mask"
-                                      action="${pageContext}/employee/manageemployee" method="POST" modelAttribute="employee">
+                                      action="${contextPath}/employee/manageemployee" method="POST" modelAttribute="employee">
                                     <div class="col-md-6 col-sm-6 col-xs-12 form-group has-feedback">
                                         <input type="text" class="form-control" name="empName"
                                                placeholder="ชื่อพนักงาน" required>
@@ -207,7 +208,7 @@
                             <!-- ส่วนเนื้อหาของ Modal -->
                             <div class="modal-body">
                                 <form class="form-horizontal form-label-left input_mask"
-                                      action="${pageContext}/employee/manageemployee" method="POST" modelAttribute="employee">
+                                      action="${contextPath}/employee/manageemployee" method="POST" modelAttribute="employee">
                                     <input type="hidden" name="empNo" id="hiddenempno">
                                     <div class="col-md-6 col-sm-6 col-xs-12 form-group has-feedback">
                                         <input type="text" class="form-control" id="editempname" name="empName"
@@ -310,10 +311,19 @@
 <jsp:include page="include/bottomenv.jsp"/>
 <%--<script src="/handmade/empindex.js"></script>--%>
 <script>
+    $(document).ready(function () {
+        $("#datatable-employee").DataTable({
+            "order": [[0, "asc"]],
+            "columnDefs": [
+                { orderable: false, targets: [-1] }
+            ]
+        });
+    });
+
     function editEmp(empNo) {
         $.ajax({
             type: "GET",
-            url: "${pageContext}/employee/ajax/getemployee/" + empNo,
+            url: "${contextPath}/employee/ajax/getemployee/" + empNo,
             dataType: "json",
             success: function (result) {
                 $("#hiddenempno").val(result.empNo);

@@ -1,11 +1,9 @@
 package com.springoeb.employee.model;
 
 import com.fasterxml.jackson.annotation.JsonIgnore;
-import com.sun.istack.internal.Nullable;
 
 import javax.persistence.*;
-import java.util.Set;
-import java.util.Set;
+import java.util.List;
 
 /**
  * Created by bighead on 6/9/17.
@@ -15,22 +13,22 @@ public class Employee {
     @Id
     private int empNo;
     private String empName;
-    @Nullable
     private String empTel;
     private String empType; // Full-time,Part-time,Training
     private String payType; // วัน,ชั่วโมง
     private double pay;
     private String empGender;
     private int branchNo;
-    @JsonIgnore
     @OneToMany(fetch = FetchType.LAZY, mappedBy = "employee")
-    private Set<EmployeePay> employeePays;
+    private List<EmployeePay> employeePays;
+    @OneToMany(fetch = FetchType.LAZY, mappedBy = "employee")
+    private List<WorkHistory> workHistories;
 
-    public static int FULL_TIME = 1;
-    public static int PART_TIME = 2;
-    public static int TRAINING = 3;
-    public static int HOUR = 1;
-    public static int DAY = 2;
+    public static String FULL_TIME = "1";
+    public static String PART_TIME = "2";
+    public static String TRAINING = "3";
+    public static String HOUR = "1";
+    public static String DAY = "2";
     public static String MALE = "M";
     public static String FEMALE = "F";
 
@@ -90,19 +88,43 @@ public class Employee {
         this.branchNo = branchNo;
     }
 
-    public Set<EmployeePay> getEmployeePays() {
-        return employeePays;
-    }
-
-    public void setEmployeePays(Set<EmployeePay> employeePays) {
-        this.employeePays = employeePays;
-    }
-
     public String getEmpGender() {
         return empGender;
     }
 
     public void setEmpGender(String empGender) {
         this.empGender = empGender;
+    }
+
+    public List<EmployeePay> getEmployeePays() {
+        return employeePays;
+    }
+
+    public void setEmployeePays(List<EmployeePay> employeePays) {
+        this.employeePays = employeePays;
+    }
+
+    public List<WorkHistory> getWorkHistories() {
+        return workHistories;
+    }
+
+    public void setWorkHistories(List<WorkHistory> workHistories) {
+        this.workHistories = workHistories;
+    }
+
+    @Override
+    public String toString() {
+        return "Employee{" +
+                "empNo=" + empNo +
+                ", empName='" + empName + '\'' +
+                ", empTel='" + empTel + '\'' +
+                ", empType='" + empType + '\'' +
+                ", payType='" + payType + '\'' +
+                ", pay=" + pay +
+                ", empGender='" + empGender + '\'' +
+                ", branchNo=" + branchNo +
+                ", employeePays=" + employeePays +
+                ", workHistories=" + workHistories +
+                '}';
     }
 }

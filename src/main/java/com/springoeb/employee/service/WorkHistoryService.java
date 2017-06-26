@@ -13,7 +13,7 @@ public class WorkHistoryService {
     public WorkHistoryRepository workHistoryRepository;
 
     public List<WorkHistory> findAll(int branchNo){
-        return workHistoryRepository.findByEmployee_BranchNo(branchNo);
+        return workHistoryRepository.findByEmployee_BranchNoOrderByWorkDateDescWorkHistNoDesc(branchNo);
     }
 
     public void removeByWorkHist(int workHistNo,int branchNo){

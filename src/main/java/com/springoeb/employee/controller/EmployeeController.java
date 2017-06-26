@@ -5,7 +5,6 @@ import com.fasterxml.jackson.databind.ObjectMapper;
 import com.springoeb.employee.model.*;
 import com.springoeb.employee.service.*;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
@@ -15,8 +14,11 @@ import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 import javax.transaction.Transactional;
 import java.io.IOException;
+import java.sql.Date;
+import java.text.ParseException;
+import java.text.SimpleDateFormat;
+import java.util.Enumeration;
 import java.util.List;
-import java.util.UUID;
 
 /**
  * Created by bighead on 6/9/17.
@@ -37,39 +39,32 @@ public class EmployeeController {
 
     @RequestMapping("/index")
     public String toEmployeeIndex(Model model, HttpSession session) {
-        Branch b = (Branch) session.getAttribute("branch");
-        int branchNo = b.getBranchNo();
+        int branchNo = (Integer)(session.getAttribute("branchno"));
         List<Employee> employees = employeeService.findByBranchNo(branchNo);
         model.addAttribute("employees", employees);
         return "/WEB-INF/empindex.jsp";
     }
 
     @PostMapping("/manageemployee")
-    public void addAndEditEmployee(@ModelAttribute("employee") Employee employee, HttpSession session, Model model,HttpServletResponse res) throws IOException {
-        Branch b = (Branch) session.getAttribute("branch");
-        int branchNo = b.getBranchNo();
+    public void addAndEditEmployee(@ModelAttribute("employee") Employee employee, HttpSession session, HttpServletRequest request,HttpServletResponse response) throws IOException {
+        int branchNo = (Integer)(session.getAttribute("branchno"));
         employee.setBranchNo(branchNo);
-//        boolean isDuplicate = employeeService.chkDuplicateEmpName(employee.getEmpName(), branchNo);
-//        if (!isDuplicate) {
         employeeService.save(employee);
-//        }
-        res.sendRedirect("/employee/index");
+        response.sendRedirect(request.getContextPath()+"/employee/index");
     }
 
     @Transactional
     @GetMapping("/deleteemployee/{empNo}")
-    public void delEmployee(@PathVariable("empNo") int empNo, HttpSession session,HttpServletResponse res) throws IOException {
-        Branch b = (Branch) session.getAttribute("branch");
-        int branchNo = b.getBranchNo();
+    public void delEmployee(@PathVariable("empNo") int empNo, HttpSession session,HttpServletRequest request,HttpServletResponse response) throws IOException {
+        int branchNo = (Integer)(session.getAttribute("branchno"));
         employeeService.removeByEmpNoAndBranchNo(empNo, branchNo);
-        res.sendRedirect("/employee/index");
+        response.sendRedirect(request.getContextPath()+"/employee/index");
     }
 
     @GetMapping("/ajax/getemployee/{empNo}")
     @ResponseBody
     public String getEmployee(@PathVariable("empNo") int empNo, HttpSession session) throws JsonProcessingException {
-        Branch b = (Branch) session.getAttribute("branch");
-        int branchNo = b.getBranchNo();
+        int branchNo = (Integer)(session.getAttribute("branchno"));
         Employee employee = employeeService.findByEmpNoAndBranchNo(empNo, branchNo);
         ObjectMapper mapper = new ObjectMapper();
         String json = mapper.writeValueAsString(employee);
@@ -86,16 +81,16 @@ public class EmployeeController {
     }
 
     @PostMapping("/manageemployeeposition")
-    public void addAndEditPosition(@ModelAttribute("employeePosition") EmployeePosition employeePosition,HttpServletResponse res) throws IOException {
+    public void addAndEditPosition(@ModelAttribute("employeePosition") EmployeePosition employeePosition,HttpServletRequest request,HttpServletResponse response) throws IOException {
         employeePositionService.save(employeePosition);
-        res.sendRedirect("/employee/position");
+        response.sendRedirect(request.getContextPath()+"/employee/position");
     }
 
     @Transactional
     @GetMapping("/deleteemployeeposition/{empPosNo}")
-    public void removeByEmpPosNo(@PathVariable("empPosNo") int empPosNo,HttpServletResponse res) throws IOException {
+    public void removeByEmpPosNo(@PathVariable("empPosNo") int empPosNo,HttpServletRequest request,HttpServletResponse response) throws IOException {
         employeePositionService.removeByEmpPosNo(empPosNo);
-        res.sendRedirect("/employee/position");
+        response.sendRedirect(request.getContextPath()+"/employee/position");
     }
 
     @GetMapping("/ajax/getemployeeposition/{empPosNo}")
@@ -111,8 +106,7 @@ public class EmployeeController {
 
     @RequestMapping("/workhistory")
     public String toEmployeeWorkHistory(Model model,HttpSession session) {
-        Branch b = (Branch)session.getAttribute("branch");
-        int branchNo = b.getBranchNo();
+        int branchNo = (Integer)(session.getAttribute("branchno"));
         List<WorkHistory> workHistories = workHistoryService.findAll(branchNo);
         List<Employee> employees = employeeService.findByBranchNo(branchNo);
         model.addAttribute("workHistories",workHistories);
@@ -120,36 +114,64 @@ public class EmployeeController {
         return "/WEB-INF/empworkhist.jsp";
     }
 
-    @GetMapping("/manageworkhistory")
-    public void save(@ModelAttribute("workHistory") WorkHistory workHistory,HttpServletResponse res) throws IOException {
+    @PostMapping("/manageworkhistory")
+    public void save(@ModelAttribute("workHistory") WorkHistory workHistory, HttpServletResponse response,HttpServletRequest request,HttpSession session) throws IOException, ParseException {
+        int branchNo = (Integer)(session.getAttribute("branchno"));
+        int empNo = workHistory.getEmpNo();
+        Employee employee = employeeService.findByEmpNoAndBranchNo(empNo,branchNo);
+        String payType = employee.getPayType();
+        double pay = employee.getPay();
+        double workHour = Double.parseDouble(request.getParameter("workHour"));
+        double workMinute = Double.parseDouble(request.getParameter("workMinute"));
+        double sumWorkHour = workHour + (workMinute*5/300);
+        if(payType.equals(Employee.HOUR)){
+            pay = pay * sumWorkHour;
+        }
+        workHistory.setWorkHour(sumWorkHour);
+        workHistory.setWorkPay(pay);
         workHistoryService.save(workHistory);
-        res.sendRedirect("/employee/workhistory");
+
+        response.sendRedirect(request.getContextPath()+"/employee/workhistory");
     }
 
     @Transactional
     @GetMapping("/deleteworkhistory/{workHistNo}")
-    public void removeByWorkHistNo(@PathVariable("workHistNo") int workHistNo,HttpServletResponse res,HttpSession session) throws IOException {
-        Branch b = (Branch)session.getAttribute("branch");
-        int branchNo = b.getBranchNo();
+    public void removeByWorkHistNo(@PathVariable("workHistNo") int workHistNo,HttpServletResponse response,HttpServletRequest request,HttpSession session) throws IOException {
+        int branchNo = (Integer)(session.getAttribute("branchno"));
         workHistoryService.removeByWorkHist(workHistNo,branchNo);
-        res.sendRedirect("/employee/workhistory");
+        response.sendRedirect(request.getContextPath()+"/employee/workhistory");
     }
 
     //----------------------------------------------------------------------------------------------------------//
 
     @RequestMapping("/pay")
-    public String toEmployeePayIndex(Model model) {
-        List<EmployeePay> employeePays = employeePayService.findAll();
-        model.addAttribute(employeePays);
-        return "/WEB-INF/emppay";
+    public String toEmployeePayIndex(Model model,HttpSession session) {
+        int branchNo = (Integer)(session.getAttribute("branchno"));
+        List<Employee> employees = employeeService.findByBranchNo(branchNo);
+        model.addAttribute("employees",employees);
+        return "/WEB-INF/emppaid.jsp";
     }
+
+    @GetMapping("/pay/{empNo}")
+    public void pay(@PathVariable("empNo") int empNo, Model model,HttpServletRequest request,HttpServletResponse response) throws IOException {
+        double pay = Double.parseDouble(request.getParameter("pay"));
+        EmployeePay employeePay = new EmployeePay();
+        employeePay.setPay(pay);
+        employeePay.setEmpNo(empNo);
+        employeePayService.save(employeePay);
+        response.sendRedirect(request.getContextPath()+"/employee/pay");
+    }
+
+    //----------------------------------------------------------------------------------------------------------//
 
     @RequestMapping("/table")
     public String toEmployeeTable(Model model) {
         List<EmployeeTable> employeeTables = employeeTableService.findAll();
         model.addAttribute(employeeTables);
-        return "/WEB-INF/emptable";
+        return "/WEB-INF/emptable.jsp";
     }
+
+    //----------------------------------------------------------------------------------------------------------//
 
     @RequestMapping("/check")
     public String toEmployeeCheck(Model model) {

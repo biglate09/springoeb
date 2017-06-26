@@ -1,5 +1,6 @@
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 <%@page contentType="text/html" pageEncoding="UTF-8" %>
+<c:set var="contextPath" value="${pageContext.request.contextPath}" />
 <!DOCTYPE html>
 <html>
 <head>
@@ -36,12 +37,12 @@
                                         ลบที่เลือก
                                     </button>
                                 </p>
-                                <table id="datatable-checkbox"
+                                <table id="datatable-position"
                                        class="table table-striped table-bordered bulk_action1">
                                     <thead>
                                     <tr>
-                                        <th><input title="checkall" type="checkbox" class="flat" id="check-all-1"
-                                                   disabled></th>
+                                        <%--<th><input title="checkall" type="checkbox" class="flat" id="check-all-1"--%>
+                                                   <%--disabled></th>--%>
                                         <th style="width:20%;text-align:center;">ชื่อตำแหน่ง</th>
                                         <th style="width:20%;text-align:center;">ตัวเลือก</th>
                                     </tr>
@@ -49,11 +50,11 @@
                                     <tbody>
                                     <c:forEach items="${employeePositions}" var="ep" varStatus="vs">
                                     <tr id="tr${ep.empPosNo}" style="text-align:center;">
-                                        <td>
-                                            <input type="checkbox" name="tabdle_records" value="${ep.empPosNo}"
-                                                   class="flat"
-                                                   disabled>
-                                        </td>
+                                        <%--<td>--%>
+                                            <%--<input type="checkbox" name="tabdle_records" value="${ep.empPosNo}"--%>
+                                                   <%--class="flat"--%>
+                                                   <%--disabled>--%>
+                                        <%--</td>--%>
                                         <td style="width:80%">
                                             <a href="javascript:void(0)" onclick="editEmpPos(${ep.empPosNo})"
                                                data-toggle="modal"
@@ -64,7 +65,7 @@
                                                href="javascript:void(0)" data-toggle="modal"
                                                data-target="#editEmpPos"><i class="fa fa-pencil"></i>&nbsp;
                                                 แก้ไข </a>
-                                            <a href="${pageContext}/employee/deleteemployeeposition/${ep.empPosNo}" )
+                                            <a href="${contextPath}/employee/deleteemployeeposition/${ep.empPosNo}" )
                                                class="btn btn-danger btn-sm" href="javascript:void(0)"><i
                                                     class="fa fa-trash"></i>&nbsp; ลบ</a>
                                         </td>
@@ -90,7 +91,7 @@
                             <!-- ส่วนเนื้อหาของ Modal -->
                             <div class="modal-body">
                                 <form class="form-horizontal form-label-left input_mask"
-                                      action="${pageContext}/employee/manageemployeeposition" method="POST"
+                                      action="${contextPath}/employee/manageemployeeposition" method="POST"
                                       modelAttribute="employeeposition">
                                     <div class="form-group">
                                         <div class="col-md-6 col-sm-6 col-xs-12 form-group has-feedback">
@@ -130,7 +131,7 @@
                             <!-- ส่วนเนื้อหาของ Modal -->
                             <div class="modal-body">
                                 <form class="form-horizontal form-label-left input_mask"
-                                      action="${pageContext}/employee/manageemployeeposition" method="POST"
+                                      action="${contextPath}/employee/manageemployeeposition" method="POST"
                                       modelAttribute="employeeposition">
                                     <input type="hidden" name="empPosNo" id="hiddenempposno">
                                     <div class="form-group">
@@ -163,10 +164,19 @@
 </div>
 <jsp:include page="include/bottomenv.jsp"/>
 <script>
+    $(document).ready(function () {
+        $("#datatable-position").DataTable({
+            "order": [[0, "asc"]],
+            "columnDefs": [
+                { orderable: false, targets: [-1] }
+            ]
+        });
+    });
+
     function editEmpPos(empPosNo){
         $.ajax({
             type: "GET",
-            url: "${pageContext}/employee/ajax/getemployeeposition/" + empPosNo,
+            url: "${contextPath}/employee/ajax/getemployeeposition/" + empPosNo,
             dataType: "json",
             success: function (result) {
                 $("#hiddenempposno").val(result.empPosNo);

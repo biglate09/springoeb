@@ -11,5 +11,5 @@ import java.util.List;
  */
 @Repository
 public interface EmployeePayRepository extends CrudRepository<EmployeePay,Integer>{
-    List<EmployeePay> findAll();
+    List<EmployeePay> findByEmployee_BranchNoAndEmpNoOrderByDateDesc(int branchNo,int empNo);
 }
