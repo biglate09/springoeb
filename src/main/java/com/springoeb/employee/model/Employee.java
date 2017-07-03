@@ -1,8 +1,9 @@
 package com.springoeb.employee.model;
 
-import com.fasterxml.jackson.annotation.JsonIgnore;
-
-import javax.persistence.*;
+import javax.persistence.Entity;
+import javax.persistence.FetchType;
+import javax.persistence.Id;
+import javax.persistence.OneToMany;
 import java.util.List;
 
 /**
@@ -80,20 +81,20 @@ public class Employee {
         this.pay = pay;
     }
 
-    public int getBranchNo() {
-        return branchNo;
-    }
-
-    public void setBranchNo(int branchNo) {
-        this.branchNo = branchNo;
-    }
-
     public String getEmpGender() {
         return empGender;
     }
 
     public void setEmpGender(String empGender) {
         this.empGender = empGender;
+    }
+
+    public int getBranchNo() {
+        return branchNo;
+    }
+
+    public void setBranchNo(int branchNo) {
+        this.branchNo = branchNo;
     }
 
     public List<EmployeePay> getEmployeePays() {
@@ -110,21 +111,5 @@ public class Employee {
 
     public void setWorkHistories(List<WorkHistory> workHistories) {
         this.workHistories = workHistories;
-    }
-
-    @Override
-    public String toString() {
-        return "Employee{" +
-                "empNo=" + empNo +
-                ", empName='" + empName + '\'' +
-                ", empTel='" + empTel + '\'' +
-                ", empType='" + empType + '\'' +
-                ", payType='" + payType + '\'' +
-                ", pay=" + pay +
-                ", empGender='" + empGender + '\'' +
-                ", branchNo=" + branchNo +
-                ", employeePays=" + employeePays +
-                ", workHistories=" + workHistories +
-                '}';
     }
 }

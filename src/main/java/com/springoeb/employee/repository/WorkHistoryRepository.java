@@ -1,11 +1,9 @@
 package com.springoeb.employee.repository;
 
 import com.springoeb.employee.model.WorkHistory;
-import org.springframework.data.jpa.repository.Query;
 import org.springframework.data.repository.CrudRepository;
 import org.springframework.stereotype.Repository;
 
-import javax.persistence.NamedQueries;
 import java.util.List;
 
 /**
@@ -13,6 +11,7 @@ import java.util.List;
  */
 @Repository
 public interface WorkHistoryRepository extends CrudRepository<WorkHistory,Integer>{
-    List<WorkHistory> findByEmployee_BranchNoOrderByWorkDateDescWorkHistNoDesc(int branchNo);
+    List<WorkHistory> findByEmployee_BranchNoAndWorkPayIsNotNullOrderByWorkDateDescWorkHistNoDesc(int branchNo);
+    WorkHistory findByWorkHistNo(int workHistNo);
     void removeByWorkHistNoAndEmployee_BranchNo(int workHistNo,int branchNo);
 }

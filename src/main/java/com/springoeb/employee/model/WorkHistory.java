@@ -1,11 +1,12 @@
 package com.springoeb.employee.model;
 
 import com.fasterxml.jackson.annotation.JsonIgnore;
+import org.jetbrains.annotations.Nullable;
 
 import javax.persistence.*;
 import java.io.Serializable;
 import java.sql.Date;
-import java.sql.Timestamp;
+import java.sql.Time;
 
 /**
  * Created by bighead on 6/9/17.
@@ -13,28 +14,31 @@ import java.sql.Timestamp;
 @Entity
 public class WorkHistory implements Serializable{
     @Id
+    @GeneratedValue(strategy = GenerationType.AUTO)
     private int workHistNo;
     private Date workDate;
-    private Timestamp workStart;
-    private Timestamp workEnd;
+    private Time workStart;
+    private Time workEnd;
     private Double workPay;
-    private Double workHour;
+    private Integer workHour;
+    private Integer workMin;
 
     @Column(name = "emp_no",updatable = true,insertable = true)
     private int empNo;
+
+    @Column(name = "emp_time_no",updatable = true,insertable = true)
+    @Nullable
+    private Integer empTimeNo;
+
+    @JsonIgnore
+    @OneToOne
+    @JoinColumn(name = "emp_time_no",updatable = false,insertable = false)
+    private EmployeeTable employeeTable;
 
     @JsonIgnore
     @ManyToOne
     @JoinColumn(name = "emp_no",updatable = false,insertable = false)
     private Employee employee;
-
-    public Date getWorkDate() {
-        return workDate;
-    }
-
-    public void setWorkDate(Date workDate) {
-        this.workDate = workDate;
-    }
 
     public int getWorkHistNo() {
         return workHistNo;
@@ -44,19 +48,27 @@ public class WorkHistory implements Serializable{
         this.workHistNo = workHistNo;
     }
 
-    public Timestamp getWorkStart() {
+    public Date getWorkDate() {
+        return workDate;
+    }
+
+    public void setWorkDate(Date workDate) {
+        this.workDate = workDate;
+    }
+
+    public Time getWorkStart() {
         return workStart;
     }
 
-    public void setWorkStart(Timestamp workStart) {
+    public void setWorkStart(Time workStart) {
         this.workStart = workStart;
     }
 
-    public Timestamp getWorkEnd() {
+    public Time getWorkEnd() {
         return workEnd;
     }
 
-    public void setWorkEnd(Timestamp workEnd) {
+    public void setWorkEnd(Time workEnd) {
         this.workEnd = workEnd;
     }
 
@@ -68,20 +80,20 @@ public class WorkHistory implements Serializable{
         this.workPay = workPay;
     }
 
-    public Double getWorkHour() {
+    public Integer getWorkHour() {
         return workHour;
     }
 
-    public void setWorkHour(Double workHour) {
+    public void setWorkHour(Integer workHour) {
         this.workHour = workHour;
     }
 
-    public Employee getEmployee() {
-        return employee;
+    public Integer getWorkMin() {
+        return workMin;
     }
 
-    public void setEmployee(Employee employee) {
-        this.employee = employee;
+    public void setWorkMin(Integer workMin) {
+        this.workMin = workMin;
     }
 
     public int getEmpNo() {
@@ -92,17 +104,27 @@ public class WorkHistory implements Serializable{
         this.empNo = empNo;
     }
 
-    @Override
-    public String toString() {
-        return "WorkHistory{" +
-                "workHistNo=" + workHistNo +
-                ", workDate=" + workDate +
-                ", workStart=" + workStart +
-                ", workEnd=" + workEnd +
-                ", workPay=" + workPay +
-                ", workHour=" + workHour +
-                ", empNo=" + empNo +
-                ", employee=" + employee +
-                '}';
+    public Integer getEmpTimeNo() {
+        return empTimeNo;
+    }
+
+    public void setEmpTimeNo(Integer empTimeNo) {
+        this.empTimeNo = empTimeNo;
+    }
+
+    public EmployeeTable getEmployeeTable() {
+        return employeeTable;
+    }
+
+    public void setEmployeeTable(EmployeeTable employeeTable) {
+        this.employeeTable = employeeTable;
+    }
+
+    public Employee getEmployee() {
+        return employee;
+    }
+
+    public void setEmployee(Employee employee) {
+        this.employee = employee;
     }
 }

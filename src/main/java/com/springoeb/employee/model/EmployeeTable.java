@@ -1,9 +1,6 @@
 package com.springoeb.employee.model;
 
-import javax.persistence.Entity;
-import javax.persistence.Id;
-import javax.persistence.JoinColumn;
-import javax.persistence.ManyToOne;
+import javax.persistence.*;
 import java.io.Serializable;
 import java.sql.Date;
 import java.sql.Time;
@@ -14,16 +11,26 @@ import java.sql.Time;
 @Entity
 public class EmployeeTable implements Serializable{
     @Id
+    @GeneratedValue(strategy = GenerationType.AUTO)
     private int empTimeNo;
     private Date date;
     private Time timeStart;
     private Time timeEnd;
+
+    @Column(name = "emp_pos_no",updatable = true,insertable = true)
+    private int empPosNo;
+    @Column(name = "emp_no",updatable = true,insertable = true)
+    private int empNo;
     @ManyToOne
-    @JoinColumn(name = "emp_pos_no")
+    @JoinColumn(name = "emp_pos_no",updatable = false,insertable = false)
     private EmployeePosition employeePosition;
+
     @ManyToOne
-    @JoinColumn(name = "emp_no")
+    @JoinColumn(name = "emp_no",updatable = false,insertable = false)
     private Employee employee;
+
+    @OneToOne(fetch = FetchType.LAZY, mappedBy = "employeeTable")
+    private WorkHistory workHistory;
 
     public int getEmpTimeNo() {
         return empTimeNo;
@@ -57,6 +64,22 @@ public class EmployeeTable implements Serializable{
         this.timeEnd = timeEnd;
     }
 
+    public int getEmpPosNo() {
+        return empPosNo;
+    }
+
+    public void setEmpPosNo(int empPosNo) {
+        this.empPosNo = empPosNo;
+    }
+
+    public int getEmpNo() {
+        return empNo;
+    }
+
+    public void setEmpNo(int empNo) {
+        this.empNo = empNo;
+    }
+
     public EmployeePosition getEmployeePosition() {
         return employeePosition;
     }
@@ -73,15 +96,11 @@ public class EmployeeTable implements Serializable{
         this.employee = employee;
     }
 
-    @Override
-    public String toString() {
-        return "EmployeeTable{" +
-                "empTimeNo=" + empTimeNo +
-                ", date=" + date +
-                ", timeStart=" + timeStart +
-                ", timeEnd=" + timeEnd +
-                ", employeePosition=" + employeePosition +
-                ", employee=" + employee +
-                '}';
+    public WorkHistory getWorkHistory() {
+        return workHistory;
+    }
+
+    public void setWorkHistory(WorkHistory workHistory) {
+        this.workHistory = workHistory;
     }
 }

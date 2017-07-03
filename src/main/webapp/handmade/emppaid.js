@@ -28,7 +28,7 @@ function setemppaid(empNo) {
                     withdrawtable.row.add({
                        0: varStatus++,
                        1: json[i].fromDate + " " + (pasthour < 10?"0"+pasthour:pasthour) + "." + (pasttime < 10?"0"+pasttime:pasttime) + " น.",
-                       2: Math.abs(json[i].workingPay).toFixed(2) + " ฿"
+                       2: Math.abs(json[i].workingPay).toFixed(2) + " บาท"
                     });
                 } else {
                     historytable.row.add({
@@ -36,7 +36,7 @@ function setemppaid(empNo) {
                         1: hour + " ชั่วโมง " + min + " นาที",
                         2: json[i].positionName,
                         3: json[i].empTypeName,
-                        4: Number(json[i].workingPay).toFixed(2) + " ฿"
+                        4: Number(json[i].workingPay).toFixed(2) + " บาท"
                     });
                 }
                 withdrawtable.draw();
@@ -57,7 +57,7 @@ $("#css-irow").click(function () {
     } else if (inputwd <= sumpay && inputwd > 0) {
         swal({
             title: "คุณต้องการเบิกเงินให้ " + $("#empName").text() + " ?",
-            text: "จำนวนเงิน " + inputwd + " ฿ จากที่เบิกได้ " + sumpay + " ฿",
+            text: "จำนวนเงิน " + inputwd + " บาท จากที่เบิกได้ " + sumpay + " บาท",
             type: "warning",
             showCancelButton: true,
             confirmButtonColor: "#DD6B55",

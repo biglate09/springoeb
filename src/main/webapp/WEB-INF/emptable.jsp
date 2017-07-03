@@ -1,4 +1,6 @@
+<%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 <%@ page contentType="text/html;charset=UTF-8" language="java" %>
+<c:set var="contextPath" value="${pageContext.request.contextPath}"/>
 <!DOCTYPE html>
 <html lang="en">
 <head>
@@ -8,7 +10,7 @@
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1">
 
-    <title>Gentelella Alela! | </title>
+    <title>ตารางการทำงาน</title>
 
     <!-- Bootstrap -->
     <link href="../vendors/bootstrap/dist/css/bootstrap.min.css" rel="stylesheet">
@@ -64,34 +66,60 @@
 <!-- calendar modal -->
 <div id="CalenderModalNew" class="modal fade" tabindex="-1" role="dialog" aria-labelledby="myModalLabel"
      aria-hidden="true">
-    <div class="modal-dialog">
+    <div class="modal-dialog modal-lg">
         <div class="modal-content">
-
             <div class="modal-header">
                 <button type="button" class="close" data-dismiss="modal" aria-hidden="true">×</button>
-                <h4 class="modal-title" id="myModalLabel">New Calendar Entry</h4>
+                <h4 class="modal-title" id="myModalLabel">เพิ่มตารางการทำงานของวันที่ <span id="modal_date"></span></h4>
+                <a class="btn btn-success btn-sm" id="addworkfieldbtn">
+                    <i class="fa fa-plus-circle"></i>
+                    &nbsp;เพิ่มรายการ
+                </a>
             </div>
             <div class="modal-body">
-                <div id="testmodal" style="padding: 5px 20px;">
-                    <form id="antoform" class="form-horizontal calender" role="form">
-                        <div class="form-group">
-                            <label class="col-sm-3 control-label">Title</label>
-                            <div class="col-sm-9">
-                                <input type="text" class="form-control" id="title" name="title">
+                <form class="form-horizontal form-label-left input_mask"
+                      action="${contextPath}/employee/managetable" method="POST">
+                    <input type="hidden" id="hiddendate_1" name="date">
+                    <div class="form-group" id="addworkfield">
+                        <div>
+                            <div class="col-md-3 col-sm-3 col-xs-3 form-group has-feedback" style="width:23%">
+                                <select name="empNo" class="form-control" required>
+                                    <c:forEach items="${employees}" var="e">
+                                        <option value="${e.empNo}">${e.empName}</option>
+                                    </c:forEach>
+                                </select>
+                            </div>
+                            <div class="col-md-3 col-sm-3 col-xs-3 form-group has-feedback" style="width:23%">
+                                <select name="empPosNo" class="form-control" required>
+                                    <c:forEach items="${employeePositions}" var="ep">
+                                        <option value="${ep.empPosNo}">${ep.empPosName}</option>
+                                    </c:forEach>
+                                </select>
+                            </div>
+                            <div class="col-md-3 col-sm-3 col-xs-3 form-group has-feedback" style="width:20%">
+                                <input type="time" class="form-control" placeholder="เวลาเริ่มงาน" name="timeStart"
+                                       required>
+                                <span class="fa fa-hourglass form-control-feedback right"
+                                      aria-hidden="true"></span>
+                            </div>
+                            <div class="col-md-3 col-sm-3 col-xs-3 form-group has-feedback" style="width:20%">
+                                <input type="time" class="form-control"
+                                       placeholder="เวลาสิ้นสุดงาน" name="timeEnd" required>
+                                <span class="fa fa-hourglass-end form-control-feedback right"
+                                      aria-hidden="true"></span>
                             </div>
                         </div>
-                        <div class="form-group">
-                            <label class="col-sm-3 control-label">Description</label>
-                            <div class="col-sm-9">
-                                <textarea class="form-control" style="height:55px;" id="descr" name="descr"></textarea>
-                            </div>
+                    </div>
+                    <div class="modal-footer">
+                        <!-- ปุ่มกดปิด (Close) ตรงส่วนล่างของ Modal -->
+                        <div class="col-md-9 col-sm-9 col-xs-12 col-md-offset-3">
+                            <button type="submit" class="btn btn-success">ตกลง</button>
+                            <button type="button" class="btn btn-default" data-dismiss="modal">
+                                ยกเลิก
+                            </button>
                         </div>
-                    </form>
-                </div>
-            </div>
-            <div class="modal-footer">
-                <button type="button" class="btn btn-default antoclose" data-dismiss="modal">Close</button>
-                <button type="button" class="btn btn-primary antosubmit">Save changes</button>
+                    </div>
+                </form>
             </div>
         </div>
     </div>
@@ -100,34 +128,52 @@
      aria-hidden="true">
     <div class="modal-dialog">
         <div class="modal-content">
-
             <div class="modal-header">
                 <button type="button" class="close" data-dismiss="modal" aria-hidden="true">×</button>
-                <h4 class="modal-title" id="myModalLabel2">Edit Calendar Entry</h4>
+                <h4 class="modal-title" id="myModalLabel2">แก้ไขตารางการทำงาน</h4>
             </div>
             <div class="modal-body">
-
-                <div id="testmodal2" style="padding: 5px 20px;">
-                    <form id="antoform2" class="form-horizontal calender" role="form">
-                        <div class="form-group">
-                            <label class="col-sm-3 control-label">Title</label>
-                            <div class="col-sm-9">
-                                <input type="text" class="form-control" id="title2" name="title2">
-                            </div>
+                <form class="form-horizontal calender" role="form"
+                      action="${contextPath}/employee/managetable" method="POST">
+                    <input type="hidden" name="empTimeNo" id="hidden_empTimeNo_edit">
+                    <input type="hidden" name="date" id="hidden_date_edit">
+                    <div class="form-group" style="padding: 5px 20px;">
+                        <div class="col-md-6 form-group has-feedback">
+                            <select name="empNo" class="form-control" id="empNo_edit" required>
+                                <c:forEach items="${employees}" var="e">
+                                    <option value="${e.empNo}">${e.empName}</option>
+                                </c:forEach>
+                            </select>
                         </div>
-                        <div class="form-group">
-                            <label class="col-sm-3 control-label">Description</label>
-                            <div class="col-sm-9">
-                                <textarea class="form-control" style="height:55px;" id="descr2" name="descr"></textarea>
-                            </div>
+                        <div class="col-md-6 form-group has-feedback">
+                            <select name="empPosNo" class="form-control" id="empPosNo_edit" required>
+                                <c:forEach items="${employeePositions}" var="ep">
+                                    <option value="${ep.empPosNo}">${ep.empPosName}</option>
+                                </c:forEach>
+                            </select>
                         </div>
-
-                    </form>
-                </div>
-            </div>
-            <div class="modal-footer">
-                <button type="button" class="btn btn-default antoclose2" data-dismiss="modal">Close</button>
-                <button type="button" class="btn btn-primary antosubmit2">Save changes</button>
+                        <div class="col-md-6 form-group has-feedback">
+                            <input type="time" class="form-control" placeholder="เวลาเริ่มงาน" name="timeStart"
+                                   id="timeStart_edit"
+                                   required>
+                            <span class="fa fa-hourglass form-control-feedback right"
+                                  aria-hidden="true"></span>
+                        </div>
+                        <div class="col-md-6 form-group has-feedback">
+                            <input type="time" class="form-control"
+                                   placeholder="เวลาสิ้นสุดงาน" name="timeEnd" id="timeEnd_edit" required>
+                            <span class="fa fa-hourglass-end form-control-feedback right"
+                                  aria-hidden="true"></span>
+                        </div>
+                    </div>
+                    <div class="modal-footer">
+                        <a id="del_link">
+                            <button type="button" class="btn btn-danger">ลบ</button>
+                        </a>
+                        <button type="submit" class="btn btn-primary">ตกลง</button>
+                        <button type="button" class="btn btn-default" data-dismiss="modal">ยกเลิก</button>
+                    </div>
+                </form>
             </div>
         </div>
     </div>
@@ -154,6 +200,30 @@
 
 </body>
 <script>
+    var events = [];
+    <c:forEach items="${employeeTables}" var="et">
+    var workDate = new Date('${et.date}');
+    var y = workDate.getFullYear();
+    var m = workDate.getMonth();
+    var d = workDate.getDate();
+    var timestart = '${et.timeStart}';
+    var timeend = '${et.timeEnd}';
+    var sh = timestart.substring(0, 2);
+    var sm = timestart.substring(3, 5);
+    var eh = timeend.substring(0, 2);
+    var em = timeend.substring(3, 5);
+    var empposname = '${et.employeePosition.empPosName}';
+    var e = {
+        title: '${et.employee.empName}' + ' (' + empposname + ')',
+        start: new Date(y, m, d, sh, sm),
+        end: new Date(y, m, d, eh, em),
+        empNo: ${et.employee.empNo},
+        empPosNo: ${et.employeePosition.empPosNo},
+        empTimeNo: ${et.empTimeNo}
+    };
+    events.push(e);
+    </c:forEach>
+
     /* CALENDAR */
 
     function init_calendar() {
@@ -161,7 +231,6 @@
         if (typeof ($.fn.fullCalendar) === 'undefined') {
             return;
         }
-        console.log('init_calendar');
 
         var date = new Date(),
             d = date.getDate(),
@@ -171,93 +240,161 @@
             categoryClass;
 
         var calendar = $('#employee-calendar').fullCalendar({
+            timeFormat: 'HH.mm น.',
             header: {
                 left: 'prev,next today',
                 center: 'title',
                 // right: 'month,agendaWeek,agendaDay,listMonth'
-                right: 'month,agendaDay'
+                right: 'month,listMonth'
             },
             selectable: true,
             selectHelper: true,
             select: function (start, end, allDay) {
                 $('#fc_create').click();
+                dateobj = start._d;
 
-                started = start;
-                ended = end;
+                date_d = (dateobj.getDate()) < 10 ? ("0" + dateobj.getDate()) : (dateobj.getDate());
+                date_m = (dateobj.getMonth() + 1) < 10 ? ("0" + (dateobj.getMonth() + 1)) : (dateobj.getMonth() + 1);
+                date_y = dateobj.getFullYear();
 
-                $(".antosubmit").on("click", function () {
-                    var title = $("#title").val();
-                    if (end) {
-                        ended = end;
-                    }
+                switch (parseInt(date_m)) {
+                    case 1:
+                        format_month = 'มกราคม';
+                        break;
+                    case 2:
+                        format_month = 'กุมภาพันธ์';
+                        break;
+                    case 3:
+                        format_month = 'มีนาคม';
+                        break;
+                    case 4:
+                        format_month = 'เมษายน';
+                        break;
+                    case 5:
+                        format_month = 'พฤษภาคม';
+                        break;
+                    case 6:
+                        format_month = 'มิถุนายน';
+                        break;
+                    case 7:
+                        format_month = 'กรกฎาคม';
+                        break;
+                    case 8:
+                        format_month = 'สิงหาคม';
+                        break;
+                    case 9:
+                        format_month = 'กันยายน';
+                        break;
+                    case 10:
+                        format_month = 'ตุลาคม';
+                        break;
+                    case 11:
+                        format_month = 'พฤศจิกายน';
+                        break;
+                    case 12:
+                        format_month = 'ธันวาคม';
+                        break;
+                }
 
-                    categoryClass = $("#event_type").val();
+                format_date = dateobj.getDate() + " " + format_month + " " + date_y;
+                java_date = date_y + "-" + date_m + "-" + date_d;
+                $("#modal_date").html(format_date);
+                $("#hiddendate_1").val(java_date);
 
-                    if (title) {
-                        calendar.fullCalendar('renderEvent', {
-                                title: title,
-                                start: started,
-                                end: end,
-                                allDay: allDay
-                            },
-                            true // make the event "stick"
-                        );
-                    }
 
-                    $('#title').val('');
-
-                    calendar.fullCalendar('unselect');
-
-                    $('.antoclose').click();
-
-                    return false;
-                });
+//                started = start;
+//                ended = end;
+//
+//                $(".antosubmit").on("click", function () {
+//                    var title = $("#title").val();
+//                    if (end) {
+//                        ended = end;
+//                    }
+//
+//                    categoryClass = $("#event_type").val();
+//
+//                    if (title) {
+//                        calendar.fullCalendar('renderEvent', {
+//                                title: title,
+//                                start: started,
+//                                end: end,
+//                                allDay: allDay
+//                            },
+//                            true // make the event "stick"
+//                        );
+//                    }
+//
+//                    $('#title').val('');
+//
+//                    calendar.fullCalendar('unselect');
+//
+//                    $('.antoclose').click();
+//
+//                    return false;
+//                });
             },
             eventClick: function (calEvent, jsEvent, view) {
                 $('#fc_edit').click();
                 $('#title2').val(calEvent.title);
 
+                $("#empNo_edit").val(calEvent.empNo);
+                $("#empPosNo_edit").val(calEvent.empPosNo);
+                $("#timeStart_edit").val((calEvent.start._d.getHours() < 10 ? "0" + calEvent.start._d.getHours() : calEvent.start._d.getHours()) + ":" + (calEvent.start._d.getMinutes() < 10 ? "0" + calEvent.start._d.getMinutes() : calEvent.start._d.getMinutes()));
+                $("#timeEnd_edit").val((calEvent.end._d.getHours() < 10 ? "0" + calEvent.end._d.getHours() : calEvent.end._d.getHours()) + ":" + (calEvent.end._d.getMinutes() < 10 ? "0" + calEvent.end._d.getMinutes() : calEvent.end._d.getMinutes()));
+                $("#hidden_empTimeNo_edit").val(calEvent.empTimeNo);
+                $("#hidden_date_edit").val(calEvent.start._d.getFullYear() + "-" + (calEvent.start._d.getMonth() + 1) + "-" + calEvent.start._d.getDate());
+                $("#del_link").attr('href','${contextPath}/employee/deletetable/'+calEvent.empTimeNo);
                 categoryClass = $("#event_type").val();
 
-                $(".antosubmit2").on("click", function () {
-                    calEvent.title = $("#title2").val();
-
-                    calendar.fullCalendar('updateEvent', calEvent);
-                    $('.antoclose2').click();
-                });
+//                $(".antosubmit2").on("click", function () {
+//                    calEvent.title = $("#title2").val();
+//
+//                    calendar.fullCalendar('updateEvent', calEvent);
+//                    $('.antoclose2').click();
+//                });
                 calendar.fullCalendar('unselect');
             },
             editable: false,
-            events: [{
-                title: 'All Day Event',
-                start: new Date(y, m, 10, 15, 18)
-            }, {
-                title: 'Long Event',
-                start: new Date(y, m, d - 5),
-                end: new Date(y, m, d - 2)
-            }, {
-                title: 'Meeting',
-                start: new Date(y, m, d, 10, 30),
-                allDay: false
-            }, {
-                title: 'Lunch',
-                start: new Date(y, m, d + 14, 12, 0),
-                end: new Date(y, m, d, 14, 0),
-                allDay: false
-            }, {
-                title: 'Birthday Party',
-                start: new Date(y, m, d + 1, 19, 0),
-                end: new Date(y, m, d + 1, 22, 30),
-                allDay: false
-            }, {
-                title: 'Click for Google',
-                start: new Date(y, m, 28),
-                end: new Date(y, m, 29),
-                url: 'http://google.com/'
-            }]
+            events: events
         });
+    };
 
-    }
-    ;
+    var wrapper = $("#addworkfield");
+    var add_button = $("#addworkfieldbtn");
+    var work_field = '<div>' +
+        '<div class="col-md-3 col-sm-3 col-xs-3 form-group has-feedback" style="width:23%;">' +
+        '<select name="empNo" class="form-control" required>' +
+        <c:forEach items="${employees}" var="e">
+        '<option value="${e.empNo}">${e.empName}</option>' +
+        </c:forEach>
+        '</select>' +
+        '</div>' +
+        '<div class="col-md-3 col-sm-3 col-xs-3 form-group has-feedback" style="width:23%;">' +
+        '<select name="empPosNo" class="form-control" required>' +
+        <c:forEach items="${employeePositions}" var="ep">
+        '<option value="${ep.empPosNo}">${ep.empPosName}</option>' +
+        </c:forEach>
+        '</select>' +
+        '</div>' +
+        '<div class="col-md-3 col-sm-3 col-xs-3 form-group has-feedback" style="width:20%">' +
+        '<input type="time" class="form-control" placeholder="เวลาเริ่มงาน" name="timeStart" required>' +
+        '<span class="fa fa-hourglass form-control-feedback right" aria-hidden="true"></span>' +
+        '</div>' +
+        '<div class="col-md-3 col-sm-3 col-xs-3 form-group has-feedback" style="width:20%">' +
+        '<input type="time" class="form-control" placeholder="เวลาสิ้นสุดงาน" name="timeEnd" required>' +
+        '<span class="fa fa-hourglass-end form-control-feedback right" aria-hidden="true"></span>' +
+        '</div>' +
+        '<div class="col-md-1 col-sm-1 col-xs-1">' +
+        '<a style="cursor:pointer" class="removeworkfieldbtn">remove</a>' +
+        '</div>' +
+        '</div>';
+
+    $(add_button).click(function () {
+        $(wrapper).append(work_field);
+    });
+
+    $(wrapper).on("click", ".removeworkfieldbtn", function () {
+        $(this).parent('div').parent('div').remove();
+    });
 </script>
 </html>

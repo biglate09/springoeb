@@ -1,10 +1,8 @@
 package com.springoeb.employee.model;
 
 import com.fasterxml.jackson.annotation.JsonIgnore;
-import org.springframework.stereotype.Component;
 
 import javax.persistence.*;
-import java.sql.Date;
 import java.sql.Timestamp;
 
 /**
@@ -49,14 +47,6 @@ public class EmployeePay {
         this.date = date;
     }
 
-    public Employee getEmployee() {
-        return employee;
-    }
-
-    public void setEmployee(Employee employee) {
-        this.employee = employee;
-    }
-
     public int getEmpNo() {
         return empNo;
     }
@@ -65,12 +55,11 @@ public class EmployeePay {
         this.empNo = empNo;
     }
 
-    @Override
-    public String toString() {
-        return "EmployeePay{" +
-                "empPayNo=" + empPayNo +
-                ", pay=" + pay +
-                ", date=" + date +
-                '}';
+    public Employee getEmployee() {
+        return employee;
+    }
+
+    public void setEmployee(Employee employee) {
+        this.employee = employee;
     }
 }

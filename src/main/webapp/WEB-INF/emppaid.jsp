@@ -48,7 +48,8 @@
                                             <td style="text-align:center;">
                                                     ${e.empType==Employee.FULL_TIME?'Full-Time':e.empType==Employee.PART_TIME?'Part-Time':'Training'}
                                             </td>
-                                            <td style="text-align:center;" data-order="${e.payType==Employee.HOUR?e.pay*8:e.pay}">
+                                            <td style="text-align:center;"
+                                                data-order="${e.payType==Employee.HOUR?e.pay*8:e.pay}">
                                                 <fmt:formatNumber value="${e.pay}" pattern="#,###,##0.00"/> บาท /
                                                     ${e.payType==Employee.HOUR?'ชั่วโมง':'วัน'}
                                             </td>
@@ -60,9 +61,8 @@
                                                 <c:set var="sumpay" value="${sumpay - ep.pay}"/>
                                             </c:forEach>
 
-                                            <td style="text-align:center;" data-order="${sumpay}"><fmt:formatNumber value="${sumpay}"
-                                                                                             pattern="#,###,##0.00"/>
-                                                บาท
+                                            <td style="text-align:center;" data-order="${sumpay}">
+                                                <fmt:formatNumber value="${sumpay}" pattern="#,###,##0.00"/> บาท
                                             </td>
 
                                                 <%--<td style="text-align:center;">${e.constraint.employmentType.empTypeName}--%>
@@ -158,10 +158,67 @@
 <script>
     $(document).ready(function () {
         $("#datatable-pay").DataTable({
-            "order": [[3, "desc"]],
-            "columnDefs": [
+            order: [[3, "desc"]],
+            columnDefs: [
                 {
                     orderable: false, targets: [-1]
+                }
+            ]
+        });
+
+        $("#datatable-workhist").DataTable({
+            order: [[0, "desc"]],
+            columns: [
+                {
+                    data: {
+                        _: "date.display",
+                        sort: "date.order"
+                    }
+                },
+                {
+                    data: {
+                        _: "workStart.display",
+                        sort: "workStart.order"
+                    }
+                },
+                {
+                    data: {
+                        _: "workEnd.display",
+                        sort: "workEnd.order"
+                    }
+                },
+                {
+                    data: {
+                        _: "workTime.display",
+                        sort: "workTime.order"
+                    }
+                },
+                {
+                    data: {
+                        _: "workPay.display",
+                        sort: "workPay.order"
+                    }
+                }
+            ]
+        });
+
+        $("#datatable-workpay").DataTable({
+            order: [[0, "desc"]],
+            columns: [
+                {
+                    data: "payNo"
+                },
+                {
+                    data: {
+                        _: "payTime.display",
+                        sort: "payTime.order"
+                    }
+                },
+                {
+                    data: {
+                        _: "pay.display",
+                        sort: "pay.order"
+                    }
                 }
             ]
         });
@@ -184,20 +241,66 @@
                 tableworkpay.clear();
                 for (var i = 0; i < workHistories.length; i++) {
                     var workHistory = workHistories[i];
-                    var hour = Math.floor(workHistory.workHour);
-                    var minute = Math.ceil(((workHistory.workHour) % 1) * 60);
+                    var hour = workHistory.workHour;
+                    var minute = workHistory.workMin;
                     var date = new Date(workHistory.workDate);
-                    var formatDate = date.getDate() + '/' + ((date.getMonth() + 1) < 10 ? '0' + date.getMonth() : date.getMonth()) + '/' + date.getFullYear();
-                    tableworkhist.row.add([formatDate, workHistory.workStart == null ? '-' : workHistory.workStart, workHistory.workEnd == null ? '-' : workHistory.workEnd, hour + ' ชั่วโมง ' + minute + ' นาที', workHistory.workPay.toFixed(2) + ' บาท']);
+                    var formatDate = (date.getDate() < 10 ? '0' + date.getDate() : date.getDate()) + '/' + ((date.getMonth() + 1) < 10 ? '0' + date.getMonth() : date.getMonth() + 1) + '/' + date.getFullYear();
+                    if (workHistory.workPay == null) {
+                        continue;
+                    }
+                    workPayOrder = "" + (workHistory.workPay * 100);
+
+                    for (var j = workPayOrder.length; j < 30; j++) {
+                        workPayOrder = "0" + workPayOrder;
+                    }
+
+                    tableworkhist.row.add({
+                        date: {
+                            display: formatDate,
+                            order: '' + date.getFullYear() + ((date.getMonth() + 1) < 10 ? ('0' + (date.getMonth() + 1)) : (date.getMonth() + 1)) + ((date.getDate()) < 10 ? ('0' + (date.getDate())) : (date.getDate())),
+                        },
+                        workStart: {
+                            display: workHistory.workStart == null ? '-' : (workHistory.workStart.substr(0, 2) + "." + workHistory.workStart.substr(3, 2) + " น."),
+                            order: workHistory.workStart == null ? '-' : ("" + workHistory.workStart.substr(0, 2) + workHistory.workStart.substr(3, 2))
+                        },
+                        workEnd: {
+                            display: workHistory.workEnd == null ? '-' : (workHistory.workEnd.substr(0, 2) + "." + workHistory.workEnd.substr(3, 2) + " น."),
+                            order: workHistory.workEnd == null ? '-' : ("" + workHistory.workEnd.substr(0, 2) + workHistory.workEnd.substr(3, 2))
+                        },
+                        workTime: {
+                            display: (hour > 0 ? hour + ' ชั่วโมง ' : '') + minute + ' นาที',
+                            order: "" + (hour < 10 ? '0' + hour : hour) + (minute < 10 ? '0' + minute : minute)
+                        },
+                        workPay: {
+                            display: workHistory.workPay.toFixed(2) + ' บาท',
+                            order: workPayOrder
+                        }
+                    });
                     sumpay += workHistory.workPay;
                 }
 
                 for (var i = 0; i < employeePays.length; i++) {
                     var employeePay = employeePays[i];
                     var date = new Date(employeePay.date);
-                    var formatDate = date.getDate() + '/' + ((date.getMonth() + 1) < 10 ? '0' + date.getMonth() : date.getMonth()) + '/' + date.getFullYear();
-                    formatDate += ' '+date.getHours()+':'+date.getMinutes()+' น.';
-                    tableworkpay.row.add([(i + 1), formatDate, employeePay.pay.toFixed(2) + ' บาท']);
+                    var formatDate = (date.getDate() < 10 ? '0' + date.getDate() : date.getDate()) + '/' + ((date.getMonth() + 1) < 10 ? '0' + date.getMonth() : date.getMonth()) + '/' + date.getFullYear();
+                    formatDate += ' ' + date.getHours() + '.' + date.getMinutes() + ' น.';
+                    payOrder = "" + (employeePay.pay * 100);
+
+                    for (var j = payOrder.length; j < 30; j++) {
+                        payOrder = "0" + payOrder;
+                    }
+
+                    tableworkpay.row.add({
+                        payNo: (i + 1),
+                        payTime: {
+                            display: formatDate,
+                            order: "" + date.getFullYear() + ((date.getMonth() + 1) < 10 ? '0' + date.getMonth() : date.getMonth()) + (date.getDate() < 10 ? '0' + date.getDate() : date.getDate()) + (date.getHours() < 10 ? "0" + date.getHours() : date.getHours()) + (date.getMinutes() < 10 ? "0" + date.getMinutes() : date.getMinutes()),
+                        },
+                        pay: {
+                            display: employeePay.pay.toFixed(2) + ' บาท',
+                            order: payOrder
+                        }
+                    });
                     sumpay -= employeePay.pay;
                 }
 
@@ -206,7 +309,8 @@
 
                 $("#sumpay").html(sumpay.toFixed(2));
             }
-        });
+        })
+        ;
     }
 
     $("#pay-form").submit(function () {
@@ -229,14 +333,13 @@
 //                    closeOnConfirm: false
 //                },
 //                function () {
-                    return true;
+            return true;
 //                });
         } else {
             alert('เงินที่ต้องการเบิกน้อยกว่าเงินที่เบิกได้ หรือใส่เงินที่ต้องการเบิกเป็น 0 หรือน้อยกว่า');
             return false;
         }
 
-        console.log(send_form);
     });
 </script>
 </html>

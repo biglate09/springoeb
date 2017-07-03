@@ -34,30 +34,30 @@
                                 <form class="form-horizontal" action="FilterWorkByDateServlet" method="POST"
                                       modelAttribute="workHistory">
                                     <p>
-                                        <a href="javascript:void(0)" data-toggle="modal" data-target="#addWorkHist"
+                                        <a data-toggle="modal" data-target="#addWorkHist"
                                            class="btn btn-success btn-sm"><i class="fa fa-plus-circle"></i>&nbsp;
                                             เพิ่มทำงาน</a>
-                                        <button type="submit" name="submit" value="del" href="javascript:void(0)"
+                                        <button type="submit" name="submit" value="del"
                                                 class="btn btn-danger btn-sm" disabled><i class="fa fa-trash"></i>&nbsp;
                                             ลบที่เลือก
                                         </button>
                                     </p>
                                     <%--<fieldset>--%>
-                                        <%--<div class="control-group show-grid">--%>
-                                            <%--<p id="text-before-calendar">เลือกวันที่ต้องการแสดง</p>--%>
-                                            <%--<div class="controls">--%>
-                                                <%--<div class="input-prepend input-group col-md-6 col-md-offset-4">--%>
-                                                                <%--<span class="add-on input-group-addon">--%>
-                                                                    <%--<i class="glyphicon glyphicon-calendar fa fa-calendar"></i>--%>
-                                                                <%--</span>--%>
-                                                    <%--<input type="text" name="date" id="reservation"--%>
-                                                           <%--class="form-control datepicker" value="${daterange}"/>--%>
-                                                    <%--<button type="submit" class="btn btn-default">--%>
-                                                        <%--<span class="glyphicon glyphicon-search"></span> ค้นหา--%>
-                                                    <%--</button>--%>
-                                                <%--</div>--%>
-                                            <%--</div>--%>
-                                        <%--</div>--%>
+                                    <%--<div class="control-group show-grid">--%>
+                                    <%--<p id="text-before-calendar">เลือกวันที่ต้องการแสดง</p>--%>
+                                    <%--<div class="controls">--%>
+                                    <%--<div class="input-prepend input-group col-md-6 col-md-offset-4">--%>
+                                    <%--<span class="add-on input-group-addon">--%>
+                                    <%--<i class="glyphicon glyphicon-calendar fa fa-calendar"></i>--%>
+                                    <%--</span>--%>
+                                    <%--<input type="text" name="date" id="reservation"--%>
+                                    <%--class="form-control datepicker" value="${daterange}"/>--%>
+                                    <%--<button type="submit" class="btn btn-default">--%>
+                                    <%--<span class="glyphicon glyphicon-search"></span> ค้นหา--%>
+                                    <%--</button>--%>
+                                    <%--</div>--%>
+                                    <%--</div>--%>
+                                    <%--</div>--%>
                                     <%--</fieldset>--%>
                                 </form>
                             </div>
@@ -77,52 +77,54 @@
                                 <tbody>
                                 <c:forEach items="${workHistories}" var="wh">
                                     <tr style="text-align:center;">
-                                        <td>
+                                        <fmt:formatDate pattern="yyyyMMdd" value="${wh.workDate}" var="timeorder"/>
+                                        <td data-order="${timeorder}">
                                             <fmt:formatDate pattern="dd/MM/yyyy" value="${wh.workDate}"/>
                                         </td>
                                         <td>
                                                 ${wh.employee.empName}
                                         </td>
-                                        <td>
+                                        <fmt:formatDate pattern="HHmm" value="${wh.workStart}" var="workStartOrder"/>
+                                        <td data-order="${workStartOrder}">
                                             <c:choose>
                                                 <c:when test="${wh.workStart != null}">
-                                                    <fmt:formatDate pattern="HH:mm" value="${wh.workStart}"/> น.
+                                                    <fmt:formatDate pattern="HH.mm" value="${wh.workStart}"/> น.
                                                 </c:when>
                                                 <c:otherwise>
                                                     -
                                                 </c:otherwise>
                                             </c:choose>
                                         </td>
-
-                                        <td>
+                                        <fmt:formatDate pattern="HHmm" value="${wh.workEnd}" var="workEndOrder"/>
+                                        <td data-order="${workEndOrder}">
                                             <c:choose>
                                                 <c:when test="${wh.workEnd != null}">
-                                                    <fmt:formatDate pattern="HH:mm" value="${wh.workEnd}"/> น.
+                                                    <fmt:formatDate pattern="HH.mm" value="${wh.workEnd}"/> น.
                                                 </c:when>
                                                 <c:otherwise>
                                                     -
                                                 </c:otherwise>
                                             </c:choose>
                                         </td>
-                                        <td>
-                                            <fmt:formatNumber type="number" pattern="#0"
-                                                              value="${Math.floor(wh.workHour)}"/>
-                                            ชั่วโมง
-                                            <fmt:formatNumber type="number" pattern="00"
-                                                              value="${(wh.workHour%1)*60}"/>
+                                        <td data-order="${wh.workHour}${wh.workMin}">
+                                            <c:if test="${wh.workHour > 0}">
+                                                <fmt:formatNumber type="number" pattern="#0" value="${wh.workHour}"/>
+                                                ชั่วโมง
+                                            </c:if>
+                                            <fmt:formatNumber type="number" pattern="#0" value="${wh.workMin}"/>
                                             นาที
                                         </td>
-                                        <td>
+                                        <td data-order="${wh.workPay}">
                                             <fmt:formatNumber type="number" pattern="#,###,###0.00"
-                                                              value="${wh.workPay}"/> ฿
+                                                              value="${wh.workPay}"/> บาท
                                         </td>
                                         <td>
                                             <a onclick="editEmp(${e.empNo})" class="btn btn-warning btn-sm"
-                                               href="javascript:void(0)" data-toggle="modal"
-                                               data-target="#editEmp"disabled=""><i class="fa fa-pencil"></i>&nbsp;
+                                               data-toggle="modal"
+                                               data-target="#editEmp" disabled=""><i class="fa fa-pencil"></i>&nbsp;
                                                 แก้ไข </a>
                                             <a href="${contextPath}/employee/deleteworkhistory/${wh.workHistNo}" )
-                                               class="btn btn-danger btn-sm" href="javascript:void(0)"><i
+                                               class="btn btn-danger btn-sm"><i
                                                     class="fa fa-trash"></i>&nbsp; ลบ</a>
                                         </td>
                                     </tr>
@@ -134,7 +136,7 @@
                 </div>
                 <!-- modal ADD WORK HIST -->
                 <div class="modal fade" id="addWorkHist" role="dialog">
-                    <div class="modal-dialog">
+                    <div class="modal-dialog modal-lg">
                         <!-- เนือหาของ Modal ทั้งหมด -->
                         <div class="modal-content">
                             <!-- ส่วนหัวของ Modal -->
@@ -142,38 +144,44 @@
                                 <!-- ปุ่มกดปิด (X) ตรงส่วนหัวของ Modal -->
                                 <button type="button" class="close" data-dismiss="modal">&times;</button>
                                 <h4 class="modal-title">เพิ่มประวัติการทำงาน</h4>
+                                <a class="btn btn-success btn-sm" id="addworkfieldbtn">
+                                    <i class="fa fa-plus-circle"></i>
+                                    &nbsp;เพิ่มรายการ
+                                </a>
                             </div>
                             <!-- ส่วนเนื้อหาของ Modal -->
                             <div class="modal-body">
                                 <form class="form-horizontal form-label-left input_mask"
                                       action="${contextPath}/employee/manageworkhistory" method="POST">
-                                    <div class="form-group">
-                                        <div class="col-md-6 col-sm-6 col-xs-12 form-group has-feedback">
-                                            <select name="empNo" class="form-control" required>
-                                                <c:forEach items="${employees}" var="e">
-                                                    <option value="${e.empNo}">${e.empName}</option>
-                                                </c:forEach>
-                                            </select>
-                                        </div>
-                                        <div class="col-md-6 col-sm-6 col-xs-12 form-group has-feedback"
+                                    <div class="form-group" id="addworkfield">
+                                        <div class="col-md-3 col-sm-3 col-xs-6 form-group has-feedback"
                                              style="text-align: center;">
-                                            <input type="date" id="workdate" class="form-control" name="workDate"
+                                            <input type="date" class="form-control workdate" name="workDate"
                                                    required>
                                             <span class="fa fa-calendar form-control-feedback right"
                                                   aria-hidden="true"></span>
                                         </div>
-                                        <div class="col-md-6 col-sm-6 col-xs-12 form-group has-feedback"
-                                             style="clear:both;">
-                                            <input type="number" class="form-control" min="0" step="1"
-                                                   placeholder="จำนวนชั่วโมง" name="workHour" required>
-                                            <span class="fa fa-hourglass form-control-feedback right"
-                                                  aria-hidden="true"></span>
-                                        </div>
-                                        <div class="col-md-6 col-sm-6 col-xs-12 form-group has-feedback">
-                                            <input type="number" class="form-control" min="0" step="1"
-                                                   placeholder="จำนวนนาที" name="workMinute" required>
-                                            <span class="fa fa-hourglass-end form-control-feedback right"
-                                                  aria-hidden="true"></span>
+                                        <div>
+                                            <div class="col-md-4 col-sm-4 col-xs-4 form-group has-feedback"
+                                                 style="clear:both;">
+                                                <select name="empNo" class="form-control" required>
+                                                    <c:forEach items="${employees}" var="e">
+                                                        <option value="${e.empNo}">${e.empName}</option>
+                                                    </c:forEach>
+                                                </select>
+                                            </div>
+                                            <div class="col-md-3 col-sm-3 col-xs-3 form-group has-feedback">
+                                                <input type="number" class="form-control" min="0" max="24" step="1"
+                                                       placeholder="ชั่วโมง" name="workHour" required>
+                                                <span class="fa fa-hourglass form-control-feedback right"
+                                                      aria-hidden="true"></span>
+                                            </div>
+                                            <div class="col-md-3 col-sm-3 col-xs-3 form-group has-feedback">
+                                                <input type="number" class="form-control" min="0" max="59" step="1"
+                                                       placeholder="นาที" name="workMin" required>
+                                                <span class="fa fa-hourglass-end form-control-feedback right"
+                                                      aria-hidden="true"></span>
+                                            </div>
                                         </div>
                                     </div>
                                     <div class="modal-footer">
@@ -207,14 +215,45 @@
         }
         var date = d.getDate();
         var dateformat = year + "-" + month + "-" + date;
-        $("#workdate").val(dateformat);
+        $(".workdate").val(dateformat);
 
         $("#datatable-work").DataTable({
-            "order" : [[0,"desc"]],
+            "order": [[0, "desc"]],
             "columnDefs": [
-                { orderable: false, targets: [-1] }
+                {orderable: false, targets: [-1]}
             ]
         });
+    });
+
+    var wrapper = $("#addworkfield");
+    var add_button = $("#addworkfieldbtn");
+    var work_field = '<div>' +
+        '<div class="col-md-4 col-sm-4 col-xs-4 form-group has-feedback" style="clear:both;">' +
+        '<select name="empNo" class="form-control" required>' +
+        <c:forEach items="${employees}" var="e">
+        '<option value="${e.empNo}">${e.empName}</option>' +
+        </c:forEach>
+        '</select>' +
+        '</div>' +
+        '<div class="col-md-3 col-sm-3 col-xs-3 form-group has-feedback">' +
+        '<input type="number" class="form-control" min="0" step="1" placeholder="ชั่วโมง" name="workHour" required>' +
+        '<span class="fa fa-hourglass form-control-feedback right" aria-hidden="true"></span>' +
+        '</div>' +
+        '<div class="col-md-3 col-sm-3 col-xs-3 form-group has-feedback">' +
+        '<input type="number" class="form-control" min="0" max="59" step="1" placeholder="นาที" name="workMin" required>' +
+        '<span class="fa fa-hourglass-end form-control-feedback right" aria-hidden="true"></span>' +
+        '</div>' +
+        '<div class="col-md-1 col-sm-1 col-xs-1">' +
+        '<a style="cursor:pointer" class="removeworkfieldbtn">remove</a>' +
+        '</div>' +
+        '</div>';
+    $(add_button).click(function () {
+        $(wrapper).append(work_field);
+        $('.workdate').val(dateformat);
+    });
+
+    $(wrapper).on("click", ".removeworkfieldbtn", function () {
+        $(this).parent('div').parent('div').remove();
     });
 </script>
 </body>

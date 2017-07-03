@@ -13,7 +13,11 @@ public class WorkHistoryService {
     public WorkHistoryRepository workHistoryRepository;
 
     public List<WorkHistory> findAll(int branchNo){
-        return workHistoryRepository.findByEmployee_BranchNoOrderByWorkDateDescWorkHistNoDesc(branchNo);
+        return workHistoryRepository.findByEmployee_BranchNoAndWorkPayIsNotNullOrderByWorkDateDescWorkHistNoDesc(branchNo);
+    }
+
+    public WorkHistory findByWorkHistNo(int workHistNo){
+        return workHistoryRepository.findByWorkHistNo(workHistNo);
     }
 
     public void removeByWorkHist(int workHistNo,int branchNo){
@@ -22,5 +26,9 @@ public class WorkHistoryService {
 
     public void save(WorkHistory workHistory){
         workHistoryRepository.save(workHistory);
+    }
+
+    public void save(Iterable<WorkHistory> iWorkHistories){
+        workHistoryRepository.save(iWorkHistories);
     }
 }

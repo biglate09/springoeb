@@ -73,7 +73,7 @@ function getMenuByMenuSet(menuSetNo, showType) {
                     var ms = json.menuset[i];
                     showsetdtb.row.add({
                         0: ms.menuNameTH + " / " + ms.menuNameEN,
-                        1: ms.menuPrice + " ฿",
+                        1: ms.menuPrice + " บาท",
                         2: ms.amount
                     });
                     fromPrice += ms.menuPrice * ms.amount;
