@@ -317,7 +317,7 @@
                             order: "" + (hour < 10 ? '0' + hour : hour) + (minute < 10 ? '0' + minute : minute)
                         },
                         workPay: {
-                            display: workHistory.workPay.toFixed(2) + ' บาท',
+                            display: workHistory.workPay.toFixed(2).replace(/\B(?=(\d{3})+(?!\d))/g, ",") + ' บาท',
                             order: workPayOrder
                         }
                     });
@@ -367,7 +367,7 @@
                             order: "" + date.getFullYear() + ((date.getMonth() + 1) < 10 ? '0' + (date.getMonth() + 1) : (date.getMonth() + 1)) + (date.getDate() < 10 ? '0' + date.getDate() : date.getDate()) + (date.getHours() < 10 ? "0" + date.getHours() : date.getHours()) + (date.getMinutes() < 10 ? "0" + date.getMinutes() : date.getMinutes()),
                         },
                         pay: {
-                            display: employeePay.pay.toFixed(2) + ' บาท',
+                            display: employeePay.pay.toFixed(2).replace(/\B(?=(\d{3})+(?!\d))/g, ",") + ' บาท',
                             order: payOrder
                         }
                     });
