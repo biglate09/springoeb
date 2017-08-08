@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Host: 127.0.0.1
--- Generation Time: Jun 28, 2017 at 03:49 PM
+-- Generation Time: Aug 08, 2017 at 02:19 PM
 -- Server version: 10.1.21-MariaDB
 -- PHP Version: 5.6.30
 
@@ -52,6 +52,8 @@ CREATE TABLE `employee` (
   `emp_type` varchar(30) NOT NULL,
   `pay_type` varchar(30) NOT NULL,
   `pay` double(8,2) NOT NULL,
+  `bg_color` varchar(50) NOT NULL,
+  `font_color` varchar(50) NOT NULL,
   `branch_no` int(8) NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8 ROW_FORMAT=COMPACT;
 
@@ -59,9 +61,17 @@ CREATE TABLE `employee` (
 -- Dumping data for table `employee`
 --
 
-INSERT INTO `employee` (`emp_no`, `emp_name`, `emp_tel`, `emp_gender`, `emp_type`, `pay_type`, `pay`, `branch_no`) VALUES
-(1, 'BigHEAD', '0813026159', 'M', '1', '1', 40.00, 1),
-(2, 'นิ้ง', '0933166336', 'F', '2', '2', 300.00, 1);
+INSERT INTO `employee` (`emp_no`, `emp_name`, `emp_tel`, `emp_gender`, `emp_type`, `pay_type`, `pay`, `bg_color`, `font_color`, `branch_no`) VALUES
+(3, 'บอยคุง', '0999999999', 'M', '3', '1', 39.00, '#b02e2e', '#ffffff', 1),
+(55, 'บอยจัง', '0813026159', 'M', '1', '2', 300.00, '', '', 1),
+(58, 'นนท์', '30', 'M', '1', '1', 123.00, '#000000', '#ffffff', 1),
+(59, 'นนท์งิ', '', 'M', '1', '2', 300.00, '#000000', '#ffffff', 1),
+(60, 'lol', '123', 'M', '1', '2', 30.00, '#00ff5a', '#000000', 1),
+(61, 'เหลืองแดง', '', 'M', '1', '1', 30.00, '#f1ff00', '#ff0000', 1),
+(62, 'น้อย', '', 'M', '1', '1', 30.00, '#ff0000', '#ffffff', 1),
+(63, 'เป้', '0851131980', 'M', '1', '1', 50.00, '#ff0000', '#30ff00', 1),
+(64, 'อินทร์', '', 'M', '1', '1', 1000.00, '#000000', '#ffffff', 1),
+(65, 'ewqrq', 'rq', 'M', '1', '1', 123.00, '#000000', '#ffffff', 1);
 
 -- --------------------------------------------------------
 
@@ -81,27 +91,22 @@ CREATE TABLE `employee_pay` (
 --
 
 INSERT INTO `employee_pay` (`emp_pay_no`, `pay`, `date`, `emp_no`) VALUES
-(3, 300.00, '2017-06-24 18:32:57', 1),
-(4, 10.00, '2017-06-24 18:38:54', 1),
-(5, 30.00, '2017-06-24 18:49:29', 1),
-(6, 110.00, '2017-06-24 18:50:40', 1),
-(7, 200.00, '2017-06-24 18:55:46', 1),
-(8, 30.00, '2017-06-24 20:12:32', 1),
-(9, 150.00, '2017-06-24 21:15:39', 1),
-(10, 10.00, '2017-06-24 21:16:02', 1),
-(11, 10.00, '2017-06-24 21:16:08', 1),
-(12, 10.00, '2017-06-24 21:16:12', 1),
-(13, 1.00, '2017-06-24 21:16:17', 1),
-(14, 1.00, '2017-06-24 21:16:22', 1),
-(15, 111.00, '2017-06-24 21:31:17', 1),
-(16, 199.00, '2017-06-24 21:48:34', 2),
-(17, 10.00, '2017-06-25 11:20:55', 2),
-(18, 200.00, '2017-06-25 11:21:34', 1),
-(19, 150.00, '2017-06-25 11:21:39', 1),
-(20, 50.00, '2017-06-25 11:23:02', 2),
-(21, 100.00, '2017-06-25 11:23:26', 2),
-(22, 500.00, '2017-06-25 11:46:51', 2),
-(23, 20.00, '2017-06-25 15:16:36', 2);
+(43, 200.00, '2017-07-06 14:44:23', 55),
+(44, 30.00, '2017-07-06 14:47:43', 3),
+(45, 100.00, '2017-07-06 14:48:54', 3),
+(47, 50.00, '2017-07-06 15:16:30', 55),
+(48, 40.00, '2017-07-06 15:25:17', 3),
+(50, 20.00, '2017-07-06 21:26:14', 55),
+(56, 100.00, '2017-07-10 13:10:23', 3),
+(57, 10.00, '2017-07-11 06:03:32', 3),
+(63, 199.75, '2017-07-13 14:41:21', 55),
+(65, 30.00, '2017-07-15 23:17:56', 3),
+(68, 50.00, '2017-07-15 23:38:30', 3),
+(69, 30.00, '2017-07-15 23:43:55', 55),
+(70, 30.00, '2017-07-16 01:40:11', 3),
+(73, 4000.00, '2017-07-16 17:12:35', 64),
+(74, 1500.00, '2017-07-16 17:13:18', 63),
+(75, 19000.00, '2017-07-16 17:21:04', 64);
 
 -- --------------------------------------------------------
 
@@ -111,15 +116,16 @@ INSERT INTO `employee_pay` (`emp_pay_no`, `pay`, `date`, `emp_no`) VALUES
 
 CREATE TABLE `employee_position` (
   `emp_pos_no` int(8) NOT NULL,
-  `emp_pos_name` varchar(100) NOT NULL
+  `emp_pos_name` varchar(100) NOT NULL,
+  `available` tinyint(1) DEFAULT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8 ROW_FORMAT=COMPACT;
 
 --
 -- Dumping data for table `employee_position`
 --
 
-INSERT INTO `employee_position` (`emp_pos_no`, `emp_pos_name`) VALUES
-(1, 'ตัวอย่าง');
+INSERT INTO `employee_position` (`emp_pos_no`, `emp_pos_name`, `available`) VALUES
+(22, 'เสิร์ฟอาหาร', 1);
 
 -- --------------------------------------------------------
 
@@ -132,9 +138,105 @@ CREATE TABLE `employee_table` (
   `date` date NOT NULL,
   `time_start` time NOT NULL,
   `time_end` time NOT NULL,
-  `emp_pos_no` int(8) NOT NULL,
+  `emp_pos_no` int(8) DEFAULT NULL,
   `emp_no` int(8) NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8;
+
+--
+-- Dumping data for table `employee_table`
+--
+
+INSERT INTO `employee_table` (`emp_time_no`, `date`, `time_start`, `time_end`, `emp_pos_no`, `emp_no`) VALUES
+(66, '2017-07-06', '00:00:00', '00:00:00', 22, 3),
+(68, '2017-07-06', '00:00:00', '00:00:00', 22, 55),
+(70, '2017-07-07', '13:00:00', '13:00:00', 22, 3),
+(71, '2017-07-07', '13:00:00', '13:00:00', 22, 55),
+(73, '2017-07-13', '13:00:00', '13:00:00', 22, 3),
+(74, '2017-07-13', '00:00:00', '00:00:00', 22, 55),
+(75, '2017-07-13', '00:00:00', '00:00:00', 22, 60),
+(76, '2017-07-15', '18:00:00', '18:00:00', 22, 61),
+(79, '2017-07-15', '18:00:00', '18:00:00', 22, 62),
+(80, '2017-07-17', '18:00:00', '18:00:00', 22, 63),
+(81, '2017-07-19', '13:00:00', '13:00:00', 22, 63),
+(82, '2017-07-22', '18:00:00', '18:00:00', 22, 63);
+
+-- --------------------------------------------------------
+
+--
+-- Table structure for table `menu`
+--
+
+CREATE TABLE `menu` (
+  `menu_no` int(8) NOT NULL,
+  `menu_name_th` varchar(256) NOT NULL,
+  `menu_name_en` varchar(256) NOT NULL,
+  `menu_desc` varchar(1000) DEFAULT NULL,
+  `menu_price` double(10,2) NOT NULL,
+  `menu_pic_path` varchar(512) DEFAULT NULL,
+  `available` tinyint(1) NOT NULL,
+  `menu_cat_no` int(8) NOT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=utf8;
+
+-- --------------------------------------------------------
+
+--
+-- Table structure for table `menu_category`
+--
+
+CREATE TABLE `menu_category` (
+  `menu_cat_no` int(8) NOT NULL,
+  `menu_cat_name_th` varchar(100) NOT NULL,
+  `menu_cat_name_en` varchar(100) NOT NULL,
+  `stock_cat_no` int(8) NOT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=utf8;
+
+-- --------------------------------------------------------
+
+--
+-- Table structure for table `menu_set`
+--
+
+CREATE TABLE `menu_set` (
+  `menu_set_no` int(8) NOT NULL,
+  `menu_set_name_th` varchar(256) NOT NULL,
+  `menu_set_name_en` varchar(256) NOT NULL,
+  `menu_set_desc` varchar(1000) NOT NULL,
+  `menu_set_price` double(10,2) NOT NULL,
+  `menu_set_pic_path` varchar(512) NOT NULL,
+  `available` tinyint(1) NOT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=utf8;
+
+-- --------------------------------------------------------
+
+--
+-- Table structure for table `menu_set_menu`
+--
+
+CREATE TABLE `menu_set_menu` (
+  `menu_set_no` int(8) NOT NULL,
+  `menu_no` int(8) NOT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=utf8;
+
+-- --------------------------------------------------------
+
+--
+-- Table structure for table `stock_category`
+--
+
+CREATE TABLE `stock_category` (
+  `stock_cat_no` int(8) NOT NULL,
+  `stock_cat_name_TH` varchar(100) NOT NULL,
+  `stock_car_name_EN` varchar(100) NOT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=utf8;
+
+--
+-- Dumping data for table `stock_category`
+--
+
+INSERT INTO `stock_category` (`stock_cat_no`, `stock_cat_name_TH`, `stock_car_name_EN`) VALUES
+(1, 'อาหาร', 'Food'),
+(2, 'ของหวาน', 'Dessert'),
+(3, 'เครื่องดื่ม', 'Beverage');
 
 -- --------------------------------------------------------
 
@@ -166,24 +268,31 @@ CREATE TABLE `work_history` (
   `work_start` time DEFAULT NULL,
   `work_end` time DEFAULT NULL,
   `work_pay` double(8,2) DEFAULT NULL,
-  `work_hour` double(8,2) DEFAULT NULL,
-  `emp_no` int(8) NOT NULL
+  `work_hour` int(11) DEFAULT NULL,
+  `work_min` int(8) DEFAULT NULL,
+  `emp_no` int(8) NOT NULL,
+  `emp_time_no` int(8) DEFAULT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8;
 
 --
 -- Dumping data for table `work_history`
 --
 
-INSERT INTO `work_history` (`work_hist_no`, `work_date`, `work_start`, `work_end`, `work_pay`, `work_hour`, `emp_no`) VALUES
-(1, '2017-06-24', NULL, NULL, 153.33, 3.83, 1),
-(2, '2017-06-23', NULL, NULL, 296.67, 7.42, 1),
-(3, '2017-06-22', NULL, NULL, 312.00, 7.80, 1),
-(4, '2017-06-24', NULL, NULL, 100.00, 2.50, 1),
-(5, '2017-06-24', NULL, NULL, 296.00, 7.40, 1),
-(6, '2017-06-24', NULL, NULL, 220.00, 5.50, 1),
-(7, '2017-06-24', NULL, NULL, 300.00, 2.50, 2),
-(8, '2017-06-25', NULL, NULL, 300.00, 3.50, 2),
-(9, '2017-06-25', NULL, NULL, 300.00, 3.50, 2);
+INSERT INTO `work_history` (`work_hist_no`, `work_date`, `work_start`, `work_end`, `work_pay`, `work_hour`, `work_min`, `emp_no`, `emp_time_no`) VALUES
+(72, '2017-07-06', NULL, NULL, 182.00, 4, 40, 3, NULL),
+(76, '2017-07-09', NULL, NULL, 117.00, 3, 0, 3, NULL),
+(81, '2017-07-11', NULL, NULL, 300.00, 5, 50, 55, NULL),
+(83, '2017-07-13', NULL, NULL, 182.00, 4, 40, 3, NULL),
+(84, '2017-07-13', NULL, NULL, 300.00, 3, 30, 55, NULL),
+(90, '2017-07-17', NULL, NULL, 900.00, 18, 0, 63, NULL),
+(91, '2017-07-19', NULL, NULL, 341.67, 6, 50, 63, NULL),
+(92, '2017-07-22', NULL, NULL, 850.00, 17, 0, 63, NULL),
+(93, '2017-07-16', NULL, NULL, 19.50, 0, 30, 3, NULL),
+(94, '2017-07-27', NULL, NULL, 897.00, 23, 0, 3, NULL),
+(95, '2017-07-27', NULL, NULL, 21000.00, 21, 0, 64, NULL),
+(96, '2017-07-23', NULL, NULL, 52.00, 1, 20, 3, NULL),
+(97, '2017-07-27', NULL, NULL, 910.00, 23, 20, 3, NULL),
+(98, '2017-07-23', NULL, NULL, 74.75, 1, 55, 3, NULL);
 
 --
 -- Indexes for dumped tables
@@ -227,6 +336,39 @@ ALTER TABLE `employee_table`
   ADD KEY `employee_table_ibfk_2` (`emp_pos_no`);
 
 --
+-- Indexes for table `menu`
+--
+ALTER TABLE `menu`
+  ADD PRIMARY KEY (`menu_no`),
+  ADD KEY `menu_cat_no` (`menu_cat_no`);
+
+--
+-- Indexes for table `menu_category`
+--
+ALTER TABLE `menu_category`
+  ADD PRIMARY KEY (`menu_cat_no`),
+  ADD KEY `stock_cat_no` (`stock_cat_no`);
+
+--
+-- Indexes for table `menu_set`
+--
+ALTER TABLE `menu_set`
+  ADD PRIMARY KEY (`menu_set_no`);
+
+--
+-- Indexes for table `menu_set_menu`
+--
+ALTER TABLE `menu_set_menu`
+  ADD PRIMARY KEY (`menu_set_no`,`menu_no`),
+  ADD KEY `menu_no` (`menu_no`);
+
+--
+-- Indexes for table `stock_category`
+--
+ALTER TABLE `stock_category`
+  ADD PRIMARY KEY (`stock_cat_no`);
+
+--
 -- Indexes for table `user`
 --
 ALTER TABLE `user`
@@ -237,7 +379,8 @@ ALTER TABLE `user`
 --
 ALTER TABLE `work_history`
   ADD PRIMARY KEY (`work_hist_no`),
-  ADD KEY `emp_no` (`emp_no`);
+  ADD KEY `emp_no` (`emp_no`),
+  ADD KEY `emp_time_no` (`emp_time_no`);
 
 --
 -- AUTO_INCREMENT for dumped tables
@@ -252,27 +395,47 @@ ALTER TABLE `branch`
 -- AUTO_INCREMENT for table `employee`
 --
 ALTER TABLE `employee`
-  MODIFY `emp_no` int(8) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=3;
+  MODIFY `emp_no` int(8) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=66;
 --
 -- AUTO_INCREMENT for table `employee_pay`
 --
 ALTER TABLE `employee_pay`
-  MODIFY `emp_pay_no` int(8) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=24;
+  MODIFY `emp_pay_no` int(8) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=76;
 --
 -- AUTO_INCREMENT for table `employee_position`
 --
 ALTER TABLE `employee_position`
-  MODIFY `emp_pos_no` int(8) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=2;
+  MODIFY `emp_pos_no` int(8) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=23;
 --
 -- AUTO_INCREMENT for table `employee_table`
 --
 ALTER TABLE `employee_table`
-  MODIFY `emp_time_no` int(8) NOT NULL AUTO_INCREMENT;
+  MODIFY `emp_time_no` int(8) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=83;
+--
+-- AUTO_INCREMENT for table `menu`
+--
+ALTER TABLE `menu`
+  MODIFY `menu_no` int(8) NOT NULL AUTO_INCREMENT;
+--
+-- AUTO_INCREMENT for table `menu_category`
+--
+ALTER TABLE `menu_category`
+  MODIFY `menu_cat_no` int(8) NOT NULL AUTO_INCREMENT;
+--
+-- AUTO_INCREMENT for table `menu_set`
+--
+ALTER TABLE `menu_set`
+  MODIFY `menu_set_no` int(8) NOT NULL AUTO_INCREMENT;
+--
+-- AUTO_INCREMENT for table `stock_category`
+--
+ALTER TABLE `stock_category`
+  MODIFY `stock_cat_no` int(8) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=4;
 --
 -- AUTO_INCREMENT for table `work_history`
 --
 ALTER TABLE `work_history`
-  MODIFY `work_hist_no` int(8) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=10;
+  MODIFY `work_hist_no` int(8) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=99;
 --
 -- Constraints for dumped tables
 --
@@ -303,10 +466,30 @@ ALTER TABLE `employee_table`
   ADD CONSTRAINT `employee_table_ibfk_2` FOREIGN KEY (`emp_pos_no`) REFERENCES `employee_position` (`emp_pos_no`) ON DELETE CASCADE ON UPDATE CASCADE;
 
 --
+-- Constraints for table `menu`
+--
+ALTER TABLE `menu`
+  ADD CONSTRAINT `menu_ibfk_1` FOREIGN KEY (`menu_cat_no`) REFERENCES `menu_category` (`menu_cat_no`) ON DELETE CASCADE ON UPDATE CASCADE;
+
+--
+-- Constraints for table `menu_category`
+--
+ALTER TABLE `menu_category`
+  ADD CONSTRAINT `menu_category_ibfk_1` FOREIGN KEY (`stock_cat_no`) REFERENCES `stock_category` (`stock_cat_no`) ON DELETE CASCADE ON UPDATE CASCADE;
+
+--
+-- Constraints for table `menu_set_menu`
+--
+ALTER TABLE `menu_set_menu`
+  ADD CONSTRAINT `menu_set_menu_ibfk_1` FOREIGN KEY (`menu_set_no`) REFERENCES `menu_set` (`menu_set_no`) ON DELETE CASCADE ON UPDATE CASCADE,
+  ADD CONSTRAINT `menu_set_menu_ibfk_2` FOREIGN KEY (`menu_no`) REFERENCES `menu` (`menu_no`) ON DELETE CASCADE ON UPDATE CASCADE;
+
+--
 -- Constraints for table `work_history`
 --
 ALTER TABLE `work_history`
-  ADD CONSTRAINT `work_history_ibfk_1` FOREIGN KEY (`emp_no`) REFERENCES `employee` (`emp_no`) ON DELETE CASCADE ON UPDATE CASCADE;
+  ADD CONSTRAINT `work_history_ibfk_1` FOREIGN KEY (`emp_no`) REFERENCES `employee` (`emp_no`) ON DELETE CASCADE ON UPDATE CASCADE,
+  ADD CONSTRAINT `work_history_ibfk_2` FOREIGN KEY (`emp_time_no`) REFERENCES `employee_table` (`emp_time_no`) ON DELETE SET NULL ON UPDATE SET NULL;
 
 /*!40101 SET CHARACTER_SET_CLIENT=@OLD_CHARACTER_SET_CLIENT */;
 /*!40101 SET CHARACTER_SET_RESULTS=@OLD_CHARACTER_SET_RESULTS */;
