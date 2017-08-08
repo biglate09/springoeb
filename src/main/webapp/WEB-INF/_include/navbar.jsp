@@ -13,11 +13,11 @@
         <!-- menu profile quick info -->
         <div class="profile clearfix">
             <div class="profile_pic">
-                <img src="${contextPath}/images/img.jpg" alt="..." class="img-circle profile_img">
+                <img src="${contextPath}/images/img.png" alt="..." class="img-circle profile_img">
             </div>
             <div class="profile_info">
                 <span>ยินดีต้อนรับ,</span>
-                <h2>${restowner.restUserName}</h2>
+                <h2>${username}</h2>
             </div>
         </div>
         <!-- /menu profile quick info -->
@@ -34,25 +34,26 @@
                             <li><a id="emptable" href="${contextPath}/employee/table">ตารางการทำงาน</a></li>
                             <li><a id="workhist" href="${contextPath}/employee/workhistory">ประวัติการทำงาน</a></li>
                             <li><a id="emppaid" href="${contextPath}/employee/pay">จ่ายเงินพนักงาน</a></li>
-                            <li><a id="empcheck" href="${contextPath}/employee/check">เช็คชื่อพนักงาน</a></li>
+                            <%--<li><a id="empcheck" href="${contextPath}/employee/check">เช็คชื่อพนักงาน</a></li>--%>
+                        </ul>
+                    </li>
+                    <li>
+                        <a id="menutab"><i class="fa fa-cutlery"></i> จัดการเมนูอาหาร <span
+                                class="fa fa-chevron-down"></span></a>
+                        <ul class="nav child_menu">
+                            <li><a id="menu" href="${contextPath}/menu/menu">เมนูอาหารแบบเดี่ยว</a></li>
+                            <li><a id="menuset" href="${contextPath}/menu/menuset">เมนูอาหารแบบชุด</a></li>
+                            <li><a id="menucategory" href="${contextPath}/menu/menucategory">ประเภทเมนูอาหาร</a></li>
+                            <%--<li><a id="menucust" href="ToMenuCustServlet">ปรับแต่งเมนูอาหาร</a></li>--%>
                         </ul>
                     </li>
                     <%--<li>--%>
-                    <%--<a id="menutab"><i class="fa fa-cutlery"></i> จัดการเมนูอาหาร <span class="fa fa-chevron-down"></span></a>--%>
-                    <%--<ul class="nav child_menu">--%>
-                    <%--<li><a id="menu" href="ToMenuServlet">เมนูอาหารแบบเดี่ยว</a></li>--%>
-                    <%--<li><a id="menuset" href="ToMenuSetServlet">เมนูอาหารแบบชุด</a></li>--%>
-                    <%--<li><a id="menutype" href="ToMenuTypeServlet">ประเภทเมนูอาหาร</a></li>--%>
-                    <%--<li><a id="menucust" href="ToMenuCustServlet">ปรับแต่งเมนูอาหาร</a></li>--%>
-                    <%--</ul>--%>
-                    <%--</li>--%>
-                    <%--<li>--%>
-                    <%--<a><i class="fa fa-spoon"></i> จัดการวัตถุดิบอาหาร <span class="fa fa-chevron-down"></span></a>--%>
-                    <%--<ul class="nav child_menu">--%>
-                    <%--<li><a href="ToMaterialServlet">ข้อมูลวัตถุดิบ</a></li>--%>
-                    <%--<li><a href="ToMaterialTypeServlet">ประเภทวัตถุดิบ</a></li>--%>
-                    <%--<!--<li><a href="ToMaterialStock">สต็อกวัตถุดิบ</a></li>-->--%>
-                    <%--</ul>--%>
+                        <%--<a><i class="fa fa-spoon"></i> จัดการวัตถุดิบอาหาร <span class="fa fa-chevron-down"></span></a>--%>
+                        <%--<ul class="nav child_menu">--%>
+                            <%--<li><a href="ToMaterialServlet">ข้อมูลวัตถุดิบ</a></li>--%>
+                            <%--<li><a href="ToMaterialTypeServlet">ประเภทวัตถุดิบ</a></li>--%>
+                            <%--<!--<li><a href="ToMaterialStock">สต็อกวัตถุดิบ</a></li>-->--%>
+                        <%--</ul>--%>
                     <%--</li>--%>
                 </ul>
             </div>
@@ -82,7 +83,7 @@
                 <li class="">
                     <a href="javascript:;" class="user-profile dropdown-toggle" data-toggle="dropdown"
                        aria-expanded="false">
-                        <img src="${contextPath}/images/img.jpg" alt="">${restowner.restUserName}
+                        <img src="${contextPath}/images/img.png" alt=""> ${username}
                         <span class=" fa fa-angle-down"></span>
                     </a>
                     <ul class="dropdown-menu dropdown-usermenu pull-right">

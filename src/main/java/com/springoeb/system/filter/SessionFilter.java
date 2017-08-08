@@ -1,19 +1,13 @@
-package com.springoeb.filter;
+package com.springoeb.system.filter;
 
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 
 import javax.servlet.*;
 import javax.servlet.annotation.WebFilter;
-import javax.servlet.http.Cookie;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 import java.io.IOException;
-import java.util.Arrays;
-import java.util.Collections;
-import java.util.HashSet;
-import java.util.Set;
 
 @WebFilter(urlPatterns = "/*")
 @Component("SessionFilter")
@@ -31,6 +25,7 @@ public class SessionFilter implements Filter {
         HttpServletResponse response = (HttpServletResponse)servletResponse;
         HttpSession hs = request.getSession();
         hs.setAttribute("branchno",1);
+        hs.setAttribute("username","Kopihub");
         filterChain.doFilter(request,response);
     }
 

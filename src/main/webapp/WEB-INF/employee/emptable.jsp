@@ -13,23 +13,23 @@
     <title>ตารางการทำงาน</title>
 
     <!-- Bootstrap -->
-    <link href="../vendors/bootstrap/dist/css/bootstrap.min.css" rel="stylesheet">
+    <link href="${contextPath}/vendors/bootstrap/dist/css/bootstrap.min.css" rel="stylesheet">
     <!-- Font Awesome -->
-    <link href="../vendors/font-awesome/css/font-awesome.min.css" rel="stylesheet">
+    <link href="${contextPath}/vendors/font-awesome/css/font-awesome.min.css" rel="stylesheet">
     <!-- NProgress -->
-    <link href="../vendors/nprogress/nprogress.css" rel="stylesheet">
+    <link href="${contextPath}/vendors/nprogress/nprogress.css" rel="stylesheet">
     <!-- FullCalendar -->
-    <link href="../vendors/fullcalendar/dist/fullcalendar.css" rel="stylesheet">
-    <link href="../vendors/fullcalendar/dist/fullcalendar.print.css" rel="stylesheet" media="print">
+    <link href="${contextPath}/vendors/fullcalendar/dist/fullcalendar.css" rel="stylesheet">
+    <link href="${contextPath}/vendors/fullcalendar/dist/fullcalendar.print.css" rel="stylesheet" media="print">
 
     <!-- Custom styling plus plugins -->
-    <link href="../build/css/custom.min.css" rel="stylesheet">
+    <link href="${contextPath}/build/css/custom.min.css" rel="stylesheet">
 </head>
 
 <body class="nav-md">
 <div class="container body">
     <div class="main_container">
-        <jsp:include page="include/navbar.jsp"/>
+        <jsp:include page="../_include/navbar.jsp"/>
     </div>
 
     <!-- page content -->
@@ -66,47 +66,43 @@
 <!-- calendar modal -->
 <div id="CalenderModalNew" class="modal fade" tabindex="-1" role="dialog" aria-labelledby="myModalLabel"
      aria-hidden="true">
-    <div class="modal-dialog modal-lg">
+    <div class="modal-dialog">
         <div class="modal-content">
             <div class="modal-header">
                 <button type="button" class="close" data-dismiss="modal" aria-hidden="true">×</button>
                 <h4 class="modal-title" id="myModalLabel">เพิ่มตารางการทำงานของวันที่ <span id="modal_date"></span></h4>
-                <a class="btn btn-success btn-sm" id="addworkfieldbtn">
-                    <i class="fa fa-plus-circle"></i>
-                    &nbsp;เพิ่มรายการ
-                </a>
             </div>
             <div class="modal-body">
-                <form class="form-horizontal form-label-left input_mask"
-                      action="${contextPath}/employee/managetable" method="POST">
+                <form class="form-horizontal form-label-left input_mask" id="table_add" action="${contextPath}/employee/managetable">
                     <input type="hidden" id="hiddendate_1" name="date">
                     <div class="form-group" id="addworkfield">
-                        <div>
-                            <div class="col-md-3 col-sm-3 col-xs-3 form-group has-feedback" style="width:23%">
+                        <div class="col-md-12" style="margin-bottom:2vh;">
+                            <a class="btn btn-success btn-sm" id="addworkfieldbtn">
+                                <i class="fa fa-plus-circle"></i>
+                                &nbsp;เพิ่มรายการ
+                            </a>
+                        </div>
+                        <div style="clear:both">
+                            <div class="col-md-4 col-sm-3 col-xs-3 form-group has-feedback">
                                 <select name="empNo" class="form-control" required>
                                     <c:forEach items="${employees}" var="e">
                                         <option value="${e.empNo}">${e.empName}</option>
                                     </c:forEach>
                                 </select>
                             </div>
-                            <div class="col-md-3 col-sm-3 col-xs-3 form-group has-feedback" style="width:23%">
+                            <div class="col-md-4 col-sm-3 col-xs-3 form-group has-feedback">
                                 <select name="empPosNo" class="form-control" required>
                                     <c:forEach items="${employeePositions}" var="ep">
                                         <option value="${ep.empPosNo}">${ep.empPosName}</option>
                                     </c:forEach>
                                 </select>
                             </div>
-                            <div class="col-md-3 col-sm-3 col-xs-3 form-group has-feedback" style="width:20%">
-                                <input type="time" class="form-control" placeholder="เวลาเริ่มงาน" name="timeStart"
-                                       required>
-                                <span class="fa fa-hourglass form-control-feedback right"
-                                      aria-hidden="true"></span>
-                            </div>
-                            <div class="col-md-3 col-sm-3 col-xs-3 form-group has-feedback" style="width:20%">
-                                <input type="time" class="form-control"
-                                       placeholder="เวลาสิ้นสุดงาน" name="timeEnd" required>
-                                <span class="fa fa-hourglass-end form-control-feedback right"
-                                      aria-hidden="true"></span>
+                            <div class="btn-group col-md-3" data-toggle="buttons">
+                                <select name="workTime" class="form-control" required>
+                                    <option value="00:00:00">เช้า</option>
+                                    <option value="13:00:00">บ่าย</option>
+                                    <option value="18:00:00">ทั้งวัน</option>
+                                </select>
                             </div>
                         </div>
                     </div>
@@ -138,32 +134,26 @@
                     <input type="hidden" name="empTimeNo" id="hidden_empTimeNo_edit">
                     <input type="hidden" name="date" id="hidden_date_edit">
                     <div class="form-group" style="padding: 5px 20px;">
-                        <div class="col-md-6 form-group has-feedback">
+                        <div class="col-md-4 col-sm-3 col-xs-3 form-group has-feedback">
                             <select name="empNo" class="form-control" id="empNo_edit" required>
                                 <c:forEach items="${employees}" var="e">
                                     <option value="${e.empNo}">${e.empName}</option>
                                 </c:forEach>
                             </select>
                         </div>
-                        <div class="col-md-6 form-group has-feedback">
+                        <div class="col-md-4 col-sm-3 col-xs-3 form-group has-feedback">
                             <select name="empPosNo" class="form-control" id="empPosNo_edit" required>
                                 <c:forEach items="${employeePositions}" var="ep">
                                     <option value="${ep.empPosNo}">${ep.empPosName}</option>
                                 </c:forEach>
                             </select>
                         </div>
-                        <div class="col-md-6 form-group has-feedback">
-                            <input type="time" class="form-control" placeholder="เวลาเริ่มงาน" name="timeStart"
-                                   id="timeStart_edit"
-                                   required>
-                            <span class="fa fa-hourglass form-control-feedback right"
-                                  aria-hidden="true"></span>
-                        </div>
-                        <div class="col-md-6 form-group has-feedback">
-                            <input type="time" class="form-control"
-                                   placeholder="เวลาสิ้นสุดงาน" name="timeEnd" id="timeEnd_edit" required>
-                            <span class="fa fa-hourglass-end form-control-feedback right"
-                                  aria-hidden="true"></span>
+                        <div class="btn-group col-md-3" data-toggle="buttons">
+                            <select name="workTime" class="form-control" id="time_edit" required>
+                                <option value="00:00:00">เช้า</option>
+                                <option value="13:00:00">บ่าย</option>
+                                <option value="18:00:00">ทั้งวัน</option>
+                            </select>
                         </div>
                     </div>
                     <div class="modal-footer">
@@ -184,22 +174,23 @@
 <!-- /calendar modal -->
 
 <!-- jQuery -->
-<script src="../vendors/jquery/dist/jquery.min.js"></script>
+<script src="${contextPath}/vendors/jquery/dist/jquery.min.js"></script>
 <!-- Bootstrap -->
-<script src="../vendors/bootstrap/dist/js/bootstrap.min.js"></script>
+<script src="${contextPath}/vendors/bootstrap/dist/js/bootstrap.min.js"></script>
 <!-- FastClick -->
-<script src="../vendors/fastclick/lib/fastclick.js"></script>
+<script src="${contextPath}/vendors/fastclick/lib/fastclick.js"></script>
 <!-- NProgress -->
-<script src="../vendors/nprogress/nprogress.js"></script>
+<script src="${contextPath}/vendors/nprogress/nprogress.js"></script>
 <!-- FullCalendar -->
-<script src="../vendors/moment/min/moment.min.js"></script>
-<script src="../vendors/fullcalendar/dist/fullcalendar.js"></script>
+<script src="${contextPath}/vendors/moment/min/moment.min.js"></script>
+<script src="${contextPath}/vendors/fullcalendar/dist/fullcalendar.js"></script>
 
 <!-- Custom Theme Scripts -->
-<script src="../build/js/custom.js"></script>
+<script src="${contextPath}/build/js/custom.js"></script>
 
 </body>
 <script>
+
     var events = [];
     <c:forEach items="${employeeTables}" var="et">
     var workDate = new Date('${et.date}');
@@ -214,13 +205,16 @@
     var em = timeend.substring(3, 5);
     var empposname = '${et.employeePosition.empPosName}';
     var e = {
-        title: '${et.employee.empName}' + ' (' + empposname + ')',
+        title: (sh < 13 ? '[เช้า] ' : sh < 18 ? '[บ่าย] ' : '[ทั้งวัน] ') + ' ... ' + '${et.employee.empName}' + ' (' + empposname + ')',
         start: new Date(y, m, d, sh, sm),
         end: new Date(y, m, d, eh, em),
         empNo: ${et.employee.empNo},
         empPosNo: ${et.employeePosition.empPosNo},
-        empTimeNo: ${et.empTimeNo}
+        empTimeNo: ${et.empTimeNo},
+        textColor: '${et.employee.fontColor}',
+        color: '${et.employee.bgColor}'
     };
+
     events.push(e);
     </c:forEach>
 
@@ -240,13 +234,14 @@
             categoryClass;
 
         var calendar = $('#employee-calendar').fullCalendar({
-            timeFormat: 'HH.mm น.',
+            timeFormat: ' ',
             header: {
                 left: 'prev,next today',
                 center: 'title',
                 // right: 'month,agendaWeek,agendaDay,listMonth'
-                right: 'month,listMonth'
+                right: 'month'
             },
+            firstDay : 1,
             selectable: true,
             selectHelper: true,
             select: function (start, end, allDay) {
@@ -300,58 +295,17 @@
                 java_date = date_y + "-" + date_m + "-" + date_d;
                 $("#modal_date").html(format_date);
                 $("#hiddendate_1").val(java_date);
-
-
-//                started = start;
-//                ended = end;
-//
-//                $(".antosubmit").on("click", function () {
-//                    var title = $("#title").val();
-//                    if (end) {
-//                        ended = end;
-//                    }
-//
-//                    categoryClass = $("#event_type").val();
-//
-//                    if (title) {
-//                        calendar.fullCalendar('renderEvent', {
-//                                title: title,
-//                                start: started,
-//                                end: end,
-//                                allDay: allDay
-//                            },
-//                            true // make the event "stick"
-//                        );
-//                    }
-//
-//                    $('#title').val('');
-//
-//                    calendar.fullCalendar('unselect');
-//
-//                    $('.antoclose').click();
-//
-//                    return false;
-//                });
             },
             eventClick: function (calEvent, jsEvent, view) {
                 $('#fc_edit').click();
                 $('#title2').val(calEvent.title);
-
                 $("#empNo_edit").val(calEvent.empNo);
                 $("#empPosNo_edit").val(calEvent.empPosNo);
-                $("#timeStart_edit").val((calEvent.start._d.getHours() < 10 ? "0" + calEvent.start._d.getHours() : calEvent.start._d.getHours()) + ":" + (calEvent.start._d.getMinutes() < 10 ? "0" + calEvent.start._d.getMinutes() : calEvent.start._d.getMinutes()));
-                $("#timeEnd_edit").val((calEvent.end._d.getHours() < 10 ? "0" + calEvent.end._d.getHours() : calEvent.end._d.getHours()) + ":" + (calEvent.end._d.getMinutes() < 10 ? "0" + calEvent.end._d.getMinutes() : calEvent.end._d.getMinutes()));
+                $("#time_edit").val(calEvent.start._d.getHours() < 13 ? '00:00:00' : '13:00:00');
                 $("#hidden_empTimeNo_edit").val(calEvent.empTimeNo);
                 $("#hidden_date_edit").val(calEvent.start._d.getFullYear() + "-" + (calEvent.start._d.getMonth() + 1) + "-" + calEvent.start._d.getDate());
-                $("#del_link").attr('href','${contextPath}/employee/deletetable/'+calEvent.empTimeNo);
+                $("#del_link").attr('href', '${contextPath}/employee/deletetable/' + calEvent.empTimeNo);
                 categoryClass = $("#event_type").val();
-
-//                $(".antosubmit2").on("click", function () {
-//                    calEvent.title = $("#title2").val();
-//
-//                    calendar.fullCalendar('updateEvent', calEvent);
-//                    $('.antoclose2').click();
-//                });
                 calendar.fullCalendar('unselect');
             },
             editable: false,
@@ -361,31 +315,30 @@
 
     var wrapper = $("#addworkfield");
     var add_button = $("#addworkfieldbtn");
-    var work_field = '<div>' +
-        '<div class="col-md-3 col-sm-3 col-xs-3 form-group has-feedback" style="width:23%;">' +
+    var work_field = '<div style="clear:both;" class="removable_div">' +
+        '<div class="col-md-4 col-sm-3 col-xs-3 form-group has-feedback">' +
         '<select name="empNo" class="form-control" required>' +
         <c:forEach items="${employees}" var="e">
         '<option value="${e.empNo}">${e.empName}</option>' +
         </c:forEach>
         '</select>' +
         '</div>' +
-        '<div class="col-md-3 col-sm-3 col-xs-3 form-group has-feedback" style="width:23%;">' +
+        '<div class="col-md-4 col-sm-3 col-xs-3 form-group has-feedback">' +
         '<select name="empPosNo" class="form-control" required>' +
         <c:forEach items="${employeePositions}" var="ep">
         '<option value="${ep.empPosNo}">${ep.empPosName}</option>' +
         </c:forEach>
         '</select>' +
         '</div>' +
-        '<div class="col-md-3 col-sm-3 col-xs-3 form-group has-feedback" style="width:20%">' +
-        '<input type="time" class="form-control" placeholder="เวลาเริ่มงาน" name="timeStart" required>' +
-        '<span class="fa fa-hourglass form-control-feedback right" aria-hidden="true"></span>' +
-        '</div>' +
-        '<div class="col-md-3 col-sm-3 col-xs-3 form-group has-feedback" style="width:20%">' +
-        '<input type="time" class="form-control" placeholder="เวลาสิ้นสุดงาน" name="timeEnd" required>' +
-        '<span class="fa fa-hourglass-end form-control-feedback right" aria-hidden="true"></span>' +
+        '<div class="btn-group col-md-3" data-toggle="buttons">' +
+        '<select name="workTime" class="form-control" required>' +
+        '<option value="00:00:00">เช้า</option>' +
+        '<option value="13:00:00">บ่าย</option>' +
+        '<option value="18:00:00">ทั้งวัน</option>' +
+        '</select>' +
         '</div>' +
         '<div class="col-md-1 col-sm-1 col-xs-1">' +
-        '<a style="cursor:pointer" class="removeworkfieldbtn">remove</a>' +
+        '<a style="cursor:pointer" class="removeworkfieldbtn"><i class="fa fa-trash"></i></a>' +
         '</div>' +
         '</div>';
 

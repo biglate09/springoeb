@@ -12,15 +12,15 @@ import java.sql.Time;
 public class EmployeeTable implements Serializable{
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)
-    private int empTimeNo;
+    private Integer empTimeNo;
     private Date date;
     private Time timeStart;
     private Time timeEnd;
 
     @Column(name = "emp_pos_no",updatable = true,insertable = true)
-    private int empPosNo;
+    private Integer empPosNo;
     @Column(name = "emp_no",updatable = true,insertable = true)
-    private int empNo;
+    private Integer empNo;
     @ManyToOne
     @JoinColumn(name = "emp_pos_no",updatable = false,insertable = false)
     private EmployeePosition employeePosition;
@@ -32,11 +32,11 @@ public class EmployeeTable implements Serializable{
     @OneToOne(fetch = FetchType.LAZY, mappedBy = "employeeTable")
     private WorkHistory workHistory;
 
-    public int getEmpTimeNo() {
+    public Integer getEmpTimeNo() {
         return empTimeNo;
     }
 
-    public void setEmpTimeNo(int empTimeNo) {
+    public void setEmpTimeNo(Integer empTimeNo) {
         this.empTimeNo = empTimeNo;
     }
 
@@ -64,19 +64,19 @@ public class EmployeeTable implements Serializable{
         this.timeEnd = timeEnd;
     }
 
-    public int getEmpPosNo() {
+    public Integer getEmpPosNo() {
         return empPosNo;
     }
 
-    public void setEmpPosNo(int empPosNo) {
+    public void setEmpPosNo(Integer empPosNo) {
         this.empPosNo = empPosNo;
     }
 
-    public int getEmpNo() {
+    public Integer getEmpNo() {
         return empNo;
     }
 
-    public void setEmpNo(int empNo) {
+    public void setEmpNo(Integer empNo) {
         this.empNo = empNo;
     }
 

@@ -1,25 +1,26 @@
 package com.springoeb.employee.model;
 
-import javax.persistence.Entity;
-import javax.persistence.FetchType;
-import javax.persistence.Id;
-import javax.persistence.OneToMany;
+import javax.persistence.*;
+import java.io.Serializable;
 import java.util.List;
 
 /**
  * Created by bighead on 6/9/17.
  */
 @Entity
-public class Employee {
+public class Employee implements Serializable{
     @Id
-    private int empNo;
+    @GeneratedValue(strategy = GenerationType.AUTO)
+    private Integer empNo;
     private String empName;
     private String empTel;
     private String empType; // Full-time,Part-time,Training
     private String payType; // วัน,ชั่วโมง
     private double pay;
     private String empGender;
-    private int branchNo;
+    private String bgColor;
+    private String fontColor;
+    private Integer branchNo;
     @OneToMany(fetch = FetchType.LAZY, mappedBy = "employee")
     private List<EmployeePay> employeePays;
     @OneToMany(fetch = FetchType.LAZY, mappedBy = "employee")
@@ -33,11 +34,11 @@ public class Employee {
     public static String MALE = "M";
     public static String FEMALE = "F";
 
-    public int getEmpNo() {
+    public Integer getEmpNo() {
         return empNo;
     }
 
-    public void setEmpNo(int empNo) {
+    public void setEmpNo(Integer empNo) {
         this.empNo = empNo;
     }
 
@@ -89,11 +90,27 @@ public class Employee {
         this.empGender = empGender;
     }
 
-    public int getBranchNo() {
+    public String getBgColor() {
+        return bgColor;
+    }
+
+    public void setBgColor(String bgColor) {
+        this.bgColor = bgColor;
+    }
+
+    public String getFontColor() {
+        return fontColor;
+    }
+
+    public void setFontColor(String fontColor) {
+        this.fontColor = fontColor;
+    }
+
+    public Integer getBranchNo() {
         return branchNo;
     }
 
-    public void setBranchNo(int branchNo) {
+    public void setBranchNo(Integer branchNo) {
         this.branchNo = branchNo;
     }
 

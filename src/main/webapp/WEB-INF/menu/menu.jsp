@@ -1,18 +1,17 @@
 <%@ taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt" %>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
-<%@ page import="com.springoeb.employee.model.Employee" %>
 <%@ page contentType="text/html" pageEncoding="UTF-8" %>
-<c:set var="contextPath" value="${pageContext.request.contextPath}" />
+<c:set var="contextPath" value="${pageContext.request.contextPath}"/>
 <!DOCTYPE html>
 <html>
 <head>
-    <jsp:include page="include/topenv.jsp"/>
+    <jsp:include page="../_include/topenv.jsp"/>
     <title>ข้อมูลพนักงาน</title>
 </head>
 <body class="nav-md">
 <div class="container body">
     <div class="main_container">
-        <jsp:include page="include/navbar.jsp"/>
+        <jsp:include page="../_include/navbar.jsp"/>
         <!-- page content -->
         <div class="right_col" role="main">
             <div class="page-title">
@@ -31,20 +30,20 @@
                         <div class="x_content">
                             <form action="#">
                                 <p>
-                                    <a href="javascript:void(0)" data-toggle="modal" data-target="#addEmp"
+                                    <a data-toggle="modal" data-target="#addEmp"
                                        class="btn btn-success btn-sm"><i class="fa fa-plus-circle"></i>&nbsp;
                                         เพิ่มพนักงาน</a>
-                                    <button type="submit" name="submit" value="del" href="javascript:void(0)"
-                                            class="btn btn-danger btn-sm" disabled><i class="fa fa-trash"></i>&nbsp;
-                                        ลบที่เลือก
-                                    </button>
+                                    <%--<button type="submit" name="submit" value="del"--%>
+                                            <%--class="btn btn-danger btn-sm" disabled><i class="fa fa-trash"></i>&nbsp;--%>
+                                        <%--ลบที่เลือก--%>
+                                    <%--</button>--%>
                                 </p>
                                 <table id="datatable-employee"
                                        class="table table-striped table-bordered bulk_action1">
                                     <thead>
                                     <tr>
                                         <%--<th><input title="checkall" type="checkbox" class="flat" id="check-all-1"--%>
-                                                   <%--disabled></th>--%>
+                                        <%--disabled></th>--%>
                                         <th style="width:20%;text-align:center;">ชื่อ</th>
                                         <th style="width:20%;text-align:center;">ประเภท</th>
                                         <th style="width:20%;text-align:center;">ประเภทการจ้าง</th>
@@ -52,38 +51,35 @@
                                         <th style="width:20%;text-align:center;">ตัวเลือก</th>
                                     </tr>
                                     </thead>
-                                    <tbody>
-                                    <c:forEach items="${employees}" var="e" varStatus="vs">
-                                    <tr id="tr${e.empNo}" style="text-align:center;">
-                                        <%--<td>--%>
-                                            <%--<input type="checkbox" name="tabdle_records" value="${e.empNo}" class="flat"--%>
-                                                   <%--disabled>--%>
-                                        <%--</td>--%>
-                                        <td>
-                                            <a href="javascript:void(0)" onclick="editEmp(${e.empNo})"
-                                               data-toggle="modal"
-                                               data-target="#editEmp" style="font-weight: bold;">${e.empName}</a>
-                                        </td>
-                                        <td>
-                                                ${e.empType == Employee.FULL_TIME ? 'Full-Time' : e.empType == Employee.PART_TIME ? 'Part-Time' : 'Training'}
-                                        </td>
-                                        <td>
-                                            ราย${e.payType == Employee.HOUR ? 'ชั่วโมง' : 'วัน'}
-                                        </td>
-                                        <td data-order="${e.payType==Employee.HOUR?e.pay*8:e.pay}">
-                                            <fmt:formatNumber value="${e.pay}" pattern="#,###,##0.00"/> บาท
-                                            / ${e.payType == Employee.HOUR ? 'ชั่วโมง' : 'วัน'}
-                                        </td>
-                                        <td>
-                                            <a onclick="editEmp(${e.empNo})" class="btn btn-warning btn-sm"
-                                               href="javascript:void(0)" data-toggle="modal"
-                                               data-target="#editEmp"><i class="fa fa-pencil"></i>&nbsp;
-                                                แก้ไข </a>
-                                            <a href="${contextPath}/employee/deleteemployee/${e.empNo}" )
-                                               class="btn btn-danger btn-sm" href="javascript:void(0)"><i
-                                                    class="fa fa-trash"></i>&nbsp; ลบ</a>
-                                        </td>
-                                        </c:forEach>
+                                    <tbody style="text-align:center;">
+                                    <%--<c:forEach items="${employees}" var="e" varStatus="vs">--%>
+                                        <%--<tr>--%>
+                                            <%--<td>--%>
+                                                <%--<b style="cursor:pointer" onclick="editEmp(${e.empNo})"--%>
+                                                   <%--data-toggle="modal"--%>
+                                                   <%--data-target="#editEmp" style="font-weight: bold;">${e.empName}</b>--%>
+                                            <%--</td>--%>
+                                            <%--<td>--%>
+                                                    <%--${e.empType == Employee.FULL_TIME ? 'Full-Time' : e.empType == Employee.PART_TIME ? 'Part-Time' : 'Training'}--%>
+                                            <%--</td>--%>
+                                            <%--<td>--%>
+                                                <%--ราย${e.payType == Employee.HOUR ? 'ชั่วโมง' : 'วัน'}--%>
+                                            <%--</td>--%>
+                                            <%--<td data-order="<fmt:formatNumber value="20" pattern="0000000000000"/>">--%>
+                                                <%--<fmt:formatNumber value="${e.pay}" pattern="#,###,##0.00"/> บาท--%>
+                                                <%--/ ${e.payType == Employee.HOUR ? 'ชั่วโมง' : 'วัน'}--%>
+                                            <%--</td>--%>
+                                            <%--<td>--%>
+                                                <%--<a onclick="editEmp(${e.empNo})" class="btn btn-warning btn-sm"--%>
+                                                   <%--data-toggle="modal"--%>
+                                                   <%--data-target="#editEmp"><i class="fa fa-pencil"></i>&nbsp;--%>
+                                                    <%--แก้ไข </a>--%>
+                                                <%--<a href="${contextPath}/employee/deleteemployee/${e.empNo}" )--%>
+                                                   <%--class="btn btn-danger btn-sm">--%>
+                                                    <%--<i class="fa fa-trash"></i>&nbsp; ลบ</a>--%>
+                                            <%--</td>--%>
+                                        <%--</tr>--%>
+                                    <%--</c:forEach>--%>
                                     </tbody>
                                 </table>
                             </form>
@@ -104,11 +100,11 @@
                             </div>
                             <!-- ส่วนเนื้อหาของ Modal -->
                             <div class="modal-body">
-                                <form class="form-horizontal form-label-left input_mask"
-                                      action="${contextPath}/employee/manageemployee" method="POST" modelAttribute="employee">
+                                <form class="form-horizontal form-label-left input_mask" id="add_emp"
+                                      modelAttribute="employee">
                                     <div class="col-md-6 col-sm-6 col-xs-12 form-group has-feedback">
                                         <input type="text" class="form-control" name="empName"
-                                               placeholder="ชื่อพนักงาน" required>
+                                               placeholder="ชื่อพนักงาน" id="empname_add" required>
                                         <span class="fa fa-user form-control-feedback right"
                                               aria-hidden="true"></span>
                                     </div>
@@ -116,13 +112,15 @@
                                         <div class="col-md-6 col-sm-6 col-xs-12 form-group has-feedback">
                                             <div class="form-group">
                                                 <div class="btn-group" data-toggle="buttons">
-                                                    <label class="btn btn-default" data-toggle-class="btn-primary"
+                                                    <label class="btn btn-default clear-active"
+                                                           data-toggle-class="btn-primary"
                                                            data-toggle-passive-class="btn-default">
                                                         <input type="radio" name="empGender" value="${Employee.MALE}"
                                                                required> &nbsp;
                                                         ชาย &nbsp;
                                                     </label>
-                                                    <label class="btn btn-default" data-toggle-class="btn-primary"
+                                                    <label class="btn btn-default clear-active"
+                                                           data-toggle-class="btn-primary"
                                                            data-toggle-passive-class="btn-default">
                                                         <input type="radio" name="empGender" value="${Employee.FEMALE}"
                                                                required> &nbsp;
@@ -140,19 +138,19 @@
                                         </div>
                                         <div class="col-md-6 col-sm-6 col-xs-12 form-group has-feedback">
                                             <div class="btn-group" data-toggle="buttons">
-                                                <label class="btn btn-default empTypeItem"
+                                                <label class="btn btn-default clear-active empTypeItem"
                                                        data-toggle-class="btn-primary"
                                                        data-toggle-passive-class="btn-default">
                                                     <input type="radio" name="empType" value="${Employee.FULL_TIME}"
                                                            required> Full - Time
                                                 </label>
-                                                <label class="btn btn-default empTypeItem"
+                                                <label class="btn btn-default clear-active empTypeItem"
                                                        data-toggle-class="btn-primary"
                                                        data-toggle-passive-class="btn-default">
                                                     <input type="radio" name="empType" value="${Employee.PART_TIME}"
                                                            required> Part - Time
                                                 </label>
-                                                <label class="btn btn-default empTypeItem"
+                                                <label class="btn btn-default clear-active empTypeItem"
                                                        data-toggle-class="btn-primary"
                                                        data-toggle-passive-class="btn-default">
                                                     <input type="radio" name="empType" value="${Employee.TRAINING}"
@@ -171,7 +169,8 @@
 
                                         <div class="col-md-6 col-sm-6 col-xs-12 form-group has-feedback">
                                             <input type="number" step="any" class="form-control"
-                                                   placeholder="ค่าจ้างต่อหน่วยเวลา" name="pay" required>
+                                                   placeholder="ค่าจ้างต่อหน่วยเวลา" name="pay" max="999999.99"
+                                                   required>
                                             <span class="fa fa-bitcoin form-control-feedback right"
                                                   aria-hidden="true"></span>
                                         </div>
@@ -207,8 +206,9 @@
                             </div>
                             <!-- ส่วนเนื้อหาของ Modal -->
                             <div class="modal-body">
-                                <form class="form-horizontal form-label-left input_mask"
-                                      action="${contextPath}/employee/manageemployee" method="POST" modelAttribute="employee">
+                                <form class="form-horizontal form-label-left input_mask" id="edit_emp"
+                                      action="${contextPath}/employee/manageemployee" method="POST"
+                                      modelAttribute="employee">
                                     <input type="hidden" name="empNo" id="hiddenempno">
                                     <div class="col-md-6 col-sm-6 col-xs-12 form-group has-feedback">
                                         <input type="text" class="form-control" id="editempname" name="empName"
@@ -220,14 +220,16 @@
                                         <div class="col-md-6 col-sm-6 col-xs-12 form-group has-feedback">
                                             <div class="form-group">
                                                 <div class="btn-group" data-toggle="buttons">
-                                                    <label class="btn btn-default" data-toggle-class="btn-primary"
+                                                    <label class="btn btn-default clear-active"
+                                                           data-toggle-class="btn-primary"
                                                            data-toggle-passive-class="btn-default"
                                                            id="editempgender${Employee.MALE}">
                                                         <input type="radio" name="empGender" value="${Employee.MALE}"
                                                                required> &nbsp;
                                                         ชาย &nbsp;
                                                     </label>
-                                                    <label class="btn btn-default" data-toggle-class="btn-primary"
+                                                    <label class="btn btn-default clear-active"
+                                                           data-toggle-class="btn-primary"
                                                            data-toggle-passive-class="btn-default"
                                                            id="editempgender${Employee.FEMALE}">
                                                         <input type="radio" name="empGender" value="${Employee.FEMALE}"
@@ -246,7 +248,7 @@
                                         </div>
                                         <div class="col-md-6 col-sm-6 col-xs-12 form-group has-feedback">
                                             <div class="btn-group" data-toggle="buttons">
-                                                <label class="btn btn-default empTypeItem"
+                                                <label class="btn btn-default empTypeItem clear-active"
                                                        data-toggle-class="btn-primary"
                                                        data-toggle-passive-class="btn-default">
                                                     <input type="radio" name="empType"
@@ -254,7 +256,7 @@
                                                            value="${Employee.FULL_TIME}"
                                                            required> Full - Time
                                                 </label>
-                                                <label class="btn btn-default empTypeItem"
+                                                <label class="btn btn-default empTypeItem clear-active"
                                                        data-toggle-class="btn-primary"
                                                        data-toggle-passive-class="btn-default">
                                                     <input type="radio" name="empType"
@@ -262,7 +264,7 @@
                                                            value="${Employee.PART_TIME}"
                                                            required> Part - Time
                                                 </label>
-                                                <label class="btn btn-default empTypeItem"
+                                                <label class="btn btn-default empTypeItem clear-active"
                                                        data-toggle-class="btn-primary"
                                                        data-toggle-passive-class="btn-default">
                                                     <input type="radio" name="empType"
@@ -283,7 +285,8 @@
 
                                         <div class="col-md-6 col-sm-6 col-xs-12 form-group has-feedback">
                                             <input type="number" step="any" class="form-control"
-                                                   placeholder="ค่าจ้างต่อหน่วยเวลา" name="pay" id="editpay" required>
+                                                   placeholder="ค่าจ้างต่อหน่วยเวลา" name="pay" id="editpay"
+                                                   max="999999.99" required>
                                             <span class="fa fa-bitcoin form-control-feedback right"
                                                   aria-hidden="true"></span>
                                         </div>
@@ -308,18 +311,68 @@
         </div>
     </div>
 </div>
-<jsp:include page="include/bottomenv.jsp"/>
+<jsp:include page="../_include/bottomenv.jsp"/>
 <%--<script src="/handmade/empindex.js"></script>--%>
+
+
 <script>
     $(document).ready(function () {
         $("#datatable-employee").DataTable({
-            "order": [[0, "asc"]],
-            "columnDefs": [
-                { orderable: false, targets: [-1] }
+            order: [[0, "asc"]],
+            columnDefs: [
+                {orderable: false, targets: [-1]}
+            ],
+            columns: [
+                {
+                    data: "empName"
+                },
+                {
+                    data: "empType"
+                },
+                {
+                    data: "payType"
+                },
+                {
+                    data: {
+                        _: "pay.display",
+                        sort: "pay.order"
+                    }
+                },
+                {
+                    data: "empNo"
+                }
             ]
         });
+
+        refresh_table();
+
+        setInterval(refresh_table, 60000);
     });
 
+    /////////////////////////////////////////// Function //////////////////////////////////////////
+
+    //TODO : Add Employee Function
+    $("#add_emp").submit(function () {
+        var object = $("#add_emp").serialize();
+        var empName = $("#empname_add").val();
+        $.ajax({
+            type: "POST",
+            data: object,
+            url: "${contextPath}/employee/manageemployee",
+            success: function (result) {
+                swal("สำเร็จ", "พนักงาน " + empName + " ถูกเพิ่มเรียบร้อยแล้ว", "success");
+                $("#add_emp")[0].reset();
+                $(".clear-active").removeClass('active');
+                refresh_table();
+                $("#addEmp").modal('toggle');
+            }, error: function (result) {
+                swal("ไม่สำเร็จ", "ชื่อพนักงานอาจซ้ำหรือเซิร์ฟเวอร์มีปัญหา", "error")
+            }
+        });
+        return false;
+    });
+
+    //TODO : Set Employee For Editing Function
     function editEmp(empNo) {
         $.ajax({
             type: "GET",
@@ -336,6 +389,92 @@
             }
         });
     }
+
+    //TODO : Edit Employee Function
+    $("#edit_emp").submit(function () {
+        var object = $("#edit_emp").serialize();
+        var empName = $("#editempname").val();
+        $.ajax({
+            type: "POST",
+            data: object,
+            url: "${contextPath}/employee/manageemployee",
+            success: function (result) {
+                swal("สำเร็จ", "แก้ไขเรียบร้อยแล้ว", "success");
+                $("#edit_emp")[0].reset();
+                $(".clear-active").removeClass('active');
+                $("#editEmp").modal('toggle');
+                refresh_table();
+            }, error: function (result) {
+                swal("ไม่สำเร็จ", "ชื่อพนักงานอาจซ้ำหรือเซิร์ฟเวอร์มีปัญหา", "error");
+            }
+        });
+        return false;
+    });
+
+    // TODO : Delete Employee Function
+    function delEmp(empNo, empName) {
+        swal({
+                title: "ยืนยันการลบ " + empName,
+                text: "ข้อมูลเกี่ยวกับ " + empName + " จะหายไปทั้งหมดเลย !",
+                type: "warning",
+                showCancelButton: true,
+                confirmButtonColor: "#DD6B55",
+                confirmButtonText: "ใช่, ต้องการลบ",
+                cancelButtonText: "ยกเลิก",
+                closeOnConfirm: false
+            },
+            function () {
+                $.ajax({
+                    type: "GET",
+                    url: "${contextPath}/employee/deleteemployee/" + empNo + "",
+                    success: function (result) {
+                        swal("สำเร็จ", "พนักงาน " + empName + " ถูกลบเรียบร้อยแล้ว", "success");
+                        refresh_table();
+                    }, error: function (result) {
+                        swal("ไม่สำเร็จ", "กรุณาลองใหม่ในภายหลัง", "error");
+                    }
+                });
+            });
+    }
+
+    // TODO : Refresh Table
+    function refresh_table() {
+        $.ajax({
+            type: "POST",
+            url: "${contextPath}/employee/ajax/getemployees",
+            dataType: "json",
+            success: function (json) {
+                var data_array = [];
+                for (var iterator = 0; iterator < json.length; iterator++) {
+                    var emp_obj = json[iterator];
+                    var pay_order = emp_obj.payType == '${Employee.HOUR}' ? (emp_obj.pay * 800 + "") : (emp_obj.pay * 100 + "");
+                    for (var i = pay_order.length; i < 20; i++) {
+                        pay_order = "0" + pay_order;
+                    }
+                    var pay_format = "" + emp_obj.pay.toFixed(2);
+                    if(pay_format.length >= 7){
+                        pay_format = pay_format.replace(/\B(?=(\d{3})+(?!\d))/g, ",");
+                    }
+                    var data_refresh = {
+                        empName: '<b style="cursor:pointer" onclick="editEmp(' + emp_obj.empNo + ')" data-toggle="modal"' +
+                        'data-target="#editEmp" style="font-weight: bold;">' + emp_obj.empName + '</b>',
+                        empType: emp_obj.empType == '${Employee.FULL_TIME}' ? 'Full-Time' : (emp_obj.empType == '${Employee.PART_TIME}' ? 'Part-Time' : 'Training'),
+                        payType: emp_obj.payType == '${Employee.HOUR}' ? 'รายชั่วโมง' : 'รายวัน',
+                        pay: {
+                            display: pay_format + ' บาท / ' + (emp_obj.payType == '${Employee.HOUR}' ? 'ชั่วโมง' : 'วัน'),
+                            order: pay_order
+                        },
+                        empNo: '<a onclick="editEmp(' + emp_obj.empNo + ')" class="btn btn-warning btn-sm" data-toggle="modal" data-target="#editEmp"><i class="fa fa-pencil"></i>&nbsp; แก้ไข </a>' +
+                        '<a onclick="delEmp(' + emp_obj.empNo + ',\'' + emp_obj.empName + '\')" class="btn btn-danger btn-sm"> <i class="fa fa-trash"></i>&nbsp; ลบ</a>'
+                    };
+                    data_array.push(data_refresh);
+                }
+                $("#datatable-employee").DataTable().clear();
+                $("#datatable-employee").DataTable().rows.add(data_array).draw(false);
+            }
+        });
+    }
+    /////////////////////////////////////////// Function //////////////////////////////////////////
 </script>
 </body>
 </html>
