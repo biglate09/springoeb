@@ -3,39 +3,41 @@ package com.springoeb.employee.model;
 import com.fasterxml.jackson.annotation.JsonIgnore;
 
 import javax.persistence.*;
+import java.io.Serializable;
 import java.sql.Timestamp;
 
 /**
  * Created by bighead on 6/9/17.
  */
 @Entity
-public class EmployeePay {
+public class EmployeePay implements Serializable{
     @Id
-    private int empPayNo;
-    private double pay;
+    @GeneratedValue(strategy = GenerationType.AUTO)
+    private Integer empPayNo;
+    private Double pay;
     private Timestamp date;
 
     @Column(name = "emp_no",updatable = true,insertable = true)
-    private int empNo;
+    private Integer empNo;
 
     @JsonIgnore
     @ManyToOne
     @JoinColumn(name = "emp_no",updatable = false,insertable = false)
     private Employee employee;
 
-    public int getEmpPayNo() {
+    public Integer getEmpPayNo() {
         return empPayNo;
     }
 
-    public void setEmpPayNo(int empPayNo) {
+    public void setEmpPayNo(Integer empPayNo) {
         this.empPayNo = empPayNo;
     }
 
-    public double getPay() {
+    public Double getPay() {
         return pay;
     }
 
-    public void setPay(double pay) {
+    public void setPay(Double pay) {
         this.pay = pay;
     }
 
@@ -47,11 +49,11 @@ public class EmployeePay {
         this.date = date;
     }
 
-    public int getEmpNo() {
+    public Integer getEmpNo() {
         return empNo;
     }
 
-    public void setEmpNo(int empNo) {
+    public void setEmpNo(Integer empNo) {
         this.empNo = empNo;
     }
 

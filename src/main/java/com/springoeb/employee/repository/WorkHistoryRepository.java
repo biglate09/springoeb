@@ -4,6 +4,7 @@ import com.springoeb.employee.model.WorkHistory;
 import org.springframework.data.repository.CrudRepository;
 import org.springframework.stereotype.Repository;
 
+import java.sql.Date;
 import java.util.List;
 
 /**
@@ -11,7 +12,10 @@ import java.util.List;
  */
 @Repository
 public interface WorkHistoryRepository extends CrudRepository<WorkHistory,Integer>{
+    WorkHistory findByWorkHistNoAndEmployee_BranchNo(int workHistNo, int branchNo);
     List<WorkHistory> findByEmployee_BranchNoAndWorkPayIsNotNullOrderByWorkDateDescWorkHistNoDesc(int branchNo);
-    WorkHistory findByWorkHistNo(int workHistNo);
+    List<WorkHistory> findByEmployee_BranchNoAndEmployee_EmpNo(int branchNo,int empNo);
+    List<WorkHistory> findByWorkDate(Date date);
+    List<WorkHistory> findByWorkDateBetween(Date d1, Date d2);
     void removeByWorkHistNoAndEmployee_BranchNo(int workHistNo,int branchNo);
 }

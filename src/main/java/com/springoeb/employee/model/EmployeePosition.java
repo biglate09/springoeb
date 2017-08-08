@@ -2,10 +2,7 @@ package com.springoeb.employee.model;
 
 import com.fasterxml.jackson.annotation.JsonIgnore;
 
-import javax.persistence.CascadeType;
-import javax.persistence.Entity;
-import javax.persistence.Id;
-import javax.persistence.OneToMany;
+import javax.persistence.*;
 import java.io.Serializable;
 import java.util.List;
 
@@ -15,17 +12,19 @@ import java.util.List;
 @Entity
 public class EmployeePosition implements Serializable{
     @Id
-    private int empPosNo;
+    @GeneratedValue(strategy = GenerationType.AUTO)
+    private Integer empPosNo;
     private String empPosName;
+    private Integer available;
     @JsonIgnore
     @OneToMany(mappedBy = "employeePosition", cascade = CascadeType.ALL)
     private List<EmployeeTable> employeeTables;
 
-    public int getEmpPosNo() {
+    public Integer getEmpPosNo() {
         return empPosNo;
     }
 
-    public void setEmpPosNo(int empPosNo) {
+    public void setEmpPosNo(Integer empPosNo) {
         this.empPosNo = empPosNo;
     }
 
@@ -35,6 +34,14 @@ public class EmployeePosition implements Serializable{
 
     public void setEmpPosName(String empPosName) {
         this.empPosName = empPosName;
+    }
+
+    public Integer getAvailable() {
+        return available;
+    }
+
+    public void setAvailable(Integer available) {
+        this.available = available;
     }
 
     public List<EmployeeTable> getEmployeeTables() {

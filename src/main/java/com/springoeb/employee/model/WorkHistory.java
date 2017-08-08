@@ -15,7 +15,7 @@ import java.sql.Time;
 public class WorkHistory implements Serializable{
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)
-    private int workHistNo;
+    private Integer workHistNo;
     private Date workDate;
     private Time workStart;
     private Time workEnd;
@@ -24,11 +24,14 @@ public class WorkHistory implements Serializable{
     private Integer workMin;
 
     @Column(name = "emp_no",updatable = true,insertable = true)
-    private int empNo;
+    private Integer empNo;
 
     @Column(name = "emp_time_no",updatable = true,insertable = true)
     @Nullable
     private Integer empTimeNo;
+
+    @Transient
+    private String empName;
 
     @JsonIgnore
     @OneToOne
@@ -40,11 +43,11 @@ public class WorkHistory implements Serializable{
     @JoinColumn(name = "emp_no",updatable = false,insertable = false)
     private Employee employee;
 
-    public int getWorkHistNo() {
+    public Integer getWorkHistNo() {
         return workHistNo;
     }
 
-    public void setWorkHistNo(int workHistNo) {
+    public void setWorkHistNo(Integer workHistNo) {
         this.workHistNo = workHistNo;
     }
 
@@ -96,20 +99,29 @@ public class WorkHistory implements Serializable{
         this.workMin = workMin;
     }
 
-    public int getEmpNo() {
+    public Integer getEmpNo() {
         return empNo;
     }
 
-    public void setEmpNo(int empNo) {
+    public void setEmpNo(Integer empNo) {
         this.empNo = empNo;
     }
 
+    @Nullable
     public Integer getEmpTimeNo() {
         return empTimeNo;
     }
 
-    public void setEmpTimeNo(Integer empTimeNo) {
+    public void setEmpTimeNo(@Nullable Integer empTimeNo) {
         this.empTimeNo = empTimeNo;
+    }
+
+    public String getEmpName() {
+        return empName;
+    }
+
+    public void setEmpName(String empName) {
+        this.empName = empName;
     }
 
     public EmployeeTable getEmployeeTable() {

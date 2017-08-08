@@ -18,6 +18,15 @@ public class EmployeeTableService {
         return employeeTableRepository.findAllByEmployee_BranchNo(branchNo);
     }
 
+    public boolean canDeleteEmpPos(int empPosNo){
+        List<EmployeeTable> employeeTables = employeeTableRepository.findAllByEmpPosNo(empPosNo);
+        if(employeeTables != null && employeeTables.size() != 0){
+            return false;
+        }else{
+            return true;
+        }
+    }
+
     public void save(Iterable<EmployeeTable> employeeTables){
         employeeTableRepository.save(employeeTables);
     }
@@ -28,5 +37,18 @@ public class EmployeeTableService {
 
     public void removeByEmpTimeNoAndBranchNo(int empTimeNo, int branchNo){
         employeeTableRepository.removeByEmpTimeNoAndEmployee_BranchNo(empTimeNo, branchNo);
+    }
+
+    public boolean chkDuplicateEmployeeTable(int branchNo,int empNo,Date date,Time startTime,Time endTime){
+        List<EmployeeTable> employeeTables = employeeTableRepository.findAllByEmployee_BranchNoAndEmpNoAndDateAndTimeStartBeforeAndTimeEndAfter(branchNo,empNo,date,endTime,startTime);
+        if(employeeTables.size() > 0 || endTime.getTime() < startTime.getTime()){
+            return true;
+        }else{
+            return false;
+        }
+    }
+
+    public List<EmployeeTable> findAllByDate(Date date){
+        return employeeTableRepository.findAllByDate(date);
     }
 }
