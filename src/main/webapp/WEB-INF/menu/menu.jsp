@@ -6,7 +6,7 @@
 <html>
 <head>
     <jsp:include page="../_include/topenv.jsp"/>
-    <title>ข้อมูลพนักงาน</title>
+    <title>ข้อมูลพนักงานนนนนนน</title>
 </head>
 <body class="nav-md">
 <div class="container body">
