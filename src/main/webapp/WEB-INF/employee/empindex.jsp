@@ -11,11 +11,7 @@
           rel="stylesheet">
     <link href="${contextPath}/vendors/fullcalendar/dist/fullcalendar.css" rel="stylesheet">
     <link href="${contextPath}/vendors/fullcalendar/dist/fullcalendar.print.css" rel="stylesheet" media="print">
-<<<<<<< HEAD
     <title>ข้อมูลพนักงาน</title>
-=======
-    <title>ข้อมูลพนักงาล</title>
->>>>>>> 89aaafa6e1f0bf1252aa4f3e09f4ec323afc417e
 </head>
 <body class="nav-md">
 <div class="container body">
