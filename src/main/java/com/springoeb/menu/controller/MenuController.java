@@ -15,7 +15,7 @@ import java.util.List;
 
 @RequestMapping("/menu")
 @Controller
-public class MenuController{
+public class MenuController {
 
     @Autowired
     private MenuService menuService;
@@ -32,7 +32,7 @@ public class MenuController{
 
     //----------------------------------------------------------------------------------------------------------//
     @GetMapping("/menu")
-    public String toMenuIndex(){
+    public String toMenuIndex() {
         return MENU_PATH + "menu.jsp";
     }
 
@@ -45,12 +45,12 @@ public class MenuController{
     }
 
     @PostMapping("/managemenu")
-    public void addAndEditMenu(@ModelAttribute("menu") Menu menu){
+    public void addAndEditMenu(@ModelAttribute("menu") Menu menu) {
         menuService.save(menu);
     }
 
     @DeleteMapping("/delmenu/{menuNo}")
-    public void delMenu(@PathVariable("menuNo") int menuNo){
+    public void delMenu(@PathVariable("menuNo") int menuNo) {
         menuService.delMenu(menuNo);
     }
 
@@ -61,9 +61,10 @@ public class MenuController{
         String json = mapper.writeValueAsString(menu);
         return json;
     }
+
     //----------------------------------------------------------------------------------------------------------//
     @GetMapping("/menuset")
-    public String toMenuSetIndex(){
+    public String toMenuSetIndex() {
         return MENU_PATH + "menuset.jsp";
     }
 
@@ -74,9 +75,10 @@ public class MenuController{
         String json = mapper.writeValueAsString(menuSets);
         return json;
     }
+
     //----------------------------------------------------------------------------------------------------------//
     @GetMapping("/menucategory")
-    public String toMenuCategory(){
+    public String toMenuCategory() {
         return MENU_PATH + "menucategory.jsp";
     }
 
@@ -90,13 +92,13 @@ public class MenuController{
     }
 
     @PostMapping("/managemenucategory")
-    public void addAndEditMenuCategory(@ModelAttribute("menucategory") MenuCategory menuCategory){
+    public void addAndEditMenuCategory(@ModelAttribute("menucategory") MenuCategory menuCategory) {
         menuCategoryService.save(menuCategory);
     }
 
     @Transactional
     @DeleteMapping("/delmenucategory/{menuCatNo}")
-    public void delMenuCategory(@PathVariable("menuCatNo") int menuCatNo){
+    public void delMenuCategory(@PathVariable("menuCatNo") int menuCatNo) {
         menuCategoryService.delMenuCategory(menuCatNo);
     }
 

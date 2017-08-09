@@ -21,7 +21,7 @@ public class MenuCategoryService {
     }
 
     public void delMenuCategory(int menuCategory){
-        menuCategoryRepository.deleteByMenuCatNo(menuCategory);
+        menuCategoryRepository.removeByMenuCatNo(menuCategory);
     }
 
     public MenuCategory getMenuCategory(int menuCatNo){
