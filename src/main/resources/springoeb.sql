@@ -1,11 +1,11 @@
 -- phpMyAdmin SQL Dump
--- version 4.5.4.1deb2ubuntu2
--- http://www.phpmyadmin.net
+-- version 4.6.5.2
+-- https://www.phpmyadmin.net/
 --
--- Host: localhost
--- Generation Time: Aug 09, 2017 at 11:31 AM
--- Server version: 5.7.19-0ubuntu0.16.04.1
--- PHP Version: 7.0.18-0ubuntu0.16.04.1
+-- Host: 127.0.0.1
+-- Generation Time: Aug 09, 2017 at 03:59 PM
+-- Server version: 10.1.21-MariaDB
+-- PHP Version: 5.6.30
 
 SET SQL_MODE = "NO_AUTO_VALUE_ON_ZERO";
 SET time_zone = "+00:00";
@@ -26,6 +26,7 @@ SET time_zone = "+00:00";
 -- Table structure for table `branch`
 --
 
+DROP TABLE IF EXISTS `branch`;
 CREATE TABLE `branch` (
   `branch_no` int(8) NOT NULL,
   `username` varchar(30) NOT NULL
@@ -44,6 +45,7 @@ INSERT INTO `branch` (`branch_no`, `username`) VALUES
 -- Table structure for table `employee`
 --
 
+DROP TABLE IF EXISTS `employee`;
 CREATE TABLE `employee` (
   `emp_no` int(8) NOT NULL,
   `emp_name` varchar(100) NOT NULL,
@@ -81,6 +83,7 @@ INSERT INTO `employee` (`emp_no`, `emp_name`, `emp_tel`, `emp_gender`, `emp_type
 -- Table structure for table `employee_pay`
 --
 
+DROP TABLE IF EXISTS `employee_pay`;
 CREATE TABLE `employee_pay` (
   `emp_pay_no` int(8) NOT NULL,
   `pay` double(10,2) NOT NULL,
@@ -146,6 +149,7 @@ INSERT INTO `employee_pay` (`emp_pay_no`, `pay`, `date`, `emp_no`) VALUES
 -- Table structure for table `employee_position`
 --
 
+DROP TABLE IF EXISTS `employee_position`;
 CREATE TABLE `employee_position` (
   `emp_pos_no` int(8) NOT NULL,
   `emp_pos_name` varchar(100) NOT NULL,
@@ -159,10 +163,10 @@ CREATE TABLE `employee_position` (
 INSERT INTO `employee_position` (`emp_pos_no`, `emp_pos_name`, `available`) VALUES
 (2, 'All', 1),
 (3, 'Bar', 1),
-(4, 'เคาท์เตอร์', 1),
+(4, 'เคาท์เตอร์', 0),
 (5, 'ครัว', 1),
 (6, 'ติ่มซำ', 1),
-(7, 'เสิร์ฟ', 1),
+(7, 'เสิร์ฟ', 0),
 (8, 'Manage', 1);
 
 -- --------------------------------------------------------
@@ -171,6 +175,7 @@ INSERT INTO `employee_position` (`emp_pos_no`, `emp_pos_name`, `available`) VALU
 -- Table structure for table `employee_table`
 --
 
+DROP TABLE IF EXISTS `employee_table`;
 CREATE TABLE `employee_table` (
   `emp_time_no` int(8) NOT NULL,
   `date` date NOT NULL,
@@ -300,6 +305,7 @@ INSERT INTO `employee_table` (`emp_time_no`, `date`, `time_start`, `time_end`, `
 -- Table structure for table `menu`
 --
 
+DROP TABLE IF EXISTS `menu`;
 CREATE TABLE `menu` (
   `menu_no` int(8) NOT NULL,
   `menu_name_TH` varchar(200) NOT NULL,
@@ -307,7 +313,8 @@ CREATE TABLE `menu` (
   `menu_desc` varchar(500) NOT NULL,
   `menu_price` double(20,2) NOT NULL,
   `menu_pic_path` varchar(500) NOT NULL,
-  `menu_cat_no` int(8) NOT NULL
+  `menu_cat_no` int(8) NOT NULL,
+  `available` tinyint(1) NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8;
 
 -- --------------------------------------------------------
@@ -316,11 +323,21 @@ CREATE TABLE `menu` (
 -- Table structure for table `menu_category`
 --
 
+DROP TABLE IF EXISTS `menu_category`;
 CREATE TABLE `menu_category` (
   `menu_cat_no` int(8) NOT NULL,
-  `menu_cat_name` varchar(200) NOT NULL,
+  `menu_cat_name_TH` varchar(200) NOT NULL,
+  `menu_cat_name_EN` varchar(200) NOT NULL,
   `stock_cat_no` int(8) NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8;
+
+--
+-- Dumping data for table `menu_category`
+--
+
+INSERT INTO `menu_category` (`menu_cat_no`, `menu_cat_name_TH`, `menu_cat_name_EN`, `stock_cat_no`) VALUES
+(1, 'ติ่มซำ', 'Dimsum', 1),
+(2, 'ซาลาเปา', 'Bun', 2);
 
 -- --------------------------------------------------------
 
@@ -328,6 +345,7 @@ CREATE TABLE `menu_category` (
 -- Table structure for table `menu_menu_set`
 --
 
+DROP TABLE IF EXISTS `menu_menu_set`;
 CREATE TABLE `menu_menu_set` (
   `menu_set_no` int(8) NOT NULL,
   `menu_no` int(8) NOT NULL,
@@ -340,13 +358,15 @@ CREATE TABLE `menu_menu_set` (
 -- Table structure for table `menu_set`
 --
 
+DROP TABLE IF EXISTS `menu_set`;
 CREATE TABLE `menu_set` (
   `menu_set_no` int(8) NOT NULL,
   `menu_set_name_TH` varchar(200) NOT NULL,
   `menu_set_name_EN` varchar(200) NOT NULL,
   `menu_set_desc` varchar(500) NOT NULL,
   `menu_set_price` double(20,2) NOT NULL,
-  `menu_set_pic_path` varchar(500) NOT NULL
+  `menu_set_pic_path` varchar(500) NOT NULL,
+  `available` tinyint(1) NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8;
 
 -- --------------------------------------------------------
@@ -355,10 +375,20 @@ CREATE TABLE `menu_set` (
 -- Table structure for table `stock_category`
 --
 
+DROP TABLE IF EXISTS `stock_category`;
 CREATE TABLE `stock_category` (
   `stock_cat_no` int(8) NOT NULL,
   `stock_cat_name` varchar(200) NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8;
+
+--
+-- Dumping data for table `stock_category`
+--
+
+INSERT INTO `stock_category` (`stock_cat_no`, `stock_cat_name`) VALUES
+(1, 'อาหาร'),
+(2, 'เครื่องดื่ม'),
+(3, 'ของหวาน');
 
 -- --------------------------------------------------------
 
@@ -366,6 +396,7 @@ CREATE TABLE `stock_category` (
 -- Table structure for table `user`
 --
 
+DROP TABLE IF EXISTS `user`;
 CREATE TABLE `user` (
   `username` varchar(30) NOT NULL,
   `password` varchar(200) NOT NULL
@@ -384,6 +415,7 @@ INSERT INTO `user` (`username`, `password`) VALUES
 -- Table structure for table `work_history`
 --
 
+DROP TABLE IF EXISTS `work_history`;
 CREATE TABLE `work_history` (
   `work_hist_no` int(8) NOT NULL,
   `work_date` date NOT NULL,
@@ -741,7 +773,7 @@ ALTER TABLE `menu`
 -- AUTO_INCREMENT for table `menu_category`
 --
 ALTER TABLE `menu_category`
-  MODIFY `menu_cat_no` int(8) NOT NULL AUTO_INCREMENT;
+  MODIFY `menu_cat_no` int(8) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=3;
 --
 -- AUTO_INCREMENT for table `menu_set`
 --
@@ -751,7 +783,7 @@ ALTER TABLE `menu_set`
 -- AUTO_INCREMENT for table `stock_category`
 --
 ALTER TABLE `stock_category`
-  MODIFY `stock_cat_no` int(8) NOT NULL AUTO_INCREMENT;
+  MODIFY `stock_cat_no` int(8) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=4;
 --
 -- AUTO_INCREMENT for table `work_history`
 --
