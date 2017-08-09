@@ -1,5 +1,7 @@
 package com.springoeb.menu.model;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
+
 import javax.persistence.*;
 import java.io.Serializable;
 import java.util.List;
@@ -8,11 +10,9 @@ import java.util.List;
 public class StockCategory implements Serializable {
     @Id
     private Integer stockCatNo;
-    @Column(name = "stock_cat_name_th")
-    private String stockCatNameTH;
-    @Column(name = "stock_cat_name_en")
-    private String stockCatNameEN;
+    private String stockCatName;
 
+    @JsonIgnore
     @OneToMany(fetch = FetchType.LAZY,mappedBy = "stockCategory")
     List<MenuCategory> menuCategories;
 
@@ -24,20 +24,12 @@ public class StockCategory implements Serializable {
         this.stockCatNo = stockCatNo;
     }
 
-    public String getStockCatNameTH() {
-        return stockCatNameTH;
+    public String getStockCatName() {
+        return stockCatName;
     }
 
-    public void setStockCatNameTH(String stockCatNameTH) {
-        this.stockCatNameTH = stockCatNameTH;
-    }
-
-    public String getStockCatNameEN() {
-        return stockCatNameEN;
-    }
-
-    public void setStockCatNameEN(String stockCatNameEN) {
-        this.stockCatNameEN = stockCatNameEN;
+    public void setStockCatName(String stockCatName) {
+        this.stockCatName = stockCatName;
     }
 
     public List<MenuCategory> getMenuCategories() {

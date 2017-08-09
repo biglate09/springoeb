@@ -15,4 +15,16 @@ public class MenuCategoryService {
     public List<MenuCategory> getMenuCategories(){
         return menuCategoryRepository.findAll();
     }
+
+    public void save(MenuCategory menuCategory){
+        menuCategoryRepository.save(menuCategory);
+    }
+
+    public void delMenuCategory(int menuCategory){
+        menuCategoryRepository.deleteByMenuCatNo(menuCategory);
+    }
+
+    public MenuCategory getMenuCategory(int menuCatNo){
+        return menuCategoryRepository.findByMenuCatNo(menuCatNo);
+    }
 }

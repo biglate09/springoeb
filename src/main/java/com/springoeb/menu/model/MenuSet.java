@@ -1,5 +1,6 @@
 package com.springoeb.menu.model;
 
+import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.Id;
 import java.io.Serializable;
@@ -8,12 +9,14 @@ import java.io.Serializable;
 public class MenuSet implements Serializable {
     @Id
     private Integer menuSetNo;
+    @Column(name = "menu_set_name_TH")
     private String menuSetNameTH;
+    @Column(name = "menu_set_name_EN")
     private String menuSetNameEN;
-    private String menuSetNameDesc;
+    private String menuSetDesc;
     private Double menuSetPrice;
     private String menuSetPicPath;
-    private Boolean isOfficialMenuSet;
+    private Boolean available;
 
     public Integer getMenuSetNo() {
         return menuSetNo;
@@ -39,12 +42,12 @@ public class MenuSet implements Serializable {
         this.menuSetNameEN = menuSetNameEN;
     }
 
-    public String getMenuSetNameDesc() {
-        return menuSetNameDesc;
+    public String getMenuSetDesc() {
+        return menuSetDesc;
     }
 
-    public void setMenuSetNameDesc(String menuSetNameDesc) {
-        this.menuSetNameDesc = menuSetNameDesc;
+    public void setMenuSetDesc(String menuSetDesc) {
+        this.menuSetDesc = menuSetDesc;
     }
 
     public Double getMenuSetPrice() {
@@ -63,11 +66,11 @@ public class MenuSet implements Serializable {
         this.menuSetPicPath = menuSetPicPath;
     }
 
-    public Boolean getOfficialMenuSet() {
-        return isOfficialMenuSet;
+    public Boolean getAvailable() {
+        return available;
     }
 
-    public void setOfficialMenuSet(Boolean officialMenuSet) {
-        isOfficialMenuSet = officialMenuSet;
+    public void setAvailable(Boolean available) {
+        this.available = available;
     }
 }

@@ -7,9 +7,9 @@ import java.io.Serializable;
 public class Menu implements Serializable{
     @Id
     private Integer menuNo;
-    @Column(name = "menu_name_th")
+    @Column(name = "menu_name_TH")
     private String menuNameTH;
-    @Column(name = "menu_name_en")
+    @Column(name = "menu_name_EN")
     private String menuNameEN;
     private String menuDesc;
     private Double menuPrice;

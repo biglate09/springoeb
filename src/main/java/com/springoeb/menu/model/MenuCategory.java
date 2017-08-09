@@ -7,10 +7,10 @@ import java.util.List;
 @Entity
 public class MenuCategory implements Serializable {
     @Id
-    private Integer menuCateNo;
-    @Column(name = "menu_cat_name_th")
+    private Integer menuCatNo;
+    @Column(name = "menu_cat_name_TH")
     private String menuCatNameTH;
-    @Column(name = "menu_cat_name_en")
+    @Column(name = "menu_cat_name_EN")
     private String menuCatNameEN;
     @Column(name = "stock_cat_no",insertable = true,updatable = true)
     private Integer stockCatNo;
@@ -22,12 +22,12 @@ public class MenuCategory implements Serializable {
     @JoinColumn(name="stock_cat_no",insertable = false,updatable = false)
     private StockCategory stockCategory;
 
-    public Integer getMenuCateNo() {
-        return menuCateNo;
+    public Integer getMenuCatNo() {
+        return menuCatNo;
     }
 
-    public void setMenuCateNo(Integer menuCateNo) {
-        this.menuCateNo = menuCateNo;
+    public void setMenuCatNo(Integer menuCatNo) {
+        this.menuCatNo = menuCatNo;
     }
 
     public String getMenuCatNameTH() {
