@@ -98,15 +98,18 @@ public class MenuController {
 
     @Transactional
     @DeleteMapping("/delmenucategory/{menuCatNo}")
+    @ResponseBody
     public void delMenuCategory(@PathVariable("menuCatNo") int menuCatNo) {
         menuCategoryService.delMenuCategory(menuCatNo);
     }
 
     @PutMapping("/getmenucategory/{menuCatNo}")
+    @ResponseBody
     public String getMenuCategory(@PathVariable("menuCatNo") int menuCatNo) throws JsonProcessingException {
         MenuCategory menuCategory = menuCategoryService.getMenuCategory(menuCatNo);
         ObjectMapper mapper = new ObjectMapper();
         String json = mapper.writeValueAsString(menuCategory);
+        menuCategoryService.delMenuCategory(menuCatNo);
         return json;
     }
     //----------------------------------------------------------------------------------------------------------//
