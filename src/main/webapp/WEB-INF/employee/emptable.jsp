@@ -12,18 +12,9 @@
 
     <title>ตารางการทำงาน</title>
 
-    <!-- Bootstrap -->
-    <link href="${contextPath}/vendors/bootstrap/dist/css/bootstrap.min.css" rel="stylesheet">
-    <!-- Font Awesome -->
-    <link href="${contextPath}/vendors/font-awesome/css/font-awesome.min.css" rel="stylesheet">
-    <!-- NProgress -->
-    <link href="${contextPath}/vendors/nprogress/nprogress.css" rel="stylesheet">
-    <!-- FullCalendar -->
+    <jsp:include page="../_include/topenv.jsp"/>
     <link href="${contextPath}/vendors/fullcalendar/dist/fullcalendar.css" rel="stylesheet">
     <link href="${contextPath}/vendors/fullcalendar/dist/fullcalendar.print.css" rel="stylesheet" media="print">
-
-    <!-- Custom styling plus plugins -->
-    <link href="${contextPath}/build/css/custom.min.css" rel="stylesheet">
 </head>
 
 <body class="nav-md">
@@ -173,20 +164,14 @@
 <div id="fc_edit" data-toggle="modal" data-target="#CalenderModalEdit"></div>
 <!-- /calendar modal -->
 
-<!-- jQuery -->
-<script src="${contextPath}/vendors/jquery/dist/jquery.min.js"></script>
-<!-- Bootstrap -->
-<script src="${contextPath}/vendors/bootstrap/dist/js/bootstrap.min.js"></script>
-<!-- FastClick -->
-<script src="${contextPath}/vendors/fastclick/lib/fastclick.js"></script>
-<!-- NProgress -->
-<script src="${contextPath}/vendors/nprogress/nprogress.js"></script>
+<jsp:include page="../_include/bottomenv.jsp"/>
+
 <!-- FullCalendar -->
 <script src="${contextPath}/vendors/moment/min/moment.min.js"></script>
 <script src="${contextPath}/vendors/fullcalendar/dist/fullcalendar.js"></script>
 
-<!-- Custom Theme Scripts -->
-<script src="${contextPath}/build/js/custom.js"></script>
+<%--<!-- Custom Theme Scripts -->--%>
+<%--<script src="${contextPath}/build/js/custom.js"></script>--%>
 
 </body>
 <script>
