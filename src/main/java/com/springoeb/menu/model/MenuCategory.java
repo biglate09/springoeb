@@ -7,6 +7,7 @@ import java.util.List;
 @Entity
 public class MenuCategory implements Serializable {
     @Id
+    @GeneratedValue(strategy = GenerationType.AUTO)
     private Integer menuCatNo;
     @Column(name = "menu_cat_name_TH")
     private String menuCatNameTH;
