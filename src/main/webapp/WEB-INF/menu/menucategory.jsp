@@ -27,7 +27,25 @@
                             <h4>ประเภทเมนูอาหาร</h4>
                         </div>
                         <div class="x_content">
-
+                            <form action="#">
+                                <p>
+                                    <a data-toggle="modal" data-target="#addEmpPos"
+                                       class="btn btn-success btn-sm"><i class="fa fa-plus-circle"></i>&nbsp;
+                                        เพิ่มประเภท</a>
+                                </p>
+                                <table id="datatable-position"
+                                       class="table table-striped table-bordered bulk_action1">
+                                    <thead>
+                                    <tr>
+                                        <th style="width:20%;text-align:center;">ชื่อประเภทอาหาร</th>
+                                        <th style="width:20%;text-align:center;">หมวดหมู่</th>
+                                        <th style="width:20%;text-align:center;">ตัวเลือก</th>
+                                    </tr>
+                                    </thead>
+                                    <tbody style="text-align:center;">
+                                    </tbody>
+                                </table>
+                            </form>
                         </div>
                     </div>
                 </div>
@@ -35,6 +53,23 @@
         </div>
     </div>
 </div>
+
 <jsp:include page="../_include/bottomenv.jsp"/>
+<script>
+    $(document).ready(function () {
+        refresh_table();
+    });
+
+    function refresh_table() {
+        $.ajax({
+            type: "POST",
+            url: "${contextPath}/menu/getmenucategories",
+//            dataType: "json",
+            success: function (json) {
+                console.log(json);
+            }
+        })
+    }
+</script>
 </body>
 </html>
