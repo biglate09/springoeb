@@ -66,7 +66,7 @@
             url: "${contextPath}/menu/getmenucategories",
             dataType: "json",
             success: function (json) {
-                console.log(json);
+
             }
         });
     }
