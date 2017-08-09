@@ -92,8 +92,11 @@ public class MenuController {
     }
 
     @PostMapping("/managemenucategory")
+    @ResponseBody
     public void addAndEditMenuCategory(@ModelAttribute("menucategory") MenuCategory menuCategory) {
+        System.out.println(menuCategory);
         menuCategoryService.save(menuCategory);
+
     }
 
     @Transactional
@@ -103,6 +106,7 @@ public class MenuController {
         menuCategoryService.delMenuCategory(menuCatNo);
     }
 
+    @Transactional
     @PutMapping("/getmenucategory/{menuCatNo}")
     @ResponseBody
     public String getMenuCategory(@PathVariable("menuCatNo") int menuCatNo) throws JsonProcessingException {

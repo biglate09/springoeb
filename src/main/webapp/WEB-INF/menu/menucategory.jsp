@@ -64,14 +64,14 @@
                                                 <div class="col-md-6 col-sm-6 col-xs-12 form-group has-feedback">
                                                     <input type="text" class="form-control" name="menuCatNameTH" id="add_menu_cat_nameTH"
                                                            placeholder="ชื่อประเภทอาหารภาษาไทย" required>
-                                                    <span class="fa fa-user form-control-feedback right"
+                                                    <span class="fa fa-folder form-control-feedback right"
                                                           aria-hidden="true"></span>
                                                     <input type="text" class="form-control" name="menuCatNameEN" id="add_menu_cat_nameEN"
                                                            placeholder="ชื่อประเภทอาหารภาษาอังกฤษ" required>
-                                                    <span class="fa fa-user form-control-feedback right"
+                                                    <span class="fa fa-folder form-control-feedback right"
                                                           aria-hidden="true"></span>
-                                                    <select name="group" class="form-control" required>
-                                                        <option value="" disabled>เลือกหมวดหมู่</option>
+                                                    <select name="stockCatNo" class="form-control" required>
+                                                        <option value=" " disabled>เลือกหมวดหมู่</option>
                                                         <option value="1">อาหาร</option>
                                                         <option value="2">เครื่องดื่ม</option>
                                                         <option value="3">ของหวาน</option>
@@ -92,7 +92,7 @@
                                 </div>
                             </div>
                         </div>
-                        <div class="modal fade" id="editaddMenuCat" role="dialog">
+                        <div class="modal fade" id="editMenuCat" role="dialog">
                             <div class="modal-dialog">
                                 <!-- เนือหาของ Modal ทั้งหมด -->
                                 <div class="modal-content">
@@ -105,18 +105,19 @@
                                     <!-- ส่วนเนื้อหาของ Modal -->
                                     <div class="modal-body">
                                         <form class="form-horizontal form-label-left input_mask" modelAttribute="menucategory" id="edit_menu_category">
+                                            <input type="hidden" name="menuCatNo" id="hiddenmenucatno">
                                             <div class="form-group">
                                                 <div class="col-md-6 col-sm-6 col-xs-12 form-group has-feedback">
                                                     <input type="text" class="form-control" name="menuCatNameTH" id="edit_menu_cat_nameTH"
                                                            placeholder="ชื่อประเภทอาหารภาษาไทย" required>
-                                                    <span class="fa fa-user form-control-feedback right"
+                                                    <span class="fa fa-folder form-control-feedback right"
                                                           aria-hidden="true"></span>
                                                     <input type="text" class="form-control" name="menuCatNameEN" id="edit_menu_cat_nameEN"
                                                            placeholder="ชื่อประเภทอาหารภาษาอังกฤษ" required>
-                                                    <span class="fa fa-user form-control-feedback right"
+                                                    <span class="fa fa-folder form-control-feedback right"
                                                           aria-hidden="true"></span>
-                                                    <select name="group" class="form-control" required>
-                                                        <option value="" disabled>เลือกหมวดหมู่</option>
+                                                    <select name="stockCatNo" class="form-control" required>
+                                                        <option value=" " disabled>เลือกหมวดหมู่</option>
                                                         <option value="1">อาหาร</option>
                                                         <option value="2">เครื่องดื่ม</option>
                                                         <option value="3">ของหวาน</option>
@@ -191,7 +192,54 @@
         });
     }
 
+    $("#add_menu_category").submit(function(){
+        var object = $("#add_menu_category").serialize();
+        $.ajax({
+            type: "POST",
+            data: object,
+            url: "${contextPath}/menu/managemenucategory",
+            success: function (result) {
+                swal("สำเร็จ", "ชื่อประเภท " + $("#add_menu_category").val() + " ถูกเพิ่มเรียบร้อยแล้ว", "success");
+                $("#add_menu_category")[0].reset();
+                $("#addMenuCat").modal('toggle');
+                refresh_table();
+            },error: function(result){
+                swal("ไม่สำเร็จ", "กรุณาลองใหม่ในภายหลัง", "error");
+            }
+        });
+        return false;
+    });
 
+    $("#edit_menu_category").submit(function(){
+        var object = $("#edit_menu_category").serialize();
+        $.ajax({
+            type: "POST",
+            data: object,
+            url: "${contextPath}/menu/managemenucategory",
+            success: function (result) {
+                swal("สำเร็จ", "ชื่อประเภท " + $("#add_menu_category").val() + " ถูกแก้ไขเรียบร้อยแล้ว", "success");
+                $("#edit_menu_category")[0].reset();
+                $("#editMenuCat").modal('toggle');
+                refresh_table();
+            },error: function(result){
+                swal("ไม่สำเร็จ", "กรุณาลองใหม่ในภายหลัง", "error");
+            }
+        });
+        return false;
+    });
+
+    function set_menu_category(menuCatNo) {
+        $.ajax({
+            type: "PUT",
+            url: "${contextPath}/menu/getmenucategory/" + menuCatNo,
+            dataType: "json",
+            success: function (result) {
+                $("#hiddenmenucatno").val(result.menuCatNo);
+                $("#edit_menu_cat_nameTH").val(result.menuCatNameTH);
+                $("#edit_menu_cat_nameEN").val(result.menuCatNameEN);
+            }
+        });
+    }
 
     function del_menu_category(menuCatNo,menuCatNameTH) {
         swal ({
@@ -211,6 +259,7 @@
                 url: "${contextPath}/menu/delmenucategory/"+menuCatNo,
                 success: function (json) {
                     swal ("สำเร็จ", menuCatNameTH+" ถูกลบเรียบร้อยแล้ว", "success");
+                    refresh_table();
                 },
                 error: function (json) {
                     swal ("ไม่สำเร็จ", "เซิร์ฟเวอร์อาจมีปัญหา", "error");
