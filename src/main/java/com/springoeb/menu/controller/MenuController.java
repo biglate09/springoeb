@@ -12,8 +12,8 @@ import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
 
-@Controller
 @RequestMapping("/menu")
+@Controller
 public class MenuController{
 
     @Autowired
@@ -80,6 +80,7 @@ public class MenuController{
     }
 
     @PostMapping("/getmenucategories")
+    @ResponseBody
     public String getMenuCategories() throws JsonProcessingException {
         List<MenuCategory> menuCategories = menuCategoryService.getMenuCategories();
         ObjectMapper mapper = new ObjectMapper();

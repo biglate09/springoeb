@@ -64,11 +64,11 @@
         $.ajax({
             type: "POST",
             url: "${contextPath}/menu/getmenucategories",
-//            dataType: "json",
+            dataType: "json",
             success: function (json) {
                 console.log(json);
             }
-        })
+        });
     }
 </script>
 </body>
