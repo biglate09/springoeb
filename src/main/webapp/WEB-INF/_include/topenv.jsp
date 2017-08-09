@@ -23,3 +23,4 @@
 <link href="${contextPath}/build/css/custom.min.css" rel="stylesheet">
 <link href="${contextPath}/vendors/sweetalert/sweetalert.css" rel="stylesheet">
 <link rel="stylesheet" href="${contextPath}/build/css/OEB_style.css">
+<link rel="icon" type="image/png" href="${contextPath}/images/OEB_LOGO.png">
