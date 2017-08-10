@@ -120,7 +120,7 @@
                         </div>
                     </div>
                     <div class="modal fade" id="editMenu" role="dialog">
-                        <div class="modal-dialog">
+                        <div class="modal-dialog modal-lg">
                             <!-- เนือหาของ Modal ทั้งหมด -->
                             <div class="modal-content">
                                 <!-- ส่วนหัวของ Modal -->
