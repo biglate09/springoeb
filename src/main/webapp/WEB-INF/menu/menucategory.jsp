@@ -71,7 +71,7 @@
                                                     <span class="fa fa-folder form-control-feedback right"
                                                           aria-hidden="true"></span>
                                                     <select name="stockCatNo" class="form-control" required>
-                                                        <option value=" " disabled>เลือกหมวดหมู่</option>
+                                                        <option value="">---เลือกหมวดหมู่---</option>
                                                         <option value="1">อาหาร</option>
                                                         <option value="2">เครื่องดื่ม</option>
                                                         <option value="3">ของหวาน</option>
