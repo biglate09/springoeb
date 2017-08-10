@@ -252,29 +252,29 @@
 
     function del_menu_category(menuCatNo,menuCatNameTH) {
         swal ({
-            title: "ยืนยันการลบ " + menuCatNameTH,
-            text: "เมื่อยืนยัน คุณจะไม่สามารถนำข้อมูล "+menuCatNameTH+" กลับมาได้",
-            type: "warning",
-            showCancelButton: true,
-            cancelButtonText: "ยกเลิก",
-            confirmButtonText: "ใช่, ต้องการลบ",
-            confirmButtonColor: "#DD6B55",
-            closeOnConfirm: false
+                title: "ยืนยันการลบ " + menuCatNameTH,
+                text: "เมื่อยืนยัน คุณจะไม่สามารถนำข้อมูล "+menuCatNameTH+" กลับมาได้",
+                type: "warning",
+                showCancelButton: true,
+                cancelButtonText: "ยกเลิก",
+                confirmButtonText: "ใช่, ต้องการลบ",
+                confirmButtonColor: "#DD6B55",
+                closeOnConfirm: false
 
-        },
-        function () {
-            $.ajax({
-                type: "DELETE",
-                url: "${contextPath}/menu/delmenucategory/"+menuCatNo,
-                success: function (json) {
-                    swal ("สำเร็จ", menuCatNameTH+" ถูกลบเรียบร้อยแล้ว", "success");
-                    refresh_table();
-                },
-                error: function (json) {
-                    swal ("ไม่สำเร็จ", "เซิร์ฟเวอร์อาจมีปัญหา", "error");
-                }
+            },
+            function () {
+                $.ajax({
+                    type: "DELETE",
+                    url: "${contextPath}/menu/delmenucategory/"+menuCatNo,
+                    success: function (json) {
+                        swal ("สำเร็จ", menuCatNameTH+" ถูกลบเรียบร้อยแล้ว", "success");
+                        refresh_table();
+                    },
+                    error: function (json) {
+                        swal ("ไม่สำเร็จ", "ยังมีเมนูที่เป็นอาหารประเภทนี้อยู่ กรุณาลบออกให้หมดก่อน หรือเซิร์ฟเวอร์อาจมีปัญหา", "error");
+                    }
+                });
             });
-        });
     }
 </script>
 </body>

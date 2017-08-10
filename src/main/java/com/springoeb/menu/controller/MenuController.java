@@ -13,6 +13,7 @@ import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.multipart.MultipartFile;
 
+import javax.servlet.http.HttpServletRequest;
 import javax.transaction.Transactional;
 import java.io.IOException;
 import java.nio.file.Files;
@@ -40,7 +41,9 @@ public class MenuController {
 
     //----------------------------------------------------------------------------------------------------------//
     @GetMapping("/menu")
-    public String toMenuIndex() {
+    public String toMenuIndex(Model model) {
+        List<MenuCategory> menuCategories = menuCategoryService.getMenuCategories();
+        model.addAttribute("menuCategories",menuCategories);
         return MENU_PATH + "menu.jsp";
     }
 
@@ -55,12 +58,26 @@ public class MenuController {
 
     @ResponseBody
     @PostMapping("/managemenu")
-    public void addAndEditMenu(@ModelAttribute("menu") Menu menu, @RequestParam("file") MultipartFile file) throws IOException {
+    public void addAndEditMenu(@RequestParam("menuPicPath") MultipartFile file, HttpServletRequest request) throws IOException {
+        Menu menu = new Menu();
         byte[] bytes = file.getBytes();
-        Path path = Paths.get(UPLOADED_FOLDER + System.currentTimeMillis() + file.getOriginalFilename());
+        String filename = System.currentTimeMillis() + file.getOriginalFilename();
+        Path path = Paths.get(UPLOADED_FOLDER + filename);
         Files.write(path, bytes);
+        menu.setMenuNameTH(request.getParameter("menuNameTH"));
+        menu.setMenuNameEN(request.getParameter("menuNameEN"));
+        menu.setMenuPrice(Double.parseDouble(request.getParameter("menuPrice")));
+        menu.setMenuDesc(request.getParameter("menuDesc"));
+        menu.setMenuCatNo(Integer.parseInt(request.getParameter("menuCatNo")));
+        menu.setMenuPicPath(filename);
+        menu.setAvailable(request.getParameter("menuAvailable") == null ? false : true);
+        if(request.getParameter("menuNo") != null){
+            menu.setMenuNo(Integer.parseInt(request.getParameter("menuNo")));
+        }
+        menuService.save(menu);
     }
 
+    @Transactional
     @ResponseBody
     @DeleteMapping("/delmenu/{menuNo}")
     public void delMenu(@PathVariable("menuNo") int menuNo) {

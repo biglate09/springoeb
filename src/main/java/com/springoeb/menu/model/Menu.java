@@ -6,6 +6,7 @@ import java.io.Serializable;
 @Entity
 public class Menu implements Serializable{
     @Id
+    @GeneratedValue(strategy = GenerationType.AUTO)
     private Integer menuNo;
     @Column(name = "menu_name_TH")
     private String menuNameTH;
@@ -93,5 +94,19 @@ public class Menu implements Serializable{
 
     public void setMenuCategory(MenuCategory menuCategory) {
         this.menuCategory = menuCategory;
+    }
+
+    @Override
+    public String toString() {
+        return "Menu{" +
+                "menuNo=" + menuNo +
+                ", menuNameTH='" + menuNameTH + '\'' +
+                ", menuNameEN='" + menuNameEN + '\'' +
+                ", menuDesc='" + menuDesc + '\'' +
+                ", menuPrice=" + menuPrice +
+                ", menuPicPath='" + menuPicPath + '\'' +
+                ", available=" + available +
+                ", menuCatNo=" + menuCatNo +
+                '}';
     }
 }

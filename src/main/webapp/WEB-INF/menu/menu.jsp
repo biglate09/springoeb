@@ -83,12 +83,11 @@
                                                           aria-hidden="true"></span>
                                                 </div>
                                                 <div class="col-md-6 col-sm-6 col-xs-12 form-group has-feedback">
-                                                    <select name="stockCatNo" class="form-control" required>
+                                                    <select name="menuCatNo" class="form-control" required>
                                                         <option disabled>เลือกหมวดหมู่</option>
-                                                        <option value="1">อาหาร</option>
-                                                        <option value="2">เครื่องดื่ม</option>
-                                                        <option value="3">ของหวาน</option>
-                                                        <option value="4">อื่นๆ</option>
+                                                        <c:forEach items="${menuCategories}" var="mc">
+                                                            <option value="${mc.menuCatNo}">${mc.menuCatNameTH}</option>
+                                                        </c:forEach>
                                                     </select>
                                                 </div>
                                                 <div class="col-md-6 col-sm-6 col-xs-12 form-group has-feedback">
@@ -96,7 +95,7 @@
                                                                placeholder="รายละเอียด" required></textarea>
                                                 </div>
                                                 <div class="col-md-6 col-sm-6 col-xs-12 form-group has-feedback">
-                                                    <input type="file" class="form-control" name="menuPic" id="add_menu_pic"
+                                                    <input type="file" class="form-control" name="menuPicPath" id="add_menu_pic"
                                                            placeholder="อัพโหลดรูปภาพ" required>
                                                 </div>
 
@@ -153,12 +152,11 @@
                                                       aria-hidden="true"></span>
                                             </div>
                                             <div class="col-md-6 col-sm-6 col-xs-12 form-group has-feedback">
-                                                <select name="stockCatNo" class="form-control" required>
+                                                <select name="menuCatNo" class="form-control" required>
                                                     <option disabled>เลือกหมวดหมู่</option>
-                                                    <option value="1">อาหาร</option>
-                                                    <option value="2">เครื่องดื่ม</option>
-                                                    <option value="3">ของหวาน</option>
-                                                    <option value="4">อื่นๆ</option>
+                                                    <c:forEach items="${menuCategories}" var="mc">
+                                                        <option value="${mc.menuCatNo}">${mc.menuCatNameTH}</option>
+                                                    </c:forEach>
                                                 </select>
                                             </div>
                                             <div class="col-md-6 col-sm-6 col-xs-12 form-group has-feedback">
@@ -167,7 +165,7 @@
 
                                             </div>
                                             <div class="col-md-6 col-sm-6 col-xs-12 form-group has-feedback">
-                                                <input type="file" class="form-control" name="menuPic" id="edit_menu_pic"
+                                                <input type="file" class="form-control" name="menuPicPath" id="edit_menu_pic"
                                                        placeholder="อัพโหลดรูปภาพ" required>
                                             </div>
 
@@ -205,7 +203,7 @@
             ],
             columns: [
                 {
-                    data: 'menuPic'
+                    data: 'menuPicPath'
                 },
                 {
                     data: 'menuName'
@@ -238,7 +236,7 @@
                 for (var i=0; i<json.length; i++){
                     var obj = json[i];
                     var data = {
-                        menuPic: obj.menuPic,
+                        menuPicPath: obj.menuPicPath,
                         menuName: obj.menuNameTH +" / "+ obj.menuNameEN,
                         menuDesc: obj.menuDesc,
                         menuPrice: obj.menuPrice,
@@ -255,10 +253,11 @@
     }
 
     $("#add_menu").submit(function(){
-        var object = $("#add_menu").serialize();
         $.ajax({
             type: "POST",
-            data: object,
+            data: new FormData($("#add_menu")[0]),
+            enctype: 'multipart/form-data',
+            cache: false,
             contentType: false,
             processData: false,
             url: "${contextPath}/menu/managemenu",

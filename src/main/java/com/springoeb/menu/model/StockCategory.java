@@ -39,4 +39,5 @@ public class StockCategory implements Serializable {
     public void setMenuCategories(List<MenuCategory> menuCategories) {
         this.menuCategories = menuCategories;
     }
+
 }
