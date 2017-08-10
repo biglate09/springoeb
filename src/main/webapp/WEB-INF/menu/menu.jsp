@@ -321,7 +321,7 @@
                 $("#edit_menu_nameTH").val(result.menuNameTH);
                 $("#edit_menu_nameEN").val(result.menuNameEN);
                 $("#edit_menu_desc").val(result.menuDesc);
-                $("#edit_menu_price").val(result.menuPrice);
+                $("#edit_menu_price").val(result.menuPrice.toFixed(2));
                 $("#edit_menu_available").val(result.menuAvailable);
                 $("#edit_menu_stock_cat").val(result.menuCatNo);
                 $("#edit_menu_available").attr('checked',result.available);
