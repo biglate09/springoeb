@@ -102,7 +102,7 @@
                                                     </select>
                                                 </div>
                                                 <div class="col-md-6 col-sm-6 col-xs-12 form-group has-feedback">
-                                                    <input type="checkbox" class="form-control" name="menuAvailable" id="add_menu_available"> Available
+                                                    <input type="checkbox" name="menuAvailable" id="add_menu_available"> Available
                                                 </div>
                                             </div>
                                             <div class="modal-footer">
@@ -173,7 +173,7 @@
                                                 </select>
                                             </div>
                                             <div class="col-md-6 col-sm-6 col-xs-12 form-group has-feedback">
-                                                <input type="checkbox" class="form-control" name="menuAvailable" id="edit_menu_available"> Available
+                                                <input type="checkbox" name="menuAvailable" id="edit_menu_available"> Available
                                             </div>
                                         </div>
                                         <div class="modal-footer">
