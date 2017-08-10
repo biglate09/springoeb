@@ -62,7 +62,7 @@
                                     </div>
                                     <!-- ส่วนเนื้อหาของ Modal -->
                                     <div class="modal-body">
-                                        <form class="form-horizontal form-label-left input_mask" modelAttribute="menu" id="add_menu">
+                                        <form class="form-horizontal form-label-left input_mask" modelAttribute="menu" id="add_menu" enctype="multipart/form-data">
                                             <div class="form-group">
                                                 <div class="col-md-6 col-sm-6 col-xs-12 form-group has-feedback">
                                                     <input type="text" class="form-control" name="menuNameTH" id="add_menu_nameTH"
@@ -131,7 +131,7 @@
                                 </div>
                                 <!-- ส่วนเนื้อหาของ Modal -->
                                 <div class="modal-body">
-                                    <form class="form-horizontal form-label-left input_mask" modelAttribute="menu" id="edit_menu">
+                                    <form class="form-horizontal form-label-left input_mask" modelAttribute="menu" id="edit_menu" enctype="multipart/form-data">
                                         <input type="hidden" name="menuNo" id="hiddenmenuno">
                                         <div class="form-group">
                                             <div class="col-md-6 col-sm-6 col-xs-12 form-group has-feedback">
@@ -259,6 +259,8 @@
         $.ajax({
             type: "POST",
             data: object,
+            contentType: false,
+            processData: false,
             url: "${contextPath}/menu/managemenu",
             success: function (result) {
                 swal("สำเร็จ", "เมนู " + $("#add_menu").val() + " ถูกเพิ่มเรียบร้อยแล้ว", "success");
@@ -277,6 +279,8 @@
         $.ajax({
             type: "POST",
             data: object,
+            contentType: false,
+            processData: false,
             url: "${contextPath}/menu/managemenu",
             success: function (result) {
                 swal("สำเร็จ", "เมนู " + $("#add_menu").val() + " ถูกแก้ไขเรียบร้อยแล้ว", "success");
