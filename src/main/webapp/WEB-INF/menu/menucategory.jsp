@@ -74,7 +74,7 @@
                                                           aria-hidden="true"></span>
                                                 </div>
                                                 <div class="col-md-6 col-sm-6 col-xs-12 form-group has-feedback">
-                                                    <select name="stockCatNo" class="form-control" required>
+                                                    <select name="stockCatNo" id="add_menu_cat_stock_cat" class="form-control" required>
                                                         <option value="">---เลือกหมวดหมู่---</option>
                                                         <c:forEach items="${stockCategories}" var="sc">
                                                             <option value="${sc.stockCatNo}">${sc.stockCatName}</option>

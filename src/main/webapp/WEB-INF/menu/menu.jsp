@@ -78,12 +78,16 @@
                                                 </div>
                                                 <div class="col-md-6 col-sm-6 col-xs-12 form-group has-feedback">
                                                     <input type="number" class="form-control" name="menuPrice" id="add_menu_price"
-                                                           placeholder="ราคา" min="0" required>
+                                                           placeholder="ราคา" min="0" step="0.25" required>
                                                     <span class="fa fa-folder form-control-feedback right"
                                                           aria-hidden="true"></span>
                                                 </div>
                                                 <div class="col-md-6 col-sm-6 col-xs-12 form-group has-feedback">
+<<<<<<< HEAD
                                                     <select name="menuCatNo" class="form-control" required>
+=======
+                                                    <select name="menuStockCatNo" id="add_menu_stock_cat" class="form-control" required>
+>>>>>>> refs/remotes/origin/master
                                                         <option disabled>เลือกหมวดหมู่</option>
                                                         <c:forEach items="${menuCategories}" var="mc">
                                                             <option value="${mc.menuCatNo}">${mc.menuCatNameTH}</option>
@@ -119,7 +123,7 @@
                         </div>
                     </div>
                     <div class="modal fade" id="editMenu" role="dialog">
-                        <div class="modal-dialog">
+                        <div class="modal-dialog modal-lg">
                             <!-- เนือหาของ Modal ทั้งหมด -->
                             <div class="modal-content">
                                 <!-- ส่วนหัวของ Modal -->
@@ -152,7 +156,11 @@
                                                       aria-hidden="true"></span>
                                             </div>
                                             <div class="col-md-6 col-sm-6 col-xs-12 form-group has-feedback">
+<<<<<<< HEAD
                                                 <select name="menuCatNo" class="form-control" required>
+=======
+                                                <select name="menuStockCatNo" id="edit_menu_stock_cat" class="form-control" required>
+>>>>>>> refs/remotes/origin/master
                                                     <option disabled>เลือกหมวดหมู่</option>
                                                     <c:forEach items="${menuCategories}" var="mc">
                                                         <option value="${mc.menuCatNo}">${mc.menuCatNameTH}</option>
@@ -233,19 +241,21 @@
             dataType: "json",
             success: function (json) {
                 var data_array = [];
+                var price = 0;
                 for (var i=0; i<json.length; i++){
                     var obj = json[i];
                     var data = {
                         menuPicPath: obj.menuPicPath,
                         menuName: obj.menuNameTH +" / "+ obj.menuNameEN,
                         menuDesc: obj.menuDesc,
-                        menuPrice: obj.menuPrice,
+                        menuPrice: obj.menuPrice.toFixed(2).replace(/\B(?=(\d{3})+(?!\d))/g, ",")+" บาท/Baht",
                         group: obj.menuCategory.stockCategory.stockCatName,
                         option: '<a onclick = "set_menu(' + obj.menuNo + ')" class = "btn btn-warning btn-sm" data-toggle = "modal" data-target = "#editMenu"> <i class = "fa fa-pencil"> </i> &nbsp; แก้ไข </a>' +
                         '<a onclick = "del_menu(' + obj.menuNo+ ',\'' + obj.menuNameTH +'\')" class = "btn btn-danger btn-sm"> <i class = "fa fa-trash"></i> &nbsp; ลบ </a>'
                     }
                     data_array.push(data);
                 }
+                $("#price").html(price.toFixed(2).replace(/\B(?=(\d{3})+(?!\d))/g, ","));
                 $("#datatable-menu").DataTable().clear();
                 $("#datatable-menu").DataTable().rows.add(data_array).draw(false);
             }
@@ -305,6 +315,8 @@
                 $("#edit_menu_desc").val(result.menuDesc);
                 $("#edit_menu_pic").val(result.menuPic);
                 $("#edit_menu_price").val(result.menuPrice);
+                $("#edit_menu_available").val(result.menuAvailable);
+                $("#edit_menu_stock_cat").val(result.menuStockCatNo);
 
             }
         });
