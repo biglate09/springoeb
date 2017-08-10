@@ -63,19 +63,24 @@
                                             <div class="form-group">
                                                 <div class="col-md-6 col-sm-6 col-xs-12 form-group has-feedback">
                                                     <input type="text" class="form-control" name="menuCatNameTH" id="add_menu_cat_nameTH"
-                                                           placeholder="ชื่อประเภทอาหารภาษาไทย" required>
-                                                    <span class="fa fa-folder form-control-feedback right"
+                                                           placeholder="ชื่ออาหาร (ภาษาไทย)" required>
+                                                    <span class="fa fa-pencil form-control-feedback right"
                                                           aria-hidden="true"></span>
+                                                </div>
+                                                <div class="col-md-6 col-sm-6 col-xs-12 form-group has-feedback">
                                                     <input type="text" class="form-control" name="menuCatNameEN" id="add_menu_cat_nameEN"
-                                                           placeholder="ชื่อประเภทอาหารภาษาอังกฤษ" required>
-                                                    <span class="fa fa-folder form-control-feedback right"
+                                                           placeholder="ชื่ออาหาร (English)" required>
+                                                    <span class="fa fa-pencil form-control-feedback right"
                                                           aria-hidden="true"></span>
+                                                </div>
+                                                <div class="col-md-6 col-sm-6 col-xs-12 form-group has-feedback">
                                                     <select name="stockCatNo" class="form-control" required>
                                                         <option value=" " disabled>เลือกหมวดหมู่</option>
                                                         <option value="1">อาหาร</option>
                                                         <option value="2">เครื่องดื่ม</option>
                                                         <option value="3">ของหวาน</option>
                                                     </select>
+                                                </div>
                                                 </div>
                                             </div>
                                             <div class="modal-footer">
@@ -109,19 +114,24 @@
                                             <div class="form-group">
                                                 <div class="col-md-6 col-sm-6 col-xs-12 form-group has-feedback">
                                                     <input type="text" class="form-control" name="menuCatNameTH" id="edit_menu_cat_nameTH"
-                                                           placeholder="ชื่อประเภทอาหารภาษาไทย" required>
-                                                    <span class="fa fa-folder form-control-feedback right"
+                                                           placeholder="ชื่ออาหาร (ภาษาไทย)" required>
+                                                    <span class="fa fa-pencil form-control-feedback right"
                                                           aria-hidden="true"></span>
+                                                </div>
+                                                <div class="col-md-6 col-sm-6 col-xs-12 form-group has-feedback">
                                                     <input type="text" class="form-control" name="menuCatNameEN" id="edit_menu_cat_nameEN"
-                                                           placeholder="ชื่อประเภทอาหารภาษาอังกฤษ" required>
-                                                    <span class="fa fa-folder form-control-feedback right"
+                                                           placeholder="ชื่ออาหาร (English)" required>
+                                                    <span class="fa fa-pencil form-control-feedback right"
                                                           aria-hidden="true"></span>
+                                                </div>
+                                                <div class="col-md-6 col-sm-6 col-xs-12 form-group has-feedback">
                                                     <select name="stockCatNo" class="form-control" required>
                                                         <option value=" " disabled>เลือกหมวดหมู่</option>
                                                         <option value="1">อาหาร</option>
                                                         <option value="2">เครื่องดื่ม</option>
                                                         <option value="3">ของหวาน</option>
                                                     </select>
+                                                </div>
                                                 </div>
                                             </div>
                                             <div class="modal-footer">
