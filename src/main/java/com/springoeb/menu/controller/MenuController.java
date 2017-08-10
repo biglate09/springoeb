@@ -9,8 +9,13 @@ import com.springoeb.menu.service.*;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.*;
+import org.springframework.web.multipart.MultipartFile;
 
 import javax.transaction.Transactional;
+import java.io.IOException;
+import java.nio.file.Files;
+import java.nio.file.Path;
+import java.nio.file.Paths;
 import java.util.List;
 
 @RequestMapping("/menu")
@@ -48,12 +53,10 @@ public class MenuController {
 
     @ResponseBody
     @PostMapping("/managemenu")
-    public void addAndEditMenu(@ModelAttribute("menu") Menu menu) {
-//        public void upload(@RequestParam("file") MultipartFile file) throws IOException {
-//            byte[] bytes = file.getBytes();
-//            Path path = Paths.get(UPLOADED_FOLDER + System.currentTimeMillis() + file.getOriginalFilename());
-//            Files.write(path, bytes);
-//        }
+    public void addAndEditMenu(@ModelAttribute("menu") Menu menu, @RequestParam("file") MultipartFile file) throws IOException {
+        byte[] bytes = file.getBytes();
+        Path path = Paths.get(UPLOADED_FOLDER + System.currentTimeMillis() + file.getOriginalFilename());
+        Files.write(path, bytes);
     }
 
     @ResponseBody
@@ -70,6 +73,7 @@ public class MenuController {
         String json = mapper.writeValueAsString(menu);
         return json;
     }
+
     //----------------------------------------------------------------------------------------------------------//
     @GetMapping("/menuset")
     public String toMenuSetIndex() {
@@ -123,7 +127,6 @@ public class MenuController {
         MenuCategory menuCategory = menuCategoryService.getMenuCategory(menuCatNo);
         ObjectMapper mapper = new ObjectMapper();
         String json = mapper.writeValueAsString(menuCategory);
-        menuCategoryService.delMenuCategory(menuCatNo);
         return json;
     }
     //----------------------------------------------------------------------------------------------------------//
