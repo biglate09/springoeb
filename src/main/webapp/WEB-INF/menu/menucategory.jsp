@@ -76,9 +76,9 @@
                                                 <div class="col-md-6 col-sm-6 col-xs-12 form-group has-feedback">
                                                     <select name="stockCatNo" class="form-control" required>
                                                         <option value="">---เลือกหมวดหมู่---</option>
-                                                        <option value="1">อาหาร</option>
-                                                        <option value="2">เครื่องดื่ม</option>
-                                                        <option value="3">ของหวาน</option>
+                                                        <c:forEach items="${stockCategories}" var="sc">
+                                                            <option value="${sc.stockCatNo}">${sc.stockCatName}</option>
+                                                        </c:forEach>
                                                     </select>
                                                 </div>
                                             </div>
@@ -124,11 +124,11 @@
                                                           aria-hidden="true"></span>
                                                 </div>
                                                 <div class="col-md-6 col-sm-6 col-xs-12 form-group has-feedback">
-                                                    <select name="stockCatNo" class="form-control" required>
-                                                        <option value=" " disabled>เลือกหมวดหมู่</option>
-                                                        <option value="1">อาหาร</option>
-                                                        <option value="2">เครื่องดื่ม</option>
-                                                        <option value="3">ของหวาน</option>
+                                                    <select name="stockCatNo" id="edit_stock_cat_no" class="form-control" required>
+                                                        <option value="" disabled>เลือกหมวดหมู่</option>
+                                                        <c:forEach items="${stockCategories}" var="sc">
+                                                            <option value="${sc.stockCatNo}">${sc.stockCatName}</option>
+                                                        </c:forEach>
                                                     </select>
                                                 </div>
                                             </div>
@@ -245,6 +245,7 @@
                 $("#hiddenmenucatno").val(result.menuCatNo);
                 $("#edit_menu_cat_nameTH").val(result.menuCatNameTH);
                 $("#edit_menu_cat_nameEN").val(result.menuCatNameEN);
+                $("#edit_stock_cat_no").val(result.stockCatNo);
             }
         });
     }

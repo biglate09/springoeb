@@ -5,9 +5,11 @@ import com.fasterxml.jackson.databind.ObjectMapper;
 import com.springoeb.menu.model.Menu;
 import com.springoeb.menu.model.MenuCategory;
 import com.springoeb.menu.model.MenuSet;
+import com.springoeb.menu.model.StockCategory;
 import com.springoeb.menu.service.*;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
+import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.multipart.MultipartFile;
 
@@ -44,7 +46,7 @@ public class MenuController {
 
     @PostMapping("/getmenus")
     @ResponseBody
-    public String getMenus() throws JsonProcessingException {
+    public String getMenus(Model model) throws JsonProcessingException {
         List<Menu> menus = menuService.getMenus();
         ObjectMapper mapper = new ObjectMapper();
         String json = mapper.writeValueAsString(menus);
@@ -90,7 +92,9 @@ public class MenuController {
 
     //----------------------------------------------------------------------------------------------------------//
     @GetMapping("/menucategory")
-    public String toMenuCategory() {
+    public String toMenuCategory(Model model) {
+        List<StockCategory> stockCategories = stockCategoryService.findAll();
+        model.addAttribute("stockCategories", stockCategories);
         return MENU_PATH + "menucategory.jsp";
     }
 
@@ -100,25 +104,24 @@ public class MenuController {
         List<MenuCategory> menuCategories = menuCategoryService.getMenuCategories();
         ObjectMapper mapper = new ObjectMapper();
         String json = mapper.writeValueAsString(menuCategories);
-        System.out.println(json);
         return json;
     }
 
     @PostMapping("/managemenucategory")
     @ResponseBody
     public void addAndEditMenuCategory(@ModelAttribute("menucategory") MenuCategory menuCategory) throws Exception {
-        if(menuCategory.getMenuCatNo() != null){ // edit
-            if(!menuCategoryService.getMenuCategory(menuCategory.getMenuCatNo()).equals(menuCategory)){
-                if (!menuCategoryService.chkDuplicateMenuCat(menuCategory)){
+        if (menuCategory.getMenuCatNo() != null) { // edit
+            if (!menuCategoryService.getMenuCategory(menuCategory.getMenuCatNo()).equals(menuCategory)) {
+                if (!menuCategoryService.chkDuplicateMenuCat(menuCategory)) {
                     menuCategoryService.save(menuCategory);
-                }else{
+                } else {
                     throw new Exception();
                 }
-            }else{
+            } else {
                 throw new Exception();
             }
-        }else { // add
-            if (!menuCategoryService.chkDuplicateMenuCat(menuCategory)){
+        } else { // add
+            if (!menuCategoryService.chkDuplicateMenuCat(menuCategory)) {
                 menuCategoryService.save(menuCategory);
             } else {
                 throw new Exception();
