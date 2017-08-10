@@ -28,9 +28,18 @@ public class MenuCategoryService {
         return menuCategoryRepository.findByMenuCatNo(menuCatNo);
     }
 
-    public boolean chkDuplicateMenuCatNameTH(String menuCatNameTH){
-        if(menuCategoryRepository.findByMenuCatNameTH(menuCatNameTH) != null){
-            return true;
+    public boolean chkDuplicateMenuCat(MenuCategory menuCategory){
+        List<MenuCategory> menuCategories = menuCategoryRepository.findByMenuCatNameTHIgnoreCaseOrMenuCatNameENIgnoreCase(menuCategory.getMenuCatNameTH(),menuCategory.getMenuCatNameEN());
+        if(menuCategories != null && menuCategories.size() != 0){
+            if(menuCategories.size() > 1) {
+                return true;
+            }else{
+                if(menuCategory.getMenuCatNo() != null && menuCategories.get(0).getMenuCatNo() == menuCategory.getMenuCatNo()){
+                    return false;
+                }else{
+                    return true;
+                }
+            }
         }else{
             return false;
         }

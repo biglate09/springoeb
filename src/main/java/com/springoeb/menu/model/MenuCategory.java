@@ -70,4 +70,10 @@ public class MenuCategory implements Serializable {
     public void setStockCategory(StockCategory stockCategory) {
         this.stockCategory = stockCategory;
     }
+
+    @Override
+    public boolean equals(Object obj_menuCategory) {
+        MenuCategory menuCategory = (MenuCategory)obj_menuCategory;
+        return menuCatNameTH.equals(menuCategory.getMenuCatNameTH()) && menuCatNameEN.equals(menuCategory.getMenuCatNameEN()) && stockCatNo.equals(menuCategory.getStockCatNo());
+    }
 }

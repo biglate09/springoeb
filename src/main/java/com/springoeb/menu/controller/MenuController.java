@@ -106,10 +106,22 @@ public class MenuController {
     @PostMapping("/managemenucategory")
     @ResponseBody
     public void addAndEditMenuCategory(@ModelAttribute("menucategory") MenuCategory menuCategory) throws Exception {
-        if (!menuCategoryService.chkDuplicateMenuCatNameTH(menuCategory.getMenuCatNameTH())) {
-            menuCategoryService.save(menuCategory);
-        } else {
-            throw new Exception();
+        if(menuCategory.getMenuCatNo() != null){ // edit
+            if(!menuCategoryService.getMenuCategory(menuCategory.getMenuCatNo()).equals(menuCategory)){
+                if (!menuCategoryService.chkDuplicateMenuCat(menuCategory)){
+                    menuCategoryService.save(menuCategory);
+                }else{
+                    throw new Exception();
+                }
+            }else{
+                throw new Exception();
+            }
+        }else { // add
+            if (!menuCategoryService.chkDuplicateMenuCat(menuCategory)){
+                menuCategoryService.save(menuCategory);
+            } else {
+                throw new Exception();
+            }
         }
     }
 

@@ -116,7 +116,7 @@
                                                            placeholder="ชื่อประเภทอาหารภาษาอังกฤษ" required>
                                                     <span class="fa fa-folder form-control-feedback right"
                                                           aria-hidden="true"></span>
-                                                    <select name="stockCatNo" class="form-control" required>
+                                                    <select name="stockCatNo" id="edit_stock_cat_no" class="form-control" required>
                                                         <option value=" " disabled>เลือกหมวดหมู่</option>
                                                         <option value="1">อาหาร</option>
                                                         <option value="2">เครื่องดื่ม</option>
@@ -237,6 +237,7 @@
                 $("#hiddenmenucatno").val(result.menuCatNo);
                 $("#edit_menu_cat_nameTH").val(result.menuCatNameTH);
                 $("#edit_menu_cat_nameEN").val(result.menuCatNameEN);
+                $("#edit_stock_cat_no").val(result.stockCatNo);
             }
         });
     }
