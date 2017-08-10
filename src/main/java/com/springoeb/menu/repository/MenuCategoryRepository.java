@@ -10,6 +10,6 @@ import java.util.List;
 public interface MenuCategoryRepository extends CrudRepository<MenuCategory,Integer> {
     List<MenuCategory> findAll();
     MenuCategory findByMenuCatNo(int menuCatNo);
-    MenuCategory findByMenuCatNameTH(String menuCatNameTH);
+    List<MenuCategory> findByMenuCatNameTHIgnoreCaseOrMenuCatNameENIgnoreCase(String menuCatNameTH,String menuCatNameEN);
     void removeByMenuCatNo(int menuCatNo);
 }
