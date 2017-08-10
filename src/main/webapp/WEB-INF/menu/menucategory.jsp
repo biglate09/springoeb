@@ -204,7 +204,7 @@
                 $("#addMenuCat").modal('toggle');
                 refresh_table();
             },error: function(result){
-                swal("ไม่สำเร็จ", "กรุณาลองใหม่ในภายหลัง", "error");
+                swal("ไม่สำเร็จ", "ชื่ออาจซ้ำ กรุณาลองใหม่ในภายหลัง", "error");
             }
         });
         return false;
@@ -222,7 +222,7 @@
                 $("#editMenuCat").modal('toggle');
                 refresh_table();
             },error: function(result){
-                swal("ไม่สำเร็จ", "กรุณาลองใหม่ในภายหลัง", "error");
+                swal("ไม่สำเร็จ", "ชื่ออาจซ้ำ กรุณาลองใหม่ในภายหลัง", "error");
             }
         });
         return false;

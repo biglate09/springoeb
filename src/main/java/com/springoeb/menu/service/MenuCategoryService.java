@@ -27,4 +27,12 @@ public class MenuCategoryService {
     public MenuCategory getMenuCategory(int menuCatNo){
         return menuCategoryRepository.findByMenuCatNo(menuCatNo);
     }
+
+    public boolean chkDuplicateMenuCatNameTH(String menuCatNameTH){
+        if(menuCategoryRepository.findByMenuCatNameTH(menuCatNameTH) != null){
+            return true;
+        }else{
+            return false;
+        }
+    }
 }
