@@ -100,6 +100,7 @@ public class MenuController {
         List<MenuCategory> menuCategories = menuCategoryService.getMenuCategories();
         ObjectMapper mapper = new ObjectMapper();
         String json = mapper.writeValueAsString(menuCategories);
+        System.out.println(json);
         return json;
     }
 
