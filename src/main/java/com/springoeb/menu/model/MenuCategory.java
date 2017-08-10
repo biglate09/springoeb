@@ -1,5 +1,7 @@
 package com.springoeb.menu.model;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
+
 import javax.persistence.*;
 import java.io.Serializable;
 import java.util.List;
@@ -16,6 +18,7 @@ public class MenuCategory implements Serializable {
     @Column(name = "stock_cat_no",insertable = true,updatable = true)
     private Integer stockCatNo;
 
+    @JsonIgnore
     @OneToMany(fetch = FetchType.LAZY, mappedBy = "menuCategory")
     private List<Menu> menus;
 

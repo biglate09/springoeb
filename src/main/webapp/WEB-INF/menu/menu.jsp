@@ -31,7 +31,7 @@
                                 <p>
                                     <a data-toggle="modal" data-target="#addMenu"
                                        class="btn btn-success btn-sm"><i class="fa fa-plus-circle"></i>&nbsp;
-                                        เพิ่มเมนูอาหาร</a>
+                                        เพิ่มเมนู</a>
                                 </p>
                                 <table id="datatable-menu"
                                        class="table table-striped table-bordered bulk_action1">
@@ -120,7 +120,7 @@
                             </div>
                         </div>
                     </div>
-                    <div class="modal fade" id="addMenu" role="dialog">
+                    <div class="modal fade" id="editMenu" role="dialog">
                         <div class="modal-dialog">
                             <!-- เนือหาของ Modal ทั้งหมด -->
                             <div class="modal-content">
@@ -148,8 +148,8 @@
                                                       aria-hidden="true"></span>
                                             </div>
                                             <div class="col-md-6 col-sm-6 col-xs-12 form-group has-feedback">
-                                                <input type="textarea"  rows="3" cols="50" class="form-control" name="menuDesc" id="edit_menu_desc"
-                                                       placeholder="รายละเอียด" required>
+                                                <textarea  rows="3" cols="50" class="form-control" name="menuDesc" id="edit_menu_desc"
+                                                           placeholder="รายละเอียด" required></textarea>
                                                 <span class="fa fa-folder form-control-feedback right"
                                                       aria-hidden="true"></span>
                                             </div>
@@ -243,7 +243,7 @@
                         menuName: obj.menuNameTH +" / "+ obj.menuNameEN,
                         menuDesc: obj.menuDesc,
                         menuPrice: obj.menuPrice,
-                        group: obj.stockCategory.stockName,
+                        group: obj.menuCategory.stockCategory.stockCatName,
                         option: '<a onclick = "set_menu(' + obj.menuNo + ')" class = "btn btn-warning btn-sm" data-toggle = "modal" data-target = "#editMenu"> <i class = "fa fa-pencil"> </i> &nbsp; แก้ไข </a>' +
                         '<a onclick = "del_menu(' + obj.menuNo+ ',\'' + obj.menuNameTH +'\')" class = "btn btn-danger btn-sm"> <i class = "fa fa-trash"></i> &nbsp; ลบ </a>'
                     }
