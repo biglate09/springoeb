@@ -51,7 +51,7 @@
                             </form>
                         </div>
                         <div class="modal fade" id="addMenu" role="dialog">
-                            <div class="modal-dialog">
+                            <div class="modal-dialog modal-lg">
                                 <!-- เนือหาของ Modal ทั้งหมด -->
                                 <div class="modal-content">
                                     <!-- ส่วนหัวของ Modal -->
@@ -77,20 +77,10 @@
                                                           aria-hidden="true"></span>
                                                 </div>
                                                 <div class="col-md-6 col-sm-6 col-xs-12 form-group has-feedback">
-                                                    <input type="textarea"  rows="3" cols="50" class="form-control" name="menuDesc" id="add_menu_desc"
-                                                           placeholder="รายละเอียด" required>
-                                                    <span class="fa fa-folder form-control-feedback right"
-                                                          aria-hidden="true"></span>
-                                                </div>
-                                                <div class="col-md-6 col-sm-6 col-xs-12 form-group has-feedback">
                                                     <input type="number" class="form-control" name="menuPrice" id="add_menu_price"
                                                            placeholder="ราคา" min="0" required>
                                                     <span class="fa fa-folder form-control-feedback right"
                                                           aria-hidden="true"></span>
-                                                </div>
-                                                <div class="col-md-6 col-sm-6 col-xs-12 form-group has-feedback">
-                                                    <input type="file" class="form-control" name="menuPic" id="add_menu_pic"
-                                                           placeholder="อัพโหลดรูปภาพ" required>
                                                 </div>
                                                 <div class="col-md-6 col-sm-6 col-xs-12 form-group has-feedback">
                                                     <select name="stockCatNo" class="form-control" required>
@@ -101,6 +91,15 @@
                                                         <option value="4">อื่นๆ</option>
                                                     </select>
                                                 </div>
+                                                <div class="col-md-6 col-sm-6 col-xs-12 form-group has-feedback">
+                                                    <textarea  rows="4" cols="50" class="form-control" name="menuDesc" id="add_menu_desc"
+                                                               placeholder="รายละเอียด" required></textarea>
+                                                </div>
+                                                <div class="col-md-6 col-sm-6 col-xs-12 form-group has-feedback">
+                                                    <input type="file" class="form-control" name="menuPic" id="add_menu_pic"
+                                                           placeholder="อัพโหลดรูปภาพ" required>
+                                                </div>
+
                                                 <div class="col-md-6 col-sm-6 col-xs-12 form-group has-feedback">
                                                     <input type="checkbox" name="menuAvailable" id="add_menu_available"> Available
                                                 </div>
@@ -148,20 +147,10 @@
                                                       aria-hidden="true"></span>
                                             </div>
                                             <div class="col-md-6 col-sm-6 col-xs-12 form-group has-feedback">
-                                                <textarea  rows="3" cols="50" class="form-control" name="menuDesc" id="edit_menu_desc"
-                                                           placeholder="รายละเอียด" required></textarea>
-                                                <span class="fa fa-folder form-control-feedback right"
-                                                      aria-hidden="true"></span>
-                                            </div>
-                                            <div class="col-md-6 col-sm-6 col-xs-12 form-group has-feedback">
                                                 <input type="number" class="form-control" name="menuPrice" id="edit_menu_price"
                                                        placeholder="ราคา" min="0" required>
                                                 <span class="fa fa-folder form-control-feedback right"
                                                       aria-hidden="true"></span>
-                                            </div>
-                                            <div class="col-md-6 col-sm-6 col-xs-12 form-group has-feedback">
-                                                <input type="file" class="form-control" name="menuPic" id="edit_menu_pic"
-                                                       placeholder="อัพโหลดรูปภาพ" required>
                                             </div>
                                             <div class="col-md-6 col-sm-6 col-xs-12 form-group has-feedback">
                                                 <select name="stockCatNo" class="form-control" required>
@@ -172,6 +161,16 @@
                                                     <option value="4">อื่นๆ</option>
                                                 </select>
                                             </div>
+                                            <div class="col-md-6 col-sm-6 col-xs-12 form-group has-feedback">
+                                                <textarea  rows="4" cols="50" class="form-control" name="menuDesc" id="edit_menu_desc"
+                                                           placeholder="รายละเอียด" required></textarea>
+
+                                            </div>
+                                            <div class="col-md-6 col-sm-6 col-xs-12 form-group has-feedback">
+                                                <input type="file" class="form-control" name="menuPic" id="edit_menu_pic"
+                                                       placeholder="อัพโหลดรูปภาพ" required>
+                                            </div>
+
                                             <div class="col-md-6 col-sm-6 col-xs-12 form-group has-feedback">
                                                 <input type="checkbox" name="menuAvailable" id="edit_menu_available"> Available
                                             </div>
