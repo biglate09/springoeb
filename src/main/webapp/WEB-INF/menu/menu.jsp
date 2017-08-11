@@ -65,7 +65,15 @@
                                         <form class="form-horizontal form-label-left input_mask" modelAttribute="menu"
                                               id="add_menu" enctype="multipart/form-data">
                                             <div class="form-group">
+                                                <img class="col-md-offset-3 col-sm-offset-3 col-md-6 col-sm-6 col-xs-12" id="showpic"  width="414" height="232" />
+
+                                                <div class="col-md-offset-3 col-sm-offset-3 col-md-6 col-sm-6 col-xs-12 has-feedback" style="margin-bottom: 12px">
+                                                    <input type="file" class="form-control" name="menuPicPath"
+                                                           id="add_menu_pic" onchange="document.getElementById('showpic').src = window.URL.createObjectURL(this.files[0])"
+                                                           placeholder="อัพโหลดรูปภาพ" required>
+                                                </div>
                                                 <div class="col-md-6 col-sm-6 col-xs-12 form-group has-feedback">
+                                                    <label>ชื่อเมนูอาหารภาษาไทย</label>
                                                     <input type="text" class="form-control" name="menuNameTH"
                                                            id="add_menu_nameTH"
                                                            placeholder="ชื่อเมนูอาหารภาษาไทย" required>
@@ -73,6 +81,7 @@
                                                           aria-hidden="true"></span>
                                                 </div>
                                                 <div class="col-md-6 col-sm-6 col-xs-12 form-group has-feedback">
+                                                    <label>ชื่อเมนูอาหารภาษาอังกฤษ</label>
                                                     <input type="text" class="form-control" name="menuNameEN"
                                                            id="add_menu_nameEN"
                                                            placeholder="ชื่อเมนูอาหารภาษาอังกฤษ" required>
@@ -80,6 +89,7 @@
                                                           aria-hidden="true"></span>
                                                 </div>
                                                 <div class="col-md-6 col-sm-6 col-xs-12 form-group has-feedback">
+                                                    <label>ราคา (บาท)</label>
                                                     <input type="number" class="form-control" name="menuPrice"
                                                            id="add_menu_price"
                                                            placeholder="ราคา" min="0" step="0.25" required>
@@ -87,33 +97,28 @@
                                                           aria-hidden="true"></span>
                                                 </div>
                                                 <div class="col-md-6 col-sm-6 col-xs-12 form-group has-feedback">
+                                                    <label>ประเภทของเมนู</label>
                                                     <select name="menuCatNo" id="add_menu_stock_cat"
                                                             class="form-control" required>
-                                                        <option disabled>เลือกหมวดหมู่</option>
+                                                        <option disabled selected>เลือกประเภทเมนู</option>
                                                         <c:forEach items="${menuCategories}" var="mc">
                                                             <option value="${mc.menuCatNo}">${mc.menuCatNameTH}</option>
                                                         </c:forEach>
                                                     </select>
                                                 </div>
-                                                <div class="col-md-6 col-sm-6 col-xs-12 form-group has-feedback">
+                                                <div class="col-md-12 col-sm-12 col-xs-12 form-group has-feedback">
+                                                    <label>รายละเอียดของเมนู</label>
                                                     <textarea rows="4" cols="50" class="form-control" name="menuDesc"
                                                               id="add_menu_desc"
                                                               placeholder="รายละเอียด" required></textarea>
                                                 </div>
-                                                <div class="col-md-6 col-sm-6 col-xs-12 form-group has-feedback">
-                                                    <input type="file" class="form-control" name="menuPicPath"
-                                                           id="add_menu_pic"
-                                                           placeholder="อัพโหลดรูปภาพ" required>
-                                                </div>
 
-                                                <div class="col-md-6 col-sm-6 col-xs-12 form-group has-feedback">
-                                                    <input type="checkbox" name="menuAvailable" id="add_menu_available">
-                                                    Available
-                                                </div>
+
                                             </div>
                                             <div class="modal-footer">
                                                 <!-- ปุ่มกดปิด (Close) ตรงส่วนล่างของ Modal -->
                                                 <div class="col-md-9 col-sm-9 col-xs-12 col-md-offset-3">
+                                                    <input type="checkbox" name="menuAvailable" id="add_menu_available">&nbsp;พร้อมจำหน่าย&nbsp;&nbsp;&nbsp;
                                                     <button type="submit" class="btn btn-success">ตกลง</button>
                                                     <button type="button" class="btn btn-default" data-dismiss="modal">
                                                         ยกเลิก
@@ -142,7 +147,15 @@
                                           id="edit_menu" enctype="multipart/form-data">
                                         <input type="hidden" name="menuNo" id="hiddenmenuno">
                                         <div class="form-group">
+                                            <img class="col-md-offset-3 col-sm-offset-3 col-md-6 col-sm-6 col-xs-12" id="showpic"  width="414" height="232" />
+
+                                            <div class="col-md-offset-3 col-sm-offset-3 col-md-6 col-sm-6 col-xs-12 has-feedback" style="margin-bottom: 12px">
+                                                <input type="file" class="form-control" name="menuPicPath"
+                                                       id="edit_menu_pic" onchange="document.getElementById('showpic').src = window.URL.createObjectURL(this.files[0])"
+                                                       placeholder="อัพโหลดรูปภาพ" required>
+                                            </div>
                                             <div class="col-md-6 col-sm-6 col-xs-12 form-group has-feedback">
+                                                <label>ชื่อเมนูอาหารภาษาไทย</label>
                                                 <input type="text" class="form-control" name="menuNameTH"
                                                        id="edit_menu_nameTH"
                                                        placeholder="ชื่อเมนูอาหารภาษาไทย" required>
@@ -150,6 +163,7 @@
                                                       aria-hidden="true"></span>
                                             </div>
                                             <div class="col-md-6 col-sm-6 col-xs-12 form-group has-feedback">
+                                                <label>ชื่อเมนูอาหารภาษาอังกฤษ</label>
                                                 <input type="text" class="form-control" name="menuNameEN"
                                                        id="edit_menu_nameEN"
                                                        placeholder="ชื่อเมนูอาหารภาษาอังกฤษ" required>
@@ -157,6 +171,7 @@
                                                       aria-hidden="true"></span>
                                             </div>
                                             <div class="col-md-6 col-sm-6 col-xs-12 form-group has-feedback">
+                                                <label>ราคา (บาท)</label>
                                                 <input type="number" class="form-control" name="menuPrice"
                                                        id="edit_menu_price"
                                                        placeholder="ราคา" min="0" required>
@@ -164,34 +179,27 @@
                                                       aria-hidden="true"></span>
                                             </div>
                                             <div class="col-md-6 col-sm-6 col-xs-12 form-group has-feedback">
+                                                <label>ประเภทของเมนู</label>
                                                 <select name="menuCatNo" id="edit_menu_stock_cat" class="form-control"
                                                         required>
-                                                    <option disabled>เลือกหมวดหมู่</option>
+                                                    <option disabled selected>เลือกประเภทเมนู</option>
                                                     <c:forEach items="${menuCategories}" var="mc">
                                                         <option value="${mc.menuCatNo}">${mc.menuCatNameTH}</option>
                                                     </c:forEach>
                                                 </select>
                                             </div>
                                             <div class="col-md-6 col-sm-6 col-xs-12 form-group has-feedback">
+                                                <label>รายละเอียดของเมนู</label>
                                                 <textarea rows="4" cols="50" class="form-control" name="menuDesc"
                                                           id="edit_menu_desc"
                                                           placeholder="รายละเอียด" required></textarea>
 
                                             </div>
-                                            <div class="col-md-6 col-sm-6 col-xs-12 form-group has-feedback">
-                                                <input type="file" class="form-control" name="menuPicPath"
-                                                       id="edit_menu_pic"
-                                                       placeholder="อัพโหลดรูปภาพ" required>
-                                            </div>
-
-                                            <div class="col-md-6 col-sm-6 col-xs-12 form-group has-feedback">
-                                                <input type="checkbox" name="menuAvailable" id="edit_menu_available">
-                                                Available
-                                            </div>
                                         </div>
                                         <div class="modal-footer">
                                             <!-- ปุ่มกดปิด (Close) ตรงส่วนล่างของ Modal -->
                                             <div class="col-md-9 col-sm-9 col-xs-12 col-md-offset-3">
+                                                <input type="checkbox" name="menuAvailable" id="edit_menu_available">&nbsp;พร้อมจำหน่าย&nbsp;&nbsp;&nbsp;
                                                 <button type="submit" class="btn btn-success">ตกลง</button>
                                                 <button type="button" class="btn btn-default" data-dismiss="modal">
                                                     ยกเลิก
