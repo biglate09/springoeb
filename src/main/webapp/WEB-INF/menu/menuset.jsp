@@ -120,7 +120,7 @@
                                                         <div id="addFromMenu" class="col-md-6 col-sm-6 col-xs-12 has-feedback">
                                                             <label>เพิ่มเมนูของเมนูอาหารแบบชุด</label>
                                                             <div class="block">
-                                                                <input type="text" class="form-control" id="add_menu_in_menuset"><span class="remove">ลบ</span>
+                                                                <input type="text" class="form-control" id="add_menu_in_menuset" autocomplete="on"><span class="remove">ลบ</span>
                                                             </div>
                                                             <div class="block">
                                                                 <button id="insertMenu" type="button" class="btn btn-default">เพิ่ม</button>
@@ -212,7 +212,7 @@
                                             <div id="editFromMenu" class="col-md-6 col-sm-6 col-xs-12 has-feedback">
                                                 <label>เพิ่มเมนูของเมนูอาหารแบบชุด</label>
                                                 <div class="block">
-                                                    <input type="text" class="form-control" id="edit_menu_in_menuset"><span class="remove">ลบ</span>
+                                                    <input type="text" class="form-control" id="edit_menu_in_menuset" autocomplete="on"><span class="remove">ลบ</span>
                                                 </div>
                                                 <div class="block">
                                                     <button id="insertEditMenu" type="button" class="btn btn-default">เพิ่ม</button>

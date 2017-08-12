@@ -93,6 +93,7 @@
                                 <form class="form-horizontal form-label-left input_mask" modelAttribute="employeeposition" id="emp_pos_add">
                                     <div class="form-group">
                                         <div class="col-md-6 col-sm-6 col-xs-12 form-group has-feedback">
+                                            <label>ชื่อตำแหน่งพนักงาน</label>
                                             <input type="text" class="form-control" name="empPosName" id="emp_pos_name_add"
                                                    placeholder="ชื่อตำแหน่งพนักงาน" required>
                                             <span class="fa fa-user form-control-feedback right"
@@ -132,6 +133,7 @@
                                     <input type="hidden" name="empPosNo" id="hiddenempposno">
                                     <div class="form-group">
                                         <div class="col-md-6 col-sm-6 col-xs-12 form-group has-feedback">
+                                            <label>ชื่อตำแหน่งพนักงาน</label>
                                             <input type="text" class="form-control" id="editempposname"
                                                    name="empPosName"
                                                    placeholder="ชื่อตำแหน่งพนักงาน" required>

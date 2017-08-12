@@ -62,18 +62,21 @@
                                         <form class="form-horizontal form-label-left input_mask" modelAttribute="menucategory" id="add_menu_category">
                                             <div class="form-group">
                                                 <div class="col-md-6 col-sm-6 col-xs-12 form-group has-feedback">
+                                                    <label>ชื่อประเภทอาหารภาษาไทย</label>
                                                     <input type="text" class="form-control" name="menuCatNameTH" id="add_menu_cat_nameTH"
                                                            placeholder="ชื่อประเภทอาหารภาษาไทย" required>
                                                     <span class="fa fa-pencil form-control-feedback right"
                                                           aria-hidden="true"></span>
                                                 </div>
                                                 <div class="col-md-6 col-sm-6 col-xs-12 form-group has-feedback">
+                                                    <label>ชื่อประเภทอาหารภาษาอังกฤษ</label>
                                                     <input type="text" class="form-control" name="menuCatNameEN" id="add_menu_cat_nameEN"
                                                            placeholder="ชื่อประเภทอาหารภาษาอังกฤษ" required>
                                                     <span class="fa fa-pencil form-control-feedback right"
                                                           aria-hidden="true"></span>
                                                 </div>
                                                 <div class="col-md-6 col-sm-6 col-xs-12 form-group has-feedback">
+                                                    <label>หมวดหมู่ของประเภทอาหาร</label>
                                                     <select name="stockCatNo" id="add_menu_cat_stock_cat" class="form-control" required>
                                                         <option value="">---เลือกหมวดหมู่---</option>
                                                         <c:forEach items="${stockCategories}" var="sc">
@@ -112,18 +115,21 @@
                                             <input type="hidden" name="menuCatNo" id="hiddenmenucatno">
                                             <div class="form-group">
                                                 <div class="col-md-6 col-sm-6 col-xs-12 form-group has-feedback">
+                                                    <label>ชื่อประเภทอาหารภาษาไทย</label>
                                                     <input type="text" class="form-control" name="menuCatNameTH" id="edit_menu_cat_nameTH"
                                                            placeholder="ชื่อประเภทอาหารภาษาไทย" required>
                                                     <span class="fa fa-pencil form-control-feedback right"
                                                           aria-hidden="true"></span>
                                                 </div>
                                                 <div class="col-md-6 col-sm-6 col-xs-12 form-group has-feedback">
+                                                    <label>ชื่อประเภทอาหารภาษาอังกฤษ</label>
                                                     <input type="text" class="form-control" name="menuCatNameEN" id="edit_menu_cat_nameEN"
                                                            placeholder="ชื่อประเภทอาหารภาษาอังกฤษ" required>
                                                     <span class="fa fa-pencil form-control-feedback right"
                                                           aria-hidden="true"></span>
                                                 </div>
                                                 <div class="col-md-6 col-sm-6 col-xs-12 form-group has-feedback">
+                                                    <label>หมวดหมู่ของประเภทอาหาร</label>
                                                     <select name="stockCatNo" id="edit_stock_cat_no" class="form-control" required>
                                                         <option value="" disabled>เลือกหมวดหมู่</option>
                                                         <c:forEach items="${stockCategories}" var="sc">
