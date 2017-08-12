@@ -179,7 +179,7 @@
                                                 <label>ราคา (บาท)</label>
                                                 <input type="number" class="form-control" name="menuPrice"
                                                        id="edit_menu_price"
-                                                       placeholder="ราคา" min="0" required>
+                                                       placeholder="ราคา" min="0" step="0.25" required>
                                                 <span class="fa fa-money form-control-feedback right"
                                                       aria-hidden="true"></span>
                                             </div>
