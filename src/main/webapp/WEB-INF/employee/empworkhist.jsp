@@ -165,6 +165,7 @@
                                         <div>
                                             <div class="col-md-4 col-sm-4 col-xs-4 form-group has-feedback"
                                                  style="clear:both;">
+                                                <label>ชื่อพนักงาน</label>
                                                 <select name="empNo" class="form-control chooseEmpName" required>
                                                     <c:forEach items="${employees}" var="e">
                                                         <option value="${e.empNo}">${e.empName}</option>
@@ -172,12 +173,14 @@
                                                 </select>
                                             </div>
                                             <div class="col-md-3 col-sm-3 col-xs-3 form-group has-feedback">
+                                                <label>จำนวนชั่วโมงในการทำงาน</label>
                                                 <input type="number" class="form-control" min="0" max="24" step="1"
                                                        placeholder="ชั่วโมง" name="workHour" required>
                                                 <span class="fa fa-hourglass form-control-feedback right"
                                                       aria-hidden="true"></span>
                                             </div>
                                             <div class="col-md-3 col-sm-3 col-xs-3 form-group has-feedback">
+                                                <label>จำนวนนาทีในการทำงาน</label>
                                                 <input type="number" class="form-control" min="0" max="59" step="1"
                                                        placeholder="นาที" name="workMin">
                                                 <span class="fa fa-hourglass-end form-control-feedback right"
@@ -227,6 +230,7 @@
                                                   aria-hidden="true"></span>
                                         </div>
                                         <div class="col-md-6 col-sm-6 col-xs-6 form-group has-feedback">
+                                            <label>ชื่อพนักงาน</label>
                                             <select class="form-control chooseEmpName" id="editEmpNo" disabled required>
                                                 <c:forEach items="${employees}" var="e">
                                                     <option value="${e.empNo}">${e.empName}</option>
@@ -234,12 +238,14 @@
                                             </select>
                                         </div>
                                         <div class="col-md-6 col-sm-3 col-xs-3 form-group has-feedback">
+                                            <label>จำนวนชั่วโมงในการทำงาน</label>
                                             <input type="number" class="form-control" min="0" max="24" step="1"
                                                    placeholder="ชั่วโมง" name="workHour" id="editWorkHour" required>
                                             <span class="fa fa-hourglass form-control-feedback right"
                                                   aria-hidden="true"></span>
                                         </div>
                                         <div class="col-md-6 col-sm-3 col-xs-3 form-group has-feedback">
+                                            <label>จำนวนนาทีในการทำงาน</label>
                                             <input type="number" class="form-control" min="0" max="59" step="1"
                                                    placeholder="นาที" name="workMin" id="editWorkMin">
                                             <span class="fa fa-hourglass-end form-control-feedback right"
