@@ -70,7 +70,7 @@
                                         <form class="form-horizontal form-label-left input_mask" modelAttribute="menu"
                                               id="add_menu" enctype="multipart/form-data">
                                             <div class="form-group">
-                                                <img class="col-md-offset-3 col-sm-offset-3 col-md-6 col-sm-6 col-xs-12 img-resize" id="showpic"  height="auto" width="414" src="../images/defaultpic.gif" />
+                                                <img class="col-md-offset-3 col-sm-offset-3 col-md-6 col-sm-6 col-xs-12 img-resize" id="showpic"  height="auto" width="414" src="../images/default_image_upload.png" />
 
                                                 <div class="col-md-offset-3 col-sm-offset-3 col-md-6 col-sm-6 col-xs-12 has-feedback" style="margin-bottom: 12px">
                                                     <input type="file" class="form-control" name="menuPicPath"
@@ -152,7 +152,7 @@
                                           id="edit_menu" enctype="multipart/form-data">
                                         <input type="hidden" name="menuNo" id="hiddenmenuno">
                                         <div class="form-group">
-                                            <img class="col-md-offset-3 col-sm-offset-3 col-md-6 col-sm-6 col-xs-12 img-resize" id="showpic_edit"  width="414" height="auto" src="../images/defaultpic.gif"/>
+                                            <img class="col-md-offset-3 col-sm-offset-3 col-md-6 col-sm-6 col-xs-12 img-resize" id="showpic_edit"  width="414" height="auto" src="../images/default_image_upload.png"/>
 
                                             <div class="col-md-offset-3 col-sm-offset-3 col-md-6 col-sm-6 col-xs-12 has-feedback" style="margin-bottom: 12px">
                                                 <input type="file" class="form-control" name="menuPicPath"
