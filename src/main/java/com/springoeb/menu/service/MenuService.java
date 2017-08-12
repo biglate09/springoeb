@@ -15,6 +15,9 @@ public class MenuService {
     public List<Menu> getMenus(){
         return menuRepository.findAll();
     }
+    public List<Menu> getMenusByMenuCategory(int menuCatNo){
+        return menuRepository.findByMenuCatNo(menuCatNo);
+    }
     public void save(Menu menu){
         menuRepository.save(menu);
     }

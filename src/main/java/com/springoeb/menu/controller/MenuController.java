@@ -47,10 +47,15 @@ public class MenuController {
         return MENU_PATH + "menu.jsp";
     }
 
-    @PostMapping("/getmenus")
+    @PostMapping("/getmenus/{menuCatNo}")
     @ResponseBody
-    public String getMenus(Model model) throws JsonProcessingException {
+    public String getMenus(@PathVariable("menuCatNo") int menuCatNo, Model model) throws JsonProcessingException {
         List<Menu> menus = menuService.getMenus();
+
+        if (menuCatNo != 0) {
+            menus = menuService.getMenusByMenuCategory(menuCatNo);
+        }
+
         ObjectMapper mapper = new ObjectMapper();
         String json = mapper.writeValueAsString(menus);
         return json;
@@ -68,7 +73,7 @@ public class MenuController {
             menu.setMenuNo(menuNo);
         }
 
-        if(!file.getOriginalFilename().equals("")) {
+        if (!file.getOriginalFilename().equals("")) {
             String filename = System.currentTimeMillis() + file.getOriginalFilename();
             Path path = Paths.get(UPLOADED_FOLDER + filename);
             Files.write(path, bytes);
@@ -84,6 +89,14 @@ public class MenuController {
         if (request.getParameter("menuNo") != null) {
             menu.setMenuNo(Integer.parseInt(request.getParameter("menuNo")));
         }
+        menuService.save(menu);
+    }
+
+    @ResponseBody
+    @PostMapping("/changeavailable")
+    public void changeAvailable(HttpServletRequest request) {
+        Menu menu = menuService.getMenuByMenuNo(Integer.parseInt(request.getParameter("menuno")));
+        menu.setAvailable(!menu.getAvailable());
         menuService.save(menu);
     }
 

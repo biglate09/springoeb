@@ -9,6 +9,7 @@ import java.util.List;
 @Repository
 public interface MenuRepository extends CrudRepository<Menu,Integer>{
     public List<Menu> findAll();
+    public List<Menu> findByMenuCatNo(int menuCatNo);
     public void deleteByMenuNo(int menuNo);
     public Menu findByMenuNo(int menuNo);
 }
