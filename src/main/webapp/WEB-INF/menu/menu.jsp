@@ -33,21 +33,26 @@
                                        class="btn btn-success btn-sm"><i class="fa fa-plus-circle"></i>&nbsp;
                                         เพิ่มเมนู</a>
                                 </p>
-                                <table id="datatable-menu"
-                                       class="table table-striped table-bordered bulk_action1">
-                                    <thead>
-                                    <tr>
-                                        <th style="width:20%;text-align:center;">รูปเมนู</th>
-                                        <th style="width:20%;text-align:center;">ชื่อเมนู</th>
-                                        <th style="width:20%;text-align:center;">รายละเอียด</th>
-                                        <th style="width:20%;text-align:center;">ราคา</th>
-                                        <th style="width:20%;text-align:center;">ประเภทอาหาร</th>
-                                        <th style="width:20%;text-align:center;">ตัวเลือก</th>
-                                    </tr>
-                                    </thead>
-                                    <tbody style="text-align:center;">
-                                    </tbody>
-                                </table>
+
+                                <div class="col-md-55">
+                                    <div class="thumbnail_inline">
+                                        <div class="image view view-first">
+                                            <img style="width: 100%; display: block;" src="../images/default_image_upload.png" alt="image" />
+                                            <div class="mask">
+                                                <div class="" style="color:#fff;text-align:center;font-size:17px;">
+                                                    <a data-toggle="modal" data-target="#editMenu" style="color:white;"><i class="fa fa-pencil"></i></a>
+                                                    <a href="#" style="color:white;"><i class="fa fa-times"></i></a>
+                                                </div>
+                                            </div>
+                                        </div>
+                                        <div class="caption">
+                                            <p style="">Name</p>
+                                            <p style="">Price</p>
+                                            <p style="">Description</p>
+                                        </div>
+                                    </div>
+                                </div>
+
                             </form>
                         </div>
                         <div class="modal fade" id="addMenu" role="dialog">
@@ -70,14 +75,14 @@
                                                 <div class="col-md-offset-3 col-sm-offset-3 col-md-6 col-sm-6 col-xs-12 has-feedback" style="margin-bottom: 12px">
                                                     <input type="file" class="form-control" name="menuPicPath"
                                                            id="add_menu_pic" onchange="document.getElementById('showpic').src = window.URL.createObjectURL(this.files[0])"
-                                                           placeholder="อัพโหลดรูปภาพ" required>
+                                                           placeholder="อัพโหลดรูปภาพ" >
                                                 </div>
                                                 <div class="col-md-6 col-sm-6 col-xs-12 form-group has-feedback">
                                                     <label>ชื่อเมนูอาหารภาษาไทย</label>
                                                     <input type="text" class="form-control" name="menuNameTH"
                                                            id="add_menu_nameTH"
                                                            placeholder="ชื่อเมนูอาหารภาษาไทย" required>
-                                                    <span class="fa fa-folder form-control-feedback right"
+                                                    <span class="fa fa-pencil form-control-feedback right"
                                                           aria-hidden="true"></span>
                                                 </div>
                                                 <div class="col-md-6 col-sm-6 col-xs-12 form-group has-feedback">
@@ -85,7 +90,7 @@
                                                     <input type="text" class="form-control" name="menuNameEN"
                                                            id="add_menu_nameEN"
                                                            placeholder="ชื่อเมนูอาหารภาษาอังกฤษ" required>
-                                                    <span class="fa fa-folder form-control-feedback right"
+                                                    <span class="fa fa-pencil form-control-feedback right"
                                                           aria-hidden="true"></span>
                                                 </div>
                                                 <div class="col-md-6 col-sm-6 col-xs-12 form-group has-feedback">
@@ -93,7 +98,7 @@
                                                     <input type="number" class="form-control" name="menuPrice"
                                                            id="add_menu_price"
                                                            placeholder="ราคา" min="0" step="0.25" required>
-                                                    <span class="fa fa-folder form-control-feedback right"
+                                                    <span class="fa fa-money form-control-feedback right"
                                                           aria-hidden="true"></span>
                                                 </div>
                                                 <div class="col-md-6 col-sm-6 col-xs-12 form-group has-feedback">
@@ -118,7 +123,7 @@
                                             <div class="modal-footer">
                                                 <!-- ปุ่มกดปิด (Close) ตรงส่วนล่างของ Modal -->
                                                 <div class="col-md-9 col-sm-9 col-xs-12 col-md-offset-3">
-                                                    <input type="checkbox" name="menuAvailable" id="add_menu_available">&nbsp;พร้อมจำหน่าย&nbsp;&nbsp;&nbsp;
+                                                    <input type="checkbox" name="menuAvailable" id="add_menu_available" class="flat">&nbsp;พร้อมจำหน่าย&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
                                                     <button type="submit" class="btn btn-success">ตกลง</button>
                                                     <button type="button" class="btn btn-default" data-dismiss="modal">
                                                         ยกเลิก
@@ -159,7 +164,7 @@
                                                 <input type="text" class="form-control" name="menuNameTH"
                                                        id="edit_menu_nameTH"
                                                        placeholder="ชื่อเมนูอาหารภาษาไทย" required>
-                                                <span class="fa fa-folder form-control-feedback right"
+                                                <span class="fa fa-pencil form-control-feedback right"
                                                       aria-hidden="true"></span>
                                             </div>
                                             <div class="col-md-6 col-sm-6 col-xs-12 form-group has-feedback">
@@ -167,7 +172,7 @@
                                                 <input type="text" class="form-control" name="menuNameEN"
                                                        id="edit_menu_nameEN"
                                                        placeholder="ชื่อเมนูอาหารภาษาอังกฤษ" required>
-                                                <span class="fa fa-folder form-control-feedback right"
+                                                <span class="fa fa-pencil form-control-feedback right"
                                                       aria-hidden="true"></span>
                                             </div>
                                             <div class="col-md-6 col-sm-6 col-xs-12 form-group has-feedback">
@@ -175,7 +180,7 @@
                                                 <input type="number" class="form-control" name="menuPrice"
                                                        id="edit_menu_price"
                                                        placeholder="ราคา" min="0" required>
-                                                <span class="fa fa-folder form-control-feedback right"
+                                                <span class="fa fa-money form-control-feedback right"
                                                       aria-hidden="true"></span>
                                             </div>
                                             <div class="col-md-6 col-sm-6 col-xs-12 form-group has-feedback">
@@ -199,7 +204,7 @@
                                         <div class="modal-footer">
                                             <!-- ปุ่มกดปิด (Close) ตรงส่วนล่างของ Modal -->
                                             <div class="col-md-9 col-sm-9 col-xs-12 col-md-offset-3">
-                                                <input type="checkbox" name="menuAvailable" id="edit_menu_available">&nbsp;พร้อมจำหน่าย&nbsp;&nbsp;&nbsp;
+                                                <input type="checkbox" name="menuAvailable" id="edit_menu_available" class="flat">&nbsp;พร้อมจำหน่าย&nbsp;&nbsp;&nbsp;
                                                 <button type="submit" class="btn btn-success">ตกลง</button>
                                                 <button type="button" class="btn btn-default" data-dismiss="modal">
                                                     ยกเลิก
@@ -365,5 +370,9 @@
             });
     }
 </script>
+
+<style>
+    .thumbnail_inline{height:350px;overflow:hidden}
+</style>
 </body>
 </html>
