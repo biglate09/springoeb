@@ -243,14 +243,6 @@
 <jsp:include page="../_include/bottomenv.jsp"/>
 <script>
 
-//    $('#insertMenu').click(function() {
-//        $('.block:last').before('<div class="block"><input type="text" class="form-control" id="add_menu_in_menuset"><span class="remove">ลบ</span></div>');
-//    });
-//
-//    $('#addFromMenu').on('click','.remove',function() {
-//        $(this).parent().remove();
-//    });
-
     $(document).ready(function () {
         $("#datatable-menu").DataTable({
             order: [[0, "asc"]],
