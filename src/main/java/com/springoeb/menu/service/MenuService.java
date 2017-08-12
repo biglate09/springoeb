@@ -23,7 +23,7 @@ public class MenuService {
         menuRepository.deleteByMenuNo(menuNo);
     }
 
-    public Menu getMenuCategory(int menuNo){
+    public Menu getMenuByMenuNo(int menuNo){
         return menuRepository.findByMenuNo(menuNo);
     }
 }

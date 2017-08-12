@@ -33,26 +33,9 @@
                                        class="btn btn-success btn-sm"><i class="fa fa-plus-circle"></i>&nbsp;
                                         เพิ่มเมนู</a>
                                 </p>
+                                <div id="menu_thumbnail">
 
-                                <div class="col-md-55">
-                                    <div class="thumbnail_inline">
-                                        <div class="image view view-first">
-                                            <img style="width: 100%; display: block;" src="../images/default_image_upload.png" alt="image" />
-                                            <div class="mask">
-                                                <div class="" style="color:#fff;text-align:center;font-size:17px;">
-                                                    <a data-toggle="modal" data-target="#editMenu" style="color:white;"><i class="fa fa-pencil"></i></a>
-                                                    <a href="#" style="color:white;"><i class="fa fa-times"></i></a>
-                                                </div>
-                                            </div>
-                                        </div>
-                                        <div class="caption">
-                                            <p style="">Name</p>
-                                            <p style="">Price</p>
-                                            <p style="">Description</p>
-                                        </div>
-                                    </div>
                                 </div>
-
                             </form>
                         </div>
                         <div class="modal fade" id="addMenu" role="dialog">
@@ -70,12 +53,16 @@
                                         <form class="form-horizontal form-label-left input_mask" modelAttribute="menu"
                                               id="add_menu" enctype="multipart/form-data">
                                             <div class="form-group">
-                                                <img class="col-md-offset-3 col-sm-offset-3 col-md-6 col-sm-6 col-xs-12 img-resize" id="showpic"  height="auto" width="414" src="../images/default_image_upload.png" />
-
-                                                <div class="col-md-offset-3 col-sm-offset-3 col-md-6 col-sm-6 col-xs-12 has-feedback" style="margin-bottom: 12px">
-                                                    <input type="file" class="form-control" name="menuPicPath"
-                                                           id="add_menu_pic" onchange="document.getElementById('showpic').src = window.URL.createObjectURL(this.files[0])"
-                                                           placeholder="อัพโหลดรูปภาพ" >
+                                                <img class="col-md-offset-3 col-sm-offset-3 col-md-6 col-sm-6 col-xs-12 img-resize"
+                                                     id="showpic" style="margin-bottom:20px;" height="auto" width="414"
+                                                     src="../images/default_image_upload.png"/>
+                                                <div class="col-md-offset-3 col-sm-offset-3 col-md-6 col-sm-6 col-xs-12 has-feedback"
+                                                     style="margin-bottom: 12px">
+                                                    <input type="file" accept="image/x-png,image/gif,image/jpeg"
+                                                           class="form-control" name="menuPicPath"
+                                                           id="add_menu_pic"
+                                                           onchange="document.getElementById('showpic').src = window.URL.createObjectURL(this.files[0])"
+                                                           placeholder="อัพโหลดรูปภาพ" required>
                                                 </div>
                                                 <div class="col-md-6 col-sm-6 col-xs-12 form-group has-feedback">
                                                     <label>ชื่อเมนูอาหารภาษาไทย</label>
@@ -113,7 +100,7 @@
                                                 </div>
                                                 <div class="col-md-12 col-sm-12 col-xs-12 form-group has-feedback">
                                                     <label>รายละเอียดของเมนู</label>
-                                                    <textarea rows="4" cols="50" class="form-control" name="menuDesc"
+                                                    <textarea rows="4" cols="100" class="form-control" name="menuDesc"
                                                               id="add_menu_desc"
                                                               placeholder="รายละเอียด" required></textarea>
                                                 </div>
@@ -123,7 +110,8 @@
                                             <div class="modal-footer">
                                                 <!-- ปุ่มกดปิด (Close) ตรงส่วนล่างของ Modal -->
                                                 <div class="col-md-9 col-sm-9 col-xs-12 col-md-offset-3">
-                                                    <input type="checkbox" name="menuAvailable" id="add_menu_available" class="flat">&nbsp;พร้อมจำหน่าย&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+                                                    <input type="checkbox" name="menuAvailable" id="add_menu_available"
+                                                           class="flat">&nbsp;พร้อมจำหน่าย&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
                                                     <button type="submit" class="btn btn-success">ตกลง</button>
                                                     <button type="button" class="btn btn-default" data-dismiss="modal">
                                                         ยกเลิก
@@ -144,7 +132,7 @@
                                 <div class="modal-header">
                                     <!-- ปุ่มกดปิด (X) ตรงส่วนหัวของ Modal -->
                                     <button type="button" class="close" data-dismiss="modal">&times;</button>
-                                    <h4 class="modal-title">แก้ไขเมนูอาหาร</h4>
+                                    <h4 class="modal-title">แก้ไขเมนูอาหาร <span id="show_menu_name_for_edit"></span></h4>
                                 </div>
                                 <!-- ส่วนเนื้อหาของ Modal -->
                                 <div class="modal-body">
@@ -152,12 +140,17 @@
                                           id="edit_menu" enctype="multipart/form-data">
                                         <input type="hidden" name="menuNo" id="hiddenmenuno">
                                         <div class="form-group">
-                                            <img class="col-md-offset-3 col-sm-offset-3 col-md-6 col-sm-6 col-xs-12 img-resize" id="showpic_edit"  width="414" height="auto" src="../images/default_image_upload.png"/>
+                                            <img class="col-md-offset-3 col-sm-offset-3 col-md-6 col-sm-6 col-xs-12 img-resize"
+                                                 style="margin-bottom:20px;" id="showpic_edit" width="414" height="auto"
+                                                 src="../images/default_image_upload.png"/>
 
-                                            <div class="col-md-offset-3 col-sm-offset-3 col-md-6 col-sm-6 col-xs-12 has-feedback" style="margin-bottom: 12px">
-                                                <input type="file" class="form-control" name="menuPicPath"
-                                                       id="edit_menu_pic" onchange="document.getElementById('showpic_edit').src = window.URL.createObjectURL(this.files[0])"
-                                                       placeholder="อัพโหลดรูปภาพ" required>
+                                            <div class="col-md-offset-3 col-sm-offset-3 col-md-6 col-sm-6 col-xs-12 has-feedback"
+                                                 style="margin-bottom: 12px">
+                                                <input type="file" accept="image/x-png,image/gif,image/jpeg"
+                                                       class="form-control" name="menuPicPath"
+                                                       id="edit_menu_pic"
+                                                       onchange="document.getElementById('showpic_edit').src = window.URL.createObjectURL(this.files[0])"
+                                                       placeholder="อัพโหลดรูปภาพ">
                                             </div>
                                             <div class="col-md-6 col-sm-6 col-xs-12 form-group has-feedback">
                                                 <label>ชื่อเมนูอาหารภาษาไทย</label>
@@ -193,9 +186,9 @@
                                                     </c:forEach>
                                                 </select>
                                             </div>
-                                            <div class="col-md-6 col-sm-6 col-xs-12 form-group has-feedback">
+                                            <div class="col-md-12 col-sm-12 col-xs-12 form-group has-feedback">
                                                 <label>รายละเอียดของเมนู</label>
-                                                <textarea rows="4" cols="50" class="form-control" name="menuDesc"
+                                                <textarea rows="4" cols="100" class="form-control" name="menuDesc"
                                                           id="edit_menu_desc"
                                                           placeholder="รายละเอียด" required></textarea>
 
@@ -204,7 +197,8 @@
                                         <div class="modal-footer">
                                             <!-- ปุ่มกดปิด (Close) ตรงส่วนล่างของ Modal -->
                                             <div class="col-md-9 col-sm-9 col-xs-12 col-md-offset-3">
-                                                <input type="checkbox" name="menuAvailable" id="edit_menu_available" class="flat">&nbsp;พร้อมจำหน่าย&nbsp;&nbsp;&nbsp;
+                                                <input type="checkbox" name="menuAvailable" id="edit_menu_available"
+                                                       class="flat">&nbsp;พร้อมจำหน่าย&nbsp;&nbsp;&nbsp;
                                                 <button type="submit" class="btn btn-success">ตกลง</button>
                                                 <button type="button" class="btn btn-default" data-dismiss="modal">
                                                     ยกเลิก
@@ -252,6 +246,27 @@
             ]
         });
 
+        $("#showpic").click(function () {
+            $("#add_menu_pic").click();
+        });
+
+        $("#showpic_edit").click(function () {
+            $("#edit_menu_pic").click();
+        });
+
+        $("#add_menu_pic").change(function () {
+            if ($("#add_menu_pic").val() == '') {
+                $("#showpic").attr('src', '../images/default_image_upload.png');
+            }
+        });
+
+        $("#edit_menu_pic").change(function () {
+            if ($("#edit_menu_pic").val() == '') {
+                $("#showpic_edit").attr('src', '../images/default_image_upload.png');
+            }
+        });
+
+
         refresh_table();
     });
 
@@ -261,10 +276,35 @@
             url: "${contextPath}/menu/getmenus",
             dataType: "json",
             success: function (json) {
-                var data_array = [];
-                var price = 0;
+                //remove
+                $("#menu_thumbnail").empty();
+
                 for (var i = 0; i < json.length; i++) {
                     var obj = json[i];
+                    var div = '\
+                        <div class="col-md-55">\
+                            <div class="thumbnail_inline">\
+                        <div class="image view view-first">\
+                        <img style="width: 100%; display: block;"\
+                    src="../images/menu/'+obj.menuPicPath+'" alt="image"/>\
+                        <div class="mask">\
+                        <div style="color:#fff;text-align:center;font-size:17px;">\
+                        <a data-toggle="modal" data-target="#editMenu" onclick="set_menu('+obj.menuNo+')" style="color:white;">\
+                        <i class="fa fa-pencil"></i></a>\
+                        <a onclick="del_menu('+obj.menuNo+',\''+obj.menuNameTH+'\')" style="color:white;"><i class="fa fa-times"></i></a>\
+                        </div>\
+                        </div>\
+                        </div>\
+                        <div class="caption">\
+                        <p style="text-align:center">'+obj.menuNameTH + " / " + obj.menuNameEN+'</p>\
+                        <p style="text-align:center">'+obj.menuPrice.toFixed(2).replace(/\B(?=(\d{3})+(?!\d))/g, ",") + " บาท"+'</p>\
+                        </div>\
+                        </div>\
+                        </div>\
+                        ';
+
+                    $("#menu_thumbnail").append(div);
+
                     var data = {
                         menuPicPath: obj.menuPicPath,
                         menuName: obj.menuNameTH + " / " + obj.menuNameEN,
@@ -274,11 +314,7 @@
                         option: '<a onclick = "set_menu(' + obj.menuNo + ')" class = "btn btn-warning btn-sm" data-toggle = "modal" data-target = "#editMenu"> <i class = "fa fa-pencil"> </i> &nbsp; แก้ไข </a>' +
                         '<a onclick = "del_menu(' + obj.menuNo + ',\'' + obj.menuNameTH + '\')" class = "btn btn-danger btn-sm"> <i class = "fa fa-trash"></i> &nbsp; ลบ </a>'
                     }
-                    data_array.push(data);
                 }
-                $("#price").html(price.toFixed(2).replace(/\B(?=(\d{3})+(?!\d))/g, ","));
-                $("#datatable-menu").DataTable().clear();
-                $("#datatable-menu").DataTable().rows.add(data_array).draw(false);
             }
         });
     }
@@ -296,6 +332,7 @@
                 swal("สำเร็จ", "เมนู " + $("#add_menu").val() + " ถูกเพิ่มเรียบร้อยแล้ว", "success");
                 $("#add_menu")[0].reset();
                 $("#addMenu").modal('toggle');
+                $("#showpic").attr('src','../images/default_image_upload.png');
                 refresh_table();
             }, error: function (result) {
                 swal("ไม่สำเร็จ", "ชื่อภาษาไทยหรืออังกฤษอาจซ้ำ กรุณาลองใหม่ในภายหลัง", "error");
@@ -308,12 +345,14 @@
         var object = $("#edit_menu").serialize();
         $.ajax({
             type: "POST",
-            data: object,
+            data: new FormData($("#edit_menu")[0]),
+            enctype: 'multipart/form-data',
+            cache: false,
             contentType: false,
             processData: false,
             url: "${contextPath}/menu/managemenu",
             success: function (result) {
-                swal("สำเร็จ", "เมนู " + $("#add_menu").val() + " ถูกแก้ไขเรียบร้อยแล้ว", "success");
+                swal("สำเร็จ", "เมนู " + $("#edit_menu").val() + " ถูกแก้ไขเรียบร้อยแล้ว", "success");
                 $("#edit_menu")[0].reset();
                 $("#editMenu").modal('toggle');
                 refresh_table();
@@ -333,12 +372,19 @@
                 $("#hiddenmenuno").val(result.menuNo);
                 $("#edit_menu_nameTH").val(result.menuNameTH);
                 $("#edit_menu_nameEN").val(result.menuNameEN);
+                $("#show_menu_name_for_edit").html(result.menuNameTH + " / " + result.menuNameEN);
                 $("#edit_menu_desc").val(result.menuDesc);
                 $("#edit_menu_price").val(result.menuPrice.toFixed(2));
                 $("#edit_menu_available").val(result.menuAvailable);
                 $("#edit_menu_stock_cat").val(result.menuCatNo);
-                $("#edit_menu_available").attr('checked',result.available);
-//                $("#edit_menu_pic").val(result.menuPicPath);
+                if(result.available){
+                    $("#edit_menu_available").parent().addClass('checked');
+                    $("#edit_menu_available").attr('checked',true);
+                }else{
+                    $("#edit_menu_available").parent().removeClass('checked');
+                    $("#edit_menu_available").attr('checked',false);
+                }
+                $("#showpic_edit").attr('src','../images/menu/' + result.menuPicPath);
             }
         });
     }
@@ -372,7 +418,10 @@
 </script>
 
 <style>
-    .thumbnail_inline{height:350px;overflow:hidden}
+    .thumbnail_inline {
+        height: 350px;
+        overflow: hidden
+    }
 </style>
 </body>
 </html>

@@ -37,13 +37,13 @@ public class MenuController {
     private StockCategoryService stockCategoryService;
 
     private static final String MENU_PATH = "/WEB-INF/menu/";
-    private static final String UPLOADED_FOLDER = System.getProperty("user.dir") + "\\src\\main\\webapp\\WEB-INF\\menu\\image\\";
+    private static final String UPLOADED_FOLDER = System.getProperty("user.dir") + "/src/main/webapp/images/menu/";
 
     //----------------------------------------------------------------------------------------------------------//
     @GetMapping("/menu")
     public String toMenuIndex(Model model) {
         List<MenuCategory> menuCategories = menuCategoryService.getMenuCategories();
-        model.addAttribute("menuCategories",menuCategories);
+        model.addAttribute("menuCategories", menuCategories);
         return MENU_PATH + "menu.jsp";
     }
 
@@ -61,17 +61,27 @@ public class MenuController {
     public void addAndEditMenu(@RequestParam("menuPicPath") MultipartFile file, HttpServletRequest request) throws IOException {
         Menu menu = new Menu();
         byte[] bytes = file.getBytes();
-        String filename = System.currentTimeMillis() + file.getOriginalFilename();
-        Path path = Paths.get(UPLOADED_FOLDER + filename);
-        Files.write(path, bytes);
+
+        if (request.getParameter("menuNo") != null) {
+            int menuNo = Integer.parseInt(request.getParameter("menuNo"));
+            menu = menuService.getMenuByMenuNo(menuNo);
+            menu.setMenuNo(menuNo);
+        }
+
+        if(!file.getOriginalFilename().equals("")) {
+            String filename = System.currentTimeMillis() + file.getOriginalFilename();
+            Path path = Paths.get(UPLOADED_FOLDER + filename);
+            Files.write(path, bytes);
+            menu.setMenuPicPath(filename);
+        }
+
         menu.setMenuNameTH(request.getParameter("menuNameTH"));
         menu.setMenuNameEN(request.getParameter("menuNameEN"));
         menu.setMenuPrice(Double.parseDouble(request.getParameter("menuPrice")));
         menu.setMenuDesc(request.getParameter("menuDesc"));
         menu.setMenuCatNo(Integer.parseInt(request.getParameter("menuCatNo")));
-        menu.setMenuPicPath(filename);
         menu.setAvailable(request.getParameter("menuAvailable") == null ? false : true);
-        if(request.getParameter("menuNo") != null){
+        if (request.getParameter("menuNo") != null) {
             menu.setMenuNo(Integer.parseInt(request.getParameter("menuNo")));
         }
         menuService.save(menu);
@@ -87,7 +97,7 @@ public class MenuController {
     @ResponseBody
     @PutMapping("/getmenu/{menuNo}")
     public String getMenu(@PathVariable("menuNo") int menuNo) throws JsonProcessingException {
-        Menu menu = menuService.getMenuCategory(menuNo);
+        Menu menu = menuService.getMenuByMenuNo(menuNo);
         ObjectMapper mapper = new ObjectMapper();
         String json = mapper.writeValueAsString(menu);
         return json;

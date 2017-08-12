@@ -104,7 +104,7 @@
                                     <div class="modal-header">
                                         <!-- ปุ่มกดปิด (X) ตรงส่วนหัวของ Modal -->
                                         <button type="button" class="close" data-dismiss="modal">&times;</button>
-                                        <h4 class="modal-title">แก้ไขประเภทเมนูอาหาร</h4>
+                                        <h4 class="modal-title">แก้ไขประเภทเมนูอาหาร <span id="show_menu_cat_name_for_edit"></span></h4>
                                     </div>
                                     <!-- ส่วนเนื้อหาของ Modal -->
                                     <div class="modal-body">
@@ -187,7 +187,7 @@
                 for (var i=0; i<json.length; i++){
                     var obj = json[i];
                     var data = {
-                        menuCatName: obj.menuCatNameTH +" / "+ obj.menuCatNameEN,
+                        menuCatName: '<b style="cursor:pointer" onclick = "set_menu_category(' + obj.menuCatNo + ')" data-toggle = "modal" data-target = "#editMenuCat">' + obj.menuCatNameTH +" / "+ obj.menuCatNameEN + '</b>',
                         group: obj.stockCategory.stockCatName,
                         option: '<a onclick = "set_menu_category(' + obj.menuCatNo + ')" class = "btn btn-warning btn-sm" data-toggle = "modal" data-target = "#editMenuCat"> <i class = "fa fa-pencil"> </i> &nbsp; แก้ไข </a>' +
                         '<a onclick = "del_menu_category(' + obj.menuCatNo+ ',\'' + obj.menuCatNameTH +'\')" class = "btn btn-danger btn-sm"> <i class = "fa fa-trash"></i> &nbsp; ลบ </a>'
@@ -246,6 +246,7 @@
                 $("#edit_menu_cat_nameTH").val(result.menuCatNameTH);
                 $("#edit_menu_cat_nameEN").val(result.menuCatNameEN);
                 $("#edit_stock_cat_no").val(result.stockCatNo);
+                $("#show_menu_cat_name_for_edit").html(result.menuCatNameTH + " / " + result.menuCatNameEN);
             }
         });
     }
