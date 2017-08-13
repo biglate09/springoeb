@@ -32,6 +32,13 @@
                                     <a data-toggle="modal" data-target="#addMenu"
                                        class="btn btn-success btn-sm"><i class="fa fa-plus-circle"></i>&nbsp;
                                         เพิ่มเมนู</a>
+                                    เลือกประเภทเมนู :
+                                    <select id="filter_by_category">
+                                        <option value="0">ทั้งหมด</option>
+                                        <c:forEach items="${menuCategories}" var="mc">
+                                            <option value="${mc.menuCatNo}">${mc.menuCatNameTH}</option>
+                                        </c:forEach>
+                                    </select>
                                 </p>
                                 <div id="menu_thumbnail">
 
@@ -132,7 +139,8 @@
                                 <div class="modal-header">
                                     <!-- ปุ่มกดปิด (X) ตรงส่วนหัวของ Modal -->
                                     <button type="button" class="close" data-dismiss="modal">&times;</button>
-                                    <h4 class="modal-title">แก้ไขเมนูอาหาร <span id="show_menu_name_for_edit"></span></h4>
+                                    <h4 class="modal-title">แก้ไขเมนูอาหาร <span id="show_menu_name_for_edit"></span>
+                                    </h4>
                                 </div>
                                 <!-- ส่วนเนื้อหาของ Modal -->
                                 <div class="modal-body">
@@ -266,6 +274,7 @@
             }
         });
 
+        $("#filter_by_category").change(refresh_table);
 
         refresh_table();
     });
@@ -273,7 +282,7 @@
     function refresh_table() {
         $.ajax({
             type: "POST",
-            url: "${contextPath}/menu/getmenus",
+            url: "${contextPath}/menu/getmenus/"+$("#filter_by_category").val(),
             dataType: "json",
             success: function (json) {
                 //remove
@@ -286,18 +295,25 @@
                             <div class="thumbnail_inline">\
                         <div class="image view view-first">\
                         <img style="width: 100%; display: block;"\
-                    src="../images/menu/'+obj.menuPicPath+'" alt="image"/>\
+                    src="../images/menu/' + obj.menuPicPath + '" alt="image"/>\
                         <div class="mask">\
-                        <div style="color:#fff;text-align:center;font-size:17px;">\
-                        <a data-toggle="modal" data-target="#editMenu" onclick="set_menu('+obj.menuNo+')" style="color:white;">\
-                        <i class="fa fa-pencil"></i></a>\
-                        <a onclick="del_menu('+obj.menuNo+',\''+obj.menuNameTH+'\')" style="color:white;"><i class="fa fa-times"></i></a>\
+                        <p>' + obj.menuDesc + '</p>\
+                        <div class="tools tools-bottom">\
+                        <a title="แก้ไข" data-toggle="modal" data-target="#editMenu" onclick="set_menu(' + obj.menuNo + ')" style="color:white;cursor:pointer;margin-right:5px;"><i class="fa fa-pencil"></i></a>\
+                        <a title="พร้อมจำหน่าย" onclick="change_available(' + obj.menuNo + ')" style="color:white;cursor:pointer;margin-right:5px;"><i class="fa ' + (obj.available == true ? 'fa-eye' : 'fa-eye-slash' ) + '"></i></a>\
+                        <a title="ลบ" onclick="del_menu(' + obj.menuNo + ',\'' + obj.menuNameTH + '\')" style="color:white;cursor:pointer;"><i class="fa fa-trash"></i></a>\
                         </div>\
                         </div>\
                         </div>\
                         <div class="caption">\
-                        <p style="text-align:center">'+obj.menuNameTH + " / " + obj.menuNameEN+'</p>\
-                        <p style="text-align:center">'+obj.menuPrice.toFixed(2).replace(/\B(?=(\d{3})+(?!\d))/g, ",") + " บาท"+'</p>\
+                        <p style="text-align:center;font-weight:bold;white-space:nowrap;overflow:hidden;text-overflow: ellipsis;cursor:pointer;" data-toggle="modal" data-target="#editMenu" onclick="set_menu(' + obj.menuNo + ')">' + obj.menuNameTH + " / " + obj.menuNameEN + '</p>\
+                        <p style="text-align:center;white-space: nowrap;overflow:hidden;text-overflow: ellipsis;">ประเภท : ' + obj.menuCategory.menuCatNameTH + '</p>\
+                        <p style="text-align:center">' + obj.menuPrice.toFixed(2).replace(/\B(?=(\d{3})+(?!\d))/g, ",") + " บาท" + '</p>\
+                        <div style="text-align:center;">\
+                        <a title="แก้ไข" data-toggle="modal" data-target="#editMenu" onclick="set_menu(' + obj.menuNo + ')" style="color:#73879C;cursor:pointer;margin-right:5px;"><i class="fa fa-pencil"></i></a>\
+                        <a title="พร้อมจำหน่าย" onclick="change_available(' + obj.menuNo + ')" style="color:#73879C;cursor:pointer;margin-right:5px;"><i class="fa ' + (obj.available == true ? 'fa-eye' : 'fa-eye-slash' ) + '"></i></a>\
+                        <a title="ลบ" onclick="del_menu(' + obj.menuNo + ',\'' + obj.menuNameTH + '\')" style="color:#73879C;cursor:pointer;"><i class="fa fa-trash"></i></a>\
+                        </div>\
                         </div>\
                         </div>\
                         </div>\
@@ -305,15 +321,15 @@
 
                     $("#menu_thumbnail").append(div);
 
-                    var data = {
-                        menuPicPath: obj.menuPicPath,
-                        menuName: obj.menuNameTH + " / " + obj.menuNameEN,
-                        menuDesc: obj.menuDesc,
-                        menuPrice: obj.menuPrice.toFixed(2).replace(/\B(?=(\d{3})+(?!\d))/g, ",") + " บาท",
-                        group: obj.menuCategory.menuCatNameTH + " / " + obj.menuCategory.menuCatNameEN,
-                        option: '<a onclick = "set_menu(' + obj.menuNo + ')" class = "btn btn-warning btn-sm" data-toggle = "modal" data-target = "#editMenu"> <i class = "fa fa-pencil"> </i> &nbsp; แก้ไข </a>' +
-                        '<a onclick = "del_menu(' + obj.menuNo + ',\'' + obj.menuNameTH + '\')" class = "btn btn-danger btn-sm"> <i class = "fa fa-trash"></i> &nbsp; ลบ </a>'
-                    }
+//                    var data = {
+//                        menuPicPath: obj.menuPicPath,
+//                        menuName: obj.menuNameTH + " / " + obj.menuNameEN,
+//                        menuDesc: obj.menuDesc,
+//                        menuPrice: obj.menuPrice.toFixed(2).replace(/\B(?=(\d{3})+(?!\d))/g, ",") + " บาท",
+//                        group: obj.menuCategory.menuCatNameTH + " / " + obj.menuCategory.menuCatNameEN,
+//                        option: '<a onclick = "set_menu(' + obj.menuNo + ')" class = "btn btn-warning btn-sm" data-toggle = "modal" data-target = "#editMenu"> <i class = "fa fa-pencil"> </i> &nbsp; แก้ไข </a>' +
+//                        '<a onclick = "del_menu(' + obj.menuNo + ',\'' + obj.menuNameTH + '\')" class = "btn btn-danger btn-sm"> <i class = "fa fa-trash"></i> &nbsp; ลบ </a>'
+//                    }
                 }
             }
         });
@@ -332,7 +348,9 @@
                 swal("สำเร็จ", "เมนู " + $("#add_menu").val() + " ถูกเพิ่มเรียบร้อยแล้ว", "success");
                 $("#add_menu")[0].reset();
                 $("#addMenu").modal('toggle');
-                $("#showpic").attr('src','../images/default_image_upload.png');
+                $("#showpic").attr('src', '../images/default_image_upload.png');
+                $("#add_menu_available").parent().removeClass('checked');
+                $("#add_menu_available").attr('checked', false);
                 refresh_table();
             }, error: function (result) {
                 swal("ไม่สำเร็จ", "ชื่อภาษาไทยหรืออังกฤษอาจซ้ำ กรุณาลองใหม่ในภายหลัง", "error");
@@ -352,7 +370,7 @@
             processData: false,
             url: "${contextPath}/menu/managemenu",
             success: function (result) {
-                swal("สำเร็จ", "เมนู " + $("#edit_menu").val() + " ถูกแก้ไขเรียบร้อยแล้ว", "success");
+                swal("สำเร็จ", "เมนูนี้ถูกแก้ไขเรียบร้อยแล้ว", "success");
                 $("#edit_menu")[0].reset();
                 $("#editMenu").modal('toggle');
                 refresh_table();
@@ -377,14 +395,14 @@
                 $("#edit_menu_price").val(result.menuPrice.toFixed(2));
                 $("#edit_menu_available").val(result.menuAvailable);
                 $("#edit_menu_stock_cat").val(result.menuCatNo);
-                if(result.available){
+                if (result.available) {
                     $("#edit_menu_available").parent().addClass('checked');
-                    $("#edit_menu_available").attr('checked',true);
-                }else{
+                    $("#edit_menu_available").attr('checked', true);
+                } else {
                     $("#edit_menu_available").parent().removeClass('checked');
-                    $("#edit_menu_available").attr('checked',false);
+                    $("#edit_menu_available").attr('checked', false);
                 }
-                $("#showpic_edit").attr('src','../images/menu/' + result.menuPicPath);
+                $("#showpic_edit").attr('src', '../images/menu/' + result.menuPicPath);
             }
         });
     }
@@ -415,11 +433,25 @@
                 });
             });
     }
+
+    function change_available(menuno) {
+        $.ajax({
+            type: "POST",
+            data: {menuno: menuno},
+            url: "${contextPath}/menu/changeavailable",
+            success: function (result) {
+//                swal("สำเร็จ", "แก้ไขความพร้อมจำหน่ายเรียบร้อยแล้ว", "success");
+                refresh_table();
+            }, error: function (result) {
+                swal("ไม่สำเร็จ", "กรุณาลองใหม่ภายหลัง", "error");
+            }
+        });
+    }
 </script>
 
 <style>
     .thumbnail_inline {
-        height: 350px;
+        height: 250px;
         overflow: hidden
     }
 </style>
