@@ -15,7 +15,7 @@ import org.springframework.web.multipart.MultipartFile;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.transaction.Transactional;
-import java.io.IOException;
+import java.io.*;
 import java.nio.file.Files;
 import java.nio.file.Path;
 import java.nio.file.Paths;
@@ -39,7 +39,7 @@ public class MenuController {
     private static final String MENU_PATH = "/WEB-INF/menu/";
     private static final String UPLOADED_FOLDER = System.getProperty("user.dir") + "/src/main/webapp/images/menu/";
 
-    //----------------------------------------------------------------------------------------------------------//
+    //-------------------------------------z---------------------------------------------------------------------//
     @GetMapping("/menu")
     public String toMenuIndex(Model model) {
         List<MenuCategory> menuCategories = menuCategoryService.getMenuCategories();
@@ -66,18 +66,25 @@ public class MenuController {
     public void addAndEditMenu(@RequestParam("menuPicPath") MultipartFile file, HttpServletRequest request) throws IOException {
         Menu menu = new Menu();
         byte[] bytes = file.getBytes();
+        Integer menuNo = request.getParameter("menuNo") != null ? Integer.parseInt(request.getParameter("menuNo")) : null;
 
-        if (request.getParameter("menuNo") != null) {
-            int menuNo = Integer.parseInt(request.getParameter("menuNo"));
+        if (menuNo != null) {
             menu = menuService.getMenuByMenuNo(menuNo);
             menu.setMenuNo(menuNo);
         }
 
         if (!file.getOriginalFilename().equals("")) {
+            //pic path before change
+            String menuPicPath = menuService.getMenuByMenuNo(menuNo).getMenuPicPath();
+
             String filename = System.currentTimeMillis() + file.getOriginalFilename();
             Path path = Paths.get(UPLOADED_FOLDER + filename);
             Files.write(path, bytes);
             menu.setMenuPicPath(filename);
+            if(request.getParameter("menuNo") != null){
+                File picFile = new File(UPLOADED_FOLDER + "/" + menuPicPath);
+                picFile.delete();
+            }
         }
 
         menu.setMenuNameTH(request.getParameter("menuNameTH"));
@@ -104,7 +111,10 @@ public class MenuController {
     @ResponseBody
     @DeleteMapping("/delmenu/{menuNo}")
     public void delMenu(@PathVariable("menuNo") int menuNo) {
+        String menuPicPath = menuService.getMenuByMenuNo(menuNo).getMenuPicPath();
         menuService.delMenu(menuNo);
+        File file = new File(UPLOADED_FOLDER + "/" + menuPicPath);
+        file.delete();
     }
 
     @ResponseBody

@@ -28,18 +28,21 @@
                         </div>
                         <div class="x_content">
                             <form action="#">
-                                <p>
+                                <div class="col-md-9" style="padding:0px;">
                                     <a data-toggle="modal" data-target="#addMenu"
                                        class="btn btn-success btn-sm"><i class="fa fa-plus-circle"></i>&nbsp;
                                         เพิ่มเมนู</a>
-                                    เลือกประเภทเมนู :
-                                    <select id="filter_by_category">
+                                </div>
+                                <div class="col-md-3 form-group has-feedback" style="padding:0px;">
+                                    <label>ค้นหาจากประเภทอาหาร</label>
+                                    <select class="form-control" id="filter_by_category">
                                         <option value="0">ทั้งหมด</option>
                                         <c:forEach items="${menuCategories}" var="mc">
-                                            <option value="${mc.menuCatNo}">${mc.menuCatNameTH}</option>
+                                            <option value="${mc.menuCatNo}">${mc.menuCatNameTH}
+                                                / ${mc.menuCatNameEN}</option>
                                         </c:forEach>
                                     </select>
-                                </p>
+                                </div>
                                 <div id="menu_thumbnail">
 
                                 </div>
@@ -282,17 +285,17 @@
     function refresh_table() {
         $.ajax({
             type: "POST",
-            url: "${contextPath}/menu/getmenus/"+$("#filter_by_category").val(),
+            url: "${contextPath}/menu/getmenus/" + $("#filter_by_category").val(),
             dataType: "json",
             success: function (json) {
                 //remove
                 $("#menu_thumbnail").empty();
-
-                for (var i = 0; i < json.length; i++) {
-                    var obj = json[i];
-                    var div = '\
+                if (json.length != 0) {
+                    for (var i = 0; i < json.length; i++) {
+                        var obj = json[i];
+                        var div = '\
                         <div class="col-md-55">\
-                            <div class="thumbnail_inline">\
+                        <div class="thumbnail thumbnail_inline">\
                         <div class="image view view-first">\
                         <img style="width: 100%; display: block;"\
                     src="../images/menu/' + obj.menuPicPath + '" alt="image"/>\
@@ -305,7 +308,7 @@
                         </div>\
                         </div>\
                         </div>\
-                        <div class="caption">\
+                        <div class="caption" style="color:#73879C">\
                         <p style="text-align:center;font-weight:bold;white-space:nowrap;overflow:hidden;text-overflow: ellipsis;cursor:pointer;" data-toggle="modal" data-target="#editMenu" onclick="set_menu(' + obj.menuNo + ')">' + obj.menuNameTH + " / " + obj.menuNameEN + '</p>\
                         <p style="text-align:center;white-space: nowrap;overflow:hidden;text-overflow: ellipsis;">ประเภท : ' + obj.menuCategory.menuCatNameTH + '</p>\
                         <p style="text-align:center">' + obj.menuPrice.toFixed(2).replace(/\B(?=(\d{3})+(?!\d))/g, ",") + " บาท" + '</p>\
@@ -318,18 +321,14 @@
                         </div>\
                         </div>\
                         ';
-
-                    $("#menu_thumbnail").append(div);
-
-//                    var data = {
-//                        menuPicPath: obj.menuPicPath,
-//                        menuName: obj.menuNameTH + " / " + obj.menuNameEN,
-//                        menuDesc: obj.menuDesc,
-//                        menuPrice: obj.menuPrice.toFixed(2).replace(/\B(?=(\d{3})+(?!\d))/g, ",") + " บาท",
-//                        group: obj.menuCategory.menuCatNameTH + " / " + obj.menuCategory.menuCatNameEN,
-//                        option: '<a onclick = "set_menu(' + obj.menuNo + ')" class = "btn btn-warning btn-sm" data-toggle = "modal" data-target = "#editMenu"> <i class = "fa fa-pencil"> </i> &nbsp; แก้ไข </a>' +
-//                        '<a onclick = "del_menu(' + obj.menuNo + ',\'' + obj.menuNameTH + '\')" class = "btn btn-danger btn-sm"> <i class = "fa fa-trash"></i> &nbsp; ลบ </a>'
-//                    }
+                        $("#menu_thumbnail").append(div);
+                    }
+                } else {
+                    $("#menu_thumbnail").append('\
+                    <div class="well" style="overflow: auto">\
+                        <p style="text-align:center;font-weight:bold;"> ไม่พบข้อมูลเมนูอาหารแบบเดี่ยว จากการค้นหาประเภทอาหาร ' + $("#filter_by_category option:selected").text() + ' </p>\
+                    </div>\
+                    ');
                 }
             }
         });
@@ -451,8 +450,7 @@
 
 <style>
     .thumbnail_inline {
-        height: 250px;
-        overflow: hidden
+        height: 250px !important;
     }
 </style>
 </body>
