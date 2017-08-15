@@ -86,13 +86,13 @@ public class MenuController {
 
         if (!menuService.chkDuplicateMenu(menu)) {
             if (!file.getOriginalFilename().equals("")) {
+                String menuPicPath = menuService.getMenuByMenuNo(menuNo).getMenuPicPath();
                 //pic path before change
                 String filename = System.currentTimeMillis() + file.getOriginalFilename();
                 Path path = Paths.get(UPLOADED_FOLDER + filename);
                 Files.write(path, bytes);
                 menu.setMenuPicPath(filename);
                 if (request.getParameter("menuNo") != null) {
-                    String menuPicPath = menuService.getMenuByMenuNo(menuNo).getMenuPicPath();
                     File picFile = new File(UPLOADED_FOLDER + "/" + menuPicPath);
                     picFile.delete();
                 }

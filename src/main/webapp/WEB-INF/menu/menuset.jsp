@@ -1,5 +1,5 @@
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
-<%@ taglib prefix="fmt" uri="http://java.sun.com/jstl/fmt" %>
+<%@ taglib prefix = "fmt" uri = "http://java.sun.com/jsp/jstl/fmt" %>
 <%@page contentType="text/html" pageEncoding="UTF-8" %>
 <c:set var="contextPath" value="${pageContext.request.contextPath}"/>
 <!DOCTYPE html>
@@ -111,8 +111,7 @@
                                                             <c:forEach items="${menus}" var="m">
                                                                 <tr>
                                                                     <td>${m.menuNameTH} / ${m.menuNameEN}</td>
-                                                                    <c:set value="${m.menuPrice}" var="menuPrice" />
-                                                                    <td><fmt:formatNumber value="${menuPrice}" pattern="#,###,##0.00"></fmt:formatNumber></td>
+                                                                    <td><fmt:formatNumber value="${m.menuPrice}" pattern="#,###,##0.00"></fmt:formatNumber></td>
                                                                     <td><input type="number" name="quantity" class="form-control bfh-number" min="0" value="0"></td>
                                                                 </tr>
                                                             </c:forEach>
