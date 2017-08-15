@@ -68,7 +68,7 @@
                                                      src="../images/default_image_upload.png"/>
                                                 <div class="col-md-offset-3 col-sm-offset-3 col-md-6 col-sm-6 col-xs-12 has-feedback"
                                                      style="margin-bottom: 12px">
-                                                    <input type="file" accept="image/x-png,image/gif,image/jpeg"
+                                                    <input type="file" accept="image/*"
                                                            class="form-control" name="menuPicPath"
                                                            id="add_menu_pic"
                                                            onchange="document.getElementById('showpic').src = window.URL.createObjectURL(this.files[0])"
@@ -165,7 +165,7 @@
 
                                             <div class="col-md-offset-3 col-sm-offset-3 col-md-6 col-sm-6 col-xs-12 has-feedback"
                                                  style="margin-bottom: 12px">
-                                                <input type="file" accept="image/x-png,image/gif,image/jpeg"
+                                                <input type="file" accept="image/*"
                                                        class="form-control" name="menuPicPath"
                                                        id="edit_menu_pic"
                                                        onchange="document.getElementById('showpic_edit').src = window.URL.createObjectURL(this.files[0])"
