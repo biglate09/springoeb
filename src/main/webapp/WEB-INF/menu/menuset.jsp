@@ -1,11 +1,12 @@
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
+<%@ taglib prefix="fmt" uri="http://java.sun.com/jstl/fmt" %>
 <%@page contentType="text/html" pageEncoding="UTF-8" %>
 <c:set var="contextPath" value="${pageContext.request.contextPath}"/>
 <!DOCTYPE html>
 <html>
 <head>
     <jsp:include page="../_include/topenv.jsp"/>
-    <title>เมนูอาหารแบบเดี่ยว</title>
+    <title>เมนูอาหารแบบชุด</title>
 </head>
 <body class="nav-md">
 <div class="container body">
@@ -24,125 +25,141 @@
                 <div class="col-md-12 col-sm-12 col-xs-12">
                     <div class="x_panel">
                         <div class="x_title">
-                            <h4>เมนูอาหารแบบเดี่ยว</h4>
+                            <h4>เมนูอาหารแบบชุด</h4>
                         </div>
                         <div class="x_content">
                             <form action="#">
-                                <div class="col-md-9" style="padding:0px;">
-                                    <a data-toggle="modal" data-target="#addMenu"
+                                <p>
+                                    <a data-toggle="modal" data-target="#addMenuSet"
                                        class="btn btn-success btn-sm"><i class="fa fa-plus-circle"></i>&nbsp;
-                                        เพิ่มเมนู</a>
-                                </div>
-                                <div class="col-md-3 form-group has-feedback" style="padding:0px;">
-                                    <label>ค้นหาจากประเภทอาหาร</label>
-                                    <select class="form-control" id="filter_by_category">
-                                        <option value="0">ทั้งหมด</option>
-                                        <c:forEach items="${menuCategories}" var="mc">
-                                            <option value="${mc.menuCatNo}">${mc.menuCatNameTH}
-                                                / ${mc.menuCatNameEN}</option>
-                                        </c:forEach>
-                                    </select>
-                                </div>
-                                <div id="menu_thumbnail">
+                                        เพิ่มชุดเมนู</a>
+                                </p>
 
+                                <div class="col-md-55">
+                                    <div class="thumbnail_inline">
+                                        <div class="image view view-first">
+                                            <img style="width: 100%; display: block;" src="../images/default_image_upload.png" alt="image" />
+                                            <div class="mask">
+                                                <div class="" style="color:#fff;text-align:center;font-size:17px;">
+                                                    <a data-toggle="modal" data-target="#editMenuSet" style="color:white;"><i class="fa fa-pencil"></i></a>
+                                                    <a href="#" style="color:white;"><i class="fa fa-times"></i></a>
+                                                </div>
+                                            </div>
+                                        </div>
+                                        <div class="caption">
+                                            <p style="">Name</p>
+                                            <p style="">Price</p>
+                                            <p style="">Description</p>
+                                        </div>
+                                    </div>
                                 </div>
                             </form>
-                        </div>
-                        <div class="modal fade" id="addMenu" role="dialog">
-                            <div class="modal-dialog modal-lg">
-                                <!-- เนือหาของ Modal ทั้งหมด -->
-                                <div class="modal-content">
-                                    <!-- ส่วนหัวของ Modal -->
-                                    <div class="modal-header">
-                                        <!-- ปุ่มกดปิด (X) ตรงส่วนหัวของ Modal -->
-                                        <button type="button" class="close" data-dismiss="modal">&times;</button>
-                                        <h4 class="modal-title">เพิ่มเมนูอาหารใหม่</h4>
-                                    </div>
-                                    <!-- ส่วนเนื้อหาของ Modal -->
-                                    <div class="modal-body">
-                                        <form class="form-horizontal form-label-left input_mask" modelAttribute="menu"
-                                              id="add_menu" enctype="multipart/form-data">
-                                            <div class="form-group">
-                                                <img class="col-md-offset-3 col-sm-offset-3 col-md-6 col-sm-6 col-xs-12 img-resize"
-                                                     id="showpic" style="margin-bottom:20px;" height="auto" width="414"
-                                                     src="../images/default_image_upload.png"/>
-                                                <div class="col-md-offset-3 col-sm-offset-3 col-md-6 col-sm-6 col-xs-12 has-feedback"
-                                                     style="margin-bottom: 12px">
-                                                    <input type="file" accept="image/*"
-                                                           class="form-control" name="menuPicPath"
-                                                           id="add_menu_pic"
-                                                           onchange="document.getElementById('showpic').src = window.URL.createObjectURL(this.files[0])"
-                                                           placeholder="อัพโหลดรูปภาพ" required>
-                                                </div>
-                                                <div class="col-md-6 col-sm-6 col-xs-12 form-group has-feedback">
-                                                    <label>ชื่อเมนูอาหารภาษาไทย</label>
-                                                    <input type="text" class="form-control" name="menuNameTH"
-                                                           id="add_menu_nameTH"
-                                                           placeholder="ชื่อเมนูอาหารภาษาไทย" required>
-                                                    <span class="fa fa-pencil form-control-feedback right"
-                                                          aria-hidden="true"></span>
-                                                </div>
-                                                <div class="col-md-6 col-sm-6 col-xs-12 form-group has-feedback">
-                                                    <label>ชื่อเมนูอาหารภาษาอังกฤษ</label>
-                                                    <input type="text" class="form-control" name="menuNameEN"
-                                                           id="add_menu_nameEN"
-                                                           placeholder="ชื่อเมนูอาหารภาษาอังกฤษ" required>
-                                                    <span class="fa fa-pencil form-control-feedback right"
-                                                          aria-hidden="true"></span>
-                                                </div>
-                                                <div class="col-md-6 col-sm-6 col-xs-12 form-group has-feedback">
-                                                    <label>ราคา (บาท)</label>
-                                                    <input type="number" class="form-control" name="menuPrice"
-                                                           id="add_menu_price"
-                                                           placeholder="ราคา" min="0" step="0.25" required>
-                                                    <span class="fa fa-money form-control-feedback right"
-                                                          aria-hidden="true"></span>
-                                                </div>
-                                                <div class="col-md-6 col-sm-6 col-xs-12 form-group has-feedback">
-                                                    <label>ประเภทของเมนู</label>
-                                                    <select name="menuCatNo" id="add_menu_stock_cat"
-                                                            class="form-control" required>
-                                                        <option disabled selected>เลือกประเภทเมนู</option>
-                                                        <c:forEach items="${menuCategories}" var="mc">
-                                                            <option value="${mc.menuCatNo}">${mc.menuCatNameTH}</option>
-                                                        </c:forEach>
-                                                    </select>
-                                                </div>
-                                                <div class="col-md-12 col-sm-12 col-xs-12 form-group has-feedback">
-                                                    <label>รายละเอียดของเมนู</label>
-                                                    <textarea rows="4" cols="100" class="form-control" name="menuDesc"
-                                                              id="add_menu_desc"
-                                                              placeholder="รายละเอียด" required></textarea>
-                                                </div>
-
-
+                                <div class="modal fade" id="addMenuSet" role="dialog">
+                                    <div class="modal-dialog">
+                                        <!-- เนือหาของ Modal ทั้งหมด -->
+                                        <div class="modal-content modal-body-test">
+                                            <!-- ส่วนหัวของ Modal -->
+                                            <div class="modal-header">
+                                                <!-- ปุ่มกดปิด (X) ตรงส่วนหัวของ Modal -->
+                                                <button type="button" class="close" data-dismiss="modal">&times;</button>
+                                                <h4 class="modal-title">เพิ่มชุดเมนูอาหารใหม่</h4>
                                             </div>
-                                            <div class="modal-footer">
-                                                <!-- ปุ่มกดปิด (Close) ตรงส่วนล่างของ Modal -->
-                                                <div class="col-md-9 col-sm-9 col-xs-12 col-md-offset-3">
-                                                    <div class="checkbox" style="display:inline-block">
-                                                        <label>
-                                                            <input type="checkbox" name="menuAvailable"
-                                                                   id="add_menu_available"
-                                                                   class="flat">
-                                                            พร้อมจำหน่าย
-                                                        </label>
+                                            <!-- ส่วนเนื้อหาของ Modal -->
+                                            <div class="modal-body">
+                                                <form class="form-horizontal form-label-left input_mask" modelAttribute="menuset"
+                                                      id="add_menuset" enctype="multipart/form-data">
+                                                    <div class="form-group">
+                                                        <img class="col-md-offset-3 col-sm-offset-3 col-md-6 col-sm-6 col-xs-12 img-resize" id="showpic_menuset"  height="auto" width="414" src="../images/default_image_upload.png" />
+
+                                                        <div class="col-md-offset-3 col-sm-offset-3 col-md-6 col-sm-6 col-xs-12 has-feedback" style="margin-bottom: 12px">
+                                                            <input type="file" class="form-control" name="menuSetPicPath"
+                                                                   id="add_menuset__pic" onchange="document.getElementById('showpic_menuset').src = window.URL.createObjectURL(this.files[0])"
+                                                                   placeholder="อัพโหลดรูปภาพ" >
+                                                        </div>
+
+                                                        <div class="col-md-6 col-sm-6 col-xs-12 form-group has-feedback">
+                                                            <label>ชื่อเมนูอาหารภาษาไทย</label>
+                                                            <input type="text" class="form-control" name="menuSetNameTH"
+                                                                   id="add_menuset_nameTH"
+                                                                   placeholder="ชื่อเมนูอาหารภาษาไทย" required>
+                                                            <span class="fa fa-pencil form-control-feedback right"
+                                                                  aria-hidden="true"></span>
+                                                        </div>
+                                                        <div class="col-md-6 col-sm-6 col-xs-12 form-group has-feedback">
+                                                            <label>ชื่อเมนูอาหารภาษาอังกฤษ</label>
+                                                            <input type="text" class="form-control" name="menuSetNameEN"
+                                                                   id="add_menuset_nameEN"
+                                                                   placeholder="ชื่อเมนูอาหารภาษาอังกฤษ" required>
+                                                            <span class="fa fa-pencil form-control-feedback right"
+                                                                  aria-hidden="true"></span>
+                                                        </div>
+
+                                                        <div class="col-md-12">
+                                                            <h4 class="modal-title" style="text-align:center;margin-bottom:10px;margin-top: 10px">
+                                                                เลือกเมนู</h4>
+
+                                                        <table id="datatable-addmenuset" class="table table-striped table-bordered">
+                                                            <thead>
+                                                            <tr>
+                                                                <th class="table-rows">ชื่อเมนู</th>
+                                                                <th class="table-rows">ราคา</th>
+                                                                <th class="table-rows">จำนวน</th>
+                                                            </tr>
+
+                                                            </thead>
+                                                            <tbody style="text-align: center;">
+                                                            <c:forEach items="${menus}" var="m">
+                                                                <tr>
+                                                                    <td>${m.menuNameTH} / ${m.menuNameEN}</td>
+                                                                    <c:set value="${m.menuPrice}" var="menuPrice" />
+                                                                    <td><fmt:formatNumber value="${menuPrice}" pattern="#,###,##0.00"></fmt:formatNumber></td>
+                                                                    <td><input type="number" name="quantity" class="form-control bfh-number" min="0" value="0"></td>
+                                                                </tr>
+                                                            </c:forEach>
+                                                            </tbody>
+                                                        </table>
+                                                        </div>
+                                                            <div class="col-md-6 col-md-offset-6 form-group has-feedback" style="text-align:left;">
+                                                                ราคาทั้งหมด : <span id="total_price" style="font-weight: bold;"></span> บาท
+                                                            </div>
+
+                                                        <div class="col-md-6 col-sm-6 col-xs-12 form-group has-feedback">
+                                                            <label>ราคา (บาท)</label>
+                                                            <input type="number" class="form-control" name="menuSetPrice"
+                                                                   id="add_menuset_price"
+                                                                   placeholder="ราคา" min="0" step="0.25" required>
+                                                            <span class="fa fa-money form-control-feedback right"
+                                                                  aria-hidden="true"></span>
+                                                        </div>
+
                                                     </div>
-                                                    <button type="submit" style="margin-left:5px;"
-                                                            class="btn btn-success">ตกลง
-                                                    </button>
-                                                    <button type="button" class="btn btn-default" data-dismiss="modal">
-                                                        ยกเลิก
-                                                    </button>
-                                                </div>
+                                                    <div class="modal-footer">
+                                                        <!-- ปุ่มกดปิด (Close) ตรงส่วนล่างของ Modal -->
+                                                        <div class="col-md-9 col-sm-9 col-xs-12 col-md-offset-3">
+                                                            <div class="checkbox" style="display:inline-block">
+                                                                <label>
+                                                                    <input type="checkbox" name="menuAvailable"
+                                                                           id="add_menuset_available"
+                                                                           class="flat">
+                                                                    พร้อมจำหน่าย
+                                                                </label>
+                                                            </div>
+                                                            <button type="submit" style="margin-left:5px;"
+                                                                    class="btn btn-success">ตกลง
+                                                            </button>
+                                                            <button type="button" class="btn btn-default" data-dismiss="modal">
+                                                                ยกเลิก
+                                                            </button>
+                                                        </div>
+                                                    </div>
+                                                </form>
                                             </div>
-                                        </form>
+                                        </div>
                                     </div>
                                 </div>
-                            </div>
                         </div>
                     </div>
-                    <div class="modal fade" id="editMenu" role="dialog">
+                    <div class="modal fade" id="editMenuSet" role="dialog">
                         <div class="modal-dialog modal-lg">
                             <!-- เนือหาของ Modal ทั้งหมด -->
                             <div class="modal-content">
@@ -150,67 +167,70 @@
                                 <div class="modal-header">
                                     <!-- ปุ่มกดปิด (X) ตรงส่วนหัวของ Modal -->
                                     <button type="button" class="close" data-dismiss="modal">&times;</button>
-                                    <h4 class="modal-title">แก้ไขเมนูอาหาร <span id="show_menu_name_for_edit"></span>
-                                    </h4>
+                                    <h4 class="modal-title">แก้ไขชุดเมนูอาหาร</h4>
                                 </div>
                                 <!-- ส่วนเนื้อหาของ Modal -->
                                 <div class="modal-body">
-                                    <form class="form-horizontal form-label-left input_mask" modelAttribute="menu"
-                                          id="edit_menu" enctype="multipart/form-data">
-                                        <input type="hidden" name="menuNo" id="hiddenmenuno">
+                                    <form class="form-horizontal form-label-left input_mask" modelAttribute="menuset"
+                                          id="edit_menuset" enctype="multipart/form-data">
+                                        <input type="hidden" name="menuSetNo" id="hiddenmenusetno">
                                         <div class="form-group">
-                                            <img class="col-md-offset-3 col-sm-offset-3 col-md-6 col-sm-6 col-xs-12 img-resize"
-                                                 style="margin-bottom:20px;" id="showpic_edit" width="414" height="auto"
-                                                 src="../images/default_image_upload.png"/>
+                                            <img class="col-md-offset-3 col-sm-offset-3 col-md-6 col-sm-6 col-xs-12 img-resize" id="showpic_menuset_edit"  width="414" height="auto" src="../images/default_image_upload.png"/>
 
-                                            <div class="col-md-offset-3 col-sm-offset-3 col-md-6 col-sm-6 col-xs-12 has-feedback"
-                                                 style="margin-bottom: 12px">
-                                                <input type="file" accept="image/*"
-                                                       class="form-control" name="menuPicPath"
-                                                       id="edit_menu_pic"
-                                                       onchange="document.getElementById('showpic_edit').src = window.URL.createObjectURL(this.files[0])"
-                                                       placeholder="อัพโหลดรูปภาพ">
+                                            <div class="col-md-offset-3 col-sm-offset-3 col-md-6 col-sm-6 col-xs-12 has-feedback" style="margin-bottom: 12px">
+                                                <input type="file" class="form-control" name="menuSetPicPath"
+                                                       id="edit_menuset_pic" onchange="document.getElementById('showpic_menuset_edit').src = window.URL.createObjectURL(this.files[0])"
+                                                       placeholder="อัพโหลดรูปภาพ" required>
                                             </div>
                                             <div class="col-md-6 col-sm-6 col-xs-12 form-group has-feedback">
                                                 <label>ชื่อเมนูอาหารภาษาไทย</label>
-                                                <input type="text" class="form-control" name="menuNameTH"
-                                                       id="edit_menu_nameTH"
+                                                <input type="text" class="form-control" name="menuSetNameTH"
+                                                       id="edit_menuset_nameTH"
                                                        placeholder="ชื่อเมนูอาหารภาษาไทย" required>
                                                 <span class="fa fa-pencil form-control-feedback right"
                                                       aria-hidden="true"></span>
                                             </div>
                                             <div class="col-md-6 col-sm-6 col-xs-12 form-group has-feedback">
                                                 <label>ชื่อเมนูอาหารภาษาอังกฤษ</label>
-                                                <input type="text" class="form-control" name="menuNameEN"
-                                                       id="edit_menu_nameEN"
+                                                <input type="text" class="form-control" name="menuSetNameEN"
+                                                       id="edit_menuset_nameEN"
                                                        placeholder="ชื่อเมนูอาหารภาษาอังกฤษ" required>
                                                 <span class="fa fa-pencil form-control-feedback right"
                                                       aria-hidden="true"></span>
                                             </div>
+                                            <div class="col-md-12">
+                                                <h4 class="modal-title" style="text-align:center;margin-bottom:10px;margin-top: 10px">
+                                                    เลือกเมนู</h4>
+
+                                                <table id="datatable-editmenuset" class="table table-striped table-bordered">
+                                                    <thead>
+                                                    <tr>
+                                                        <th class="table-rows">ชื่อเมนู</th>
+                                                        <th class="table-rows">ราคา</th>
+                                                        <th class="table-rows">จำนวน</th>
+                                                    </tr>
+
+                                                    </thead>
+                                                    <tbody style="text-align: center;">
+                                                    <tr>
+                                                        <td></td>
+                                                        <td></td>
+                                                        <td><input type="number" class="form-control bfh-number" min="0" value="0"></td>
+                                                    </tr>
+                                                    </tbody>
+                                                </table>
+                                            </div>
+                                            <div class="col-md-6 col-md-offset-6 form-group has-feedback" style="text-align:left;">
+                                                ราคาทั้งหมด : <span id="total_price_edit" style="font-weight: bold;"></span> บาท
+                                            </div>
+
                                             <div class="col-md-6 col-sm-6 col-xs-12 form-group has-feedback">
                                                 <label>ราคา (บาท)</label>
-                                                <input type="number" class="form-control" name="menuPrice"
-                                                       id="edit_menu_price"
+                                                <input type="number" class="form-control" name="menuSetPrice"
+                                                       id="edit_menuset_price"
                                                        placeholder="ราคา" min="0" step="0.25" required>
                                                 <span class="fa fa-money form-control-feedback right"
                                                       aria-hidden="true"></span>
-                                            </div>
-                                            <div class="col-md-6 col-sm-6 col-xs-12 form-group has-feedback">
-                                                <label>ประเภทของเมนู</label>
-                                                <select name="menuCatNo" id="edit_menu_stock_cat" class="form-control"
-                                                        required>
-                                                    <option disabled selected>เลือกประเภทเมนู</option>
-                                                    <c:forEach items="${menuCategories}" var="mc">
-                                                        <option value="${mc.menuCatNo}">${mc.menuCatNameTH}</option>
-                                                    </c:forEach>
-                                                </select>
-                                            </div>
-                                            <div class="col-md-12 col-sm-12 col-xs-12 form-group has-feedback">
-                                                <label>รายละเอียดของเมนู</label>
-                                                <textarea rows="4" cols="100" class="form-control" name="menuDesc"
-                                                          id="edit_menu_desc"
-                                                          placeholder="รายละเอียด" required></textarea>
-
                                             </div>
                                         </div>
                                         <div class="modal-footer">
@@ -219,13 +239,13 @@
                                                 <div class="checkbox" style="display:inline-block">
                                                     <label>
                                                         <input type="checkbox" name="menuAvailable"
-                                                               id="edit_menu_available"
+                                                               id="edit_menuset_available"
                                                                class="flat">
                                                         พร้อมจำหน่าย
                                                     </label>
                                                 </div>
-                                                <button type="submit" style="margin-left:5px;" class="btn btn-success">
-                                                    ตกลง
+                                                <button type="submit" style="margin-left:5px;"
+                                                        class="btn btn-success">ตกลง
                                                 </button>
                                                 <button type="button" class="btn btn-default" data-dismiss="modal">
                                                     ยกเลิก
@@ -242,58 +262,24 @@
         </div>
     </div>
 </div>
-</div>
 <jsp:include page="../_include/bottomenv.jsp"/>
 <script>
+
     $(document).ready(function () {
-        $("#datatable-menu").DataTable({
+        $("#datatable-addmenuset").DataTable({
             order: [[0, "asc"]],
-            columnDefs: [
-                {orderable: false, targets: [-1]}
-            ],
             columns: [
                 {
-                    data: 'menuPicPath'
-                },
-                {
                     data: 'menuName'
-                },
-                {
-                    data: 'menuDesc'
                 },
                 {
                     data: 'menuPrice'
                 },
                 {
-                    data: 'group'
-                },
-                {
-                    data: 'option'
+                    data: 'quantity'
                 }
             ]
         });
-
-        $("#showpic").click(function () {
-            $("#add_menu_pic").click();
-        });
-
-        $("#showpic_edit").click(function () {
-            $("#edit_menu_pic").click();
-        });
-
-        $("#add_menu_pic").change(function () {
-            if ($("#add_menu_pic").val() == '') {
-                $("#showpic").attr('src', '../images/default_image_upload.png');
-            }
-        });
-
-        $("#edit_menu_pic").change(function () {
-            if ($("#edit_menu_pic").val() == '') {
-                $("#showpic_edit").attr('src', '../images/default_image_upload.png');
-            }
-        });
-
-        $("#filter_by_category").change(refresh_table);
 
         refresh_table();
     });
@@ -313,7 +299,8 @@
                         <div class="col-md-55">\
                         <div class="thumbnail thumbnail_inline">\
                         <div class="image view view-first">\
-                        <img style="width: 100%; display: block;" src="../images/menu/' + obj.menuPicPath + '" alt="image"/>\
+                        <img style="width: 100%; display: block;"\
+                    src="../images/menu/' + obj.menuPicPath + '" alt="image"/>\
                         <div class="mask">\
                         <p style="white-space: nowrap;overflow:hidden;text-overflow: ellipsis;">' + obj.menuDesc + '</p>\
                         <div class="tools tools-bottom">\
@@ -349,82 +336,72 @@
         });
     }
 
-    $("#add_menu").submit(function () {
+    $("#add_menuset").submit(function () {
         $.ajax({
             type: "POST",
-            data: new FormData($("#add_menu")[0]),
+            data: new FormData($("#add_menuset")[0]),
             enctype: 'multipart/form-data',
             cache: false,
             contentType: false,
             processData: false,
-            url: "${contextPath}/menu/managemenu",
+            url: "${contextPath}/menu/managemenuset",
             success: function (result) {
-                swal("สำเร็จ", "เมนู " + $("#add_menu").val() + " ถูกเพิ่มเรียบร้อยแล้ว", "success");
-                $("#add_menu")[0].reset();
-                $("#addMenu").modal('toggle');
-                $("#showpic").attr('src', '../images/default_image_upload.png');
-                $("#add_menu_available").parent().removeClass('checked');
-                $("#add_menu_available").attr('checked', false);
+                swal("สำเร็จ", "เมนู " + $("#add_menuset").val() + " ถูกเพิ่มเรียบร้อยแล้ว", "success");
+                $("#add_menuset")[0].reset();
+                $("#addMenuSet").modal('toggle');
                 refresh_table();
             }, error: function (result) {
                 swal("ไม่สำเร็จ", "ชื่อภาษาไทยหรืออังกฤษอาจซ้ำ กรุณาลองใหม่ในภายหลัง", "error");
             }
         });
+
         return false;
     });
 
-    $("#edit_menu").submit(function () {
-        var object = $("#edit_menu").serialize();
+
+    $("#edit_menuset").submit(function () {
+        var object = $("#edit_menuset").serialize();
         $.ajax({
             type: "POST",
-            data: new FormData($("#edit_menu")[0]),
-            enctype: 'multipart/form-data',
-            cache: false,
+            data: object,
             contentType: false,
             processData: false,
-            url: "${contextPath}/menu/managemenu",
+            url: "${contextPath}/menu/managemenuset",
             success: function (result) {
-                swal("สำเร็จ", "เมนูนี้ถูกแก้ไขเรียบร้อยแล้ว", "success");
-                $("#edit_menu")[0].reset();
-                $("#editMenu").modal('toggle');
+                swal("สำเร็จ", "เมนู " + $("#add_menuset").val() + " ถูกแก้ไขเรียบร้อยแล้ว", "success");
+                $("#edit_menuset")[0].reset();
+                $("#editMenuSet").modal('toggle');
                 refresh_table();
             }, error: function (result) {
                 swal("ไม่สำเร็จ", "ชื่อภาษาไทยหรืออังกฤษอาจซ้ำ กรุณาลองใหม่ในภายหลัง", "error");
             }
         });
+
         return false;
     });
 
-    function set_menu(menuNo) {
+    function set_menuset(menuSetNo) {
         $.ajax({
             type: "PUT",
-            url: "${contextPath}/menu/getmenu/" + menuNo,
+            url: "${contextPath}/menu/getmenuset/" + menuNo,
             dataType: "json",
             success: function (result) {
-                $("#hiddenmenuno").val(result.menuNo);
-                $("#edit_menu_nameTH").val(result.menuNameTH);
-                $("#edit_menu_nameEN").val(result.menuNameEN);
-                $("#show_menu_name_for_edit").html(result.menuNameTH + " / " + result.menuNameEN);
-                $("#edit_menu_desc").val(result.menuDesc);
-                $("#edit_menu_price").val(result.menuPrice.toFixed(2));
-                $("#edit_menu_available").val(result.menuAvailable);
-                $("#edit_menu_stock_cat").val(result.menuCatNo);
-                if (result.available) {
-                    $("#edit_menu_available").parent().addClass('checked');
-                    $("#edit_menu_available").attr('checked', true);
-                } else {
-                    $("#edit_menu_available").parent().removeClass('checked');
-                    $("#edit_menu_available").attr('checked', false);
-                }
-                $("#showpic_edit").attr('src', '../images/menu/' + result.menuPicPath);
+                $("#hiddenmenuno").val(result.menuSetNo);
+                $("#edit_menuset_nameTH").val(result.menuSetNameTH);
+                $("#edit_menuset_nameEN").val(result.menuSetNameEN);
+                $("#edit_menuset_price").val(result.menuSetPrice.toFixed(2));
+                $("#edit_menuset_available").val(result.menuSetAvailable);
+                $("#edit_menuset_available").attr('checked',result.available);
+//                $("#edit_menu_pic").val(result.menuPicPath);
             }
         });
+
     }
 
-    function del_menu(menuNo, menuNameTH) {
+    function del_menuset(menuSetNo, menuSetNameTH) {
         swal({
-                title: "ยืนยันการลบ " + menuNameTH,
-                text: "เมื่อยืนยัน คุณจะไม่สามารถนำข้อมูล " + menuNameTH + " กลับมาได้",
+                title: "ยืนยันการลบ " + menuSetNameTH,
+                text: "เมื่อยืนยัน คุณจะไม่สามารถนำข้อมูล " + menuSetNameTH + " กลับมาได้",
                 type: "warning",
                 showCancelButton: true,
                 cancelButtonText: "ยกเลิก",
@@ -436,9 +413,9 @@
             function () {
                 $.ajax({
                     type: "DELETE",
-                    url: "${contextPath}/menu/delmenu/" + menuNo,
+                    url: "${contextPath}/menu/delmenuset/" + menuSetNo,
                     success: function (json) {
-                        swal("สำเร็จ", menuNameTH + " ถูกลบเรียบร้อยแล้ว", "success");
+                        swal("สำเร็จ", menuSetNameTH + " ถูกลบเรียบร้อยแล้ว", "success");
                         refresh_table();
                     },
                     error: function (json) {
@@ -448,25 +425,6 @@
             });
     }
 
-    function change_available(menuno) {
-        $.ajax({
-            type: "POST",
-            data: {menuno: menuno},
-            url: "${contextPath}/menu/changeavailable",
-            success: function (result) {
-//                swal("สำเร็จ", "แก้ไขความพร้อมจำหน่ายเรียบร้อยแล้ว", "success");
-                refresh_table();
-            }, error: function (result) {
-                swal("ไม่สำเร็จ", "กรุณาลองใหม่ภายหลัง", "error");
-            }
-        });
-    }
 </script>
-
-<style>
-    .thumbnail_inline {
-        height: 250px !important;
-    }
-</style>
 </body>
 </html>
