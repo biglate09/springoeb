@@ -1,4 +1,5 @@
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
+<%@ taglib prefix="fmt" uri="http://java.sun.com/jstl/fmt" %>
 <%@page contentType="text/html" pageEncoding="UTF-8" %>
 <c:set var="contextPath" value="${pageContext.request.contextPath}"/>
 <!DOCTYPE html>
@@ -107,11 +108,14 @@
 
                                                             </thead>
                                                             <tbody style="text-align: center;">
-                                                            <tr>
-                                                                <td></td>
-                                                                <td></td>
-                                                                <td><input type="number" class="form-control bfh-number" min="0" value="0"></td>
-                                                            </tr>
+                                                            <c:forEach items="${menus}" var="m">
+                                                                <tr>
+                                                                    <td>${m.menuNameTH} / ${m.menuNameEN}</td>
+                                                                    <c:set value="${m.menuPrice}" var="menuPrice" />
+                                                                    <td><fmt:formatNumber value="${menuPrice}" pattern="#,###,##0.00"></fmt:formatNumber></td>
+                                                                    <td><input type="number" name="quantity" class="form-control bfh-number" min="0" value="0"></td>
+                                                                </tr>
+                                                            </c:forEach>
                                                             </tbody>
                                                         </table>
                                                         </div>
@@ -135,7 +139,7 @@
                                                             <div class="checkbox" style="display:inline-block">
                                                                 <label>
                                                                     <input type="checkbox" name="menuAvailable"
-                                                                           id="add_menu_available"
+                                                                           id="add_menuset_available"
                                                                            class="flat">
                                                                     พร้อมจำหน่าย
                                                                 </label>
@@ -235,7 +239,7 @@
                                                 <div class="checkbox" style="display:inline-block">
                                                     <label>
                                                         <input type="checkbox" name="menuAvailable"
-                                                               id="add_menu_available"
+                                                               id="edit_menuset_available"
                                                                class="flat">
                                                         พร้อมจำหน่าย
                                                     </label>
@@ -385,11 +389,9 @@
                 $("#hiddenmenuno").val(result.menuSetNo);
                 $("#edit_menuset_nameTH").val(result.menuSetNameTH);
                 $("#edit_menuset_nameEN").val(result.menuSetNameEN);
-                $("#edit_menuset_desc").val(result.menuSetDesc);
                 $("#edit_menuset_price").val(result.menuSetPrice.toFixed(2));
                 $("#edit_menuset_available").val(result.menuSetAvailable);
-                $("#edit_menu_stock_cat").val(result.menuCatNo);
-                $("#edit_menu_available").attr('checked',result.available);
+                $("#edit_menuset_available").attr('checked',result.available);
 //                $("#edit_menu_pic").val(result.menuPicPath);
             }
         });
