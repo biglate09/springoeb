@@ -1,5 +1,5 @@
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
-<%@ taglib prefix="fmt" uri="http://java.sun.com/jstl/fmt" %>
+<%@ taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt" %>
 <%@page contentType="text/html" pageEncoding="UTF-8" %>
 <c:set var="contextPath" value="${pageContext.request.contextPath}"/>
 <!DOCTYPE html>
@@ -112,8 +112,8 @@
                                                                 <tr>
                                                                     <td>${m.menuNameTH} / ${m.menuNameEN}</td>
                                                                     <c:set value="${m.menuPrice}" var="menuPrice" />
-                                                                    <td><fmt:formatNumber value="${menuPrice}" pattern="#,###,##0.00"></fmt:formatNumber></td>
-                                                                    <td><input type="number" name="quantity" class="form-control bfh-number" min="0" value="0"></td>
+                                                                    <td><fmt:formatNumber value="${menuPrice}" pattern="#,###,##0.00"></fmt:formatNumber> บาท</td>
+                                                                    <td><input type="number" class="form-control" value="0" min="0"></td>
                                                                 </tr>
                                                             </c:forEach>
                                                             </tbody>
@@ -205,9 +205,9 @@
                                                 <table id="datatable-editmenuset" class="table table-striped table-bordered">
                                                     <thead>
                                                     <tr>
-                                                        <th class="table-rows">ชื่อเมนู</th>
-                                                        <th class="table-rows">ราคา</th>
-                                                        <th class="table-rows">จำนวน</th>
+                                                        <th class="table-rows" style="width: 45%">ชื่อเมนู</th>
+                                                        <th class="table-rows" style="width: 27%">ราคา</th>
+                                                        <th class="table-rows" style="width: 27%">จำนวน</th>
                                                     </tr>
 
                                                     </thead>
