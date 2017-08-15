@@ -7,6 +7,19 @@
 <head>
     <jsp:include page="../_include/topenv.jsp"/>
     <title>เมนูอาหารแบบชุด</title>
+    <style>
+        .panel_menuset{
+            position:absolute;
+            bottom:0;
+            right:0;
+            margin-bottom: 10%;
+        }
+        .foodDesc {
+            width:100%;
+            height:60%;
+            overflow-y:scroll;
+        }
+    </style>
 </head>
 <body class="nav-md">
 <div class="container body">
@@ -35,24 +48,48 @@
                                         เพิ่มชุดเมนู</a>
                                 </p>
 
-                                <div class="col-md-55">
-                                    <div class="thumbnail_inline">
-                                        <div class="image view view-first">
-                                            <img style="width: 100%; display: block;" src="../images/default_image_upload.png" alt="image" />
-                                            <div class="mask">
-                                                <div class="" style="color:#fff;text-align:center;font-size:17px;">
-                                                    <a data-toggle="modal" data-target="#editMenuSet" style="color:white;"><i class="fa fa-pencil"></i></a>
-                                                    <a href="#" style="color:white;"><i class="fa fa-times"></i></a>
-                                                </div>
+                                <div class="col-md-6 col-sm-6 col-xs-12">
+                                <div class="thumbnail">
+                                    <div class="col-md-6 image view view-first"   style="height: 100%;">
+                                        <img style="width: 100%; display: block;" src="images/" alt="image" />
+                                    </div>
+                                    <div class="col-md-6 caption"  style="height: 100%;color:#73879C">
+                                        <div class="col-md-12" style=";font-weight:bold;white-space:nowrap;overflow:hidden;text-overflow: ellipsis;cursor:pointer;">
+                                            ชื่อชุดอาหาร
+                                        </div>
+                                        <div class="col-md-12 foodDesc">
+                                            <div>
+                                                TEST<br>
+                                                TEST<br>
+                                                TEST<br>
+                                                TEST<br>
+                                                TEST<br>
+                                                TEST<br>
+                                                TEST<br>
+                                                TEST<br>
+                                                TEST<br>
+                                                TEST<br>
+                                                TEST<br>
                                             </div>
                                         </div>
-                                        <div class="caption">
-                                            <p style="">Name</p>
-                                            <p style="">Price</p>
-                                            <p style="">Description</p>
+                                        <div class="col-md-12">
+                                            ราคา
+                                            <br>
+                                            <br>
+                                            <br>
+                                            <br>
+                                        </div>
+                                        <div class="col-md-12">
+                                            <div class="panel_menuset">
+                                                <a title="แก้ไข" data-toggle="modal" data-target="#editMenu" onclick="set_menu(' + obj.menuNo + ')" style="color:#73879C;cursor:pointer;margin-right:5px;"><i class="fa fa-pencil"></i></a>
+                                                <a title="พร้อมจำหน่าย" onclick="change_available(' + obj.menuNo + ')" style="color:#73879C;cursor:pointer;margin-right:5px;"><i class="fa ' + (obj.available == true ? 'fa-eye' : 'fa-eye-slash' ) + '"></i></a>
+                                                <a title="ลบ" onclick="del_menu(' + obj.menuNo + ',\'' + obj.menuNameTH + '\')" style="color:#73879C;cursor:pointer;"><i class="fa fa-trash"></i></a>
+                                            </div>
                                         </div>
                                     </div>
                                 </div>
+                        </div>
+
                             </form>
                                 <div class="modal fade" id="addMenuSet" role="dialog">
                                     <div class="modal-dialog">
