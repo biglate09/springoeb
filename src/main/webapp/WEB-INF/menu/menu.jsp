@@ -120,9 +120,17 @@
                                             <div class="modal-footer">
                                                 <!-- ปุ่มกดปิด (Close) ตรงส่วนล่างของ Modal -->
                                                 <div class="col-md-9 col-sm-9 col-xs-12 col-md-offset-3">
-                                                    <input type="checkbox" name="menuAvailable" id="add_menu_available"
-                                                           class="flat">&nbsp;พร้อมจำหน่าย&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
-                                                    <button type="submit" class="btn btn-success">ตกลง</button>
+                                                    <div class="checkbox" style="display:inline-block">
+                                                        <label>
+                                                            <input type="checkbox" name="menuAvailable"
+                                                                   id="add_menu_available"
+                                                                   class="flat">
+                                                            พร้อมจำหน่าย
+                                                        </label>
+                                                    </div>
+                                                    <button type="submit" style="margin-left:5px;"
+                                                            class="btn btn-success">ตกลง
+                                                    </button>
                                                     <button type="button" class="btn btn-default" data-dismiss="modal">
                                                         ยกเลิก
                                                     </button>
@@ -208,9 +216,17 @@
                                         <div class="modal-footer">
                                             <!-- ปุ่มกดปิด (Close) ตรงส่วนล่างของ Modal -->
                                             <div class="col-md-9 col-sm-9 col-xs-12 col-md-offset-3">
-                                                <input type="checkbox" name="menuAvailable" id="edit_menu_available"
-                                                       class="flat">&nbsp;พร้อมจำหน่าย&nbsp;&nbsp;&nbsp;
-                                                <button type="submit" class="btn btn-success">ตกลง</button>
+                                                <div class="checkbox" style="display:inline-block">
+                                                    <label>
+                                                        <input type="checkbox" name="menuAvailable"
+                                                               id="edit_menu_available"
+                                                               class="flat">
+                                                        พร้อมจำหน่าย
+                                                    </label>
+                                                </div>
+                                                <button type="submit" style="margin-left:5px;" class="btn btn-success">
+                                                    ตกลง
+                                                </button>
                                                 <button type="button" class="btn btn-default" data-dismiss="modal">
                                                     ยกเลิก
                                                 </button>
@@ -300,7 +316,7 @@
                         <img style="width: 100%; display: block;"\
                     src="../images/menu/' + obj.menuPicPath + '" alt="image"/>\
                         <div class="mask">\
-                        <p>' + obj.menuDesc + '</p>\
+                        <p style="white-space: nowrap;overflow:hidden;text-overflow: ellipsis;">' + obj.menuDesc + '</p>\
                         <div class="tools tools-bottom">\
                         <a title="แก้ไข" data-toggle="modal" data-target="#editMenu" onclick="set_menu(' + obj.menuNo + ')" style="color:white;cursor:pointer;margin-right:5px;"><i class="fa fa-pencil"></i></a>\
                         <a title="พร้อมจำหน่าย" onclick="change_available(' + obj.menuNo + ')" style="color:white;cursor:pointer;margin-right:5px;"><i class="fa ' + (obj.available == true ? 'fa-eye' : 'fa-eye-slash' ) + '"></i></a>\
