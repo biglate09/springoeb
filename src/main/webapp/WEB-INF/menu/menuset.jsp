@@ -6,6 +6,19 @@
 <head>
     <jsp:include page="../_include/topenv.jsp"/>
     <title>เมนูอาหารแบบชุด</title>
+    <style>
+        .panel_menuset{
+            position:absolute;
+            bottom:0;
+            right:0;
+            margin-bottom: 10%;
+        }
+        .foodDesc {
+            width:100%;
+            height:60%;
+            overflow-y:scroll;
+        }
+    </style>
 </head>
 <body class="nav-md">
 <div class="container body">
