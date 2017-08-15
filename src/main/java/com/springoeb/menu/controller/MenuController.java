@@ -75,13 +75,13 @@ public class MenuController {
 
         if (!file.getOriginalFilename().equals("")) {
             //pic path before change
-            String menuPicPath = menuService.getMenuByMenuNo(menuNo).getMenuPicPath();
 
             String filename = System.currentTimeMillis() + file.getOriginalFilename();
             Path path = Paths.get(UPLOADED_FOLDER + filename);
             Files.write(path, bytes);
             menu.setMenuPicPath(filename);
             if(request.getParameter("menuNo") != null){
+                String menuPicPath = menuService.getMenuByMenuNo(menuNo).getMenuPicPath();
                 File picFile = new File(UPLOADED_FOLDER + "/" + menuPicPath);
                 picFile.delete();
             }
