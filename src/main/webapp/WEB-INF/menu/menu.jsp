@@ -313,8 +313,7 @@
                         <div class="col-md-55">\
                         <div class="thumbnail thumbnail_inline">\
                         <div class="image view view-first">\
-                        <img style="width: 100%; display: block;"\
-                    src="../images/menu/' + obj.menuPicPath + '" alt="image"/>\
+                        <img style="width: 100%; display: block;" src="../images/menu/' + obj.menuPicPath + '" alt="image"/>\
                         <div class="mask">\
                         <p style="white-space: nowrap;overflow:hidden;text-overflow: ellipsis;">' + obj.menuDesc + '</p>\
                         <div class="tools tools-bottom">\

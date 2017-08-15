@@ -1,7 +1,7 @@
-package com.springoeb.menu.service;
+package com.springoeb.stock.service;
 
-import com.springoeb.menu.model.StockCategory;
-import com.springoeb.menu.repository.StockCategoryRepository;
+import com.springoeb.stock.model.StockCategory;
+import com.springoeb.stock.repository.StockCategoryRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 

@@ -1,6 +1,7 @@
 package com.springoeb.menu.model;
 
 import com.fasterxml.jackson.annotation.JsonIgnore;
+import com.springoeb.stock.model.StockCategory;
 
 import javax.persistence.*;
 import java.io.Serializable;

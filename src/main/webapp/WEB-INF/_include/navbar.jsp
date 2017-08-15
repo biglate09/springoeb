@@ -47,14 +47,14 @@
                             <%--<li><a id="menucust" href="ToMenuCustServlet">ปรับแต่งเมนูอาหาร</a></li>--%>
                         </ul>
                     </li>
-                    <%--<li>--%>
-                        <%--<a><i class="fa fa-spoon"></i> จัดการวัตถุดิบอาหาร <span class="fa fa-chevron-down"></span></a>--%>
-                        <%--<ul class="nav child_menu">--%>
+                    <li>
+                        <a><i class="fa fa-spoon"></i> จัดการวัตถุดิบอาหาร <span class="fa fa-chevron-down"></span></a>
+                        <ul class="nav child_menu">
+                            <li><a id="materialcategory" href="${contextPath}/stock/stockcategory">ประเภทวัตถุดิบ</a></li>
                             <%--<li><a href="ToMaterialServlet">ข้อมูลวัตถุดิบ</a></li>--%>
-                            <%--<li><a href="ToMaterialTypeServlet">ประเภทวัตถุดิบ</a></li>--%>
-                            <%--<!--<li><a href="ToMaterialStock">สต็อกวัตถุดิบ</a></li>-->--%>
-                        <%--</ul>--%>
-                    <%--</li>--%>
+                            <%--<li><a href="ToMaterialStock">สต็อกวัตถุดิบ</a></li>--%>
+                        </ul>
+                    </li>
                 </ul>
             </div>
         </div>
