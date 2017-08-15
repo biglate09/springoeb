@@ -94,7 +94,7 @@
                 <!-- /page content -->
                 <!-- Modal Content (ADD EMP)-->
                 <div class="modal fade" id="addEmp" role="dialog">
-                    <div class="modal-dialog">
+                    <div class="modal-dialog modal-lg">
                         <!-- เนือหาของ Modal ทั้งหมด -->
                         <div class="modal-content" id="add_emp_modal">
                             <!-- ส่วนหัวของ Modal -->
@@ -146,25 +146,27 @@
                                         </div>
                                         <div class="col-md-6 col-sm-6 col-xs-12 form-group has-feedback">
                                             <label>ประเภทพนักงาน</label>
-                                            <div class="btn-group" data-toggle="buttons">
-                                                <label class="btn btn-default clear-active empTypeItem"
-                                                       data-toggle-class="btn-primary"
-                                                       data-toggle-passive-class="btn-default">
-                                                    <input type="radio" name="empType" value="${Employee.FULL_TIME}"
-                                                           required> Full - Time
-                                                </label>
-                                                <label class="btn btn-default clear-active empTypeItem"
-                                                       data-toggle-class="btn-primary"
-                                                       data-toggle-passive-class="btn-default">
-                                                    <input type="radio" name="empType" value="${Employee.PART_TIME}"
-                                                           required> Part - Time
-                                                </label>
-                                                <label class="btn btn-default clear-active empTypeItem"
-                                                       data-toggle-class="btn-primary"
-                                                       data-toggle-passive-class="btn-default">
-                                                    <input type="radio" name="empType" value="${Employee.TRAINING}"
-                                                           required> Training
-                                                </label>
+                                            <div class="form-group">
+                                                <div class="btn-group" data-toggle="buttons">
+                                                    <label class="btn btn-default clear-active empTypeItem"
+                                                           data-toggle-class="btn-primary"
+                                                           data-toggle-passive-class="btn-default">
+                                                        <input type="radio" name="empType" value="${Employee.FULL_TIME}"
+                                                               required> Full - Time
+                                                    </label>
+                                                    <label class="btn btn-default clear-active empTypeItem"
+                                                           data-toggle-class="btn-primary"
+                                                           data-toggle-passive-class="btn-default">
+                                                        <input type="radio" name="empType" value="${Employee.PART_TIME}"
+                                                               required> Part - Time
+                                                    </label>
+                                                    <label class="btn btn-default clear-active empTypeItem"
+                                                           data-toggle-class="btn-primary"
+                                                           data-toggle-passive-class="btn-default">
+                                                        <input type="radio" name="empType" value="${Employee.TRAINING}"
+                                                               required> Training
+                                                    </label>
+                                                </div>
                                             </div>
                                         </div>
                                         <div class="col-md-6 col-sm-6 col-xs-12 form-group has-feedback"
@@ -242,7 +244,7 @@
 
                 <!-- Modal Content (EDIT EMP)-->
                 <div class="modal fade" id="editEmp" role="dialog">
-                    <div class="modal-dialog">
+                    <div class="modal-dialog modal-lg">
                         <!-- เนือหาของ Modal ทั้งหมด -->
                         <div class="modal-content">
                             <!-- ส่วนหัวของ Modal -->
@@ -298,107 +300,112 @@
                                         </div>
                                         <div class="col-md-6 col-sm-6 col-xs-12 form-group has-feedback">
                                             <label>ประเภทพนักงาน</label>
-                                            <div class="btn-group" data-toggle="buttons">
-                                                <label class="btn btn-default empTypeItem clear-active"
-                                                       data-toggle-class="btn-primary"
-                                                       data-toggle-passive-class="btn-default">
-                                                    <input type="radio" name="empType"
-                                                           id="editemptype${Employee.FULL_TIME}"
-                                                           value="${Employee.FULL_TIME}"
-                                                           required> Full - Time
-                                                </label>
-                                                <label class="btn btn-default empTypeItem clear-active"
-                                                       data-toggle-class="btn-primary"
-                                                       data-toggle-passive-class="btn-default">
-                                                    <input type="radio" name="empType"
-                                                           id="editemptype${Employee.PART_TIME}"
-                                                           value="${Employee.PART_TIME}"
-                                                           required> Part - Time
-                                                </label>
-                                                <label class="btn btn-default empTypeItem clear-active"
-                                                       data-toggle-class="btn-primary"
-                                                       data-toggle-passive-class="btn-default">
-                                                    <input type="radio" name="empType"
-                                                           id="editemptype${Employee.TRAINING}"
-                                                           value="${Employee.TRAINING}"
-                                                           required> Training
-                                                </label>
+                                            <div class="form-group">
+                                                <div class="btn-group" data-toggle="buttons">
+                                                    <label class="btn btn-default empTypeItem clear-active"
+                                                           data-toggle-class="btn-primary"
+                                                           data-toggle-passive-class="btn-default">
+                                                        <input type="radio" name="empType"
+                                                               id="editemptype${Employee.FULL_TIME}"
+                                                               value="${Employee.FULL_TIME}"
+                                                               required> Full - Time
+                                                    </label>
+                                                    <label class="btn btn-default empTypeItem clear-active"
+                                                           data-toggle-class="btn-primary"
+                                                           data-toggle-passive-class="btn-default">
+                                                        <input type="radio" name="empType"
+                                                               id="editemptype${Employee.PART_TIME}"
+                                                               value="${Employee.PART_TIME}"
+                                                               required> Part - Time
+                                                    </label>
+                                                    <label class="btn btn-default empTypeItem clear-active"
+                                                           data-toggle-class="btn-primary"
+                                                           data-toggle-passive-class="btn-default">
+                                                        <input type="radio" name="empType"
+                                                               id="editemptype${Employee.TRAINING}"
+                                                               value="${Employee.TRAINING}"
+                                                               required> Training
+                                                    </label>
+                                                </div>
                                             </div>
                                         </div>
-                                        <div class="col-md-6 col-sm-6 col-xs-12 form-group has-feedback"
-                                             style="clear: both;">
-                                            <label>ประเภทการจ่าย</label>
-                                            <select id="editpaytype" name="payType" class="form-control" required>
-                                                <option value="">---เลือกประเภทการจ่าย---</option>
-                                                <option value="${Employee.HOUR}">รายชั่วโมง</option>
-                                                <option value="${Employee.DAY}">รายวัน</option>
-                                            </select>
-                                        </div>
+                                    </div>
+                                    <div class="col-md-6 col-sm-6 col-xs-12 form-group has-feedback"
+                                         style="clear: both;">
+                                        <label>ประเภทการจ่าย</label>
+                                        <select id="editpaytype" name="payType" class="form-control" required>
+                                            <option value="">---เลือกประเภทการจ่าย---</option>
+                                            <option value="${Employee.HOUR}">รายชั่วโมง</option>
+                                            <option value="${Employee.DAY}">รายวัน</option>
+                                        </select>
+                                    </div>
 
-                                        <div class="col-md-6 col-sm-6 col-xs-12 form-group has-feedback">
-                                            <label>ค่าจ้างต่อหน่วยเวลา</label>
-                                            <input type="number" step="any" class="form-control"
-                                                   placeholder="ค่าจ้างต่อหน่วยเวลา" name="pay" id="editpay"
-                                                   max="999999.99" required>
-                                            <span class="fa fa-bitcoin form-control-feedback right"
-                                                  aria-hidden="true"></span>
-                                        </div>
-                                        <div class="form-group col-md-12">
-                                            <label>สีป้ายชื่อพนักงานในตารางการทำงาน</label>
-                                            <div class="well" style="overflow: auto">
-                                                <%--<div style="text-align:center;" class="col-md-12">--%>
-                                                <%--<span>ตัวอย่างป้ายตารางการทำงาน</span>--%>
-                                                <%--</div>--%>
-                                                <div class="col-md-4"
-                                                     style="margin-left:30%;width:40%;margin-bottom:10px;">
-                                                    <a class="fc-day-grid-event fc-event" id="edit_row_example"
-                                                       style="padding:7px;background-color:#000000;border-color:#000000;color:#ffffff;">
-                                                        <div class="fc-content">
-                                                            <span class="fc-time"> </span>
-                                                            <span class="fc-title">[เช้า]  ... ชื่อพนักงาน (เสิร์ฟอาหาร)</span>
-                                                        </div>
-                                                    </a>
-                                                </div>
-                                                <div class="col-md-6 col-sm-6 col-xs-12">
-                                                    <div class="input-group demo2 colorpicker-element" id="edit_bgColor">
-                                                        <input type="text" value="#000000" name="bgColor"
-                                                               class="form-control">
-                                                        <span class="input-group-addon">
+                                    <div class="col-md-6 col-sm-6 col-xs-12 form-group has-feedback">
+                                        <label>ค่าจ้างต่อหน่วยเวลา</label>
+                                        <input type="number" step="any" class="form-control"
+                                               placeholder="ค่าจ้างต่อหน่วยเวลา" name="pay" id="editpay"
+                                               max="999999.99" required>
+                                        <span class="fa fa-bitcoin form-control-feedback right"
+                                              aria-hidden="true"></span>
+                                    </div>
+                                    <div class="form-group col-md-12">
+                                        <label>สีป้ายชื่อพนักงานในตารางการทำงาน</label>
+                                        <div class="well" style="overflow: auto">
+                                            <%--<div style="text-align:center;" class="col-md-12">--%>
+                                            <%--<span>ตัวอย่างป้ายตารางการทำงาน</span>--%>
+                                            <%--</div>--%>
+                                            <div class="col-md-4"
+                                                 style="margin-left:30%;width:40%;margin-bottom:10px;">
+                                                <a class="fc-day-grid-event fc-event" id="edit_row_example"
+                                                   style="padding:7px;background-color:#000000;border-color:#000000;color:#ffffff;">
+                                                    <div class="fc-content">
+                                                        <span class="fc-time"> </span>
+                                                        <span class="fc-title">[เช้า]  ... ชื่อพนักงาน (เสิร์ฟอาหาร)</span>
+                                                    </div>
+                                                </a>
+                                            </div>
+                                            <div class="col-md-6 col-sm-6 col-xs-12">
+                                                <div class="input-group demo2 colorpicker-element"
+                                                     id="edit_bgColor">
+                                                    <input type="text" value="#000000" name="bgColor"
+                                                           class="form-control">
+                                                    <span class="input-group-addon">
                                                             <i style="background-color: rgb(0, 0, 0);"></i>
                                                         </span>
-                                                    </div>
                                                 </div>
-                                                <div class="col-md-6 col-sm-6 col-xs-12">
-                                                    <div class="input-group demo2 colorpicker-element" id="edit_fontColor">
-                                                        <input type="text" value="#FFFFFF" name="fontColor"
-                                                               class="form-control">
-                                                        <span class="input-group-addon">
+                                            </div>
+                                            <div class="col-md-6 col-sm-6 col-xs-12">
+                                                <div class="input-group demo2 colorpicker-element"
+                                                     id="edit_fontColor">
+                                                    <input type="text" value="#FFFFFF" name="fontColor"
+                                                           class="form-control">
+                                                    <span class="input-group-addon">
                                                             <i style="background-color: rgb(255, 255, 255);"></i>
                                                         </span>
-                                                    </div>
                                                 </div>
                                             </div>
                                         </div>
                                     </div>
-                                    <div class="modal-footer">
-                                        <!-- ปุ่มกดปิด (Close) ตรงส่วนล่างของ Modal -->
-                                        <div class="col-md-9 col-sm-9 col-xs-12 col-md-offset-3">
-                                            <button type="submit" class="btn btn-success">ตกลง</button>
-                                            <button type="button" class="btn btn-default" data-dismiss="modal">
-                                                ยกเลิก
-                                            </button>
-
-                                        </div>
-                                    </div>
-                                </form>
                             </div>
+                            <div class="modal-footer">
+                                <!-- ปุ่มกดปิด (Close) ตรงส่วนล่างของ Modal -->
+                                <div class="col-md-9 col-sm-9 col-xs-12 col-md-offset-3">
+                                    <button type="submit" class="btn btn-success">ตกลง</button>
+                                    <button type="button" class="btn btn-default" data-dismiss="modal">
+                                        ยกเลิก
+                                    </button>
+
+                                </div>
+                            </div>
+                            </form>
                         </div>
                     </div>
                 </div>
-                <!-- /Modal Content (EDIT EMP)-->
             </div>
+            <!-- /Modal Content (EDIT EMP)-->
         </div>
     </div>
+</div>
 </div>
 <jsp:include page="../_include/bottomenv.jsp"/>
 <script src="${contextPath}/vendors/mjolnic-bootstrap-colorpicker/dist/js/bootstrap-colorpicker.min.js"></script>
@@ -495,8 +502,8 @@
                 $("#editemptype" + result.empType).click();
                 $("#editpaytype").val(result.payType);
                 $("#editpay").val((result.pay).toFixed(2));
-                edit_bgColor.colorpicker('setValue',result.bgColor==''?'#000000':result.bgColor);
-                edit_fontColor.colorpicker('setValue',result.fontColor==''?'#FFFFFF':result.fontColor);
+                edit_bgColor.colorpicker('setValue', result.bgColor == '' ? '#000000' : result.bgColor);
+                edit_fontColor.colorpicker('setValue', result.fontColor == '' ? '#FFFFFF' : result.fontColor);
             }
         });
     }

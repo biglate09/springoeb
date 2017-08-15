@@ -15,7 +15,7 @@ import org.springframework.web.multipart.MultipartFile;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.transaction.Transactional;
-import java.io.*;
+import java.io.File;
 import java.nio.file.Files;
 import java.nio.file.Path;
 import java.nio.file.Paths;
@@ -63,7 +63,7 @@ public class MenuController {
 
     @ResponseBody
     @PostMapping("/managemenu")
-    public void addAndEditMenu(@RequestParam("menuPicPath") MultipartFile file, HttpServletRequest request) throws IOException {
+    public void addAndEditMenu(@RequestParam("menuPicPath") MultipartFile file, HttpServletRequest request) throws Exception {
         Menu menu = new Menu();
         byte[] bytes = file.getBytes();
         Integer menuNo = request.getParameter("menuNo") != null ? Integer.parseInt(request.getParameter("menuNo")) : null;
@@ -71,20 +71,6 @@ public class MenuController {
         if (menuNo != null) {
             menu = menuService.getMenuByMenuNo(menuNo);
             menu.setMenuNo(menuNo);
-        }
-
-        if (!file.getOriginalFilename().equals("")) {
-            //pic path before change
-
-            String filename = System.currentTimeMillis() + file.getOriginalFilename();
-            Path path = Paths.get(UPLOADED_FOLDER + filename);
-            Files.write(path, bytes);
-            menu.setMenuPicPath(filename);
-            if(request.getParameter("menuNo") != null){
-                String menuPicPath = menuService.getMenuByMenuNo(menuNo).getMenuPicPath();
-                File picFile = new File(UPLOADED_FOLDER + "/" + menuPicPath);
-                picFile.delete();
-            }
         }
 
         menu.setMenuNameTH(request.getParameter("menuNameTH"));
@@ -96,7 +82,24 @@ public class MenuController {
         if (request.getParameter("menuNo") != null) {
             menu.setMenuNo(Integer.parseInt(request.getParameter("menuNo")));
         }
-        menuService.save(menu);
+
+        if(!menuService.chkDuplicateMenu(menu)) {
+            if (!file.getOriginalFilename().equals("")) {
+                //pic path before change
+                String filename = System.currentTimeMillis() + file.getOriginalFilename();
+                Path path = Paths.get(UPLOADED_FOLDER + filename);
+                Files.write(path, bytes);
+                menu.setMenuPicPath(filename);
+                if(request.getParameter("menuNo") != null){
+                    String menuPicPath = menuService.getMenuByMenuNo(menuNo).getMenuPicPath();
+                    File picFile = new File(UPLOADED_FOLDER + "/" + menuPicPath);
+                    picFile.delete();
+                }
+            }
+            menuService.save(menu);
+        }else{
+            throw new Exception();
+        }
     }
 
     @ResponseBody
@@ -128,7 +131,8 @@ public class MenuController {
 
     //----------------------------------------------------------------------------------------------------------//
     @GetMapping("/menuset")
-    public String toMenuSetIndex() {
+    public String toMenuSetIndex(Model model) {
+        model.addAttribute("menus", menuService.getMenus());
         return MENU_PATH + "menuset.jsp";
     }
 

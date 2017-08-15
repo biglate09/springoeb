@@ -29,4 +29,21 @@ public class MenuService {
     public Menu getMenuByMenuNo(int menuNo){
         return menuRepository.findByMenuNo(menuNo);
     }
+
+    public boolean chkDuplicateMenu(Menu menu){
+        List<Menu> menus = menuRepository.findByMenuNameTHIgnoreCaseOrMenuNameENIgnoreCase(menu.getMenuNameTH(),menu.getMenuNameEN());
+        if(menus != null && menus.size() != 0){
+            if(menus.size() > 1) {
+                return true;
+            }else{
+                if(menu.getMenuNo() != null && menus.get(0).getMenuCatNo() == menu.getMenuCatNo()){
+                    return false;
+                }else{
+                    return true;
+                }
+            }
+        }else{
+            return false;
+        }
+    }
 }
