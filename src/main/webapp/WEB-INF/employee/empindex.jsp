@@ -301,32 +301,32 @@
                                         <div class="col-md-6 col-sm-6 col-xs-12 form-group has-feedback">
                                             <label>ประเภทพนักงาน</label>
                                             <div class="form-group">
-                                            <div class="btn-group" data-toggle="buttons">
-                                                <label class="btn btn-default empTypeItem clear-active"
-                                                       data-toggle-class="btn-primary"
-                                                       data-toggle-passive-class="btn-default">
-                                                    <input type="radio" name="empType"
-                                                           id="editemptype${Employee.FULL_TIME}"
-                                                           value="${Employee.FULL_TIME}"
-                                                           required> Full - Time
-                                                </label>
-                                                <label class="btn btn-default empTypeItem clear-active"
-                                                       data-toggle-class="btn-primary"
-                                                       data-toggle-passive-class="btn-default">
-                                                    <input type="radio" name="empType"
-                                                           id="editemptype${Employee.PART_TIME}"
-                                                           value="${Employee.PART_TIME}"
-                                                           required> Part - Time
-                                                </label>
-                                                <label class="btn btn-default empTypeItem clear-active"
-                                                       data-toggle-class="btn-primary"
-                                                       data-toggle-passive-class="btn-default">
-                                                    <input type="radio" name="empType"
-                                                           id="editemptype${Employee.TRAINING}"
-                                                           value="${Employee.TRAINING}"
-                                                           required> Training
-                                                </label>
-                                            </div>
+                                                <div class="btn-group" data-toggle="buttons">
+                                                    <label class="btn btn-default empTypeItem clear-active"
+                                                           data-toggle-class="btn-primary"
+                                                           data-toggle-passive-class="btn-default">
+                                                        <input type="radio" name="empType"
+                                                               id="editemptype${Employee.FULL_TIME}"
+                                                               value="${Employee.FULL_TIME}"
+                                                               required> Full - Time
+                                                    </label>
+                                                    <label class="btn btn-default empTypeItem clear-active"
+                                                           data-toggle-class="btn-primary"
+                                                           data-toggle-passive-class="btn-default">
+                                                        <input type="radio" name="empType"
+                                                               id="editemptype${Employee.PART_TIME}"
+                                                               value="${Employee.PART_TIME}"
+                                                               required> Part - Time
+                                                    </label>
+                                                    <label class="btn btn-default empTypeItem clear-active"
+                                                           data-toggle-class="btn-primary"
+                                                           data-toggle-passive-class="btn-default">
+                                                        <input type="radio" name="empType"
+                                                               id="editemptype${Employee.TRAINING}"
+                                                               value="${Employee.TRAINING}"
+                                                               required> Training
+                                                    </label>
+                                                </div>
                                             </div>
                                         </div>
                                     </div>
@@ -386,26 +386,24 @@
                                             </div>
                                         </div>
                                     </div>
+                                    <div class="modal-footer">
+                                        <!-- ปุ่มกดปิด (Close) ตรงส่วนล่างของ Modal -->
+                                        <div class="col-md-9 col-sm-9 col-xs-12 col-md-offset-3">
+                                            <button type="submit" class="btn btn-success">ตกลง</button>
+                                            <button type="button" class="btn btn-default" data-dismiss="modal">
+                                                ยกเลิก
+                                            </button>
+                                        </div>
+                                    </div>
+                                </form>
                             </div>
-                            <div class="modal-footer">
-                                <!-- ปุ่มกดปิด (Close) ตรงส่วนล่างของ Modal -->
-                                <div class="col-md-9 col-sm-9 col-xs-12 col-md-offset-3">
-                                    <button type="submit" class="btn btn-success">ตกลง</button>
-                                    <button type="button" class="btn btn-default" data-dismiss="modal">
-                                        ยกเลิก
-                                    </button>
-
-                                </div>
-                            </div>
-                            </form>
                         </div>
                     </div>
                 </div>
+                <!-- /Modal Content (EDIT EMP)-->
             </div>
-            <!-- /Modal Content (EDIT EMP)-->
         </div>
     </div>
-</div>
 </div>
 <jsp:include page="../_include/bottomenv.jsp"/>
 <script src="${contextPath}/vendors/mjolnic-bootstrap-colorpicker/dist/js/bootstrap-colorpicker.min.js"></script>

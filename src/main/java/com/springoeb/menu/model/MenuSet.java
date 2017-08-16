@@ -1,13 +1,12 @@
 package com.springoeb.menu.model;
 
-import javax.persistence.Column;
-import javax.persistence.Entity;
-import javax.persistence.Id;
+import javax.persistence.*;
 import java.io.Serializable;
 
 @Entity
 public class MenuSet implements Serializable {
     @Id
+    @GeneratedValue(strategy = GenerationType.AUTO)
     private Integer menuSetNo;
     @Column(name = "menu_set_name_TH")
     private String menuSetNameTH;

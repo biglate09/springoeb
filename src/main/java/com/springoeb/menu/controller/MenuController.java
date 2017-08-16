@@ -5,8 +5,11 @@ import com.fasterxml.jackson.databind.ObjectMapper;
 import com.springoeb.menu.model.Menu;
 import com.springoeb.menu.model.MenuCategory;
 import com.springoeb.menu.model.MenuSet;
+import com.springoeb.menu.service.MenuCategoryService;
+import com.springoeb.menu.service.MenuService;
+import com.springoeb.menu.service.MenuSetMenuService;
+import com.springoeb.menu.service.MenuSetService;
 import com.springoeb.stock.model.StockCategory;
-import com.springoeb.menu.service.*;
 import com.springoeb.stock.service.StockCategoryService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
@@ -80,19 +83,25 @@ public class MenuController {
         menu.setMenuDesc(request.getParameter("menuDesc"));
         menu.setMenuCatNo(Integer.parseInt(request.getParameter("menuCatNo")));
         menu.setAvailable(request.getParameter("menuAvailable") == null ? false : true);
-        if (request.getParameter("menuNo") != null) {
-            menu.setMenuNo(Integer.parseInt(request.getParameter("menuNo")));
+        if (menuNo != null) {
+            menu.setMenuNo(menuNo);
         }
 
         if (!menuService.chkDuplicateMenu(menu)) {
             if (!file.getOriginalFilename().equals("")) {
-                String menuPicPath = menuService.getMenuByMenuNo(menuNo).getMenuPicPath();
+                String menuPicPath = null;
+                if(menuNo != null) {
+                    Menu tmpMenu = menuService.getMenuByMenuNo(menuNo);
+                    if (tmpMenu != null) {
+                        menuService.getMenuByMenuNo(menuNo).getMenuPicPath();
+                    }
+                }
                 //pic path before change
                 String filename = System.currentTimeMillis() + file.getOriginalFilename();
                 Path path = Paths.get(UPLOADED_FOLDER + filename);
                 Files.write(path, bytes);
                 menu.setMenuPicPath(filename);
-                if (request.getParameter("menuNo") != null) {
+                if (menuNo != null) {
                     File picFile = new File(UPLOADED_FOLDER + "/" + menuPicPath);
                     picFile.delete();
                 }
@@ -137,12 +146,59 @@ public class MenuController {
         return MENU_PATH + "menuset.jsp";
     }
 
+    @ResponseBody
     @PostMapping("/getmenusets")
     public String getMenuSets() throws JsonProcessingException {
         List<MenuSet> menuSets = menuSetService.getMenuSets();
         ObjectMapper mapper = new ObjectMapper();
         String json = mapper.writeValueAsString(menuSets);
         return json;
+    }
+
+    @ResponseBody
+    @PostMapping("/managemenuset")
+    public void addAndEditMenuSet(@RequestParam("menuSetPicPath") MultipartFile file, HttpServletRequest request) throws Exception {
+        MenuSet menuSet = new MenuSet();
+        byte[] bytes = file.getBytes();
+        Integer menuSetNo = request.getParameter("menuSetNo") != null ? Integer.parseInt(request.getParameter("menuSetNo")) : null;
+
+        if (menuSetNo != null) {
+            menuSet = menuSetService.getMenuSetByMenuSetNo(menuSetNo);
+            menuSet.setMenuSetNo(menuSetNo);
+        }
+
+        menuSet.setMenuSetNameTH(request.getParameter("menuSetNameTH"));
+        menuSet.setMenuSetNameEN(request.getParameter("menuSetNameEN"));
+        menuSet.setMenuSetPrice(Double.parseDouble(request.getParameter("menuSetPrice")));
+        menuSet.setMenuSetDesc(request.getParameter("menuSetDesc"));
+        menuSet.setAvailable(request.getParameter("available") == null ? false : true);
+        if (menuSetNo != null) {
+            menuSet.setMenuSetNo(menuSetNo);
+        }
+
+        if (!menuSetService.chkDuplicateMenuSet(menuSet)) {
+            if (!file.getOriginalFilename().equals("")) {
+                String menuPicPath = null;
+                if(menuSetNo != null) {
+                    MenuSet tmpMenuSet = menuSetService.getMenuSetByMenuSetNo(menuSetNo);
+                    if (tmpMenuSet != null) {
+                        menuPicPath = tmpMenuSet.getMenuSetPicPath();
+                    }
+                }
+                //pic path before change
+                String filename = System.currentTimeMillis() + file.getOriginalFilename();
+                Path path = Paths.get(UPLOADED_FOLDER + filename);
+                Files.write(path, bytes);
+                menuSet.setMenuSetPicPath(filename);
+                if (menuSetNo != null) {
+                    File picFile = new File(UPLOADED_FOLDER + "/" + menuPicPath);
+                    picFile.delete();
+                }
+            }
+            menuSetService.save(menuSet);
+        } else {
+            throw new Exception();
+        }
     }
 
     //----------------------------------------------------------------------------------------------------------//
