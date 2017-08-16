@@ -70,14 +70,12 @@
                                             </div>
                                             <div class="col-md-4">
                                                 <a title="แก้ไข" data-toggle="modal" data-target="#editMenu"
-                                                   onclick="set_menu(' + obj.menuNo + ')"
                                                    style="color:#73879C;cursor:pointer;margin-right:5px;"><i
                                                         class="fa fa-pencil"></i></a>
                                                 <a title="พร้อมจำหน่าย" onclick="change_available(' + obj.menuNo + ')"
                                                    style="color:#73879C;cursor:pointer;margin-right:5px;"><i
                                                         class="fa ' + (obj.available == true ? 'fa-eye' : 'fa-eye-slash' ) + '"></i></a>
                                                 <a title="ลบ"
-                                                   onclick="del_menu(' + obj.menuNo + ',\'' + obj.menuNameTH + '\')"
                                                    style="color:#73879C;cursor:pointer;"><i class="fa fa-trash"></i></a>
                                             </div>
                                         </div>
