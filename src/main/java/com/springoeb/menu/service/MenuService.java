@@ -36,7 +36,7 @@ public class MenuService {
             if(menus.size() > 1) {
                 return true;
             }else{
-                if(menu.getMenuNo() != null && menus.get(0).getMenuCatNo() == menu.getMenuCatNo()){
+                if(menu.getMenuNo() != null && menus.get(0).getMenuNo() == menu.getMenuNo()){
                     return false;
                 }else{
                     return true;

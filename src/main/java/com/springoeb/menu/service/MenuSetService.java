@@ -15,4 +15,29 @@ public class MenuSetService {
     public List<MenuSet> getMenuSets(){
         return menuSetRepository.findAll();
     }
+
+    public MenuSet getMenuSetByMenuSetNo(int menuSetNo){
+        return menuSetRepository.getMenuSetByMenuSetNo(menuSetNo);
+    }
+
+    public boolean chkDuplicateMenuSet(MenuSet menuSet){
+        List<MenuSet> menuSets = menuSetRepository.findByMenuSetNameTHIgnoreCaseOrMenuSetNameENIgnoreCase(menuSet.getMenuSetNameTH(),menuSet.getMenuSetNameEN());
+        if(menuSets != null && menuSets.size() != 0){
+            if(menuSets.size() > 1) {
+                return true;
+            }else{
+                if(menuSet.getMenuSetNo() != null && menuSets.get(0).getMenuSetNo() == menuSet.getMenuSetNo()){
+                    return false;
+                }else{
+                    return true;
+                }
+            }
+        }else{
+            return false;
+        }
+    }
+
+    public void save(MenuSet menuSet){
+        menuSetRepository.save(menuSet);
+    }
 }

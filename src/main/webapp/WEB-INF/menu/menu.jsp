@@ -64,11 +64,11 @@
                                               id="add_menu" enctype="multipart/form-data">
                                             <div class="form-group">
                                                 <img class="col-md-offset-3 col-sm-offset-3 col-md-6 col-sm-6 col-xs-12 img-resize"
-                                                     id="showpic" style="margin-bottom:20px;" height="auto" width="414"
-                                                     src="../images/default_image_upload.png"/>
+                                                     id="showpic" style="margin-bottom:20px;cursor:pointer;" height="auto" width="414"
+                                                     src="../images/default_upload_image.png"/>
                                                 <div class="col-md-offset-3 col-sm-offset-3 col-md-6 col-sm-6 col-xs-12 has-feedback"
                                                      style="margin-bottom: 12px">
-                                                    <input type="file" accept="image/x-png,image/gif,image/jpeg"
+                                                    <input type="file" accept="image/*"
                                                            class="form-control" name="menuPicPath"
                                                            id="add_menu_pic"
                                                            onchange="document.getElementById('showpic').src = window.URL.createObjectURL(this.files[0])"
@@ -120,7 +120,7 @@
                                             <div class="modal-footer">
                                                 <!-- ปุ่มกดปิด (Close) ตรงส่วนล่างของ Modal -->
                                                 <div class="col-md-9 col-sm-9 col-xs-12 col-md-offset-3">
-                                                    <div class="checkbox" style="display:inline-block">
+                                                    <div class="checkbox" style="display:inline-block;margin-right:15px;">
                                                         <label>
                                                             <input type="checkbox" name="menuAvailable"
                                                                    id="add_menu_available"
@@ -160,12 +160,12 @@
                                         <input type="hidden" name="menuNo" id="hiddenmenuno">
                                         <div class="form-group">
                                             <img class="col-md-offset-3 col-sm-offset-3 col-md-6 col-sm-6 col-xs-12 img-resize"
-                                                 style="margin-bottom:20px;" id="showpic_edit" width="414" height="auto"
-                                                 src="../images/default_image_upload.png"/>
+                                                 style="margin-bottom:20px;cursor:pointer;" id="showpic_edit" width="414" height="auto"
+                                                 src="../images/default_upload_image.png"/>
 
                                             <div class="col-md-offset-3 col-sm-offset-3 col-md-6 col-sm-6 col-xs-12 has-feedback"
                                                  style="margin-bottom: 12px">
-                                                <input type="file" accept="image/x-png,image/gif,image/jpeg"
+                                                <input type="file" accept="image/*"
                                                        class="form-control" name="menuPicPath"
                                                        id="edit_menu_pic"
                                                        onchange="document.getElementById('showpic_edit').src = window.URL.createObjectURL(this.files[0])"
@@ -216,7 +216,7 @@
                                         <div class="modal-footer">
                                             <!-- ปุ่มกดปิด (Close) ตรงส่วนล่างของ Modal -->
                                             <div class="col-md-9 col-sm-9 col-xs-12 col-md-offset-3">
-                                                <div class="checkbox" style="display:inline-block">
+                                                <div class="checkbox" style="display:inline-block;margin-right:15px;">
                                                     <label>
                                                         <input type="checkbox" name="menuAvailable"
                                                                id="edit_menu_available"
@@ -283,13 +283,13 @@
 
         $("#add_menu_pic").change(function () {
             if ($("#add_menu_pic").val() == '') {
-                $("#showpic").attr('src', '../images/default_image_upload.png');
+                $("#showpic").attr('src', '../images/default_upload_image.png');
             }
         });
 
         $("#edit_menu_pic").change(function () {
             if ($("#edit_menu_pic").val() == '') {
-                $("#showpic_edit").attr('src', '../images/default_image_upload.png');
+                $("#showpic_edit").attr('src', '../images/default_upload_image.png');
             }
         });
 
@@ -362,7 +362,7 @@
                 swal("สำเร็จ", "เมนู " + $("#add_menu").val() + " ถูกเพิ่มเรียบร้อยแล้ว", "success");
                 $("#add_menu")[0].reset();
                 $("#addMenu").modal('toggle');
-                $("#showpic").attr('src', '../images/default_image_upload.png');
+                $("#showpic").attr('src', '../images/default_upload_image.png');
                 $("#add_menu_available").parent().removeClass('checked');
                 $("#add_menu_available").attr('checked', false);
                 refresh_table();

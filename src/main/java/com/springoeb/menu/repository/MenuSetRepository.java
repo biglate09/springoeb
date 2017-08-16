@@ -9,4 +9,6 @@ import java.util.List;
 @Repository
 public interface MenuSetRepository extends CrudRepository<MenuSet,Integer>{
     List<MenuSet> findAll();
+    List<MenuSet> findByMenuSetNameTHIgnoreCaseOrMenuSetNameENIgnoreCase(String menuSetNameTH, String menuSetNameEN);
+    MenuSet getMenuSetByMenuSetNo(int menuSetNo);
 }
