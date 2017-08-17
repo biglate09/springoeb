@@ -248,10 +248,10 @@
                             <div class="col-md-12" style=";font-weight:bold;white-space:nowrap;overflow:hidden;text-overflow: ellipsis;cursor:pointer;">' + obj.menuSetNameTH + ' / ' + obj.menuSetNameEN + '</div>\
                             <div class="col-md-12 foodDesc">\
                             <div>\
-                            <p style="text-align:center;font-weight:bold;">รายการเมนู</p>'
+                            <p style="text-align:center;font-weight:bold;">รายการเมนู</p>';
                             for(var j = 0; j < obj.menuSetMenus.length ; j++){
                                 var menuSetMenu = obj.menuSetMenus[j];
-                                div += '<span>' + menuSetMenu.menu.menuNameTH + ' : </span>' + menuSetMenu.amount  + " เมนู<br>"
+                                div += '<div class="col-md-9" style="white-space:nowrap;overflow:hidden;text-overflow:ellipsis;" title="' + menuSetMenu.menu.menuNameTH + '">' + menuSetMenu.menu.menuNameTH + ' </div>' + menuSetMenu.amount  + " เมนู<br>";
                             }
                             div += '</div>\
                             </div>\
