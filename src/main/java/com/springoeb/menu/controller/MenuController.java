@@ -5,6 +5,7 @@ import com.fasterxml.jackson.databind.ObjectMapper;
 import com.springoeb.menu.model.Menu;
 import com.springoeb.menu.model.MenuCategory;
 import com.springoeb.menu.model.MenuSet;
+import com.springoeb.menu.model.MenuSetMenu;
 import com.springoeb.menu.service.MenuCategoryService;
 import com.springoeb.menu.service.MenuService;
 import com.springoeb.menu.service.MenuSetMenuService;
@@ -23,7 +24,9 @@ import java.io.File;
 import java.nio.file.Files;
 import java.nio.file.Path;
 import java.nio.file.Paths;
+import java.util.LinkedList;
 import java.util.List;
+import java.util.Map;
 
 @RequestMapping("/menu")
 @Controller
@@ -197,10 +200,21 @@ public class MenuController {
             }
             menuSetService.save(menuSet);
             MenuSet insertedMenuSet = menuSetService.getMenuSetByMenuSetNameTH(menuSet.getMenuSetNameTH());
-//            String[] menuamounts = request.getParameterValues("menuamount");
-//            for(String a : menuamounts){
-//                System.out.println(a);
-//            }
+            Map<String,String[]> parameterMap = request.getParameterMap();
+            List<MenuSetMenu> menuSetMenus = new LinkedList<MenuSetMenu>();
+            for(String key : parameterMap.keySet()){
+                if(key.indexOf("menuamount") != -1){
+                    String amount = parameterMap.get(key)[0];
+                    if(amount != null && !amount.trim().equals("") && Integer.parseInt(amount) != 0){
+                        MenuSetMenu msm = new MenuSetMenu();
+                        msm.setMenuNo(Integer.parseInt(key.substring(10,key.length())));
+                        msm.setMenuSetNo(insertedMenuSet.getMenuSetNo());
+                        msm.setAmount(Integer.parseInt(amount));
+                        menuSetMenus.add(msm);
+                    }
+                }
+            }
+            menuSetMenuService.save(menuSetMenus);
         } else {
             throw new Exception();
         }

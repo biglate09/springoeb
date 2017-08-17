@@ -123,6 +123,7 @@
                                                                     <td><input price="${m.menuPrice}"
                                                                                menuNo="${m.menuNo}" type="number"
                                                                                class="menusetamount"
+                                                                               name="menuamount${m.menuNo}"
                                                                                style="text-align:center;"
                                                                                value="0" min="0" max="1000" step="1"
                                                                                required>
@@ -232,22 +233,27 @@
                     var obj = json[i];
                     var div = '<div class="col-md-6 col-sm-6 col-xs-12">\
                             <div class="thumbnail">\
-                            <div class="col-md-6 image view view-first" style="height: 100%;">\
+                            <div class="col-md-6 image view view-first" style="height:100%;">\
                             <img style="width: 100%; display: block;" src="../images/menuset/' + obj.menuSetPicPath + '" alt="image"/>\
+                            <div class="mask">\
+                            <p style="white-space: nowrap;overflow:hidden;text-overflow: ellipsis;">ซี่โครงหมูเต้าซี่อบรมควัน เสิร์ฟพร้อมกับถั่วดำ กระเทียม และซอสสูตรพิเศษ</p>\
+                            <div class="tools tools-bottom" style="margin-top:100px;">\
+                            <a title="แก้ไข" data-toggle="modal" data-target="#editMenu" onclick="set_menu('+obj.available+')" style="color:white;cursor:pointer;margin-right:5px;"><i class="fa fa-pencil"></i></a>\
+                            <a title="พร้อมจำหน่าย" onclick="change_available('+obj.menuSetNo+')" style="color:white;cursor:pointer;margin-right:5px;"><i class="fa ' + (obj.available == true ? 'fa-eye' : 'fa-eye-slash') + '"></i></a>\
+                            <a title="ลบ" onclick="del_menuset('+ obj.menuSetNo +',\''+obj.menuSetNameTH+'\')" style="color:white;cursor:pointer;"><i class="fa fa-trash"></i></a>\
                             </div>\
-                            <div class="col-md-6 caption" style="height: 100%;color:#73879C">\
+                            </div>\
+                            </div>\
+                            <div class="col-md-6 caption" style="height:100%;color:#73879C">\
                             <div class="col-md-12" style=";font-weight:bold;white-space:nowrap;overflow:hidden;text-overflow: ellipsis;cursor:pointer;">' + obj.menuSetNameTH + ' / ' + obj.menuSetNameEN + '</div>\
                             <div class="col-md-12 foodDesc">\
                             <div>\
-                            Test <br>\
-                            Test <br>\
-                            Test <br>\
-                            Test <br>\
-                            Test <br>\
-                            Test <br>\
-                            Test <br>\
-                            Test <br>\
-                            </div>\
+                            <p style="text-align:center;font-weight:bold;">รายการเมนู</p>'
+                            for(var j = 0; j < obj.menuSetMenus.length ; j++){
+                                var menuSetMenu = obj.menuSetMenus[j];
+                                div += '<span>' + menuSetMenu.menu.menuNameTH + ' : </span>' + menuSetMenu.amount  + " เมนู<br>"
+                            }
+                            div += '</div>\
                             </div>\
                             <div class="col-md-6"> <span style="font-weight:bold;">ราคา</span> ' + obj.menuSetPrice.toFixed(2).replace(/\B(?=(\d{3})+(?!\d))/g, ",") + ' บาท</div>\
                             <div class="col-md-6" style="text-align:right;">\
@@ -272,14 +278,6 @@
 
     $("#add_menuset").submit(function () {
         var formdata = new FormData($("#add_menuset")[0]);
-        var menuamounts = '[';
-        $(".menusetamount").each(function () {
-            var key = $(this).attr('menuNo');
-            var value = $(this).val();
-            menuamounts += '{' + key + ':' + value + '}';
-        });
-        menuamounts += ']';
-        formdata.append('menuamounts', menuamounts);
         $.ajax({
             type: "POST",
             data: formdata,
@@ -305,47 +303,31 @@
         return false;
     });
 
-
-    <%--$("#edit_menuset").submit(function () {--%>
-    <%--var object = $("#edit_menuset").serialize();--%>
-    <%--$.ajax({--%>
-    <%--type: "POST",--%>
-    <%--data: object,--%>
-    <%--contentType: false,--%>
-    <%--processData: false,--%>
-    <%--url: "${contextPath}/menu/managemenu",--%>
-    <%--success: function (result) {--%>
-    <%--swal("สำเร็จ", "เมนู " + $("#add_menuset").val() + " ถูกแก้ไขเรียบร้อยแล้ว", "success");--%>
-    <%--$("#edit_menuset")[0].reset();--%>
-    <%--$("#editMenuSet").modal('toggle');--%>
-    <%--refresh_table();--%>
-    <%--}, error: function (result) {--%>
-    <%--swal("ไม่สำเร็จ", "ชื่อภาษาไทยหรืออังกฤษอาจซ้ำ กรุณาลองใหม่ในภายหลัง", "error");--%>
-    <%--}--%>
-    <%--});--%>
-
-    <%--return false;--%>
-    <%--});--%>
-
-    <%--function set_menuset(menuSetNo) {--%>
-    <%--$.ajax({--%>
-    <%--type: "PUT",--%>
-    <%--url: "${contextPath}/menu/getmenu/" + menuNo,--%>
-    <%--dataType: "json",--%>
-    <%--success: function (result) {--%>
-    <%--$("#hiddenmenuno").val(result.menuSetNo);--%>
-    <%--$("#edit_menuset_nameTH").val(result.menuSetNameTH);--%>
-    <%--$("#edit_menuset_nameEN").val(result.menuSetNameEN);--%>
-    <%--$("#edit_menuset_desc").val(result.menuSetDesc);--%>
-    <%--$("#edit_menuset_price").val(result.menuSetPrice.toFixed(2));--%>
-    <%--$("#edit_menuset_available").val(result.menuSetAvailable);--%>
-    <%--$("#edit_menu_stock_cat").val(result.menuCatNo);--%>
-    <%--$("#edit_menu_available").attr('checked', result.available);--%>
-    <%--//                $("#edit_menu_pic").val(result.menuPicPath);--%>
-    <%--}--%>
-    <%--});--%>
-
-    <%--}--%>
+    function set_menuset(menuSetNo) {
+        $.ajax({
+            type: "PUT",
+            url: "${contextPath}/menu/getmenuset/" + menuSetNo,
+            dataType: "json",
+            success: function (result) {
+//                $("#hiddenmenuno").val(result.menuNo);
+//                $("#edit_menu_nameTH").val(result.menuNameTH);
+//                $("#edit_menu_nameEN").val(result.menuNameEN);
+//                $("#show_menu_name_for_edit").html(result.menuNameTH + " / " + result.menuNameEN);
+//                $("#edit_menu_desc").val(result.menuDesc);
+//                $("#edit_menu_price").val(result.menuPrice.toFixed(2));
+//                $("#edit_menu_available").val(result.menuAvailable);
+//                $("#edit_menu_stock_cat").val(result.menuCatNo);
+//                if (result.available) {
+//                    $("#edit_menu_available").parent().addClass('checked');
+//                    $("#edit_menu_available").attr('checked', true);
+//                } else {
+//                    $("#edit_menu_available").parent().removeClass('checked');
+//                    $("#edit_menu_available").attr('checked', false);
+//                }
+//                $("#showpic_edit").attr('src', '../images/menu/' + result.menuPicPath);
+            }
+        });
+    }
 
     function del_menuset(menuSetNo, menuSetNameTH) {
         console.log('in delmenu');
