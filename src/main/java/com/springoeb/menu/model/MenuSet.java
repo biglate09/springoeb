@@ -2,6 +2,7 @@ package com.springoeb.menu.model;
 
 import javax.persistence.*;
 import java.io.Serializable;
+import java.util.List;
 
 @Entity
 public class MenuSet implements Serializable {
@@ -16,6 +17,9 @@ public class MenuSet implements Serializable {
     private Double menuSetPrice;
     private String menuSetPicPath;
     private Boolean available;
+
+    @OneToMany(fetch = FetchType.LAZY, mappedBy = "menuSet")
+    private List<MenuSetMenu> menuSetMenus;
 
     public Integer getMenuSetNo() {
         return menuSetNo;
@@ -71,5 +75,27 @@ public class MenuSet implements Serializable {
 
     public void setAvailable(Boolean available) {
         this.available = available;
+    }
+
+    public List<MenuSetMenu> getMenuSetMenus() {
+        return menuSetMenus;
+    }
+
+    public void setMenuSetMenus(List<MenuSetMenu> menuSetMenus) {
+        this.menuSetMenus = menuSetMenus;
+    }
+
+    @Override
+    public String toString() {
+        return "MenuSet{" +
+                "menuSetNo=" + menuSetNo +
+                ", menuSetNameTH='" + menuSetNameTH + '\'' +
+                ", menuSetNameEN='" + menuSetNameEN + '\'' +
+                ", menuSetDesc='" + menuSetDesc + '\'' +
+                ", menuSetPrice=" + menuSetPrice +
+                ", menuSetPicPath='" + menuSetPicPath + '\'' +
+                ", available=" + available +
+                ", menuSetMenus=" + menuSetMenus +
+                '}';
     }
 }

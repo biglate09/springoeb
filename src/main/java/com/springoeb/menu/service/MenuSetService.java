@@ -37,7 +37,13 @@ public class MenuSetService {
         }
     }
 
+    public MenuSet getMenuSetByMenuSetNameTH(String menuSetNameTH){ return menuSetRepository.findMenuSetByMenuSetNameTH(menuSetNameTH); }
+
     public void save(MenuSet menuSet){
         menuSetRepository.save(menuSet);
+    }
+
+    public void delMenuSet(int menuSetNo){
+        menuSetRepository.removeByMenuSetNo(menuSetNo);
     }
 }

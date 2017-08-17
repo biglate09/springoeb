@@ -5,6 +5,7 @@ import com.fasterxml.jackson.databind.ObjectMapper;
 import com.springoeb.menu.model.Menu;
 import com.springoeb.menu.model.MenuCategory;
 import com.springoeb.menu.model.MenuSet;
+import com.springoeb.menu.model.MenuSetMenu;
 import com.springoeb.menu.service.MenuCategoryService;
 import com.springoeb.menu.service.MenuService;
 import com.springoeb.menu.service.MenuSetMenuService;
@@ -23,7 +24,9 @@ import java.io.File;
 import java.nio.file.Files;
 import java.nio.file.Path;
 import java.nio.file.Paths;
+import java.util.LinkedList;
 import java.util.List;
+import java.util.Map;
 
 @RequestMapping("/menu")
 @Controller
@@ -41,7 +44,7 @@ public class MenuController {
     private StockCategoryService stockCategoryService;
 
     private static final String MENU_PATH = "/WEB-INF/menu/";
-    private static final String UPLOADED_FOLDER = System.getProperty("user.dir") + "/src/main/webapp/images/menu/";
+    private static final String UPLOADED_FOLDER = System.getProperty("user.dir") + "/src/main/webapp/images/";
 
     //-----------------------------------------------------------------------------------------------------------//
     @GetMapping("/menu")
@@ -98,11 +101,11 @@ public class MenuController {
                 }
                 //pic path before change
                 String filename = System.currentTimeMillis() + file.getOriginalFilename();
-                Path path = Paths.get(UPLOADED_FOLDER + filename);
+                Path path = Paths.get(UPLOADED_FOLDER + "menu/" + filename);
                 Files.write(path, bytes);
                 menu.setMenuPicPath(filename);
                 if (menuNo != null) {
-                    File picFile = new File(UPLOADED_FOLDER + "/" + menuPicPath);
+                    File picFile = new File(UPLOADED_FOLDER + "menu/" + menuPicPath);
                     picFile.delete();
                 }
             }
@@ -126,7 +129,7 @@ public class MenuController {
     public void delMenu(@PathVariable("menuNo") int menuNo) {
         String menuPicPath = menuService.getMenuByMenuNo(menuNo).getMenuPicPath();
         menuService.delMenu(menuNo);
-        File file = new File(UPLOADED_FOLDER + "/" + menuPicPath);
+        File file = new File(UPLOADED_FOLDER + "menu/" + menuPicPath);
         file.delete();
     }
 
@@ -142,7 +145,7 @@ public class MenuController {
     //----------------------------------------------------------------------------------------------------------//
     @GetMapping("/menuset")
     public String toMenuSetIndex(Model model) {
-        model.addAttribute("menus", menuService.getMenus());
+        model.addAttribute("menus", menuService.getMenusAvailable());
         return MENU_PATH + "menuset.jsp";
     }
 
@@ -187,18 +190,52 @@ public class MenuController {
                 }
                 //pic path before change
                 String filename = System.currentTimeMillis() + file.getOriginalFilename();
-                Path path = Paths.get(UPLOADED_FOLDER + filename);
+                Path path = Paths.get(UPLOADED_FOLDER + "menuset/" + filename);
                 Files.write(path, bytes);
                 menuSet.setMenuSetPicPath(filename);
                 if (menuSetNo != null) {
-                    File picFile = new File(UPLOADED_FOLDER + "/" + menuPicPath);
+                    File picFile = new File(UPLOADED_FOLDER + "menuset/" + menuPicPath);
                     picFile.delete();
                 }
             }
             menuSetService.save(menuSet);
+            MenuSet insertedMenuSet = menuSetService.getMenuSetByMenuSetNameTH(menuSet.getMenuSetNameTH());
+            Map<String,String[]> parameterMap = request.getParameterMap();
+            List<MenuSetMenu> menuSetMenus = new LinkedList<MenuSetMenu>();
+            for(String key : parameterMap.keySet()){
+                if(key.indexOf("menuamount") != -1){
+                    String amount = parameterMap.get(key)[0];
+                    if(amount != null && !amount.trim().equals("") && Integer.parseInt(amount) != 0){
+                        MenuSetMenu msm = new MenuSetMenu();
+                        msm.setMenuNo(Integer.parseInt(key.substring(10,key.length())));
+                        msm.setMenuSetNo(insertedMenuSet.getMenuSetNo());
+                        msm.setAmount(Integer.parseInt(amount));
+                        menuSetMenus.add(msm);
+                    }
+                }
+            }
+            menuSetMenuService.save(menuSetMenus);
         } else {
             throw new Exception();
         }
+    }
+
+    @Transactional
+    @ResponseBody
+    @DeleteMapping("/delmenuset/{menuSetNo}")
+    public void delMenuSet(@PathVariable("menuSetNo") int menuSetNo) {
+        String menuSetPicPath = menuSetService.getMenuSetByMenuSetNo(menuSetNo).getMenuSetPicPath();
+        menuSetService.delMenuSet(menuSetNo);
+        File file = new File(UPLOADED_FOLDER + "menuset/" + menuSetPicPath);
+        file.delete();
+    }
+
+    @ResponseBody
+    @PostMapping("/changemenusetavailable")
+    public void changeMenuSetAvailable(HttpServletRequest request) {
+        MenuSet menuSet = menuSetService.getMenuSetByMenuSetNo(Integer.parseInt(request.getParameter("menusetno")));
+        menuSet.setAvailable(!menuSet.getAvailable());
+        menuSetService.save(menuSet);
     }
 
     //----------------------------------------------------------------------------------------------------------//
