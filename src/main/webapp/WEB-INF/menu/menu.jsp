@@ -454,7 +454,6 @@
             data: {menuno: menuno},
             url: "${contextPath}/menu/changeavailable",
             success: function (result) {
-//                swal("สำเร็จ", "แก้ไขความพร้อมจำหน่ายเรียบร้อยแล้ว", "success");
                 refresh_table();
             }, error: function (result) {
                 swal("ไม่สำเร็จ", "กรุณาลองใหม่ภายหลัง", "error");

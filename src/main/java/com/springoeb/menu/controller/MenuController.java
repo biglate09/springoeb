@@ -41,7 +41,7 @@ public class MenuController {
     private StockCategoryService stockCategoryService;
 
     private static final String MENU_PATH = "/WEB-INF/menu/";
-    private static final String UPLOADED_FOLDER = System.getProperty("user.dir") + "/src/main/webapp/images/menu/";
+    private static final String UPLOADED_FOLDER = System.getProperty("user.dir") + "/src/main/webapp/images/";
 
     //-----------------------------------------------------------------------------------------------------------//
     @GetMapping("/menu")
@@ -98,11 +98,11 @@ public class MenuController {
                 }
                 //pic path before change
                 String filename = System.currentTimeMillis() + file.getOriginalFilename();
-                Path path = Paths.get(UPLOADED_FOLDER + filename);
+                Path path = Paths.get(UPLOADED_FOLDER + "menu/" + filename);
                 Files.write(path, bytes);
                 menu.setMenuPicPath(filename);
                 if (menuNo != null) {
-                    File picFile = new File(UPLOADED_FOLDER + "/" + menuPicPath);
+                    File picFile = new File(UPLOADED_FOLDER + "menu/" + menuPicPath);
                     picFile.delete();
                 }
             }
@@ -126,7 +126,7 @@ public class MenuController {
     public void delMenu(@PathVariable("menuNo") int menuNo) {
         String menuPicPath = menuService.getMenuByMenuNo(menuNo).getMenuPicPath();
         menuService.delMenu(menuNo);
-        File file = new File(UPLOADED_FOLDER + "/" + menuPicPath);
+        File file = new File(UPLOADED_FOLDER + "menu/" + menuPicPath);
         file.delete();
     }
 
@@ -142,7 +142,7 @@ public class MenuController {
     //----------------------------------------------------------------------------------------------------------//
     @GetMapping("/menuset")
     public String toMenuSetIndex(Model model) {
-        model.addAttribute("menus", menuService.getMenus());
+        model.addAttribute("menus", menuService.getMenusAvailable());
         return MENU_PATH + "menuset.jsp";
     }
 
@@ -187,18 +187,41 @@ public class MenuController {
                 }
                 //pic path before change
                 String filename = System.currentTimeMillis() + file.getOriginalFilename();
-                Path path = Paths.get(UPLOADED_FOLDER + filename);
+                Path path = Paths.get(UPLOADED_FOLDER + "menuset/" + filename);
                 Files.write(path, bytes);
                 menuSet.setMenuSetPicPath(filename);
                 if (menuSetNo != null) {
-                    File picFile = new File(UPLOADED_FOLDER + "/" + menuPicPath);
+                    File picFile = new File(UPLOADED_FOLDER + "menuset/" + menuPicPath);
                     picFile.delete();
                 }
             }
             menuSetService.save(menuSet);
+            MenuSet insertedMenuSet = menuSetService.getMenuSetByMenuSetNameTH(menuSet.getMenuSetNameTH());
+//            String[] menuamounts = request.getParameterValues("menuamount");
+//            for(String a : menuamounts){
+//                System.out.println(a);
+//            }
         } else {
             throw new Exception();
         }
+    }
+
+    @Transactional
+    @ResponseBody
+    @DeleteMapping("/delmenuset/{menuSetNo}")
+    public void delMenuSet(@PathVariable("menuSetNo") int menuSetNo) {
+        String menuSetPicPath = menuSetService.getMenuSetByMenuSetNo(menuSetNo).getMenuSetPicPath();
+        menuSetService.delMenuSet(menuSetNo);
+        File file = new File(UPLOADED_FOLDER + "menuset/" + menuSetPicPath);
+        file.delete();
+    }
+
+    @ResponseBody
+    @PostMapping("/changemenusetavailable")
+    public void changeMenuSetAvailable(HttpServletRequest request) {
+        MenuSet menuSet = menuSetService.getMenuSetByMenuSetNo(Integer.parseInt(request.getParameter("menusetno")));
+        menuSet.setAvailable(!menuSet.getAvailable());
+        menuSetService.save(menuSet);
     }
 
     //----------------------------------------------------------------------------------------------------------//
