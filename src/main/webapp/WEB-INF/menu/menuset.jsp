@@ -255,8 +255,8 @@
                             }
                             div += '</div>\
                             </div>\
-                            <div class="col-md-6"> <span style="font-weight:bold;">ราคา</span> ' + obj.menuSetPrice.toFixed(2).replace(/\B(?=(\d{3})+(?!\d))/g, ",") + ' บาท</div>\
-                            <div class="col-md-6" style="text-align:right;">\
+                            <div class="col-md-7"> <span style="font-weight:bold;">ราคา</span> ' + obj.menuSetPrice.toFixed(2).replace(/\B(?=(\d{3})+(?!\d))/g, ",") + ' บาท</div>\
+                            <div class="col-md-5" style="text-align:right;">\
                             <div class="panel_menuset">\
                             <a title="แก้ไข" data-toggle="modal" data-target="#editMenu" style="color:#73879C;cursor:pointer;margin-right:5px;">\
                             <i class="fa fa-pencil"></i></a>\
