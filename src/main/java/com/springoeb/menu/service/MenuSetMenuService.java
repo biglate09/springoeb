@@ -15,4 +15,8 @@ public class MenuSetMenuService {
     public void save(List<MenuSetMenu> msm){
         menuSetMenuRepository.save(msm);
     }
+
+    public void removeMenuSetMenuByMenuSetNo(int menuSetNo){
+        menuSetMenuRepository.removeByMenuSetNo(menuSetNo);
+    }
 }

@@ -145,7 +145,7 @@ public class MenuController {
     //----------------------------------------------------------------------------------------------------------//
     @GetMapping("/menuset")
     public String toMenuSetIndex(Model model) {
-        model.addAttribute("menus", menuService.getMenusAvailable());
+        model.addAttribute("menus", menuService.getMenus());
         return MENU_PATH + "menuset.jsp";
     }
 
@@ -158,6 +158,16 @@ public class MenuController {
         return json;
     }
 
+    @ResponseBody
+    @PutMapping("/getmenuset/{menuSetNo}")
+    public String getMenuSet(@PathVariable("menuSetNo") int menuSetNo) throws JsonProcessingException {
+        MenuSet menuSet = menuSetService.getMenuSetByMenuSetNo(menuSetNo);
+        ObjectMapper mapper = new ObjectMapper();
+        String json = mapper.writeValueAsString(menuSet);
+        return json;
+    }
+
+    @Transactional
     @ResponseBody
     @PostMapping("/managemenuset")
     public void addAndEditMenuSet(@RequestParam("menuSetPicPath") MultipartFile file, HttpServletRequest request) throws Exception {
@@ -200,6 +210,7 @@ public class MenuController {
             }
             menuSetService.save(menuSet);
             MenuSet insertedMenuSet = menuSetService.getMenuSetByMenuSetNameTH(menuSet.getMenuSetNameTH());
+            menuSetMenuService.removeMenuSetMenuByMenuSetNo(insertedMenuSet.getMenuSetNo());
             Map<String,String[]> parameterMap = request.getParameterMap();
             List<MenuSetMenu> menuSetMenus = new LinkedList<MenuSetMenu>();
             for(String key : parameterMap.keySet()){
