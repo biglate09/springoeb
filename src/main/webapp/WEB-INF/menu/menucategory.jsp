@@ -5,7 +5,7 @@
 <html>
 <head>
     <jsp:include page="../_include/topenv.jsp"/>
-    <title>ประเภทเมนูอาหาร</title>
+    <title>ประเภทอาหาร</title>
 </head>
 <body class="nav-md">
 <div class="container body">
@@ -24,7 +24,7 @@
                 <div class="col-md-12 col-sm-12 col-xs-12">
                     <div class="x_panel">
                         <div class="x_title">
-                            <h4>ประเภทเมนูอาหาร</h4>
+                            <h4>ประเภทอาหาร</h4>
                         </div>
                         <div class="x_content">
                             <form action="#">
@@ -33,146 +33,113 @@
                                        class="btn btn-success btn-sm"><i class="fa fa-plus-circle"></i>&nbsp;
                                         เพิ่มประเภท</a>
                                 </p>
-                                <table id="datatable-menucat"
-                                       class="table table-striped table-bordered bulk_action1">
+                                <table id="datatable-menucategory"
+                                       class="table table-striped table-bordered">
                                     <thead>
                                     <tr>
                                         <th style="width:20%;text-align:center;">ชื่อประเภทอาหาร</th>
-                                        <th style="width:20%;text-align:center;">หมวดหมู่</th>
                                         <th style="width:20%;text-align:center;">ตัวเลือก</th>
                                     </tr>
                                     </thead>
                                     <tbody style="text-align:center;">
+
                                     </tbody>
                                 </table>
                             </form>
                         </div>
-                        <div class="modal fade" id="addMenuCat" role="dialog">
-                            <div class="modal-dialog">
-                                <!-- เนือหาของ Modal ทั้งหมด -->
-                                <div class="modal-content">
-                                    <!-- ส่วนหัวของ Modal -->
-                                    <div class="modal-header">
-                                        <!-- ปุ่มกดปิด (X) ตรงส่วนหัวของ Modal -->
-                                        <button type="button" class="close" data-dismiss="modal">&times;</button>
-                                        <h4 class="modal-title">เพิ่มประเภทเมนูอาหารใหม่</h4>
-                                    </div>
-                                    <!-- ส่วนเนื้อหาของ Modal -->
-                                    <div class="modal-body">
-                                        <form class="form-horizontal form-label-left input_mask" modelAttribute="menucategory" id="add_menu_category">
-                                            <div class="form-group">
-                                                <div class="col-md-6 col-sm-6 col-xs-12 form-group has-feedback">
-                                                    <label>ชื่อประเภทอาหารภาษาไทย</label>
-                                                    <input type="text" class="form-control" name="menuCatNameTH" id="add_menu_cat_nameTH"
-                                                           placeholder="ชื่อประเภทอาหารภาษาไทย" required>
-                                                    <span class="fa fa-pencil form-control-feedback right"
-                                                          aria-hidden="true"></span>
-                                                </div>
-                                                <div class="col-md-6 col-sm-6 col-xs-12 form-group has-feedback">
-                                                    <label>ชื่อประเภทอาหารภาษาอังกฤษ</label>
-                                                    <input type="text" class="form-control" name="menuCatNameEN" id="add_menu_cat_nameEN"
-                                                           placeholder="ชื่อประเภทอาหารภาษาอังกฤษ" required>
-                                                    <span class="fa fa-pencil form-control-feedback right"
-                                                          aria-hidden="true"></span>
-                                                </div>
-                                                <div class="col-md-6 col-sm-6 col-xs-12 form-group has-feedback">
-                                                    <label>หมวดหมู่ของประเภทอาหาร</label>
-                                                    <select name="stockCatNo" id="add_menu_cat_stock_cat" class="form-control" required>
-                                                        <option value="">---เลือกหมวดหมู่---</option>
-                                                        <c:forEach items="${stockCategories}" var="sc">
-                                                            <option value="${sc.stockCatNo}">${sc.stockCatName}</option>
-                                                        </c:forEach>
-                                                    </select>
-                                                </div>
-                                            </div>
-                                            <div class="modal-footer">
-                                                <!-- ปุ่มกดปิด (Close) ตรงส่วนล่างของ Modal -->
-                                                <div class="col-md-9 col-sm-9 col-xs-12 col-md-offset-3">
-                                                    <button type="submit" class="btn btn-success">ตกลง</button>
-                                                    <button type="button" class="btn btn-default" data-dismiss="modal">
-                                                        ยกเลิก
-                                                    </button>
-                                                </div>
-                                            </div>
-                                        </form>
-                                    </div>
-                                </div>
+                    </div>
+                </div>
+                <!-- /page content -->
+                <!-- Modal Content (Add Menu Category)-->
+                <div class="modal fade" id="addMenuCat" role="dialog">
+                    <div class="modal-dialog">
+                        <div class="modal-content">
+                            <div class="modal-header">
+                                <button type="button" class="close" data-dismiss="modal">&times;</button>
+                                <h4 class="modal-title">เพิ่มประเภทอาหาร</h4>
                             </div>
-                        </div>
-                        <div class="modal fade" id="editMenuCat" role="dialog">
-                            <div class="modal-dialog">
-                                <!-- เนือหาของ Modal ทั้งหมด -->
-                                <div class="modal-content">
-                                    <!-- ส่วนหัวของ Modal -->
-                                    <div class="modal-header">
-                                        <!-- ปุ่มกดปิด (X) ตรงส่วนหัวของ Modal -->
-                                        <button type="button" class="close" data-dismiss="modal">&times;</button>
-                                        <h4 class="modal-title">แก้ไขประเภทเมนูอาหาร <span id="show_menu_cat_name_for_edit"></span></h4>
+                            <div class="modal-body">
+                                <form class="form-horizontal form-label-left input_mask" modelAttribute="menuCategory" id="menu_category">
+                                    <div class="form-group">
+                                        <div class="col-md-6 col-sm-6 col-xs-12 form-group has-feedback">
+                                            <label>ชื่อประเภทอาหาร</label>
+                                            <input type="text" class="form-control" name="menuCatName" id="menu_cat_name"
+                                                   placeholder="ชื่อประเภทอาหาร" required>
+                                            <span class="fa fa-pencil form-control-feedback right"
+                                                  aria-hidden="true"></span>
+                                        </div>
                                     </div>
-                                    <!-- ส่วนเนื้อหาของ Modal -->
-                                    <div class="modal-body">
-                                        <form class="form-horizontal form-label-left input_mask" modelAttribute="menucategory" id="edit_menu_category">
-                                            <input type="hidden" name="menuCatNo" id="hiddenmenucatno">
-                                            <div class="form-group">
-                                                <div class="col-md-6 col-sm-6 col-xs-12 form-group has-feedback">
-                                                    <label>ชื่อประเภทอาหารภาษาไทย</label>
-                                                    <input type="text" class="form-control" name="menuCatNameTH" id="edit_menu_cat_nameTH"
-                                                           placeholder="ชื่อประเภทอาหารภาษาไทย" required>
-                                                    <span class="fa fa-pencil form-control-feedback right"
-                                                          aria-hidden="true"></span>
-                                                </div>
-                                                <div class="col-md-6 col-sm-6 col-xs-12 form-group has-feedback">
-                                                    <label>ชื่อประเภทอาหารภาษาอังกฤษ</label>
-                                                    <input type="text" class="form-control" name="menuCatNameEN" id="edit_menu_cat_nameEN"
-                                                           placeholder="ชื่อประเภทอาหารภาษาอังกฤษ" required>
-                                                    <span class="fa fa-pencil form-control-feedback right"
-                                                          aria-hidden="true"></span>
-                                                </div>
-                                                <div class="col-md-6 col-sm-6 col-xs-12 form-group has-feedback">
-                                                    <label>หมวดหมู่ของประเภทอาหาร</label>
-                                                    <select name="stockCatNo" id="edit_stock_cat_no" class="form-control" required>
-                                                        <option value="" disabled>เลือกหมวดหมู่</option>
-                                                        <c:forEach items="${stockCategories}" var="sc">
-                                                            <option value="${sc.stockCatNo}">${sc.stockCatName}</option>
-                                                        </c:forEach>
-                                                    </select>
-                                                </div>
-                                            </div>
-                                            <div class="modal-footer">
-                                                <!-- ปุ่มกดปิด (Close) ตรงส่วนล่างของ Modal -->
-                                                <div class="col-md-9 col-sm-9 col-xs-12 col-md-offset-3">
-                                                    <button type="submit" class="btn btn-success">ตกลง</button>
-                                                    <button type="button" class="btn btn-default" data-dismiss="modal">
-                                                        ยกเลิก
-                                                    </button>
-                                                </div>
-                                            </div>
-                                        </form>
+                                    <div class="modal-footer">
+                                        <!-- ปุ่มกดปิด (Close) ตรงส่วนล่างของ Modal -->
+                                        <div class="col-md-9 col-sm-9 col-xs-12 col-md-offset-3">
+                                            <button type="submit" class="btn btn-success">ตกลง</button>
+                                            <button type="button" class="btn btn-default" data-dismiss="modal">
+                                                ยกเลิก
+                                            </button>
+                                        </div>
                                     </div>
-                                </div>
+                                </form>
                             </div>
                         </div>
                     </div>
                 </div>
+                <!-- /Modal Content (Add Menu Category)-->
+
+                <!-- Modal Content (Edit Menu Category)-->
+                <div class="modal fade" id="editMenuCat" role="dialog">
+                    <div class="modal-dialog">
+                        <!-- เนือหาของ Modal ทั้งหมด -->
+                        <div class="modal-content">
+                            <!-- ส่วนหัวของ Modal -->
+                            <div class="modal-header">
+                                <!-- ปุ่มกดปิด (X) ตรงส่วนหัวของ Modal -->
+                                <button type="button" class="close" data-dismiss="modal">&times;</button>
+                                <h4 class="modal-title">แก้ไขประเภทอาหาร</h4>
+                            </div>
+                            <!-- ส่วนเนื้อหาของ Modal -->
+                            <div class="modal-body">
+                                <form class="form-horizontal form-label-left input_mask" modelAttribute="menuCategory" id="menu_category_edit">
+                                    <input type="hidden" name="menuCatNo" id="hiddenmenucatno">
+                                    <div class="form-group">
+                                        <div class="col-md-6 col-sm-6 col-xs-12 form-group has-feedback">
+                                            <label>ชื่อประเภทอาหาร</label>
+                                            <input type="text" class="form-control" id="edit_menu_cat_name"
+                                                   name="menuCatName"
+                                                   placeholder="ชื่อประเภทอาหาร" required>
+                                            <span class="fa fa-pencil form-control-feedback right"
+                                                  aria-hidden="true"></span>
+                                        </div>
+                                    </div>
+                                    <div class="modal-footer">
+                                        <!-- ปุ่มกดปิด (Close) ตรงส่วนล่างของ Modal -->
+                                        <div class="col-md-9 col-sm-9 col-xs-12 col-md-offset-3">
+                                            <button type="submit" class="btn btn-success">ตกลง</button>
+                                            <button type="button" class="btn btn-default" data-dismiss="modal">
+                                                ยกเลิก
+                                            </button>
+                                        </div>
+                                    </div>
+                                </form>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <!-- /Modal Content (Edit Menu Category)-->
             </div>
         </div>
     </div>
 </div>
-
 <jsp:include page="../_include/bottomenv.jsp"/>
 <script>
     $(document).ready(function () {
-        $("#datatable-menucat").DataTable({
-            order: [[0,"asc"]],
+        $("#datatable-menucategory").DataTable({
+            order: [[0, "asc"]],
             columnDefs: [
                 {orderable: false, targets: [-1]}
             ],
             columns: [
                 {
                     data: 'menuCatName'
-                },
-                {
-                    data: 'group'
                 },
                 {
                     data: 'option'
@@ -183,6 +150,79 @@
         refresh_table();
     });
 
+    $("#menu_category").submit(function(){
+        var object = $("#menu_category").serialize();
+        $.ajax({
+            type: "POST",
+            data: object,
+            url: "${contextPath}/menu/managemenucategory",
+            success: function (result) {
+                swal("สำเร็จ", "ประเภท " + $("#menu_cat_name").val() + " ถูกเพิ่มเรียบร้อยแล้ว", "success");
+                $("#menu_category")[0].reset();
+                $("#addMenuCat").modal('toggle');
+                refresh_table();
+            },error: function(result){
+                swal("ไม่สำเร็จ", "ชื่อประเภทอาจซ้ำหรือเซิร์ฟเวอร์มีปัญหา", "error");
+            }
+        });
+        return false;
+    });
+
+    function setMenuCat(menuCatNo) {
+        $.ajax({
+            type: "PUT",
+            url: "${contextPath}/menu/getmenucategory/" + menuCatNo,
+            dataType: "json",
+            success: function (result) {
+                $("#hiddenmenucatno").val(result.menuCatNo);
+                $("#edit_menu_cat_name").val(result.menuCatName);
+            }
+        });
+    }
+
+    $("#menu_category_edit").submit(function(){
+        var object = $("#menu_category_edit").serialize();
+        $.ajax({
+            type: "POST",
+            data: object,
+            url: "${contextPath}/menu/managemenucategory",
+            success: function (result) {
+                swal("สำเร็จ", "แก้ไขเรียบร้อยแล้ว", "success");
+                $("#menu_category_edit")[0].reset();
+                $("#editMenuCat").modal('toggle');
+                refresh_table();
+            },error: function(result){
+                swal("ไม่สำเร็จ", "ชื่อประเภทอาหารอาจซ้ำหรือเซิร์ฟเวอร์มีปัญหา", "error");
+            }
+        });
+        return false;
+    });
+
+    function delMenuCat(menuCatNo,menuCatName){
+        swal({
+                title: "ยืนยันการลบ " + menuCatName,
+                text: "ข้อมูลเกี่ยวกับ " + menuCatName + " จะหายไปทั้งหมดเลย !",
+                type: "warning",
+                showCancelButton: true,
+                confirmButtonColor: "#DD6B55",
+                confirmButtonText: "ใช่, ต้องการลบ",
+                cancelButtonText: "ยกเลิก",
+                closeOnConfirm: false
+            },
+            function () {
+                $.ajax({
+                    type: "DELETE",
+                    url: "${contextPath}/menu/deletemenucategory/" + menuCatNo,
+                    success: function (result) {
+                        swal("สำเร็จ", menuCatName + " ถูกลบเรียบร้อยแล้ว", "success");
+                        refresh_table();
+                    }, error: function (result) {
+                        swal("ไม่สำเร็จ", "ลบไม่ได้เนื่องจาก มีหมวดหมู่อาหารที่เป็นประเภทนี้อยู่", "error");
+                    }
+                });
+            });
+    }
+
     function refresh_table() {
         $.ajax({
             type: "POST",
@@ -190,98 +230,19 @@
             dataType: "json",
             success: function (json) {
                 var data_array = [];
-                for (var i=0; i<json.length; i++){
-                    var obj = json[i];
-                    var data = {
-                        menuCatName: '<b style="cursor:pointer" onclick = "set_menu_category(' + obj.menuCatNo + ')" data-toggle = "modal" data-target = "#editMenuCat">' + obj.menuCatNameTH +" / "+ obj.menuCatNameEN + '</b>',
-                        group: obj.stockCategory.stockCatName,
-                        option: '<a onclick = "set_menu_category(' + obj.menuCatNo + ')" class = "btn btn-warning btn-sm" data-toggle = "modal" data-target = "#editMenuCat"> <i class = "fa fa-pencil"> </i> &nbsp; แก้ไข </a>' +
-                        '<a onclick = "del_menu_category(' + obj.menuCatNo+ ',\'' + obj.menuCatNameTH +'\')" class = "btn btn-danger btn-sm"> <i class = "fa fa-trash"></i> &nbsp; ลบ </a>'
-                    }
-                    data_array.push(data);
+                for (var iterator = 0; iterator < json.length; iterator++) {
+                    var menu_cat_obj = json[iterator];
+                    var data_refresh = {
+                        menuCatName: '<a onclick = "setMenuCat(' + menu_cat_obj.menuCatNo + ')" data-toggle = "modal" data-target = "#editMenuCat" style = "font-weight: bold;cursor:pointer;" >' + menu_cat_obj.menuCatName + '</a>',
+                        option: '<a onclick = "setMenuCat(' + menu_cat_obj.menuCatNo + ')" class = "btn btn-warning btn-sm" data-toggle = "modal" data-target = "#editMenuCat"> <i class = "fa fa-pencil"> </i> &nbsp; แก้ไข </a>' +
+                        '<a onclick = "delMenuCat(' + menu_cat_obj.menuCatNo + ',\'' + menu_cat_obj.menuCatName +'\')") class = "btn btn-danger btn-sm"> <i class = "fa fa-trash"></i> &nbsp; ลบ </a>'
+                    };
+                    data_array.push(data_refresh);
                 }
-                $("#datatable-menucat").DataTable().clear();
-                $("#datatable-menucat").DataTable().rows.add(data_array).draw(false);
+                $("#datatable-menucategory").DataTable().clear();
+                $("#datatable-menucategory").DataTable().rows.add(data_array).draw(false);
             }
         });
-    }
-
-    $("#add_menu_category").submit(function(){
-        var object = $("#add_menu_category").serialize();
-        $.ajax({
-            type: "POST",
-            data: object,
-            url: "${contextPath}/menu/managemenucategory",
-            success: function (result) {
-                swal("สำเร็จ", "ชื่อประเภท " + $("#add_menu_category").val() + " ถูกเพิ่มเรียบร้อยแล้ว", "success");
-                $("#add_menu_category")[0].reset();
-                $("#addMenuCat").modal('toggle');
-                refresh_table();
-            },error: function(result){
-                swal("ไม่สำเร็จ", "ชื่ออาจซ้ำ กรุณาลองใหม่ในภายหลัง", "error");
-            }
-        });
-        return false;
-    });
-
-    $("#edit_menu_category").submit(function(){
-        var object = $("#edit_menu_category").serialize();
-        $.ajax({
-            type: "POST",
-            data: object,
-            url: "${contextPath}/menu/managemenucategory",
-            success: function (result) {
-                swal("สำเร็จ", "ชื่อประเภท " + $("#add_menu_category").val() + " ถูกแก้ไขเรียบร้อยแล้ว", "success");
-                $("#edit_menu_category")[0].reset();
-                $("#editMenuCat").modal('toggle');
-                refresh_table();
-            },error: function(result){
-                swal("ไม่สำเร็จ", "ชื่ออาจซ้ำ กรุณาลองใหม่ในภายหลัง", "error");
-            }
-        });
-        return false;
-    });
-
-    function set_menu_category(menuCatNo) {
-        $.ajax({
-            type: "PUT",
-            url: "${contextPath}/menu/getmenucategory/" + menuCatNo,
-            dataType: "json",
-            success: function (result) {
-                $("#hiddenmenucatno").val(result.menuCatNo);
-                $("#edit_menu_cat_nameTH").val(result.menuCatNameTH);
-                $("#edit_menu_cat_nameEN").val(result.menuCatNameEN);
-                $("#edit_stock_cat_no").val(result.stockCatNo);
-                $("#show_menu_cat_name_for_edit").html(result.menuCatNameTH + " / " + result.menuCatNameEN);
-            }
-        });
-    }
-
-    function del_menu_category(menuCatNo,menuCatNameTH) {
-        swal ({
-                title: "ยืนยันการลบ " + menuCatNameTH,
-                text: "เมื่อยืนยัน คุณจะไม่สามารถนำข้อมูล "+menuCatNameTH+" กลับมาได้",
-                type: "warning",
-                showCancelButton: true,
-                cancelButtonText: "ยกเลิก",
-                confirmButtonText: "ใช่, ต้องการลบ",
-                confirmButtonColor: "#DD6B55",
-                closeOnConfirm: false
-
-            },
-            function () {
-                $.ajax({
-                    type: "DELETE",
-                    url: "${contextPath}/menu/delmenucategory/"+menuCatNo,
-                    success: function (json) {
-                        swal ("สำเร็จ", menuCatNameTH+" ถูกลบเรียบร้อยแล้ว", "success");
-                        refresh_table();
-                    },
-                    error: function (json) {
-                        swal ("ไม่สำเร็จ", "ยังมีเมนูที่เป็นอาหารประเภทนี้อยู่ กรุณาลบออกให้หมดก่อน หรือเซิร์ฟเวอร์อาจมีปัญหา", "error");
-                    }
-                });
-            });
     }
 </script>
 </body>

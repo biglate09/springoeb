@@ -374,7 +374,7 @@
                             <div class="col-md-6 image view view-first" style="height:100%;">\
                             <img style="width: 100%; display: block;" src="../images/menuset/' + obj.menuSetPicPath + '" alt="image"/>\
                             <div class="mask">\
-                            <p style="white-space: nowrap;overflow:hidden;text-overflow: ellipsis;"> obj.menuSetDesc </p>\
+                            <p style="white-space: nowrap;overflow:hidden;text-overflow: ellipsis;">' + obj.menuSetDesc + '</p>\
                             <div class="tools tools-bottom" style="margin-top:100px;">\
                             <a title="แก้ไข" data-toggle="modal" data-target="#editMenuSet" onclick="set_menuset('+obj.menuSetNo+')" style="color:white;cursor:pointer;margin-right:5px;"><i class="fa fa-pencil"></i></a>\
                             <a title="พร้อมจำหน่าย" onclick="change_available('+obj.menuSetNo+')" style="color:white;cursor:pointer;margin-right:5px;"><i class="fa ' + (obj.available == true ? 'fa-eye' : 'fa-eye-slash') + '"></i></a>\
