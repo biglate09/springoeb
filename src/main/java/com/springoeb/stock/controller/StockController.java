@@ -133,4 +133,19 @@ public class StockController {
         return json;
     }
     //-----------------------------------------------------------------------------------------------------------//
+    @GetMapping("/mixedproduct")
+    public String toMixedProductIndex() {
+        return STOCK_PATH + "mixedproduct.jsp";
+    }
+    //-----------------------------------------------------------------------------------------------------------//
+    @GetMapping("/stockmanage")
+    public String toStockManageIndex() {
+        return STOCK_PATH + "stockmanage.jsp";
+    }
+    //-----------------------------------------------------------------------------------------------------------//
+    @GetMapping("/menumaterial")
+    public String toMenuMaterialIndex() {
+        return STOCK_PATH + "menumaterial.jsp";
+    }
+    //-----------------------------------------------------------------------------------------------------------//
 }

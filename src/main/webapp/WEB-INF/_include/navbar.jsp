@@ -59,7 +59,7 @@
                             <li><a id="material" href="${contextPath}/stock/materialitem">วัตถุดิบอาหาร</a></li>
                             <li><a id="mixedproduct" href="${contextPath}/stock/mixedproduct">วัตถุดิบแบบผสม</a></li>
                             <li><a id="stockmanage" href="${contextPath}/stock/stockmanage">เพิ่ม / ลดวัตถุดิบ</a></li>
-                            <li><a id="menustock" href="${contextPath}/stock/menustock">วัตถุดิบของเมนูอาหาร</a></li>
+                            <li><a id="menustock" href="${contextPath}/stock/menumaterial">วัตถุดิบของเมนูอาหาร</a></li>
                             <li><a id="materialcategory" href="${contextPath}/stock/materialcategory">ประเภทวัตถุดิบ</a></li>
                         </ul>
                     </li>

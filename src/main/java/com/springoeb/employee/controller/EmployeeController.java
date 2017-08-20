@@ -92,13 +92,13 @@ public class EmployeeController {
 
     @RequestMapping("/position")
     public String toEmployeePositionIndex() {
-        return EMP_PATH+"emppos.jsp";
+        return EMP_PATH + "emppos.jsp";
     }
 
     @PostMapping("/manageemployeeposition")
     public void addAndEditPosition(@ModelAttribute("employeePosition") EmployeePosition employeePosition, HttpServletRequest request, HttpServletResponse response, HttpSession session) throws Exception {
         int branchNo = (Integer) (session.getAttribute("branchno"));
-        if (!employeePositionService.chkDuplicateEmpPosisitonName(employeePosition.getEmpPosName(), branchNo)) {
+        if (!employeePositionService.chkDuplicateEmpPosisitonName(employeePosition.getEmpPosName())) {
             employeePositionService.save(employeePosition);
         } else {
             throw new Exception();
@@ -108,11 +108,7 @@ public class EmployeeController {
     @Transactional
     @GetMapping("/deleteemployeeposition/{empPosNo}")
     public void removeByEmpPosNo(@PathVariable("empPosNo") int empPosNo, HttpServletRequest request, HttpServletResponse response) throws IOException {
-        if (employeeTableService.canDeleteEmpPos(empPosNo)) {
-            employeePositionService.removeByEmpPosNo(empPosNo);
-        } else {
-            employeePositionService.unused(employeePositionService.findByEmpPosNo(empPosNo));
-        }
+        employeePositionService.removeByEmpPosNo(empPosNo);
         response.sendRedirect(request.getContextPath() + "/employee/position");
     }
 
@@ -141,7 +137,7 @@ public class EmployeeController {
         int branchNo = (Integer) (session.getAttribute("branchno"));
         List<Employee> employees = employeeService.findByBranchNo(branchNo);
         model.addAttribute("employees", employees);
-        return EMP_PATH+"empworkhist.jsp";
+        return EMP_PATH + "empworkhist.jsp";
     }
 
     @PostMapping("/manageworkhistory")
@@ -177,7 +173,7 @@ public class EmployeeController {
             workHistory.setWorkMin(workMinute);
             workHistory.setWorkDate(workDate);
             workHistory.setWorkPay(pay);
-            if(workHistNo != null){
+            if (workHistNo != null) {
                 workHistory.setWorkHistNo(workHistNo);
             }
             workHistories.add(workHistory);
@@ -214,7 +210,7 @@ public class EmployeeController {
     @ResponseBody
     public String getJsonWorkHistories(@PathVariable("workHistNo") int workHistNo, HttpSession session) throws JsonProcessingException {
         int branchNo = (Integer) (session.getAttribute("branchno"));
-        WorkHistory workHistory = workHistoryService.getWorkHistory(workHistNo,branchNo);
+        WorkHistory workHistory = workHistoryService.getWorkHistory(workHistNo, branchNo);
         ObjectMapper mapper = new ObjectMapper();
         String json = mapper.writeValueAsString(workHistory);
         return json;
@@ -247,11 +243,11 @@ public class EmployeeController {
     @ResponseBody
     public String filterWorkByDate(HttpSession session, HttpServletRequest request, HttpServletResponse response) throws JsonProcessingException {
         String filterDate = request.getParameter("filterdate");
-        String fromddmmyyyy = filterDate.substring(0,10);
-        String toddmmyyyy = filterDate.substring(13,23);
-        Date fromDate = Date.valueOf(fromddmmyyyy.substring(6,10)+"-"+fromddmmyyyy.substring(3,5)+"-"+fromddmmyyyy.substring(0,2));
-        Date toDate = Date.valueOf(toddmmyyyy.substring(6,10)+"-"+toddmmyyyy.substring(3,5)+"-"+toddmmyyyy.substring(0,2));
-        List<WorkHistory> workHistories = workHistoryService.findByWorkDate(fromDate,toDate);
+        String fromddmmyyyy = filterDate.substring(0, 10);
+        String toddmmyyyy = filterDate.substring(13, 23);
+        Date fromDate = Date.valueOf(fromddmmyyyy.substring(6, 10) + "-" + fromddmmyyyy.substring(3, 5) + "-" + fromddmmyyyy.substring(0, 2));
+        Date toDate = Date.valueOf(toddmmyyyy.substring(6, 10) + "-" + toddmmyyyy.substring(3, 5) + "-" + toddmmyyyy.substring(0, 2));
+        List<WorkHistory> workHistories = workHistoryService.findByWorkDate(fromDate, toDate);
         for (WorkHistory wh : workHistories) {
             wh.setEmpName(wh.getEmployee().getEmpName());
         }
@@ -266,7 +262,7 @@ public class EmployeeController {
         int branchNo = (Integer) (session.getAttribute("branchno"));
         List<Employee> employees = employeeService.findByBranchNo(branchNo);
         model.addAttribute("employees", employees);
-        return EMP_PATH+"/emppaid.jsp";
+        return EMP_PATH + "/emppaid.jsp";
     }
 
     @PostMapping("/payforemp")
@@ -276,10 +272,10 @@ public class EmployeeController {
         double pay = Double.parseDouble(request.getParameter("pay"));
 //        double remainPay = workHistoryService.getWorkSum(branchNo, empNo) - employeePayService.getPaySum(branchNo, empNo);
 //        if (pay <= remainPay) {
-            EmployeePay employeePay = new EmployeePay();
-            employeePay.setPay(pay);
-            employeePay.setEmpNo(empNo);
-            employeePayService.save(employeePay);
+        EmployeePay employeePay = new EmployeePay();
+        employeePay.setPay(pay);
+        employeePay.setEmpNo(empNo);
+        employeePayService.save(employeePay);
 //        } else {
 //            throw new Exception();
 //        }
@@ -296,7 +292,7 @@ public class EmployeeController {
         model.addAttribute("employees", employees);
         model.addAttribute("employeePositions", employeePositions);
         model.addAttribute("employeeTables", employeeTables);
-        return EMP_PATH+"/emptable.jsp";
+        return EMP_PATH + "/emptable.jsp";
     }
 
     @RequestMapping("/managetable")

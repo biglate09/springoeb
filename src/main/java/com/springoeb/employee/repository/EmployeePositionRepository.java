@@ -11,8 +11,8 @@ import java.util.List;
  */
 @Repository
 public interface EmployeePositionRepository extends CrudRepository<EmployeePosition,Integer>{
-    List<EmployeePosition> findAllByAvailable(int available);
-    List<EmployeePosition> findAllByEmpPosNameAndAvailable(String empPosName, int avaialble);
+    List<EmployeePosition> findAll();
+    List<EmployeePosition> findAllByEmpPosName(String empPosName);
     void removeByEmpPosNo(int empPosNo);
-    EmployeePosition findByEmpPosNoAndAvailable(int empPosNo,int available);
+    EmployeePosition findByEmpPosNo(int empPosNo);
 }
