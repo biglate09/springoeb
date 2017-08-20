@@ -274,15 +274,15 @@ public class EmployeeController {
         int empNo = Integer.parseInt(request.getParameter("empNo"));
         int branchNo = (Integer) (session.getAttribute("branchno"));
         double pay = Double.parseDouble(request.getParameter("pay"));
-        double remainPay = workHistoryService.getWorkSum(branchNo, empNo) - employeePayService.getPaySum(branchNo, empNo);
-        if (pay <= remainPay) {
+//        double remainPay = workHistoryService.getWorkSum(branchNo, empNo) - employeePayService.getPaySum(branchNo, empNo);
+//        if (pay <= remainPay) {
             EmployeePay employeePay = new EmployeePay();
             employeePay.setPay(pay);
             employeePay.setEmpNo(empNo);
             employeePayService.save(employeePay);
-        } else {
-            throw new Exception();
-        }
+//        } else {
+//            throw new Exception();
+//        }
     }
 
     //----------------------------------------------------------------------------------------------------------//

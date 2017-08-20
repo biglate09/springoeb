@@ -391,7 +391,8 @@
         empno = $("#empno").val();
         if (inputwd === '') {
             alert('กรุณาใส่เงินที่ต้องการเบิกก่อน');
-        } else if (inputwd <= sumpay && inputwd > 0) {
+//        } else if (inputwd <= sumpay && inputwd > 0) {
+        }else{
             var object = $("#pay-form").serialize();
             swal({
                     title: "ต้องการเบิกเงินให้ " + $("#empName").text(),
@@ -418,8 +419,6 @@
                         }
                     });
                 });
-        } else {
-            alert('เงินที่ต้องการเบิกมากกว่าเงินที่เบิกได้ หรือใส่เงินที่ต้องการเบิกเป็น 0 หรือน้อยกว่า');
         }
         return false;
     });

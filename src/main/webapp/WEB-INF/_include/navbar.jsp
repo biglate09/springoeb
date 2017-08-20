@@ -48,13 +48,19 @@
                         </ul>
                     </li>
                     <li>
+                        <a><i class="fa fa-tags"></i> จัดการโปรโมชั่น <span class="fa fa-chevron-down"></span></a>
+                        <ul class="nav child_menu">
+                            <li><a id="promotion" href="${contextPath}/promotion/promotion">โปรโมชั่นเมนูอาหาร</a></li>
+                        </ul>
+                    </li>
+                    <li>
                         <a><i class="fa fa-spoon"></i> จัดการวัตถุดิบอาหาร <span class="fa fa-chevron-down"></span></a>
                         <ul class="nav child_menu">
-                            <li><a id="material" href="${contextPath}/stock/material">วัตถุดิบอาหาร</a></li>
+                            <li><a id="material" href="${contextPath}/stock/materialitem">วัตถุดิบอาหาร</a></li>
                             <li><a id="mixedproduct" href="${contextPath}/stock/mixedproduct">วัตถุดิบแบบผสม</a></li>
                             <li><a id="stockmanage" href="${contextPath}/stock/stockmanage">เพิ่ม / ลดวัตถุดิบ</a></li>
                             <li><a id="menustock" href="${contextPath}/stock/menustock">วัตถุดิบของเมนูอาหาร</a></li>
-                            <li><a id="stockcategory" href="${contextPath}/stock/stockcategory">ประเภทวัตถุดิบ</a></li>
+                            <li><a id="materialcategory" href="${contextPath}/stock/materialcategory">ประเภทวัตถุดิบ</a></li>
                         </ul>
                     </li>
                 </ul>
