@@ -24,9 +24,3 @@
 <link href="${contextPath}/vendors/sweetalert/sweetalert.css" rel="stylesheet">
 <link rel="stylesheet" href="${contextPath}/build/css/OEB_style.css">
 <link rel="icon" type="image/png" href="${contextPath}/images/OEB_LOGO.png">
-<link href="https://fonts.googleapis.com/css?family=Prompt" rel="stylesheet">
-<style>
-    body{
-        font-family: 'Prompt', sans-serif;
-    }
-</style>

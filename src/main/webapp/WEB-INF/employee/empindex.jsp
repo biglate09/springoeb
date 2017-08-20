@@ -572,8 +572,8 @@
                         pay_format = pay_format.replace(/\B(?=(\d{3})+(?!\d))/g, ",");
                     }
                     var data_refresh = {
-                        empName: '<b style="cursor:pointer" onclick="editEmp(' + emp_obj.empNo + ')" data-toggle="modal"' +
-                        'data-target="#editEmp" style="font-weight: bold;">' + emp_obj.empName + '</b>',
+                        empName: '<a style="cursor:pointer;font-weight:bold;" onclick="editEmp(' + emp_obj.empNo + ')" data-toggle="modal"' +
+                        'data-target="#editEmp" style="font-weight: bold;">' + emp_obj.empName + '</a>',
                         empType: emp_obj.empType == '${Employee.FULL_TIME}' ? 'Full-Time' : (emp_obj.empType == '${Employee.PART_TIME}' ? 'Part-Time' : 'Training'),
                         payType: emp_obj.payType == '${Employee.HOUR}' ? 'รายชั่วโมง' : 'รายวัน',
                         pay: {

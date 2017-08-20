@@ -1,5 +1,6 @@
 package com.springoeb.menu.model;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.springoeb.menu.model_key.MenuSetMenuId;
 
 import javax.persistence.*;
@@ -12,9 +13,11 @@ public class MenuSetMenu implements Serializable {
     @Column(name="menu_set_no",insertable = true,updatable = true)
     private Integer menuSetNo;
     @Id
-    @Column(name="menu_no",insertable =true,updatable = true)
+    @Column(name="menu_no",insertable = true,updatable = true)
     private Integer menuNo;
+    private Integer amount;
 
+    @JsonIgnore
     @ManyToOne
     @JoinColumn(name="menu_set_no",insertable = false,updatable = false)
     private MenuSet menuSet;
@@ -53,5 +56,22 @@ public class MenuSetMenu implements Serializable {
 
     public void setMenu(Menu menu) {
         this.menu = menu;
+    }
+
+    public Integer getAmount() {
+        return amount;
+    }
+
+    public void setAmount(Integer amount) {
+        this.amount = amount;
+    }
+
+    @Override
+    public String toString() {
+        return "MenuSetMenu{" +
+                "menuSetNo=" + menuSetNo +
+                ", menuNo=" + menuNo +
+                ", amount=" + amount +
+                '}';
     }
 }

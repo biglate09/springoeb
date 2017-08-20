@@ -7,5 +7,5 @@ import org.springframework.stereotype.Repository;
 
 @Repository
 public interface MenuSetMenuRepository extends CrudRepository<MenuSetMenu, MenuSetMenuId> {
-
+    public void removeByMenuSetNo(int menuSetNo);
 }

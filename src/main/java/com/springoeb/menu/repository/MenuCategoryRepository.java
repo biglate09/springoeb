@@ -9,7 +9,7 @@ import java.util.List;
 @Repository
 public interface MenuCategoryRepository extends CrudRepository<MenuCategory,Integer> {
     List<MenuCategory> findAll();
-    MenuCategory findByMenuCatNo(int menuCatNo);
-    List<MenuCategory> findByMenuCatNameTHIgnoreCaseOrMenuCatNameENIgnoreCase(String menuCatNameTH,String menuCatNameEN);
     void removeByMenuCatNo(int menuCatNo);
+    MenuCategory findByMenuCatNo(int menuCatNo);
+    List<MenuCategory> findByMenuCatNameIgnoreCase(String menuCatName);
 }

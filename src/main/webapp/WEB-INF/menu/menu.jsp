@@ -34,12 +34,12 @@
                                         เพิ่มเมนู</a>
                                 </div>
                                 <div class="col-md-3 form-group has-feedback" style="padding:0px;">
-                                    <label>ค้นหาจากประเภทอาหาร</label>
+                                    <label>ค้นหาจากหมวดหมู่อาหาร</label>
                                     <select class="form-control" id="filter_by_category">
                                         <option value="0">ทั้งหมด</option>
-                                        <c:forEach items="${menuCategories}" var="mc">
-                                            <option value="${mc.menuCatNo}">${mc.menuCatNameTH}
-                                                / ${mc.menuCatNameEN}</option>
+                                        <c:forEach items="${menuGroups}" var="mc">
+                                            <option value="${mc.menuGroupNo}">${mc.menuGroupNameTH}
+                                                / ${mc.menuGroupNameEN}</option>
                                         </c:forEach>
                                     </select>
                                 </div>
@@ -99,12 +99,12 @@
                                                           aria-hidden="true"></span>
                                                 </div>
                                                 <div class="col-md-6 col-sm-6 col-xs-12 form-group has-feedback">
-                                                    <label>ประเภทของเมนู</label>
-                                                    <select name="menuCatNo" id="add_menu_stock_cat"
+                                                    <label>หมวดหมู่ของเมนู</label>
+                                                    <select name="menuGroupNo" id="add_menu_stock_cat"
                                                             class="form-control" required>
-                                                        <option disabled selected>เลือกประเภทเมนู</option>
-                                                        <c:forEach items="${menuCategories}" var="mc">
-                                                            <option value="${mc.menuCatNo}">${mc.menuCatNameTH}</option>
+                                                        <option disabled selected>เลือกหมวดหมู่เมนู</option>
+                                                        <c:forEach items="${menuGroups}" var="mc">
+                                                            <option value="${mc.menuGroupNo}">${mc.menuGroupNameTH}</option>
                                                         </c:forEach>
                                                     </select>
                                                 </div>
@@ -196,12 +196,12 @@
                                                       aria-hidden="true"></span>
                                             </div>
                                             <div class="col-md-6 col-sm-6 col-xs-12 form-group has-feedback">
-                                                <label>ประเภทของเมนู</label>
-                                                <select name="menuCatNo" id="edit_menu_stock_cat" class="form-control"
+                                                <label>หมวดหมู่ของเมนู</label>
+                                                <select name="menuGroupNo" id="edit_menu_stock_cat" class="form-control"
                                                         required>
-                                                    <option disabled selected>เลือกประเภทเมนู</option>
-                                                    <c:forEach items="${menuCategories}" var="mc">
-                                                        <option value="${mc.menuCatNo}">${mc.menuCatNameTH}</option>
+                                                    <option disabled selected>เลือกหมวดหมู่เมนู</option>
+                                                    <c:forEach items="${menuGroups}" var="mc">
+                                                        <option value="${mc.menuGroupNo}">${mc.menuGroupNameTH}</option>
                                                     </c:forEach>
                                                 </select>
                                             </div>
@@ -325,7 +325,7 @@
                         </div>\
                         <div class="caption" style="color:#73879C">\
                         <p style="text-align:center;font-weight:bold;white-space:nowrap;overflow:hidden;text-overflow: ellipsis;cursor:pointer;" data-toggle="modal" data-target="#editMenu" onclick="set_menu(' + obj.menuNo + ')">' + obj.menuNameTH + " / " + obj.menuNameEN + '</p>\
-                        <p style="text-align:center;white-space: nowrap;overflow:hidden;text-overflow: ellipsis;">ประเภท : ' + obj.menuCategory.menuCatNameTH + '</p>\
+                        <p style="text-align:center;white-space: nowrap;overflow:hidden;text-overflow: ellipsis;">หมวดหมู่ : ' + obj.menuGroup.menuGroupNameTH + '</p>\
                         <p style="text-align:center">' + obj.menuPrice.toFixed(2).replace(/\B(?=(\d{3})+(?!\d))/g, ",") + " บาท" + '</p>\
                         <div style="text-align:center;">\
                         <a title="แก้ไข" data-toggle="modal" data-target="#editMenu" onclick="set_menu(' + obj.menuNo + ')" style="color:#73879C;cursor:pointer;margin-right:5px;"><i class="fa fa-pencil"></i></a>\
@@ -341,7 +341,7 @@
                 } else {
                     $("#menu_thumbnail").append('\
                     <div class="well" style="overflow: auto">\
-                        <p style="text-align:center;font-weight:bold;"> ไม่พบข้อมูลเมนูอาหารแบบเดี่ยว จากการค้นหาประเภทอาหาร ' + $("#filter_by_category option:selected").text() + ' </p>\
+                        <p style="text-align:center;font-weight:bold;"> ไม่พบข้อมูลเมนูอาหารแบบเดี่ยว จากการค้นหาหมวดหมู่อาหาร ' + $("#filter_by_category option:selected").text() + ' </p>\
                     </div>\
                     ');
                 }
@@ -408,7 +408,7 @@
                 $("#edit_menu_desc").val(result.menuDesc);
                 $("#edit_menu_price").val(result.menuPrice.toFixed(2));
                 $("#edit_menu_available").val(result.menuAvailable);
-                $("#edit_menu_stock_cat").val(result.menuCatNo);
+                $("#edit_menu_stock_cat").val(result.menuGroupNo);
                 if (result.available) {
                     $("#edit_menu_available").parent().addClass('checked');
                     $("#edit_menu_available").attr('checked', true);
@@ -454,7 +454,6 @@
             data: {menuno: menuno},
             url: "${contextPath}/menu/changeavailable",
             success: function (result) {
-//                swal("สำเร็จ", "แก้ไขความพร้อมจำหน่ายเรียบร้อยแล้ว", "success");
                 refresh_table();
             }, error: function (result) {
                 swal("ไม่สำเร็จ", "กรุณาลองใหม่ภายหลัง", "error");
