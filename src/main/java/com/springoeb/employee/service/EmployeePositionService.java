@@ -13,16 +13,10 @@ public class EmployeePositionService {
     private EmployeePositionRepository employeePositionRepository;
 
     public List<EmployeePosition> findAll(){
-        return employeePositionRepository.findAllByAvailable(1);
-    }
-
-    public void unused(EmployeePosition employeePosition){
-        employeePosition.setAvailable(0);
-        employeePositionRepository.save(employeePosition);
+        return employeePositionRepository.findAll();
     }
 
     public void save(EmployeePosition employeePosition){
-        employeePosition.setAvailable(1);
         employeePositionRepository.save(employeePosition);
     }
 
@@ -31,11 +25,11 @@ public class EmployeePositionService {
     }
 
     public EmployeePosition findByEmpPosNo(int empPosNo){
-        return employeePositionRepository.findByEmpPosNoAndAvailable(empPosNo,1);
+        return employeePositionRepository.findByEmpPosNo(empPosNo);
     }
 
-    public boolean chkDuplicateEmpPosisitonName(String empPosName, int available){
-        List<EmployeePosition> employeePositions = employeePositionRepository.findAllByEmpPosNameAndAvailable(empPosName,available);
+    public boolean chkDuplicateEmpPosisitonName(String empPosName){
+        List<EmployeePosition> employeePositions = employeePositionRepository.findAllByEmpPosName(empPosName);
         if(employeePositions.size() > 0){
             return true;
         }else{
