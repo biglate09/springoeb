@@ -124,6 +124,7 @@
                                                                     </td>
                                                                     <td><input price="${m.menuPrice}"
                                                                                menuNo="${m.menuNo}" type="number"
+                                                                               menuName="${m.menuNameTH} / ${m.menuNameEN}"
                                                                                class="menusetamount"
                                                                                name="menuamount${m.menuNo}"
                                                                                style="text-align:center;"
@@ -137,8 +138,9 @@
                                                     </div>
                                                     <div class="col-md-12" style="text-align:center;margin-top:20px;">
                                                         <div class="well" style="overflow: auto">
-                                                            ราคารวมเมนูเดี่ยวทั้งหมด : <span
-                                                                id="sum_menu_price">0.00</span> บาท
+                                                            <span style="font-weight:bold;">รายการเมนูเดี่ยวของชุดนี้</span>
+                                                            <div id="display_sum_menu" style="margin-bottom:20px;margin-top:20px;"></div>
+                                                            <span style="font-weight:bold;">ราคารวมเมนูเดี่ยวทั้งหมด : <span id="sum_menu_price">0.00</span> บาท</span>
                                                         </div>
                                                     </div>
                                                     <div class="col-md-6">
@@ -185,7 +187,8 @@
                                         <div class="modal-header">
                                             <!-- ปุ่มกดปิด (X) ตรงส่วนหัวของ Modal -->
                                             <button type="button" class="close" data-dismiss="modal">&times</button>
-                                            <h4 class="modal-title">เแก้ไขชุดเมนูอาหาร <span id="edit_menuset_name"></span></h4>
+                                            <h4 class="modal-title">เแก้ไขชุดเมนูอาหาร <span
+                                                    id="edit_menuset_name"></span></h4>
                                         </div>
                                         <!-- ส่วนเนื้อหาของ Modal -->
                                         <div class="modal-body">
@@ -194,7 +197,8 @@
                                                 <input type="hidden" name="menuSetNo" id="hidden_menuset_no">
                                                 <div class="form-group">
                                                     <img class="col-md-offset-3 col-sm-offset-3 col-md-6 col-sm-6 col-xs-12 img-resize"
-                                                         id="showpic_menuset_edit" style="margin-bottom:20px;cursor:pointer;"
+                                                         id="showpic_menuset_edit"
+                                                         style="margin-bottom:20px;cursor:pointer;"
                                                          height="auto"
                                                          width="414"
                                                          src="../images/default_upload_image.png"/>
@@ -250,6 +254,7 @@
                                                                     </td>
                                                                     <td><input price="${m.menuPrice}"
                                                                                menuNo="${m.menuNo}" type="number"
+                                                                               menuName="${m.menuNameTH} / ${m.menuNameEN}"
                                                                                class="menusetamount_edit"
                                                                                name="menuamount${m.menuNo}"
                                                                                style="text-align:center;"
@@ -263,8 +268,9 @@
                                                     </div>
                                                     <div class="col-md-12" style="text-align:center;margin-top:20px;">
                                                         <div class="well" style="overflow: auto">
-                                                            ราคารวมเมนูเดี่ยวทั้งหมด : <span
-                                                                id="sum_menu_price2">0.00</span> บาท
+                                                            <span style="font-weight:bold;">รายการเมนูเดี่ยวของชุดนี้</span>
+                                                            <div id="display_sum_menu2" style="margin-bottom:20px;margin-top:20px;"></div>
+                                                            <span style="font-weight:bold;">ราคารวมเมนูเดี่ยวทั้งหมด : <span id="sum_menu_price2">0.00</span> บาท</span>
                                                         </div>
                                                     </div>
                                                     <div class="col-md-6">
@@ -342,8 +348,12 @@
 
     $(".menusetamount").on('change keyup', function () {
         var sum_menu_price = 0;
+        $("#display_sum_menu").empty();
         $(".menusetamount").each(function () {
-            sum_menu_price += $(this).attr('price') * $(this).val();
+            if ($(this).val() > 0) {
+                $("#display_sum_menu").append('<div class="col-md-6 col-md-offset-2" style="text-align:left;white-space:nowrap;overflow:hidden;text-overflow: ellipsis;">' + $(this).attr('menuname') + '</div><div class="col-md-2">' + $(this).val() + ' เมนู</div><br>');
+                sum_menu_price += $(this).attr('price') * $(this).val();
+            }
         });
 
         $("#sum_menu_price").html(sum_menu_price.toFixed(2).replace(/\B(?=(\d{3})+(?!\d))/g, ","));
@@ -351,8 +361,12 @@
 
     $(".menusetamount_edit").on('change keyup', function () {
         var sum_menu_price = 0;
+        $("#display_sum_menu2").empty();
         $(".menusetamount_edit").each(function () {
-            sum_menu_price += $(this).attr('price') * $(this).val();
+            if ($(this).val() > 0) {
+                $("#display_sum_menu2").append('<div class="col-md-6 col-md-offset-2" style="text-align:left;white-space:nowrap;overflow:hidden;text-overflow: ellipsis;">' + $(this).attr('menuname') + '</div><div class="col-md-2">' + $(this).val() + ' เมนู</div><br>');
+                sum_menu_price += $(this).attr('price') * $(this).val();
+            }
         });
 
         $("#sum_menu_price2").html(sum_menu_price.toFixed(2).replace(/\B(?=(\d{3})+(?!\d))/g, ","));
@@ -374,32 +388,32 @@
                             <div class="col-md-6 image view view-first" style="height:100%;">\
                             <img style="width: 100%; display: block;" src="../images/menuset/' + obj.menuSetPicPath + '" alt="image"/>\
                             <div class="mask">\
-                            <p style="white-space: nowrap;overflow:hidden;text-overflow: ellipsis;">' + obj.menuSetDesc + '</p>\
+                            <p style="white-space:nowrap;overflow:hidden;text-overflow: ellipsis;">' + obj.menuSetDesc + '</p>\
                             <div class="tools tools-bottom" style="margin-top:100px;">\
-                            <a title="แก้ไข" data-toggle="modal" data-target="#editMenuSet" onclick="set_menuset('+obj.menuSetNo+')" style="color:white;cursor:pointer;margin-right:5px;"><i class="fa fa-pencil"></i></a>\
-                            <a title="พร้อมจำหน่าย" onclick="change_available('+obj.menuSetNo+')" style="color:white;cursor:pointer;margin-right:5px;"><i class="fa ' + (obj.available == true ? 'fa-eye' : 'fa-eye-slash') + '"></i></a>\
-                            <a title="ลบ" onclick="del_menuset('+ obj.menuSetNo +',\''+obj.menuSetNameTH+'\')" style="color:white;cursor:pointer;"><i class="fa fa-trash"></i></a>\
+                            <a title="แก้ไข" data-toggle="modal" data-target="#editMenuSet" onclick="set_menuset(' + obj.menuSetNo + ')" style="color:white;cursor:pointer;margin-right:5px;"><i class="fa fa-pencil"></i></a>\
+                            <a title="พร้อมจำหน่าย" onclick="change_available(' + obj.menuSetNo + ')" style="color:white;cursor:pointer;margin-right:5px;"><i class="fa ' + (obj.available == true ? 'fa-eye' : 'fa-eye-slash') + '"></i></a>\
+                            <a title="ลบ" onclick="del_menuset(' + obj.menuSetNo + ',\'' + obj.menuSetNameTH + '\')" style="color:white;cursor:pointer;"><i class="fa fa-trash"></i></a>\
                             </div>\
                             </div>\
                             </div>\
                             <div class="col-md-6 caption" style="height:100%;color:#73879C">\
-                            <div class="col-md-12" data-toggle="modal" data-target="#editMenuSet" onclick="set_menuset('+obj.menuSetNo+')" style="font-weight:bold;white-space:nowrap;overflow:hidden;text-overflow: ellipsis;cursor:pointer;">' + obj.menuSetNameTH + ' / ' + obj.menuSetNameEN + '</div>\
+                            <div class="col-md-12" data-toggle="modal" data-target="#editMenuSet" onclick="set_menuset(' + obj.menuSetNo + ')" style="font-weight:bold;white-space:nowrap;overflow:hidden;text-overflow: ellipsis;cursor:pointer;">' + obj.menuSetNameTH + ' / ' + obj.menuSetNameEN + '</div>\
                             <div class="col-md-12 foodDesc">\
                             <div>\
                             <p style="text-align:center;font-weight:bold;">รายการเมนู</p>';
-                            for(var j = 0; j < obj.menuSetMenus.length ; j++){
-                                var menuSetMenu = obj.menuSetMenus[j];
-                                div += '<div class="col-md-9" style="white-space:nowrap;overflow:hidden;text-overflow:ellipsis;" title="' + menuSetMenu.menu.menuNameTH + '">' + menuSetMenu.menu.menuNameTH + ' </div>' + menuSetMenu.amount  + " เมนู<br>";
-                            }
-                            div += '</div>\
+                    for (var j = 0; j < obj.menuSetMenus.length; j++) {
+                        var menuSetMenu = obj.menuSetMenus[j];
+                        div += '<div class="col-md-9" style="white-space:nowrap;overflow:hidden;text-overflow:ellipsis;" title="' + menuSetMenu.menu.menuNameTH + '">' + menuSetMenu.menu.menuNameTH + ' </div>' + menuSetMenu.amount + " เมนู<br>";
+                    }
+                    div += '</div>\
                             </div>\
                             <div class="col-md-7"> <span style="font-weight:bold;">ราคา</span> ' + obj.menuSetPrice.toFixed(2).replace(/\B(?=(\d{3})+(?!\d))/g, ",") + ' บาท</div>\
                             <div class="col-md-5" style="text-align:right;">\
                             <div class="panel_menuset">\
-                            <a title="แก้ไข" data-toggle="modal" data-target="#editMenuSet" onclick="set_menuset('+obj.menuSetNo+')" style="color:#73879C;cursor:pointer;margin-right:5px;">\
+                            <a title="แก้ไข" data-toggle="modal" data-target="#editMenuSet" onclick="set_menuset(' + obj.menuSetNo + ')" style="color:#73879C;cursor:pointer;margin-right:5px;">\
                             <i class="fa fa-pencil"></i></a>\
                             <a title="พร้อมจำหน่าย" style="color:#73879C;cursor:pointer;margin-right:5px;" onclick="change_available(' + obj.menuSetNo + ')">\
-                            <i class="fa '+ (obj.available == true ? 'fa-eye' : 'fa-eye-slash') +'"></i></a>\
+                            <i class="fa ' + (obj.available == true ? 'fa-eye' : 'fa-eye-slash') + '"></i></a>\
                             <a title="ลบ" style="color:#73879C;cursor:pointer;" onclick="del_menuset(' + obj.menuSetNo + ',\'' + obj.menuSetNameTH + '\')">\
                             <i class="fa fa-trash"></i></a>\
                             </div>\
@@ -466,14 +480,20 @@
 
                 $(".menusetamount_edit").val(0);
                 var menu_in_menuset = result.menuSetMenus;
-                for(var i = 0 ; i < menu_in_menuset.length ; i++){
-                    $(".menusetamount_edit[menuno='"+menu_in_menuset[i].menuNo+"']").val(menu_in_menuset[i].amount);
+                for (var i = 0; i < menu_in_menuset.length; i++) {
+                    $(".menusetamount_edit[menuno='" + menu_in_menuset[i].menuNo + "']").val(menu_in_menuset[i].amount);
                 }
 
                 var sum_menu_price = 0;
+                $("#display_sum_menu2").empty();
                 $(".menusetamount_edit").each(function () {
-                    sum_menu_price += $(this).attr('price') * $(this).val();
+                    if ($(this).val() > 0) {
+                        $("#display_sum_menu2").append('<div class="col-md-6 col-md-offset-2" style="text-align:left;white-space:nowrap;overflow:hidden;text-overflow: ellipsis;">' + $(this).attr('menuname') + '</div><div class="col-md-2">' + $(this).val() + ' เมนู</div><br>');
+                        sum_menu_price += $(this).attr('price') * $(this).val();
+                    }
                 });
+
+                $("#sum_menu_price2").html(sum_menu_price.toFixed(2).replace(/\B(?=(\d{3})+(?!\d))/g, ","));
 
                 $("#sum_menu_price2").html(sum_menu_price.toFixed(2).replace(/\B(?=(\d{3})+(?!\d))/g, ","));
             }

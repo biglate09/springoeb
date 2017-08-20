@@ -179,7 +179,7 @@
                 for (var i=0; i<json.length; i++){
                     var obj = json[i];
                     var data = {
-                        matItemName: '<b style="cursor:pointer" onclick = "set_mat_item(' + obj.matItemNo + ')" data-toggle = "modal" data-target = "#editMatItem">' + obj.matItemName + '</b>',
+                        matItemName: '<a style="cursor:pointer;font-weight:bold;" onclick = "set_mat_item(' + obj.matItemNo + ')" data-toggle = "modal" data-target = "#editMatItem">' + obj.matItemName + '</a>',
                         item: obj.materialCategory.matCatName,
                         option: '<a onclick = "set_mat_item(' + obj.matItemNo + ')" class = "btn btn-warning btn-sm" data-toggle = "modal" data-target = "#editMatItem"> <i class = "fa fa-pencil"> </i> &nbsp; แก้ไข </a>' +
                         '<a onclick = "del_mat_item(' + obj.matItemNo+ ',\'' + obj.matItemName +'\')" class = "btn btn-danger btn-sm"> <i class = "fa fa-trash"></i> &nbsp; ลบ </a>'

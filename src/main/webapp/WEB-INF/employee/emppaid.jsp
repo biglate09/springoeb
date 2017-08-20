@@ -461,8 +461,8 @@
                     }
 
                     var data_refresh = {
-                        empName: '<b style="cursor:pointer" onclick="setemppaid(' + emp_obj.empNo + ')" data-toggle="modal"' +
-                        'data-target="#paidDetail" style="font-weight: bold;">' + emp_obj.empName + '</b>',
+                        empName: '<a style="cursor:pointer;font-weight:bold;" onclick="setemppaid(' + emp_obj.empNo + ')" data-toggle="modal"' +
+                        'data-target="#paidDetail" style="font-weight: bold;">' + emp_obj.empName + '</a>',
                         empType: emp_obj.empType == '${Employee.FULL_TIME}' ? 'Full-Time' : (emp_obj.empType == '${Employee.PART_TIME}' ? 'Part-Time' : 'Training'),
                         empPay: {
                             display: pay_format + ' บาท / ' + (emp_obj.payType == '${Employee.HOUR}' ? 'ชั่วโมง' : 'วัน'),

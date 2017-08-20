@@ -193,7 +193,7 @@
                 for (var i=0; i<json.length; i++){
                     var obj = json[i];
                     var data = {
-                        menuGroupName: '<b style="cursor:pointer" onclick = "set_menu_group(' + obj.menuGroupNo + ')" data-toggle = "modal" data-target = "#editMenuGroup">' + obj.menuGroupNameTH +" / "+ obj.menuGroupNameEN + '</b>',
+                        menuGroupName: '<a style="cursor:pointer;font-weight:bold;" onclick = "set_menu_group(' + obj.menuGroupNo + ')" data-toggle = "modal" data-target = "#editMenuGroup">' + obj.menuGroupNameTH +" / "+ obj.menuGroupNameEN + '</a>',
                         group: obj.menuCategory.menuCatName,
                         option: '<a onclick = "set_menu_group(' + obj.menuGroupNo + ')" class = "btn btn-warning btn-sm" data-toggle = "modal" data-target = "#editMenuGroup"> <i class = "fa fa-pencil"> </i> &nbsp; แก้ไข </a>' +
                         '<a onclick = "del_menu_group(' + obj.menuGroupNo+ ',\'' + obj.menuGroupNameTH +'\')" class = "btn btn-danger btn-sm"> <i class = "fa fa-trash"></i> &nbsp; ลบ </a>'
