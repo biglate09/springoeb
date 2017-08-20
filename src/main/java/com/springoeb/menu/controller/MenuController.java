@@ -121,8 +121,10 @@ public class MenuController {
     public void delMenu(@PathVariable("menuNo") int menuNo) {
         String menuPicPath = menuService.getMenuByMenuNo(menuNo).getMenuPicPath();
         menuService.delMenu(menuNo);
-        File file = new File(UPLOADED_FOLDER + "menu/" + menuPicPath);
-        file.delete();
+        if(menuService.getMenuByMenuNo(menuNo) == null) {
+            File file = new File(UPLOADED_FOLDER + "menu/" + menuPicPath);
+            file.delete();
+        }
     }
 
     @ResponseBody
