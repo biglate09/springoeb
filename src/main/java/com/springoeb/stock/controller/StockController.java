@@ -1,11 +1,27 @@
-package com.springoeb.stock.controller;
-
-import org.springframework.stereotype.Controller;
-import org.springframework.web.bind.annotation.RequestMapping;
-
-@RequestMapping("/stock")
-@Controller
-public class StockController {
+//package com.springoeb.stock.controller;
+//
+//import com.fasterxml.jackson.core.JsonProcessingException;
+//import com.fasterxml.jackson.databind.ObjectMapper;
+//import com.springoeb.menu.model.Menu;
+//import com.springoeb.menu.model.MenuCategory;
+//import com.springoeb.stock.service.StockCategoryService;
+//import org.springframework.beans.factory.annotation.Autowired;
+//import org.springframework.stereotype.Controller;
+//import org.springframework.ui.Model;
+//import org.springframework.web.bind.annotation.*;
+//import org.springframework.web.multipart.MultipartFile;
+//
+//import javax.servlet.http.HttpServletRequest;
+//import javax.transaction.Transactional;
+//import java.io.File;
+//import java.nio.file.Files;
+//import java.nio.file.Path;
+//import java.nio.file.Paths;
+//import java.util.List;
+//
+//@RequestMapping("/stock")
+//@Controller
+//public class StockController {
 //    @Autowired
 //    private StockCategoryService stockCategoryService;
 //
@@ -106,6 +122,6 @@ public class StockController {
 //        String json = mapper.writeValueAsString(stock);
 //        return json;
 //    }
-
-    //-----------------------------------------------------------------------------------------------------------//
-}
+//
+//    //-----------------------------------------------------------------------------------------------------------//
+//}

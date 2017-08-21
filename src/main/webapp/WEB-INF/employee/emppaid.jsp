@@ -419,7 +419,14 @@
                     });
                 });
         } else {
-            alert('เงินที่ต้องการเบิกมากกว่าเงินที่เบิกได้ หรือใส่เงินที่ต้องการเบิกเป็น 0 หรือน้อยกว่า');
+            var object = $("#pay-form").serialize();
+            swal({
+                title: "ไม่สำเร็จ ",
+                text: "จำนวนเงินที่ต้องการเบิก มากกว่าจำนวนเงินที่สามารถเบิกได้",
+                type: "warning",
+                confirmButtonColor: "#DD6B55",
+                closeOnConfirm: false
+            })
         }
         return false;
     });
