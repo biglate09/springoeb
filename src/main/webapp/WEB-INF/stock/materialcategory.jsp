@@ -5,7 +5,7 @@
 <html>
 <head>
     <jsp:include page="../_include/topenv.jsp"/>
-    <title>ประเภทอาหาร</title>
+    <title>ประเภทวัตถุดิบ</title>
 </head>
 <body class="nav-md">
 <div class="container body">
@@ -24,20 +24,20 @@
                 <div class="col-md-12 col-sm-12 col-xs-12">
                     <div class="x_panel">
                         <div class="x_title">
-                            <h4>ประเภทอาหาร</h4>
+                            <h4>ประเภทวัตถุดิบ</h4>
                         </div>
                         <div class="x_content">
                             <form action="#">
                                 <p>
-                                    <a data-toggle="modal" data-target="#addMenuCat"
+                                    <a data-toggle="modal" data-target="#addMaterialCat"
                                        class="btn btn-success btn-sm"><i class="fa fa-plus-circle"></i>&nbsp;
                                         เพิ่มประเภท</a>
                                 </p>
-                                <table id="datatable-menucategory"
+                                <table id="datatable-materialcategory"
                                        class="table table-striped table-bordered">
                                     <thead>
                                     <tr>
-                                        <th style="width:20%;text-align:center;">ชื่อประเภทอาหาร</th>
+                                        <th style="width:20%;text-align:center;">ชื่อประเภทวัตถุดิบ</th>
                                         <th style="width:20%;text-align:center;">ตัวเลือก</th>
                                     </tr>
                                     </thead>
@@ -50,21 +50,21 @@
                     </div>
                 </div>
                 <!-- /page content -->
-                <!-- Modal Content (Add Menu Category)-->
-                <div class="modal fade" id="addMenuCat" role="dialog">
+                <!-- Modal Content (Add Material Category)-->
+                <div class="modal fade" id="addMaterialCat" role="dialog">
                     <div class="modal-dialog">
                         <div class="modal-content">
                             <div class="modal-header">
                                 <button type="button" class="close" data-dismiss="modal">&times;</button>
-                                <h4 class="modal-title">เพิ่มประเภทอาหาร</h4>
+                                <h4 class="modal-title">เพิ่มประเภทวัตถุดิบ</h4>
                             </div>
                             <div class="modal-body">
-                                <form class="form-horizontal form-label-left input_mask" modelAttribute="menuCategory" id="menu_category">
+                                <form class="form-horizontal form-label-left input_mask" modelAttribute="materialCategory" id="material_category">
                                     <div class="form-group">
                                         <div class="col-md-6 col-sm-6 col-xs-12 form-group has-feedback">
-                                            <label>ชื่อประเภทอาหาร</label>
-                                            <input type="text" class="form-control" name="menuCatName" id="menu_cat_name"
-                                                   placeholder="ชื่อประเภทอาหาร" required>
+                                            <label>ชื่อประเภทวัตถุดิบ</label>
+                                            <input type="text" class="form-control" name="matCatName" id="mat_cat_name"
+                                                   placeholder="ชื่อประเภทวัตถุดิบ" required>
                                             <span class="fa fa-pencil form-control-feedback right"
                                                   aria-hidden="true"></span>
                                         </div>
@@ -83,10 +83,10 @@
                         </div>
                     </div>
                 </div>
-                <!-- /Modal Content (Add Menu Category)-->
+                <!-- /Modal Content (Add Material Category)-->
 
-                <!-- Modal Content (Edit Menu Category)-->
-                <div class="modal fade" id="editMenuCat" role="dialog">
+                <!-- Modal Content (Edit Material Category)-->
+                <div class="modal fade" id="editMaterialCat" role="dialog">
                     <div class="modal-dialog">
                         <!-- เนือหาของ Modal ทั้งหมด -->
                         <div class="modal-content">
@@ -94,18 +94,18 @@
                             <div class="modal-header">
                                 <!-- ปุ่มกดปิด (X) ตรงส่วนหัวของ Modal -->
                                 <button type="button" class="close" data-dismiss="modal">&times;</button>
-                                <h4 class="modal-title">แก้ไขประเภทอาหาร</h4>
+                                <h4 class="modal-title">แก้ไขประเภทวัตถุดิบ</h4>
                             </div>
                             <!-- ส่วนเนื้อหาของ Modal -->
                             <div class="modal-body">
-                                <form class="form-horizontal form-label-left input_mask" modelAttribute="menuCategory" id="menu_category_edit">
-                                    <input type="hidden" name="menuCatNo" id="hiddenmenucatno">
+                                <form class="form-horizontal form-label-left input_mask" modelAttribute="materialCategory" id="material_category_edit">
+                                    <input type="hidden" name="matCatNo" id="hiddenmatcatno">
                                     <div class="form-group">
                                         <div class="col-md-6 col-sm-6 col-xs-12 form-group has-feedback">
-                                            <label>ชื่อประเภทอาหาร</label>
-                                            <input type="text" class="form-control" id="edit_menu_cat_name"
-                                                   name="menuCatName"
-                                                   placeholder="ชื่อประเภทอาหาร" required>
+                                            <label>ชื่อประเภทวัตถุดิบ</label>
+                                            <input type="text" class="form-control" id="edit_mat_cat_name"
+                                                   name="matCatName"
+                                                   placeholder="ชื่อประเภทวัตถุดิบ" required>
                                             <span class="fa fa-pencil form-control-feedback right"
                                                   aria-hidden="true"></span>
                                         </div>
@@ -124,7 +124,7 @@
                         </div>
                     </div>
                 </div>
-                <!-- /Modal Content (Edit Menu Category)-->
+                <!-- /Modal Content (Edit Material Category)-->
             </div>
         </div>
     </div>
@@ -132,14 +132,14 @@
 <jsp:include page="../_include/bottomenv.jsp"/>
 <script>
     $(document).ready(function () {
-        $("#datatable-menucategory").DataTable({
+        $("#datatable-materialcategory").DataTable({
             order: [[0, "asc"]],
             columnDefs: [
                 {orderable: false, targets: [-1]}
             ],
             columns: [
                 {
-                    data: 'menuCatName'
+                    data: 'matCatName'
                 },
                 {
                     data: 'option'
@@ -150,16 +150,16 @@
         refresh_table();
     });
 
-    $("#menu_category").submit(function(){
-        var object = $("#menu_category").serialize();
+    $("#material_category").submit(function(){
+        var object = $("#material_category").serialize();
         $.ajax({
             type: "POST",
             data: object,
-            url: "${contextPath}/menu/managemenucategory",
+            url: "${contextPath}/stock/managematerialcategory",
             success: function (result) {
-                swal("สำเร็จ", "ประเภท " + $("#menu_cat_name").val() + " ถูกเพิ่มเรียบร้อยแล้ว", "success");
-                $("#menu_category")[0].reset();
-                $("#addMenuCat").modal('toggle');
+                swal("สำเร็จ", "ประเภท " + $("#mat_cat_name").val() + " ถูกเพิ่มเรียบร้อยแล้ว", "success");
+                $("#material_category")[0].reset();
+                $("#addMaterialCat").modal('toggle');
                 refresh_table();
             },error: function(result){
                 swal("ไม่สำเร็จ", "ชื่อประเภทอาจซ้ำหรือเซิร์ฟเวอร์มีปัญหา", "error");
@@ -168,40 +168,40 @@
         return false;
     });
 
-    function setMenuCat(menuCatNo) {
+    function setMaterialCat(matCatNo) {
         $.ajax({
             type: "PUT",
-            url: "${contextPath}/menu/getmenucategory/" + menuCatNo,
+            url: "${contextPath}/stock/getmaterialcategory/" + matCatNo,
             dataType: "json",
             success: function (result) {
-                $("#hiddenmenucatno").val(result.menuCatNo);
-                $("#edit_menu_cat_name").val(result.menuCatName);
+                $("#hiddenmatcatno").val(result.matCatNo);
+                $("#edit_mat_cat_name").val(result.matCatName);
             }
         });
     }
 
-    $("#menu_category_edit").submit(function(){
-        var object = $("#menu_category_edit").serialize();
+    $("#material_category_edit").submit(function(){
+        var object = $("#material_category_edit").serialize();
         $.ajax({
             type: "POST",
             data: object,
-            url: "${contextPath}/menu/managemenucategory",
+            url: "${contextPath}/stock/managematerialcategory",
             success: function (result) {
                 swal("สำเร็จ", "แก้ไขเรียบร้อยแล้ว", "success");
-                $("#menu_category_edit")[0].reset();
-                $("#editMenuCat").modal('toggle');
+                $("#material_category_edit")[0].reset();
+                $("#editMaterialCat").modal('toggle');
                 refresh_table();
             },error: function(result){
-                swal("ไม่สำเร็จ", "ชื่อประเภทอาหารอาจซ้ำหรือเซิร์ฟเวอร์มีปัญหา", "error");
+                swal("ไม่สำเร็จ", "ชื่อประเภทวัตถุดิบอาจซ้ำหรือเซิร์ฟเวอร์มีปัญหา", "error");
             }
         });
         return false;
     });
 
-    function delMenuCat(menuCatNo,menuCatName){
+    function delMaterialCat(matCatNo,matCatName){
         swal({
-                title: "ยืนยันการลบ " + menuCatName,
-                text: "ข้อมูลเกี่ยวกับ " + menuCatName + " จะหายไปทั้งหมดเลย !",
+                title: "ยืนยันการลบ " + matCatName,
+                text: "ข้อมูลเกี่ยวกับ " + matCatName + " จะหายไปทั้งหมดเลย !",
                 type: "warning",
                 showCancelButton: true,
                 confirmButtonColor: "#DD6B55",
@@ -212,12 +212,12 @@
             function () {
                 $.ajax({
                     type: "DELETE",
-                    url: "${contextPath}/menu/deletemenucategory/" + menuCatNo,
+                    url: "${contextPath}/stock/deletematerialcategory/" + matCatNo,
                     success: function (result) {
-                        swal("สำเร็จ", menuCatName + " ถูกลบเรียบร้อยแล้ว", "success");
+                        swal("สำเร็จ", matCatName + " ถูกลบเรียบร้อยแล้ว", "success");
                         refresh_table();
                     }, error: function (result) {
-                        swal("ไม่สำเร็จ", "ลบไม่ได้เนื่องจาก มีหมวดหมู่อาหารที่เป็นประเภทนี้อยู่", "error");
+                        swal("ไม่สำเร็จ", "ลบไม่ได้เนื่องจาก มีวัตถุดิบที่เป็นประเภทนี้อยู่", "error");
                     }
                 });
             });
@@ -226,21 +226,22 @@
     function refresh_table() {
         $.ajax({
             type: "POST",
-            url: "${contextPath}/menu/getmenucategories",
+            url: "${contextPath}/stock/getmaterialcategories",
             dataType: "json",
             success: function (json) {
                 var data_array = [];
                 for (var iterator = 0; iterator < json.length; iterator++) {
-                    var menu_cat_obj = json[iterator];
+                    var mat_cat_obj = json[iterator];
                     var data_refresh = {
-                        menuCatName: '<a onclick = "setMenuCat(' + menu_cat_obj.menuCatNo + ')" data-toggle = "modal" data-target = "#editMenuCat" style = "font-weight: bold;cursor:pointer;" >' + menu_cat_obj.menuCatName + '</a>',
-                        option: '<a onclick = "setMenuCat(' + menu_cat_obj.menuCatNo + ')" class = "btn btn-warning btn-sm" data-toggle = "modal" data-target = "#editMenuCat"> <i class = "fa fa-pencil"> </i> &nbsp; แก้ไข </a>' +
-                        '<a onclick = "delMenuCat(' + menu_cat_obj.menuCatNo + ',\'' + menu_cat_obj.menuCatName +'\')") class = "btn btn-danger btn-sm"> <i class = "fa fa-trash"></i> &nbsp; ลบ </a>'
+                        matCatName: '<a onclick = "setMaterialCat(' + mat_cat_obj.matCatNo + ')" data-toggle = "modal" data-target = "#editMaterialCat" style = "font-weight: bold;cursor:pointer;" >' + mat_cat_obj.matCatName + '</a>',
+                        option: '<a onclick = "setMaterialCat(' + mat_cat_obj.matCatNo + ')" class = "btn btn-warning btn-sm" data-toggle = "modal" data-target = "#editMaterialCat"> <i class = "fa fa-pencil"> </i> &nbsp; แก้ไข </a>' +
+                        '<a onclick = "delMaterialCat(' + mat_cat_obj.matCatNo + ',\'' + mat_cat_obj.matCatName +'\')") class = "btn btn-danger btn-sm"> <i class = "fa fa-trash"></i> &nbsp; ลบ </a>'
                     };
                     data_array.push(data_refresh);
                 }
-                $("#datatable-menucategory").DataTable().clear();
-                $("#datatable-menucategory").DataTable().rows.add(data_array).draw(false);
+
+                $("#datatable-materialcategory").DataTable().clear();
+                $("#datatable-materialcategory").DataTable().rows.add(data_array).draw(false);
             }
         });
     }

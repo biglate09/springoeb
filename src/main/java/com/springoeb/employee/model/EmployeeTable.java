@@ -29,9 +29,6 @@ public class EmployeeTable implements Serializable{
     @JoinColumn(name = "emp_no",updatable = false,insertable = false)
     private Employee employee;
 
-    @OneToOne(fetch = FetchType.LAZY, mappedBy = "employeeTable")
-    private WorkHistory workHistory;
-
     public Integer getEmpTimeNo() {
         return empTimeNo;
     }
@@ -96,11 +93,4 @@ public class EmployeeTable implements Serializable{
         this.employee = employee;
     }
 
-    public WorkHistory getWorkHistory() {
-        return workHistory;
-    }
-
-    public void setWorkHistory(WorkHistory workHistory) {
-        this.workHistory = workHistory;
-    }
 }

@@ -1,7 +1,6 @@
 package com.springoeb.menu.model;
 
 import com.fasterxml.jackson.annotation.JsonIgnore;
-import com.springoeb.stock.model.StockCategory;
 
 import javax.persistence.*;
 import java.io.Serializable;
@@ -12,20 +11,10 @@ public class MenuCategory implements Serializable {
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)
     private Integer menuCatNo;
-    @Column(name = "menu_cat_name_TH")
-    private String menuCatNameTH;
-    @Column(name = "menu_cat_name_EN")
-    private String menuCatNameEN;
-    @Column(name = "stock_cat_no",insertable = true,updatable = true)
-    private Integer stockCatNo;
-
+    private String menuCatName;
     @JsonIgnore
-    @OneToMany(fetch = FetchType.LAZY, mappedBy = "menuCategory")
-    private List<Menu> menus;
-
-    @ManyToOne
-    @JoinColumn(name="stock_cat_no",insertable = false,updatable = false)
-    private StockCategory stockCategory;
+    @OneToMany(fetch = FetchType.LAZY,mappedBy = "menuCategory")
+    List<MenuGroup> menuGroups;
 
     public Integer getMenuCatNo() {
         return menuCatNo;
@@ -35,49 +24,19 @@ public class MenuCategory implements Serializable {
         this.menuCatNo = menuCatNo;
     }
 
-    public String getMenuCatNameTH() {
-        return menuCatNameTH;
+    public String getMenuCatName() {
+        return menuCatName;
     }
 
-    public void setMenuCatNameTH(String menuCatNameTH) {
-        this.menuCatNameTH = menuCatNameTH;
+    public void setMenuCatName(String menuCatName) {
+        this.menuCatName = menuCatName;
     }
 
-    public String getMenuCatNameEN() {
-        return menuCatNameEN;
+    public List<MenuGroup> getMenuGroups() {
+        return menuGroups;
     }
 
-    public void setMenuCatNameEN(String menuCatNameEN) {
-        this.menuCatNameEN = menuCatNameEN;
-    }
-
-    public Integer getStockCatNo() {
-        return stockCatNo;
-    }
-
-    public void setStockCatNo(Integer stockCatNo) {
-        this.stockCatNo = stockCatNo;
-    }
-
-    public List<Menu> getMenus() {
-        return menus;
-    }
-
-    public void setMenus(List<Menu> menus) {
-        this.menus = menus;
-    }
-
-    public StockCategory getStockCategory() {
-        return stockCategory;
-    }
-
-    public void setStockCategory(StockCategory stockCategory) {
-        this.stockCategory = stockCategory;
-    }
-
-    @Override
-    public boolean equals(Object obj_menuCategory) {
-        MenuCategory menuCategory = (MenuCategory)obj_menuCategory;
-        return menuCatNameTH.equals(menuCategory.getMenuCatNameTH()) && menuCatNameEN.equals(menuCategory.getMenuCatNameEN()) && stockCatNo.equals(menuCategory.getStockCatNo());
+    public void setMenuGroups(List<MenuGroup> menuGroups) {
+        this.menuGroups = menuGroups;
     }
 }

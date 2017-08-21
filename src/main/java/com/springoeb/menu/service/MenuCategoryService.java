@@ -11,25 +11,16 @@ import java.util.List;
 public class MenuCategoryService {
     @Autowired
     private MenuCategoryRepository menuCategoryRepository;
-
     public List<MenuCategory> getMenuCategories(){
         return menuCategoryRepository.findAll();
     }
-
-    public void save(MenuCategory menuCategory){
-        menuCategoryRepository.save(menuCategory);
-    }
-
-    public void delMenuCategory(int menuCategory){
-        menuCategoryRepository.removeByMenuCatNo(menuCategory);
-    }
-
+    public void save(MenuCategory menuCategory){ menuCategoryRepository.save(menuCategory);}
+    public void delMenuCategory(int menuCatNo){ menuCategoryRepository.removeByMenuCatNo(menuCatNo);}
     public MenuCategory getMenuCategory(int menuCatNo){
         return menuCategoryRepository.findByMenuCatNo(menuCatNo);
     }
-
     public boolean chkDuplicateMenuCat(MenuCategory menuCategory){
-        List<MenuCategory> menuCategories = menuCategoryRepository.findByMenuCatNameTHIgnoreCaseOrMenuCatNameENIgnoreCase(menuCategory.getMenuCatNameTH(),menuCategory.getMenuCatNameEN());
+        List<MenuCategory> menuCategories = menuCategoryRepository.findByMenuCatNameIgnoreCase(menuCategory.getMenuCatName());
         if(menuCategories != null && menuCategories.size() != 0){
             if(menuCategories.size() > 1) {
                 return true;

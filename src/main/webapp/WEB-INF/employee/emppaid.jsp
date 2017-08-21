@@ -391,7 +391,8 @@
         empno = $("#empno").val();
         if (inputwd === '') {
             alert('กรุณาใส่เงินที่ต้องการเบิกก่อน');
-        } else if (inputwd <= sumpay && inputwd > 0) {
+//        } else if (inputwd <= sumpay && inputwd > 0) {
+        }else{
             var object = $("#pay-form").serialize();
             swal({
                     title: "ต้องการเบิกเงินให้ " + $("#empName").text(),
@@ -418,15 +419,6 @@
                         }
                     });
                 });
-        } else {
-            var object = $("#pay-form").serialize();
-            swal({
-                title: "ไม่สำเร็จ ",
-                text: "จำนวนเงินที่ต้องการเบิก มากกว่าจำนวนเงินที่สามารถเบิกได้",
-                type: "warning",
-                confirmButtonColor: "#DD6B55",
-                closeOnConfirm: false
-            })
         }
         return false;
     });
@@ -469,8 +461,8 @@
                     }
 
                     var data_refresh = {
-                        empName: '<b style="cursor:pointer" onclick="setemppaid(' + emp_obj.empNo + ')" data-toggle="modal"' +
-                        'data-target="#paidDetail" style="font-weight: bold;">' + emp_obj.empName + '</b>',
+                        empName: '<a style="cursor:pointer;font-weight:bold;" onclick="setemppaid(' + emp_obj.empNo + ')" data-toggle="modal"' +
+                        'data-target="#paidDetail" style="font-weight: bold;">' + emp_obj.empName + '</a>',
                         empType: emp_obj.empType == '${Employee.FULL_TIME}' ? 'Full-Time' : (emp_obj.empType == '${Employee.PART_TIME}' ? 'Part-Time' : 'Training'),
                         empPay: {
                             display: pay_format + ' บาท / ' + (emp_obj.payType == '${Employee.HOUR}' ? 'ชั่วโมง' : 'วัน'),

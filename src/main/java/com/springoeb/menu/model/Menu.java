@@ -17,12 +17,12 @@ public class Menu implements Serializable{
     private String menuPicPath;
     private Boolean available;
 
-    @Column(name = "menu_cat_no",insertable = true,updatable = true)
-    private Integer menuCatNo;
+    @Column(name = "menu_group_no",insertable = true,updatable = true)
+    private Integer menuGroupNo;
 
     @ManyToOne
-    @JoinColumn(name = "menu_cat_no",updatable = false,insertable = false)
-    private MenuCategory menuCategory;
+    @JoinColumn(name = "menu_group_no",updatable = false,insertable = false)
+    private MenuGroup menuGroup;
 
     public Integer getMenuNo() {
         return menuNo;
@@ -80,33 +80,19 @@ public class Menu implements Serializable{
         this.available = available;
     }
 
-    public Integer getMenuCatNo() {
-        return menuCatNo;
+    public Integer getMenuGroupNo() {
+        return menuGroupNo;
     }
 
-    public void setMenuCatNo(Integer menuCatNo) {
-        this.menuCatNo = menuCatNo;
+    public void setMenuGroupNo(Integer menuGroupNo) {
+        this.menuGroupNo = menuGroupNo;
     }
 
-    public MenuCategory getMenuCategory() {
-        return menuCategory;
+    public MenuGroup getMenuGroup() {
+        return menuGroup;
     }
 
-    public void setMenuCategory(MenuCategory menuCategory) {
-        this.menuCategory = menuCategory;
-    }
-
-    @Override
-    public String toString() {
-        return "Menu{" +
-                "menuNo=" + menuNo +
-                ", menuNameTH='" + menuNameTH + '\'' +
-                ", menuNameEN='" + menuNameEN + '\'' +
-                ", menuDesc='" + menuDesc + '\'' +
-                ", menuPrice=" + menuPrice +
-                ", menuPicPath='" + menuPicPath + '\'' +
-                ", available=" + available +
-                ", menuCatNo=" + menuCatNo +
-                '}';
+    public void setMenuGroup(MenuGroup menuGroup) {
+        this.menuGroup = menuGroup;
     }
 }

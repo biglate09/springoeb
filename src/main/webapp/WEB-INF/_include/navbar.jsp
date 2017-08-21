@@ -43,16 +43,24 @@
                         <ul class="nav child_menu">
                             <li><a id="menu" href="${contextPath}/menu/menu">เมนูอาหารแบบเดี่ยว</a></li>
                             <li><a id="menuset" href="${contextPath}/menu/menuset">เมนูอาหารแบบชุด</a></li>
-                            <li><a id="menucategory" href="${contextPath}/menu/menucategory">ประเภทเมนูอาหาร</a></li>
-                            <%--<li><a id="menucust" href="ToMenuCustServlet">ปรับแต่งเมนูอาหาร</a></li>--%>
+                            <li><a id="menucategory" href="${contextPath}/menu/menucategory">ประเภทอาหาร</a></li>
+                            <li><a id="menugroup" href="${contextPath}/menu/menugroup">หมวดหมู่เมนูอาหาร</a></li>
+                        </ul>
+                    </li>
+                    <li>
+                        <a><i class="fa fa-tags"></i> จัดการโปรโมชั่น <span class="fa fa-chevron-down"></span></a>
+                        <ul class="nav child_menu">
+                            <li><a id="promotion" href="${contextPath}/promotion/promotion">โปรโมชั่นเมนูอาหาร</a></li>
                         </ul>
                     </li>
                     <li>
                         <a><i class="fa fa-spoon"></i> จัดการวัตถุดิบอาหาร <span class="fa fa-chevron-down"></span></a>
                         <ul class="nav child_menu">
-                            <li><a id="materialcategory" href="${contextPath}/stock/stockcategory">ประเภทวัตถุดิบ</a></li>
-                            <%--<li><a href="ToMaterialServlet">ข้อมูลวัตถุดิบ</a></li>--%>
-                            <%--<li><a href="ToMaterialStock">สต็อกวัตถุดิบ</a></li>--%>
+                            <li><a id="material" href="${contextPath}/stock/materialitem">วัตถุดิบอาหาร</a></li>
+                            <li><a id="mixedproduct" href="${contextPath}/stock/mixedproduct">วัตถุดิบแบบผสม</a></li>
+                            <li><a id="stockmanage" href="${contextPath}/stock/stockmanage">เพิ่ม / ลดวัตถุดิบ</a></li>
+                            <li><a id="menustock" href="${contextPath}/stock/menumaterial">วัตถุดิบของเมนูอาหาร</a></li>
+                            <li><a id="materialcategory" href="${contextPath}/stock/materialcategory">ประเภทวัตถุดิบ</a></li>
                         </ul>
                     </li>
                 </ul>
