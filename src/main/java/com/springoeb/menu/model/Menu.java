@@ -15,7 +15,8 @@ public class Menu implements Serializable{
     private String menuDesc;
     private Double menuPrice;
     private String menuPicPath;
-    private Boolean available;
+    private String menuFlag;
+    private int localFlag;
 
     @Column(name = "menu_group_no",insertable = true,updatable = true)
     private Integer menuGroupNo;
@@ -23,6 +24,10 @@ public class Menu implements Serializable{
     @ManyToOne
     @JoinColumn(name = "menu_group_no",updatable = false,insertable = false)
     private MenuGroup menuGroup;
+
+    public static final int OFFICIAL_MENU_FLAG = 0;
+    public static final String flagForMenu = "M";
+    public static final String flagForMenuSet = "S";
 
     public Integer getMenuNo() {
         return menuNo;
@@ -72,13 +77,6 @@ public class Menu implements Serializable{
         this.menuPicPath = menuPicPath;
     }
 
-    public Boolean getAvailable() {
-        return available;
-    }
-
-    public void setAvailable(Boolean available) {
-        this.available = available;
-    }
 
     public Integer getMenuGroupNo() {
         return menuGroupNo;
@@ -94,5 +92,21 @@ public class Menu implements Serializable{
 
     public void setMenuGroup(MenuGroup menuGroup) {
         this.menuGroup = menuGroup;
+    }
+
+    public String getMenuFlag() {
+        return menuFlag;
+    }
+
+    public void setMenuFlag(String menuFlag) {
+        this.menuFlag = menuFlag;
+    }
+
+    public int getLocalFlag() {
+        return localFlag;
+    }
+
+    public void setLocalFlag(int localFlag) {
+        this.localFlag = localFlag;
     }
 }

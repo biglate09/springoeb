@@ -5,6 +5,7 @@ import com.springoeb.menu.repository.MenuRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import java.util.LinkedList;
 import java.util.List;
 
 @Service
@@ -15,10 +16,21 @@ public class MenuService {
     public List<Menu> getMenus(){
         return menuRepository.findAll();
     }
-    public List<Menu> getMenusByMenuCategory(int menuGroupNo){
+    public List<Menu> getMenusSubBranch(int branchNo){
+        List<Integer> localFlag = new LinkedList<Integer>();
+        localFlag.add(Menu.OFFICIAL_MENU_FLAG);
+        localFlag.add(branchNo);
+        return menuRepository.findAllByMenuFlagAndLocalFlagIn(Menu.flagForMenu,localFlag);
+    }
+    public List<Menu> getMenusByMenuGroup(int menuGroupNo){
         return menuRepository.findByMenuGroupNo(menuGroupNo);
     }
-    public List<Menu> getMenusAvailable(){return menuRepository.findByAvailable(true);}
+    public List<Menu> getMenusByMenuGroupSubBranch(int menuGroupNo,int branchNo){
+        List<Integer> localFlag = new LinkedList<Integer>();
+        localFlag.add(Menu.OFFICIAL_MENU_FLAG);
+        localFlag.add(branchNo);
+        return menuRepository.findByMenuGroupNoAndMenuFlagAndLocalFlagIn(menuGroupNo, Menu.flagForMenu,localFlag);
+    }
     public void save(Menu menu){
         menuRepository.save(menu);
     }
