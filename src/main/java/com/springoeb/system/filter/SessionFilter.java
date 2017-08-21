@@ -24,7 +24,7 @@ public class SessionFilter implements Filter {
         HttpServletRequest request = (HttpServletRequest)servletRequest;
         HttpServletResponse response = (HttpServletResponse)servletResponse;
         HttpSession hs = request.getSession();
-        hs.setAttribute("branchno",1);
+        hs.setAttribute("branchno",0);
         hs.setAttribute("username","Kopihub");
         filterChain.doFilter(request,response);
     }

@@ -175,7 +175,7 @@
                                             <div class="col-md-3 col-sm-3 col-xs-3 form-group has-feedback">
                                                 <label>จำนวนชั่วโมงในการทำงาน</label>
                                                 <input type="number" class="form-control" min="0" max="24" step="1"
-                                                       placeholder="ชั่วโมง" name="workHour" required>
+                                                       placeholder="ชั่วโมง" name="workHour">
                                                 <span class="fa fa-hourglass form-control-feedback right"
                                                       aria-hidden="true"></span>
                                             </div>
@@ -221,8 +221,8 @@
                                     <input type="hidden" id="edithiddenworkhistno" name="workHistNo">
                                     <input type="hidden" id="edithiddenempno" name="empNo">
                                     <div class="form-group">
-                                        <div class="col-md-6 col-sm-6 col-xs-6 form-group has-feedback"
-                                             style="text-align: center;">
+                                        <div class="col-md-6 col-sm-6 col-xs-6 form-group has-feedback">
+                                            <label>วันที่ทำงาน</label>
                                             <input type="date" id="editWorkDate" class="form-control workdate"
                                                    name="workDate"
                                                    required readonly>
@@ -240,7 +240,7 @@
                                         <div class="col-md-6 col-sm-3 col-xs-3 form-group has-feedback">
                                             <label>จำนวนชั่วโมงในการทำงาน</label>
                                             <input type="number" class="form-control" min="0" max="24" step="1"
-                                                   placeholder="ชั่วโมง" name="workHour" id="editWorkHour" required>
+                                                   placeholder="ชั่วโมง" name="workHour" id="editWorkHour">
                                             <span class="fa fa-hourglass form-control-feedback right"
                                                   aria-hidden="true"></span>
                                         </div>
@@ -339,7 +339,7 @@
         '</select>' +
         '</div>' +
         '<div class="col-md-3 col-sm-3 col-xs-3 form-group has-feedback">' +
-        '<input type="number" class="form-control" min="0" step="1" placeholder="ชั่วโมง" name="workHour" required>' +
+        '<input type="number" class="form-control" min="0" step="1" placeholder="ชั่วโมง" name="workHour">' +
         '<span class="fa fa-hourglass form-control-feedback right" aria-hidden="true"></span>' +
         '</div>' +
         '<div class="col-md-3 col-sm-3 col-xs-3 form-group has-feedback">' +

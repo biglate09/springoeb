@@ -31,8 +31,9 @@ public class EmployeeTableService {
         employeeTableRepository.save(employeeTables);
     }
 
-    public List<EmployeeTable> findEmployeeTableNow(int branchNo, Date date, Time timeNow){
-        return employeeTableRepository.findAllByEmployee_BranchNoAndDateAndTimeStartBeforeAndTimeEndAfter(branchNo,date,timeNow,timeNow);
+    public List<EmployeeTable> findEmployeeTableNow(int branchNo, Date date){
+//        return employeeTableRepository.findAllByEmployee_BranchNoAndDateAndTimeStartBeforeAndTimeEndAfter(branchNo,date,timeNow,timeNow);
+        return employeeTableRepository.findAllByEmployee_BranchNoAndDate(branchNo,date);
     }
 
     public void removeByEmpTimeNoAndBranchNo(int empTimeNo, int branchNo){
