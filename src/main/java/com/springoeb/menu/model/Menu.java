@@ -2,6 +2,7 @@ package com.springoeb.menu.model;
 
 import javax.persistence.*;
 import java.io.Serializable;
+import java.util.List;
 
 @Entity
 public class Menu implements Serializable{
@@ -24,6 +25,9 @@ public class Menu implements Serializable{
     @ManyToOne
     @JoinColumn(name = "menu_group_no",updatable = false,insertable = false)
     private MenuGroup menuGroup;
+
+    @OneToMany(fetch = FetchType.LAZY, mappedBy = "menuSet")
+    private List<MenuInSet> menuInSets;
 
     public static final int OFFICIAL_MENU_FLAG = 0;
     public static final String flagForMenu = "M";
@@ -108,5 +112,13 @@ public class Menu implements Serializable{
 
     public void setLocalFlag(int localFlag) {
         this.localFlag = localFlag;
+    }
+
+    public List<MenuInSet> getMenuInSets() {
+        return menuInSets;
+    }
+
+    public void setMenuInSets(List<MenuInSet> menuInSets) {
+        this.menuInSets = menuInSets;
     }
 }
