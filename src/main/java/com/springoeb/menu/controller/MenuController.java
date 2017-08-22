@@ -33,6 +33,8 @@ public class MenuController {
     private MenuCategoryService menuCategoryService;
     @Autowired
     private MenuGroupService menuGroupService;
+    @Autowired
+    private BranchMenuService branchMenuService;
 
     private static final String MENU_PATH = "/WEB-INF/menu/";
     private static final String UPLOADED_FOLDER = System.getProperty("user.dir") + "/src/main/webapp/images/";
@@ -52,13 +54,13 @@ public class MenuController {
         int branchNo = (Integer) (session.getAttribute("branchno"));
 
         if (menuGroupNo != 0) {
-            if (branchNo == 0) {
+            if (branchNo == Menu.OFFICIAL_MENU_FLAG) {
                 menus = menuService.getMenusByMenuGroup(menuGroupNo);
             } else {
                 menus = menuService.getMenusByMenuGroupSubBranch(menuGroupNo,branchNo);
             }
         } else {
-            if (branchNo == 0) {
+            if (branchNo == Menu.OFFICIAL_MENU_FLAG) {
                 menus = menuService.getMenus();
             } else {
                 menus = menuService.getMenusSubBranch(branchNo);
@@ -157,7 +159,7 @@ public class MenuController {
     public String toMenuSetIndex(Model model,HttpSession session) {
         int branchNo = (Integer) (session.getAttribute("branchno"));
         List<Menu> menus = null;
-        if (branchNo == 0) {
+        if (branchNo == Menu.OFFICIAL_MENU_FLAG) {
             menus = menuService.getMenus();
         } else {
             menus = menuService.getMenusSubBranch(branchNo);
