@@ -173,7 +173,7 @@
                                              style="clear: both;">
                                             <label>ประเภทการจ่าย</label>
                                             <select name="payType" class="form-control" required>
-                                                <option value="">---เลือกประเภทการจ่าย---</option>
+                                                <option value="" selected disabled>เลือกประเภทการจ่าย</option>
                                                 <option value="${Employee.HOUR}">รายชั่วโมง</option>
                                                 <option value="${Employee.DAY}">รายวัน</option>
                                             </select>
@@ -334,7 +334,7 @@
                                          style="clear: both;">
                                         <label>ประเภทการจ่าย</label>
                                         <select id="editpaytype" name="payType" class="form-control" required>
-                                            <option value="">---เลือกประเภทการจ่าย---</option>
+                                            <option value="" disabled>เลือกประเภทการจ่าย</option>
                                             <option value="${Employee.HOUR}">รายชั่วโมง</option>
                                             <option value="${Employee.DAY}">รายวัน</option>
                                         </select>

@@ -78,7 +78,7 @@
                                                 <div class="col-md-6 col-sm-6 col-xs-12 form-group has-feedback">
                                                     <label>ประเภทอาหาร</label>
                                                     <select name="menuCatNo" id="add_menu_cat" class="form-control" required>
-                                                        <option value="">---เลือกหมวดหมู่---</option>
+                                                        <option value="" disabled selected>เลือกประเภทอาหาร</option>
                                                         <c:forEach items="${menuCategories}" var="mc">
                                                             <option value="${mc.menuCatNo}">${mc.menuCatName}</option>
                                                         </c:forEach>
@@ -131,7 +131,7 @@
                                                 <div class="col-md-6 col-sm-6 col-xs-12 form-group has-feedback">
                                                     <label>ประเภทอาหาร</label>
                                                     <select name="menuCatNo" id="edit_menu_group_no" class="form-control" required>
-                                                        <option value="" disabled>เลือกหมวดหมู่</option>
+                                                        <option value="" disabled>เลือกประเภทอาหาร</option>
                                                         <c:forEach items="${menuCategories}" var="mc">
                                                             <option value="${mc.menuCatNo}">${mc.menuCatName}</option>
                                                         </c:forEach>
