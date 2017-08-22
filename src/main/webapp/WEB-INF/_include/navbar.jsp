@@ -41,10 +41,10 @@
                         <a id="menutab"><i class="fa fa-cutlery"></i> จัดการเมนูอาหาร <span
                                 class="fa fa-chevron-down"></span></a>
                         <ul class="nav child_menu">
-                            <li><a id="menu" href="${contextPath}/menu/menu">เมนูอาหารแบบเดี่ยว</a></li>
-                            <li><a id="menuset" href="${contextPath}/menu/menuset">เมนูอาหารแบบชุด</a></li>
                             <li><a id="menucategory" href="${contextPath}/menu/menucategory">ประเภทอาหาร</a></li>
                             <li><a id="menugroup" href="${contextPath}/menu/menugroup">หมวดหมู่เมนูอาหาร</a></li>
+                            <li><a id="menu" href="${contextPath}/menu/menu">เมนูอาหารแบบเดี่ยว</a></li>
+                            <li><a id="menuset" href="${contextPath}/menu/menuset">เมนูอาหารแบบชุด</a></li>
                         </ul>
                     </li>
                     <li>
@@ -56,12 +56,12 @@
                     <li>
                         <a><i class="fa fa-spoon"></i> จัดการวัตถุดิบอาหาร <span class="fa fa-chevron-down"></span></a>
                         <ul class="nav child_menu">
+                            <li><a id="materialcategory" href="${contextPath}/stock/materialcategory">ประเภทวัตถุดิบ</a></li>
+                            <li><a id="materialunit" href="${contextPath}/stock/materialunit">หน่วยวัตถุดิบอาหาร</a></li>
                             <li><a id="material" href="${contextPath}/stock/materialitem">วัตถุดิบอาหาร</a></li>
                             <li><a id="mixedproduct" href="${contextPath}/stock/mixedproduct">วัตถุดิบแบบผสม</a></li>
                             <li><a id="stockmanage" href="${contextPath}/stock/stockmanage">เพิ่ม / ลดวัตถุดิบ</a></li>
                             <li><a id="menustock" href="${contextPath}/stock/menumaterial">วัตถุดิบของเมนูอาหาร</a></li>
-                            <li><a id="materialcategory" href="${contextPath}/stock/materialcategory">ประเภทวัตถุดิบ</a></li>
-                            <li><a id="materialunit" href="${contextPath}/stock/materialunit">หน่วยวัตถุดิบอาหาร</a></li>
                         </ul>
                     </li>
                 </ul>
