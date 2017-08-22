@@ -11,6 +11,7 @@ import org.springframework.web.bind.annotation.*;
 import org.springframework.web.multipart.MultipartFile;
 
 import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpSession;
 import javax.transaction.Transactional;
 import java.io.File;
 import java.nio.file.Files;
@@ -27,9 +28,7 @@ public class MenuController {
     @Autowired
     private MenuService menuService;
     @Autowired
-    private MenuSetService menuSetService;
-    @Autowired
-    private MenuSetMenuService menuSetMenuService;
+    private MenuInSetService menuInSetService;
     @Autowired
     private MenuCategoryService menuCategoryService;
     @Autowired
@@ -47,12 +46,23 @@ public class MenuController {
     }
 
     @ResponseBody
-    @PostMapping("/getmenus/{menuCatNo}")
-    public String getMenus(@PathVariable("menuCatNo") int menuCatNo, Model model) throws JsonProcessingException {
-        List<Menu> menus = menuService.getMenus();
+    @PostMapping("/getmenus/{menuGroupNo}")
+    public String getMenus(@PathVariable("menuGroupNo") int menuGroupNo, Model model, HttpSession session) throws JsonProcessingException {
+        List<Menu> menus = null;
+        int branchNo = (Integer) (session.getAttribute("branchno"));
 
-        if (menuCatNo != 0) {
-            menus = menuService.getMenusByMenuCategory(menuCatNo);
+        if (menuGroupNo != 0) {
+            if (branchNo == 0) {
+                menus = menuService.getMenusByMenuGroup(menuGroupNo);
+            } else {
+                menus = menuService.getMenusByMenuGroupSubBranch(menuGroupNo,branchNo);
+            }
+        } else {
+            if (branchNo == 0) {
+                menus = menuService.getMenus();
+            } else {
+                menus = menuService.getMenusSubBranch(branchNo);
+            }
         }
 
         ObjectMapper mapper = new ObjectMapper();
@@ -62,7 +72,9 @@ public class MenuController {
 
     @ResponseBody
     @PostMapping("/managemenu")
-    public void addAndEditMenu(@RequestParam("menuPicPath") MultipartFile file, HttpServletRequest request) throws Exception {
+    public void addAndEditMenu(@RequestParam("menuPicPath") MultipartFile file, HttpServletRequest request, HttpSession session) throws Exception {
+        int branchNo = (Integer) (session.getAttribute("branchno"));
+
         Menu menu = new Menu();
         byte[] bytes = file.getBytes();
         Integer menuNo = request.getParameter("menuNo") != null ? Integer.parseInt(request.getParameter("menuNo")) : null;
@@ -70,6 +82,9 @@ public class MenuController {
         if (menuNo != null) {
             menu = menuService.getMenuByMenuNo(menuNo);
             menu.setMenuNo(menuNo);
+        }else{
+            //only for add
+            menu.setLocalFlag(branchNo);
         }
 
         menu.setMenuNameTH(request.getParameter("menuNameTH"));
@@ -77,7 +92,8 @@ public class MenuController {
         menu.setMenuPrice(Double.parseDouble(request.getParameter("menuPrice")));
         menu.setMenuDesc(request.getParameter("menuDesc"));
         menu.setMenuGroupNo(Integer.parseInt(request.getParameter("menuGroupNo")));
-        menu.setAvailable(request.getParameter("menuAvailable") == null ? false : true);
+        menu.setMenuFlag(Menu.flagForMenu);
+//        menu.setAvailable(request.getParameter("menuAvailable") == null ? false : true);
         if (menuNo != null) {
             menu.setMenuNo(menuNo);
         }
@@ -85,7 +101,7 @@ public class MenuController {
         if (!menuService.chkDuplicateMenu(menu)) {
             if (!file.getOriginalFilename().equals("")) {
                 String menuPicPath = null;
-                if(menuNo != null) {
+                if (menuNo != null) {
                     Menu tmpMenu = menuService.getMenuByMenuNo(menuNo);
                     if (tmpMenu != null) {
                         menuService.getMenuByMenuNo(menuNo).getMenuPicPath();
@@ -111,7 +127,7 @@ public class MenuController {
     @PostMapping("/changeavailable")
     public void changeAvailable(HttpServletRequest request) {
         Menu menu = menuService.getMenuByMenuNo(Integer.parseInt(request.getParameter("menuno")));
-        menu.setAvailable(!menu.getAvailable());
+//        menu.setAvailable(!menu.getAvailable());
         menuService.save(menu);
     }
 
@@ -121,7 +137,7 @@ public class MenuController {
     public void delMenu(@PathVariable("menuNo") int menuNo) {
         String menuPicPath = menuService.getMenuByMenuNo(menuNo).getMenuPicPath();
         menuService.delMenu(menuNo);
-        if(menuService.getMenuByMenuNo(menuNo) == null) {
+        if (menuService.getMenuByMenuNo(menuNo) == null) {
             File file = new File(UPLOADED_FOLDER + "menu/" + menuPicPath);
             file.delete();
         }
@@ -138,15 +154,23 @@ public class MenuController {
 
     //----------------------------------------------------------------------------------------------------------//
     @GetMapping("/menuset")
-    public String toMenuSetIndex(Model model) {
-        model.addAttribute("menus", menuService.getMenus());
+    public String toMenuSetIndex(Model model,HttpSession session) {
+        int branchNo = (Integer) (session.getAttribute("branchno"));
+        List<Menu> menus = null;
+        if (branchNo == 0) {
+            menus = menuService.getMenus();
+        } else {
+            menus = menuService.getMenusSubBranch(branchNo);
+        }
+        model.addAttribute("menus", menus);
         return MENU_PATH + "menuset.jsp";
     }
 
     @ResponseBody
     @PostMapping("/getmenusets")
-    public String getMenuSets() throws JsonProcessingException {
-        List<MenuSet> menuSets = menuSetService.getMenuSets();
+    public String getMenuSets(HttpSession session) throws JsonProcessingException {
+        int branchNo = (Integer) (session.getAttribute("branchno"));
+        List<Menu> menuSets = menuService.getMenuSets(branchNo);
         ObjectMapper mapper = new ObjectMapper();
         String json = mapper.writeValueAsString(menuSets);
         return json;
@@ -155,7 +179,7 @@ public class MenuController {
     @ResponseBody
     @PutMapping("/getmenuset/{menuSetNo}")
     public String getMenuSet(@PathVariable("menuSetNo") int menuSetNo) throws JsonProcessingException {
-        MenuSet menuSet = menuSetService.getMenuSetByMenuSetNo(menuSetNo);
+        Menu menuSet = menuService.getMenuByMenuNo(menuSetNo);
         ObjectMapper mapper = new ObjectMapper();
         String json = mapper.writeValueAsString(menuSet);
         return json;
@@ -164,62 +188,65 @@ public class MenuController {
     @Transactional
     @ResponseBody
     @PostMapping("/managemenuset")
-    public void addAndEditMenuSet(@RequestParam("menuSetPicPath") MultipartFile file, HttpServletRequest request) throws Exception {
-        MenuSet menuSet = new MenuSet();
+    public void addAndEditMenuSet(@RequestParam("menuPicPath") MultipartFile file, HttpServletRequest request) throws Exception {
+        Menu menuSet = new Menu();
         byte[] bytes = file.getBytes();
-        Integer menuSetNo = request.getParameter("menuSetNo") != null ? Integer.parseInt(request.getParameter("menuSetNo")) : null;
+        Integer menuSetNo = request.getParameter("menuNo") != null ? Integer.parseInt(request.getParameter("menuNo")) : null;
 
         if (menuSetNo != null) {
-            menuSet = menuSetService.getMenuSetByMenuSetNo(menuSetNo);
-            menuSet.setMenuSetNo(menuSetNo);
+            menuSet = menuService.getMenuByMenuNo(menuSetNo);
+            menuSet.setMenuNo(menuSetNo);
         }
 
-        menuSet.setMenuSetNameTH(request.getParameter("menuSetNameTH"));
-        menuSet.setMenuSetNameEN(request.getParameter("menuSetNameEN"));
-        menuSet.setMenuSetPrice(Double.parseDouble(request.getParameter("menuSetPrice")));
-        menuSet.setMenuSetDesc(request.getParameter("menuSetDesc"));
-        menuSet.setAvailable(request.getParameter("available") == null ? false : true);
+        menuSet.setMenuNameTH(request.getParameter("menuNameTH"));
+        menuSet.setMenuNameEN(request.getParameter("menuNameEN"));
+        menuSet.setMenuPrice(Double.parseDouble(request.getParameter("menuPrice")));
+        menuSet.setMenuDesc(request.getParameter("menuDesc"));
+//        menuSet.setAvailable(request.getParameter("available") == null ? false : true);
         if (menuSetNo != null) {
-            menuSet.setMenuSetNo(menuSetNo);
+            menuSet.setMenuNo(menuSetNo);
+        }else{
+            menuSet.setMenuFlag(Menu.flagForMenuSet);
         }
 
-        if (!menuSetService.chkDuplicateMenuSet(menuSet)) {
+        if (!menuService.chkDuplicateMenu(menuSet)) {
             if (!file.getOriginalFilename().equals("")) {
                 String menuPicPath = null;
-                if(menuSetNo != null) {
-                    MenuSet tmpMenuSet = menuSetService.getMenuSetByMenuSetNo(menuSetNo);
+                if (menuSetNo != null) {
+                    Menu tmpMenuSet = menuService.getMenuByMenuNo(menuSetNo);
                     if (tmpMenuSet != null) {
-                        menuPicPath = tmpMenuSet.getMenuSetPicPath();
+                        menuPicPath = tmpMenuSet.getMenuPicPath();
                     }
                 }
                 //pic path before change
                 String filename = System.currentTimeMillis() + file.getOriginalFilename();
                 Path path = Paths.get(UPLOADED_FOLDER + "menuset/" + filename);
                 Files.write(path, bytes);
-                menuSet.setMenuSetPicPath(filename);
+                menuSet.setMenuPicPath(filename);
                 if (menuSetNo != null) {
                     File picFile = new File(UPLOADED_FOLDER + "menuset/" + menuPicPath);
                     picFile.delete();
                 }
             }
-            menuSetService.save(menuSet);
-            MenuSet insertedMenuSet = menuSetService.getMenuSetByMenuSetNameTH(menuSet.getMenuSetNameTH());
-            menuSetMenuService.removeMenuSetMenuByMenuSetNo(insertedMenuSet.getMenuSetNo());
-            Map<String,String[]> parameterMap = request.getParameterMap();
-            List<MenuSetMenu> menuSetMenus = new LinkedList<MenuSetMenu>();
-            for(String key : parameterMap.keySet()){
-                if(key.indexOf("menuamount") != -1){
+            menuService.save(menuSet);
+
+            Menu insertedMenuSet = menuService.getMenuByMenuNameTH(menuSet.getMenuNameTH());
+            menuInSetService.removeMenuSetMenuByMenuSetNo(insertedMenuSet.getMenuNo());
+            Map<String, String[]> parameterMap = request.getParameterMap();
+            List<MenuInSet> menuSetMenus = new LinkedList<MenuInSet>();
+            for (String key : parameterMap.keySet()) {
+                if (key.indexOf("menuamount") != -1) {
                     String amount = parameterMap.get(key)[0];
-                    if(amount != null && !amount.trim().equals("") && Integer.parseInt(amount) != 0){
-                        MenuSetMenu msm = new MenuSetMenu();
-                        msm.setMenuNo(Integer.parseInt(key.substring(10,key.length())));
-                        msm.setMenuSetNo(insertedMenuSet.getMenuSetNo());
+                    if (amount != null && !amount.trim().equals("") && Integer.parseInt(amount) != 0) {
+                        MenuInSet msm = new MenuInSet();
+                        msm.setMenuSubNo(Integer.parseInt(key.substring(10, key.length())));
+                        msm.setMenuNo(insertedMenuSet.getMenuNo());
                         msm.setAmount(Integer.parseInt(amount));
                         menuSetMenus.add(msm);
                     }
                 }
             }
-            menuSetMenuService.save(menuSetMenus);
+            menuInSetService.save(menuSetMenus);
         } else {
             throw new Exception();
         }
@@ -229,24 +256,24 @@ public class MenuController {
     @ResponseBody
     @DeleteMapping("/delmenuset/{menuSetNo}")
     public void delMenuSet(@PathVariable("menuSetNo") int menuSetNo) {
-        String menuSetPicPath = menuSetService.getMenuSetByMenuSetNo(menuSetNo).getMenuSetPicPath();
-        menuSetService.delMenuSet(menuSetNo);
+        String menuSetPicPath = menuService.getMenuByMenuNo(menuSetNo).getMenuPicPath();
+        menuService.delMenu(menuSetNo);
         File file = new File(UPLOADED_FOLDER + "menuset/" + menuSetPicPath);
         file.delete();
     }
 
-    @ResponseBody
-    @PostMapping("/changemenusetavailable")
-    public void changeMenuSetAvailable(HttpServletRequest request) {
-        MenuSet menuSet = menuSetService.getMenuSetByMenuSetNo(Integer.parseInt(request.getParameter("menusetno")));
-        menuSet.setAvailable(!menuSet.getAvailable());
-        menuSetService.save(menuSet);
-    }
+//    @ResponseBody
+//    @PostMapping("/changemenusetavailable")
+//    public void changeMenuSetAvailable(HttpServletRequest request) {
+//        MenuSet menuSet = menuSetService.getMenuSetByMenuSetNo(Integer.parseInt(request.getParameter("menusetno")));
+//        menuSet.setAvailable(!menuSet.getAvailable());
+//        menuSetService.save(menuSet);
+//    }
 
     //----------------------------------------------------------------------------------------------------------//
     @GetMapping("/menugroup")
     public String toMenuGroup(Model model) {
-        List<MenuCategory> menuCategories  = menuCategoryService.getMenuCategories();
+        List<MenuCategory> menuCategories = menuCategoryService.getMenuCategories();
         model.addAttribute("menuCategories", menuCategories);
         return MENU_PATH + "menugroup.jsp";
     }

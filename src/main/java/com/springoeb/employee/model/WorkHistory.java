@@ -1,10 +1,12 @@
 package com.springoeb.employee.model;
 
 import com.fasterxml.jackson.annotation.JsonIgnore;
+import org.jetbrains.annotations.Nullable;
 
 import javax.persistence.*;
 import java.io.Serializable;
 import java.sql.Date;
+import java.sql.Time;
 
 /**
  * Created by bighead on 6/9/17.
@@ -15,6 +17,8 @@ public class WorkHistory implements Serializable{
     @GeneratedValue(strategy = GenerationType.AUTO)
     private Integer workHistNo;
     private Date workDate;
+    private Time workStart;
+    private Time workEnd;
     private Double workPay;
     private Integer workHour;
     private Integer workMin;
@@ -24,6 +28,15 @@ public class WorkHistory implements Serializable{
 
     @Transient
     private String empName;
+
+    @Column(name = "emp_time_no",updatable = true,insertable = true)
+    @Nullable
+    private Integer empTimeNo;
+
+    @JsonIgnore
+    @OneToOne
+    @JoinColumn(name = "emp_time_no",updatable = false,insertable = false)
+    private EmployeeTable employeeTable;
 
     @JsonIgnore
     @ManyToOne
@@ -92,5 +105,38 @@ public class WorkHistory implements Serializable{
 
     public void setEmployee(Employee employee) {
         this.employee = employee;
+    }
+
+    public Time getWorkStart() {
+        return workStart;
+    }
+
+    @Nullable
+    public Integer getEmpTimeNo() {
+        return empTimeNo;
+    }
+
+    public void setEmpTimeNo(@Nullable Integer empTimeNo) {
+        this.empTimeNo = empTimeNo;
+    }
+
+    public EmployeeTable getEmployeeTable() {
+        return employeeTable;
+    }
+
+    public void setEmployeeTable(EmployeeTable employeeTable) {
+        this.employeeTable = employeeTable;
+    }
+
+    public void setWorkStart(Time workStart) {
+        this.workStart = workStart;
+    }
+
+    public Time getWorkEnd() {
+        return workEnd;
+    }
+
+    public void setWorkEnd(Time workEnd) {
+        this.workEnd = workEnd;
     }
 }

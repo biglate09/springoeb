@@ -8,10 +8,12 @@ import java.util.List;
 
 @Repository
 public interface MenuRepository extends CrudRepository<Menu,Integer>{
-    public List<Menu> findAll();
+    public List<Menu> findAllByMenuFlag(String menuFlag);
+    public List<Menu> findAllByMenuFlagAndLocalFlagIn(String menuFlag,List<Integer> localFlag);
     public List<Menu> findByMenuGroupNo(int menuGroupNo);
+    public List<Menu> findByMenuGroupNoAndMenuFlagAndLocalFlagIn(int menuGroupNo,String menuFlag,List<Integer> localFlag);
     public List<Menu> findByMenuNameTHIgnoreCaseOrMenuNameENIgnoreCase(String menuNameTH, String menuNameEN);
-    public List<Menu> findByAvailable(boolean available);
+    public Menu findByMenuNameTH(String menuNameTH);
     public void deleteByMenuNo(int menuNo);
     public Menu findByMenuNo(int menuNo);
 }

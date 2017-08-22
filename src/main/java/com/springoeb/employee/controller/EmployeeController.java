@@ -17,6 +17,7 @@ import java.io.IOException;
 import java.sql.Date;
 import java.sql.Time;
 import java.text.ParseException;
+import java.time.LocalTime;
 import java.util.ArrayList;
 import java.util.HashSet;
 import java.util.List;
@@ -158,11 +159,15 @@ public class EmployeeController {
             Employee employee = employeeService.findByEmpNoAndBranchNo(empNo, branchNo);
             String payType = employee.getPayType();
             double pay = employee.getPay();
-            int workHour = Integer.parseInt(stWorkHours[i]);
+            int workHour = 0;
             int workMinute = 0;
+            if(stWorkHours[i] != null && !stWorkHours[i].equals("")){
+                workHour = Integer.parseInt(stWorkHours[i]);
+            }
             if (stWorkMinutes[i] != null && !stWorkMinutes[i].equals("")) {
                 workMinute = Integer.parseInt(stWorkMinutes[i]);
             }
+
             double sumWorkHour = workHour + (workMinute * 5 / 300.0);
             if (payType.equals(Employee.HOUR)) {
                 pay = pay * sumWorkHour;
@@ -330,5 +335,76 @@ public class EmployeeController {
         int branchNo = (Integer) (session.getAttribute("branchno"));
         employeeTableService.removeByEmpTimeNoAndBranchNo(empTimeNo, branchNo);
         response.sendRedirect(request.getContextPath() + "/employee/table");
+    }
+
+    //----------------------------------------------------------------------------------------------------------//
+
+    @RequestMapping("/check")
+    public String toEmployeeCheck(Model model, HttpSession session) {
+        int branchNo = (Integer) (session.getAttribute("branchno"));
+        Date date = new Date(System.currentTimeMillis());
+        Time time = new Time(System.currentTimeMillis());
+        List<EmployeeTable> employeeTables = employeeTableService.findEmployeeTableNow(branchNo, date);
+        model.addAttribute("employeeTables", employeeTables);
+        return EMP_PATH + "empcheck.jsp";
+    }
+
+    @RequestMapping("/clockin")
+    public void clockIn(HttpServletRequest request, HttpServletResponse response) throws IOException {
+        int empNo = Integer.parseInt(request.getParameter("empNo"));
+        int empTimeNo = Integer.parseInt(request.getParameter("empTimeNo"));
+        Date date = new Date(System.currentTimeMillis());
+        Time workStart = new Time(System.currentTimeMillis());
+        WorkHistory workHistory = new WorkHistory();
+        workHistory.setWorkDate(date);
+        workHistory.setWorkStart(workStart);
+        workHistory.setEmpNo(empNo);
+        workHistory.setEmpTimeNo(empTimeNo);
+        workHistoryService.save(workHistory);
+        response.sendRedirect(request.getContextPath() + "/employee/check");
+    }
+
+    @RequestMapping("/clockout")
+    public void clockOut(HttpServletRequest request, HttpServletResponse response,HttpSession session) throws IOException {
+        int branchNo = (Integer) (session.getAttribute("branchno"));
+        int workHistNo = Integer.parseInt(request.getParameter("workHistNo"));
+        WorkHistory workHistory = workHistoryService.getWorkHistory(workHistNo,branchNo);
+        Employee employee = workHistory.getEmployee();
+
+        Time workStart = workHistory.getWorkStart();
+        Time workEnd = new Time(System.currentTimeMillis());
+
+        LocalTime localWorkStart = workStart.toLocalTime();
+        LocalTime localWorkEnd = workEnd.toLocalTime();
+
+        int hourStart = localWorkStart.getHour();
+        int minStart = localWorkStart.getMinute();
+        int hourEnd = localWorkEnd.getHour();
+        int minEnd = localWorkEnd.getMinute();
+
+        int hour = 0,minute = 0;
+
+        if(minEnd < minStart){
+            hour = hourEnd - hourStart - 1;
+            minute = (60 - minStart) + minEnd;
+        }else{
+            hour = hourEnd - hourStart;
+            minute = minEnd - minStart;
+        }
+
+
+        double workPay = employee.getPay();
+        if (employee.getPayType().equals(Employee.HOUR)) {
+            workPay = workPay * ( hour + ((minute*5)/300d) );
+        }
+
+        workHistory.setWorkEnd(workEnd);
+        workHistory.setWorkPay(workPay);
+        workHistory.setWorkHour(hour);
+        workHistory.setWorkMin(minute);
+
+        workHistoryService.save(workHistory);
+
+        response.sendRedirect(request.getContextPath() + "/employee/check");
     }
 }

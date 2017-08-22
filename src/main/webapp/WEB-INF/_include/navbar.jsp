@@ -34,7 +34,7 @@
                             <li><a id="emptable" href="${contextPath}/employee/table">ตารางการทำงาน</a></li>
                             <li><a id="workhist" href="${contextPath}/employee/workhistory">ประวัติการทำงาน</a></li>
                             <li><a id="emppaid" href="${contextPath}/employee/pay">จ่ายเงินพนักงาน</a></li>
-                            <%--<li><a id="empcheck" href="${contextPath}/employee/check">เช็คชื่อพนักงาน</a></li>--%>
+                            <li><a id="empcheck" href="${contextPath}/employee/check">เช็คชื่อพนักงาน</a></li>
                         </ul>
                     </li>
                     <li>
@@ -61,6 +61,7 @@
                             <li><a id="stockmanage" href="${contextPath}/stock/stockmanage">เพิ่ม / ลดวัตถุดิบ</a></li>
                             <li><a id="menustock" href="${contextPath}/stock/menumaterial">วัตถุดิบของเมนูอาหาร</a></li>
                             <li><a id="materialcategory" href="${contextPath}/stock/materialcategory">ประเภทวัตถุดิบ</a></li>
+                            <li><a id="materialunit" href="${contextPath}/stock/materialunit">หน่วยวัตถุดิบอาหาร</a></li>
                         </ul>
                     </li>
                 </ul>

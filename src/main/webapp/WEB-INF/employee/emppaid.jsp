@@ -46,43 +46,7 @@
                                     </tr>
                                     </thead>
                                     <tbody style="text-align:center;">
-                                    <%--<c:forEach items="${employees}" var="e" varStatus="vs">--%>
-                                    <%--<tr id="tr${e.empNo}">--%>
-                                    <%--<td style="text-align:center;">${e.empName}</td>--%>
-                                    <%--<td style="text-align:center;">--%>
-                                    <%--${e.empType==Employee.FULL_TIME?'Full-Time':e.empType==Employee.PART_TIME?'Part-Time':'Training'}--%>
-                                    <%--</td>--%>
-                                    <%--<td style="text-align:center;"--%>
-                                    <%--data-order="${e.payType==Employee.HOUR?e.pay*8:e.pay}">--%>
-                                    <%--<fmt:formatNumber value="${e.pay}" pattern="#,###,##0.00"/> บาท /--%>
-                                    <%--${e.payType==Employee.HOUR?'ชั่วโมง':'วัน'}--%>
-                                    <%--</td>--%>
-                                    <%--<c:set var="sumpay" value="0"/>--%>
-                                    <%--<c:forEach items="${e.workHistories}" var="wh">--%>
-                                    <%--<c:set var="sumpay" value="${sumpay + wh.workPay}"/>--%>
-                                    <%--</c:forEach>--%>
-                                    <%--<c:forEach items="${e.employeePays}" var="ep">--%>
-                                    <%--<c:set var="sumpay" value="${sumpay - ep.pay}"/>--%>
-                                    <%--</c:forEach>--%>
 
-                                    <%--<td style="text-align:center;" data-order="${sumpay}">--%>
-                                    <%--<fmt:formatNumber value="${sumpay}" pattern="#,###,##0.00"/> บาท--%>
-                                    <%--</td>--%>
-
-                                    <%--&lt;%&ndash;<td style="text-align:center;">${e.constraint.employmentType.empTypeName}&ndash;%&gt;--%>
-                                    <%--&lt;%&ndash;ราย${e.constraint.payType.payTypeName}</td>&ndash;%&gt;--%>
-                                    <%--&lt;%&ndash;<td style="text-align:center;"><fmt:formatNumber type="number"&ndash;%&gt;--%>
-                                    <%--&lt;%&ndash;pattern="#,###,##0.00"&ndash;%&gt;--%>
-                                    <%--&lt;%&ndash;value="${e.SUMPAY}"/> ฿&ndash;%&gt;--%>
-                                    <%--&lt;%&ndash;</td>&ndash;%&gt;--%>
-                                    <%--<td style="text-align:center;">--%>
-                                    <%--<button class="btn btn-primary btn-sm" data-toggle="modal"--%>
-                                    <%--data-target="#paidDetail" onclick="setemppaid(${e.empNo})"><i--%>
-                                    <%--class="fa fa-money"></i>&nbsp; จ่ายเงิน--%>
-                                    <%--</button>--%>
-                                    <%--</td>--%>
-                                    <%--</tr>--%>
-                                    <%--</c:forEach>--%>
                                     </tbody>
                                 </table>
                             </div>
@@ -137,7 +101,8 @@
                                     <div class="well">
                                         <form id="pay-form">
                                             <div class="col-md-4" style="text-align:left;">
-                                                เบิกไปแล้วทั้งหมด : <span id="withdraw" style="font-weight: bold;"></span> บาท
+                                                เบิกไปแล้วทั้งหมด : <span id="withdraw"
+                                                                          style="font-weight: bold;"></span> บาท
                                             </div>
                                             <div class="col-md-4" style="text-align:left;">
                                                 คงเหลือ : <span id="sumpay" style="font-weight: bold;"></span> บาท
@@ -343,25 +308,27 @@
                     var tmppay = employeePay.pay;
                     var ofTheseDays = "";
 
-                    while(tmppay >= workhist_sumpay){
-                        ofTheseDays += 'เบิกวันที่ : '+workhist.workDate+' จำนวน '+workhist_sumpay.toFixed(2).replace(/\B(?=(\d{3})+(?!\d))/g, ",")+" บาท\\n";
-                        tmppay = tmppay - workhist_sumpay;
+                    while (tmppay >= workhist_sumpay) {
+                        if(workhist_sumpay != null) {
+                            ofTheseDays += 'เบิกวันที่ : ' + workhist.workDate + ' จำนวน ' + workhist_sumpay.toFixed(2).replace(/\B(?=(\d{3})+(?!\d))/g, ",") + " บาท\\n";
+                            tmppay = tmppay - workhist_sumpay;
+                        }
                         whi++;
-                        if(whi < workHistories.length) {
+                        if (whi < workHistories.length) {
                             workhist = workHistories[whi];
                             workhist_sumpay = workhist.workPay;
-                        }else{
+                        } else {
                             break;
                         }
                     }
 
-                    if(tmppay < workhist_sumpay && tmppay != 0){
-                        ofTheseDays += 'เบิกวันที่ : '+workhist.workDate+' จำนวน '+tmppay.toFixed(2).replace(/\B(?=(\d{3})+(?!\d))/g, ",")+" บาท";
+                    if (tmppay < workhist_sumpay && tmppay != 0) {
+                        ofTheseDays += 'เบิกวันที่ : ' + workhist.workDate + ' จำนวน ' + tmppay.toFixed(2).replace(/\B(?=(\d{3})+(?!\d))/g, ",") + " บาท";
                         workhist_sumpay -= tmppay;
                     }
 
                     tableworkpay.row.add({
-                        payNo: '<a style="cursor:pointer" onclick="alert(\''+ofTheseDays+'\')">' + (i + 1) + '</a>',
+                        payNo: '<a style="cursor:pointer" onclick="alert(\'' + ofTheseDays + '\')">' + (i + 1) + '</a>',
                         payTime: {
                             display: formatDate,
                             order: "" + date.getFullYear() + ((date.getMonth() + 1) < 10 ? '0' + (date.getMonth() + 1) : (date.getMonth() + 1)) + (date.getDate() < 10 ? '0' + date.getDate() : date.getDate()) + (date.getHours() < 10 ? "0" + date.getHours() : date.getHours()) + (date.getMinutes() < 10 ? "0" + date.getMinutes() : date.getMinutes()),
@@ -392,7 +359,7 @@
         if (inputwd === '') {
             alert('กรุณาใส่เงินที่ต้องการเบิกก่อน');
 //        } else if (inputwd <= sumpay && inputwd > 0) {
-        }else{
+        } else {
             var object = $("#pay-form").serialize();
             swal({
                     title: "ต้องการเบิกเงินให้ " + $("#empName").text(),
@@ -446,11 +413,15 @@
                     var sumpay = 0;
 
                     for (ir = 0; ir < emp_obj.workHistories.length; ir++) {
-                        sumpay = sumpay + parseFloat(emp_obj.workHistories[ir].workPay);
+                        if (emp_obj.workHistories[ir].workPay != null) {
+                            sumpay = sumpay + parseFloat(emp_obj.workHistories[ir].workPay);
+                        }
                     }
 
                     for (ir = 0; ir < emp_obj.employeePays.length; ir++) {
-                        sumpay = sumpay - parseFloat(emp_obj.employeePays[ir].pay);
+                        if (emp_obj.employeePays[ir].pay != null) {
+                            sumpay = sumpay - parseFloat(emp_obj.employeePays[ir].pay);
+                        }
                     }
 
                     all_sum_pay += sumpay;

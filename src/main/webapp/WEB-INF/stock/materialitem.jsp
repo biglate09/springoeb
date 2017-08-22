@@ -71,7 +71,7 @@
                                                 <div class="col-md-6 col-sm-6 col-xs-12 form-group has-feedback">
                                                     <label>ประเภทวัตถุดิบ</label>
                                                     <select name="matCatNo" id="add_mat_cat" class="form-control" required>
-                                                        <option value="">---เลือกวัตถุดิบ---</option>
+                                                        <option value="" disabled selected>เลือกวัตถุดิบ</option>
                                                         <c:forEach items="${matCategories}" var="mc">
                                                             <option value="${mc.matCatNo}">${mc.matCatName}</option>
                                                         </c:forEach>

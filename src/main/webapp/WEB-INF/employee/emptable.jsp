@@ -234,6 +234,7 @@
             },
             firstDay : 1,
             selectable: true,
+//            eventLimit: true,
             selectHelper: true,
             select: function (start, end, allDay) {
                 $('#fc_create').click();

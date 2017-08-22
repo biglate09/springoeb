@@ -74,7 +74,7 @@
                                                          src="../images/default_upload_image.png"/>
                                                     <div class="col-md-offset-3 col-sm-offset-3 col-md-6 col-sm-6 col-xs-12 has-feedback"
                                                          style="margin-bottom: 12px">
-                                                        <input type="file" class="form-control" name="menuSetPicPath"
+                                                        <input type="file" class="form-control" name="menuPicPath"
                                                                id="add_menuset_pic"
                                                                onchange="document.getElementById('showpic_menuset').src = window.URL.createObjectURL(this.files[0])"
                                                                placeholder="อัพโหลดรูปภาพ" required>
@@ -82,7 +82,7 @@
 
                                                     <div class="col-md-6 col-sm-6 col-xs-12 form-group has-feedback">
                                                         <label>ชื่อชุดเมนูอาหารภาษาไทย</label>
-                                                        <input type="text" class="form-control" name="menuSetNameTH"
+                                                        <input type="text" class="form-control" name="menuNameTH"
                                                                id="add_menuset_nameTH"
                                                                placeholder="ชื่อชุดเมนูอาหารภาษาไทย" required>
                                                         <span class="fa fa-pencil form-control-feedback right"
@@ -90,7 +90,7 @@
                                                     </div>
                                                     <div class="col-md-6 col-sm-6 col-xs-12 form-group has-feedback">
                                                         <label>ชื่อชุดเมนูอาหารภาษาอังกฤษ</label>
-                                                        <input type="text" class="form-control" name="menuSetNameEN"
+                                                        <input type="text" class="form-control" name="menuNameEN"
                                                                id="add_menuset_nameEN"
                                                                placeholder="ชื่อชุดเมนูอาหารภาษาอังกฤษ" required>
                                                         <span class="fa fa-pencil form-control-feedback right"
@@ -99,7 +99,7 @@
                                                     <div class="col-md-12 col-sm-12 col-xs-12 form-group has-feedback">
                                                         <label>รายละเอียดของชุดเมนูอาหาร</label>
                                                         <textarea rows="4" cols="50" class="form-control"
-                                                                  name="menuSetDesc"
+                                                                  name="menuDesc"
                                                                   id="add_menuset_desc"
                                                                   placeholder="รายละเอียด" required></textarea>
                                                     </div>
@@ -146,7 +146,7 @@
                                                     <div class="col-md-6">
                                                         <label>ราคาชุดเมนูอาหารนี้ (บาท)</label>
                                                         <input type="number" min="0" step="0.25" class="form-control"
-                                                               name="menuSetPrice"
+                                                               name="menuPrice"
                                                                placeholder="ราคาชุดเมนูอาหารนี้ (บาท)" required>
                                                     </div>
                                                 </div>
@@ -194,7 +194,7 @@
                                         <div class="modal-body">
                                             <form class="form-horizontal form-label-left input_mask"
                                                   id="edit_menuset" enctype="multipart/form-data">
-                                                <input type="hidden" name="menuSetNo" id="hidden_menuset_no">
+                                                <input type="hidden" name="menuNo" id="hidden_menuset_no">
                                                 <div class="form-group">
                                                     <img class="col-md-offset-3 col-sm-offset-3 col-md-6 col-sm-6 col-xs-12 img-resize"
                                                          id="showpic_menuset_edit"
@@ -204,7 +204,7 @@
                                                          src="../images/default_upload_image.png"/>
                                                     <div class="col-md-offset-3 col-sm-offset-3 col-md-6 col-sm-6 col-xs-12 has-feedback"
                                                          style="margin-bottom: 12px">
-                                                        <input type="file" class="form-control" name="menuSetPicPath"
+                                                        <input type="file" class="form-control" name="menuPicPath"
                                                                id="edit_menuset_pic"
                                                                onchange="document.getElementById('showpic_menuset_edit').src = window.URL.createObjectURL(this.files[0])"
                                                                placeholder="อัพโหลดรูปภาพ">
@@ -212,7 +212,7 @@
 
                                                     <div class="col-md-6 col-sm-6 col-xs-12 form-group has-feedback">
                                                         <label>ชื่อชุดเมนูอาหารภาษาไทย</label>
-                                                        <input type="text" class="form-control" name="menuSetNameTH"
+                                                        <input type="text" class="form-control" name="menuNameTH"
                                                                id="edit_menuset_nameTH"
                                                                placeholder="ชื่อชุดเมนูอาหารภาษาไทย" required>
                                                         <span class="fa fa-pencil form-control-feedback right"
@@ -220,7 +220,7 @@
                                                     </div>
                                                     <div class="col-md-6 col-sm-6 col-xs-12 form-group has-feedback">
                                                         <label>ชื่อชุดเมนูอาหารภาษาอังกฤษ</label>
-                                                        <input type="text" class="form-control" name="menuSetNameEN"
+                                                        <input type="text" class="form-control" name="menuNameEN"
                                                                id="edit_menuset_nameEN"
                                                                placeholder="ชื่อชุดเมนูอาหารภาษาอังกฤษ" required>
                                                         <span class="fa fa-pencil form-control-feedback right"
@@ -229,7 +229,7 @@
                                                     <div class="col-md-12 col-sm-12 col-xs-12 form-group has-feedback">
                                                         <label>รายละเอียดของชุดเมนูอาหาร</label>
                                                         <textarea rows="4" cols="50" class="form-control"
-                                                                  name="menuSetDesc"
+                                                                  name="menuDesc"
                                                                   id="edit_menuset_desc"
                                                                   placeholder="รายละเอียด" required></textarea>
                                                     </div>
@@ -276,7 +276,7 @@
                                                     <div class="col-md-6">
                                                         <label>ราคาชุดเมนูอาหารนี้ (บาท)</label>
                                                         <input type="number" min="0" step="0.25" class="form-control"
-                                                               name="menuSetPrice" id="edit_menuset_price"
+                                                               name="menuPrice" id="edit_menuset_price"
                                                                placeholder="ราคาชุดเมนูอาหารนี้ (บาท)" required>
                                                     </div>
                                                 </div>
@@ -386,35 +386,35 @@
                     var div = '<div class="col-md-6 col-sm-6 col-xs-12">\
                             <div class="thumbnail">\
                             <div class="col-md-6 image view view-first" style="height:100%;">\
-                            <img style="width: 100%; display: block;" src="../images/menuset/' + obj.menuSetPicPath + '" alt="image"/>\
+                            <img style="width: 100%; display: block;" src="../images/menuset/' + obj.menuPicPath + '" alt="image"/>\
                             <div class="mask">\
-                            <p style="white-space:nowrap;overflow:hidden;text-overflow: ellipsis;">' + obj.menuSetDesc + '</p>\
+                            <p style="white-space:nowrap;overflow:hidden;text-overflow: ellipsis;">' + obj.menuDesc + '</p>\
                             <div class="tools tools-bottom" style="margin-top:100px;">\
-                            <a title="แก้ไข" data-toggle="modal" data-target="#editMenuSet" onclick="set_menuset(' + obj.menuSetNo + ')" style="color:white;cursor:pointer;margin-right:5px;"><i class="fa fa-pencil"></i></a>\
-                            <a title="พร้อมจำหน่าย" onclick="change_available(' + obj.menuSetNo + ')" style="color:white;cursor:pointer;margin-right:5px;"><i class="fa ' + (obj.available == true ? 'fa-eye' : 'fa-eye-slash') + '"></i></a>\
-                            <a title="ลบ" onclick="del_menuset(' + obj.menuSetNo + ',\'' + obj.menuSetNameTH + '\')" style="color:white;cursor:pointer;"><i class="fa fa-trash"></i></a>\
+                            <a title="แก้ไข" data-toggle="modal" data-target="#editMenuSet" onclick="set_menuset(' + obj.menuNo + ')" style="color:white;cursor:pointer;margin-right:5px;"><i class="fa fa-pencil"></i></a>\
+                            <a title="พร้อมจำหน่าย" onclick="change_available(' + obj.menuNo + ')" style="color:white;cursor:pointer;margin-right:5px;"><i class="fa ' + (obj.available == true ? 'fa-eye' : 'fa-eye-slash') + '"></i></a>\
+                            <a title="ลบ" onclick="del_menuset(' + obj.menuNo + ',\'' + obj.menuNameTH + '\')" style="color:white;cursor:pointer;"><i class="fa fa-trash"></i></a>\
                             </div>\
                             </div>\
                             </div>\
                             <div class="col-md-6 caption" style="height:100%;color:#73879C">\
-                            <div class="col-md-12" data-toggle="modal" data-target="#editMenuSet" onclick="set_menuset(' + obj.menuSetNo + ')" style="font-weight:bold;white-space:nowrap;overflow:hidden;text-overflow: ellipsis;cursor:pointer;">' + obj.menuSetNameTH + ' / ' + obj.menuSetNameEN + '</div>\
+                            <div class="col-md-12" data-toggle="modal" data-target="#editMenuSet" onclick="set_menuset(' + obj.menuNo + ')" style="font-weight:bold;white-space:nowrap;overflow:hidden;text-overflow: ellipsis;cursor:pointer;">' + obj.menuNameTH + ' / ' + obj.menuNameEN + '</div>\
                             <div class="col-md-12 foodDesc">\
                             <div>\
                             <p style="text-align:center;font-weight:bold;">รายการเมนู</p>';
-                    for (var j = 0; j < obj.menuSetMenus.length; j++) {
-                        var menuSetMenu = obj.menuSetMenus[j];
+                    for (var j = 0; j < obj.menuInSets.length; j++) {
+                        var menuSetMenu = obj.menuInSets[j];
                         div += '<div class="col-md-9" style="white-space:nowrap;overflow:hidden;text-overflow:ellipsis;" title="' + menuSetMenu.menu.menuNameTH + '">' + menuSetMenu.menu.menuNameTH + ' </div>' + menuSetMenu.amount + " เมนู<br>";
                     }
                     div += '</div>\
                             </div>\
-                            <div class="col-md-7"> <span style="font-weight:bold;">ราคา</span> ' + obj.menuSetPrice.toFixed(2).replace(/\B(?=(\d{3})+(?!\d))/g, ",") + ' บาท</div>\
+                            <div class="col-md-7"> <span style="font-weight:bold;">ราคา</span> ' + obj.menuPrice.toFixed(2).replace(/\B(?=(\d{3})+(?!\d))/g, ",") + ' บาท</div>\
                             <div class="col-md-5" style="text-align:right;">\
                             <div class="panel_menuset">\
-                            <a title="แก้ไข" data-toggle="modal" data-target="#editMenuSet" onclick="set_menuset(' + obj.menuSetNo + ')" style="color:#73879C;cursor:pointer;margin-right:5px;">\
+                            <a title="แก้ไข" data-toggle="modal" data-target="#editMenuSet" onclick="set_menuset(' + obj.menuNo + ')" style="color:#73879C;cursor:pointer;margin-right:5px;">\
                             <i class="fa fa-pencil"></i></a>\
-                            <a title="พร้อมจำหน่าย" style="color:#73879C;cursor:pointer;margin-right:5px;" onclick="change_available(' + obj.menuSetNo + ')">\
+                            <a title="พร้อมจำหน่าย" style="color:#73879C;cursor:pointer;margin-right:5px;" onclick="change_available(' + obj.menuNo + ')">\
                             <i class="fa ' + (obj.available == true ? 'fa-eye' : 'fa-eye-slash') + '"></i></a>\
-                            <a title="ลบ" style="color:#73879C;cursor:pointer;" onclick="del_menuset(' + obj.menuSetNo + ',\'' + obj.menuSetNameTH + '\')">\
+                            <a title="ลบ" style="color:#73879C;cursor:pointer;" onclick="del_menuset(' + obj.menuNo + ',\'' + obj.menuNameTH + '\')">\
                             <i class="fa fa-trash"></i></a>\
                             </div>\
                             </div>\
@@ -455,19 +455,19 @@
         return false;
     });
 
-    function set_menuset(menuSetNo) {
+    function set_menuset(menuNo) {
         $.ajax({
             type: "PUT",
-            url: "${contextPath}/menu/getmenuset/" + menuSetNo,
+            url: "${contextPath}/menu/getmenuset/" + menuNo,
             dataType: "json",
             success: function (result) {
-                $("#hidden_menuset_no").val(result.menuSetNo);
-                $("#edit_menuset_nameTH").val(result.menuSetNameTH);
-                $("#edit_menuset_nameEN").val(result.menuSetNameEN);
-                $("#edit_menuset_name").html(result.menuSetNameTH + " / " + result.menuSetNameEN);
-                $("#edit_menuset_desc").val(result.menuSetDesc);
-                $("#edit_menuset_price").val(result.menuSetPrice.toFixed(2));
-                $("#edit_menuset_available").val(result.available);
+                $("#hidden_menuset_no").val(result.menuNo);
+                $("#edit_menuset_nameTH").val(result.menuNameTH);
+                $("#edit_menuset_nameEN").val(result.menuNameEN);
+                $("#edit_menuset_name").html(result.menuNameTH + " / " + result.menuNameEN);
+                $("#edit_menuset_desc").val(result.menuDesc);
+                $("#edit_menuset_price").val(result.menuPrice.toFixed(2));
+//                $("#edit_menuset_available").val(result.available);
                 if (result.available) {
                     $("#edit_menuset_available").parent().addClass('checked');
                     $("#edit_menuset_available").attr('checked', true);
@@ -476,12 +476,12 @@
                     $("#edit_menuset_available").attr('checked', false);
                 }
 
-                $("#showpic_menuset_edit").attr('src', '../images/menuset/' + result.menuSetPicPath);
+                $("#showpic_menuset_edit").attr('src', '../images/menuset/' + result.menuPicPath);
 
                 $(".menusetamount_edit").val(0);
-                var menu_in_menuset = result.menuSetMenus;
+                var menu_in_menuset = result.menuInSets;
                 for (var i = 0; i < menu_in_menuset.length; i++) {
-                    $(".menusetamount_edit[menuno='" + menu_in_menuset[i].menuNo + "']").val(menu_in_menuset[i].amount);
+                    $(".menusetamount_edit[menuno='" + menu_in_menuset[i].menuSubNo + "']").val(menu_in_menuset[i].amount);
                 }
 
                 var sum_menu_price = 0;
@@ -527,10 +527,10 @@
         return false;
     });
 
-    function del_menuset(menuSetNo, menuSetNameTH) {
+    function del_menuset(menuNo, menuNameTH) {
         swal({
-                title: "ยืนยันการลบ " + menuSetNameTH,
-                text: "เมื่อยืนยัน คุณจะไม่สามารถนำข้อมูล " + menuSetNameTH + " กลับมาได้",
+                title: "ยืนยันการลบ " + menuNameTH,
+                text: "เมื่อยืนยัน คุณจะไม่สามารถนำข้อมูล " + menuNameTH + " กลับมาได้",
                 type: "warning",
                 showCancelButton: true,
                 cancelButtonText: "ยกเลิก",
@@ -541,9 +541,9 @@
             function () {
                 $.ajax({
                     type: "DELETE",
-                    url: "${contextPath}/menu/delmenuset/" + menuSetNo,
+                    url: "${contextPath}/menu/delmenuset/" + menuNo,
                     success: function (json) {
-                        swal("สำเร็จ", menuSetNameTH + " ถูกลบเรียบร้อยแล้ว", "success");
+                        swal("สำเร็จ", menuNameTH + " ถูกลบเรียบร้อยแล้ว", "success");
                         console.log('success');
                         refresh_table();
                         console.log('refresh success');
@@ -555,10 +555,10 @@
             });
     }
 
-    function change_available(menusetno) {
+    function change_available(menuNo) {
         $.ajax({
             type: "POST",
-            data: {menusetno: menusetno},
+            data: {menuNo: menuNo},
             url: "${contextPath}/menu/changemenusetavailable",
             success: function (result) {
                 refresh_table();
