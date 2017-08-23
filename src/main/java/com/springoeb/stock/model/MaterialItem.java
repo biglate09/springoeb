@@ -21,7 +21,10 @@ public class MaterialItem {
 
     @ManyToOne
     @JoinColumn(name = "unit_no",updatable = false,insertable = false)
-    private MaterialCategory unit;
+    private MaterialUnit unit;
+
+    public static final String flagForItem = "I";
+    public static final String flagForMixed = "M";
 
     public Integer getMatItemNo() {
         return matItemNo;
@@ -71,11 +74,11 @@ public class MaterialItem {
         this.unitNo = unitNo;
     }
 
-    public MaterialCategory getUnit() {
+    public MaterialUnit getUnit() {
         return unit;
     }
 
-    public void setUnit(MaterialCategory unit) {
+    public void setUnit(MaterialUnit unit) {
         this.unit = unit;
     }
 }

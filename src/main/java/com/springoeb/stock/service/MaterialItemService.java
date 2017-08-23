@@ -12,7 +12,10 @@ public class MaterialItemService {
     @Autowired
     private MaterialItemRepository materialItemRepository;
     public List<MaterialItem> getMaterialItems(){
-        return materialItemRepository.findAll();
+        return materialItemRepository.findByMatFlag(MaterialItem.flagForItem);
+    }
+    public List<MaterialItem> getMixedProducts(){
+        return materialItemRepository.findByMatFlag(MaterialItem.flagForMixed);
     }
     public void save(MaterialItem matItem){ materialItemRepository.save(matItem);}
     public void delMaterialItem(int matItemNo){ materialItemRepository.removeByMatItemNo(matItemNo);}

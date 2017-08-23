@@ -89,7 +89,9 @@ public class StockController {
     @GetMapping("/materialitem")
     public String toMaterialItem(Model model) {
         List<MaterialCategory> materialCategories  = materialCategoryService.getMaterialCategories();
+        List<MaterialUnit> materialUnits = materialUnitService.getMaterialUnits();
         model.addAttribute("matCategories", materialCategories);
+        model.addAttribute("units", materialUnits);
         return STOCK_PATH + "materialitem.jsp";
     }
 
@@ -142,8 +144,21 @@ public class StockController {
     }
     //-----------------------------------------------------------------------------------------------------------//
     @GetMapping("/mixedproduct")
-    public String toMixedProductIndex() {
+    public String toMixedProductIndex(Model model) {
+        List<MaterialCategory> materialCategories  = materialCategoryService.getMaterialCategories();
+        List<MaterialUnit> materialUnits = materialUnitService.getMaterialUnits();
+        model.addAttribute("matCategories", materialCategories);
+        model.addAttribute("units", materialUnits);
         return STOCK_PATH + "mixedproduct.jsp";
+    }
+
+    @PostMapping("/getmixedproducts")
+    @ResponseBody
+    public String getMixedProducts() throws JsonProcessingException {
+        List<MaterialItem> materialItems = materialItemService.getMixedProducts();
+        ObjectMapper mapper = new ObjectMapper();
+        String json = mapper.writeValueAsString(materialItems);
+        return json;
     }
     //-----------------------------------------------------------------------------------------------------------//
     @GetMapping("/stockmanage")
