@@ -5,7 +5,9 @@ import com.springoeb.menu.model_key.BranchMenuId;
 import org.springframework.data.repository.CrudRepository;
 import org.springframework.stereotype.Repository;
 
+import java.util.List;
+
 @Repository
 public interface BranchMenuRepository extends CrudRepository<BranchMenu,BranchMenuId> {
-    BranchMenu findByBranchNoAndMenuNo(Integer branchNo, Integer menuNo);
+    List<BranchMenu> findByBranchNoAndMenu_MenuFlag(int branchNo,String menuFlag);
 }

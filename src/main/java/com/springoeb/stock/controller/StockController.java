@@ -4,8 +4,8 @@ import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.springoeb.stock.model.MaterialCategory;
 import com.springoeb.stock.model.MaterialItem;
-import com.springoeb.stock.service.MaterialCategoryService;
-import com.springoeb.stock.service.MaterialItemService;
+import com.springoeb.stock.model.MaterialUnit;
+import com.springoeb.stock.service.*;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -21,6 +21,14 @@ public class StockController {
     private MaterialCategoryService materialCategoryService;
     @Autowired
     private MaterialItemService materialItemService;
+    @Autowired
+    private MaterialHistoryService materialHistoryService;
+    @Autowired
+    private MaterialMixedService materialMixedService;
+    @Autowired
+    private MaterialUnitService materialUnitService;
+    @Autowired
+    private MenuMaterialService menuMaterialService;
 
     private static final String STOCK_PATH = "/WEB-INF/stock/";
 
@@ -146,6 +154,59 @@ public class StockController {
     @GetMapping("/menumaterial")
     public String toMenuMaterialIndex() {
         return STOCK_PATH + "menumaterial.jsp";
+    }
+    //-----------------------------------------------------------------------------------------------------------//
+    @GetMapping("/materialunit")
+    public String toMaterialUnitIndex() {
+        return STOCK_PATH + "materialunit.jsp";
+    }
+
+    @PostMapping("/getmaterialunits")
+    @ResponseBody
+    public String getMaterialUnits() throws JsonProcessingException {
+        List<MaterialUnit> materialUnits = materialUnitService.getMaterialUnits();
+        ObjectMapper mapper = new ObjectMapper();
+        String json = mapper.writeValueAsString(materialUnits);
+        return json;
+    }
+
+    @PostMapping("/managematerialunit")
+    @ResponseBody
+    public void addAndEditMaterialUnit(@ModelAttribute("materialunit") MaterialUnit materialUnit) throws Exception {
+        if (materialUnit.getUnitNo() != null) { // edit
+            if (!materialUnitService.getMaterialUnit(materialUnit.getUnitNo()).equals(materialUnit)) {
+                if (!materialUnitService.chkDuplicateMaterialUnit(materialUnit)) {
+                    materialUnitService.save(materialUnit);
+                } else {
+                    throw new Exception();
+                }
+            } else {
+                throw new Exception();
+            }
+        } else { // add
+            if (!materialUnitService.chkDuplicateMaterialUnit(materialUnit)) {
+                materialUnitService.save(materialUnit);
+            } else {
+                throw new Exception();
+            }
+        }
+    }
+
+    @Transactional
+    @DeleteMapping("/deletematerialunit/{unitNo}")
+    @ResponseBody
+    public void delMaterialUnit(@PathVariable("unitNo") int unitNo) {
+        materialUnitService.delMaterialUnit(unitNo);
+    }
+
+    @Transactional
+    @PutMapping("/getmaterialunit/{unitNo}")
+    @ResponseBody
+    public String getMaterialUnit(@PathVariable("unitNo") int unitNo) throws JsonProcessingException {
+        MaterialUnit materialUnit = materialUnitService.getMaterialUnit(unitNo);
+        ObjectMapper mapper = new ObjectMapper();
+        String json = mapper.writeValueAsString(materialUnit);
+        return json;
     }
     //-----------------------------------------------------------------------------------------------------------//
 }

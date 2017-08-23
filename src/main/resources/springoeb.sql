@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Host: 127.0.0.1
--- Generation Time: Aug 22, 2017 at 02:23 PM
+-- Generation Time: Aug 23, 2017 at 07:39 AM
 -- Server version: 10.1.21-MariaDB
 -- PHP Version: 5.6.30
 
@@ -45,10 +45,17 @@ INSERT INTO `branch` (`branch_no`, `username`) VALUES
 --
 
 CREATE TABLE `branch_menu` (
-  `branchNo` int(11) NOT NULL,
-  `menuNo` int(11) NOT NULL,
+  `branch_no` int(11) NOT NULL,
+  `menu_no` int(11) NOT NULL,
   `available` tinyint(1) NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8;
+
+--
+-- Dumping data for table `branch_menu`
+--
+
+INSERT INTO `branch_menu` (`branch_no`, `menu_no`, `available`) VALUES
+(0, 26, 1);
 
 -- --------------------------------------------------------
 
@@ -337,21 +344,61 @@ INSERT INTO `material_category` (`mat_cat_no`, `mat_cat_name`) VALUES
 -- --------------------------------------------------------
 
 --
+-- Table structure for table `material_history`
+--
+
+CREATE TABLE `material_history` (
+  `mat_hist_no` int(11) NOT NULL,
+  `mat_name` varchar(100) NOT NULL,
+  `mat_quantity` double NOT NULL,
+  `datetime` datetime NOT NULL,
+  `mat_item_no` int(11) NOT NULL,
+  `branch_no` int(11) NOT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=utf8;
+
+-- --------------------------------------------------------
+
+--
 -- Table structure for table `material_item`
 --
 
 CREATE TABLE `material_item` (
   `mat_item_no` int(11) NOT NULL,
   `mat_item_name` varchar(200) NOT NULL,
-  `mat_cat_no` int(11) NOT NULL
+  `mat_flag` varchar(1) NOT NULL COMMENT 'I = item, M = mixed product',
+  `mat_cat_no` int(11) NOT NULL,
+  `unit_no` int(11) NOT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=utf8;
+
+-- --------------------------------------------------------
+
+--
+-- Table structure for table `material_mixed`
+--
+
+CREATE TABLE `material_mixed` (
+  `mixed_prod_no` int(11) NOT NULL,
+  `item_no` int(11) NOT NULL,
+  `quantity` double NOT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=utf8;
+
+-- --------------------------------------------------------
+
+--
+-- Table structure for table `material_unit`
+--
+
+CREATE TABLE `material_unit` (
+  `unit_no` int(11) NOT NULL,
+  `unit_name` varchar(100) NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8;
 
 --
--- Dumping data for table `material_item`
+-- Dumping data for table `material_unit`
 --
 
-INSERT INTO `material_item` (`mat_item_no`, `mat_item_name`, `mat_cat_no`) VALUES
-(6, 'หมูสับทรงเครื่อง', 11);
+INSERT INTO `material_unit` (`unit_no`, `unit_name`) VALUES
+(1, 'กรัม');
 
 -- --------------------------------------------------------
 
@@ -447,6 +494,18 @@ INSERT INTO `menu_in_set` (`menu_no`, `menu_sub_no`, `amount`) VALUES
 (32, 26, 1),
 (32, 27, 8),
 (32, 30, 4);
+
+-- --------------------------------------------------------
+
+--
+-- Table structure for table `menu_material`
+--
+
+CREATE TABLE `menu_material` (
+  `menu_no` int(11) NOT NULL,
+  `mat_item_no` int(11) NOT NULL,
+  `quantity` double NOT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=utf8;
 
 -- --------------------------------------------------------
 
@@ -732,8 +791,9 @@ ALTER TABLE `branch`
 -- Indexes for table `branch_menu`
 --
 ALTER TABLE `branch_menu`
-  ADD PRIMARY KEY (`branchNo`,`menuNo`),
-  ADD KEY `menuNo` (`menuNo`);
+  ADD PRIMARY KEY (`branch_no`,`menu_no`),
+  ADD KEY `menuNo` (`menu_no`),
+  ADD KEY `branch_no` (`branch_no`,`menu_no`);
 
 --
 -- Indexes for table `employee`
@@ -772,11 +832,34 @@ ALTER TABLE `material_category`
   ADD PRIMARY KEY (`mat_cat_no`);
 
 --
+-- Indexes for table `material_history`
+--
+ALTER TABLE `material_history`
+  ADD PRIMARY KEY (`mat_hist_no`),
+  ADD KEY `mat_no` (`mat_item_no`,`branch_no`),
+  ADD KEY `branch_no` (`branch_no`);
+
+--
 -- Indexes for table `material_item`
 --
 ALTER TABLE `material_item`
   ADD PRIMARY KEY (`mat_item_no`),
-  ADD KEY `mat_cat_no` (`mat_cat_no`);
+  ADD KEY `mat_cat_no` (`mat_cat_no`),
+  ADD KEY `unit_no` (`unit_no`);
+
+--
+-- Indexes for table `material_mixed`
+--
+ALTER TABLE `material_mixed`
+  ADD PRIMARY KEY (`mixed_prod_no`,`item_no`),
+  ADD KEY `item_no` (`item_no`),
+  ADD KEY `mixed_prod_no` (`mixed_prod_no`,`item_no`);
+
+--
+-- Indexes for table `material_unit`
+--
+ALTER TABLE `material_unit`
+  ADD PRIMARY KEY (`unit_no`);
 
 --
 -- Indexes for table `menu`
@@ -808,6 +891,14 @@ ALTER TABLE `menu_in_set`
   ADD KEY `menu_set_no` (`menu_no`),
   ADD KEY `menu_no` (`menu_no`),
   ADD KEY `menu_sub_no` (`menu_sub_no`);
+
+--
+-- Indexes for table `menu_material`
+--
+ALTER TABLE `menu_material`
+  ADD PRIMARY KEY (`menu_no`,`mat_item_no`),
+  ADD KEY `mat_item_no` (`mat_item_no`),
+  ADD KEY `menu_no` (`menu_no`,`mat_item_no`);
 
 --
 -- Indexes for table `promotion`
@@ -864,10 +955,20 @@ ALTER TABLE `employee_table`
 ALTER TABLE `material_category`
   MODIFY `mat_cat_no` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=12;
 --
+-- AUTO_INCREMENT for table `material_history`
+--
+ALTER TABLE `material_history`
+  MODIFY `mat_hist_no` int(11) NOT NULL AUTO_INCREMENT;
+--
 -- AUTO_INCREMENT for table `material_item`
 --
 ALTER TABLE `material_item`
   MODIFY `mat_item_no` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=7;
+--
+-- AUTO_INCREMENT for table `material_unit`
+--
+ALTER TABLE `material_unit`
+  MODIFY `unit_no` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=3;
 --
 -- AUTO_INCREMENT for table `menu`
 --
@@ -907,8 +1008,8 @@ ALTER TABLE `branch`
 -- Constraints for table `branch_menu`
 --
 ALTER TABLE `branch_menu`
-  ADD CONSTRAINT `branch_menu_ibfk_1` FOREIGN KEY (`branchNo`) REFERENCES `branch` (`branch_no`),
-  ADD CONSTRAINT `branch_menu_ibfk_2` FOREIGN KEY (`menuNo`) REFERENCES `menu` (`menu_no`);
+  ADD CONSTRAINT `branch_menu_ibfk_1` FOREIGN KEY (`branch_no`) REFERENCES `branch` (`branch_no`),
+  ADD CONSTRAINT `branch_menu_ibfk_2` FOREIGN KEY (`menu_no`) REFERENCES `menu` (`menu_no`);
 
 --
 -- Constraints for table `employee`
@@ -930,10 +1031,25 @@ ALTER TABLE `employee_table`
   ADD CONSTRAINT `employee_table_ibfk_2` FOREIGN KEY (`emp_pos_no`) REFERENCES `employee_position` (`emp_pos_no`) ON DELETE CASCADE ON UPDATE CASCADE;
 
 --
+-- Constraints for table `material_history`
+--
+ALTER TABLE `material_history`
+  ADD CONSTRAINT `material_history_ibfk_1` FOREIGN KEY (`mat_item_no`) REFERENCES `material_item` (`mat_item_no`),
+  ADD CONSTRAINT `material_history_ibfk_2` FOREIGN KEY (`branch_no`) REFERENCES `branch` (`branch_no`);
+
+--
 -- Constraints for table `material_item`
 --
 ALTER TABLE `material_item`
-  ADD CONSTRAINT `material_item_ibfk_1` FOREIGN KEY (`mat_cat_no`) REFERENCES `material_category` (`mat_cat_no`);
+  ADD CONSTRAINT `material_item_ibfk_1` FOREIGN KEY (`mat_cat_no`) REFERENCES `material_category` (`mat_cat_no`),
+  ADD CONSTRAINT `material_item_ibfk_2` FOREIGN KEY (`unit_no`) REFERENCES `material_unit` (`unit_no`);
+
+--
+-- Constraints for table `material_mixed`
+--
+ALTER TABLE `material_mixed`
+  ADD CONSTRAINT `material_mixed_ibfk_1` FOREIGN KEY (`mixed_prod_no`) REFERENCES `material_item` (`mat_item_no`),
+  ADD CONSTRAINT `material_mixed_ibfk_2` FOREIGN KEY (`item_no`) REFERENCES `material_item` (`mat_item_no`);
 
 --
 -- Constraints for table `menu`
@@ -953,6 +1069,13 @@ ALTER TABLE `menu_group`
 ALTER TABLE `menu_in_set`
   ADD CONSTRAINT `menu_in_set_ibfk_1` FOREIGN KEY (`menu_no`) REFERENCES `menu` (`menu_no`) ON DELETE CASCADE ON UPDATE CASCADE,
   ADD CONSTRAINT `menu_in_set_ibfk_2` FOREIGN KEY (`menu_sub_no`) REFERENCES `menu` (`menu_no`);
+
+--
+-- Constraints for table `menu_material`
+--
+ALTER TABLE `menu_material`
+  ADD CONSTRAINT `menu_material_ibfk_1` FOREIGN KEY (`menu_no`) REFERENCES `menu` (`menu_no`),
+  ADD CONSTRAINT `menu_material_ibfk_2` FOREIGN KEY (`mat_item_no`) REFERENCES `material_item` (`mat_item_no`);
 
 --
 -- Constraints for table `work_history`

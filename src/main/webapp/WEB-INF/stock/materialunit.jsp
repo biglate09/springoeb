@@ -63,7 +63,7 @@
                                     <div class="form-group">
                                         <div class="col-md-6 col-sm-6 col-xs-12 form-group has-feedback">
                                             <label>ชื่อหน่วยวัตถุดิบอาหาร</label>
-                                            <input type="text" class="form-control" name="matUnitName" id="mat_unit_name"
+                                            <input type="text" class="form-control" name="unitName" id="mat_unit_name"
                                                    placeholder="ชื่อหน่วยวัตถุดิบอาหาร" required>
                                             <span class="fa fa-pencil form-control-feedback right"
                                                   aria-hidden="true"></span>
@@ -99,12 +99,12 @@
                             <!-- ส่วนเนื้อหาของ Modal -->
                             <div class="modal-body">
                                 <form class="form-horizontal form-label-left input_mask" modelAttribute="materialUnit" id="material_unit_edit">
-                                    <input type="hidden" name="matUnitNo" id="hiddenmatunitno">
+                                    <input type="hidden" name="unitNo" id="hiddenunitno">
                                     <div class="form-group">
                                         <div class="col-md-6 col-sm-6 col-xs-12 form-group has-feedback">
                                             <label>ชื่อหน่วยวัตถุดิบอาหาร</label>
                                             <input type="text" class="form-control" id="edit_mat_unit_name"
-                                                   name="matUnitName"
+                                                   name="unitName"
                                                    placeholder="ชื่อหน่วยวัตถุดิบอาหาร" required>
                                             <span class="fa fa-pencil form-control-feedback right"
                                                   aria-hidden="true"></span>
@@ -139,7 +139,7 @@
             ],
             columns: [
                 {
-                    data: 'matUnitName'
+                    data: 'unitName'
                 },
                 {
                     data: 'option'
@@ -168,14 +168,14 @@
         return false;
     });
 
-    function setMaterialUnit(matUnitNo) {
+    function setMaterialUnit(unitNo) {
         $.ajax({
             type: "PUT",
-            url: "${contextPath}/stock/getmaterialunit/" + matUnitNo,
+            url: "${contextPath}/stock/getmaterialunit/" + unitNo,
             dataType: "json",
             success: function (result) {
-                $("#hiddenmatunitno").val(result.matUnitNo);
-                $("#edit_mat_unit_name").val(result.matUnitName);
+                $("#hiddenunitno").val(result.unitNo);
+                $("#edit_mat_unit_name").val(result.unitName);
             }
         });
     }
@@ -192,16 +192,16 @@
                 $("#editMaterialUnit").modal('toggle');
                 refresh_table();
             },error: function(result){
-                swal("ไม่สำเร็จ", "ชื่อประเภทวัตถุดิบอาจซ้ำหรือเซิร์ฟเวอร์มีปัญหา", "error");
+                swal("ไม่สำเร็จ", "ชื่อหน่วยวัตถุดิบอาจซ้ำหรือเซิร์ฟเวอร์มีปัญหา", "error");
             }
         });
         return false;
     });
 
-    function delMaterialUnit(matUnitNo,matUnitName){
+    function delMaterialUnit(unitNo,unitName){
         swal({
-                title: "ยืนยันการลบ " + matUnitName,
-                text: "ข้อมูลเกี่ยวกับ " + matUnitName + " จะหายไปทั้งหมดเลย !",
+                title: "ยืนยันการลบ " + unitName,
+                text: "ข้อมูลเกี่ยวกับ " + unitName + " จะหายไปทั้งหมดเลย !",
                 type: "warning",
                 showCancelButton: true,
                 confirmButtonColor: "#DD6B55",
@@ -212,9 +212,9 @@
             function () {
                 $.ajax({
                     type: "DELETE",
-                    url: "${contextPath}/stock/deletematerialunit/" + matUnitNo,
+                    url: "${contextPath}/stock/deletematerialunit/" + unitNo,
                     success: function (result) {
-                        swal("สำเร็จ", matUnitName + " ถูกลบเรียบร้อยแล้ว", "success");
+                        swal("สำเร็จ", unitName + " ถูกลบเรียบร้อยแล้ว", "success");
                         refresh_table();
                     }, error: function (result) {
                         swal("ไม่สำเร็จ", "ลบไม่ได้เนื่องจาก มีวัตถุดิบที่เป็นประเภทนี้อยู่", "error");
@@ -226,16 +226,16 @@
     function refresh_table() {
         $.ajax({
             type: "POST",
-            url: "${contextPath}/stock/getmaterialunit,
+            url: "${contextPath}/stock/getmaterialunits",
             dataType: "json",
             success: function (json) {
                 var data_array = [];
                 for (var iterator = 0; iterator < json.length; iterator++) {
                     var mat_unit_obj = json[iterator];
                     var data_refresh = {
-                        matUnitName: '<a onclick = "setMaterialUnit(' + mat_unit_obj.matUnitNo + ')" data-toggle = "modal" data-target = "#editMaterialUnit" style = "font-weight: bold;cursor:pointer;" >' + mat_unit_obj.matUnitName + '</a>',
-                        option: '<a onclick = "setMaterialUnit(' + mat_unit_obj.matUnitNo + ')" class = "btn btn-warning btn-sm" data-toggle = "modal" data-target = "#editMaterialUnit"> <i class = "fa fa-pencil"> </i> &nbsp; แก้ไข </a>' +
-                        '<a onclick = "delMaterialUnit(' + mat_unit_obj.matUnitNo + ',\'' + mat_unit_obj.matUnitName +'\')") class = "btn btn-danger btn-sm"> <i class = "fa fa-trash"></i> &nbsp; ลบ </a>'
+                        unitName: '<a onclick = "setMaterialUnit(' + mat_unit_obj.unitNo + ')" data-toggle = "modal" data-target = "#editMaterialUnit" style = "font-weight: bold;cursor:pointer;" >' + mat_unit_obj.unitName + '</a>',
+                        option: '<a onclick = "setMaterialUnit(' + mat_unit_obj.unitNo + ')" class = "btn btn-warning btn-sm" data-toggle = "modal" data-target = "#editMaterialUnit"> <i class = "fa fa-pencil"> </i> &nbsp; แก้ไข </a>' +
+                        '<a onclick = "delMaterialUnit(' + mat_unit_obj.unitNo + ',\'' + mat_unit_obj.unitName +'\')") class = "btn btn-danger btn-sm"> <i class = "fa fa-trash"></i> &nbsp; ลบ </a>'
                     };
                     data_array.push(data_refresh);
                 }

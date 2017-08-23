@@ -18,6 +18,8 @@ public class Menu implements Serializable{
     private String menuPicPath;
     private String menuFlag;
     private Integer localFlag;
+    @OneToMany(fetch = FetchType.LAZY, mappedBy = "menu")
+    private List<BranchMenu> branchMenu;
 
     @Column(name = "menu_group_no",insertable = true,updatable = true)
     private Integer menuGroupNo;
@@ -126,4 +128,11 @@ public class Menu implements Serializable{
         this.localFlag = localFlag;
     }
 
+    public List<BranchMenu> getBranchMenu() {
+        return branchMenu;
+    }
+
+    public void setBranchMenu(List<BranchMenu> branchMenu) {
+        this.branchMenu = branchMenu;
+    }
 }
