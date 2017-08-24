@@ -32,7 +32,7 @@
                             </div>
                             <div class="x_content">
                                 <div class="well" style="overflow: auto">
-                                    <p style="text-align:center;">ค่าจ้างคงเหลือกับพนักงานทุกคนคือ : <b
+                                    <p style="text-align:center;">ค่าจ้างคงเหลือของพนักงานทุกคนคือ : <b
                                             id="all_sum_pay"></b> บาท</p>
                                 </div>
                                 <table id="datatable-pay" class="table table-striped table-bordered">

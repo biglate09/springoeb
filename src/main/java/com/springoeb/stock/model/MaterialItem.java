@@ -1,6 +1,7 @@
 package com.springoeb.stock.model;
 
 import javax.persistence.*;
+import java.util.List;
 
 @Entity
 public class MaterialItem {
@@ -8,13 +9,27 @@ public class MaterialItem {
     @GeneratedValue(strategy = GenerationType.AUTO)
     private Integer matItemNo;
     private String matItemName;
-
+    private String matFlag;
+    private Double quantity;
     @Column(name = "mat_cat_no",insertable = true,updatable = true)
     private Integer matCatNo;
 
     @ManyToOne
     @JoinColumn(name = "mat_cat_no",updatable = false,insertable = false)
     private MaterialCategory materialCategory;
+
+    @Column(name = "unit_no",insertable = true,updatable = true)
+    private Integer unitNo;
+
+    @ManyToOne
+    @JoinColumn(name = "unit_no",updatable = false,insertable = false)
+    private MaterialUnit unit;
+
+    @OneToMany(fetch = FetchType.LAZY, mappedBy = "mixedProduct")
+    private List<MaterialMixed> materialItemList;
+
+    public static final String flagForItem = "I";
+    public static final String flagForMixed = "M";
 
     public Integer getMatItemNo() {
         return matItemNo;
@@ -46,5 +61,45 @@ public class MaterialItem {
 
     public void setMaterialCategory(MaterialCategory materialCategory) {
         this.materialCategory = materialCategory;
+    }
+
+    public String getMatFlag() {
+        return matFlag;
+    }
+
+    public void setMatFlag(String matFlag) {
+        this.matFlag = matFlag;
+    }
+
+    public Integer getUnitNo() {
+        return unitNo;
+    }
+
+    public void setUnitNo(Integer unitNo) {
+        this.unitNo = unitNo;
+    }
+
+    public MaterialUnit getUnit() {
+        return unit;
+    }
+
+    public void setUnit(MaterialUnit unit) {
+        this.unit = unit;
+    }
+
+    public Double getQuantity() {
+        return quantity;
+    }
+
+    public void setQuantity(Double quantity) {
+        this.quantity = quantity;
+    }
+
+    public List<MaterialMixed> getMaterialItemList() {
+        return materialItemList;
+    }
+
+    public void setMaterialItemList(List<MaterialMixed> materialItemList) {
+        this.materialItemList = materialItemList;
     }
 }

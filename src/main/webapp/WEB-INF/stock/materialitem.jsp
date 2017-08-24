@@ -39,6 +39,7 @@
                                     <tr>
                                         <th style="width:20%;text-align:center;">ชื่อวัตถุดิบอาหาร</th>
                                         <th style="width:20%;text-align:center;">ประเภท</th>
+                                        <th style="width:20%;text-align:center;">หน่วยที่ใช้</th>
                                         <th style="width:20%;text-align:center;">ตัวเลือก</th>
                                     </tr>
                                     </thead>
@@ -48,7 +49,7 @@
                             </form>
                         </div>
                         <div class="modal fade" id="addMatItem" role="dialog">
-                            <div class="modal-dialog">
+                            <div class="modal-dialog modal-lg">
                                 <!-- เนือหาของ Modal ทั้งหมด -->
                                 <div class="modal-content">
                                     <!-- ส่วนหัวของ Modal -->
@@ -60,20 +61,30 @@
                                     <!-- ส่วนเนื้อหาของ Modal -->
                                     <div class="modal-body">
                                         <form class="form-horizontal form-label-left input_mask" modelAttribute="matitem" id="add_mat_item">
+                                            <input type="hidden" name="matFlag" value="I">
                                             <div class="form-group">
-                                                <div class="col-md-6 col-sm-6 col-xs-12 form-group has-feedback">
+                                                <div class="col-md-4 col-sm-4 col-xs-12 form-group has-feedback">
                                                     <label>ชื่อวัตถุดิบอาหาร</label>
                                                     <input type="text" class="form-control" name="matItemName" id="add_mat_item_name"
                                                            placeholder="ชื่อวัตถุดิบอาหาร" required>
                                                     <span class="fa fa-pencil form-control-feedback right"
                                                           aria-hidden="true"></span>
                                                 </div>
-                                                <div class="col-md-6 col-sm-6 col-xs-12 form-group has-feedback">
+                                                <div class="col-md-4 col-sm-4 col-xs-12 form-group has-feedback">
                                                     <label>ประเภทวัตถุดิบ</label>
                                                     <select name="matCatNo" id="add_mat_cat" class="form-control" required>
-                                                        <option value="" disabled selected>เลือกวัตถุดิบ</option>
+                                                        <option value="" disabled selected>เลือกประเภทวัตถุดิบ</option>
                                                         <c:forEach items="${matCategories}" var="mc">
                                                             <option value="${mc.matCatNo}">${mc.matCatName}</option>
+                                                        </c:forEach>
+                                                    </select>
+                                                </div>
+                                                <div class="col-md-4 col-sm-4 col-xs-12 form-group has-feedback">
+                                                    <label>หน่วยวัตถุดิบ</label>
+                                                    <select name="unitNo" id="add_unit_no" class="form-control" required>
+                                                        <option value="" disabled selected>เลือกหน่วย</option>
+                                                        <c:forEach items="${units}" var="u">
+                                                            <option value="${u.unitNo}">${u.unitName}</option>
                                                         </c:forEach>
                                                     </select>
                                                 </div>
@@ -93,7 +104,7 @@
                             </div>
                         </div>
                         <div class="modal fade" id="editMatItem" role="dialog">
-                            <div class="modal-dialog">
+                            <div class="modal-dialog modal-lg">
                                 <!-- เนือหาของ Modal ทั้งหมด -->
                                 <div class="modal-content">
                                     <!-- ส่วนหัวของ Modal -->
@@ -105,21 +116,31 @@
                                     <!-- ส่วนเนื้อหาของ Modal -->
                                     <div class="modal-body">
                                         <form class="form-horizontal form-label-left input_mask" modelAttribute="matitem" id="edit_mat_item">
+                                            <input type="hidden" name="matFlag" value="I">
                                             <input type="hidden" name="matItemNo" id="hiddenmatitemno">
                                             <div class="form-group">
-                                                <div class="col-md-6 col-sm-6 col-xs-12 form-group has-feedback">
+                                                <div class="col-md-4 col-sm-4 col-xs-12 form-group has-feedback">
                                                     <label>ชื่อวัตถุดิบอาหาร</label>
                                                     <input type="text" class="form-control" name="matItemName" id="edit_mat_item_name"
                                                            placeholder="ชื่อวัตถุดิบอาหาร" required>
                                                     <span class="fa fa-pencil form-control-feedback right"
                                                           aria-hidden="true"></span>
                                                 </div>
-                                                <div class="col-md-6 col-sm-6 col-xs-12 form-group has-feedback">
+                                                <div class="col-md-4 col-sm-4 col-xs-12 form-group has-feedback">
                                                     <label>ประเภทวัตถุดิบ</label>
                                                     <select name="matCatNo" id="edit_mat_cat_no" class="form-control" required>
-                                                        <option value="" disabled>เลือกวัตถุดิบ</option>
+                                                        <option value="" disabled>เลือกประเภทวัตถุดิบ</option>
                                                         <c:forEach items="${matCategories}" var="mc">
                                                             <option value="${mc.matCatNo}">${mc.matCatName}</option>
+                                                        </c:forEach>
+                                                    </select>
+                                                </div>
+                                                <div class="col-md-4 col-sm-4 col-xs-12 form-group has-feedback">
+                                                    <label>หน่วยวัตถุดิบ</label>
+                                                    <select name="unitNo" id="edit_unit_no" class="form-control" required>
+                                                        <option value="" disabled selected>เลือกหน่วย</option>
+                                                        <c:forEach items="${units}" var="u">
+                                                            <option value="${u.unitNo}">${u.unitName}</option>
                                                         </c:forEach>
                                                     </select>
                                                 </div>
@@ -161,6 +182,9 @@
                     data: 'item'
                 },
                 {
+                    data: 'unit'
+                },
+                {
                     data: 'option'
                 }
             ]
@@ -181,6 +205,7 @@
                     var data = {
                         matItemName: '<a style="cursor:pointer;font-weight:bold;" onclick = "set_mat_item(' + obj.matItemNo + ')" data-toggle = "modal" data-target = "#editMatItem">' + obj.matItemName + '</a>',
                         item: obj.materialCategory.matCatName,
+                        unit: obj.unit.unitName,
                         option: '<a onclick = "set_mat_item(' + obj.matItemNo + ')" class = "btn btn-warning btn-sm" data-toggle = "modal" data-target = "#editMatItem"> <i class = "fa fa-pencil"> </i> &nbsp; แก้ไข </a>' +
                         '<a onclick = "del_mat_item(' + obj.matItemNo+ ',\'' + obj.matItemName +'\')" class = "btn btn-danger btn-sm"> <i class = "fa fa-trash"></i> &nbsp; ลบ </a>'
                     }
@@ -237,6 +262,7 @@
                 $("#hiddenmatitemno").val(result.matItemNo);
                 $("#edit_mat_item_name").val(result.matItemName);
                 $("#edit_mat_cat_no").val(result.matCatNo);
+                $("#edit_unit_no").val(result.unitNo);
                 $("#show_mat_item_name_for_edit").html(result.matItemName);
             }
         });

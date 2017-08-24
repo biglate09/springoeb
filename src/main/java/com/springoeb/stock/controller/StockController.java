@@ -4,15 +4,19 @@ import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.springoeb.stock.model.MaterialCategory;
 import com.springoeb.stock.model.MaterialItem;
-import com.springoeb.stock.service.MaterialCategoryService;
-import com.springoeb.stock.service.MaterialItemService;
+import com.springoeb.stock.model.MaterialMixed;
+import com.springoeb.stock.model.MaterialUnit;
+import com.springoeb.stock.service.*;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
 
+import javax.servlet.http.HttpServletRequest;
 import javax.transaction.Transactional;
+import java.util.LinkedList;
 import java.util.List;
+import java.util.Map;
 
 @RequestMapping("/stock")
 @Controller
@@ -21,6 +25,14 @@ public class StockController {
     private MaterialCategoryService materialCategoryService;
     @Autowired
     private MaterialItemService materialItemService;
+    @Autowired
+    private MaterialHistoryService materialHistoryService;
+    @Autowired
+    private MaterialMixedService materialMixedService;
+    @Autowired
+    private MaterialUnitService materialUnitService;
+    @Autowired
+    private MenuMaterialService menuMaterialService;
 
     private static final String STOCK_PATH = "/WEB-INF/stock/";
 
@@ -77,11 +89,14 @@ public class StockController {
         String json = mapper.writeValueAsString(materialCategory);
         return json;
     }
+
     //-----------------------------------------------------------------------------------------------------------//
     @GetMapping("/materialitem")
     public String toMaterialItem(Model model) {
-        List<MaterialCategory> materialCategories  = materialCategoryService.getMaterialCategories();
+        List<MaterialCategory> materialCategories = materialCategoryService.getMaterialCategories();
+        List<MaterialUnit> materialUnits = materialUnitService.getMaterialUnits();
         model.addAttribute("matCategories", materialCategories);
+        model.addAttribute("units", materialUnits);
         return STOCK_PATH + "materialitem.jsp";
     }
 
@@ -94,13 +109,20 @@ public class StockController {
         return json;
     }
 
+    @Transactional
     @PostMapping("/managematerialitem")
     @ResponseBody
-    public void addAndEditMaterialItem(@ModelAttribute("materialItem") MaterialItem materialItem) throws Exception {
+    public void addAndEditMaterialItem(@ModelAttribute("materialItem") MaterialItem materialItem, HttpServletRequest request) throws Exception {
+        MaterialItem insertedMaterialItem = null;
+
+        if (materialItem.getMatFlag().equals(MaterialItem.flagForItem)) {
+            materialItem.setQuantity(1.0);
+        }
+
         if (materialItem.getMatItemNo() != null) { // edit
             if (!materialItemService.getMaterialItem(materialItem.getMatItemNo()).equals(materialItem)) {
                 if (!materialItemService.chkDuplicateMaterialItem(materialItem)) {
-                    materialItemService.save(materialItem);
+                    insertedMaterialItem = materialItemService.save(materialItem);
                 } else {
                     throw new Exception();
                 }
@@ -109,10 +131,29 @@ public class StockController {
             }
         } else { // add
             if (!materialItemService.chkDuplicateMaterialItem(materialItem)) {
-                materialItemService.save(materialItem);
+                insertedMaterialItem = materialItemService.save(materialItem);
             } else {
                 throw new Exception();
             }
+        }
+
+        if (materialItem.getMatFlag().equals(MaterialItem.flagForMixed) && insertedMaterialItem != null) {
+            materialMixedService.removeByMixedProdNo(insertedMaterialItem.getMatItemNo());
+            Map<String, String[]> parameterMap = request.getParameterMap();
+            List<MaterialMixed> materialMixeds = new LinkedList<MaterialMixed>();
+            for (String key : parameterMap.keySet()) {
+                if (key.indexOf("materialamount") != -1) {
+                    String amount = parameterMap.get(key)[0];
+                    if (amount != null && !amount.trim().equals("") && Double.parseDouble(amount) != 0) {
+                        MaterialMixed mm = new MaterialMixed();
+                        mm.setMixedProdNo(insertedMaterialItem.getMatItemNo());
+                        mm.setItemNo(Integer.parseInt(key.substring("materialamount".length(), key.length())));
+                        mm.setQuantity(Double.parseDouble(amount));
+                        materialMixeds.add(mm);
+                    }
+                }
+            }
+            materialMixedService.save(materialMixeds);
         }
     }
 
@@ -132,20 +173,92 @@ public class StockController {
         String json = mapper.writeValueAsString(materialItem);
         return json;
     }
+
     //-----------------------------------------------------------------------------------------------------------//
     @GetMapping("/mixedproduct")
-    public String toMixedProductIndex() {
+    public String toMixedProductIndex(Model model) {
+        List<MaterialCategory> materialCategories = materialCategoryService.getMaterialCategories();
+        List<MaterialUnit> materialUnits = materialUnitService.getMaterialUnits();
+        List<MaterialItem> materialItems = materialItemService.getMaterialItems();
+        model.addAttribute("materialItems", materialItems);
+        model.addAttribute("matCategories", materialCategories);
+        model.addAttribute("units", materialUnits);
         return STOCK_PATH + "mixedproduct.jsp";
     }
+
+    @PostMapping("/getmixedproducts")
+    @ResponseBody
+    public String getMixedProducts() throws JsonProcessingException {
+        List<MaterialItem> materialItems = materialItemService.getMixedProducts();
+        ObjectMapper mapper = new ObjectMapper();
+        String json = mapper.writeValueAsString(materialItems);
+        return json;
+    }
+
     //-----------------------------------------------------------------------------------------------------------//
     @GetMapping("/stockmanage")
     public String toStockManageIndex() {
         return STOCK_PATH + "stockmanage.jsp";
     }
+
     //-----------------------------------------------------------------------------------------------------------//
     @GetMapping("/menumaterial")
     public String toMenuMaterialIndex() {
         return STOCK_PATH + "menumaterial.jsp";
+    }
+
+    //-----------------------------------------------------------------------------------------------------------//
+    @GetMapping("/materialunit")
+    public String toMaterialUnitIndex() {
+        return STOCK_PATH + "materialunit.jsp";
+    }
+
+    @PostMapping("/getmaterialunits")
+    @ResponseBody
+    public String getMaterialUnits() throws JsonProcessingException {
+        List<MaterialUnit> materialUnits = materialUnitService.getMaterialUnits();
+        ObjectMapper mapper = new ObjectMapper();
+        String json = mapper.writeValueAsString(materialUnits);
+        return json;
+    }
+
+    @PostMapping("/managematerialunit")
+    @ResponseBody
+    public void addAndEditMaterialUnit(@ModelAttribute("materialunit") MaterialUnit materialUnit) throws Exception {
+        if (materialUnit.getUnitNo() != null) { // edit
+            if (!materialUnitService.getMaterialUnit(materialUnit.getUnitNo()).equals(materialUnit)) {
+                if (!materialUnitService.chkDuplicateMaterialUnit(materialUnit)) {
+                    materialUnitService.save(materialUnit);
+                } else {
+                    throw new Exception();
+                }
+            } else {
+                throw new Exception();
+            }
+        } else { // add
+            if (!materialUnitService.chkDuplicateMaterialUnit(materialUnit)) {
+                materialUnitService.save(materialUnit);
+            } else {
+                throw new Exception();
+            }
+        }
+    }
+
+    @Transactional
+    @DeleteMapping("/deletematerialunit/{unitNo}")
+    @ResponseBody
+    public void delMaterialUnit(@PathVariable("unitNo") int unitNo) {
+        materialUnitService.delMaterialUnit(unitNo);
+    }
+
+    @Transactional
+    @PutMapping("/getmaterialunit/{unitNo}")
+    @ResponseBody
+    public String getMaterialUnit(@PathVariable("unitNo") int unitNo) throws JsonProcessingException {
+        MaterialUnit materialUnit = materialUnitService.getMaterialUnit(unitNo);
+        ObjectMapper mapper = new ObjectMapper();
+        String json = mapper.writeValueAsString(materialUnit);
+        return json;
     }
     //-----------------------------------------------------------------------------------------------------------//
 }

@@ -34,8 +34,9 @@
                                         เพิ่มเมนู</a>
                                 </div>
                                 <div class="col-md-3 form-group has-feedback" style="padding:0px;">
-                                    <label>ค้นหาจากหมวดหมู่อาหาร</label>
+                                    <%--<label>ตัวกรองจากหมวดหมู่ของอาหาร</label>--%>
                                     <select class="form-control" id="filter_by_category">
+                                        <option disabled >ตัวกรองจากหมวดหมู่ของอาหาร</option>
                                         <option value="0">ทั้งหมด</option>
                                         <c:forEach items="${menuGroups}" var="mc">
                                             <option value="${mc.menuGroupNo}">${mc.menuGroupNameTH}
