@@ -4,6 +4,7 @@ import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.springoeb.employee.model.*;
 import com.springoeb.employee.service.*;
+import com.springoeb.system.model.BranchUser;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -49,7 +50,7 @@ public class EmployeeController {
 
     @PostMapping("/manageemployee")
     public void addAndEditEmployee(@ModelAttribute("employee") Employee employee, HttpSession session, HttpServletRequest request, HttpServletResponse response) throws Exception {
-        int branchNo = (Integer) (session.getAttribute("branchno"));
+        int branchNo = ((BranchUser)(session.getAttribute("branchUser"))).getBranchNo();
         employee.setBranchNo(branchNo);
         if (!employeeService.chkDuplicateEmpName(employee.getEmpName(), branchNo)) {
             employeeService.save(employee);
@@ -65,14 +66,14 @@ public class EmployeeController {
     @Transactional
     @GetMapping("/deleteemployee/{empNo}")
     public void delEmployee(@PathVariable("empNo") int empNo, HttpSession session, HttpServletRequest request, HttpServletResponse response) throws IOException {
-        int branchNo = (Integer) (session.getAttribute("branchno"));
+        int branchNo = ((BranchUser)(session.getAttribute("branchUser"))).getBranchNo();
         employeeService.removeByEmpNoAndBranchNo(empNo, branchNo);
     }
 
     @GetMapping("/ajax/getemployee/{empNo}")
     @ResponseBody
     public String getEmployee(@PathVariable("empNo") int empNo, HttpSession session) throws JsonProcessingException {
-        int branchNo = (Integer) (session.getAttribute("branchno"));
+        int branchNo = ((BranchUser)(session.getAttribute("branchUser"))).getBranchNo();
         Employee employee = employeeService.findByEmpNoAndBranchNo(empNo, branchNo);
         ObjectMapper mapper = new ObjectMapper();
         String json = mapper.writeValueAsString(employee);
@@ -82,7 +83,7 @@ public class EmployeeController {
     @PostMapping("/ajax/getemployees")
     @ResponseBody
     public String getJsonEmployees(HttpSession session) throws JsonProcessingException {
-        int branchNo = (Integer) (session.getAttribute("branchno"));
+        int branchNo = ((BranchUser)(session.getAttribute("branchUser"))).getBranchNo();
         List<Employee> employee = employeeService.findByBranchNo(branchNo);
         ObjectMapper mapper = new ObjectMapper();
         String json = mapper.writeValueAsString(employee);
@@ -98,7 +99,7 @@ public class EmployeeController {
 
     @PostMapping("/manageemployeeposition")
     public void addAndEditPosition(@ModelAttribute("employeePosition") EmployeePosition employeePosition, HttpServletRequest request, HttpServletResponse response, HttpSession session) throws Exception {
-        int branchNo = (Integer) (session.getAttribute("branchno"));
+        int branchNo = ((BranchUser)(session.getAttribute("branchUser"))).getBranchNo();
         if (!employeePositionService.chkDuplicateEmpPosisitonName(employeePosition.getEmpPosName())) {
             employeePositionService.save(employeePosition);
         } else {
@@ -135,7 +136,7 @@ public class EmployeeController {
 
     @RequestMapping("/workhistory")
     public String toEmployeeWorkHistory(Model model, HttpSession session) {
-        int branchNo = (Integer) (session.getAttribute("branchno"));
+        int branchNo = ((BranchUser)(session.getAttribute("branchUser"))).getBranchNo();
         List<Employee> employees = employeeService.findByBranchNo(branchNo);
         model.addAttribute("employees", employees);
         return EMP_PATH + "empworkhist.jsp";
@@ -143,7 +144,7 @@ public class EmployeeController {
 
     @PostMapping("/manageworkhistory")
     public void save(HttpServletResponse response, HttpServletRequest request, HttpSession session) throws IOException, ParseException {
-        int branchNo = (Integer) (session.getAttribute("branchno"));
+        int branchNo = ((BranchUser)(session.getAttribute("branchUser"))).getBranchNo();
         List<WorkHistory> workHistories = new ArrayList<WorkHistory>();
         String stWorkDate = request.getParameter("workDate");
         String stEmpNos[] = request.getParameterValues("empNo");
@@ -193,7 +194,7 @@ public class EmployeeController {
     @Transactional
     @GetMapping("/deleteworkhistory/{workHistNo}")
     public void removeByWorkHistNo(@PathVariable("workHistNo") int workHistNo, HttpServletResponse response, HttpServletRequest request, HttpSession session) throws IOException {
-        int branchNo = (Integer) (session.getAttribute("branchno"));
+        int branchNo = ((BranchUser)(session.getAttribute("branchUser"))).getBranchNo();
         workHistoryService.removeByWorkHist(workHistNo, branchNo);
         response.sendRedirect(request.getContextPath() + "/employee/workhistory");
     }
@@ -201,7 +202,7 @@ public class EmployeeController {
     @PostMapping("/ajax/getworkhistories")
     @ResponseBody
     public String getJsonWorkHistories(HttpSession session) throws JsonProcessingException {
-        int branchNo = (Integer) (session.getAttribute("branchno"));
+        int branchNo = ((BranchUser)(session.getAttribute("branchUser"))).getBranchNo();
         List<WorkHistory> workHistories = workHistoryService.findAll(branchNo);
         for (WorkHistory wh : workHistories) {
             wh.setEmpName(wh.getEmployee().getEmpName());
@@ -214,7 +215,7 @@ public class EmployeeController {
     @GetMapping("/ajax/getworkhistory/{workHistNo}")
     @ResponseBody
     public String getJsonWorkHistories(@PathVariable("workHistNo") int workHistNo, HttpSession session) throws JsonProcessingException {
-        int branchNo = (Integer) (session.getAttribute("branchno"));
+        int branchNo = ((BranchUser)(session.getAttribute("branchUser"))).getBranchNo();
         WorkHistory workHistory = workHistoryService.getWorkHistory(workHistNo, branchNo);
         ObjectMapper mapper = new ObjectMapper();
         String json = mapper.writeValueAsString(workHistory);
@@ -224,7 +225,7 @@ public class EmployeeController {
     @PostMapping("/ajax/smartgenworkhistory")
     @ResponseBody
     public String smartGenWorkHistory(HttpSession session, HttpServletRequest request, HttpServletResponse response) throws JsonProcessingException {
-        int branchNo = (Integer) (session.getAttribute("branchno"));
+        int branchNo = ((BranchUser)(session.getAttribute("branchUser"))).getBranchNo();
         Date d = Date.valueOf(request.getParameter("date"));
         List<WorkHistory> workHistories = workHistoryService.findByWorkDate(d);
         List<EmployeeTable> employeeTables = employeeTableService.findAllByDate(d);
@@ -264,7 +265,7 @@ public class EmployeeController {
 
     @RequestMapping("/pay")
     public String toEmployeePayIndex(Model model, HttpSession session) {
-        int branchNo = (Integer) (session.getAttribute("branchno"));
+        int branchNo = ((BranchUser)(session.getAttribute("branchUser"))).getBranchNo();
         List<Employee> employees = employeeService.findByBranchNo(branchNo);
         model.addAttribute("employees", employees);
         return EMP_PATH + "/emppaid.jsp";
@@ -273,7 +274,7 @@ public class EmployeeController {
     @PostMapping("/payforemp")
     public void pay(Model model, HttpServletRequest request, HttpServletResponse response, HttpSession session) throws Exception {
         int empNo = Integer.parseInt(request.getParameter("empNo"));
-        int branchNo = (Integer) (session.getAttribute("branchno"));
+        int branchNo = ((BranchUser)(session.getAttribute("branchUser"))).getBranchNo();
         double pay = Double.parseDouble(request.getParameter("pay"));
 //        double remainPay = workHistoryService.getWorkSum(branchNo, empNo) - employeePayService.getPaySum(branchNo, empNo);
 //        if (pay <= remainPay) {
@@ -290,7 +291,7 @@ public class EmployeeController {
 
     @RequestMapping("/table")
     public String toEmployeeTable(Model model, HttpSession session) {
-        int branchNo = (Integer) (session.getAttribute("branchno"));
+        int branchNo = ((BranchUser)(session.getAttribute("branchUser"))).getBranchNo();
         List<EmployeeTable> employeeTables = employeeTableService.findAll(branchNo);
         List<Employee> employees = employeeService.findByBranchNo(branchNo);
         List<EmployeePosition> employeePositions = employeePositionService.findAll();
@@ -332,7 +333,7 @@ public class EmployeeController {
     @Transactional
     @RequestMapping("/deletetable/{empTimeNo}")
     public void removeByEmpTimeNo(@PathVariable("empTimeNo") int empTimeNo, HttpServletRequest request, HttpServletResponse response, HttpSession session) throws IOException {
-        int branchNo = (Integer) (session.getAttribute("branchno"));
+        int branchNo = ((BranchUser)(session.getAttribute("branchUser"))).getBranchNo();
         employeeTableService.removeByEmpTimeNoAndBranchNo(empTimeNo, branchNo);
         response.sendRedirect(request.getContextPath() + "/employee/table");
     }
@@ -341,7 +342,7 @@ public class EmployeeController {
 
     @RequestMapping("/check")
     public String toEmployeeCheck(Model model, HttpSession session) {
-        int branchNo = (Integer) (session.getAttribute("branchno"));
+        int branchNo = ((BranchUser)(session.getAttribute("branchUser"))).getBranchNo();
         Date date = new Date(System.currentTimeMillis());
         Time time = new Time(System.currentTimeMillis());
         List<EmployeeTable> employeeTables = employeeTableService.findEmployeeTableNow(branchNo, date);
@@ -366,7 +367,7 @@ public class EmployeeController {
 
     @RequestMapping("/clockout")
     public void clockOut(HttpServletRequest request, HttpServletResponse response,HttpSession session) throws IOException {
-        int branchNo = (Integer) (session.getAttribute("branchno"));
+        int branchNo = ((BranchUser)(session.getAttribute("branchUser"))).getBranchNo();
         int workHistNo = Integer.parseInt(request.getParameter("workHistNo"));
         WorkHistory workHistory = workHistoryService.getWorkHistory(workHistNo,branchNo);
         Employee employee = workHistory.getEmployee();

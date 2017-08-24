@@ -2,8 +2,12 @@ package com.springoeb.menu.controller;
 
 import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.databind.ObjectMapper;
-import com.springoeb.menu.model.*;
+import com.springoeb.menu.model.Menu;
+import com.springoeb.menu.model.MenuCategory;
+import com.springoeb.menu.model.MenuGroup;
+import com.springoeb.menu.model.MenuInSet;
 import com.springoeb.menu.service.*;
+import com.springoeb.system.model.BranchUser;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -51,7 +55,7 @@ public class MenuController {
     @PostMapping("/getmenus/{menuGroupNo}")
     public String getMenus(@PathVariable("menuGroupNo") int menuGroupNo, Model model, HttpSession session) throws JsonProcessingException {
         List<Menu> menus = null;
-        int branchNo = (Integer) (session.getAttribute("branchno"));
+        int branchNo = ((BranchUser)(session.getAttribute("branchUser"))).getBranchNo();
 
         if (menuGroupNo != 0) {
             if (branchNo == Menu.OFFICIAL_MENU_FLAG) {
@@ -75,7 +79,7 @@ public class MenuController {
     @ResponseBody
     @PostMapping("/managemenu")
     public void addAndEditMenu(@RequestParam("menuPicPath") MultipartFile file, HttpServletRequest request, HttpSession session) throws Exception {
-        int branchNo = (Integer) (session.getAttribute("branchno"));
+        int branchNo = ((BranchUser)(session.getAttribute("branchUser"))).getBranchNo();
 
         Menu menu = new Menu();
         byte[] bytes = file.getBytes();
@@ -157,7 +161,7 @@ public class MenuController {
     //----------------------------------------------------------------------------------------------------------//
     @GetMapping("/menuset")
     public String toMenuSetIndex(Model model,HttpSession session) {
-        int branchNo = (Integer) (session.getAttribute("branchno"));
+        int branchNo = ((BranchUser)(session.getAttribute("branchUser"))).getBranchNo();
         List<Menu> menus = null;
         if (branchNo == Menu.OFFICIAL_MENU_FLAG) {
             menus = menuService.getMenus();
@@ -171,7 +175,7 @@ public class MenuController {
     @ResponseBody
     @PostMapping("/getmenusets")
     public String getMenuSets(HttpSession session) throws JsonProcessingException {
-        int branchNo = (Integer) (session.getAttribute("branchno"));
+        int branchNo = ((BranchUser)(session.getAttribute("branchUser"))).getBranchNo();
         List<Menu> menuSets = menuService.getMenuSets(branchNo);
         ObjectMapper mapper = new ObjectMapper();
         String json = mapper.writeValueAsString(menuSets);
@@ -190,7 +194,8 @@ public class MenuController {
     @Transactional
     @ResponseBody
     @PostMapping("/managemenuset")
-    public void addAndEditMenuSet(@RequestParam("menuPicPath") MultipartFile file, HttpServletRequest request) throws Exception {
+    public void addAndEditMenuSet(@RequestParam("menuPicPath") MultipartFile file, HttpServletRequest request,HttpSession session) throws Exception {
+        int branchNo = ((BranchUser)(session.getAttribute("branchUser"))).getBranchNo();
         Menu menuSet = new Menu();
         byte[] bytes = file.getBytes();
         Integer menuSetNo = request.getParameter("menuNo") != null ? Integer.parseInt(request.getParameter("menuNo")) : null;
@@ -198,6 +203,9 @@ public class MenuController {
         if (menuSetNo != null) {
             menuSet = menuService.getMenuByMenuNo(menuSetNo);
             menuSet.setMenuNo(menuSetNo);
+        }else{
+            //only for add
+            menuSet.setLocalFlag(branchNo);
         }
 
         menuSet.setMenuNameTH(request.getParameter("menuNameTH"));

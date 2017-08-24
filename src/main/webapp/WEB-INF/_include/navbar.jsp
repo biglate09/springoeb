@@ -17,7 +17,7 @@
             </div>
             <div class="profile_info">
                 <span>ยินดีต้อนรับ,</span>
-                <h2>${username}</h2>
+                <h2 style="white-space:nowrap;overflow:hidden;text-overflow: ellipsis;">${branchUser.username}</h2>
             </div>
         </div>
         <!-- /menu profile quick info -->
@@ -73,7 +73,7 @@
             <%--<a data-toggle="tooltip" data-placement="top" title="Settings">--%>
             <%--<span class="glyphicon glyphicon-cog" aria-hidden="true"></span>--%>
             <%--</a>--%>
-            <a data-toggle="tooltip" data-placement="top" title="Logout" href="${contextPath}/system/logout">
+            <a data-toggle="tooltip" data-placement="top" title="ออกจากระบบ" href="${contextPath}/system/logout">
                 <span class="glyphicon glyphicon-off" aria-hidden="true"></span>
             </a>
         </div>
@@ -92,7 +92,7 @@
                 <li class="">
                     <a href="javascript:;" class="user-profile dropdown-toggle" data-toggle="dropdown"
                        aria-expanded="false">
-                        <img src="${contextPath}/images/img.png" alt=""> ${username}
+                        <img src="${contextPath}/images/img.png" alt=""> ${branchUser.username}
                         <span class=" fa fa-angle-down"></span>
                     </a>
                     <ul class="dropdown-menu dropdown-usermenu pull-right">
@@ -105,7 +105,7 @@
                         <%--</li>--%>
                         <%--<li><a href="javascript:;">Help</a></li>--%>
                         <li><a href="${contextPath}/system/logout">
-                            <i class="fa fa-sign-out pull-right"></i> Log Out</a>
+                            <i class="fa fa-sign-out pull-right"></i>ออกจากระบบ</a>
                         </li>
                     </ul>
                 </li>
