@@ -57,11 +57,11 @@
                         <a><i class="fa fa-spoon"></i> จัดการวัตถุดิบอาหาร <span class="fa fa-chevron-down"></span></a>
                         <ul class="nav child_menu">
                             <li><a id="materialcategory" href="${contextPath}/stock/materialcategory">ประเภทวัตถุดิบ</a></li>
-                            <li><a id="materialunit" href="${contextPath}/stock/materialunit">หน่วยวัตถุดิบอาหาร</a></li>
-                            <li><a id="material" href="${contextPath}/stock/materialitem">วัตถุดิบอาหาร</a></li>
+                            <li><a id="materialunit" href="${contextPath}/stock/materialunit">หน่วยของวัตถุดิบ</a></li>
+                            <li><a id="material" href="${contextPath}/stock/materialitem">วัตถุดิบ</a></li>
                             <li><a id="mixedproduct" href="${contextPath}/stock/mixedproduct">วัตถุดิบแบบผสม</a></li>
                             <li><a id="stockmanage" href="${contextPath}/stock/stockmanage">เพิ่ม / ลดวัตถุดิบ</a></li>
-                            <li><a id="menustock" href="${contextPath}/stock/menumaterial">วัตถุดิบของเมนูอาหาร</a></li>
+                            <li><a id="menustock" href="${contextPath}/stock/menumaterial">วัตถุดิบในเมนูอาหาร</a></li>
                         </ul>
                     </li>
                 </ul>

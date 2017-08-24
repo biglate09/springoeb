@@ -5,7 +5,7 @@
 <html>
 <head>
     <jsp:include page="../_include/topenv.jsp"/>
-    <title>วัตถุดิบอาหาร</title>
+    <title>วัตถุดิบ</title>
 </head>
 <body class="nav-md">
 <div class="container body">
@@ -24,7 +24,7 @@
                 <div class="col-md-12 col-sm-12 col-xs-12">
                     <div class="x_panel">
                         <div class="x_title">
-                            <h4>วัตถุดิบอาหาร</h4>
+                            <h4>วัตถุดิบ</h4>
                         </div>
                         <div class="x_content">
                             <form action="#">
@@ -37,7 +37,7 @@
                                        class="table table-striped table-bordered bulk_action1">
                                     <thead>
                                     <tr>
-                                        <th style="width:20%;text-align:center;">ชื่อวัตถุดิบอาหาร</th>
+                                        <th style="width:20%;text-align:center;">ชื่อของวัตถุดิบ</th>
                                         <th style="width:20%;text-align:center;">ประเภท</th>
                                         <th style="width:20%;text-align:center;">หน่วยที่ใช้</th>
                                         <th style="width:20%;text-align:center;">ตัวเลือก</th>
@@ -56,7 +56,7 @@
                                     <div class="modal-header">
                                         <!-- ปุ่มกดปิด (X) ตรงส่วนหัวของ Modal -->
                                         <button type="button" class="close" data-dismiss="modal">&times;</button>
-                                        <h4 class="modal-title">เพิ่มวัตถุดิบอาหารใหม่</h4>
+                                        <h4 class="modal-title">เพิ่มวัตถุดิบใหม่</h4>
                                     </div>
                                     <!-- ส่วนเนื้อหาของ Modal -->
                                     <div class="modal-body">
@@ -64,9 +64,9 @@
                                             <input type="hidden" name="matFlag" value="I">
                                             <div class="form-group">
                                                 <div class="col-md-4 col-sm-4 col-xs-12 form-group has-feedback">
-                                                    <label>ชื่อวัตถุดิบอาหาร</label>
+                                                    <label>ชื่อวัตถุดิบ</label>
                                                     <input type="text" class="form-control" name="matItemName" id="add_mat_item_name"
-                                                           placeholder="ชื่อวัตถุดิบอาหาร" required>
+                                                           placeholder="ชื่อวัตถุดิบ" required>
                                                     <span class="fa fa-pencil form-control-feedback right"
                                                           aria-hidden="true"></span>
                                                 </div>
@@ -111,7 +111,7 @@
                                     <div class="modal-header">
                                         <!-- ปุ่มกดปิด (X) ตรงส่วนหัวของ Modal -->
                                         <button type="button" class="close" data-dismiss="modal">&times;</button>
-                                        <h4 class="modal-title">แก้ไขวัตถุดิบอาหาร <span id="show_mat_item_name_for_edit"></span></h4>
+                                        <h4 class="modal-title">แก้ไขวัตถุดิบ <span id="show_mat_item_name_for_edit"></span></h4>
                                     </div>
                                     <!-- ส่วนเนื้อหาของ Modal -->
                                     <div class="modal-body">
@@ -120,9 +120,9 @@
                                             <input type="hidden" name="matItemNo" id="hiddenmatitemno">
                                             <div class="form-group">
                                                 <div class="col-md-4 col-sm-4 col-xs-12 form-group has-feedback">
-                                                    <label>ชื่อวัตถุดิบอาหาร</label>
+                                                    <label>ชื่อวัตถุดิบ</label>
                                                     <input type="text" class="form-control" name="matItemName" id="edit_mat_item_name"
-                                                           placeholder="ชื่อวัตถุดิบอาหาร" required>
+                                                           placeholder="ชื่อวัตถุดิบ" required>
                                                     <span class="fa fa-pencil form-control-feedback right"
                                                           aria-hidden="true"></span>
                                                 </div>
