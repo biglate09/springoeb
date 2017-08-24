@@ -1,5 +1,6 @@
 package com.springoeb.stock.model;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.springoeb.stock.model_key.MaterialMixedId;
 
 import javax.persistence.*;
@@ -16,6 +17,7 @@ public class MaterialMixed {
     private Integer itemNo;
     private Double quantity;
 
+    @JsonIgnore
     @ManyToOne
     @JoinColumn(name = "mixed_prod_no",updatable = false,insertable = false)
     private MaterialItem mixedProduct;

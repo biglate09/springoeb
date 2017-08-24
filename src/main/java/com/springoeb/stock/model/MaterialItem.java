@@ -1,6 +1,7 @@
 package com.springoeb.stock.model;
 
 import javax.persistence.*;
+import java.util.List;
 
 @Entity
 public class MaterialItem {
@@ -9,6 +10,7 @@ public class MaterialItem {
     private Integer matItemNo;
     private String matItemName;
     private String matFlag;
+    private Double quantity;
     @Column(name = "mat_cat_no",insertable = true,updatable = true)
     private Integer matCatNo;
 
@@ -22,6 +24,9 @@ public class MaterialItem {
     @ManyToOne
     @JoinColumn(name = "unit_no",updatable = false,insertable = false)
     private MaterialUnit unit;
+
+    @OneToMany(fetch = FetchType.LAZY, mappedBy = "mixedProduct")
+    private List<MaterialMixed> materialItemList;
 
     public static final String flagForItem = "I";
     public static final String flagForMixed = "M";
@@ -80,5 +85,21 @@ public class MaterialItem {
 
     public void setUnit(MaterialUnit unit) {
         this.unit = unit;
+    }
+
+    public Double getQuantity() {
+        return quantity;
+    }
+
+    public void setQuantity(Double quantity) {
+        this.quantity = quantity;
+    }
+
+    public List<MaterialMixed> getMaterialItemList() {
+        return materialItemList;
+    }
+
+    public void setMaterialItemList(List<MaterialMixed> materialItemList) {
+        this.materialItemList = materialItemList;
     }
 }

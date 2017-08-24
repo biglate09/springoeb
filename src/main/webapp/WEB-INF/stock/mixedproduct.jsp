@@ -49,9 +49,9 @@
                             </form>
                         </div>
                         <div class="modal fade" id="addMatItem" role="dialog">
-                            <div class="modal-dialog modal-lg">
+                            <div class="modal-dialog">
                                 <!-- เนือหาของ Modal ทั้งหมด -->
-                                <div class="modal-content">
+                                <div class="modal-content modal-body-test" style="overflow-y:hidden;">
                                     <!-- ส่วนหัวของ Modal -->
                                     <div class="modal-header">
                                         <!-- ปุ่มกดปิด (X) ตรงส่วนหัวของ Modal -->
@@ -60,19 +60,22 @@
                                     </div>
                                     <!-- ส่วนเนื้อหาของ Modal -->
                                     <div class="modal-body">
-                                        <form class="form-horizontal form-label-left input_mask" modelAttribute="matitem" id="add_mat_item">
+                                        <form class="form-horizontal form-label-left input_mask"
+                                              modelAttribute="matitem" id="add_mat_item">
                                             <input type="hidden" name="matFlag" value="M">
                                             <div class="form-group">
                                                 <div class="col-md-4 col-sm-4 col-xs-12 form-group has-feedback">
                                                     <label>ชื่อวัตถุดิบอาหารแบบผสม</label>
-                                                    <input type="text" class="form-control" name="matItemName" id="add_mat_item_name"
+                                                    <input type="text" class="form-control" name="matItemName"
+                                                           id="add_mat_item_name"
                                                            placeholder="ชื่อวัตถุดิบอาหารแบบผสม" required>
                                                     <span class="fa fa-pencil form-control-feedback right"
                                                           aria-hidden="true"></span>
                                                 </div>
                                                 <div class="col-md-4 col-sm-4 col-xs-12 form-group has-feedback">
                                                     <label>ประเภทวัตถุดิบ</label>
-                                                    <select name="matCatNo" id="add_mat_cat" class="form-control" required>
+                                                    <select name="matCatNo" id="add_mat_cat" class="form-control"
+                                                            required>
                                                         <option value="" disabled selected>เลือกวัตถุดิบ</option>
                                                         <c:forEach items="${matCategories}" var="mc">
                                                             <option value="${mc.matCatNo}">${mc.matCatName}</option>
@@ -81,12 +84,60 @@
                                                 </div>
                                                 <div class="col-md-4 col-sm-4 col-xs-12 form-group has-feedback">
                                                     <label>หน่วยวัตถุดิบ</label>
-                                                    <select name="unitNo" id="add_unit_no" class="form-control" required>
+                                                    <select name="unitNo" id="add_unit_no" class="form-control"
+                                                            required>
                                                         <option value="" disabled selected>เลือกหน่วย</option>
                                                         <c:forEach items="${units}" var="u">
                                                             <option value="${u.unitNo}">${u.unitName}</option>
                                                         </c:forEach>
                                                     </select>
+                                                </div>
+                                                <div class="col-md-12 col-sm-12 col-xs-12">
+                                                    <label>เลือกวัตถุดิบอาหารที่ผสมกันเป็นวัตถุดิบแบบผสมนี้</label>
+                                                    <table id="add_mixed_product_datatable"
+                                                           class="table table-bordered table-striped">
+                                                        <thead>
+                                                        <tr>
+                                                            <th style="text-align:center;">ชื่อวัตถุดิบอาหาร</th>
+                                                            <th style="text-align:center;">ประเภท</th>
+                                                            <th style="text-align:center;">จำนวนที่ใช้</th>
+                                                        </tr>
+                                                        </thead>
+                                                        <tbody style="text-align:center;">
+                                                        <c:forEach items="${materialItems}" var="mi">
+                                                            <tr>
+                                                                <td style="width:40%;">${mi.matItemName}</td>
+                                                                <td style="width:30%;">${mi.materialCategory.matCatName}</td>
+                                                                <td style="width:30%;">
+                                                                    <div class="col-md-6">
+                                                                        <input matItemNo="${mi.matItemNo}" type="number"
+                                                                               matItemName="${mi.matItemName}"
+                                                                               unit="${mi.unit.unitName}"
+                                                                               class="materialamount"
+                                                                               name="materialamount${mi.matItemNo}"
+                                                                               style="text-align:center;"
+                                                                               value="0" min="0" max="1000"
+                                                                               step="0.000001"
+                                                                               required>
+                                                                    </div>
+                                                                    <div class="col-md-6">
+                                                                            ${mi.unit.unitName}
+                                                                    </div>
+                                                                </td>
+                                                            </tr>
+                                                        </c:forEach>
+                                                        </tbody>
+                                                    </table>
+                                                </div>
+                                                <div class="col-md-12" style="text-align:center;margin-top:20px;">
+                                                    <div class="well" style="overflow: auto">
+                                                        <span style="font-weight:bold;">ส่วนผสมของวัตถุดิบอาหารแบบผสมมีดังนี้</span>
+                                                        <div id="display_material_desc" style="margin-bottom:20px;margin-top:20px;" class="submit-clear"></div>
+                                                        <div style="font-weight:bold">
+                                                            รวมเป็น <span style="font-weight:normal" class="submit-clear" id="mixed_prod_name"></span> ทั้งหมด :
+                                                            <input style="width:10%;" type="number" step="0.000001" min="0.000001" name="quantity" value="1"> <span class="submit-clear" id="mixed_prod_unit"></span>
+                                                        </div>
+                                                    </div>
                                                 </div>
                                             </div>
                                             <div class="modal-footer">
@@ -104,31 +155,35 @@
                             </div>
                         </div>
                         <div class="modal fade" id="editMatItem" role="dialog">
-                            <div class="modal-dialog modal-lg">
+                            <div class="modal-dialog">
                                 <!-- เนือหาของ Modal ทั้งหมด -->
-                                <div class="modal-content">
+                                <div class="modal-content modal-body-test" style="overflow-y:hidden;">
                                     <!-- ส่วนหัวของ Modal -->
                                     <div class="modal-header">
                                         <!-- ปุ่มกดปิด (X) ตรงส่วนหัวของ Modal -->
                                         <button type="button" class="close" data-dismiss="modal">&times;</button>
-                                        <h4 class="modal-title">แก้ไขวัตถุดิบอาหารแบบผสม <span id="show_mat_item_name_for_edit"></span></h4>
+                                        <h4 class="modal-title">แก้ไขวัตถุดิบอาหารแบบผสม <span
+                                                id="show_mat_item_name_for_edit"></span></h4>
                                     </div>
                                     <!-- ส่วนเนื้อหาของ Modal -->
                                     <div class="modal-body">
-                                        <form class="form-horizontal form-label-left input_mask" modelAttribute="matitem" id="edit_mat_item">
+                                        <form class="form-horizontal form-label-left input_mask"
+                                              modelAttribute="matitem" id="edit_mat_item">
                                             <input type="hidden" name="matFlag" value="M">
                                             <input type="hidden" name="matItemNo" id="hiddenmatitemno">
                                             <div class="form-group">
                                                 <div class="col-md-4 col-sm-4 col-xs-12 form-group has-feedback">
                                                     <label>ชื่อวัตถุดิบอาหารแบบผสม</label>
-                                                    <input type="text" class="form-control" name="matItemName" id="edit_mat_item_name"
+                                                    <input type="text" class="form-control" name="matItemName"
+                                                           id="edit_mat_item_name"
                                                            placeholder="ชื่อวัตถุดิบอาหารแบบผสม" required>
                                                     <span class="fa fa-pencil form-control-feedback right"
                                                           aria-hidden="true"></span>
                                                 </div>
                                                 <div class="col-md-4 col-sm-4 col-xs-12 form-group has-feedback">
                                                     <label>ประเภทวัตถุดิบ</label>
-                                                    <select name="matCatNo" id="edit_mat_cat_no" class="form-control" required>
+                                                    <select name="matCatNo" id="edit_mat_cat_no" class="form-control"
+                                                            required>
                                                         <option value="" disabled>เลือกวัตถุดิบ</option>
                                                         <c:forEach items="${matCategories}" var="mc">
                                                             <option value="${mc.matCatNo}">${mc.matCatName}</option>
@@ -137,12 +192,60 @@
                                                 </div>
                                                 <div class="col-md-4 col-sm-4 col-xs-12 form-group has-feedback">
                                                     <label>หน่วยวัตถุดิบ</label>
-                                                    <select name="unitNo" id="edit_unit_no" class="form-control" required>
+                                                    <select name="unitNo" id="edit_unit_no" class="form-control"
+                                                            required>
                                                         <option value="" disabled selected>เลือกหน่วย</option>
                                                         <c:forEach items="${units}" var="u">
                                                             <option value="${u.unitNo}">${u.unitName}</option>
                                                         </c:forEach>
                                                     </select>
+                                                </div>
+                                                <div class="col-md-12 col-sm-12 col-xs-12">
+                                                    <label>เลือกวัตถุดิบอาหารที่ผสมกันเป็นวัตถุดิบแบบผสมนี้</label>
+                                                    <table id="edit_mixed_product_datatable"
+                                                           class="table table-bordered table-striped">
+                                                        <thead>
+                                                        <tr>
+                                                            <th style="text-align:center;">ชื่อวัตถุดิบอาหาร</th>
+                                                            <th style="text-align:center;">ประเภท</th>
+                                                            <th style="text-align:center;">จำนวนที่ใช้</th>
+                                                        </tr>
+                                                        </thead>
+                                                        <tbody style="text-align:center;">
+                                                        <c:forEach items="${materialItems}" var="mi">
+                                                            <tr>
+                                                                <td style="width:40%;">${mi.matItemName}</td>
+                                                                <td style="width:30%;">${mi.materialCategory.matCatName}</td>
+                                                                <td style="width:30%;">
+                                                                    <div class="col-md-6">
+                                                                        <input matItemNo="${mi.matItemNo}" type="number"
+                                                                               matItemName="${mi.matItemName}"
+                                                                               unit="${mi.unit.unitName}"
+                                                                               class="materialamount2"
+                                                                               name="materialamount${mi.matItemNo}"
+                                                                               style="text-align:center;"
+                                                                               value="0" min="0" max="1000"
+                                                                               step="0.000001"
+                                                                               required>
+                                                                    </div>
+                                                                    <div class="col-md-6">
+                                                                            ${mi.unit.unitName}
+                                                                    </div>
+                                                                </td>
+                                                            </tr>
+                                                        </c:forEach>
+                                                        </tbody>
+                                                    </table>
+                                                </div>
+                                                <div class="col-md-12" style="text-align:center;margin-top:20px;">
+                                                    <div class="well" style="overflow: auto">
+                                                        <span style="font-weight:bold;">ส่วนผสมของวัตถุดิบอาหารแบบผสมมีดังนี้</span>
+                                                        <div id="display_material_desc2" style="margin-bottom:20px;margin-top:20px;" class="submit-clear"></div>
+                                                        <div style="font-weight:bold">
+                                                            รวมเป็น <span style="font-weight:normal" class="submit-clear" id="mixed_prod_name2"></span> ทั้งหมด :
+                                                            <input style="width:10%;" type="number" step="0.000001" min="0.000001" name="quantity" value="1" id="mixed_quantity"> <span class="submit-clear" id="mixed_prod_unit2"></span>
+                                                        </div>
+                                                    </div>
                                                 </div>
                                             </div>
                                             <div class="modal-footer">
@@ -170,7 +273,7 @@
 <script>
     $(document).ready(function () {
         $("#datatable-matitem").DataTable({
-            order: [[0,"asc"]],
+            order: [[0, "asc"]],
             columnDefs: [
                 {orderable: false, targets: [-1]}
             ],
@@ -190,7 +293,54 @@
             ]
         });
 
+        $("#add_mixed_product_datatable").DataTable({
+            order: [[1, "asc"]],
+            columnDefs: [
+                {orderable: false, targets: [-1]}
+            ]
+        });
+
+        $("#edit_mixed_product_datatable").DataTable({
+            order: [[1, "asc"]],
+            columnDefs: [
+                {orderable: false, targets: [-1]}
+            ]
+        });
         refresh_table();
+    });
+
+    $(".materialamount").on('change keyup',function(){
+        $("#display_material_desc").empty();
+        $(".materialamount").each(function () {
+            if ($(this).val() > 0) {
+                $("#display_material_desc").append('<div class="col-md-4 col-md-offset-2" style="text-align:left;white-space:nowrap;overflow:hidden;text-overflow: ellipsis;">' + $(this).attr('matItemName') + '</div><div class="col-md-3 col-md-offset-2" style="text-align:left;">' + $(this).val() + ' ' + $(this).attr('unit') + '</div><br>');
+            }
+        });
+    });
+
+    $(".materialamount2").on('change keyup',function(){
+        $("#display_material_desc2").empty();
+        $(".materialamount2").each(function () {
+            if ($(this).val() > 0) {
+                $("#display_material_desc2").append('<div class="col-md-4 col-md-offset-2" style="text-align:left;white-space:nowrap;overflow:hidden;text-overflow: ellipsis;">' + $(this).attr('matItemName') + '</div><div class="col-md-3 col-md-offset-2" style="text-align:left;">' + $(this).val() + ' ' + $(this).attr('unit') + '</div><br>');
+            }
+        });
+    });
+
+    $("#add_mat_item_name").on('change keyup',function(){
+        $("#mixed_prod_name").html($(this).val());
+    });
+
+    $("#add_unit_no").on('change',function(){
+        $("#mixed_prod_unit").html($("#add_unit_no option:selected").text());
+    });
+
+    $("#edit_mat_item_name").on('change keyup',function(){
+        $("#mixed_prod_name2").html($(this).val());
+    });
+
+    $("#edit_unit_no").on('change',function(){
+        $("#mixed_prod_unit2").html($("#edit_unit_no option:selected").text());
     });
 
     function refresh_table() {
@@ -200,14 +350,14 @@
             dataType: "json",
             success: function (json) {
                 var data_array = [];
-                for (var i=0; i<json.length; i++){
+                for (var i = 0; i < json.length; i++) {
                     var obj = json[i];
                     var data = {
                         matItemName: '<a style="cursor:pointer;font-weight:bold;" onclick = "set_mat_item(' + obj.matItemNo + ')" data-toggle = "modal" data-target = "#editMatItem">' + obj.matItemName + '</a>',
                         item: obj.materialCategory.matCatName,
                         unit: obj.unit.unitName,
                         option: '<a onclick = "set_mat_item(' + obj.matItemNo + ')" class = "btn btn-warning btn-sm" data-toggle = "modal" data-target = "#editMatItem"> <i class = "fa fa-pencil"> </i> &nbsp; แก้ไข </a>' +
-                        '<a onclick = "del_mat_item(' + obj.matItemNo+ ',\'' + obj.matItemName +'\')" class = "btn btn-danger btn-sm"> <i class = "fa fa-trash"></i> &nbsp; ลบ </a>'
+                        '<a onclick = "del_mat_item(' + obj.matItemNo + ',\'' + obj.matItemName + '\')" class = "btn btn-danger btn-sm"> <i class = "fa fa-trash"></i> &nbsp; ลบ </a>'
                     }
                     data_array.push(data);
                 }
@@ -217,7 +367,7 @@
         });
     }
 
-    $("#add_mat_item").submit(function(){
+    $("#add_mat_item").submit(function () {
         var object = $("#add_mat_item").serialize();
         $.ajax({
             type: "POST",
@@ -225,17 +375,18 @@
             url: "${contextPath}/stock/managematerialitem",
             success: function (result) {
                 swal("สำเร็จ", "ชื่อวัตถุดิบ " + $("#add_mat_item").val() + " ถูกเพิ่มเรียบร้อยแล้ว", "success");
+                $(".submit-clear").empty();
                 $("#add_mat_item")[0].reset();
                 $("#addMatItem").modal('toggle');
                 refresh_table();
-            },error: function(result){
+            }, error: function (result) {
                 swal("ไม่สำเร็จ", "ชื่ออาจซ้ำ กรุณาลองใหม่ในภายหลัง", "error");
             }
         });
         return false;
     });
 
-    $("#edit_mat_item").submit(function(){
+    $("#edit_mat_item").submit(function () {
         var object = $("#edit_mat_item").serialize();
         $.ajax({
             type: "POST",
@@ -246,7 +397,7 @@
                 $("#edit_mat_item")[0].reset();
                 $("#editMatItem").modal('toggle');
                 refresh_table();
-            },error: function(result){
+            }, error: function (result) {
                 swal("ไม่สำเร็จ", "ชื่ออาจซ้ำ กรุณาลองใหม่ในภายหลัง", "error");
             }
         });
@@ -264,14 +415,29 @@
                 $("#edit_mat_cat_no").val(result.matCatNo);
                 $("#edit_unit_no").val(result.unitNo);
                 $("#show_mat_item_name_for_edit").html(result.matItemName);
+                $("#mixed_prod_name2").html($("#edit_mat_item_name").val());
+                $("#mixed_prod_unit2").html($("#edit_unit_no option:selected").text());
+                $("#mixed_quantity").val(result.quantity);
+
+                var item_list = result.materialItemList;
+                for (var i = 0; i < item_list.length; i++) {
+                    $(".materialamount2[matitemno='" + item_list[i].itemNo + "']").val(item_list[i].quantity);
+                }
+
+                $("#display_material_desc2").empty();
+                $(".materialamount2").each(function () {
+                    if ($(this).val() > 0) {
+                        $("#display_material_desc2").append('<div class="col-md-4 col-md-offset-2" style="text-align:left;white-space:nowrap;overflow:hidden;text-overflow: ellipsis;">' + $(this).attr('matItemName') + '</div><div class="col-md-3 col-md-offset-2" style="text-align:left;">' + $(this).val() + ' ' + $(this).attr('unit') + '</div><br>');
+                    }
+                });
             }
         });
     }
 
-    function del_mat_item(matItemNo,matItemName) {
-        swal ({
+    function del_mat_item(matItemNo, matItemName) {
+        swal({
                 title: "ยืนยันการลบ " + matItemName,
-                text: "เมื่อยืนยัน คุณจะไม่สามารถนำข้อมูล "+matItemName+" กลับมาได้",
+                text: "เมื่อยืนยัน คุณจะไม่สามารถนำข้อมูล " + matItemName + " กลับมาได้",
                 type: "warning",
                 showCancelButton: true,
                 cancelButtonText: "ยกเลิก",
@@ -283,13 +449,13 @@
             function () {
                 $.ajax({
                     type: "DELETE",
-                    url: "${contextPath}/stock/delmaterialitem/"+matItemNo,
+                    url: "${contextPath}/stock/delmaterialitem/" + matItemNo,
                     success: function (json) {
-                        swal ("สำเร็จ", matItemName+" ถูกลบเรียบร้อยแล้ว", "success");
+                        swal("สำเร็จ", matItemName + " ถูกลบเรียบร้อยแล้ว", "success");
                         refresh_table();
                     },
                     error: function (json) {
-                        swal ("ไม่สำเร็จ", "ยังมีเมนูที่เป็นอาหารวัตถุดิบนี้อยู่ กรุณาลบออกให้หมดก่อน หรือเซิร์ฟเวอร์อาจมีปัญหา", "error");
+                        swal("ไม่สำเร็จ", "ยังมีเมนูที่ใช้อาหารวัตถุดิบนี้อยู่ กรุณาลบออกให้หมดก่อน หรือเซิร์ฟเวอร์อาจมีปัญหา", "error");
                     }
                 });
             });
