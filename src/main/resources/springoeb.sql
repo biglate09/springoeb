@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Host: 127.0.0.1
--- Generation Time: Aug 23, 2017 at 07:39 AM
+-- Generation Time: Aug 24, 2017 at 01:29 PM
 -- Server version: 10.1.21-MariaDB
 -- PHP Version: 5.6.30
 
@@ -339,7 +339,10 @@ CREATE TABLE `material_category` (
 
 INSERT INTO `material_category` (`mat_cat_no`, `mat_cat_name`) VALUES
 (8, 'ผัก/ผลไม้'),
-(11, 'เนื้อสัตว์');
+(11, 'เนื้อสัตว์'),
+(12, 'แป้ง'),
+(13, 'เครื่องปรุงพิเศษ'),
+(14, 'อาหารปรุงสำเร็จ');
 
 -- --------------------------------------------------------
 
@@ -365,10 +368,23 @@ CREATE TABLE `material_history` (
 CREATE TABLE `material_item` (
   `mat_item_no` int(11) NOT NULL,
   `mat_item_name` varchar(200) NOT NULL,
+  `quantity` double NOT NULL DEFAULT '1',
   `mat_flag` varchar(1) NOT NULL COMMENT 'I = item, M = mixed product',
   `mat_cat_no` int(11) NOT NULL,
   `unit_no` int(11) NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8;
+
+--
+-- Dumping data for table `material_item`
+--
+
+INSERT INTO `material_item` (`mat_item_no`, `mat_item_name`, `quantity`, `mat_flag`, `mat_cat_no`, `unit_no`) VALUES
+(7, 'หมูสับ', 1, 'I', 11, 1),
+(10, 'แบบผสม B', 100, 'M', 11, 5),
+(11, 'แป้งซาลาเปา', 1, 'I', 12, 1),
+(12, 'ผักชี', 1, 'I', 8, 1),
+(13, 'น้ำสต็อก', 1, 'I', 13, 4),
+(21, 'ซาลาเปา', 10, 'M', 14, 3);
 
 -- --------------------------------------------------------
 
@@ -381,6 +397,19 @@ CREATE TABLE `material_mixed` (
   `item_no` int(11) NOT NULL,
   `quantity` double NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8;
+
+--
+-- Dumping data for table `material_mixed`
+--
+
+INSERT INTO `material_mixed` (`mixed_prod_no`, `item_no`, `quantity`) VALUES
+(10, 12, 0.5),
+(10, 13, 20),
+(10, 7, 20),
+(10, 11, 20),
+(21, 13, 3),
+(21, 7, 4),
+(21, 11, 5);
 
 -- --------------------------------------------------------
 
@@ -398,7 +427,10 @@ CREATE TABLE `material_unit` (
 --
 
 INSERT INTO `material_unit` (`unit_no`, `unit_name`) VALUES
-(1, 'กรัม');
+(1, 'กรัม'),
+(3, 'ช้อน'),
+(4, 'มิลลิลิตร'),
+(5, 'ลูก');
 
 -- --------------------------------------------------------
 
@@ -489,9 +521,7 @@ CREATE TABLE `menu_in_set` (
 --
 
 INSERT INTO `menu_in_set` (`menu_no`, `menu_sub_no`, `amount`) VALUES
-(31, 26, 3),
-(31, 30, 2),
-(32, 26, 1),
+(31, 30, 3),
 (32, 27, 8),
 (32, 30, 4);
 
@@ -844,6 +874,7 @@ ALTER TABLE `material_history`
 --
 ALTER TABLE `material_item`
   ADD PRIMARY KEY (`mat_item_no`),
+  ADD UNIQUE KEY `mat_item_name` (`mat_item_name`),
   ADD KEY `mat_cat_no` (`mat_cat_no`),
   ADD KEY `unit_no` (`unit_no`);
 
@@ -851,7 +882,6 @@ ALTER TABLE `material_item`
 -- Indexes for table `material_mixed`
 --
 ALTER TABLE `material_mixed`
-  ADD PRIMARY KEY (`mixed_prod_no`,`item_no`),
   ADD KEY `item_no` (`item_no`),
   ADD KEY `mixed_prod_no` (`mixed_prod_no`,`item_no`);
 
@@ -928,7 +958,7 @@ ALTER TABLE `work_history`
 -- AUTO_INCREMENT for table `branch`
 --
 ALTER TABLE `branch`
-  MODIFY `branch_no` int(8) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=2;
+  MODIFY `branch_no` int(8) NOT NULL AUTO_INCREMENT;
 --
 -- AUTO_INCREMENT for table `employee`
 --
@@ -953,7 +983,7 @@ ALTER TABLE `employee_table`
 -- AUTO_INCREMENT for table `material_category`
 --
 ALTER TABLE `material_category`
-  MODIFY `mat_cat_no` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=12;
+  MODIFY `mat_cat_no` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=15;
 --
 -- AUTO_INCREMENT for table `material_history`
 --
@@ -963,17 +993,17 @@ ALTER TABLE `material_history`
 -- AUTO_INCREMENT for table `material_item`
 --
 ALTER TABLE `material_item`
-  MODIFY `mat_item_no` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=7;
+  MODIFY `mat_item_no` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=22;
 --
 -- AUTO_INCREMENT for table `material_unit`
 --
 ALTER TABLE `material_unit`
-  MODIFY `unit_no` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=3;
+  MODIFY `unit_no` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=6;
 --
 -- AUTO_INCREMENT for table `menu`
 --
 ALTER TABLE `menu`
-  MODIFY `menu_no` int(8) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=34;
+  MODIFY `menu_no` int(8) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=33;
 --
 -- AUTO_INCREMENT for table `menu_category`
 --
@@ -1048,7 +1078,7 @@ ALTER TABLE `material_item`
 -- Constraints for table `material_mixed`
 --
 ALTER TABLE `material_mixed`
-  ADD CONSTRAINT `material_mixed_ibfk_1` FOREIGN KEY (`mixed_prod_no`) REFERENCES `material_item` (`mat_item_no`),
+  ADD CONSTRAINT `material_mixed_ibfk_1` FOREIGN KEY (`mixed_prod_no`) REFERENCES `material_item` (`mat_item_no`) ON DELETE CASCADE ON UPDATE CASCADE,
   ADD CONSTRAINT `material_mixed_ibfk_2` FOREIGN KEY (`item_no`) REFERENCES `material_item` (`mat_item_no`);
 
 --
