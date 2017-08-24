@@ -5,7 +5,7 @@
 <html>
 <head>
     <jsp:include page="../_include/topenv.jsp"/>
-    <title>วัตถุดิบของเมนูอาหาร</title>
+    <title>วัตถุดิบในเมนูอาหาร</title>
 </head>
 <body class="nav-md">
 <div class="container body">
