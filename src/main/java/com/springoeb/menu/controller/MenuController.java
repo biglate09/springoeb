@@ -53,21 +53,11 @@ public class MenuController {
     @ResponseBody
     @PostMapping("/getmenus/{menuGroupNo}")
     public String getMenus(@PathVariable("menuGroupNo") int menuGroupNo, Model model, HttpSession session) throws JsonProcessingException {
-        Set<BranchMenu> menus = null;
         int branchNo = ((BranchUser)(session.getAttribute("branchUser"))).getBranchNo();
+        Set<BranchMenu> menus = branchMenuService.getMenusByMenuGroupSubBranch(menuGroupNo,branchNo);
 
-        if (menuGroupNo != 0) {
-            if (branchNo == Branch.MAIN_BRANCH) {
-                menus = branchMenuService.getMenusByMenuGroup(menuGroupNo);
-            } else {
-                menus = branchMenuService.getMenusByMenuGroupSubBranch(menuGroupNo,branchNo);
-            }
-        } else {
-            if (branchNo == Branch.MAIN_BRANCH) {
-                menus = branchMenuService.getMenus();
-            } else {
-                menus = branchMenuService.getMenusSubBranch(branchNo);
-            }
+        if(branchNo == Branch.MAIN_BRANCH){
+
         }
 
         ObjectMapper mapper = new ObjectMapper();
@@ -180,12 +170,7 @@ public class MenuController {
     @GetMapping("/menuset")
     public String toMenuSetIndex(Model model,HttpSession session) {
         int branchNo = ((BranchUser)(session.getAttribute("branchUser"))).getBranchNo();
-        Set<BranchMenu> menus = null;
-        if (branchNo == Branch.MAIN_BRANCH) {
-            menus = branchMenuService.getMenus();
-        } else {
-            menus = branchMenuService.getMenusSubBranch(branchNo);
-        }
+        Set<BranchMenu> menus = branchMenuService.getMenusSubBranch(branchNo);
         model.addAttribute("menus", menus);
         return MENU_PATH + "menuset.jsp";
     }

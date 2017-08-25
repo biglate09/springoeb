@@ -50,14 +50,4 @@ public class BranchMenu {
     public void setMenu(Menu menu) {
         this.menu = menu;
     }
-
-    @Override
-    public boolean equals(Object obj) {
-        BranchMenu paramBranchMenu = (BranchMenu)obj;
-        if(paramBranchMenu.getMenuNo() == menuNo){
-            return true;
-        }else{
-            return false;
-        }
-    }
 }

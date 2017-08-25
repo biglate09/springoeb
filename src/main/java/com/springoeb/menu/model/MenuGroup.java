@@ -18,6 +18,8 @@ public class MenuGroup implements Serializable {
     @Column(name = "menu_cat_no",insertable = true,updatable = true)
     private Integer menuCatNo;
 
+    public static final int ALL_GROUP = 0;
+
     @JsonIgnore
     @OneToMany(fetch = FetchType.LAZY,mappedBy = "menuGroup")
     List<Menu> menus;
