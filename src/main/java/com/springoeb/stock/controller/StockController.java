@@ -99,6 +99,15 @@ public class StockController {
         return STOCK_PATH + "materialitem.jsp";
     }
 
+    @PostMapping("/getmaterialitems")
+    @ResponseBody
+    public String getMaterialItems() throws JsonProcessingException {
+        List<MaterialItem> materialItems = materialItemService.getMaterialItems();
+        ObjectMapper mapper = new ObjectMapper();
+        String json = mapper.writeValueAsString(materialItems);
+        return json;
+    }
+
     @Transactional
     @PostMapping("/managematerialitem")
     @ResponseBody
@@ -187,7 +196,9 @@ public class StockController {
 
     //-----------------------------------------------------------------------------------------------------------//
     @GetMapping("/stockmanage")
-    public String toStockManageIndex() {
+    public String toStockManageIndex(Model model) {
+        List<MaterialItem> material = materialItemService.getMaterials();
+        model.addAttribute("material", material);
         return STOCK_PATH + "stockmanage.jsp";
     }
 
@@ -200,7 +211,6 @@ public class StockController {
         String json = mapper.writeValueAsString(materialHistories);
         return json;
     }
-
     //-----------------------------------------------------------------------------------------------------------//
     @GetMapping("/menumaterial")
     public String toMenuMaterialIndex() {
