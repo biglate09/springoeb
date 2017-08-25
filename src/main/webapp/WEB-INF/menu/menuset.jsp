@@ -552,7 +552,7 @@
     function del_menuset(menuNo, menuNameTH) {
         swal({
                 title: "ยืนยันการลบ " + menuNameTH,
-                text: "เมื่อยืนยัน คุณจะไม่สามารถนำข้อมูล " + menuNameTH + " กลับมาได้",
+                text: "เมื่อยืนยัน จะไม่สามารถนำข้อมูล " + menuNameTH + " กลับมาได้",
                 type: "warning",
                 showCancelButton: true,
                 cancelButtonText: "ยกเลิก",

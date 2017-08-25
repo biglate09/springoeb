@@ -425,9 +425,10 @@
         });
     }
     //TODO: Delete Work History Function
-    function delWork(workNo) {
+    function delWork(workNo,empName) {
         swal({
                 title: "ยืนยันการลบ",
+                text: "เมื่อยืนยัน จะไม่สามารถนำประวัติการทำงานของ "+ empName + " กลับมาได้",
                 type: "warning",
                 showCancelButton: true,
                 confirmButtonColor: "#DD6B55",
@@ -523,7 +524,7 @@
                             order: pay_order
                         },
                         option: '<a onclick="setWork(' + work_obj.workHistNo + ')" class="btn btn-warning btn-sm" data-toggle="modal" data-target="#editWorkHist"><i class="fa fa-pencil"></i>&nbsp; แก้ไข </a>' +
-                        '<a onclick="delWork(' + work_obj.workHistNo + ')" class="btn btn-danger btn-sm"><i class="fa fa-trash"></i>&nbsp; ลบ</a>'
+                        '<a onclick="delWork(' + work_obj.workHistNo + ',\'' + work_obj.empName + '\')" class="btn btn-danger btn-sm"><i class="fa fa-trash"></i>&nbsp; ลบ</a>'
                     };
                     data_array.push(data_refresh);
                 }

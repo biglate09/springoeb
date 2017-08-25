@@ -271,7 +271,7 @@
     function del_mat_item(matItemNo,matItemName) {
         swal ({
                 title: "ยืนยันการลบ " + matItemName,
-                text: "เมื่อยืนยัน คุณจะไม่สามารถนำข้อมูล "+matItemName+" กลับมาได้",
+                text: "เมื่อยืนยัน จะไม่สามารถนำข้อมูล "+matItemName+" กลับมาได้",
                 type: "warning",
                 showCancelButton: true,
                 cancelButtonText: "ยกเลิก",
