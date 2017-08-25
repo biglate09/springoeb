@@ -201,7 +201,7 @@
     function delMaterialCat(matCatNo,matCatName){
         swal({
                 title: "ยืนยันการลบ " + matCatName,
-                text: "ข้อมูลเกี่ยวกับ " + matCatName + " จะหายไปทั้งหมดเลย !",
+                text: "เมื่อยืนยัน คุณจะไม่สามารถนำข้อมูล " + matCatName + " กลับมาได้",
                 type: "warning",
                 showCancelButton: true,
                 confirmButtonColor: "#DD6B55",
