@@ -531,7 +531,7 @@
     function delEmp(empNo, empName) {
         swal({
                 title: "ยืนยันการลบ " + empName,
-                text: "เมื่อยืนยัน คุณจะไม่สามารถนำข้อมูล " + empName + " กลับมาได้",
+                text: "เมื่อยืนยัน ข้อมูลของ " + empName + " จะหายไปทั้งหมด และไม่สามารถนำกลับมาได้",
                 type: "warning",
                 showCancelButton: true,
                 confirmButtonColor: "#DD6B55",
