@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Host: 127.0.0.1
--- Generation Time: Aug 24, 2017 at 01:29 PM
+-- Generation Time: Aug 25, 2017 at 11:21 AM
 -- Server version: 10.1.21-MariaDB
 -- PHP Version: 5.6.30
 
@@ -28,15 +28,16 @@ SET time_zone = "+00:00";
 
 CREATE TABLE `branch` (
   `branch_no` int(8) NOT NULL,
-  `username` varchar(30) NOT NULL
+  `branch_name` varchar(100) NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8;
 
 --
 -- Dumping data for table `branch`
 --
 
-INSERT INTO `branch` (`branch_no`, `username`) VALUES
-(0, 'OrderEatBill');
+INSERT INTO `branch` (`branch_no`, `branch_name`) VALUES
+(1, 'สาขาหลัก'),
+(2, 'สาขาบางแค');
 
 -- --------------------------------------------------------
 
@@ -55,7 +56,36 @@ CREATE TABLE `branch_menu` (
 --
 
 INSERT INTO `branch_menu` (`branch_no`, `menu_no`, `available`) VALUES
-(0, 26, 1);
+(1, 36, 0),
+(1, 37, 0),
+(1, 39, 0),
+(1, 40, 0),
+(1, 41, 0),
+(1, 42, 0),
+(1, 43, 0),
+(1, 46, 1),
+(1, 47, 1);
+
+-- --------------------------------------------------------
+
+--
+-- Table structure for table `branch_user`
+--
+
+CREATE TABLE `branch_user` (
+  `branch_user_no` int(11) NOT NULL,
+  `username` varchar(30) NOT NULL,
+  `password` varchar(200) NOT NULL,
+  `branch_no` int(11) NOT NULL,
+  `role_no` int(11) NOT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=utf8;
+
+--
+-- Dumping data for table `branch_user`
+--
+
+INSERT INTO `branch_user` (`branch_user_no`, `username`, `password`, `branch_no`, `role_no`) VALUES
+(1, 'kopihub-master', '$2a$10$FRJB7JqGmSt24VRMFvGb2eHdtIejpshMshL6P9R8f7Te0vCO7mwRm', 1, 1);
 
 -- --------------------------------------------------------
 
@@ -81,18 +111,18 @@ CREATE TABLE `employee` (
 --
 
 INSERT INTO `employee` (`emp_no`, `emp_name`, `emp_tel`, `emp_gender`, `emp_type`, `pay_type`, `pay`, `bg_color`, `font_color`, `branch_no`) VALUES
-(1, 'เบนซ์', '', 'F', '2', '1', 40.00, '#ff6c87', '#170404', 0),
-(2, 'น้ำฝน', '', 'F', '2', '1', 35.00, '', '', 0),
-(7, 'บีม', '', 'F', '2', '1', 35.00, '#ff984e', '#1c0505', 0),
-(8, 'อาย', '', 'F', '2', '1', 35.00, '#1bde0a', '#260404', 0),
-(11, 'เนนนี่', '', 'F', '2', '1', 30.00, '#ff9ab8', '#050000', 0),
-(13, 'Amanicha', '', 'F', '1', '2', 300.00, '', '', 0),
-(14, 'KayOrmma', '', 'F', '1', '2', 485.00, '', '', 0),
-(16, 'เอิร์น', '', 'F', '2', '1', 35.00, '#b182c7', '#210303', 0),
-(17, 'ไพริน', '', 'F', '2', '1', 35.00, '#9ac1de', '#210d0d', 0),
-(18, 'เบส', '', 'M', '2', '1', 37.00, '#7686d9', '#0d0101', 0),
-(19, 'เต้', '', 'M', '2', '1', 35.00, '', '', 0),
-(22, 'นนท์', '', 'M', '2', '1', 30.00, '#f0f0f0', '#1f0d0d', 0);
+(1, 'เบนซ์', '', 'F', '2', '1', 40.00, '#ff6c87', '#170404', 1),
+(2, 'น้ำฝน', '', 'F', '2', '1', 35.00, '', '', 1),
+(7, 'บีม', '', 'F', '2', '1', 35.00, '#ff984e', '#1c0505', 1),
+(8, 'อาย', '', 'F', '2', '1', 35.00, '#1bde0a', '#260404', 1),
+(11, 'เนนนี่', '', 'F', '2', '1', 30.00, '#ff9ab8', '#050000', 1),
+(13, 'Amanicha', '', 'F', '1', '2', 300.00, '', '', 1),
+(14, 'KayOrmma', '', 'F', '1', '2', 485.00, '', '', 1),
+(16, 'เอิร์น', '', 'F', '2', '1', 35.00, '#b182c7', '#210303', 1),
+(17, 'ไพริน', '', 'F', '2', '1', 35.00, '#9ac1de', '#210d0d', 1),
+(18, 'เบส', '', 'M', '2', '1', 37.00, '#7686d9', '#0d0101', 1),
+(19, 'เต้', '', 'M', '2', '1', 35.00, '', '', 1),
+(22, 'นนท์', '', 'M', '2', '1', 30.00, '#f0f0f0', '#1f0d0d', 1);
 
 -- --------------------------------------------------------
 
@@ -186,7 +216,6 @@ INSERT INTO `employee_position` (`emp_pos_no`, `emp_pos_name`) VALUES
 (4, 'เคาท์เตอร์'),
 (5, 'ครัว'),
 (6, 'ติ่มซำ'),
-(7, 'เสิร์ฟ'),
 (8, 'Manage');
 
 -- --------------------------------------------------------
@@ -218,7 +247,6 @@ INSERT INTO `employee_table` (`emp_time_no`, `date`, `time_start`, `time_end`, `
 (12, '2017-07-15', '00:00:00', '00:00:00', 3, 11),
 (15, '2017-07-15', '13:00:00', '13:00:00', 4, 7),
 (16, '2017-07-15', '13:00:00', '13:00:00', 3, 1),
-(17, '2017-07-15', '13:00:00', '13:00:00', 7, 8),
 (18, '2017-07-15', '00:00:00', '00:00:00', 2, 1),
 (21, '2017-07-20', '18:00:00', '18:00:00', 2, 1),
 (22, '2017-07-20', '18:00:00', '18:00:00', 2, 18),
@@ -240,7 +268,6 @@ INSERT INTO `employee_table` (`emp_time_no`, `date`, `time_start`, `time_end`, `
 (40, '2017-07-22', '00:00:00', '00:00:00', 5, 1),
 (41, '2017-07-22', '00:00:00', '00:00:00', 4, 7),
 (42, '2017-07-22', '00:00:00', '00:00:00', 3, 11),
-(43, '2017-07-22', '00:00:00', '00:00:00', 7, 8),
 (44, '2017-07-22', '13:00:00', '13:00:00', 4, 16),
 (45, '2017-07-22', '13:00:00', '13:00:00', 3, 1),
 (46, '2017-07-22', '13:00:00', '13:00:00', 5, 22),
@@ -248,18 +275,15 @@ INSERT INTO `employee_table` (`emp_time_no`, `date`, `time_start`, `time_end`, `
 (49, '2017-07-23', '13:00:00', '13:00:00', 3, 11),
 (50, '2017-07-23', '18:00:00', '18:00:00', 5, 1),
 (51, '2017-07-23', '00:00:00', '00:00:00', 5, 18),
-(52, '2017-07-23', '18:00:00', '18:00:00', 7, 16),
 (53, '2017-07-26', '18:00:00', '18:00:00', 2, 1),
 (54, '2017-07-27', '18:00:00', '18:00:00', 2, 1),
 (56, '2017-07-29', '18:00:00', '18:00:00', 3, 1),
 (57, '2017-07-30', '18:00:00', '18:00:00', 3, 1),
 (58, '2017-07-26', '13:00:00', '13:00:00', 2, 16),
 (59, '2017-07-24', '00:00:00', '00:00:00', 2, 16),
-(60, '2017-07-29', '00:00:00', '00:00:00', 7, 17),
 (61, '2017-07-29', '00:00:00', '00:00:00', 4, 7),
 (62, '2017-07-29', '13:00:00', '13:00:00', 4, 8),
 (65, '2017-07-27', '00:00:00', '00:00:00', 2, 7),
-(66, '2017-07-28', '00:00:00', '00:00:00', 7, 16),
 (67, '2017-07-25', '00:00:00', '00:00:00', 2, 16),
 (69, '2017-07-25', '13:00:00', '13:00:00', 2, 7),
 (70, '2017-07-25', '13:00:00', '13:00:00', 2, 11),
@@ -269,7 +293,6 @@ INSERT INTO `employee_table` (`emp_time_no`, `date`, `time_start`, `time_end`, `
 (75, '2017-07-24', '00:00:00', '00:00:00', 2, 17),
 (76, '2017-07-24', '13:00:00', '13:00:00', 2, 11),
 (78, '2017-07-30', '13:00:00', '13:00:00', 4, 7),
-(79, '2017-07-30', '18:00:00', '18:00:00', 7, 8),
 (81, '2017-07-28', '13:00:00', '13:00:00', 5, 22),
 (82, '2017-07-28', '18:00:00', '18:00:00', 3, 1),
 (83, '2017-07-29', '13:00:00', '13:00:00', 5, 22),
@@ -304,16 +327,13 @@ INSERT INTO `employee_table` (`emp_time_no`, `date`, `time_start`, `time_end`, `
 (114, '2017-08-05', '00:00:00', '00:00:00', 4, 17),
 (115, '2017-08-05', '18:00:00', '18:00:00', 3, 1),
 (116, '2017-08-05', '00:00:00', '00:00:00', 5, 19),
-(117, '2017-08-05', '00:00:00', '00:00:00', 7, 16),
 (118, '2017-08-05', '18:00:00', '18:00:00', 2, 13),
 (119, '2017-08-05', '18:00:00', '18:00:00', 2, 14),
-(120, '2017-08-05', '13:00:00', '13:00:00', 7, 18),
 (121, '2017-08-05', '13:00:00', '13:00:00', 5, 22),
 (122, '2017-08-06', '00:00:00', '00:00:00', 3, 1),
 (123, '2017-08-06', '13:00:00', '13:00:00', 4, 1),
 (124, '2017-08-06', '13:00:00', '13:00:00', 3, 11),
 (125, '2017-08-06', '00:00:00', '00:00:00', 5, 19),
-(126, '2017-08-06', '18:00:00', '18:00:00', 7, 18),
 (127, '2017-08-06', '13:00:00', '13:00:00', 5, 22),
 (128, '2017-08-06', '18:00:00', '18:00:00', 2, 14),
 (129, '2017-08-06', '18:00:00', '18:00:00', 2, 13),
@@ -455,11 +475,15 @@ CREATE TABLE `menu` (
 --
 
 INSERT INTO `menu` (`menu_no`, `menu_name_TH`, `menu_name_EN`, `menu_desc`, `menu_price`, `menu_pic_path`, `menu_flag`, `local_flag`, `menu_group_no`) VALUES
-(26, 'ข้าวโพดอ่อนแต้มหน้าหมู', 'Baby Corn Served on Steamed Pork', 'ข้าวโพดอ่อนแต้มหน้าหมูแสนอร่อย ไม่บันยะบันยัง', 25.00, '1503247257896Dimsum_Baby_Corn1.jpg', 'M', 0, 39),
-(27, 'ซาลาเปาไส้ครีม', 'Sweet Cream Bun', 'ซาลาเปาสองลูก อุ่นๆหอมๆ', 30.00, '1503250131279Dimsum_Custard_Bun1.jpg', 'M', 0, 40),
-(30, 'vgewgeqgvgregvrewgv3', 'qwgqgwgqwgewvgwegewgvewgvew3', 'btefgre3', 333.00, '1503337307731Dimsum_Cabbage_Rolls1.jpg', 'M', 0, 40),
-(31, 'gasgass', 'trbtrr', 'gasgasg', 699.00, '1503339952738Dimsum_Blackbean_Garlic1.jpg', 'S', 0, NULL),
-(32, 'gasgas', 'trbtr', 'btrbtr', 123.00, '1503341994254Dimsum_Custard_Bun1.jpg', 'S', 0, NULL);
+(36, 'ข้าวโพดอ่อนแต้มหน้าหมู', 'Baby Corn Served on Steamed Pork', 'Test', 25.00, '1503651814191Dimsum_Baby_Corn1.jpg', 'M', 1, 39),
+(37, 'ซี่โครงหมูเต้าซี่', 'Blackbean Garlic Sauce Steamed Pork', 'Test', 30.00, '1503651832045Dimsum_Blackbean_Garlic1.jpg', 'M', 1, 39),
+(39, 'กะหล่ำห่อกุ้งปูอัด', 'Steamed Cabbage Roll Stuffed with Shrimp', 'Test', 30.00, '1503651885006Dimsum_Cabbage_Rolls1.jpg', 'M', 1, 39),
+(40, 'ขนมจีบปู', 'Crab Chinese Steamed Dumpling', 'Test', 30.00, '1503651901877Dimsum_Crab_Dumpling1.jpg', 'M', 1, 39),
+(41, 'ซาลาเปาไส้ครีม', 'Sweet Cream Bun', 'Test', 30.00, '1503651915038Dimsum_Custard_Bun1.jpg', 'M', 1, 40),
+(42, 'ปลาหมึกกระดองแต้มหน้าหมู', 'Cuttlefish served on Steamed Pork', 'Test', 30.00, '1503651929148Dimsum_Cuttleffish1.jpg', 'M', 1, 39),
+(43, 'ไข่แดงแต้มหน้าหมูสับ', 'Egg Yolk on Steamed Pork', 'Test', 30.00, '1503651942617Dimsum_Egg_Yolk1.jpg', 'M', 1, 39),
+(46, 'เซตหมูเต็มๆ', 'Piggy Set', 'Test', 119.00, '1503652497119Dimsum_Blackbean_Garlic1.jpg', 'S', 1, NULL),
+(47, 'บร็อคโคลี่ไส้กุ้ง', 'Broccoli served on Steamed Shrimp', 'Test', 30.00, '1503652811270Dimsum_Broccoli1.jpg', 'M', 1, 39);
 
 -- --------------------------------------------------------
 
@@ -521,9 +545,9 @@ CREATE TABLE `menu_in_set` (
 --
 
 INSERT INTO `menu_in_set` (`menu_no`, `menu_sub_no`, `amount`) VALUES
-(31, 30, 3),
-(32, 27, 8),
-(32, 30, 4);
+(46, 36, 1),
+(46, 37, 2),
+(46, 43, 2);
 
 -- --------------------------------------------------------
 
@@ -556,20 +580,20 @@ CREATE TABLE `promotion` (
 -- --------------------------------------------------------
 
 --
--- Table structure for table `user`
+-- Table structure for table `role`
 --
 
-CREATE TABLE `user` (
-  `username` varchar(30) NOT NULL,
-  `password` varchar(200) NOT NULL
+CREATE TABLE `role` (
+  `role_no` int(11) NOT NULL,
+  `role_name` varchar(100) NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8;
 
 --
--- Dumping data for table `user`
+-- Dumping data for table `role`
 --
 
-INSERT INTO `user` (`username`, `password`) VALUES
-('OrderEatBill', '$2a$10$ObZ9UEYRsdJqrXM.zc8swu4jvyhzaHSp6zsvCH2FlMiLG3c9FIAzu');
+INSERT INTO `role` (`role_no`, `role_name`) VALUES
+(1, 'manager');
 
 -- --------------------------------------------------------
 
@@ -814,16 +838,25 @@ INSERT INTO `work_history` (`work_hist_no`, `work_date`, `work_start`, `work_end
 -- Indexes for table `branch`
 --
 ALTER TABLE `branch`
-  ADD PRIMARY KEY (`branch_no`),
-  ADD KEY `username` (`username`);
+  ADD PRIMARY KEY (`branch_no`);
 
 --
 -- Indexes for table `branch_menu`
 --
 ALTER TABLE `branch_menu`
   ADD PRIMARY KEY (`branch_no`,`menu_no`),
-  ADD KEY `menuNo` (`menu_no`),
-  ADD KEY `branch_no` (`branch_no`,`menu_no`);
+  ADD KEY `branch_no` (`branch_no`,`menu_no`),
+  ADD KEY `branch_menu_ibfk_2` (`menu_no`);
+
+--
+-- Indexes for table `branch_user`
+--
+ALTER TABLE `branch_user`
+  ADD PRIMARY KEY (`branch_user_no`),
+  ADD UNIQUE KEY `username` (`username`),
+  ADD KEY `role_no` (`role_no`),
+  ADD KEY `branch_no` (`branch_no`),
+  ADD KEY `role_no_2` (`role_no`);
 
 --
 -- Indexes for table `employee`
@@ -937,10 +970,10 @@ ALTER TABLE `promotion`
   ADD PRIMARY KEY (`promotion_no`);
 
 --
--- Indexes for table `user`
+-- Indexes for table `role`
 --
-ALTER TABLE `user`
-  ADD PRIMARY KEY (`username`);
+ALTER TABLE `role`
+  ADD PRIMARY KEY (`role_no`);
 
 --
 -- Indexes for table `work_history`
@@ -958,7 +991,12 @@ ALTER TABLE `work_history`
 -- AUTO_INCREMENT for table `branch`
 --
 ALTER TABLE `branch`
-  MODIFY `branch_no` int(8) NOT NULL AUTO_INCREMENT;
+  MODIFY `branch_no` int(8) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=2;
+--
+-- AUTO_INCREMENT for table `branch_user`
+--
+ALTER TABLE `branch_user`
+  MODIFY `branch_user_no` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=3;
 --
 -- AUTO_INCREMENT for table `employee`
 --
@@ -1003,7 +1041,7 @@ ALTER TABLE `material_unit`
 -- AUTO_INCREMENT for table `menu`
 --
 ALTER TABLE `menu`
-  MODIFY `menu_no` int(8) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=33;
+  MODIFY `menu_no` int(8) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=48;
 --
 -- AUTO_INCREMENT for table `menu_category`
 --
@@ -1020,6 +1058,11 @@ ALTER TABLE `menu_group`
 ALTER TABLE `promotion`
   MODIFY `promotion_no` int(11) NOT NULL AUTO_INCREMENT;
 --
+-- AUTO_INCREMENT for table `role`
+--
+ALTER TABLE `role`
+  MODIFY `role_no` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=2;
+--
 -- AUTO_INCREMENT for table `work_history`
 --
 ALTER TABLE `work_history`
@@ -1029,17 +1072,18 @@ ALTER TABLE `work_history`
 --
 
 --
--- Constraints for table `branch`
---
-ALTER TABLE `branch`
-  ADD CONSTRAINT `branch_ibfk_1` FOREIGN KEY (`username`) REFERENCES `user` (`username`) ON DELETE CASCADE ON UPDATE CASCADE;
-
---
 -- Constraints for table `branch_menu`
 --
 ALTER TABLE `branch_menu`
-  ADD CONSTRAINT `branch_menu_ibfk_1` FOREIGN KEY (`branch_no`) REFERENCES `branch` (`branch_no`),
-  ADD CONSTRAINT `branch_menu_ibfk_2` FOREIGN KEY (`menu_no`) REFERENCES `menu` (`menu_no`);
+  ADD CONSTRAINT `branch_menu_ibfk_1` FOREIGN KEY (`branch_no`) REFERENCES `branch` (`branch_no`) ON DELETE CASCADE ON UPDATE CASCADE,
+  ADD CONSTRAINT `branch_menu_ibfk_2` FOREIGN KEY (`menu_no`) REFERENCES `menu` (`menu_no`) ON DELETE CASCADE ON UPDATE CASCADE;
+
+--
+-- Constraints for table `branch_user`
+--
+ALTER TABLE `branch_user`
+  ADD CONSTRAINT `branch_user_ibfk_1` FOREIGN KEY (`branch_no`) REFERENCES `branch` (`branch_no`) ON DELETE CASCADE ON UPDATE CASCADE,
+  ADD CONSTRAINT `branch_user_ibfk_2` FOREIGN KEY (`role_no`) REFERENCES `role` (`role_no`);
 
 --
 -- Constraints for table `employee`

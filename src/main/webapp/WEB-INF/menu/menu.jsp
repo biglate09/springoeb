@@ -310,28 +310,29 @@
                 if (json.length != 0) {
                     for (var i = 0; i < json.length; i++) {
                         var obj = json[i];
+                        var menu = obj.menu;
                         var div = '\
                         <div class="col-md-55">\
                         <div class="thumbnail thumbnail_inline">\
                         <div class="image view view-first">\
-                        <img style="width: 100%; display: block;" src="../images/menu/' + obj.menuPicPath + '" alt="image"/>\
+                        <img style="width: 100%; display: block;" src="../images/menu/' + menu.menuPicPath + '" alt="image"/>\
                         <div class="mask">\
-                        <p style="white-space: nowrap;overflow:hidden;text-overflow: ellipsis;">' + obj.menuDesc + '</p>\
+                        <p style="white-space: nowrap;overflow:hidden;text-overflow: ellipsis;">' + menu.menuDesc + '</p>\
                         <div class="tools tools-bottom">\
-                        <a title="แก้ไข" data-toggle="modal" data-target="#editMenu" onclick="set_menu(' + obj.menuNo + ')" style="color:white;cursor:pointer;margin-right:5px;"><i class="fa fa-pencil"></i></a>\
-                        <a title="พร้อมจำหน่าย" onclick="change_available(' + obj.menuNo + ')" style="color:white;cursor:pointer;margin-right:5px;"><i class="fa ' + (obj.available == true ? 'fa-eye' : 'fa-eye-slash' ) + '"></i></a>\
-                        <a title="ลบ" onclick="del_menu(' + obj.menuNo + ',\'' + obj.menuNameTH + '\')" style="color:white;cursor:pointer;"><i class="fa fa-trash"></i></a>\
+                        <a title="แก้ไข" data-toggle="modal" data-target="#editMenu" onclick="set_menu(' + menu.menuNo + ')" style="color:white;cursor:pointer;margin-right:5px;"><i class="fa fa-pencil"></i></a>\
+                        <a title="พร้อมจำหน่าย" onclick="change_available(' + menu.menuNo + ')" style="color:white;cursor:pointer;margin-right:5px;"><i class="fa ' + (obj.available == true ? 'fa-eye' : 'fa-eye-slash' ) + '"></i></a>\
+                        <a title="ลบ" onclick="del_menu(' + menu.menuNo + ',\'' + menu.menuNameTH + '\')" style="color:white;cursor:pointer;"><i class="fa fa-trash"></i></a>\
                         </div>\
                         </div>\
                         </div>\
                         <div class="caption" style="color:#73879C">\
-                        <p style="text-align:center;font-weight:bold;white-space:nowrap;overflow:hidden;text-overflow: ellipsis;cursor:pointer;" data-toggle="modal" data-target="#editMenu" onclick="set_menu(' + obj.menuNo + ')">' + obj.menuNameTH + " / " + obj.menuNameEN + '</p>\
-                        <p style="text-align:center;white-space: nowrap;overflow:hidden;text-overflow: ellipsis;">หมวดหมู่ : ' + obj.menuGroup.menuGroupNameTH + '</p>\
-                        <p style="text-align:center">' + obj.menuPrice.toFixed(2).replace(/\B(?=(\d{3})+(?!\d))/g, ",") + " บาท" + '</p>\
+                        <p style="text-align:center;font-weight:bold;white-space:nowrap;overflow:hidden;text-overflow: ellipsis;cursor:pointer;" data-toggle="modal" data-target="#editMenu" onclick="set_menu(' + menu.menuNo + ')">' + menu.menuNameTH + " / " + menu.menuNameEN + '</p>\
+                        <p style="text-align:center;white-space: nowrap;overflow:hidden;text-overflow: ellipsis;">หมวดหมู่ : ' + menu.menuGroup.menuGroupNameTH + '</p>\
+                        <p style="text-align:center">' + menu.menuPrice.toFixed(2).replace(/\B(?=(\d{3})+(?!\d))/g, ",") + " บาท" + '</p>\
                         <div style="text-align:center;">\
-                        <a title="แก้ไข" data-toggle="modal" data-target="#editMenu" onclick="set_menu(' + obj.menuNo + ')" style="color:#73879C;cursor:pointer;margin-right:5px;"><i class="fa fa-pencil"></i></a>\
-                        <a title="พร้อมจำหน่าย" onclick="change_available(' + obj.menuNo + ')" style="color:#73879C;cursor:pointer;margin-right:5px;"><i class="fa ' + (obj.available == true ? 'fa-eye' : 'fa-eye-slash' ) + '"></i></a>\
-                        <a title="ลบ" onclick="del_menu(' + obj.menuNo + ',\'' + obj.menuNameTH + '\')" style="color:#73879C;cursor:pointer;"><i class="fa fa-trash"></i></a>\
+                        <a title="แก้ไข" data-toggle="modal" data-target="#editMenu" onclick="set_menu(' + menu.menuNo + ')" style="color:#73879C;cursor:pointer;margin-right:5px;"><i class="fa fa-pencil"></i></a>\
+                        <a title="พร้อมจำหน่าย" onclick="change_available(' + menu.menuNo + ')" style="color:#73879C;cursor:pointer;margin-right:5px;"><i class="fa ' + (obj.available == true ? 'fa-eye' : 'fa-eye-slash' ) + '"></i></a>\
+                        <a title="ลบ" onclick="del_menu(' + menu.menuNo + ',\'' + menu.menuNameTH + '\')" style="color:#73879C;cursor:pointer;"><i class="fa fa-trash"></i></a>\
                         </div>\
                         </div>\
                         </div>\
@@ -402,14 +403,15 @@
             url: "${contextPath}/menu/getmenu/" + menuNo,
             dataType: "json",
             success: function (result) {
-                $("#hiddenmenuno").val(result.menuNo);
-                $("#edit_menu_nameTH").val(result.menuNameTH);
-                $("#edit_menu_nameEN").val(result.menuNameEN);
-                $("#show_menu_name_for_edit").html(result.menuNameTH + " / " + result.menuNameEN);
-                $("#edit_menu_desc").val(result.menuDesc);
-                $("#edit_menu_price").val(result.menuPrice.toFixed(2));
-                $("#edit_menu_available").val(result.menuAvailable);
-                $("#edit_menu_stock_cat").val(result.menuGroupNo);
+                menu = result.menu;
+                $("#hiddenmenuno").val(menu.menuNo);
+                $("#edit_menu_nameTH").val(menu.menuNameTH);
+                $("#edit_menu_nameEN").val(menu.menuNameEN);
+                $("#show_menu_name_for_edit").html(menu.menuNameTH + " / " + menu.menuNameEN);
+                $("#edit_menu_desc").val(menu.menuDesc);
+                $("#edit_menu_price").val(menu.menuPrice.toFixed(2));
+                $("#edit_menu_available").val(menu.menuAvailable);
+                $("#edit_menu_stock_cat").val(menu.menuGroupNo);
                 if (result.available) {
                     $("#edit_menu_available").parent().addClass('checked');
                     $("#edit_menu_available").attr('checked', true);
@@ -417,7 +419,7 @@
                     $("#edit_menu_available").parent().removeClass('checked');
                     $("#edit_menu_available").attr('checked', false);
                 }
-                $("#showpic_edit").attr('src', '../images/menu/' + result.menuPicPath);
+                $("#showpic_edit").attr('src', '../images/menu/' + menu.menuPicPath);
             }
         });
     }

@@ -42,4 +42,22 @@ public class BranchMenu {
     public void setAvailable(boolean available) {
         this.available = available;
     }
+
+    public Menu getMenu() {
+        return menu;
+    }
+
+    public void setMenu(Menu menu) {
+        this.menu = menu;
+    }
+
+    @Override
+    public boolean equals(Object obj) {
+        BranchMenu paramBranchMenu = (BranchMenu)obj;
+        if(paramBranchMenu.getMenuNo() == menuNo){
+            return true;
+        }else{
+            return false;
+        }
+    }
 }

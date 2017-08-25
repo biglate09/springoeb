@@ -9,6 +9,8 @@ public class Branch {
     private Integer branchNo;
     private String branchName;
 
+    public static int MAIN_BRANCH = 1;
+
     public Integer getBranchNo() {
         return branchNo;
     }

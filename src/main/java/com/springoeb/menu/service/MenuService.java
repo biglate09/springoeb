@@ -35,8 +35,8 @@ public class MenuService {
         return menuRepository.findByMenuGroupNoAndMenuFlagAndLocalFlagIn(menuGroupNo, Menu.flagForMenu, localFlag);
     }
 
-    public void save(Menu menu) {
-        menuRepository.save(menu);
+    public Menu save(Menu menu) {
+        return menuRepository.save(menu);
     }
 
     public void delMenu(int menuNo) {
