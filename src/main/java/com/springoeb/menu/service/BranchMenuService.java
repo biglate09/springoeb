@@ -39,4 +39,8 @@ public class BranchMenuService {
             return branchMenuRepository.findByMenu_MenuGroupNoAndMenu_MenuFlagAndBranchNo(menuGroupNo, Menu.flagForMenu, branchNo);
         }
     }
+
+    public void save(List<BranchMenu> branchMenus){
+        branchMenuRepository.save(branchMenus);
+    }
 }

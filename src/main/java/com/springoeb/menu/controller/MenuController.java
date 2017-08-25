@@ -6,6 +6,7 @@ import com.springoeb.menu.model.*;
 import com.springoeb.menu.service.*;
 import com.springoeb.system.model.Branch;
 import com.springoeb.system.model.BranchUser;
+import com.springoeb.system.service.BranchService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -38,6 +39,8 @@ public class MenuController {
     private MenuGroupService menuGroupService;
     @Autowired
     private BranchMenuService branchMenuService;
+    @Autowired
+    private BranchService branchService;
 
     private static final String MENU_PATH = "/WEB-INF/menu/";
     private static final String UPLOADED_FOLDER = System.getProperty("user.dir") + "/src/main/webapp/images/";
@@ -80,7 +83,7 @@ public class MenuController {
             menu.setMenuNo(menuNo);
         }else{
             //only for add
-            menu.setLocalFlag(branchNo);
+            menu.setLocalFlag(request.getParameter("localFlag") != null ? Menu.OFFICIAL_MENU_FLAG : branchNo);
         }
 
         menu.setMenuNameTH(request.getParameter("menuNameTH"));
@@ -115,11 +118,24 @@ public class MenuController {
             }
 
             Menu insertedMenu = menuService.save(menu);
-            BranchMenu branchMenu = new BranchMenu();
-            branchMenu.setBranchNo(branchNo);
-            branchMenu.setMenuNo(insertedMenu.getMenuNo());
-            branchMenu.setAvailable(request.getParameter("menuAvailable") == null ? false : true);
-            branchMenuService.save(branchMenu);
+
+            if(request.getParameter("localFlag") != null){
+                List<Branch> branches = branchService.getAllBranches();
+                for(Branch b : branches){
+                    BranchMenu branchMenu = new BranchMenu();
+                    branchMenu.setBranchNo(b.getBranchNo());
+                    branchMenu.setMenuNo(insertedMenu.getMenuNo());
+                    branchMenu.setAvailable(false);
+                    branchMenuService.save(branchMenu);
+                }
+            }else{
+                BranchMenu branchMenu = new BranchMenu();
+                branchMenu.setBranchNo(branchNo);
+                branchMenu.setMenuNo(insertedMenu.getMenuNo());
+                branchMenu.setAvailable(false);
+                branchMenu.setAvailable(request.getParameter("menuAvailable") == null ? false : true);
+                branchMenuService.save(branchMenu);
+            }
         } else {
             throw new Exception();
         }
@@ -189,7 +205,7 @@ public class MenuController {
             menuSet.setMenuNo(menuSetNo);
         }else{
             //only for add
-            menuSet.setLocalFlag(branchNo);
+            menuSet.setLocalFlag(request.getParameter("localFlag") != null ? Menu.OFFICIAL_MENU_FLAG : branchNo);
         }
 
         menuSet.setMenuNameTH(request.getParameter("menuNameTH"));
@@ -239,11 +255,23 @@ public class MenuController {
             }
             menuInSetService.save(menuSetMenus);
 
-            BranchMenu branchMenu = new BranchMenu();
-            branchMenu.setBranchNo(branchNo);
-            branchMenu.setMenuNo(insertedMenuSet.getMenuNo());
-            branchMenu.setAvailable(request.getParameter("available") == null ? false : true);
-            branchMenuService.save(branchMenu);
+            if(request.getParameter("localFlag") != null){
+                List<Branch> branches = branchService.getAllBranches();
+                for(Branch b : branches){
+                    BranchMenu branchMenu = new BranchMenu();
+                    branchMenu.setBranchNo(b.getBranchNo());
+                    branchMenu.setMenuNo(insertedMenuSet.getMenuNo());
+                    branchMenu.setAvailable(false);
+                    branchMenuService.save(branchMenu);
+                }
+            }else{
+                BranchMenu branchMenu = new BranchMenu();
+                branchMenu.setBranchNo(branchNo);
+                branchMenu.setMenuNo(insertedMenuSet.getMenuNo());
+                branchMenu.setAvailable(false);
+                branchMenu.setAvailable(request.getParameter("available") == null ? false : true);
+                branchMenuService.save(branchMenu);
+            }
         } else {
             throw new Exception();
         }

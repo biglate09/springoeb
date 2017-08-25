@@ -36,7 +36,7 @@
                                 <div class="col-md-3 form-group has-feedback" style="padding:0px;">
                                     <%--<label>ตัวกรองจากหมวดหมู่ของอาหาร</label>--%>
                                     <select class="form-control" id="filter_by_category">
-                                        <option disabled >ตัวกรองจากหมวดหมู่ของอาหาร</option>
+                                        <option disabled>ตัวกรองจากหมวดหมู่ของอาหาร</option>
                                         <option value="0">ทั้งหมด</option>
                                         <c:forEach items="${menuGroups}" var="mc">
                                             <option value="${mc.menuGroupNo}">${mc.menuGroupNameTH}
@@ -65,7 +65,8 @@
                                               id="add_menu" enctype="multipart/form-data">
                                             <div class="form-group">
                                                 <img class="col-md-offset-3 col-sm-offset-3 col-md-6 col-sm-6 col-xs-12 img-resize"
-                                                     id="showpic" style="margin-bottom:20px;cursor:pointer;" height="auto" width="414"
+                                                     id="showpic" style="margin-bottom:20px;cursor:pointer;"
+                                                     height="auto" width="414"
                                                      src="../images/default_upload_image.png"/>
                                                 <div class="col-md-offset-3 col-sm-offset-3 col-md-6 col-sm-6 col-xs-12 has-feedback"
                                                      style="margin-bottom: 12px">
@@ -121,7 +122,15 @@
                                             <div class="modal-footer">
                                                 <!-- ปุ่มกดปิด (Close) ตรงส่วนล่างของ Modal -->
                                                 <div class="col-md-9 col-sm-9 col-xs-12 col-md-offset-3">
-                                                    <div class="checkbox" style="display:inline-block;margin-right:15px;">
+                                                    <div class="checkbox"
+                                                         style="display:inline-block;margin-right:15px;">
+                                                        <label>
+                                                            <input type="checkbox" name="localFlag"
+                                                                   id="add_menu_official"
+                                                                   class="flat">
+                                                            เป็นเมนูของทุกสาขา
+                                                        </label>
+
                                                         <label>
                                                             <input type="checkbox" name="menuAvailable"
                                                                    id="add_menu_available"
@@ -161,7 +170,8 @@
                                         <input type="hidden" name="menuNo" id="hiddenmenuno">
                                         <div class="form-group">
                                             <img class="col-md-offset-3 col-sm-offset-3 col-md-6 col-sm-6 col-xs-12 img-resize"
-                                                 style="margin-bottom:20px;cursor:pointer;" id="showpic_edit" width="414" height="auto"
+                                                 style="margin-bottom:20px;cursor:pointer;" id="showpic_edit"
+                                                 width="414" height="auto"
                                                  src="../images/default_upload_image.png"/>
 
                                             <div class="col-md-offset-3 col-sm-offset-3 col-md-6 col-sm-6 col-xs-12 has-feedback"
@@ -319,9 +329,7 @@
                         <div class="mask">\
                         <p style="white-space: nowrap;overflow:hidden;text-overflow: ellipsis;">' + menu.menuDesc + '</p>\
                         <div class="tools tools-bottom">\
-                        <a title="แก้ไข" data-toggle="modal" data-target="#editMenu" onclick="set_menu(' + menu.menuNo + ')" style="color:white;cursor:pointer;margin-right:5px;"><i class="fa fa-pencil"></i></a>\
-                        <a title="พร้อมจำหน่าย" onclick="change_available(' + menu.menuNo + ')" style="color:white;cursor:pointer;margin-right:5px;"><i class="fa ' + (obj.available == true ? 'fa-eye' : 'fa-eye-slash' ) + '"></i></a>\
-                        <a title="ลบ" onclick="del_menu(' + menu.menuNo + ',\'' + menu.menuNameTH + '\')" style="color:white;cursor:pointer;"><i class="fa fa-trash"></i></a>\
+                        <a title="เมนูของทุกสาขา" style="color:white;margin-right:5px;"><i class="fa ' + (menu.localFlag == 0 ? 'fa-check-circle' : 'fa-circle-o' ) + '"></i> <span style="font-size:14px">' + (menu.localFlag == 0 ? 'เป็นเมนูของทุกสาขา' : 'เป็นเมนูเฉพาะสาขา ' + menu.localFlag ) + '</span></a>\
                         </div>\
                         </div>\
                         </div>\
@@ -331,7 +339,8 @@
                         <p style="text-align:center">' + menu.menuPrice.toFixed(2).replace(/\B(?=(\d{3})+(?!\d))/g, ",") + " บาท" + '</p>\
                         <div style="text-align:center;">\
                         <a title="แก้ไข" data-toggle="modal" data-target="#editMenu" onclick="set_menu(' + menu.menuNo + ')" style="color:#73879C;cursor:pointer;margin-right:5px;"><i class="fa fa-pencil"></i></a>\
-                        <a title="พร้อมจำหน่าย" onclick="change_available(' + menu.menuNo + ')" style="color:#73879C;cursor:pointer;margin-right:5px;"><i class="fa ' + (obj.available == true ? 'fa-eye' : 'fa-eye-slash' ) + '"></i></a>\
+                        <a title="เป็นเมนู' + (menu.localFlag == 0 ? 'ของทุก' : 'เฉพาะ')+ 'สาขา คลิกเพื่อเปลี่ยน" onclick="change_official(' + menu.menuNo + ')" style="color:#73879C;cursor:pointer;margin-right:5px;"><i class="fa ' + (menu.localFlag == 0 ? 'fa-check-circle' : 'fa-circle-o') + '"></i></a>\
+                        <a title="เมนูนี้'+(obj.available == true ? '' : 'ไม่' )+'พร้อมจำหน่าย คลิกเพื่อเปลี่ยน" onclick="change_available(' + menu.menuNo + ')" style="color:#73879C;cursor:pointer;margin-right:5px;"><i class="fa ' + (obj.available == true ? 'fa-eye' : 'fa-eye-slash' ) + '"></i></a>\
                         <a title="ลบ" onclick="del_menu(' + menu.menuNo + ',\'' + menu.menuNameTH + '\')" style="color:#73879C;cursor:pointer;"><i class="fa fa-trash"></i></a>\
                         </div>\
                         </div>\

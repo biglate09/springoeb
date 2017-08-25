@@ -14,4 +14,5 @@ public interface BranchMenuRepository extends CrudRepository<BranchMenu,BranchMe
     Set<BranchMenu> findByMenu_MenuGroupNoAndMenu_MenuFlagAndBranchNo(int menuGroupNo,String menuFlag,int branchNo);
     Set<BranchMenu> findByMenu_MenuFlagAndBranchNo(String menuFlag,int branchNo);
     BranchMenu findByMenuNoAndBranchNo(int menuNo,int branchNo);
+    void save(List<BranchMenu> branchMenus);
 }
