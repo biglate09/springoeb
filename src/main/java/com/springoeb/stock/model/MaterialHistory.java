@@ -10,7 +10,7 @@ public class MaterialHistory {
     private Integer matHistNo;
     private String matName;
     private Double matQuantity;
-    private Date dateTime;
+    private Date datetime;
     @Column(name = "mat_item_no",insertable = true,updatable = true)
     private Integer matItemNo;
     @Column(name = "branch_no",insertable = true,updatable = true)
@@ -44,12 +44,12 @@ public class MaterialHistory {
         this.matQuantity = matQuantity;
     }
 
-    public Date getDateTime() {
-        return dateTime;
+    public Date getDatetime() {
+        return datetime;
     }
 
-    public void setDateTime(Date dateTime) {
-        this.dateTime = dateTime;
+    public void setDatetime(Date datetime) {
+        this.datetime = datetime;
     }
 
     public Integer getMatItemNo() {
