@@ -74,7 +74,7 @@
                                                            class="form-control" name="menuPicPath"
                                                            id="add_menu_pic"
                                                            onchange="document.getElementById('showpic').src = window.URL.createObjectURL(this.files[0])"
-                                                           placeholder="อัพโหลดรูปภาพ" required>
+                                                           placeholder="อัพโหลดรูปภาพ">
                                                 </div>
                                                 <div class="col-md-6 col-sm-6 col-xs-12 form-group has-feedback">
                                                     <label>ชื่อเมนูอาหารภาษาไทย</label>
@@ -114,7 +114,7 @@
                                                     <label>รายละเอียดของเมนู</label>
                                                     <textarea rows="4" cols="100" class="form-control" name="menuDesc"
                                                               id="add_menu_desc"
-                                                              placeholder="รายละเอียด" required></textarea>
+                                                              placeholder="รายละเอียด"></textarea>
                                                 </div>
 
 
@@ -220,7 +220,7 @@
                                                 <label>รายละเอียดของเมนู</label>
                                                 <textarea rows="4" cols="100" class="form-control" name="menuDesc"
                                                           id="edit_menu_desc"
-                                                          placeholder="รายละเอียด" required></textarea>
+                                                          placeholder="รายละเอียด"></textarea>
 
                                             </div>
                                         </div>
@@ -453,7 +453,7 @@
                         refresh_table();
                     },
                     error: function (json) {
-                        swal("ไม่สำเร็จ", "เมนูนี้ถูกใช้ในเมนูอาหารแบบชุด ต้องลบออกจากเมนูอาหารแบบชุดก่อน", "error");
+                        swal("ไม่สำเร็จ", "เมนูนี้ถูกใช้ในเมนูอาหารแบบชุด \nกรุณาลบออกจากเมนูอาหารแบบชุดก่อน", "error");
                     }
                 });
             });
