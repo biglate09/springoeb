@@ -41,10 +41,10 @@
                         <a id="menutab"><i class="fa fa-cutlery"></i> จัดการเมนูอาหาร <span
                                 class="fa fa-chevron-down"></span></a>
                         <ul class="nav child_menu">
-                            <li><a>ประเภท<span class="fa fa-chevron-down"></span></a>
+                            <li><a>ประเภทอาหาร<span class="fa fa-chevron-down"></span></a>
                                 <ul class="nav child_menu">
-                                    <li class="sub_menu"><a id="menucategory" href="${contextPath}/menu/menucategory">ประเภทอาหาร</a></li>
-                                    <li class="sub_menu"> <a id="menugroup" href="${contextPath}/menu/menugroup">หมวดหมู่อาหาร</a></li>
+                                    <li class="sub_menu"><a id="menucategory" href="${contextPath}/menu/menucategory">ประเภท</a></li>
+                                    <li class="sub_menu"> <a id="menugroup" href="${contextPath}/menu/menugroup">หมวดหมู่</a></li>
                                 </ul>
                             </li>
                             <li><a id="menu" href="${contextPath}/menu/menu">เมนูอาหารแบบเดี่ยว</a></li>

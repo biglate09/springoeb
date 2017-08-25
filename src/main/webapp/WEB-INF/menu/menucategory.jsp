@@ -201,7 +201,7 @@
     function delMenuCat(menuCatNo,menuCatName){
         swal({
                 title: "ยืนยันการลบ " + menuCatName,
-                text: "ข้อมูลเกี่ยวกับ " + menuCatName + " จะหายไปทั้งหมดเลย !",
+                text: "เมื่อยืนยัน คุณจะไม่สามารถนำข้อมูล " + menuCatName + " กลับมาได้",
                 type: "warning",
                 showCancelButton: true,
                 confirmButtonColor: "#DD6B55",
@@ -217,7 +217,7 @@
                         swal("สำเร็จ", menuCatName + " ถูกลบเรียบร้อยแล้ว", "success");
                         refresh_table();
                     }, error: function (result) {
-                        swal("ไม่สำเร็จ", "ลบไม่ได้เนื่องจาก มีหมวดหมู่อาหารที่เป็นประเภทนี้อยู่", "error");
+                        swal("ไม่สำเร็จ", "ลบไม่ได้เนื่องจาก มีหมวดหมู่อาหารที่อยู่ในประเภทนี้อยู่", "error");
                     }
                 });
             });
