@@ -5,7 +5,7 @@
 <html>
 <head>
     <jsp:include page="../_include/topenv.jsp"/>
-    <title>หน่วยวของัตถุดิบ</title>
+    <title>หน่วยของวัตถุดิบ</title>
 </head>
 <body class="nav-md">
 <div class="container body">
