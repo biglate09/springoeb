@@ -197,8 +197,8 @@ public class StockController {
     //-----------------------------------------------------------------------------------------------------------//
     @GetMapping("/stockmanage")
     public String toStockManageIndex(Model model) {
-        List<MaterialItem> material = materialItemService.getMaterials();
-        model.addAttribute("material", material);
+        List<MaterialItem> materials = materialItemService.getMaterials();
+        model.addAttribute("materials", materials);
         return STOCK_PATH + "stockmanage.jsp";
     }
 
