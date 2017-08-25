@@ -2,17 +2,16 @@ package com.springoeb.stock.controller;
 
 import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.databind.ObjectMapper;
-import com.springoeb.stock.model.MaterialCategory;
-import com.springoeb.stock.model.MaterialItem;
-import com.springoeb.stock.model.MaterialMixed;
-import com.springoeb.stock.model.MaterialUnit;
+import com.springoeb.stock.model.*;
 import com.springoeb.stock.service.*;
+import com.springoeb.system.model.BranchUser;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
 
 import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpSession;
 import javax.transaction.Transactional;
 import java.util.LinkedList;
 import java.util.List;
@@ -197,10 +196,21 @@ public class StockController {
 
     //-----------------------------------------------------------------------------------------------------------//
     @GetMapping("/stockmanage")
-    public String toStockManageIndex() {
+    public String toStockManageIndex(Model model) {
+        List<MaterialItem> materials = materialItemService.getMaterials();
+        model.addAttribute("materials", materials);
         return STOCK_PATH + "stockmanage.jsp";
     }
 
+    @PostMapping("/getmaterialhistories")
+    @ResponseBody
+    public String getMaterialHistories(HttpSession session) throws JsonProcessingException {
+        int branchNo = ((BranchUser)(session.getAttribute("branchUser"))).getBranchNo();
+        List<MaterialHistory> materialHistories = materialHistoryService.getMaterialHistories(branchNo);
+        ObjectMapper mapper = new ObjectMapper();
+        String json = mapper.writeValueAsString(materialHistories);
+        return json;
+    }
     //-----------------------------------------------------------------------------------------------------------//
     @GetMapping("/menumaterial")
     public String toMenuMaterialIndex() {

@@ -17,6 +17,10 @@ public class MaterialItemService {
     public List<MaterialItem> getMixedProducts(){
         return materialItemRepository.findByMatFlag(MaterialItem.flagForMixed);
     }
+
+    public List<MaterialItem> getMaterials(){
+        return materialItemRepository.findAll();
+    }
     public MaterialItem save(MaterialItem matItem){ return materialItemRepository.save(matItem);}
     public void delMaterialItem(int matItemNo){ materialItemRepository.removeByMatItemNo(matItemNo);}
     public MaterialItem getMaterialItem(int matItemNo){

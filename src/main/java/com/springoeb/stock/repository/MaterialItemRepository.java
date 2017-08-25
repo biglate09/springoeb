@@ -9,6 +9,7 @@ import java.util.List;
 @Repository
 public interface MaterialItemRepository extends CrudRepository<MaterialItem,Integer> {
     List<MaterialItem> findByMatFlag(String materialFlag);
+    List<MaterialItem> findAll();
     void removeByMatItemNo(int matItemNo);
     MaterialItem findByMatItemNo(int matItemNo);
     List<MaterialItem> findByMatItemNameIgnoreCase(String matItemName);
