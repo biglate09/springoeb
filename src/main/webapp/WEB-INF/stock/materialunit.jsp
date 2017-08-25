@@ -5,7 +5,7 @@
 <html>
 <head>
     <jsp:include page="../_include/topenv.jsp"/>
-    <title>หน่วยวัตถุดิบอาหาร</title>
+    <title>หน่วยวของัตถุดิบ</title>
 </head>
 <body class="nav-md">
 <div class="container body">
@@ -24,7 +24,7 @@
                 <div class="col-md-12 col-sm-12 col-xs-12">
                     <div class="x_panel">
                         <div class="x_title">
-                            <h4>หน่วยวัตถุดิบอาหาร</h4>
+                            <h4>หน่วยของวัตถุดิบ</h4>
                         </div>
                         <div class="x_content">
                             <form action="#">
@@ -37,7 +37,7 @@
                                        class="table table-striped table-bordered">
                                     <thead>
                                     <tr>
-                                        <th style="width:20%;text-align:center;">ชื่อหน่วยวัตถุดิบอาหาร</th>
+                                        <th style="width:20%;text-align:center;">ชื่อหน่วยของวัตถุดิบ</th>
                                         <th style="width:20%;text-align:center;">ตัวเลือก</th>
                                     </tr>
                                     </thead>
@@ -56,15 +56,15 @@
                         <div class="modal-content">
                             <div class="modal-header">
                                 <button type="button" class="close" data-dismiss="modal">&times;</button>
-                                <h4 class="modal-title">เพิ่มหน่วยวัตถุดิบอาหารใหม่</h4>
+                                <h4 class="modal-title">เพิ่มหน่วยของวัตถุดิบใหม่</h4>
                             </div>
                             <div class="modal-body">
                                 <form class="form-horizontal form-label-left input_mask" modelAttribute="materialUnit" id="material_unit">
                                     <div class="form-group">
                                         <div class="col-md-6 col-sm-6 col-xs-12 form-group has-feedback">
-                                            <label>ชื่อหน่วยวัตถุดิบอาหาร</label>
+                                            <label>ชื่อหน่วยของวัตถุดิบ</label>
                                             <input type="text" class="form-control" name="unitName" id="mat_unit_name"
-                                                   placeholder="ชื่อหน่วยวัตถุดิบอาหาร" required>
+                                                   placeholder="ชื่อหน่วยของวัตถุดิบ" required>
                                             <span class="fa fa-pencil form-control-feedback right"
                                                   aria-hidden="true"></span>
                                         </div>
@@ -94,7 +94,7 @@
                             <div class="modal-header">
                                 <!-- ปุ่มกดปิด (X) ตรงส่วนหัวของ Modal -->
                                 <button type="button" class="close" data-dismiss="modal">&times;</button>
-                                <h4 class="modal-title">แก้ไขหน่วยัตถุดิบอาหาร</h4>
+                                <h4 class="modal-title">แก้ไขหน่วยของวัตถุดิบ</h4>
                             </div>
                             <!-- ส่วนเนื้อหาของ Modal -->
                             <div class="modal-body">
@@ -102,10 +102,10 @@
                                     <input type="hidden" name="unitNo" id="hiddenunitno">
                                     <div class="form-group">
                                         <div class="col-md-6 col-sm-6 col-xs-12 form-group has-feedback">
-                                            <label>ชื่อหน่วยวัตถุดิบอาหาร</label>
+                                            <label>ชื่อหน่วยของวัตถุดิบ</label>
                                             <input type="text" class="form-control" id="edit_mat_unit_name"
                                                    name="unitName"
-                                                   placeholder="ชื่อหน่วยวัตถุดิบอาหาร" required>
+                                                   placeholder="ชื่อหน่วยของวัตถุดิบ" required>
                                             <span class="fa fa-pencil form-control-feedback right"
                                                   aria-hidden="true"></span>
                                         </div>

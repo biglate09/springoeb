@@ -17,7 +17,7 @@
             </div>
             <div class="profile_info">
                 <span>ยินดีต้อนรับ,</span>
-                <h2>${username}</h2>
+                <h2 style="white-space:nowrap;overflow:hidden;text-overflow: ellipsis;">${branchUser.username}</h2>
             </div>
         </div>
         <!-- /menu profile quick info -->
@@ -57,11 +57,11 @@
                         <a><i class="fa fa-spoon"></i> จัดการวัตถุดิบอาหาร <span class="fa fa-chevron-down"></span></a>
                         <ul class="nav child_menu">
                             <li><a id="materialcategory" href="${contextPath}/stock/materialcategory">ประเภทวัตถุดิบ</a></li>
-                            <li><a id="materialunit" href="${contextPath}/stock/materialunit">หน่วยวัตถุดิบอาหาร</a></li>
-                            <li><a id="material" href="${contextPath}/stock/materialitem">วัตถุดิบอาหาร</a></li>
+                            <li><a id="materialunit" href="${contextPath}/stock/materialunit">หน่วยของวัตถุดิบ</a></li>
+                            <li><a id="material" href="${contextPath}/stock/materialitem">วัตถุดิบ</a></li>
                             <li><a id="mixedproduct" href="${contextPath}/stock/mixedproduct">วัตถุดิบแบบผสม</a></li>
                             <li><a id="stockmanage" href="${contextPath}/stock/stockmanage">เพิ่ม / ลดวัตถุดิบ</a></li>
-                            <li><a id="menustock" href="${contextPath}/stock/menumaterial">วัตถุดิบของเมนูอาหาร</a></li>
+                            <li><a id="menustock" href="${contextPath}/stock/menumaterial">วัตถุดิบในเมนูอาหาร</a></li>
                         </ul>
                     </li>
                 </ul>
@@ -73,7 +73,7 @@
             <%--<a data-toggle="tooltip" data-placement="top" title="Settings">--%>
             <%--<span class="glyphicon glyphicon-cog" aria-hidden="true"></span>--%>
             <%--</a>--%>
-            <a data-toggle="tooltip" data-placement="top" title="Logout" href="${contextPath}/system/logout">
+            <a data-toggle="tooltip" data-placement="top" title="ออกจากระบบ" href="${contextPath}/system/logout">
                 <span class="glyphicon glyphicon-off" aria-hidden="true"></span>
             </a>
         </div>
@@ -92,7 +92,7 @@
                 <li class="">
                     <a href="javascript:;" class="user-profile dropdown-toggle" data-toggle="dropdown"
                        aria-expanded="false">
-                        <img src="${contextPath}/images/img.png" alt=""> ${username}
+                        <img src="${contextPath}/images/img.png" alt=""> ${branchUser.username}
                         <span class=" fa fa-angle-down"></span>
                     </a>
                     <ul class="dropdown-menu dropdown-usermenu pull-right">
@@ -105,7 +105,7 @@
                         <%--</li>--%>
                         <%--<li><a href="javascript:;">Help</a></li>--%>
                         <li><a href="${contextPath}/system/logout">
-                            <i class="fa fa-sign-out pull-right"></i> Log Out</a>
+                            <i class="fa fa-sign-out pull-right"></i>ออกจากระบบ</a>
                         </li>
                     </ul>
                 </li>
