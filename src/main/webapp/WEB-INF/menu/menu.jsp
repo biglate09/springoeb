@@ -339,7 +339,7 @@
                         <p style="text-align:center">' + menu.menuPrice.toFixed(2).replace(/\B(?=(\d{3})+(?!\d))/g, ",") + " บาท" + '</p>\
                         <div style="text-align:center;">\
                         <a title="แก้ไข" data-toggle="modal" data-target="#editMenu" onclick="set_menu(' + menu.menuNo + ')" style="color:#73879C;cursor:pointer;margin-right:5px;"><i class="fa fa-pencil"></i></a>\
-                        <a title="เป็นเมนู' + (menu.localFlag == 0 ? 'ของทุก' : 'เฉพาะ')+ 'สาขา คลิกเพื่อเปลี่ยน" onclick="change_official(' + menu.menuNo + ')" style="color:#73879C;cursor:pointer;margin-right:5px;"><i class="fa ' + (menu.localFlag == 0 ? 'fa-check-circle' : 'fa-circle-o') + '"></i></a>\
+                        <a title="เป็นเมนู' + (menu.localFlag == 0 ? 'ของทุก' : 'เฉพาะ')+ 'สาขา" onclick="change_official(' + menu.menuNo + ')" style="color:#73879C;cursor:pointer;margin-right:5px;"><i class="fa ' + (menu.localFlag == 0 ? 'fa-check-circle' : 'fa-circle-o') + '"></i></a>\
                         <a title="เมนูนี้'+(obj.available == true ? '' : 'ไม่' )+'พร้อมจำหน่าย คลิกเพื่อเปลี่ยน" onclick="change_available(' + menu.menuNo + ')" style="color:#73879C;cursor:pointer;margin-right:5px;"><i class="fa ' + (obj.available == true ? 'fa-eye' : 'fa-eye-slash' ) + '"></i></a>\
                         <a title="ลบ" onclick="del_menu(' + menu.menuNo + ',\'' + menu.menuNameTH + '\')" style="color:#73879C;cursor:pointer;"><i class="fa fa-trash"></i></a>\
                         </div>\

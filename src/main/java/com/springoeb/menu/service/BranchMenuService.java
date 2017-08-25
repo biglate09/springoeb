@@ -16,7 +16,7 @@ public class BranchMenuService {
     private BranchMenuRepository branchMenuRepository;
 
     public List<BranchMenu> getMenuSets(int branchNo) {
-        return branchMenuRepository.findByBranchNoAndMenu_MenuFlag(branchNo, Menu.flagForMenuSet);
+        return branchMenuRepository.findByBranchNoAndMenu_MenuFlagOrderByMenu_LocalFlagAsc(branchNo, Menu.flagForMenuSet);
     }
 
     public BranchMenu getMenuByMenuNo(int menuNo, int branchNo) {
