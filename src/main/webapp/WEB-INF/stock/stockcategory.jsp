@@ -259,7 +259,7 @@
     function del_stock_category(stockCatNo,stockCatNameTH) {
         swal ({
                 title: "ยืนยันการลบ " + stockCatNameTH,
-                text: "เมื่อยืนยัน คุณจะไม่สามารถนำข้อมูล "+stockCatNameTH+" กลับมาได้",
+                text: "เมื่อยืนยัน จะไม่สามารถนำข้อมูล "+stockCatNameTH+" กลับมาได้",
                 type: "warning",
                 showCancelButton: true,
                 cancelButtonText: "ยกเลิก",

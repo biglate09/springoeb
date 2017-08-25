@@ -260,7 +260,7 @@
     function del_menu_group(menuGroupNo,menuGroupNameTH) {
         swal ({
                 title: "ยืนยันการลบ " + menuGroupNameTH,
-                text: "เมื่อยืนยัน คุณจะไม่สามารถนำข้อมูล "+menuGroupNameTH+" กลับมาได้",
+                text: "เมื่อยืนยัน จะไม่สามารถนำข้อมูล "+menuGroupNameTH+" กลับมาได้",
                 type: "warning",
                 showCancelButton: true,
                 cancelButtonText: "ยกเลิก",
