@@ -109,7 +109,7 @@
                                                             <thead>
                                                             <tr>
                                                                 <th style="text-align:center;">ชื่อเมนูอาหาร</th>
-                                                                <th style="text-align:center;">ประเภท</th>
+                                                                <th style="text-align:center;">หมวดหมู่</th>
                                                                 <th style="text-align:center;">ราคา</th>
                                                                 <th style="text-align:center;">จำนวน</th>
                                                             </tr>
