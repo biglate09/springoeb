@@ -161,6 +161,12 @@
                                                         <div class="checkbox"
                                                              style="display:inline-block;margin-right:15px;">
                                                             <label>
+                                                                <input type="checkbox" name="localFlag"
+                                                                       id="add_menu_official"
+                                                                       class="flat">
+                                                                เป็นเมนูของทุกสาขา
+                                                            </label>
+                                                            <label>
                                                                 <input type="checkbox" name="available"
                                                                        id="add_menuset_available"
                                                                        class="flat">
@@ -244,7 +250,7 @@
                                                             <thead>
                                                             <tr>
                                                                 <th style="text-align:center;">ชื่อเมนูอาหาร</th>
-                                                                <th style="text-align:center;">ประเภท</th>
+                                                                <th style="text-align:center;"></th>
                                                                 <th style="text-align:center;">ราคา</th>
                                                                 <th style="text-align:center;">จำนวน</th>
                                                             </tr>
@@ -402,9 +408,7 @@
                             <div class="mask">\
                             <p style="white-space:nowrap;overflow:hidden;text-overflow: ellipsis;">' + menu.menuDesc + '</p>\
                             <div class="tools tools-bottom" style="margin-top:100px;">\
-                            <a title="แก้ไข" data-toggle="modal" data-target="#editMenuSet" onclick="set_menuset(' + menu.menuNo + ')" style="color:white;cursor:pointer;margin-right:5px;"><i class="fa fa-pencil"></i></a>\
-                            <a title="พร้อมจำหน่าย" onclick="change_available(' + menu.menuNo + ')" style="color:white;cursor:pointer;margin-right:5px;"><i class="fa ' + (obj.available == true ? 'fa-eye' : 'fa-eye-slash') + '"></i></a>\
-                            <a title="ลบ" onclick="del_menuset(' + menu.menuNo + ',\'' + menu.menuNameTH + '\')" style="color:white;cursor:pointer;"><i class="fa fa-trash"></i></a>\
+                            <a title="เมนูของทุกสาขา" style="color:white;margin-right:5px;"><i class="fa ' + (menu.localFlag == 0 ? 'fa-check-circle' : 'fa-circle-o' ) + '"></i> <span style="font-size:14px">' + (menu.localFlag == 0 ? 'เป็นเมนูของทุกสาขา' : 'เป็นเมนูเฉพาะสาขา ' + menu.localFlag ) + '</span></a>\
                             </div>\
                             </div>\
                             </div>\
@@ -422,12 +426,10 @@
                             <div class="col-md-7"> <span style="font-weight:bold;">ราคา</span> ' + menu.menuPrice.toFixed(2).replace(/\B(?=(\d{3})+(?!\d))/g, ",") + ' บาท</div>\
                             <div class="col-md-5" style="text-align:right;">\
                             <div class="panel_menuset">\
-                            <a title="แก้ไข" data-toggle="modal" data-target="#editMenuSet" onclick="set_menuset(' + menu.menuNo + ')" style="color:#73879C;cursor:pointer;margin-right:5px;">\
-                            <i class="fa fa-pencil"></i></a>\
-                            <a title="พร้อมจำหน่าย" style="color:#73879C;cursor:pointer;margin-right:5px;" onclick="change_available(' + menu.menuNo + ')">\
-                            <i class="fa ' + (obj.available == true ? 'fa-eye' : 'fa-eye-slash') + '"></i></a>\
-                            <a title="ลบ" style="color:#73879C;cursor:pointer;" onclick="del_menuset(' + menu.menuNo + ',\'' + menu.menuNameTH + '\')">\
-                            <i class="fa fa-trash"></i></a>\
+                            <a title="แก้ไข" data-toggle="modal" data-target="#editMenuSet" onclick="set_menuset(' + menu.menuNo + ')" style="color:#73879C;cursor:pointer;margin-right:5px;"><i class="fa fa-pencil"></i></a>\
+                            <a title="เป็นเมนู' + (menu.localFlag == 0 ? 'ของทุก' : 'เฉพาะ')+ 'สาขา คลิกเพื่อเปลี่ยน" onclick="change_official(' + menu.menuNo + ')" style="color:#73879C;cursor:pointer;margin-right:5px;"><i class="fa ' + (menu.localFlag == 0 ? 'fa-check-circle' : 'fa-circle-o') + '"></i></a>\
+                            <a title="เมนูนี้'+(obj.available == true ? '' : 'ไม่' )+'พร้อมจำหน่าย คลิกเพื่อเปลี่ยน" onclick="change_available(' + menu.menuNo + ')" style="color:#73879C;cursor:pointer;margin-right:5px;"><i class="fa ' + (obj.available == true ? 'fa-eye' : 'fa-eye-slash' ) + '"></i></a>\
+                            <a title="ลบ" style="color:#73879C;cursor:pointer;" onclick="del_menuset(' + menu.menuNo + ',\'' + menu.menuNameTH + '\')"><i class="fa fa-trash"></i></a>\
                             </div>\
                             </div>\
                             </div>\

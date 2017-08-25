@@ -50,4 +50,13 @@ public class BranchMenu {
     public void setMenu(Menu menu) {
         this.menu = menu;
     }
+
+    @Override
+    public String toString() {
+        return "BranchMenu{" +
+                "branchNo=" + branchNo +
+                ", menuNo=" + menuNo +
+                ", available=" + available +
+                '}';
+    }
 }
