@@ -109,6 +109,7 @@
                                                             <thead>
                                                             <tr>
                                                                 <th style="text-align:center;">ชื่อเมนูอาหาร</th>
+                                                                <th style="text-align:center;">ประเภท</th>
                                                                 <th style="text-align:center;">ราคา</th>
                                                                 <th style="text-align:center;">จำนวน</th>
                                                             </tr>
@@ -118,6 +119,7 @@
                                                                 <c:set var="m" value="${menu.menu}"/>
                                                                 <tr>
                                                                     <td>${m.menuNameTH} / ${m.menuNameEN}</td>
+                                                                    <td>${m.menuGroup.menuGroupNameTH}</td>
                                                                     <td data-order="${m.menuPrice}">
                                                                         <fmt:formatNumber value="${m.menuPrice}"
                                                                                           pattern="#,###,##0.00"></fmt:formatNumber>
@@ -242,6 +244,7 @@
                                                             <thead>
                                                             <tr>
                                                                 <th style="text-align:center;">ชื่อเมนูอาหาร</th>
+                                                                <th style="text-align:center;">ประเภท</th>
                                                                 <th style="text-align:center;">ราคา</th>
                                                                 <th style="text-align:center;">จำนวน</th>
                                                             </tr>
@@ -251,6 +254,7 @@
                                                                 <c:set var="m" value="${menu.menu}"/>
                                                                 <tr>
                                                                     <td>${m.menuNameTH} / ${m.menuNameEN}</td>
+                                                                    <td>${m.menuGroup.menuGroupNameTH}</td>
                                                                     <td data-order="${m.menuPrice}">
                                                                         <fmt:formatNumber value="${m.menuPrice}"
                                                                                           pattern="#,###,##0.00"></fmt:formatNumber>
