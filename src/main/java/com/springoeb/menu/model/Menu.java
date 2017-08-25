@@ -1,5 +1,7 @@
 package com.springoeb.menu.model;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
+
 import javax.persistence.*;
 import java.io.Serializable;
 import java.util.List;
@@ -18,6 +20,7 @@ public class Menu implements Serializable{
     private String menuPicPath;
     private String menuFlag;
     private Integer localFlag;
+    @JsonIgnore
     @OneToMany(fetch = FetchType.LAZY, mappedBy = "menu")
     private List<BranchMenu> branchMenu;
 
@@ -31,9 +34,9 @@ public class Menu implements Serializable{
     @OneToMany(fetch = FetchType.LAZY, mappedBy = "menuSet")
     private List<MenuInSet> menuInSets;
 
-    public static final int OFFICIAL_MENU_FLAG = 0;
     public static final String flagForMenu = "M";
     public static final String flagForMenuSet = "S";
+    public static final int OFFICIAL_MENU_FLAG = 0;
 
     public Integer getMenuNo() {
         return menuNo;

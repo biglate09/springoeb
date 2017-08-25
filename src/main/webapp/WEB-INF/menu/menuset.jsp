@@ -114,7 +114,8 @@
                                                             </tr>
                                                             </thead>
                                                             <tbody style="text-align:center;">
-                                                            <c:forEach items="${menus}" var="m">
+                                                            <c:forEach items="${menus}" var="menu">
+                                                                <c:set var="m" value="${menu.menu}"/>
                                                                 <tr>
                                                                     <td>${m.menuNameTH} / ${m.menuNameEN}</td>
                                                                     <td data-order="${m.menuPrice}">
@@ -139,8 +140,10 @@
                                                     <div class="col-md-12" style="text-align:center;margin-top:20px;">
                                                         <div class="well" style="overflow: auto">
                                                             <span style="font-weight:bold;">รายการเมนูเดี่ยวของชุดนี้</span>
-                                                            <div id="display_sum_menu" style="margin-bottom:20px;margin-top:20px;"></div>
-                                                            <span style="font-weight:bold;">ราคารวมเมนูเดี่ยวทั้งหมด : <span id="sum_menu_price">0.00</span> บาท</span>
+                                                            <div id="display_sum_menu"
+                                                                 style="margin-bottom:20px;margin-top:20px;"></div>
+                                                            <span style="font-weight:bold;">ราคารวมเมนูเดี่ยวทั้งหมด : <span
+                                                                    id="sum_menu_price">0.00</span> บาท</span>
                                                         </div>
                                                     </div>
                                                     <div class="col-md-6">
@@ -244,7 +247,8 @@
                                                             </tr>
                                                             </thead>
                                                             <tbody style="text-align:center;">
-                                                            <c:forEach items="${menus}" var="m">
+                                                            <c:forEach items="${menus}" var="menu">
+                                                                <c:set var="m" value="${menu.menu}"/>
                                                                 <tr>
                                                                     <td>${m.menuNameTH} / ${m.menuNameEN}</td>
                                                                     <td data-order="${m.menuPrice}">
@@ -269,8 +273,10 @@
                                                     <div class="col-md-12" style="text-align:center;margin-top:20px;">
                                                         <div class="well" style="overflow: auto">
                                                             <span style="font-weight:bold;">รายการเมนูเดี่ยวของชุดนี้</span>
-                                                            <div id="display_sum_menu2" style="margin-bottom:20px;margin-top:20px;"></div>
-                                                            <span style="font-weight:bold;">ราคารวมเมนูเดี่ยวทั้งหมด : <span id="sum_menu_price2">0.00</span> บาท</span>
+                                                            <div id="display_sum_menu2"
+                                                                 style="margin-bottom:20px;margin-top:20px;"></div>
+                                                            <span style="font-weight:bold;">ราคารวมเมนูเดี่ยวทั้งหมด : <span
+                                                                    id="sum_menu_price2">0.00</span> บาท</span>
                                                         </div>
                                                     </div>
                                                     <div class="col-md-6">
@@ -373,48 +379,50 @@
     });
 
     function refresh_table() {
-        $.ajax({
+            $.ajax({
             type: "POST",
             url: "${contextPath}/menu/getmenusets",
             dataType: "json",
             success: function (json) {
-                $("#menuset_thumbnail").empty();
-                var data_array = [];
-                var price = 0;
-                for (var i = 0; i < json.length; i++) {
-                    var obj = json[i];
-                    var div = '<div class="col-md-6 col-sm-6 col-xs-12">\
+                if (json.length != 0) {
+                    $("#menuset_thumbnail").empty();
+                    var data_array = [];
+                    var price = 0;
+                    for (var i = 0; i < json.length; i++) {
+                        var obj = json[i];
+                        var menu = obj.menu;
+                        var div = '<div class="col-md-6 col-sm-6 col-xs-12">\
                             <div class="thumbnail">\
                             <div class="col-md-6 image view view-first" style="height:100%;">\
-                            <img style="width: 100%; display: block;" src="../images/menuset/' + obj.menuPicPath + '" alt="image"/>\
+                            <img style="width: 100%; display: block;" src="../images/menuset/' + menu.menuPicPath + '" alt="image"/>\
                             <div class="mask">\
-                            <p style="white-space:nowrap;overflow:hidden;text-overflow: ellipsis;">' + obj.menuDesc + '</p>\
+                            <p style="white-space:nowrap;overflow:hidden;text-overflow: ellipsis;">' + menu.menuDesc + '</p>\
                             <div class="tools tools-bottom" style="margin-top:100px;">\
-                            <a title="แก้ไข" data-toggle="modal" data-target="#editMenuSet" onclick="set_menuset(' + obj.menuNo + ')" style="color:white;cursor:pointer;margin-right:5px;"><i class="fa fa-pencil"></i></a>\
-                            <a title="พร้อมจำหน่าย" onclick="change_available(' + obj.menuNo + ')" style="color:white;cursor:pointer;margin-right:5px;"><i class="fa ' + (obj.available == true ? 'fa-eye' : 'fa-eye-slash') + '"></i></a>\
-                            <a title="ลบ" onclick="del_menuset(' + obj.menuNo + ',\'' + obj.menuNameTH + '\')" style="color:white;cursor:pointer;"><i class="fa fa-trash"></i></a>\
+                            <a title="แก้ไข" data-toggle="modal" data-target="#editMenuSet" onclick="set_menuset(' + menu.menuNo + ')" style="color:white;cursor:pointer;margin-right:5px;"><i class="fa fa-pencil"></i></a>\
+                            <a title="พร้อมจำหน่าย" onclick="change_available(' + menu.menuNo + ')" style="color:white;cursor:pointer;margin-right:5px;"><i class="fa ' + (obj.available == true ? 'fa-eye' : 'fa-eye-slash') + '"></i></a>\
+                            <a title="ลบ" onclick="del_menuset(' + menu.menuNo + ',\'' + menu.menuNameTH + '\')" style="color:white;cursor:pointer;"><i class="fa fa-trash"></i></a>\
                             </div>\
                             </div>\
                             </div>\
                             <div class="col-md-6 caption" style="height:100%;color:#73879C">\
-                            <div class="col-md-12" data-toggle="modal" data-target="#editMenuSet" onclick="set_menuset(' + obj.menuNo + ')" style="font-weight:bold;white-space:nowrap;overflow:hidden;text-overflow: ellipsis;cursor:pointer;">' + obj.menuNameTH + ' / ' + obj.menuNameEN + '</div>\
+                            <div class="col-md-12" data-toggle="modal" data-target="#editMenuSet" onclick="set_menuset(' + menu.menuNo + ')" style="font-weight:bold;white-space:nowrap;overflow:hidden;text-overflow: ellipsis;cursor:pointer;">' + menu.menuNameTH + ' / ' + menu.menuNameEN + '</div>\
                             <div class="col-md-12 foodDesc">\
                             <div>\
                             <p style="text-align:center;font-weight:bold;">รายการเมนู</p>';
-                    for (var j = 0; j < obj.menuInSets.length; j++) {
-                        var menuSetMenu = obj.menuInSets[j];
-                        div += '<div class="col-md-9" style="white-space:nowrap;overflow:hidden;text-overflow:ellipsis;" title="' + menuSetMenu.menu.menuNameTH + '">' + menuSetMenu.menu.menuNameTH + ' </div>' + menuSetMenu.amount + " เมนู<br>";
-                    }
-                    div += '</div>\
+                        for (var j = 0; j < menu.menuInSets.length; j++) {
+                            var menuSetMenu = menu.menuInSets[j];
+                            div += '<div class="col-md-9" style="white-space:nowrap;overflow:hidden;text-overflow:ellipsis;" title="' + menuSetMenu.menu.menuNameTH + '">' + menuSetMenu.menu.menuNameTH + ' </div>' + menuSetMenu.amount + " เมนู<br>";
+                        }
+                        div += '</div>\
                             </div>\
-                            <div class="col-md-7"> <span style="font-weight:bold;">ราคา</span> ' + obj.menuPrice.toFixed(2).replace(/\B(?=(\d{3})+(?!\d))/g, ",") + ' บาท</div>\
+                            <div class="col-md-7"> <span style="font-weight:bold;">ราคา</span> ' + menu.menuPrice.toFixed(2).replace(/\B(?=(\d{3})+(?!\d))/g, ",") + ' บาท</div>\
                             <div class="col-md-5" style="text-align:right;">\
                             <div class="panel_menuset">\
-                            <a title="แก้ไข" data-toggle="modal" data-target="#editMenuSet" onclick="set_menuset(' + obj.menuNo + ')" style="color:#73879C;cursor:pointer;margin-right:5px;">\
+                            <a title="แก้ไข" data-toggle="modal" data-target="#editMenuSet" onclick="set_menuset(' + menu.menuNo + ')" style="color:#73879C;cursor:pointer;margin-right:5px;">\
                             <i class="fa fa-pencil"></i></a>\
-                            <a title="พร้อมจำหน่าย" style="color:#73879C;cursor:pointer;margin-right:5px;" onclick="change_available(' + obj.menuNo + ')">\
+                            <a title="พร้อมจำหน่าย" style="color:#73879C;cursor:pointer;margin-right:5px;" onclick="change_available(' + menu.menuNo + ')">\
                             <i class="fa ' + (obj.available == true ? 'fa-eye' : 'fa-eye-slash') + '"></i></a>\
-                            <a title="ลบ" style="color:#73879C;cursor:pointer;" onclick="del_menuset(' + obj.menuNo + ',\'' + obj.menuNameTH + '\')">\
+                            <a title="ลบ" style="color:#73879C;cursor:pointer;" onclick="del_menuset(' + menu.menuNo + ',\'' + menu.menuNameTH + '\')">\
                             <i class="fa fa-trash"></i></a>\
                             </div>\
                             </div>\
@@ -422,7 +430,14 @@
                             </div>\
                             </div>';
 
-                    $("#menuset_thumbnail").append(div);
+                        $("#menuset_thumbnail").append(div);
+                    }
+                }else{
+                    $("#menuset_thumbnail").html('\
+                    <div class="well" style="overflow: auto">\
+                        <p style="text-align:center;font-weight:bold;"> ไม่พบข้อมูลเมนูอาหารแบบชุด </p>\
+                    </div>\
+                    ');
                 }
             }
         });
@@ -458,16 +473,17 @@
     function set_menuset(menuNo) {
         $.ajax({
             type: "PUT",
-            url: "${contextPath}/menu/getmenuset/" + menuNo,
+            url: "${contextPath}/menu/getmenu/" + menuNo,
             dataType: "json",
             success: function (result) {
-                $("#hidden_menuset_no").val(result.menuNo);
-                $("#edit_menuset_nameTH").val(result.menuNameTH);
-                $("#edit_menuset_nameEN").val(result.menuNameEN);
-                $("#edit_menuset_name").html(result.menuNameTH + " / " + result.menuNameEN);
-                $("#edit_menuset_desc").val(result.menuDesc);
-                $("#edit_menuset_price").val(result.menuPrice.toFixed(2));
-//                $("#edit_menuset_available").val(result.available);
+                menu = result.menu;
+                $("#hidden_menuset_no").val(menu.menuNo);
+                $("#edit_menuset_nameTH").val(menu.menuNameTH);
+                $("#edit_menuset_nameEN").val(menu.menuNameEN);
+                $("#edit_menuset_name").html(menu.menuNameTH + " / " + menu.menuNameEN);
+                $("#edit_menuset_desc").val(menu.menuDesc);
+                $("#edit_menuset_price").val(menu.menuPrice.toFixed(2));
+                $("#edit_menuset_available").val(result.available);
                 if (result.available) {
                     $("#edit_menuset_available").parent().addClass('checked');
                     $("#edit_menuset_available").attr('checked', true);
@@ -476,10 +492,10 @@
                     $("#edit_menuset_available").attr('checked', false);
                 }
 
-                $("#showpic_menuset_edit").attr('src', '../images/menuset/' + result.menuPicPath);
+                $("#showpic_menuset_edit").attr('src', '../images/menuset/' + menu.menuPicPath);
 
                 $(".menusetamount_edit").val(0);
-                var menu_in_menuset = result.menuInSets;
+                var menu_in_menuset = menu.menuInSets;
                 for (var i = 0; i < menu_in_menuset.length; i++) {
                     $(".menusetamount_edit[menuno='" + menu_in_menuset[i].menuSubNo + "']").val(menu_in_menuset[i].amount);
                 }
@@ -558,8 +574,8 @@
     function change_available(menuNo) {
         $.ajax({
             type: "POST",
-            data: {menuNo: menuNo},
-            url: "${contextPath}/menu/changemenusetavailable",
+            data: {menuno: menuNo},
+            url: "${contextPath}/menu/changeavailable",
             success: function (result) {
                 refresh_table();
             }, error: function (result) {
