@@ -24,7 +24,7 @@
                 <div class="col-md-12 col-sm-12 col-xs-12">
                     <div class="x_panel">
                         <div class="x_title">
-                            <h4>เมนูอาหารแบบเดี่ยว</h4>
+                            <h4>เมนูอาหารแบบเดี่ยว (Official)</h4>
                         </div>
                         <div class="x_content">
                             <form action="#">
@@ -109,6 +109,30 @@
                                                         </c:forEach>
                                                     </select>
                                                 </div>
+                                                <%--Material add--%>
+                                                <div class="col-md-12">
+                                                    <label>เลือกวัตถุดิบสำหรับเมนูนี้</label>
+                                                    <table class="datatable-menu table table-striped table-bordered">
+                                                        <thead>
+                                                        <tr>
+                                                            <th style="text-align:center;">ชื่อวัตถุดิบ</th>
+                                                            <th style="text-align:center;">จำนวน</th>
+                                                            <th style="text-align:center;">หน่วย</th>
+                                                        </tr>
+                                                        </thead>
+                                                        <tbody style="text-align:center;">
+                                                        <c:forEach items="${}" var="">
+                                                            <tr>
+                                                                <td>${}</td>
+                                                                <td"></td>
+                                                                <td><input>
+                                                                </td>
+                                                            </tr>
+                                                        </c:forEach>
+                                                        </tbody>
+                                                    </table>
+                                                </div>
+
                                                 <div class="col-md-12 col-sm-12 col-xs-12 form-group has-feedback">
                                                     <label>รายละเอียดของเมนู</label>
                                                     <textarea rows="4" cols="100" class="form-control" name="menuDesc"
@@ -127,6 +151,13 @@
                                                                    id="add_menu_available"
                                                                    class="flat">
                                                             พร้อมจำหน่าย
+                                                        </label>
+                                                        <%--Official Menu Checckbox --%>
+                                                        <label>
+                                                            <input type="checkbox" name="isOfficial"
+                                                                   id=""
+                                                                   class="flat">
+                                                            เป็น Official เมนู
                                                         </label>
                                                     </div>
                                                     <button type="submit" style="margin-left:5px;"
@@ -206,6 +237,30 @@
                                                     </c:forEach>
                                                 </select>
                                             </div>
+                                            <%--Material Edit--%>
+                                            <div class="col-md-12">
+                                                <label>เลือกวัตถุดิบสำหรับเมนูนี้</label>
+                                                <table class="datatable-menu table table-striped table-bordered">
+                                                    <thead>
+                                                    <tr>
+                                                        <th style="text-align:center;">ชื่อวัตถุดิบ</th>
+                                                        <th style="text-align:center;">จำนวน</th>
+                                                        <th style="text-align:center;">หน่วย</th>
+                                                    </tr>
+                                                    </thead>
+                                                    <tbody style="text-align:center;">
+                                                    <c:forEach items="${}" var="">
+                                                        <tr>
+                                                            <td>${}</td>
+                                                            <td"></td>
+                                                            <td><input>
+                                                            </td>
+                                                        </tr>
+                                                    </c:forEach>
+                                                    </tbody>
+                                                </table>
+                                            </div>
+
                                             <div class="col-md-12 col-sm-12 col-xs-12 form-group has-feedback">
                                                 <label>รายละเอียดของเมนู</label>
                                                 <textarea rows="4" cols="100" class="form-control" name="menuDesc"
@@ -219,10 +274,19 @@
                                             <div class="col-md-9 col-sm-9 col-xs-12 col-md-offset-3">
                                                 <div class="checkbox" style="display:inline-block;margin-right:15px;">
                                                     <label>
+
                                                         <input type="checkbox" name="menuAvailable"
                                                                id="edit_menu_available"
                                                                class="flat">
                                                         พร้อมจำหน่าย
+                                                    </label>
+
+                                                    <%--Edit Of to Unof--%>
+                                                    <label>
+                                                        <input type="checkbox" name="isOfficial"
+                                                               id=""
+                                                               class="flat">
+                                                        เป็น Official เมนู
                                                     </label>
                                                 </div>
                                                 <button type="submit" style="margin-left:5px;" class="btn btn-success">
@@ -238,6 +302,35 @@
                             </div>
                         </div>
                     </div>
+                </div>
+            </div>
+
+            <%--UNOFFICIAL--%>
+            <div class="row">
+                <div class="col-md-12 col-sm-12 col-xs-12">
+                    <div class="x_panel">
+                        <div class="x_title">
+                            <h4>เมนูอาหารแบบเดี่ยว (Unofficial)</h4>
+                        </div>
+                        <div class="x_content">
+                            <form action="#">
+                                <div class="col-md-3 form-group has-feedback" style="padding:0px;float:right;">
+                                    <%--<label>ตัวกรองจากหมวดหมู่ของอาหาร</label>--%>
+                                    <select class="form-control" id="filter_by_category">
+                                        <option disabled >ตัวกรองจากหมวดหมู่ของอาหาร</option>
+                                        <option value="0">ทั้งหมด</option>
+                                        <c:forEach items="${menuGroups}" var="mc">
+                                            <option value="${mc.menuGroupNo}">${mc.menuGroupNameTH}
+                                                / ${mc.menuGroupNameEN}</option>
+                                        </c:forEach>
+                                    </select>
+                                </div>
+                                <div id="menu_thumbnail">
+                                </div>
+                            </form>
+                        </div>
+                    </div>
+
                 </div>
             </div>
         </div>
