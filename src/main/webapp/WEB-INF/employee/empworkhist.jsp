@@ -367,8 +367,7 @@
             url: "${contextPath}/employee/manageworkhistory",
             success: function (result) {
                 swal("สำเร็จ", "เพิ่มการทำงานเรียบร้อยแล้ว", "success");
-                $(".removable_div").remove();
-                $("#work_hist_add")[0].reset();
+                reset_field();
                 var d = new Date();
                 var year = d.getFullYear();
                 var month = (d.getMonth() + 1) < 10 ? '0' + (d.getMonth() + 1) : (d.getMonth() + 1);
@@ -384,6 +383,15 @@
         $("#addWorkHist").modal('toggle');
         return false;
     });
+
+    $('.modal').on('hidden.bs.modal', function(){
+        reset_field();
+    });
+
+    function reset_field(){
+        $(".removable_div").remove();
+        $("#work_hist_add")[0].reset();
+    }
 
     $("#work_hist_edit").submit(function () {
         var object = $(this).serialize();

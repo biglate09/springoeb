@@ -378,7 +378,7 @@
                         url: "${contextPath}/employee/payforemp",
                         success: function (json) {
                             swal("สำเร็จ", "เบิกเรียบร้อยแล้ว", "success");
-                            $("#input-withdraw").val('');
+                            reset_field();
                             setemppaid(empno);
                             refresh_table();
                         }, error: function (json) {
@@ -389,6 +389,14 @@
         }
         return false;
     });
+
+    $('.modal').on('hidden.bs.modal', function(){
+        reset_field();
+    });
+
+    function reset_field(){
+        $("#input-withdraw").val('');
+    }
 
     //TODO : Refresh Table Function
     function refresh_table() {

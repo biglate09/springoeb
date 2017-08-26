@@ -214,7 +214,7 @@
             url: "${contextPath}/menu/managemenugroup",
             success: function (result) {
                 swal("สำเร็จ", "ชื่อหมวดหมู่ " + $("#add_menu_group").val() + " ถูกเพิ่มเรียบร้อยแล้ว", "success");
-                $("#add_menu_group")[0].reset();
+                reset_field();
                 $("#addMenuGroup").modal('toggle');
                 refresh_table();
             },error: function(result){
@@ -223,6 +223,14 @@
         });
         return false;
     });
+
+    $('.modal').on('hidden.bs.modal', function(){
+        reset_field();
+    });
+
+    function reset_field(){
+        $("#add_menu_group")[0].reset();
+    }
 
     $("#edit_menu_group").submit(function(){
         var object = $("#edit_menu_group").serialize();

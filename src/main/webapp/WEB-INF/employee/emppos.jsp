@@ -191,7 +191,7 @@
             url: "${contextPath}/employee/manageemployeeposition",
             success: function (result) {
                 swal("สำเร็จ", "ตำแหน่ง " + $("#emp_pos_name_add").val() + " ถูกเพิ่มเรียบร้อยแล้ว", "success");
-                $("#emp_pos_add")[0].reset();
+                reset_field();
                 $("#addEmpPos").modal('toggle');
                 refresh_table();
             },error: function(result){
@@ -200,6 +200,14 @@
         });
         return false;
     });
+
+    $('.modal').on('hidden.bs.modal', function(){
+        reset_field();
+    });
+
+    function reset_field(){
+        $("#emp_pos_add")[0].reset();
+    }
 
     //TODO: Set Employee Position Function For Editing
     function setEmpPos(empPosNo) {

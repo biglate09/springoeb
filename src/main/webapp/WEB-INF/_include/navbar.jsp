@@ -61,6 +61,7 @@
                     <li>
                         <a><i class="fa fa-spoon"></i> จัดการวัตถุดิบอาหาร <span class="fa fa-chevron-down"></span></a>
                         <ul class="nav child_menu">
+                            <li><a id="currentstock" >วัตถุดิบคงเหลือ</a></li>
                             <li><a id="materialcategory" href="${contextPath}/stock/materialcategory">ประเภทวัตถุดิบ</a></li>
                             <li><a id="materialunit" href="${contextPath}/stock/materialunit">หน่วยของวัตถุดิบ</a></li>
                             <li><a id="material" href="${contextPath}/stock/materialitem">วัตถุดิบ</a></li>

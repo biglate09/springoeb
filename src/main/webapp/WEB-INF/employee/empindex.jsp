@@ -475,8 +475,7 @@
             url: "${contextPath}/employee/manageemployee",
             success: function (result) {
                 swal("สำเร็จ", "พนักงาน " + empName + " ถูกเพิ่มเรียบร้อยแล้ว", "success");
-                $("#add_emp")[0].reset();
-                $(".clear-active").removeClass('active');
+                reset_field();
                 refresh_table();
                 $("#addEmp").modal('toggle');
             }, error: function (result) {
@@ -485,6 +484,15 @@
         });
         return false;
     });
+
+    $('.modal').on('hidden.bs.modal', function(){
+        reset_field();
+    });
+
+    function reset_field(){
+        $("#add_emp")[0].reset();
+        $(".clear-active").removeClass('active');
+    }
 
     //TODO : Set Employee For Editing Function
     function editEmp(empNo) {
