@@ -1,6 +1,7 @@
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 <%@ taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt" %>
 <%@page contentType="text/html" pageEncoding="UTF-8" %>
+<%@ page import="com.springoeb.system.model.Branch" %>
 <c:set var="contextPath" value="${pageContext.request.contextPath}"/>
 <!DOCTYPE html>
 <html>
@@ -61,11 +62,11 @@
                                           aria-hidden="true"></span>
                                 </div>
 
-                                <div id="menuset_thumbnail">
+                            <div id="menuset_thumbnail">
+                            </div>
 
-                                </div>
-
-                            </form>
+                            <div id="error_show">
+                            </div>
                             <%--modal for add--%>
 
                             <div class="modal fade" id="addMenuSet" role="dialog">
@@ -429,8 +430,8 @@
                             </div>\
                             </div>\
                             <div class="col-md-6 caption" style="height:100%;color:#73879C">\
-                            <div class="col-md-9" data-toggle="modal" data-target="#editMenuSet" onclick="set_menuset(' + menu.menuNo + ')" style="font-weight:bold;white-space:nowrap;overflow:hidden;text-overflow: ellipsis;cursor:pointer;">' + menu.menuNameTH + ' / ' + menu.menuNameEN + '</div>\
-                            <div class="col-md-3" style="color:white;background-color:#73879C;border-radius:4px;text-align:center;">' + (menu.localFlag == 0 ? "ทุกสาขา" : "สาขา " + menu.localFlag) + '</div>\
+                            <div class="col-md-9 cardname" data-toggle="modal" data-target="#editMenuSet" onclick="set_menuset(' + menu.menuNo + ')" style="font-weight:bold;white-space:nowrap;overflow:hidden;text-overflow: ellipsis;cursor:pointer;">' + menu.menuNameTH + ' / ' + menu.menuNameEN + '</div>\
+                            <div class="col-md-3" style="color:white;background-color:' + (menu.localFlag == 0 ? "#73879C" : "red") + ';border-radius:4px;text-align:center;">' + (menu.localFlag == 0 ? "ทุกสาขา" : "สาขา" + (menu.localFlag ==${Branch.MAIN_BRANCH} ? "นี้" : " " + menu.localFlag)) + '</div>\
                             <div class="col-md-12 foodDesc">\
                             <div>\
                             <p style="text-align:center;font-weight:bold;">รายการเมนู</p>';
@@ -443,9 +444,10 @@
                             <div class="col-md-7"> <span style="font-weight:bold;">ราคา</span> ' + menu.menuPrice.toFixed(2).replace(/\B(?=(\d{3})+(?!\d))/g, ",") + ' บาท</div>\
                             <div class="col-md-5" style="text-align:right;">\
                             <div class="panel_menuset">\
-                            <a title="แก้ไข" data-toggle="modal" data-target="#editMenuSet" onclick="set_menuset(' + menu.menuNo + ')" style="color:#73879C;cursor:pointer;margin-right:5px;"><i class="fa fa-pencil"></i></a>\
+                            ' + (menu.localFlag == 0 && ${branchUser.branchNo != Branch.MAIN_BRANCH} ? '' : '<a title="แก้ไข" style="color:#73879C;cursor:pointer;margin-right:5px;"><i class="fa fa-pencil"></i></a>') + '\
+                            ' + (menu.localFlag != 0 ? ('<a title="ทำให้เป็นเมนูของทุกสาขา" onclick="turn_official(' + menu.menuNo + ')" style="color:#73879C;cursor:pointer;margin-right:5px;"><i class="fa fa-users"></i></a>') : '') + '\
                             <a title="เมนูนี้' + (obj.available == true ? '' : 'ไม่' ) + 'พร้อมจำหน่าย คลิกเพื่อเปลี่ยน" onclick="change_available(' + menu.menuNo + ')" style="color:#73879C;cursor:pointer;margin-right:5px;"><i class="fa ' + (obj.available == true ? 'fa-check-square-o' : 'fa-square-o' ) + '"></i></a>\
-                            <a title="ลบ" style="color:#73879C;cursor:pointer;" onclick="del_menuset(' + menu.menuNo + ',\'' + menu.menuNameTH + '\')"><i class="fa fa-trash"></i></a>\
+                            ' + (menu.localFlag == 0 && ${branchUser.branchNo != Branch.MAIN_BRANCH} ? '' : '<a title="ลบ" onclick="del_menu(' + menu.menuNo + ',\'' + menu.menuNameTH + '\')" style="color:#73879C;cursor:pointer;"><i class="fa fa-trash"></i></a>') + '\
                             </div>\
                             </div>\
                             </div>\
@@ -455,7 +457,7 @@
                         $("#menuset_thumbnail").append(div);
                     }
 
-                    if(json.length == 2){
+                    if (json.length == 2) {
                         var othermenu = json[1];
                         for (var i = 0; i < othermenu.length; i++) {
                             var menu = othermenu[i];
@@ -471,8 +473,8 @@
                             </div>\
                             </div>\
                             <div class="col-md-6 caption" style="height:100%;color:#73879C">\
-                            <div class="col-md-9" data-toggle="modal" data-target="#editMenuSet" onclick="set_menuset(' + menu.menuNo + ')" style="font-weight:bold;white-space:nowrap;overflow:hidden;text-overflow: ellipsis;cursor:pointer;">' + menu.menuNameTH + ' / ' + menu.menuNameEN + '</div>\
-                            <div class="col-md-3" style="color:white;background-color:#73879C;border-radius:4px;text-align:center;">' + (menu.localFlag == 0 ? "ทุกสาขา" : "สาขา " + menu.localFlag) + '</div>\
+                            <div class="col-md-9 cardname" data-toggle="modal" data-target="#editMenuSet" onclick="set_menuset(' + menu.menuNo + ')" style="font-weight:bold;white-space:nowrap;overflow:hidden;text-overflow: ellipsis;cursor:pointer;">' + menu.menuNameTH + ' / ' + menu.menuNameEN + '</div>\
+                            <div class="col-md-3" style="color:white;background-color:yellowgreen;border-radius:4px;text-align:center;">' + (menu.localFlag == 0 ? "ทุกสาขา" : "สาขา " + menu.localFlag) + '</div>\
                             <div class="col-md-12 foodDesc">\
                             <div>\
                             <p style="text-align:center;font-weight:bold;">รายการเมนู</p>';
@@ -485,6 +487,7 @@
                             <div class="col-md-7"> <span style="font-weight:bold;">ราคา</span> ' + menu.menuPrice.toFixed(2).replace(/\B(?=(\d{3})+(?!\d))/g, ",") + ' บาท</div>\
                             <div class="col-md-5" style="text-align:right;">\
                             <div class="panel_menuset">\
+                            <a title="ทำให้เป็นเมนูของทุกสาขา" onclick="turn_official(' + menu.menuNo + ')" style="color:#73879C;cursor:pointer;margin-right:5px;"><i class="fa fa-users"></i></a>\
                             </div>\
                             </div>\
                             </div>\
@@ -539,11 +542,11 @@
         return false;
     });
 
-    $('.modal').on('hidden.bs.modal', function(){
+    $('.modal').on('hidden.bs.modal', function () {
         reset_field();
     });
 
-    function reset_field(){
+    function reset_field() {
         $("#add_menuset")[0].reset();
         $("#showpic_menuset").attr('src', '../images/default_upload_image.png');
         $("#sum_menu_price").html('0.00');
@@ -654,9 +657,7 @@
                     url: "${contextPath}/menu/delmenuset/" + menuNo,
                     success: function (json) {
                         swal("สำเร็จ", menuNameTH + " ถูกลบเรียบร้อยแล้ว", "success");
-                        console.log('success');
                         refresh_table();
-                        console.log('refresh success');
                     },
                     error: function (json) {
                         swal("ไม่สำเร็จ", "เซิร์ฟเวอร์อาจมีปัญหา", "error");
@@ -676,6 +677,54 @@
                 swal("ไม่สำเร็จ", "กรุณาลองใหม่ภายหลัง", "error");
             }
         });
+    }
+
+    function filterCard() {
+        var input = $("#myInput").val();
+        var hascard = false;
+        $(".cardname").each(function () {
+            if (($(this).text().toLowerCase()).indexOf(input.toLowerCase()) == -1) {
+                $(this).parent().parent().parent().css('display', 'none');
+            } else {
+                $(this).parent().parent().parent().css('display', '');
+                hascard = true;
+            }
+        });
+
+        if (!hascard) {
+            $("#error_show").html('\
+                    <div class="well col-md-12" style="overflow: auto">\
+                        <p style="text-align:center;font-weight:bold;"> ไม่พบข้อมูลเมนูอาหารแบบชุดด้วยคำค้นหา "' + input + '" </p>\
+                    </div>\
+                    ');
+        } else {
+            $("#error_show").html('');
+        }
+    }
+
+    function turn_official(menuno) {
+        swal({
+                title: "ต้องการเปลี่ยนเมนูนี้ให้เป็นเมนูของทุกสาขา",
+                text: "",
+                type: "warning",
+                showCancelButton: true,
+                cancelButtonText: "ยกเลิก",
+                confirmButtonText: "ใช่, ต้องการเปลี่ยน",
+                confirmButtonColor: "#DD6B55",
+                closeOnConfirm: true
+            },
+            function () {
+                $.ajax({
+                    type: "POST",
+                    data: {menuno: menuno},
+                    url: "${contextPath}/menu/promoteofficial",
+                    success: function (result) {
+                        refresh_table();
+                    }, error: function (result) {
+                        swal("ไม่สำเร็จ", "กรุณาลองใหม่ภายหลัง", "error");
+                    }
+                });
+            });
     }
 </script>
 </body>

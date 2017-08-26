@@ -1,7 +1,6 @@
 package com.springoeb.system.model;
 
-import javax.persistence.Entity;
-import javax.persistence.Id;
+import javax.persistence.*;
 
 @Entity
 public class BranchUser {
@@ -9,8 +8,13 @@ public class BranchUser {
     private Integer branchUserNo;
     private String username;
     private String password;
+    @Column(name = "branchNo", updatable = true,insertable = true)
     private Integer branchNo;
     private Integer roleNo;
+
+    @ManyToOne
+    @JoinColumn(name = "branchNo",updatable = false,insertable = false)
+    private Branch branch;
 
     public Integer getBranchUserNo() {
         return branchUserNo;
@@ -50,6 +54,14 @@ public class BranchUser {
 
     public void setRoleNo(Integer roleNo) {
         this.roleNo = roleNo;
+    }
+
+    public Branch getBranch() {
+        return branch;
+    }
+
+    public void setBranch(Branch branch) {
+        this.branch = branch;
     }
 
     @Override

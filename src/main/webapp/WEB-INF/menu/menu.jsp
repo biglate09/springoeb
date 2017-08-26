@@ -341,7 +341,7 @@
                         <div class="mask">\
                         <p style="white-space: nowrap;overflow:hidden;text-overflow: ellipsis;">' + (menu.menuDesc == '' || menu.menuDesc == null ? 'ไม่มีรายละเอียด' : menu.menuDesc) + '</p>\
                         <div class="tools tools-bottom">\
-                        <a title="เมนูของทุกสาขา" style="color:white;margin-right:5px;"><i class="fa ' + (menu.localFlag == 0 ? 'fa-users' : 'fa-user' ) + '"></i> <span style="font-size:14px">' + (menu.localFlag == 0 ? ' เป็นเมนูของทุกสาขา' : ' เป็นเมนูเฉพาะสาขา ' + menu.localFlag ) + '</span></a>\
+                        <a title="เมนูของทุกสาขา" style="color:white;margin-right:5px;"><i class="fa ' + (menu.localFlag == 0 ? 'fa-users' : 'fa-user' ) + '"></i> <span style="font-size:14px">' + (menu.localFlag == 0 ? ' เป็นเมนูของทุกสาขา' : ' เป็นเมนูเฉพาะสาขานี้') + '</span></a>\
                         </div>\
                         </div>\
                         </div>\
@@ -350,11 +350,12 @@
                         <p class="col-md-12" style="text-align:center;white-space: nowrap;overflow:hidden;text-overflow: ellipsis;">หมวดหมู่ : ' + menu.menuGroup.menuGroupNameTH + '</p>\
                         <p class="col-md-12" style="text-align:center">' + menu.menuPrice.toFixed(2).replace(/\B(?=(\d{3})+(?!\d))/g, ",") + " บาท" + '</p>\
                         <div style="text-align:left;" class="col-md-7">\
-                        <a title="แก้ไข" data-toggle="modal" data-target="#editMenu" onclick="set_menu(' + menu.menuNo + ')" style="color:#73879C;cursor:pointer;margin-right:5px;"><i class="fa fa-pencil"></i></a>\
+                        ' + (menu.localFlag == 0 && ${branchUser.branchNo != Branch.MAIN_BRANCH} ? '' : '<a title="แก้ไข" style="color:#73879C;cursor:pointer;margin-right:5px;"><i class="fa fa-pencil"></i></a>') + '\
+                        ' + (menu.localFlag != 0 ? ('<a title="ทำให้เป็นเมนูของทุกสาขา" onclick="turn_official(' + menu.menuNo + ')" style="color:#73879C;cursor:pointer;margin-right:5px;"><i class="fa fa-users"></i></a>') : '') + '\
                         <a title="เมนูนี้' + (obj.available == true ? '' : 'ไม่' ) + 'พร้อมจำหน่าย คลิกเพื่อเปลี่ยน" onclick="change_available(' + menu.menuNo + ')" style="color:#73879C;cursor:pointer;margin-right:5px;"><i class="fa ' + (obj.available == true ? 'fa-check-square-o' : 'fa-square-o' ) + '"></i></a>\
-                        <a title="ลบ" onclick="del_menu(' + menu.menuNo + ',\'' + menu.menuNameTH + '\')" style="color:#73879C;cursor:pointer;"><i class="fa fa-trash"></i></a>\
+                        ' + (menu.localFlag == 0 && ${branchUser.branchNo != Branch.MAIN_BRANCH} ? '' : '<a title="ลบ" onclick="del_menu(' + menu.menuNo + ',\'' + menu.menuNameTH + '\')" style="color:#73879C;cursor:pointer;"><i class="fa fa-trash"></i></a>') + '\
                         </div>\
-                        <div style="color:white;background-color:#73879C;border-radius:4px;text-align:center;" class="col-md-5">' + (menu.localFlag == 0 ? "ทุกสาขา" : "สาขา " + menu.localFlag) + '</div>\
+                        <div style="color:white;background-color:' + (menu.localFlag == 0 ? "#73879C" : "red") + ';border-radius:4px;text-align:center;" class="col-md-5">' + (menu.localFlag == 0 ? "ทุกสาขา" : "สาขา" + (menu.localFlag ==${Branch.MAIN_BRANCH} ? "นี้" : " " + menu.localFlag)) + '</div>\
                         </div>\
                         </div>\
                         ';
@@ -381,8 +382,9 @@
                             <p class="col-md-12" style="text-align:center;white-space: nowrap;overflow:hidden;text-overflow: ellipsis;">หมวดหมู่ : ' + menu.menuGroup.menuGroupNameTH + '</p>\
                             <p class="col-md-12" style="text-align:center">' + menu.menuPrice.toFixed(2).replace(/\B(?=(\d{3})+(?!\d))/g, ",") + " บาท" + '</p>\
                             <div style="text-align:left;" class="col-md-7">\
+                            <a title="ทำให้เป็นเมนูของทุกสาขา" onclick="turn_official(' + menu.menuNo + ')" style="color:#73879C;cursor:pointer;margin-right:5px;"><i class="fa fa-users"></i></a>\
                             </div>\
-                            <div style="color:white;background-color:#73879C;border-radius:4px;text-align:center;" class="col-md-5">' + (menu.localFlag == 0 ? "ทุกสาขา" : "สาขา " + menu.localFlag) + '</div>\
+                            <div style="color:white;background-color:yellowgreen;border-radius:4px;text-align:center;" class="col-md-5">' + (menu.localFlag == 0 ? "ทุกสาขา" : "สาขา " + menu.localFlag) + '</div>\
                             </div>\
                             </div>\
                             ';
@@ -421,11 +423,11 @@
         return false;
     });
 
-    $('.modal').on('hidden.bs.modal', function(){
+    $('.modal').on('hidden.bs.modal', function () {
         reset_field();
     });
 
-    function reset_field(){
+    function reset_field() {
         $("#add_menu")[0].reset();
         $("#showpic").attr('src', '../images/default_upload_image.png');
         $("#add_menu_available").parent().removeClass('checked');
@@ -521,6 +523,31 @@
                 swal("ไม่สำเร็จ", "กรุณาลองใหม่ภายหลัง", "error");
             }
         });
+    }
+
+    function turn_official(menuno) {
+        swal({
+                title: "ต้องการเปลี่ยนเมนูนี้ให้เป็นเมนูของทุกสาขา",
+                text: "",
+                type: "warning",
+                showCancelButton: true,
+                cancelButtonText: "ยกเลิก",
+                confirmButtonText: "ใช่, ต้องการเปลี่ยน",
+                confirmButtonColor: "#DD6B55",
+                closeOnConfirm: true
+            },
+            function () {
+                $.ajax({
+                    type: "POST",
+                    data: {menuno: menuno},
+                    url: "${contextPath}/menu/promoteofficial",
+                    success: function (result) {
+                        refresh_table();
+                    }, error: function (result) {
+                        swal("ไม่สำเร็จ", "กรุณาลองใหม่ภายหลัง", "error");
+                    }
+                });
+            });
     }
 </script>
 

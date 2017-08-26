@@ -2,6 +2,7 @@ package com.springoeb.stock.model;
 
 import javax.persistence.*;
 import java.sql.Date;
+import java.sql.Time;
 
 @Entity
 public class MaterialHistory {
@@ -10,12 +11,12 @@ public class MaterialHistory {
     private Integer matHistNo;
     private String matName;
     private Double matQuantity;
-    private Date datetime;
+    private Date date;
+    private Time time;
     @Column(name = "mat_item_no",insertable = true,updatable = true)
     private Integer matItemNo;
     @Column(name = "branch_no",insertable = true,updatable = true)
     private Integer branchNo;
-
     @ManyToOne
     @JoinColumn(name = "mat_item_no",updatable = false,insertable = false)
     private MaterialItem materialItem;
@@ -44,12 +45,20 @@ public class MaterialHistory {
         this.matQuantity = matQuantity;
     }
 
-    public Date getDatetime() {
-        return datetime;
+    public Date getDate() {
+        return date;
     }
 
-    public void setDatetime(Date datetime) {
-        this.datetime = datetime;
+    public void setDate(Date date) {
+        this.date = date;
+    }
+
+    public Time getTime() {
+        return time;
+    }
+
+    public void setTime(Time time) {
+        this.time = time;
     }
 
     public Integer getMatItemNo() {
