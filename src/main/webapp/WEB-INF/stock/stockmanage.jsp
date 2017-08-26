@@ -1,4 +1,5 @@
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
+<%@ taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt" %>
 <%@page contentType="text/html" pageEncoding="UTF-8" %>
 <c:set var="contextPath" value="${pageContext.request.contextPath}"/>
 <!DOCTYPE html>
@@ -39,7 +40,7 @@
                                     <tr>
                                         <th style="width:20%;text-align:center;">ชื่อวัตถุดิบ</th>
                                         <th style="width:20%;text-align:center;">การอัพเดทล่าสุด</th>
-                                        <th style="width:20%;text-align:center;">จำนวนคงเหลือ</th>
+                                        <th style="width:20%;text-align:center;">จำนวนการอัพเดท</th>
                                         <th style="width:20%;text-align:center;">ตัวเลือก</th>
                                     </tr>
                                     </thead>
@@ -66,7 +67,6 @@
                                             <div class="form-group">
 
 
-
                                                 <div class="col-md-12 col-sm-12 col-xs-12">
                                                     <label>เลือกวัตถุดิบอาหารที่ต้องการอัพเดท</label>
                                                     <table id="add_mixed_product_datatable"
@@ -74,28 +74,40 @@
                                                         <thead>
                                                         <tr>
                                                             <th style="text-align:center;">ชื่อวัตถุดิบอาหาร</th>
+                                                            <th style="text-align:center;">ประเภท</th>
                                                             <th style="text-align:center;">จำนวนทีคงเหลือ</th>
                                                             <th style="text-align:center;">จำนวนที่เปลี่ยนแปลง</th>
                                                         </tr>
                                                         </thead>
                                                         <tbody style="text-align:center;">
-                                                        <c:forEach items="${materialItems}" var="mi">
+                                                        <c:forEach items="${materials}" var="mi">
+                                                            <c:set var="sumquantity" value="0"/>
+                                                            <c:forEach items="${mi.materialHistories}" var="ms">
+                                                                ${sumquantity = sumquantity + ms.matQuantity}
+                                                            </c:forEach>
                                                             <tr>
-                                                                <td style="width:40%;">${mi.matItemName}</td>
-                                                                <td style="width:30%;">${mi.materialCategory.matCatName}</td>
-                                                                <td style="width:30%;">
-                                                                    <div class="col-md-6">
+                                                                <td style="width:30%;">${mi.matItemName}</td>
+                                                                <td style="width:20%;">${mi.materialCategory.matCatName}</td>
+                                                                <td style="width:25%">
+                                                                    <fmt:formatNumber value="${sumquantity}"
+                                                                                      var="formatquantity"
+                                                                                      pattern="#,###,##0.###"/>
+                                                                        ${formatquantity}
+                                                                        ${mi.unit.unitName}
+                                                                </td>
+                                                                <td style="width:25%;">
+                                                                    <div class="col-md-6" style="text-align:center;">
                                                                         <input matItemNo="${mi.matItemNo}" type="number"
                                                                                matItemName="${mi.matItemName}"
                                                                                unit="${mi.unit.unitName}"
-                                                                               class="materialamount"
+                                                                               class="materialamount col-md-12"
                                                                                name="materialamount${mi.matItemNo}"
                                                                                style="text-align:center;"
                                                                                value="0" min="-1000" max="1000"
-                                                                               step="0.000001"
+                                                                               step="0.001"
                                                                                required>
                                                                     </div>
-                                                                    <div class="col-md-6">
+                                                                    <div class="col-md-6" style="text-align:center;">
                                                                             ${mi.unit.unitName}
                                                                     </div>
                                                                 </td>
@@ -106,8 +118,10 @@
                                                 </div>
                                                 <div class="col-md-12" style="text-align:center;margin-top:20px;">
                                                     <div class="well" style="overflow: auto">
-                                                        <span style="font-weight:bold;">รายกาารวัตถุดิบที่อัพเดท</span>
-                                                        <div id="display_material_desc" style="margin-bottom:20px;margin-top:20px;" class="submit-clear"></div>
+                                                        <span style="font-weight:bold;">รายการวัตถุดิบที่อัพเดท</span>
+                                                        <div id="display_material_desc"
+                                                             style="margin-bottom:20px;margin-top:20px;"
+                                                             class="submit-clear"></div>
                                                     </div>
                                                 </div>
                                             </div>
@@ -199,7 +213,7 @@
 <script>
     $(document).ready(function () {
         $("#datatable-matitem").DataTable({
-            order: [[0, "asc"]],
+            order: [[1, "desc"]],
             columnDefs: [
                 {orderable: false, targets: [-1]}
             ],
@@ -208,10 +222,10 @@
                     data: 'matItemName'
                 },
                 {
-                    data: 'item'
+                    data: 'update'
                 },
                 {
-                    data: 'unit'
+                    data: 'remain'
                 },
                 {
                     data: 'option'
@@ -235,16 +249,16 @@
         refresh_table();
     });
 
-    $(".materialamount").on('change keyup',function(){
+    $(".materialamount").on('change keyup', function () {
         $("#display_material_desc").empty();
         $(".materialamount").each(function () {
-            if ($(this).val() > 0) {
+            if ($(this).val() != 0) {
                 $("#display_material_desc").append('<div class="col-md-4 col-md-offset-2" style="text-align:left;white-space:nowrap;overflow:hidden;text-overflow: ellipsis;">' + $(this).attr('matItemName') + '</div><div class="col-md-3 col-md-offset-2" style="text-align:left;">' + $(this).val() + ' ' + $(this).attr('unit') + '</div><br>');
             }
         });
     });
 
-    $(".materialamount2").on('change keyup',function(){
+    $(".materialamount2").on('change keyup', function () {
         $("#display_material_desc2").empty();
         $(".materialamount2").each(function () {
             if ($(this).val() > 0) {
@@ -253,19 +267,19 @@
         });
     });
 
-    $("#add_mat_item_name").on('change keyup',function(){
+    $("#add_mat_item_name").on('change keyup', function () {
         $("#mixed_prod_name").html($(this).val());
     });
 
-    $("#add_unit_no").on('change',function(){
+    $("#add_unit_no").on('change', function () {
         $("#mixed_prod_unit").html($("#add_unit_no option:selected").text());
     });
 
-    $("#edit_mat_item_name").on('change keyup',function(){
+    $("#edit_mat_item_name").on('change keyup', function () {
         $("#mixed_prod_name2").html($(this).val());
     });
 
-    $("#edit_unit_no").on('change',function(){
+    $("#edit_unit_no").on('change', function () {
         $("#mixed_prod_unit2").html($("#edit_unit_no option:selected").text());
     });
 
@@ -276,14 +290,14 @@
             dataType: "json",
             success: function (json) {
                 var data_array = [];
-                for (var i=0; i<json.length; i++){
+                for (var i = 0; i < json.length; i++) {
                     var obj = json[i];
-                    console.log(obj)
+                    var date = new Date(obj.date.substring(0,4),obj.date.substring(5,7),obj.date.substring(8,11),obj.time.substring(0,2),obj.time.substring(3,5),obj.time.substring(7,9),0);
                     var data = {
                         matItemName: '<a style="cursor:pointer;font-weight:bold;" onclick = "set_mat_item(' + obj.materialItem.matItemNo + ')" data-toggle = "modal" data-target = "#editMatItem">' + obj.materialItem.matItemName + '</a>',
-                        item: obj.datetime,
-                        unit: obj.materialItem.quantity + ' ' + obj.materialItem.unit.unitName,
-                        option: '<a onclick = "set_mat_item(' + obj.matItemNo + ')" class = "btn btn-warning btn-sm" data-toggle = "modal" data-target = "#editMatItem"> <i class = "fa fa-pencil"> </i> &nbsp; แก้ไข </a>'
+                        update: (date.getDate() < 10 ? "0" + date.getDate() : date.getDate()) + "/" + ((date.getMonth()) < 10 ? "0" + (date.getMonth()) : date.getMonth()) + "/" + date.getFullYear() + " " + (date.getHours() < 10 ? "0" + date.getHours() : date.getHour()) + "." + (date.getMinutes() < 10 ? "0" + date.getMinutes() : date.getMinutes() + " น."),
+                        remain: obj.matQuantity + ' ' + obj.materialItem.unit.unitName,
+                        option: '<a onclick = "del_mat_item(' + obj.matItemNo + ')" class = "btn btn-danger btn-sm" data-toggle = "modal" data-target = "#editMatItem"> <i class = "fa fa-trash"> </i> &nbsp; ลบ </a>'
                     }
                     data_array.push(data);
                 }

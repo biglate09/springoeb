@@ -117,7 +117,7 @@
                                                                                name="materialamount${mi.matItemNo}"
                                                                                style="text-align:center;"
                                                                                value="0" min="0" max="1000"
-                                                                               step="0.000001"
+                                                                               step="0.001"
                                                                                required>
                                                                     </div>
                                                                     <div class="col-md-6">
@@ -139,8 +139,8 @@
                                                             รวมเป็น <span style="font-weight:normal"
                                                                           class="submit-clear"
                                                                           id="mixed_prod_name"></span> ทั้งหมด :
-                                                            <input style="width:10%;" type="number" step="0.000001"
-                                                                   min="0.000001" name="quantity" value="1" required>
+                                                            <input style="width:10%;" type="number" step="0.001"
+                                                                   min="0.001" name="quantity" value="1" required>
                                                             <span class="submit-clear" id="mixed_prod_unit"></span>
                                                         </div>
                                                     </div>
@@ -231,7 +231,7 @@
                                                                                name="materialamount${mi.matItemNo}"
                                                                                style="text-align:center;"
                                                                                value="0" min="0" max="1000"
-                                                                               step="0.000001"
+                                                                               step="0.001"
                                                                                required>
                                                                     </div>
                                                                     <div class="col-md-6">
@@ -253,8 +253,8 @@
                                                             รวมเป็น <span style="font-weight:normal"
                                                                           class="submit-clear"
                                                                           id="mixed_prod_name2"></span> ทั้งหมด :
-                                                            <input style="width:10%;" type="number" step="0.000001"
-                                                                   min="0.000001" name="quantity" value="1"
+                                                            <input style="width:10%;" type="number" step="0.001"
+                                                                   min="0.001" name="quantity" value="1"
                                                                    id="mixed_quantity" required> <span
                                                                 class="submit-clear" id="mixed_prod_unit2"></span>
                                                         </div>
