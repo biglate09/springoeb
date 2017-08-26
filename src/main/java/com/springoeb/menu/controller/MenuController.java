@@ -160,6 +160,27 @@ public class MenuController {
 
     @Transactional
     @ResponseBody
+    @PostMapping("/promoteofficial")
+    public void promoteOfficial(HttpServletRequest request, HttpSession session) {
+        int branchNo = ((BranchUser) (session.getAttribute("branchUser"))).getBranchNo();
+        Menu menu = menuService.getMenuByMenuNo(Integer.parseInt(request.getParameter("menuno")));
+        menu.setLocalFlag(Menu.OFFICIAL_MENU_FLAG);
+        menuService.save(menu);
+
+        List<Branch> branches = branchService.getAllBranches();
+        for(Branch b : branches){
+            if(b.getBranchNo() != branchNo) {
+                BranchMenu bm = new BranchMenu();
+                bm.setMenuNo(menu.getMenuNo());
+                bm.setBranchNo(b.getBranchNo());
+                bm.setAvailable(false);
+                branchMenuService.save(bm);
+            }
+        }
+    }
+
+    @Transactional
+    @ResponseBody
     @DeleteMapping("/delmenu/{menuNo}")
     public void delMenu(@PathVariable("menuNo") int menuNo) {
         String menuPicPath = menuService.getMenuByMenuNo(menuNo).getMenuPicPath();
