@@ -437,7 +437,7 @@
                             <div class="col-md-5" style="text-align:right;">\
                             <div class="panel_menuset">\
                             <a title="แก้ไข" data-toggle="modal" data-target="#editMenuSet" onclick="set_menuset(' + menu.menuNo + ')" style="color:#73879C;cursor:pointer;margin-right:5px;"><i class="fa fa-pencil"></i></a>\
-                            <a title="เมนูนี้' + (obj.available == true ? '' : 'ไม่' ) + 'พร้อมจำหน่าย คลิกเพื่อเปลี่ยน" onclick="change_available(' + menu.menuNo + ')" style="color:#73879C;cursor:pointer;margin-right:5px;"><i class="fa ' + (obj.available == true ? 'fa-eye' : 'fa-eye-slash' ) + '"></i></a>\
+                            <a title="เมนูนี้' + (obj.available == true ? '' : 'ไม่' ) + 'พร้อมจำหน่าย คลิกเพื่อเปลี่ยน" onclick="change_available(' + menu.menuNo + ')" style="color:#73879C;cursor:pointer;margin-right:5px;"><i class="fa ' + (obj.available == true ? 'fa-check-square-o' : 'fa-square-o' ) + '"></i></a>\
                             <a title="ลบ" style="color:#73879C;cursor:pointer;" onclick="del_menuset(' + menu.menuNo + ',\'' + menu.menuNameTH + '\')"><i class="fa fa-trash"></i></a>\
                             </div>\
                             </div>\
@@ -459,7 +459,7 @@
                             <div class="mask">\
                             <p style="white-space:nowrap;overflow:hidden;text-overflow: ellipsis;">' + (menu.menuDesc == null ? 'ไม่มีรายละเอียด' : menu.menuDesc) + '</p>\
                             <div class="tools tools-bottom" style="margin-top:100px;">\
-                            <a title="' + (menu.localFlag == 0 ? 'เมนูของทุกสาขา' : 'เมนูเฉพาะสาขา' + menu.localFlag) + '" style="color:white;margin-right:5px;"><i class="fa ' + (menu.localFlag == 0 ? 'fa-check-circle' : 'fa-circle-o' ) + '"></i> <span style="font-size:14px">' + (menu.localFlag == 0 ? 'เป็นเมนูของทุกสาขา' : 'เป็นเมนูเฉพาะสาขา ' + menu.localFlag ) + '</span></a>\
+                            <a title="' + (menu.localFlag == 0 ? 'เมนูของทุกสาขา' : 'เมนูเฉพาะสาขา' + menu.localFlag) + '" style="color:white;margin-right:5px;"><i class="fa ' + (menu.localFlag == 0 ? 'fa-users' : 'fa-user' ) + '"></i> <span style="font-size:14px">' + (menu.localFlag == 0 ? 'เป็นเมนูของทุกสาขา' : 'เป็นเมนูเฉพาะสาขา ' + menu.localFlag ) + '</span></a>\
                             </div>\
                             </div>\
                             </div>\
