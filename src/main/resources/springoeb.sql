@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Host: 127.0.0.1
--- Generation Time: Aug 25, 2017 at 11:21 AM
+-- Generation Time: Aug 26, 2017 at 03:34 PM
 -- Server version: 10.1.21-MariaDB
 -- PHP Version: 5.6.30
 
@@ -61,10 +61,19 @@ INSERT INTO `branch_menu` (`branch_no`, `menu_no`, `available`) VALUES
 (1, 39, 0),
 (1, 40, 0),
 (1, 41, 0),
-(1, 42, 0),
-(1, 43, 0),
-(1, 46, 1),
-(1, 47, 1);
+(1, 43, 1),
+(1, 47, 1),
+(1, 48, 1),
+(1, 49, 0),
+(1, 50, 1),
+(1, 54, 0),
+(1, 63, 0),
+(1, 64, 0),
+(1, 65, 0),
+(1, 66, 1),
+(1, 68, 0),
+(2, 36, 0),
+(2, 65, 0);
 
 -- --------------------------------------------------------
 
@@ -112,7 +121,6 @@ CREATE TABLE `employee` (
 
 INSERT INTO `employee` (`emp_no`, `emp_name`, `emp_tel`, `emp_gender`, `emp_type`, `pay_type`, `pay`, `bg_color`, `font_color`, `branch_no`) VALUES
 (1, 'เบนซ์', '', 'F', '2', '1', 40.00, '#ff6c87', '#170404', 1),
-(2, 'น้ำฝน', '', 'F', '2', '1', 35.00, '', '', 1),
 (7, 'บีม', '', 'F', '2', '1', 35.00, '#ff984e', '#1c0505', 1),
 (8, 'อาย', '', 'F', '2', '1', 35.00, '#1bde0a', '#260404', 1),
 (11, 'เนนนี่', '', 'F', '2', '1', 30.00, '#ff9ab8', '#050000', 1),
@@ -142,7 +150,6 @@ CREATE TABLE `employee_pay` (
 --
 
 INSERT INTO `employee_pay` (`emp_pay_no`, `pay`, `date`, `emp_no`) VALUES
-(2, 840.00, '2017-07-09 07:03:01', 2),
 (3, 490.00, '2017-07-09 07:07:45', 7),
 (4, 735.00, '2017-07-09 09:06:43', 16),
 (6, 3219.00, '2017-07-10 08:16:31', 1),
@@ -427,7 +434,7 @@ INSERT INTO `material_mixed` (`mixed_prod_no`, `item_no`, `quantity`) VALUES
 (10, 13, 20),
 (10, 7, 20),
 (10, 11, 20),
-(21, 13, 3),
+(21, 13, 2),
 (21, 7, 4),
 (21, 11, 5);
 
@@ -462,9 +469,9 @@ CREATE TABLE `menu` (
   `menu_no` int(8) NOT NULL,
   `menu_name_TH` varchar(200) NOT NULL,
   `menu_name_EN` varchar(200) NOT NULL,
-  `menu_desc` varchar(500) NOT NULL,
+  `menu_desc` varchar(500) DEFAULT NULL,
   `menu_price` double(20,2) NOT NULL,
-  `menu_pic_path` varchar(500) NOT NULL,
+  `menu_pic_path` varchar(500) DEFAULT NULL,
   `menu_flag` varchar(1) NOT NULL COMMENT 'M = menu , S = menuset',
   `local_flag` int(11) NOT NULL COMMENT '0 = Official, อื่นๆ = Local อิงตาม BranchNo',
   `menu_group_no` int(8) DEFAULT NULL
@@ -475,15 +482,24 @@ CREATE TABLE `menu` (
 --
 
 INSERT INTO `menu` (`menu_no`, `menu_name_TH`, `menu_name_EN`, `menu_desc`, `menu_price`, `menu_pic_path`, `menu_flag`, `local_flag`, `menu_group_no`) VALUES
-(36, 'ข้าวโพดอ่อนแต้มหน้าหมู', 'Baby Corn Served on Steamed Pork', 'Test', 25.00, '1503651814191Dimsum_Baby_Corn1.jpg', 'M', 1, 39),
-(37, 'ซี่โครงหมูเต้าซี่', 'Blackbean Garlic Sauce Steamed Pork', 'Test', 30.00, '1503651832045Dimsum_Blackbean_Garlic1.jpg', 'M', 1, 39),
-(39, 'กะหล่ำห่อกุ้งปูอัด', 'Steamed Cabbage Roll Stuffed with Shrimp', 'Test', 30.00, '1503651885006Dimsum_Cabbage_Rolls1.jpg', 'M', 1, 39),
-(40, 'ขนมจีบปู', 'Crab Chinese Steamed Dumpling', 'Test', 30.00, '1503651901877Dimsum_Crab_Dumpling1.jpg', 'M', 1, 39),
-(41, 'ซาลาเปาไส้ครีม', 'Sweet Cream Bun', 'Test', 30.00, '1503651915038Dimsum_Custard_Bun1.jpg', 'M', 1, 40),
-(42, 'ปลาหมึกกระดองแต้มหน้าหมู', 'Cuttlefish served on Steamed Pork', 'Test', 30.00, '1503651929148Dimsum_Cuttleffish1.jpg', 'M', 1, 39),
-(43, 'ไข่แดงแต้มหน้าหมูสับ', 'Egg Yolk on Steamed Pork', 'Test', 30.00, '1503651942617Dimsum_Egg_Yolk1.jpg', 'M', 1, 39),
-(46, 'เซตหมูเต็มๆ', 'Piggy Set', 'Test', 119.00, '1503652497119Dimsum_Blackbean_Garlic1.jpg', 'S', 1, NULL),
-(47, 'บร็อคโคลี่ไส้กุ้ง', 'Broccoli served on Steamed Shrimp', 'Test', 30.00, '1503652811270Dimsum_Broccoli1.jpg', 'M', 1, 39);
+(36, 'ข้าวโพดอ่อนแต้มหน้าหมู', 'Baby Corn Served on Steamed Pork', NULL, 25.00, '1503651814191Dimsum_Baby_Corn1.jpg', 'M', 0, 39),
+(37, 'ซี่โครงหมูเต้าซี่', 'Blackbean Garlic Sauce Steamed Pork', 'Test', 30.00, '1503651832045Dimsum_Blackbean_Garlic1.jpg', 'M', 0, 39),
+(39, 'กะหล่ำห่อกุ้งปูอัด', 'Steamed Cabbage Roll Stuffed with Shrimp', 'Test', 30.00, '1503651885006Dimsum_Cabbage_Rolls1.jpg', 'M', 0, 39),
+(40, 'ขนมจีบปู', 'Crab Chinese Steamed Dumpling', 'Test', 30.00, '1503651901877Dimsum_Crab_Dumpling1.jpg', 'M', 0, 39),
+(41, 'ซาลาเปาไส้ครีม', 'Sweet Cream Bun', 'Test', 30.00, '1503651915038Dimsum_Custard_Bun1.jpg', 'M', 0, 40),
+(43, 'ไข่แดงแต้มหน้าหมูสับ', 'Egg Yolk on Steamed Pork', 'Test', 30.00, '1503651942617Dimsum_Egg_Yolk1.jpg', 'M', 0, 39),
+(47, 'บร็อคโคลี่ไส้กุ้ง', 'Broccoli served on Steamed Shrimp', 'Test', 30.00, '1503652811270Dimsum_Broccoli1.jpg', 'M', 0, 39),
+(48, 'เซตหมูเต็มๆ', 'Piggy Set', 'Test', 119.00, '1503653039068Dimsum_Blackbean_Garlic1.jpg', 'S', 0, NULL),
+(49, 'เซตซีฟู้ดไม่อั้น', 'Seafood Buffet Set', 'Test', 249.00, '1503653242141Dimsum_Broccoli1.jpg', 'S', 0, NULL),
+(50, 'ชาดำเย็น', 'Iced Black Tea', 'Test', 35.00, '1503653471465Ice_Black_Tea1.jpg', 'M', 0, 41),
+(54, 'เพาหือ่', 'นืนิอดน', 'อนำดทนอไพ่น', 59.00, '1503670554483Dimsum_Egg_Yolk1.jpg', 'S', 1, NULL),
+(62, 'goerjioberjiobjreiojiojiovwjboiejo', 'boterjioerjober', 'v kerjnbnijerniver', 49.00, '1503674019079Dimsum_Cuttleffish1.jpg', 'S', 2, NULL),
+(63, 'ggvkwwwjogjojoigewjoigjqewo', 'gvkoerjiogre', 'koberjogjreo', 50.00, '1503674048538Dimsum_Custard_Bun1.jpg', 'S', 0, NULL),
+(64, 'brklekore', 'bwmklmo', 'ogrekoeoi', 59.00, '1503674117091Dimsum_Cuttleffish1.jpg', 'S', 0, NULL),
+(65, 'vefnbnekfnbjernoj', 'ojvofejoibjeroi', 'oijviojoivrjeoi', 30.00, '1503674622424Dimsum_Egg_Yolk1.jpg', 'S', 0, NULL),
+(66, 'ทดสอบเมนูย่อย', 'Sub Menu', 'Test', 30.00, '1503685209312Dimsum_Egg_Yolk1.jpg', 'M', 1, 39),
+(68, 'freijkoerwmokj', 'kogvewkomko', 'bvtrkltrk', 123.00, NULL, 'M', 1, 39),
+(72, 'DummyMenuJa', 'DummyMenuJa', NULL, 30.00, NULL, 'M', 2, 37);
 
 -- --------------------------------------------------------
 
@@ -526,7 +542,8 @@ CREATE TABLE `menu_group` (
 INSERT INTO `menu_group` (`menu_group_no`, `menu_group_name_TH`, `menu_group_name_EN`, `menu_cat_no`) VALUES
 (37, 'บิงซู', 'Bing-soo', 3),
 (39, 'ติ่มซำ', 'Dim sum', 4),
-(40, 'ซาลาเปา', 'Pao Bun', 1);
+(40, 'ซาลาเปา', 'Pao Bun', 1),
+(41, 'เครื่องดื่ม', 'Drinks', 6);
 
 -- --------------------------------------------------------
 
@@ -545,9 +562,19 @@ CREATE TABLE `menu_in_set` (
 --
 
 INSERT INTO `menu_in_set` (`menu_no`, `menu_sub_no`, `amount`) VALUES
-(46, 36, 1),
-(46, 37, 2),
-(46, 43, 2);
+(48, 36, 2),
+(48, 37, 1),
+(48, 43, 2),
+(49, 39, 2),
+(49, 40, 3),
+(49, 41, 1),
+(49, 47, 2),
+(49, 50, 1),
+(54, 37, 2),
+(62, 47, 2),
+(63, 36, 3),
+(64, 39, 2),
+(65, 43, 2);
 
 -- --------------------------------------------------------
 
@@ -634,7 +661,6 @@ INSERT INTO `work_history` (`work_hist_no`, `work_date`, `work_start`, `work_end
 (23, '2017-07-05', NULL, NULL, 485.00, 7, 0, 14, NULL),
 (24, '2017-07-05', NULL, NULL, 300.00, 7, 0, 13, NULL),
 (25, '2017-07-06', NULL, NULL, 481.00, 13, 0, 1, NULL),
-(27, '2017-07-06', NULL, NULL, 227.50, 6, 30, 2, NULL),
 (28, '2017-07-06', NULL, NULL, 227.50, 6, 30, 19, NULL),
 (29, '2017-07-06', NULL, NULL, 485.00, 5, 0, 14, NULL),
 (30, '2017-07-06', NULL, NULL, 300.00, 5, 0, 13, NULL),
@@ -645,11 +671,9 @@ INSERT INTO `work_history` (`work_hist_no`, `work_date`, `work_start`, `work_end
 (37, '2017-07-07', NULL, NULL, 485.00, 6, 0, 14, NULL),
 (39, '2017-07-08', NULL, NULL, 240.00, 8, 0, 11, NULL),
 (41, '2017-07-08', NULL, NULL, 314.50, 8, 30, 18, NULL),
-(42, '2017-07-08', NULL, NULL, 332.50, 9, 30, 2, NULL),
 (43, '2017-07-08', NULL, NULL, 351.50, 9, 30, 1, NULL),
 (44, '2017-07-08', NULL, NULL, 485.00, 5, 0, 14, NULL),
 (45, '2017-07-08', NULL, NULL, 300.00, 5, 0, 13, NULL),
-(46, '2017-07-09', NULL, NULL, 280.00, 8, 0, 2, NULL),
 (48, '2017-07-04', NULL, NULL, 227.50, 6, 30, 16, NULL),
 (49, '2017-07-06', NULL, NULL, 245.00, 7, 0, 16, NULL),
 (50, '2017-07-02', NULL, NULL, 315.00, 9, 0, 16, NULL),
@@ -1041,7 +1065,7 @@ ALTER TABLE `material_unit`
 -- AUTO_INCREMENT for table `menu`
 --
 ALTER TABLE `menu`
-  MODIFY `menu_no` int(8) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=48;
+  MODIFY `menu_no` int(8) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=73;
 --
 -- AUTO_INCREMENT for table `menu_category`
 --
@@ -1051,7 +1075,7 @@ ALTER TABLE `menu_category`
 -- AUTO_INCREMENT for table `menu_group`
 --
 ALTER TABLE `menu_group`
-  MODIFY `menu_group_no` int(8) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=41;
+  MODIFY `menu_group_no` int(8) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=42;
 --
 -- AUTO_INCREMENT for table `promotion`
 --
@@ -1155,7 +1179,7 @@ ALTER TABLE `menu_material`
 -- Constraints for table `work_history`
 --
 ALTER TABLE `work_history`
-  ADD CONSTRAINT `work_history_ibfk_1` FOREIGN KEY (`emp_no`) REFERENCES `employee` (`emp_no`);
+  ADD CONSTRAINT `work_history_ibfk_1` FOREIGN KEY (`emp_no`) REFERENCES `employee` (`emp_no`) ON DELETE CASCADE ON UPDATE CASCADE;
 
 /*!40101 SET CHARACTER_SET_CLIENT=@OLD_CHARACTER_SET_CLIENT */;
 /*!40101 SET CHARACTER_SET_RESULTS=@OLD_CHARACTER_SET_RESULTS */;
