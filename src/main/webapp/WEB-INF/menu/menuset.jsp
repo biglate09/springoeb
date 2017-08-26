@@ -39,15 +39,23 @@
                         </div>
                         <div class="x_content">
                             <form action="#">
-                                <p>
-                                    <a data-toggle="modal" data-target="#addMenuSet"
-                                       class="btn btn-success btn-sm"><i class="fa fa-plus-circle"></i>&nbsp;
-                                        เพิ่มชุดเมนู</a>
-                                </p>
+                                <div class="col-md-8" style="padding:0px;">
+                                    <p>
+                                        <a data-toggle="modal" data-target="#addMenuSet"
+                                           class="btn btn-success btn-sm"><i class="fa fa-plus-circle"></i>&nbsp;
+                                            เพิ่มชุดเมนู</a>
+                                    </p>
+                                </div>
+                                <div class="col-md-4 form-group" style="padding:0px;">
+                                    <input type="text" class="form-control" id="myInput"
+                                           onkeyup="myFunction()" placeholder="ค้นหา...">
+                                    <span class="fa fa-search form-control-feedback right"
+                                          aria-hidden="true"></span>
+                                </div>
+
                                 <div id="menuset_thumbnail">
 
                                 </div>
-
 
                             </form>
                             <%--modal for add--%>
@@ -361,6 +369,7 @@
 
         refresh_table();
     });
+
 
     $(".menusetamount").on('change keyup', function () {
         var sum_menu_price = 0;
