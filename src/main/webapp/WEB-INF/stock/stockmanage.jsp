@@ -74,7 +74,7 @@
                                                         <thead>
                                                         <tr>
                                                             <th style="text-align:center;">ชื่อวัตถุดิบอาหาร</th>
-                                                            <th style="text-align:center;">จำนวนทีคงเหลือ</th>
+                                                            <th style="text-align:center;">จำนวนที่คงเหลือ</th>
                                                             <th style="text-align:center;">จำนวนที่เปลี่ยนแปลง</th>
                                                         </tr>
                                                         </thead>

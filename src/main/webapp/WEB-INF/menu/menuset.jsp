@@ -39,12 +39,20 @@
                         </div>
                         <div class="x_content">
                             <form action="#">
-                                <div class="col-md-8" style="padding:0px;">
+                                <div class="col-md-7" style="padding:0px;">
                                     <p>
                                         <a data-toggle="modal" data-target="#addMenuSet"
                                            class="btn btn-success btn-sm"><i class="fa fa-plus-circle"></i>&nbsp;
                                             เพิ่มชุดเมนู</a>
                                     </p>
+                                </div>
+                                <div class="col-cm-1 btn-group" style="padding:0px; margin-left: 1px">
+                                    <button id="displayThumbnail" class="btn btn-default" type="button">
+                                        <span class="fa fa-th-large"></span>
+                                    </button>
+                                    <button id="displayTable" class="btn btn-default" type="button">
+                                        <span class="fa fa-align-justify"></span>
+                                    </button>
                                 </div>
                                 <div class="col-md-4 form-group" style="padding:0px;">
                                     <input type="text" class="form-control" id="myInput"

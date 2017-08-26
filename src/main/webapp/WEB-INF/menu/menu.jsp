@@ -29,10 +29,18 @@
                         </div>
                         <div class="x_content">
                             <form action="#">
-                                <div class="col-md-9" style="padding:0px;">
+                                <div class="col-md-8" style="padding:0px;">
                                     <a data-toggle="modal" data-target="#addMenu"
                                        class="btn btn-success btn-sm"><i class="fa fa-plus-circle"></i>&nbsp;
                                         เพิ่มเมนู</a>
+                                </div>
+                                <div class="col-cm-1 btn-group" style="padding:0px; margin-left: 1px">
+                                    <button id="displayThumbnail" class="btn btn-default" type="button">
+                                        <span class="fa fa-th-large"></span>
+                                    </button>
+                                    <button id="displayTable" class="btn btn-default" type="button">
+                                        <span class="fa fa-align-justify"></span>
+                                    </button>
                                 </div>
                                 <div class="col-md-3 form-group has-feedback" style="padding:0px;">
                                     <%--<label>ตัวกรองจากหมวดหมู่ของอาหาร</label>--%>
