@@ -213,7 +213,7 @@
             url: "${contextPath}/stock/managestockcategory",
             success: function (result) {
                 swal("สำเร็จ", "ชื่อประเภท " + $("#add_stock_category").val() + " ถูกเพิ่มเรียบร้อยแล้ว", "success");
-                $("#add_stock_category")[0].reset();
+                reset_field();
                 $("#addStockCat").modal('toggle');
                 refresh_table();
             },error: function(result){
@@ -222,6 +222,14 @@
         });
         return false;
     });
+
+    $('.modal').on('hidden.bs.modal', function(){
+        reset_field();
+    });
+
+    function reset_field(){
+        $("#add_stock_category")[0].reset();
+    }
 
     $("#edit_stock_category").submit(function(){
         var object = $("#edit_stock_category").serialize();

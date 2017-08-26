@@ -158,7 +158,7 @@
             url: "${contextPath}/menu/managemenucategory",
             success: function (result) {
                 swal("สำเร็จ", "ประเภท " + $("#menu_cat_name").val() + " ถูกเพิ่มเรียบร้อยแล้ว", "success");
-                $("#menu_category")[0].reset();
+                reset_field();
                 $("#addMenuCat").modal('toggle');
                 refresh_table();
             },error: function(result){
@@ -167,6 +167,15 @@
         });
         return false;
     });
+
+    $('.modal').on('hidden.bs.modal', function(){
+        reset_field();
+    });
+
+    function reset_field(){
+        $("#menu_category")[0].reset();
+    }
+
 
     function setMenuCat(menuCatNo) {
         $.ajax({

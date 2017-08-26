@@ -370,7 +370,6 @@
         refresh_table();
     });
 
-
     $(".menusetamount").on('change keyup', function () {
         var sum_menu_price = 0;
         $("#display_sum_menu").empty();
@@ -518,12 +517,8 @@
                 url: "${contextPath}/menu/managemenuset",
                 success: function (result) {
                     swal("สำเร็จ", "ชุดเมนู " + $("#add_menuset_nameTH").val() + " ถูกเพิ่มเรียบร้อยแล้ว", "success");
-                    $("#add_menuset")[0].reset();
+                    reset_field();
                     $("#addMenuSet").modal('toggle');
-                    $("#showpic_menuset").attr('src', '../images/default_upload_image.png');
-                    $("#sum_menu_price").html('0.00');
-                    $("#add_menuset_available").parent().removeClass('checked');
-                    $("#add_menuset_available").attr('checked', false);
                     refresh_table();
                 }, error: function (result) {
                     swal("ไม่สำเร็จ", "ชื่อภาษาไทยหรืออังกฤษอาจซ้ำ กรุณาลองใหม่ในภายหลัง", "error");
@@ -535,6 +530,20 @@
 
         return false;
     });
+
+    $('.modal').on('hidden.bs.modal', function(){
+        reset_field();
+    });
+
+    function reset_field(){
+        $("#add_menuset")[0].reset();
+        $("#showpic_menuset").attr('src', '../images/default_upload_image.png');
+        $("#sum_menu_price").html('0.00');
+        $("#add_menuset_available").parent().removeClass('checked');
+        $("#add_menuset_available").attr('checked', false);
+        $("#add_menu_official").parent().removeClass('checked');
+        $("#add_menu_official").attr('checked', false);
+    }
 
     function set_menuset(menuNo) {
         $.ajax({

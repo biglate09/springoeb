@@ -225,7 +225,7 @@
             url: "${contextPath}/stock/managematerialitem",
             success: function (result) {
                 swal("สำเร็จ", "ชื่อวัตถุดิบ " + $("#add_mat_item").val() + " ถูกเพิ่มเรียบร้อยแล้ว", "success");
-                $("#add_mat_item")[0].reset();
+                reset_field();
                 $("#addMatItem").modal('toggle');
                 refresh_table();
             },error: function(result){
@@ -234,6 +234,14 @@
         });
         return false;
     });
+
+    $('.modal').on('hidden.bs.modal', function(){
+        reset_field();
+    });
+
+    function reset_field(){
+        $("#add_mat_item")[0].reset();
+    }
 
     $("#edit_mat_item").submit(function(){
         var object = $("#edit_mat_item").serialize();

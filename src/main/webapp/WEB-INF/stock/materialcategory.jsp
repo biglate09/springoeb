@@ -158,7 +158,7 @@
             url: "${contextPath}/stock/managematerialcategory",
             success: function (result) {
                 swal("สำเร็จ", "ประเภท " + $("#mat_cat_name").val() + " ถูกเพิ่มเรียบร้อยแล้ว", "success");
-                $("#material_category")[0].reset();
+                reset_field();
                 $("#addMaterialCat").modal('toggle');
                 refresh_table();
             },error: function(result){
@@ -167,6 +167,14 @@
         });
         return false;
     });
+
+    $('.modal').on('hidden.bs.modal', function(){
+        reset_field();
+    });
+
+    function reset_field(){
+        $("#material_category")[0].reset();
+    }
 
     function setMaterialCat(matCatNo) {
         $.ajax({

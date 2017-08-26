@@ -403,11 +403,8 @@
             url: "${contextPath}/menu/managemenu",
             success: function (result) {
                 swal("สำเร็จ", "เมนู " + $("#add_menu").val() + " ถูกเพิ่มเรียบร้อยแล้ว", "success");
-                $("#add_menu")[0].reset();
+                reset_field();
                 $("#addMenu").modal('toggle');
-                $("#showpic").attr('src', '../images/default_upload_image.png');
-                $("#add_menu_available").parent().removeClass('checked');
-                $("#add_menu_available").attr('checked', false);
                 refresh_table();
             }, error: function (result) {
                 swal("ไม่สำเร็จ", "ชื่อภาษาไทยหรืออังกฤษอาจซ้ำ กรุณาลองใหม่ในภายหลัง", "error");
@@ -415,6 +412,19 @@
         });
         return false;
     });
+
+    $('.modal').on('hidden.bs.modal', function(){
+        reset_field();
+    });
+
+    function reset_field(){
+        $("#add_menu")[0].reset();
+        $("#showpic").attr('src', '../images/default_upload_image.png');
+        $("#add_menu_available").parent().removeClass('checked');
+        $("#add_menu_available").attr('checked', false);
+        $("#add_menu_official").parent().removeClass('checked');
+        $("#add_menu_official").attr('checked', false);
+    }
 
     $("#edit_menu").submit(function () {
         var object = $("#edit_menu").serialize();
