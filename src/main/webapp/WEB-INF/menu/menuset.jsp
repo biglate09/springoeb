@@ -77,7 +77,7 @@
                                                         <input type="file" class="form-control" name="menuPicPath"
                                                                id="add_menuset_pic"
                                                                onchange="document.getElementById('showpic_menuset').src = window.URL.createObjectURL(this.files[0])"
-                                                               placeholder="อัพโหลดรูปภาพ" required>
+                                                               placeholder="อัพโหลดรูปภาพ">
                                                     </div>
 
                                                     <div class="col-md-6 col-sm-6 col-xs-12 form-group has-feedback">
@@ -101,7 +101,7 @@
                                                         <textarea rows="4" cols="50" class="form-control"
                                                                   name="menuDesc"
                                                                   id="add_menuset_desc"
-                                                                  placeholder="รายละเอียด" required></textarea>
+                                                                  placeholder="รายละเอียด"></textarea>
                                                     </div>
                                                     <div class="col-md-12">
                                                         <label>เลือกเมนูอาหารที่อยู่ในชุดอาหารนี้</label>
@@ -242,7 +242,7 @@
                                                         <textarea rows="4" cols="50" class="form-control"
                                                                   name="menuDesc"
                                                                   id="edit_menuset_desc"
-                                                                  placeholder="รายละเอียด" required></textarea>
+                                                                  placeholder="รายละเอียด"></textarea>
                                                     </div>
                                                     <div class="col-md-12">
                                                         <label>เลือกเมนูอาหารที่อยู่ในชุดอาหารนี้</label>

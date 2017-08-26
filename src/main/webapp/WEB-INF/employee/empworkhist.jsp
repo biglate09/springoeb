@@ -175,14 +175,14 @@
                                             <div class="col-md-3 col-sm-3 col-xs-3 form-group has-feedback">
                                                 <label>จำนวนชั่วโมงในการทำงาน</label>
                                                 <input type="number" class="form-control" min="0" max="24" step="1"
-                                                       placeholder="ชั่วโมง" name="workHour">
+                                                       placeholder="ชั่วโมง" name="workHour" required>
                                                 <span class="fa fa-hourglass form-control-feedback right"
                                                       aria-hidden="true"></span>
                                             </div>
                                             <div class="col-md-3 col-sm-3 col-xs-3 form-group has-feedback">
                                                 <label>จำนวนนาทีในการทำงาน</label>
                                                 <input type="number" class="form-control" min="0" max="59" step="1"
-                                                       placeholder="นาที" name="workMin">
+                                                       placeholder="นาที" name="workMin" required>
                                                 <span class="fa fa-hourglass-end form-control-feedback right"
                                                       aria-hidden="true"></span>
                                             </div>
@@ -240,14 +240,14 @@
                                         <div class="col-md-6 col-sm-3 col-xs-3 form-group has-feedback">
                                             <label>จำนวนชั่วโมงในการทำงาน</label>
                                             <input type="number" class="form-control" min="0" max="24" step="1"
-                                                   placeholder="ชั่วโมง" name="workHour" id="editWorkHour">
+                                                   placeholder="ชั่วโมง" name="workHour" id="editWorkHour" required>
                                             <span class="fa fa-hourglass form-control-feedback right"
                                                   aria-hidden="true"></span>
                                         </div>
                                         <div class="col-md-6 col-sm-3 col-xs-3 form-group has-feedback">
                                             <label>จำนวนนาทีในการทำงาน</label>
                                             <input type="number" class="form-control" min="0" max="59" step="1"
-                                                   placeholder="นาที" name="workMin" id="editWorkMin">
+                                                   placeholder="นาที" name="workMin" id="editWorkMin" required>
                                             <span class="fa fa-hourglass-end form-control-feedback right"
                                                   aria-hidden="true"></span>
                                         </div>
