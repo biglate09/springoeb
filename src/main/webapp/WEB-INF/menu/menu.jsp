@@ -1,5 +1,6 @@
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 <%@page contentType="text/html" pageEncoding="UTF-8" %>
+<%@ page import="com.springoeb.system.model.Branch" %>
 <c:set var="contextPath" value="${pageContext.request.contextPath}"/>
 <!DOCTYPE html>
 <html>
@@ -124,12 +125,14 @@
                                                 <div class="col-md-9 col-sm-9 col-xs-12 col-md-offset-3">
                                                     <div class="checkbox"
                                                          style="display:inline-block;margin-right:15px;">
-                                                        <label>
-                                                            <input type="checkbox" name="localFlag"
-                                                                   id="add_menu_official"
-                                                                   class="flat">
-                                                            เป็นเมนูของทุกสาขา
-                                                        </label>
+                                                        <c:if test="${branchUser.branchNo == Branch.MAIN_BRANCH}">
+                                                            <label>
+                                                                <input type="checkbox" name="localFlag"
+                                                                       id="add_menu_official"
+                                                                       class="flat">
+                                                                เป็นเมนูของทุกสาขา
+                                                            </label>
+                                                        </c:if>
 
                                                         <label>
                                                             <input type="checkbox" name="menuAvailable"
@@ -318,17 +321,17 @@
                 //remove
                 $("#menu_thumbnail").empty();
                 if (json.length != 0) {
-                    for (var i = 0; i < json.length; i++) {
-                        var obj = json[i];
+                    var mymenu = json[0];
+                    for (var i = 0; i < mymenu.length; i++) {
+                        var obj = mymenu[i];
                         var menu = obj.menu;
-                        console.log(menu);
                         var div = '\
                         <div class="col-md-55">\
                         <div class="thumbnail thumbnail_inline">\
                         <div class="image view view-first">\
                         <img style="width: 100%; display: block;" src="' + (menu.menuPicPath != null ? ('../images/menu/' + menu.menuPicPath) : ('../images/default_upload_image.png')) + '" alt="image"/>\
                         <div class="mask">\
-                        <p style="white-space: nowrap;overflow:hidden;text-overflow: ellipsis;">' + menu.menuDesc + '</p>\
+                        <p style="white-space: nowrap;overflow:hidden;text-overflow: ellipsis;">' + (menu.menuDesc == '' || menu.menuDesc == null ? 'ไม่มีรายละเอียด' : menu.menuDesc) + '</p>\
                         <div class="tools tools-bottom">\
                         <a title="เมนูของทุกสาขา" style="color:white;margin-right:5px;"><i class="fa ' + (menu.localFlag == 0 ? 'fa-check-circle' : 'fa-circle-o' ) + '"></i> <span style="font-size:14px">' + (menu.localFlag == 0 ? 'เป็นเมนูของทุกสาขา' : 'เป็นเมนูเฉพาะสาขา ' + menu.localFlag ) + '</span></a>\
                         </div>\
@@ -340,14 +343,43 @@
                         <p class="col-md-12" style="text-align:center">' + menu.menuPrice.toFixed(2).replace(/\B(?=(\d{3})+(?!\d))/g, ",") + " บาท" + '</p>\
                         <div style="text-align:left;" class="col-md-7">\
                         <a title="แก้ไข" data-toggle="modal" data-target="#editMenu" onclick="set_menu(' + menu.menuNo + ')" style="color:#73879C;cursor:pointer;margin-right:5px;"><i class="fa fa-pencil"></i></a>\
-                        <a title="เมนูนี้'+(obj.available == true ? '' : 'ไม่' )+'พร้อมจำหน่าย คลิกเพื่อเปลี่ยน" onclick="change_available(' + menu.menuNo + ')" style="color:#73879C;cursor:pointer;margin-right:5px;"><i class="fa ' + (obj.available == true ? 'fa-eye' : 'fa-eye-slash' ) + '"></i></a>\
+                        <a title="เมนูนี้' + (obj.available == true ? '' : 'ไม่' ) + 'พร้อมจำหน่าย คลิกเพื่อเปลี่ยน" onclick="change_available(' + menu.menuNo + ')" style="color:#73879C;cursor:pointer;margin-right:5px;"><i class="fa ' + (obj.available == true ? 'fa-eye' : 'fa-eye-slash' ) + '"></i></a>\
                         <a title="ลบ" onclick="del_menu(' + menu.menuNo + ',\'' + menu.menuNameTH + '\')" style="color:#73879C;cursor:pointer;"><i class="fa fa-trash"></i></a>\
                         </div>\
-                        <div style="color:white;background-color:#73879C;border-radius:4px;text-align:center;" class="col-md-5">'+(menu.localFlag == 0 ? "ทุกสาขา" : "สาขา "+menu.localFlag)+'</div>\
+                        <div style="color:white;background-color:#73879C;border-radius:4px;text-align:center;" class="col-md-5">' + (menu.localFlag == 0 ? "ทุกสาขา" : "สาขา " + menu.localFlag) + '</div>\
                         </div>\
                         </div>\
                         ';
                         $("#menu_thumbnail").append(div);
+                    }
+                    if (json.length == 2) {
+                        var othermenu = json[1];
+                        for (var i = 0; i < othermenu.length; i++) {
+                            var menu = othermenu[i];
+                            var div = '\
+                            <div class="col-md-55">\
+                            <div class="thumbnail thumbnail_inline">\
+                            <div class="image view view-first">\
+                            <img style="width: 100%; display: block;" src="' + (menu.menuPicPath != null ? ('../images/menu/' + menu.menuPicPath) : ('../images/default_upload_image.png')) + '" alt="image"/>\
+                            <div class="mask">\
+                            <p style="white-space: nowrap;overflow:hidden;text-overflow: ellipsis;">' + (menu.menuDesc == '' || menu.menuDesc == null ? 'ไม่มีรายละเอียด' : menu.menuDesc) + '</p>\
+                            <div class="tools tools-bottom">\
+                            <a title="เมนูของทุกสาขา" style="color:white;margin-right:5px;"><i class="fa ' + (menu.localFlag == 0 ? 'fa-check-circle' : 'fa-circle-o' ) + '"></i> <span style="font-size:14px">' + (menu.localFlag == 0 ? 'เป็นเมนูของทุกสาขา' : 'เป็นเมนูเฉพาะสาขา ' + menu.localFlag ) + '</span></a>\
+                            </div>\
+                            </div>\
+                            </div>\
+                            <div class="caption col-md-12" style="color:#73879C">\
+                            <p class="col-md-12" style="text-align:center;font-weight:bold;white-space:nowrap;overflow:hidden;text-overflow: ellipsis;cursor:pointer;" data-toggle="modal" data-target="#editMenu" onclick="set_menu(' + menu.menuNo + ')">' + menu.menuNameTH + " / " + menu.menuNameEN + '</p>\
+                            <p class="col-md-12" style="text-align:center;white-space: nowrap;overflow:hidden;text-overflow: ellipsis;">หมวดหมู่ : ' + menu.menuGroup.menuGroupNameTH + '</p>\
+                            <p class="col-md-12" style="text-align:center">' + menu.menuPrice.toFixed(2).replace(/\B(?=(\d{3})+(?!\d))/g, ",") + " บาท" + '</p>\
+                            <div style="text-align:left;" class="col-md-7">\
+                            </div>\
+                            <div style="color:white;background-color:#73879C;border-radius:4px;text-align:center;" class="col-md-5">' + (menu.localFlag == 0 ? "ทุกสาขา" : "สาขา " + menu.localFlag) + '</div>\
+                            </div>\
+                            </div>\
+                            ';
+                            $("#menu_thumbnail").append(div);
+                        }
                     }
                 } else {
                     $("#menu_thumbnail").append('\
@@ -428,7 +460,7 @@
                     $("#edit_menu_available").parent().removeClass('checked');
                     $("#edit_menu_available").attr('checked', false);
                 }
-                $("#showpic_edit").attr('src', '../images/menu/' + menu.menuPicPath);
+                $("#showpic_edit").attr('src', menu.menuPicPath == null ? '../images/default_upload_image.png' : ('../images/menu/' + menu.menuPicPath));
             }
         });
     }

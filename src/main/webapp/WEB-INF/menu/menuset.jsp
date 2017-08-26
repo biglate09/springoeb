@@ -389,32 +389,32 @@
     });
 
     function refresh_table() {
-            $.ajax({
+        $.ajax({
             type: "POST",
             url: "${contextPath}/menu/getmenusets",
             dataType: "json",
             success: function (json) {
+                $("#menuset_thumbnail").empty();
                 if (json.length != 0) {
-                    $("#menuset_thumbnail").empty();
                     var data_array = [];
                     var price = 0;
-                    for (var i = 0; i < json.length; i++) {
-                        var obj = json[i];
+                    for (var i = 0; i < json[0].length; i++) {
+                        var obj = json[0][i];
                         var menu = obj.menu;
                         var div = '<div class="col-md-6 col-sm-6 col-xs-12">\
                             <div class="thumbnail">\
                             <div class="col-md-6 image view view-first" style="height:100%;">\
-                            <img style="width: 100%; display: block;" src="../images/menuset/' + menu.menuPicPath + '" alt="image"/>\
+                            <img style="width: 100%; display: block;" src="' + (menu.menuPicPath == null ? ('../images/default_upload_image.png') : ('../images/menuset/' + menu.menuPicPath) ) + '" alt="image"/>\
                             <div class="mask">\
-                            <p style="white-space:nowrap;overflow:hidden;text-overflow: ellipsis;">' + menu.menuDesc + '</p>\
+                            <p style="white-space:nowrap;overflow:hidden;text-overflow: ellipsis;">' + (menu.menuDesc == null ? 'ไม่มีรายละเอียด' : menu.menuDesc) + '</p>\
                             <div class="tools tools-bottom" style="margin-top:100px;">\
-                            <a title="'+(menu.localFlag == 0 ? 'เมนูของทุกสาขา' : 'เมนูเฉพาะสาขา'+menu.localFlag)+'" style="color:white;margin-right:5px;"><i class="fa ' + (menu.localFlag == 0 ? 'fa-check-circle' : 'fa-circle-o' ) + '"></i> <span style="font-size:14px">' + (menu.localFlag == 0 ? 'เป็นเมนูของทุกสาขา' : 'เป็นเมนูเฉพาะสาขา ' + menu.localFlag ) + '</span></a>\
+                            <a title="' + (menu.localFlag == 0 ? 'เมนูของทุกสาขา' : 'เมนูเฉพาะสาขา' + menu.localFlag) + '" style="color:white;margin-right:5px;"><i class="fa ' + (menu.localFlag == 0 ? 'fa-check-circle' : 'fa-circle-o' ) + '"></i> <span style="font-size:14px">' + (menu.localFlag == 0 ? 'เป็นเมนูของทุกสาขา' : 'เป็นเมนูเฉพาะสาขา ' + menu.localFlag ) + '</span></a>\
                             </div>\
                             </div>\
                             </div>\
                             <div class="col-md-6 caption" style="height:100%;color:#73879C">\
                             <div class="col-md-9" data-toggle="modal" data-target="#editMenuSet" onclick="set_menuset(' + menu.menuNo + ')" style="font-weight:bold;white-space:nowrap;overflow:hidden;text-overflow: ellipsis;cursor:pointer;">' + menu.menuNameTH + ' / ' + menu.menuNameEN + '</div>\
-                            <div class="col-md-3" style="color:white;background-color:#73879C;border-radius:4px;text-align:center;">'+(menu.localFlag == 0 ? "ทุกสาขา" : "สาขา "+menu.localFlag)+'</div>\
+                            <div class="col-md-3" style="color:white;background-color:#73879C;border-radius:4px;text-align:center;">' + (menu.localFlag == 0 ? "ทุกสาขา" : "สาขา " + menu.localFlag) + '</div>\
                             <div class="col-md-12 foodDesc">\
                             <div>\
                             <p style="text-align:center;font-weight:bold;">รายการเมนู</p>';
@@ -428,7 +428,7 @@
                             <div class="col-md-5" style="text-align:right;">\
                             <div class="panel_menuset">\
                             <a title="แก้ไข" data-toggle="modal" data-target="#editMenuSet" onclick="set_menuset(' + menu.menuNo + ')" style="color:#73879C;cursor:pointer;margin-right:5px;"><i class="fa fa-pencil"></i></a>\
-                            <a title="เมนูนี้'+(obj.available == true ? '' : 'ไม่' )+'พร้อมจำหน่าย คลิกเพื่อเปลี่ยน" onclick="change_available(' + menu.menuNo + ')" style="color:#73879C;cursor:pointer;margin-right:5px;"><i class="fa ' + (obj.available == true ? 'fa-eye' : 'fa-eye-slash' ) + '"></i></a>\
+                            <a title="เมนูนี้' + (obj.available == true ? '' : 'ไม่' ) + 'พร้อมจำหน่าย คลิกเพื่อเปลี่ยน" onclick="change_available(' + menu.menuNo + ')" style="color:#73879C;cursor:pointer;margin-right:5px;"><i class="fa ' + (obj.available == true ? 'fa-eye' : 'fa-eye-slash' ) + '"></i></a>\
                             <a title="ลบ" style="color:#73879C;cursor:pointer;" onclick="del_menuset(' + menu.menuNo + ',\'' + menu.menuNameTH + '\')"><i class="fa fa-trash"></i></a>\
                             </div>\
                             </div>\
@@ -438,7 +438,47 @@
 
                         $("#menuset_thumbnail").append(div);
                     }
-                }else{
+
+                    if(json.length == 2){
+                        var othermenu = json[1];
+                        for (var i = 0; i < othermenu.length; i++) {
+                            var menu = othermenu[i];
+                            var div = '<div class="col-md-6 col-sm-6 col-xs-12">\
+                            <div class="thumbnail">\
+                            <div class="col-md-6 image view view-first" style="height:100%;">\
+                            <img style="width: 100%; display: block;" src="' + (menu.menuPicPath == null ? ('../images/default_upload_image.png') : ('../images/menuset/' + menu.menuPicPath) ) + '" alt="image"/>\
+                            <div class="mask">\
+                            <p style="white-space:nowrap;overflow:hidden;text-overflow: ellipsis;">' + (menu.menuDesc == null ? 'ไม่มีรายละเอียด' : menu.menuDesc) + '</p>\
+                            <div class="tools tools-bottom" style="margin-top:100px;">\
+                            <a title="' + (menu.localFlag == 0 ? 'เมนูของทุกสาขา' : 'เมนูเฉพาะสาขา' + menu.localFlag) + '" style="color:white;margin-right:5px;"><i class="fa ' + (menu.localFlag == 0 ? 'fa-check-circle' : 'fa-circle-o' ) + '"></i> <span style="font-size:14px">' + (menu.localFlag == 0 ? 'เป็นเมนูของทุกสาขา' : 'เป็นเมนูเฉพาะสาขา ' + menu.localFlag ) + '</span></a>\
+                            </div>\
+                            </div>\
+                            </div>\
+                            <div class="col-md-6 caption" style="height:100%;color:#73879C">\
+                            <div class="col-md-9" data-toggle="modal" data-target="#editMenuSet" onclick="set_menuset(' + menu.menuNo + ')" style="font-weight:bold;white-space:nowrap;overflow:hidden;text-overflow: ellipsis;cursor:pointer;">' + menu.menuNameTH + ' / ' + menu.menuNameEN + '</div>\
+                            <div class="col-md-3" style="color:white;background-color:#73879C;border-radius:4px;text-align:center;">' + (menu.localFlag == 0 ? "ทุกสาขา" : "สาขา " + menu.localFlag) + '</div>\
+                            <div class="col-md-12 foodDesc">\
+                            <div>\
+                            <p style="text-align:center;font-weight:bold;">รายการเมนู</p>';
+                            for (var j = 0; j < menu.menuInSets.length; j++) {
+                                var menuSetMenu = menu.menuInSets[j];
+                                div += '<div class="col-md-9" style="white-space:nowrap;overflow:hidden;text-overflow:ellipsis;" title="' + menuSetMenu.menu.menuNameTH + '">' + menuSetMenu.menu.menuNameTH + ' </div>' + menuSetMenu.amount + " เมนู<br>";
+                            }
+                            div += '</div>\
+                            </div>\
+                            <div class="col-md-7"> <span style="font-weight:bold;">ราคา</span> ' + menu.menuPrice.toFixed(2).replace(/\B(?=(\d{3})+(?!\d))/g, ",") + ' บาท</div>\
+                            <div class="col-md-5" style="text-align:right;">\
+                            <div class="panel_menuset">\
+                            </div>\
+                            </div>\
+                            </div>\
+                            </div>\
+                            </div>';
+
+                            $("#menuset_thumbnail").append(div);
+                        }
+                    }
+                } else {
                     $("#menuset_thumbnail").html('\
                     <div class="well" style="overflow: auto">\
                         <p style="text-align:center;font-weight:bold;"> ไม่พบข้อมูลเมนูอาหารแบบชุด </p>\
@@ -450,28 +490,39 @@
     }
 
     $("#add_menuset").submit(function () {
-        var formdata = new FormData($("#add_menuset")[0]);
-        $.ajax({
-            type: "POST",
-            data: formdata,
-            enctype: 'multipart/form-data',
-            cache: false,
-            contentType: false,
-            processData: false,
-            url: "${contextPath}/menu/managemenuset",
-            success: function (result) {
-                swal("สำเร็จ", "ชุดเมนู " + $("#add_menuset_nameTH").val() + " ถูกเพิ่มเรียบร้อยแล้ว", "success");
-                $("#add_menuset")[0].reset();
-                $("#addMenuSet").modal('toggle');
-                $("#showpic_menuset").attr('src', '../images/default_upload_image.png');
-                $("#sum_menu_price").html('0.00');
-                $("#add_menuset_available").parent().removeClass('checked');
-                $("#add_menuset_available").attr('checked', false);
-                refresh_table();
-            }, error: function (result) {
-                swal("ไม่สำเร็จ", "ชื่อภาษาไทยหรืออังกฤษอาจซ้ำ กรุณาลองใหม่ในภายหลัง", "error");
+        var hasmenu = false;
+        $(".menusetamount").each(function () {
+            if ($(this).val() > 0) {
+                hasmenu = true;
+                return false;
             }
         });
+        if (hasmenu) {
+            var formdata = new FormData($("#add_menuset")[0]);
+            $.ajax({
+                type: "POST",
+                data: formdata,
+                enctype: 'multipart/form-data',
+                cache: false,
+                contentType: false,
+                processData: false,
+                url: "${contextPath}/menu/managemenuset",
+                success: function (result) {
+                    swal("สำเร็จ", "ชุดเมนู " + $("#add_menuset_nameTH").val() + " ถูกเพิ่มเรียบร้อยแล้ว", "success");
+                    $("#add_menuset")[0].reset();
+                    $("#addMenuSet").modal('toggle');
+                    $("#showpic_menuset").attr('src', '../images/default_upload_image.png');
+                    $("#sum_menu_price").html('0.00');
+                    $("#add_menuset_available").parent().removeClass('checked');
+                    $("#add_menuset_available").attr('checked', false);
+                    refresh_table();
+                }, error: function (result) {
+                    swal("ไม่สำเร็จ", "ชื่อภาษาไทยหรืออังกฤษอาจซ้ำ กรุณาลองใหม่ในภายหลัง", "error");
+                }
+            });
+        } else {
+            swal("ไม่สำเร็จ", "กรุณาเลือกเมนูอาหารในชุดนี้ก่อน", "error");
+        }
 
         return false;
     });
@@ -498,7 +549,7 @@
                     $("#edit_menuset_available").attr('checked', false);
                 }
 
-                $("#showpic_menuset_edit").attr('src', '../images/menuset/' + menu.menuPicPath);
+                $("#showpic_menuset_edit").attr('src', menu.menuPicPath == null ? '../images/default_upload_image.png' : ('../images/menuset/' + menu.menuPicPath));
 
                 $(".menusetamount_edit").val(0);
                 var menu_in_menuset = menu.menuInSets;
@@ -523,28 +574,39 @@
     }
 
     $("#edit_menuset").submit(function () {
-        var formdata = new FormData($("#edit_menuset")[0]);
-        $.ajax({
-            type: "POST",
-            data: formdata,
-            enctype: 'multipart/form-data',
-            cache: false,
-            contentType: false,
-            processData: false,
-            url: "${contextPath}/menu/managemenuset",
-            success: function (result) {
-                swal("สำเร็จ", "ชุดเมนู " + $("#edit_menuset_nameTH").val() + " ถูกเพิ่มเรียบร้อยแล้ว", "success");
-                $("#edit_menuset")[0].reset();
-                $("#editMenuSet").modal('toggle');
-                $("#showpic_menuset_edit").attr('src', '../images/default_upload_image.png');
-                $("#sum_menu_price2").html('0.00');
-                $("#edit_menuset_available").parent().removeClass('checked');
-                $("#edit_menuset_available").attr('checked', false);
-                refresh_table();
-            }, error: function (result) {
-                swal("ไม่สำเร็จ", "ชื่อภาษาไทยหรืออังกฤษอาจซ้ำ กรุณาลองใหม่ในภายหลัง", "error");
+        var hasmenu = false;
+        $(".menusetamount_edit").each(function () {
+            if ($(this).val() > 0) {
+                hasmenu = true;
+                return false;
             }
         });
+        if (hasmenu) {
+            var formdata = new FormData($("#edit_menuset")[0]);
+            $.ajax({
+                type: "POST",
+                data: formdata,
+                enctype: 'multipart/form-data',
+                cache: false,
+                contentType: false,
+                processData: false,
+                url: "${contextPath}/menu/managemenuset",
+                success: function (result) {
+                    swal("สำเร็จ", "ชุดเมนู " + $("#edit_menuset_nameTH").val() + " ถูกเพิ่มเรียบร้อยแล้ว", "success");
+                    $("#edit_menuset")[0].reset();
+                    $("#editMenuSet").modal('toggle');
+                    $("#showpic_menuset_edit").attr('src', '../images/default_upload_image.png');
+                    $("#sum_menu_price2").html('0.00');
+                    $("#edit_menuset_available").parent().removeClass('checked');
+                    $("#edit_menuset_available").attr('checked', false);
+                    refresh_table();
+                }, error: function (result) {
+                    swal("ไม่สำเร็จ", "ชื่อภาษาไทยหรืออังกฤษอาจซ้ำ กรุณาลองใหม่ในภายหลัง", "error");
+                }
+            });
+        } else {
+            swal("ไม่สำเร็จ", "กรุณาเลือกเมนูอาหารในชุดนี้ก่อน", "error");
+        }
 
         return false;
     });

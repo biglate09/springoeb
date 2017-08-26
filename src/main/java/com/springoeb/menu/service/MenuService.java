@@ -83,4 +83,22 @@ public class MenuService {
 
         return menuSets;
     }
+
+    public List<Menu> getMenuSetsOther(int branchNo){
+        List<Integer> myBranches = new LinkedList<>();
+        myBranches.add(Menu.OFFICIAL_MENU_FLAG);
+        myBranches.add(branchNo);
+        return menuRepository.findByMenuFlagAndLocalFlagNotIn(Menu.flagForMenuSet,myBranches);
+    }
+
+    public List<Menu> getMenusOtherByMenuGroupNo(int menuGroupNo,int branchNo){
+        List<Integer> myBranches = new LinkedList<>();
+        myBranches.add(Menu.OFFICIAL_MENU_FLAG);
+        myBranches.add(branchNo);
+        if(menuGroupNo == 0){
+            return menuRepository.findByMenuFlagAndLocalFlagNotIn(Menu.flagForMenu,myBranches);
+        }else{
+            return menuRepository.findByMenuFlagAndMenuGroupNoAndLocalFlagNotIn(Menu.flagForMenu,menuGroupNo,myBranches);
+        }
+    }
 }

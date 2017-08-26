@@ -132,10 +132,16 @@
                                                 <div class="col-md-12" style="text-align:center;margin-top:20px;">
                                                     <div class="well" style="overflow: auto">
                                                         <span style="font-weight:bold;">ส่วนผสมของวัตถุดิบอาหารแบบผสมมีดังนี้</span>
-                                                        <div id="display_material_desc" style="margin-bottom:20px;margin-top:20px;" class="submit-clear"></div>
+                                                        <div id="display_material_desc"
+                                                             style="margin-bottom:20px;margin-top:20px;"
+                                                             class="submit-clear"></div>
                                                         <div style="font-weight:bold">
-                                                            รวมเป็น <span style="font-weight:normal" class="submit-clear" id="mixed_prod_name"></span> ทั้งหมด :
-                                                            <input style="width:10%;" type="number" step="0.000001" min="0.000001" name="quantity" value="1" required> <span class="submit-clear" id="mixed_prod_unit"></span>
+                                                            รวมเป็น <span style="font-weight:normal"
+                                                                          class="submit-clear"
+                                                                          id="mixed_prod_name"></span> ทั้งหมด :
+                                                            <input style="width:10%;" type="number" step="0.000001"
+                                                                   min="0.000001" name="quantity" value="1" required>
+                                                            <span class="submit-clear" id="mixed_prod_unit"></span>
                                                         </div>
                                                     </div>
                                                 </div>
@@ -240,10 +246,17 @@
                                                 <div class="col-md-12" style="text-align:center;margin-top:20px;">
                                                     <div class="well" style="overflow: auto">
                                                         <span style="font-weight:bold;">ส่วนผสมของวัตถุดิบอาหารแบบผสมมีดังนี้</span>
-                                                        <div id="display_material_desc2" style="margin-bottom:20px;margin-top:20px;" class="submit-clear"></div>
+                                                        <div id="display_material_desc2"
+                                                             style="margin-bottom:20px;margin-top:20px;"
+                                                             class="submit-clear"></div>
                                                         <div style="font-weight:bold">
-                                                            รวมเป็น <span style="font-weight:normal" class="submit-clear" id="mixed_prod_name2"></span> ทั้งหมด :
-                                                            <input style="width:10%;" type="number" step="0.000001" min="0.000001" name="quantity" value="1" id="mixed_quantity" required> <span class="submit-clear" id="mixed_prod_unit2"></span>
+                                                            รวมเป็น <span style="font-weight:normal"
+                                                                          class="submit-clear"
+                                                                          id="mixed_prod_name2"></span> ทั้งหมด :
+                                                            <input style="width:10%;" type="number" step="0.000001"
+                                                                   min="0.000001" name="quantity" value="1"
+                                                                   id="mixed_quantity" required> <span
+                                                                class="submit-clear" id="mixed_prod_unit2"></span>
                                                         </div>
                                                     </div>
                                                 </div>
@@ -309,7 +322,7 @@
         refresh_table();
     });
 
-    $(".materialamount").on('change keyup',function(){
+    $(".materialamount").on('change keyup', function () {
         $("#display_material_desc").empty();
         $(".materialamount").each(function () {
             if ($(this).val() > 0) {
@@ -318,7 +331,7 @@
         });
     });
 
-    $(".materialamount2").on('change keyup',function(){
+    $(".materialamount2").on('change keyup', function () {
         $("#display_material_desc2").empty();
         $(".materialamount2").each(function () {
             if ($(this).val() > 0) {
@@ -327,19 +340,19 @@
         });
     });
 
-    $("#add_mat_item_name").on('change keyup',function(){
+    $("#add_mat_item_name").on('change keyup', function () {
         $("#mixed_prod_name").html($(this).val());
     });
 
-    $("#add_unit_no").on('change',function(){
+    $("#add_unit_no").on('change', function () {
         $("#mixed_prod_unit").html($("#add_unit_no option:selected").text());
     });
 
-    $("#edit_mat_item_name").on('change keyup',function(){
+    $("#edit_mat_item_name").on('change keyup', function () {
         $("#mixed_prod_name2").html($(this).val());
     });
 
-    $("#edit_unit_no").on('change',function(){
+    $("#edit_unit_no").on('change', function () {
         $("#mixed_prod_unit2").html($("#edit_unit_no option:selected").text());
     });
 
@@ -368,39 +381,63 @@
     }
 
     $("#add_mat_item").submit(function () {
-        var object = $("#add_mat_item").serialize();
-        $.ajax({
-            type: "POST",
-            data: object,
-            url: "${contextPath}/stock/managematerialitem",
-            success: function (result) {
-                swal("สำเร็จ", "ชื่อวัตถุดิบ " + $("#add_mat_item").val() + " ถูกเพิ่มเรียบร้อยแล้ว", "success");
-                $(".submit-clear").empty();
-                $("#add_mat_item")[0].reset();
-                $("#addMatItem").modal('toggle');
-                refresh_table();
-            }, error: function (result) {
-                swal("ไม่สำเร็จ", "ชื่ออาจซ้ำ กรุณาลองใหม่ในภายหลัง", "error");
+        var hassubmaterial = false;
+        $(".materialamount").each(function () {
+            if ($(this).val() > 0) {
+                hassubmaterial = true;
+                return false;
             }
         });
+
+        if (hassubmaterial) {
+            var object = $("#add_mat_item").serialize();
+            $.ajax({
+                type: "POST",
+                data: object,
+                url: "${contextPath}/stock/managematerialitem",
+                success: function (result) {
+                    swal("สำเร็จ", "ชื่อวัตถุดิบ " + $("#add_mat_item").val() + " ถูกเพิ่มเรียบร้อยแล้ว", "success");
+                    $(".submit-clear").empty();
+                    $("#add_mat_item")[0].reset();
+                    $("#addMatItem").modal('toggle');
+                    refresh_table();
+                }, error: function (result) {
+                    swal("ไม่สำเร็จ", "ชื่ออาจซ้ำ กรุณาลองใหม่ในภายหลัง", "error");
+                }
+            });
+        }else{
+            swal("ไม่สำเร็จ", "กรุณาเลือกส่วนผสมของวัตถุดิบก่อน", "error");
+        }
         return false;
     });
 
     $("#edit_mat_item").submit(function () {
-        var object = $("#edit_mat_item").serialize();
-        $.ajax({
-            type: "POST",
-            data: object,
-            url: "${contextPath}/stock/managematerialitem",
-            success: function (result) {
-                swal("สำเร็จ", "ชื่อวัตถุดิบ " + $("#add_mat_item").val() + " ถูกแก้ไขเรียบร้อยแล้ว", "success");
-                $("#edit_mat_item")[0].reset();
-                $("#editMatItem").modal('toggle');
-                refresh_table();
-            }, error: function (result) {
-                swal("ไม่สำเร็จ", "ชื่ออาจซ้ำ กรุณาลองใหม่ในภายหลัง", "error");
+        var hassubmaterial = false;
+        $(".materialamount2").each(function () {
+            if ($(this).val() > 0) {
+                hassubmaterial = true;
+                return false;
             }
         });
+
+        if (hassubmaterial) {
+            var object = $("#edit_mat_item").serialize();
+            $.ajax({
+                type: "POST",
+                data: object,
+                url: "${contextPath}/stock/managematerialitem",
+                success: function (result) {
+                    swal("สำเร็จ", "ชื่อวัตถุดิบ " + $("#add_mat_item").val() + " ถูกแก้ไขเรียบร้อยแล้ว", "success");
+                    $("#edit_mat_item")[0].reset();
+                    $("#editMatItem").modal('toggle');
+                    refresh_table();
+                }, error: function (result) {
+                    swal("ไม่สำเร็จ", "ชื่ออาจซ้ำ กรุณาลองใหม่ในภายหลัง", "error");
+                }
+            });
+        } else {
+            swal("ไม่สำเร็จ", "กรุณาเลือกส่วนผสมของวัตถุดิบก่อน", "error");
+        }
         return false;
     });
 

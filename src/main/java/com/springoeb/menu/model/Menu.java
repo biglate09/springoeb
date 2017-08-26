@@ -138,4 +138,11 @@ public class Menu implements Serializable{
     public void setBranchMenu(List<BranchMenu> branchMenu) {
         this.branchMenu = branchMenu;
     }
+
+    @Override
+    public String toString() {
+        return "Menu{" +
+                "menuNameTH='" + menuNameTH + '\'' +
+                '}';
+    }
 }
