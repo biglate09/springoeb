@@ -321,11 +321,12 @@
                     for (var i = 0; i < json.length; i++) {
                         var obj = json[i];
                         var menu = obj.menu;
+                        console.log(menu);
                         var div = '\
                         <div class="col-md-55">\
                         <div class="thumbnail thumbnail_inline">\
                         <div class="image view view-first">\
-                        <img style="width: 100%; display: block;" src="../images/menu/' + menu.menuPicPath + '" alt="image"/>\
+                        <img style="width: 100%; display: block;" src="' + (menu.menuPicPath != null ? ('../images/menu/' + menu.menuPicPath) : ('../images/default_upload_image.png')) + '" alt="image"/>\
                         <div class="mask">\
                         <p style="white-space: nowrap;overflow:hidden;text-overflow: ellipsis;">' + menu.menuDesc + '</p>\
                         <div class="tools tools-bottom">\
