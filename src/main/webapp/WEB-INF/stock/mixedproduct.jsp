@@ -135,7 +135,7 @@
                                                         <div id="display_material_desc" style="margin-bottom:20px;margin-top:20px;" class="submit-clear"></div>
                                                         <div style="font-weight:bold">
                                                             รวมเป็น <span style="font-weight:normal" class="submit-clear" id="mixed_prod_name"></span> ทั้งหมด :
-                                                            <input style="width:10%;" type="number" step="0.000001" min="0.000001" name="quantity" value="1"> <span class="submit-clear" id="mixed_prod_unit"></span>
+                                                            <input style="width:10%;" type="number" step="0.000001" min="0.000001" name="quantity" value="1" required> <span class="submit-clear" id="mixed_prod_unit"></span>
                                                         </div>
                                                     </div>
                                                 </div>
@@ -243,7 +243,7 @@
                                                         <div id="display_material_desc2" style="margin-bottom:20px;margin-top:20px;" class="submit-clear"></div>
                                                         <div style="font-weight:bold">
                                                             รวมเป็น <span style="font-weight:normal" class="submit-clear" id="mixed_prod_name2"></span> ทั้งหมด :
-                                                            <input style="width:10%;" type="number" step="0.000001" min="0.000001" name="quantity" value="1" id="mixed_quantity"> <span class="submit-clear" id="mixed_prod_unit2"></span>
+                                                            <input style="width:10%;" type="number" step="0.000001" min="0.000001" name="quantity" value="1" id="mixed_quantity" required> <span class="submit-clear" id="mixed_prod_unit2"></span>
                                                         </div>
                                                     </div>
                                                 </div>
