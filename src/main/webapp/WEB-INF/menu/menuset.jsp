@@ -508,7 +508,7 @@
         $(".menusetamount").each(function () {
             if ($(this).val() > 0) {
                 hasmenu = true;
-                if($(this).attr('mymenu')){
+                if($(this).attr('mymenu') == true){
                     hasmymenu = true;
                     return false;
                 }

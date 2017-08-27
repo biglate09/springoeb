@@ -504,6 +504,7 @@
                 var sum_of_pay = 0;
                 for (var iterator = 0; iterator < json.length; iterator++) {
                     var work_obj = json[iterator];
+                    console.log(work_obj);
                     // sum of pay
                     sum_of_pay = sum_of_pay + work_obj.workPay;
                     // Initial
