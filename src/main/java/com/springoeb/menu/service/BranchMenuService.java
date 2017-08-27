@@ -29,14 +29,14 @@ public class BranchMenuService {
 
 
     public Set<BranchMenu> getMenusSubBranch(int branchNo) {
-        return branchMenuRepository.findByMenu_MenuFlagAndBranchNo(Menu.flagForMenu, branchNo);
+        return branchMenuRepository.findByMenu_MenuFlagAndBranchNoOrderByMenu_LocalFlagAsc(Menu.flagForMenu, branchNo);
     }
 
     public Set<BranchMenu> getMenusByMenuGroupSubBranch(int menuGroupNo, int branchNo) {
         if (menuGroupNo == MenuGroup.ALL_GROUP) {
-            return branchMenuRepository.findByMenu_MenuFlagAndBranchNo(Menu.flagForMenu, branchNo);
+            return branchMenuRepository.findByMenu_MenuFlagAndBranchNoOrderByMenu_LocalFlagAsc(Menu.flagForMenu, branchNo);
         } else {
-            return branchMenuRepository.findByMenu_MenuGroupNoAndMenu_MenuFlagAndBranchNo(menuGroupNo, Menu.flagForMenu, branchNo);
+            return branchMenuRepository.findByMenu_MenuGroupNoAndMenu_MenuFlagAndBranchNoOrderByMenu_LocalFlagAsc(menuGroupNo, Menu.flagForMenu, branchNo);
         }
     }
 

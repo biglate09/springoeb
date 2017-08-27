@@ -29,19 +29,19 @@
                         </div>
                         <div class="x_content">
                             <form action="#">
-                                <div class="col-md-8" style="padding:0px;">
+                                <div class="col-md-9" style="padding:0px;">
                                     <a data-toggle="modal" data-target="#addMenu"
                                        class="btn btn-success btn-sm"><i class="fa fa-plus-circle"></i>&nbsp;
                                         เพิ่มเมนู</a>
                                 </div>
-                                <div class="col-cm-1 btn-group" style="padding:0px; margin-left: 1px">
-                                    <button id="displayThumbnail" class="btn btn-default" type="button">
-                                        <span class="fa fa-th-large"></span>
-                                    </button>
-                                    <button id="displayTable" class="btn btn-default" type="button">
-                                        <span class="fa fa-align-justify"></span>
-                                    </button>
-                                </div>
+                                <%--<div class="col-cm-1 btn-group" style="padding:0px; margin-left: 1px">--%>
+                                    <%--<button id="displayThumbnail" class="btn btn-default" type="button">--%>
+                                        <%--<span class="fa fa-th-large"></span>--%>
+                                    <%--</button>--%>
+                                    <%--<button id="displayTable" class="btn btn-default" type="button">--%>
+                                        <%--<span class="fa fa-align-justify"></span>--%>
+                                    <%--</button>--%>
+                                <%--</div>--%>
                                 <div class="col-md-3 form-group has-feedback" style="padding:0px;">
                                     <%--<label>ตัวกรองจากหมวดหมู่ของอาหาร</label>--%>
                                     <select class="form-control" id="filter_by_category">
@@ -350,8 +350,8 @@
                         <p class="col-md-12" style="text-align:center;white-space: nowrap;overflow:hidden;text-overflow: ellipsis;">หมวดหมู่ : ' + menu.menuGroup.menuGroupNameTH + '</p>\
                         <p class="col-md-12" style="text-align:center">' + menu.menuPrice.toFixed(2).replace(/\B(?=(\d{3})+(?!\d))/g, ",") + " บาท" + '</p>\
                         <div style="text-align:left;" class="col-md-7">\
-                        ' + (menu.localFlag == 0 && ${branchUser.branchNo != Branch.MAIN_BRANCH} ? '' : '<a title="แก้ไข" style="color:#73879C;cursor:pointer;margin-right:5px;"><i class="fa fa-pencil"></i></a>') + '\
-                        ' + (menu.localFlag != 0 ? ('<a title="ทำให้เป็นเมนูของทุกสาขา" onclick="turn_official(' + menu.menuNo + ')" style="color:#73879C;cursor:pointer;margin-right:5px;"><i class="fa fa-users"></i></a>') : '') + '\
+                        ' + (menu.localFlag == 0 && ${branchUser.branchNo != Branch.MAIN_BRANCH} ? '' : '<a title="แก้ไข" style="color:#73879C;cursor:pointer;margin-right:5px;" data-toggle="modal" data-target="#editMenu" onclick="set_menu(' + menu.menuNo + ')"><i class="fa fa-pencil"></i></a>') + '\
+                        ' + (menu.localFlag != 0 && ${branchUser.branchNo == Branch.MAIN_BRANCH} ? ('<a title="ทำให้เป็นเมนูของทุกสาขา" onclick="turn_official(' + menu.menuNo + ')" style="color:#73879C;cursor:pointer;margin-right:5px;"><i class="fa fa-users"></i></a>') : '') + '\
                         <a title="เมนูนี้' + (obj.available == true ? '' : 'ไม่' ) + 'พร้อมจำหน่าย คลิกเพื่อเปลี่ยน" onclick="change_available(' + menu.menuNo + ')" style="color:#73879C;cursor:pointer;margin-right:5px;"><i class="fa ' + (obj.available == true ? 'fa-check-square-o' : 'fa-square-o' ) + '"></i></a>\
                         ' + (menu.localFlag == 0 && ${branchUser.branchNo != Branch.MAIN_BRANCH} ? '' : '<a title="ลบ" onclick="del_menu(' + menu.menuNo + ',\'' + menu.menuNameTH + '\')" style="color:#73879C;cursor:pointer;"><i class="fa fa-trash"></i></a>') + '\
                         </div>\

@@ -88,7 +88,7 @@ public class MenuService {
         List<Integer> myBranches = new LinkedList<>();
         myBranches.add(Menu.OFFICIAL_MENU_FLAG);
         myBranches.add(branchNo);
-        return menuRepository.findByMenuFlagAndLocalFlagNotIn(Menu.flagForMenuSet,myBranches);
+        return menuRepository.findByMenuFlagAndLocalFlagNotInOrderByLocalFlagAsc(Menu.flagForMenuSet,myBranches);
     }
 
     public List<Menu> getMenusOtherByMenuGroupNo(int menuGroupNo,int branchNo){
@@ -96,9 +96,9 @@ public class MenuService {
         myBranches.add(Menu.OFFICIAL_MENU_FLAG);
         myBranches.add(branchNo);
         if(menuGroupNo == 0){
-            return menuRepository.findByMenuFlagAndLocalFlagNotIn(Menu.flagForMenu,myBranches);
+            return menuRepository.findByMenuFlagAndLocalFlagNotInOrderByLocalFlagAsc(Menu.flagForMenu,myBranches);
         }else{
-            return menuRepository.findByMenuFlagAndMenuGroupNoAndLocalFlagNotIn(Menu.flagForMenu,menuGroupNo,myBranches);
+            return menuRepository.findByMenuFlagAndMenuGroupNoAndLocalFlagNotInOrderByLocalFlagAsc(Menu.flagForMenu,menuGroupNo,myBranches);
         }
     }
 }

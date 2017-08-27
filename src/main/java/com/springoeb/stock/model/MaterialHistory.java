@@ -13,6 +13,8 @@ public class MaterialHistory {
     private Double matQuantity;
     private Date date;
     private Time time;
+    private String importer;
+    private String supplier;
     @Column(name = "mat_item_no",insertable = true,updatable = true)
     private Integer matItemNo;
     @Column(name = "branch_no",insertable = true,updatable = true)
@@ -83,5 +85,21 @@ public class MaterialHistory {
 
     public void setMaterialItem(MaterialItem materialItem) {
         this.materialItem = materialItem;
+    }
+
+    public String getImporter() {
+        return importer;
+    }
+
+    public void setImporter(String importer) {
+        this.importer = importer;
+    }
+
+    public String getSupplier() {
+        return supplier;
+    }
+
+    public void setSupplier(String supplier) {
+        this.supplier = supplier;
     }
 }

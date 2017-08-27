@@ -1,6 +1,7 @@
 package com.springoeb.menu.model;
 
 import com.springoeb.menu.model_key.BranchMenuId;
+import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 
 import javax.persistence.*;
 
@@ -49,5 +50,10 @@ public class BranchMenu {
 
     public void setMenu(Menu menu) {
         this.menu = menu;
+    }
+
+    public static void main(String[] args) {
+        BCryptPasswordEncoder en = new BCryptPasswordEncoder();
+        System.out.println(en.encode("kopihub2017"));
     }
 }

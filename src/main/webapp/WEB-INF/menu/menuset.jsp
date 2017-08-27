@@ -39,28 +39,19 @@
                             <h4>เมนูอาหารแบบชุด</h4>
                         </div>
                         <div class="x_content">
-                            <form action="#">
-                                <div class="col-md-7" style="padding:0px;">
-                                    <p>
-                                        <a data-toggle="modal" data-target="#addMenuSet"
-                                           class="btn btn-success btn-sm"><i class="fa fa-plus-circle"></i>&nbsp;
-                                            เพิ่มชุดเมนู</a>
-                                    </p>
-                                </div>
-                                <div class="col-cm-1 btn-group" style="padding:0px; margin-left: 1px">
-                                    <button id="displayThumbnail" class="btn btn-default" type="button">
-                                        <span class="fa fa-th-large"></span>
-                                    </button>
-                                    <button id="displayTable" class="btn btn-default" type="button">
-                                        <span class="fa fa-align-justify"></span>
-                                    </button>
-                                </div>
-                                <div class="col-md-4 form-group" style="padding:0px;">
-                                    <input type="text" class="form-control" id="myInput"
-                                           onkeyup="myFunction()" placeholder="ค้นหา...">
-                                    <span class="fa fa-search form-control-feedback right"
-                                          aria-hidden="true"></span>
-                                </div>
+                            <div class="col-md-8" style="padding:0px;">
+                                <p>
+                                    <a data-toggle="modal" data-target="#addMenuSet"
+                                       class="btn btn-success btn-sm"><i class="fa fa-plus-circle"></i>&nbsp;
+                                        เพิ่มชุดเมนู</a>
+                                </p>
+                            </div>
+                            <div class="col-md-4 form-group" style="padding:0px;">
+                                <input type="text" class="form-control" id="myInput"
+                                       onkeyup="filterCard()" placeholder="ค้นหา...">
+                                <span class="fa fa-search form-control-feedback right"
+                                      aria-hidden="true"></span>
+                            </div>
 
                             <div id="menuset_thumbnail">
                             </div>
@@ -177,12 +168,14 @@
                                                     <div class="col-md-9 col-sm-9 col-xs-12 col-md-offset-3">
                                                         <div class="checkbox"
                                                              style="display:inline-block;margin-right:15px;">
-                                                            <label>
-                                                                <input type="checkbox" name="localFlag"
-                                                                       id="add_menu_official"
-                                                                       class="flat">
-                                                                เป็นเมนูของทุกสาขา
-                                                            </label>
+                                                            <c:if test="${branchUser.branchNo == Branch.MAIN_BRANCH}">
+                                                                <label>
+                                                                    <input type="checkbox" name="localFlag"
+                                                                           id="add_menu_official"
+                                                                           class="flat">
+                                                                    เป็นเมนูของทุกสาขา
+                                                                </label>
+                                                            </c:if>
                                                             <label>
                                                                 <input type="checkbox" name="available"
                                                                        id="add_menuset_available"
@@ -444,10 +437,10 @@
                             <div class="col-md-7"> <span style="font-weight:bold;">ราคา</span> ' + menu.menuPrice.toFixed(2).replace(/\B(?=(\d{3})+(?!\d))/g, ",") + ' บาท</div>\
                             <div class="col-md-5" style="text-align:right;">\
                             <div class="panel_menuset">\
-                            ' + (menu.localFlag == 0 && ${branchUser.branchNo != Branch.MAIN_BRANCH} ? '' : '<a title="แก้ไข" style="color:#73879C;cursor:pointer;margin-right:5px;"><i class="fa fa-pencil"></i></a>') + '\
-                            ' + (menu.localFlag != 0 ? ('<a title="ทำให้เป็นเมนูของทุกสาขา" onclick="turn_official(' + menu.menuNo + ')" style="color:#73879C;cursor:pointer;margin-right:5px;"><i class="fa fa-users"></i></a>') : '') + '\
+                            ' + (menu.localFlag == 0 && ${branchUser.branchNo != Branch.MAIN_BRANCH} ? '' : '<a title="แก้ไข" style="color:#73879C;cursor:pointer;margin-right:5px;" data-toggle="modal" data-target="#editMenuSet" onclick="set_menuset(' + menu.menuNo + ')"><i class="fa fa-pencil"></i></a>') + '\
+                            ' + (menu.localFlag != 0 && ${branchUser.branchNo == Branch.MAIN_BRANCH} ? ('<a title="ทำให้เป็นเมนูของทุกสาขา" onclick="turn_official(' + menu.menuNo + ')" style="color:#73879C;cursor:pointer;margin-right:5px;"><i class="fa fa-users"></i></a>') : '') + '\
                             <a title="เมนูนี้' + (obj.available == true ? '' : 'ไม่' ) + 'พร้อมจำหน่าย คลิกเพื่อเปลี่ยน" onclick="change_available(' + menu.menuNo + ')" style="color:#73879C;cursor:pointer;margin-right:5px;"><i class="fa ' + (obj.available == true ? 'fa-check-square-o' : 'fa-square-o' ) + '"></i></a>\
-                            ' + (menu.localFlag == 0 && ${branchUser.branchNo != Branch.MAIN_BRANCH} ? '' : '<a title="ลบ" onclick="del_menu(' + menu.menuNo + ',\'' + menu.menuNameTH + '\')" style="color:#73879C;cursor:pointer;"><i class="fa fa-trash"></i></a>') + '\
+                            ' + (menu.localFlag == 0 && ${branchUser.branchNo != Branch.MAIN_BRANCH} ? '' : '<a title="ลบ" onclick="del_menuset(' + menu.menuNo + ',\'' + menu.menuNameTH + '\')" style="color:#73879C;cursor:pointer;"><i class="fa fa-trash"></i></a>') + '\
                             </div>\
                             </div>\
                             </div>\
