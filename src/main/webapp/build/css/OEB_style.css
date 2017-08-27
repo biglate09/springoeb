@@ -22,10 +22,6 @@
     font-size: 100%;
 }
 
-#reservation {
-	width: 190px;
-}
-
 .modal-body-test {
     position: relative;
     overflow-y: auto;

@@ -67,7 +67,7 @@
                             <li><a id="material" href="${contextPath}/stock/materialitem">วัตถุดิบ</a></li>
                             <li><a id="mixedproduct" href="${contextPath}/stock/mixedproduct">วัตถุดิบแบบผสม</a></li>
                             <%--<li><a id="stockmanage" href="${contextPath}/stock/stockmanage">เพิ่ม / ลดวัตถุดิบ</a></li>--%>
-                            <li><a id="menustock" href="${contextPath}/stock/menumaterial">วัตถุดิบในเมนูอาหาร</a></li>
+                            <%--<li><a id="menustock" href="${contextPath}/stock/menumaterial">วัตถุดิบในเมนูอาหาร</a></li>--%>
                         </ul>
                     </li>
                 </ul>

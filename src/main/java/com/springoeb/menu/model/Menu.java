@@ -1,6 +1,7 @@
 package com.springoeb.menu.model;
 
 import com.fasterxml.jackson.annotation.JsonIgnore;
+import com.springoeb.stock.model.MenuMaterial;
 
 import javax.persistence.*;
 import java.io.Serializable;
@@ -33,6 +34,9 @@ public class Menu implements Serializable{
 
     @OneToMany(fetch = FetchType.LAZY, mappedBy = "menuSet")
     private List<MenuInSet> menuInSets;
+
+    @OneToMany(fetch = FetchType.LAZY, mappedBy = "menu")
+    private List<MenuMaterial> menuMaterials;
 
     public static final String flagForMenu = "M";
     public static final String flagForMenuSet = "S";
@@ -137,6 +141,14 @@ public class Menu implements Serializable{
 
     public void setBranchMenu(List<BranchMenu> branchMenu) {
         this.branchMenu = branchMenu;
+    }
+
+    public List<MenuMaterial> getMenuMaterials() {
+        return menuMaterials;
+    }
+
+    public void setMenuMaterials(List<MenuMaterial> menuMaterials) {
+        this.menuMaterials = menuMaterials;
     }
 
     @Override

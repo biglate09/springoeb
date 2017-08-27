@@ -281,6 +281,7 @@
                                                                                menuNo="${m.menuNo}" type="number"
                                                                                menuName="${m.menuNameTH} / ${m.menuNameEN}"
                                                                                class="menusetamount_edit"
+                                                                               notofficial="${m.localFlag != 0}"
                                                                                name="menuamount${m.menuNo}"
                                                                                style="text-align:center;"
                                                                                value="0" min="0" max="1000" step="1"
@@ -365,6 +366,7 @@
         });
 
         $(".datatable-menu").DataTable({
+            paging: false,
             columnDefs: [
                 {orderable: false, targets: [-1]}
             ]
@@ -491,9 +493,17 @@
                             $("#menuset_thumbnail").append(div);
                         }
                     }
+
+                    if (json[0].length + json[1].length == 0) {
+                        $("#error_show").html('\
+                        <div class="well col-md-12" style="overflow: auto">\
+                            <p style="text-align:center;font-weight:bold;"> ไม่พบข้อมูลเมนูอาหารแบบชุด </p>\
+                        </div>\
+                        ');
+                    }
                 } else {
-                    $("#menuset_thumbnail").html('\
-                    <div class="well" style="overflow: auto">\
+                    $("#error_show").html('\
+                    <div class="well col-md-12" style="overflow: auto">\
                         <p style="text-align:center;font-weight:bold;"> ไม่พบข้อมูลเมนูอาหารแบบชุด </p>\
                     </div>\
                     ');
@@ -508,7 +518,7 @@
         $(".menusetamount").each(function () {
             if ($(this).val() > 0) {
                 hasmenu = true;
-                if($(this).attr('mymenu') == true){
+                if ($(this).attr('mymenu') == true) {
                     hasmymenu = true;
                     return false;
                 }
@@ -534,9 +544,9 @@
                     swal("ไม่สำเร็จ", "ชื่อภาษาไทยหรืออังกฤษอาจซ้ำ กรุณาลองใหม่ในภายหลัง", "error");
                 }
             });
-        } else if(hasmymenu) {
+        } else if (hasmymenu) {
             swal("ไม่สำเร็จ", "ชุดนี้มีเมนูเฉพาะสาขาอยู่ จึงไม่สามารถเป็นชุดเมนูทุกสาขาได้", "error");
-        }else{
+        } else {
             swal("ไม่สำเร็จ", "กรุณาเลือกเมนูอาหารในชุดนี้ก่อน", "error");
         }
 
@@ -587,6 +597,16 @@
                     $(".menusetamount_edit[menuno='" + menu_in_menuset[i].menuSubNo + "']").val(menu_in_menuset[i].amount);
                 }
 
+                if (menu.localFlag == 0) {
+                    $(".menusetamount_edit").each(function () {
+                        if ($(this).attr('notofficial') == 'true') {
+                            $(this).attr('disabled', 'true');
+                        }
+                    });
+                } else {
+                    $(".menusetamount_edit").css('disabled', 'false');
+                }
+
                 var sum_menu_price = 0;
                 $("#display_sum_menu2").empty();
                 $(".menusetamount_edit").each(function () {
@@ -595,8 +615,6 @@
                         sum_menu_price += $(this).attr('price') * $(this).val();
                     }
                 });
-
-                $("#sum_menu_price2").html(sum_menu_price.toFixed(2).replace(/\B(?=(\d{3})+(?!\d))/g, ","));
 
                 $("#sum_menu_price2").html(sum_menu_price.toFixed(2).replace(/\B(?=(\d{3})+(?!\d))/g, ","));
             }
@@ -695,7 +713,7 @@
         if (!hascard) {
             $("#error_show").html('\
                     <div class="well col-md-12" style="overflow: auto">\
-                        <p style="text-align:center;font-weight:bold;"> ไม่พบข้อมูลเมนูอาหารแบบชุดด้วยคำค้นหา "' + input + '" </p>\
+                        <p style="text-align:center;font-weight:bold;">ไม่พบข้อมูลเมนูอาหารแบบชุด' + (input==''?'' : 'ด้วยคำค้นหา ' +'"' + input + '"') + '</p>\
                     </div>\
                     ');
         } else {

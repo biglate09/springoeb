@@ -5,7 +5,6 @@ import java.io.Serializable;
 public class MenuMaterialId implements Serializable {
     private Integer menuNo;
     private Integer matItemNo;
-    private Integer quantity;
 
     public Integer getMenuNo() {
         return menuNo;
@@ -23,11 +22,4 @@ public class MenuMaterialId implements Serializable {
         this.matItemNo = matItemNo;
     }
 
-    public Integer getQuantity() {
-        return quantity;
-    }
-
-    public void setQuantity(Integer quantity) {
-        this.quantity = quantity;
-    }
 }

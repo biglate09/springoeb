@@ -41,18 +41,20 @@
                                     <div class="col-md-12">
                                         <p style="text-align: center;">เลือกวันที่ต้องการดูประวัติการทำงานของพนักงาน</p>
                                     </div>
-                                    <div class="control-group">
-                                        <form id="filterdate" action="#" method="POST">
-                                            <input type="text" name="filterdate" id="reservation"
-                                                   class="form-control col-md-12" required>
-                                            <span class="input-group-btn">
+                                    <div class="control-group col-md-12">
+                                        <form id="filterdate" method="POST">
+                                            <div class="col-md-offset-4 col-md-3" style="padding-right:0px;">
+                                                <input type="text" name="filterdate" id="reservation"
+                                                       class="form-control" required>
+                                            </div>
+                                            <div class="input-group-btn">
                                                 <button class="btn btn-default"
                                                         type="submit"
                                                         id="css-irow">
                                                         <i class="glyphicon glyphicon-search fa fa-search"></i>
                                                         ค้นหา
                                                 </button>
-                                            </span>
+                                            </div>
                                         </form>
                                     </div>
                                     <div class="col-md-12">
@@ -384,11 +386,11 @@
         return false;
     });
 
-    $('.modal').on('hidden.bs.modal', function(){
+    $('.modal').on('hidden.bs.modal', function () {
         reset_field();
     });
 
-    function reset_field(){
+    function reset_field() {
         $(".removable_div").remove();
         $("#work_hist_add")[0].reset();
     }
@@ -433,10 +435,10 @@
         });
     }
     //TODO: Delete Work History Function
-    function delWork(workNo,empName) {
+    function delWork(workNo, empName) {
         swal({
                 title: "ยืนยันการลบ",
-                text: "เมื่อยืนยัน จะไม่สามารถนำประวัติการทำงานของ "+ empName + " กลับมาได้",
+                text: "เมื่อยืนยัน จะไม่สามารถนำประวัติการทำงานของ " + empName + " กลับมาได้",
                 type: "warning",
                 showCancelButton: true,
                 confirmButtonColor: "#DD6B55",
@@ -504,38 +506,39 @@
                 var sum_of_pay = 0;
                 for (var iterator = 0; iterator < json.length; iterator++) {
                     var work_obj = json[iterator];
-                    console.log(work_obj);
-                    // sum of pay
-                    sum_of_pay = sum_of_pay + work_obj.workPay;
-                    // Initial
-                    workdate_d = new Date(work_obj.workDate);
-                    workdate_display = (workdate_d.getDate() < 10 ? "0" + workdate_d.getDate() : workdate_d.getDate()) + "/" + ((workdate_d.getMonth() + 1) < 10 ? "0" + (workdate_d.getMonth() + 1) : (workdate_d.getMonth() + 1)) + "/" + workdate_d.getFullYear();
-                    workdate_order = "" + workdate_d.getFullYear() + ((workdate_d.getMonth() + 1) < 10 ? "0" + (workdate_d.getMonth() + 1) : (workdate_d.getMonth() + 1)) + (workdate_d.getDate() < 10 ? "0" + workdate_d.getDate() : workdate_d.getDate());
-                    hour_display = "" + (work_obj.workHour > 0 ? work_obj.workHour + " ชั่วโมง " : "") + (work_obj.workMin > 0 ? work_obj.workMin + " นาที " : "");
-                    hour_order = "" + (work_obj.workHour < 10 ? "0" + work_obj.workHour : work_obj.workHour) + (work_obj.workMin < 10 ? "0" + work_obj.workMin : work_obj.workMin);
-                    pay_display = "" + (work_obj.workPay.toFixed(2)).replace(/\B(?=(\d{3})+(?!\d))/g, ",") + " บาท";
-                    pay_order = work_obj.workPay * 100;
-                    for (var i = ("" + pay_order).length; i < 30; i++) {
-                        pay_order = "0" + pay_order;
+                    if (work_obj.workPay != null) {
+                        // sum of pay
+                        sum_of_pay = sum_of_pay + work_obj.workPay;
+                        // Initial
+                        workdate_d = new Date(work_obj.workDate);
+                        workdate_display = (workdate_d.getDate() < 10 ? "0" + workdate_d.getDate() : workdate_d.getDate()) + "/" + ((workdate_d.getMonth() + 1) < 10 ? "0" + (workdate_d.getMonth() + 1) : (workdate_d.getMonth() + 1)) + "/" + workdate_d.getFullYear();
+                        workdate_order = "" + workdate_d.getFullYear() + ((workdate_d.getMonth() + 1) < 10 ? "0" + (workdate_d.getMonth() + 1) : (workdate_d.getMonth() + 1)) + (workdate_d.getDate() < 10 ? "0" + workdate_d.getDate() : workdate_d.getDate());
+                        hour_display = "" + (work_obj.workHour > 0 ? work_obj.workHour + " ชั่วโมง " : "") + (work_obj.workMin > 0 ? work_obj.workMin + " นาที " : "");
+                        hour_order = "" + (work_obj.workHour < 10 ? "0" + work_obj.workHour : work_obj.workHour) + (work_obj.workMin < 10 ? "0" + work_obj.workMin : work_obj.workMin);
+                        pay_display = "" + (work_obj.workPay.toFixed(2)).replace(/\B(?=(\d{3})+(?!\d))/g, ",") + " บาท";
+                        pay_order = work_obj.workPay * 100;
+                        for (var i = ("" + pay_order).length; i < 30; i++) {
+                            pay_order = "0" + pay_order;
+                        }
+                        var data_refresh = {
+                            workdate: {
+                                display: workdate_display,
+                                order: workdate_order
+                            },
+                            empname: work_obj.empName,
+                            hour: {
+                                display: hour_display,
+                                order: hour_order
+                            },
+                            pay: {
+                                display: pay_display,
+                                order: pay_order
+                            },
+                            option: '<a onclick="setWork(' + work_obj.workHistNo + ')" class="btn btn-warning btn-sm" data-toggle="modal" data-target="#editWorkHist"><i class="fa fa-pencil"></i>&nbsp; แก้ไข </a>' +
+                            '<a onclick="delWork(' + work_obj.workHistNo + ',\'' + work_obj.empName + '\')" class="btn btn-danger btn-sm"><i class="fa fa-trash"></i>&nbsp; ลบ</a>'
+                        };
+                        data_array.push(data_refresh);
                     }
-                    var data_refresh = {
-                        workdate: {
-                            display: workdate_display,
-                            order: workdate_order
-                        },
-                        empname: work_obj.empName,
-                        hour: {
-                            display: hour_display,
-                            order: hour_order
-                        },
-                        pay: {
-                            display: pay_display,
-                            order: pay_order
-                        },
-                        option: '<a onclick="setWork(' + work_obj.workHistNo + ')" class="btn btn-warning btn-sm" data-toggle="modal" data-target="#editWorkHist"><i class="fa fa-pencil"></i>&nbsp; แก้ไข </a>' +
-                        '<a onclick="delWork(' + work_obj.workHistNo + ',\'' + work_obj.empName + '\')" class="btn btn-danger btn-sm"><i class="fa fa-trash"></i>&nbsp; ลบ</a>'
-                    };
-                    data_array.push(data_refresh);
                 }
 
                 $("#datatable-work").DataTable().clear();

@@ -4,6 +4,10 @@ import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.springoeb.menu.model.*;
 import com.springoeb.menu.service.*;
+import com.springoeb.stock.model.MaterialItem;
+import com.springoeb.stock.model.MenuMaterial;
+import com.springoeb.stock.service.MaterialItemService;
+import com.springoeb.stock.service.MenuMaterialService;
 import com.springoeb.system.model.Branch;
 import com.springoeb.system.model.BranchUser;
 import com.springoeb.system.service.BranchService;
@@ -41,6 +45,10 @@ public class MenuController {
     private BranchMenuService branchMenuService;
     @Autowired
     private BranchService branchService;
+    @Autowired
+    private MaterialItemService materialItemService;
+    @Autowired
+    private MenuMaterialService menuMaterialService;
 
     private static final String MENU_PATH = "/WEB-INF/menu/";
 //    private static final String UPLOADED_FOLDER = "/src/main/webapp/images/";
@@ -49,7 +57,9 @@ public class MenuController {
     @GetMapping("/menu")
     public String toMenuIndex(Model model) {
         List<MenuGroup> menuGroups = menuGroupService.getMenuGroups();
+        List<MaterialItem> materialItems = materialItemService.getAllMaterials();
         model.addAttribute("menuGroups", menuGroups);
+        model.addAttribute("materialItems",materialItems);
         return MENU_PATH + "menu.jsp";
     }
 
@@ -133,7 +143,11 @@ public class MenuController {
                     BranchMenu branchMenu = new BranchMenu();
                     branchMenu.setBranchNo(b.getBranchNo());
                     branchMenu.setMenuNo(insertedMenu.getMenuNo());
-                    branchMenu.setAvailable(false);
+                    if(b.getBranchNo() == branchNo) {
+                        branchMenu.setAvailable(request.getParameter("menuAvailable") == null ? false : true);
+                    }else{
+                        branchMenu.setAvailable(false);
+                    }
                     branchMenuService.save(branchMenu);
                 }
             } else {
@@ -144,6 +158,23 @@ public class MenuController {
                 branchMenu.setAvailable(request.getParameter("menuAvailable") == null ? false : true);
                 branchMenuService.save(branchMenu);
             }
+
+            menuMaterialService.removeByMenuNo(insertedMenu.getMenuNo());
+            Map<String, String[]> parameterMap = request.getParameterMap();
+            List<MenuMaterial> menuMaterials = new LinkedList<MenuMaterial>();
+            for (String key : parameterMap.keySet()) {
+                if (key.indexOf("materialamount") != -1) {
+                    String amount = parameterMap.get(key)[0];
+                    if (amount != null && !amount.trim().equals("") && Double.parseDouble(amount) != 0) {
+                        MenuMaterial mm = new MenuMaterial();
+                        mm.setMatItemNo(Integer.parseInt(key.substring("materialamount".length(), key.length())));
+                        mm.setMenuNo(insertedMenu.getMenuNo());
+                        mm.setQuantity(Double.parseDouble(amount));
+                        menuMaterials.add(mm);
+                    }
+                }
+            }
+            menuMaterialService.save(menuMaterials);
         } else {
             throw new Exception();
         }
@@ -311,7 +342,11 @@ public class MenuController {
                     BranchMenu branchMenu = new BranchMenu();
                     branchMenu.setBranchNo(b.getBranchNo());
                     branchMenu.setMenuNo(insertedMenuSet.getMenuNo());
-                    branchMenu.setAvailable(false);
+                    if(b.getBranchNo() == branchNo) {
+                        branchMenu.setAvailable(request.getParameter("available") == null ? false : true);
+                    }else{
+                        branchMenu.setAvailable(false);
+                    }
                     branchMenuService.save(branchMenu);
                 }
             } else {

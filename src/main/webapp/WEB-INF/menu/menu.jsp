@@ -35,12 +35,12 @@
                                         เพิ่มเมนู</a>
                                 </div>
                                 <%--<div class="col-cm-1 btn-group" style="padding:0px; margin-left: 1px">--%>
-                                    <%--<button id="displayThumbnail" class="btn btn-default" type="button">--%>
-                                        <%--<span class="fa fa-th-large"></span>--%>
-                                    <%--</button>--%>
-                                    <%--<button id="displayTable" class="btn btn-default" type="button">--%>
-                                        <%--<span class="fa fa-align-justify"></span>--%>
-                                    <%--</button>--%>
+                                <%--<button id="displayThumbnail" class="btn btn-default" type="button">--%>
+                                <%--<span class="fa fa-th-large"></span>--%>
+                                <%--</button>--%>
+                                <%--<button id="displayTable" class="btn btn-default" type="button">--%>
+                                <%--<span class="fa fa-align-justify"></span>--%>
+                                <%--</button>--%>
                                 <%--</div>--%>
                                 <div class="col-md-3 form-group has-feedback" style="padding:0px;">
                                     <%--<label>ตัวกรองจากหมวดหมู่ของอาหาร</label>--%>
@@ -59,9 +59,9 @@
                             </form>
                         </div>
                         <div class="modal fade" id="addMenu" role="dialog">
-                            <div class="modal-dialog modal-lg">
+                            <div class="modal-dialog">
                                 <!-- เนือหาของ Modal ทั้งหมด -->
-                                <div class="modal-content">
+                                <div class="modal-content modal-body-test" style="overflow-y:hidden;">
                                     <!-- ส่วนหัวของ Modal -->
                                     <div class="modal-header">
                                         <!-- ปุ่มกดปิด (X) ตรงส่วนหัวของ Modal -->
@@ -113,7 +113,7 @@
                                                     <label>หมวดหมู่ของเมนู</label>
                                                     <select name="menuGroupNo" id="add_menu_stock_cat"
                                                             class="form-control" required>
-                                                        <option disabled selected>เลือกหมวดหมู่เมนู</option>
+                                                        <option disabled selected value="">เลือกหมวดหมู่เมนู</option>
                                                         <c:forEach items="${menuGroups}" var="mc">
                                                             <option value="${mc.menuGroupNo}">${mc.menuGroupNameTH}</option>
                                                         </c:forEach>
@@ -125,8 +125,50 @@
                                                               id="add_menu_desc"
                                                               placeholder="รายละเอียด"></textarea>
                                                 </div>
-
-
+                                                <div class="col-md-12 col-sm-12 col-xs-12">
+                                                    <label>เลือกวัตถุดิบที่ใช้ในเมนูนี้</label>
+                                                    <table class="table table-bordered table-striped material-datatable">
+                                                        <thead>
+                                                        <tr>
+                                                            <th style="text-align:center;">ชื่อวัตถุดิบอาหาร</th>
+                                                            <th style="text-align:center;">ประเภท</th>
+                                                            <th style="text-align:center;">จำนวนที่ใช้</th>
+                                                        </tr>
+                                                        </thead>
+                                                        <tbody style="text-align:center;">
+                                                        <c:forEach items="${materialItems}" var="mi">
+                                                            <tr>
+                                                                <td style="width:40%;">${mi.matItemName}</td>
+                                                                <td style="width:30%;">${mi.materialCategory.matCatName}</td>
+                                                                <td style="width:30%;">
+                                                                    <div class="col-md-6">
+                                                                        <input matItemNo="${mi.matItemNo}" type="number"
+                                                                               matItemName="${mi.matItemName}"
+                                                                               unit="${mi.unit.unitName}"
+                                                                               class="materialamount"
+                                                                               name="materialamount${mi.matItemNo}"
+                                                                               style="text-align:center;"
+                                                                               value="0" min="0" max="1000"
+                                                                               step="0.001"
+                                                                               required>
+                                                                    </div>
+                                                                    <div class="col-md-6">
+                                                                            ${mi.unit.unitName}
+                                                                    </div>
+                                                                </td>
+                                                            </tr>
+                                                        </c:forEach>
+                                                        </tbody>
+                                                    </table>
+                                                </div>
+                                                <div class="col-md-12" style="text-align:center;margin-top:20px;">
+                                                    <div class="well" style="overflow: auto">
+                                                        <span style="font-weight:bold;">ส่วนผสมของเมนูอาหารมีดังนี้</span>
+                                                        <div id="display_material_desc"
+                                                             style="margin-bottom:20px;margin-top:20px;"
+                                                             class="submit-clear"></div>
+                                                    </div>
+                                                </div>
                                             </div>
                                             <div class="modal-footer">
                                                 <!-- ปุ่มกดปิด (Close) ตรงส่วนล่างของ Modal -->
@@ -164,9 +206,9 @@
                         </div>
                     </div>
                     <div class="modal fade" id="editMenu" role="dialog">
-                        <div class="modal-dialog modal-lg">
+                        <div class="modal-dialog">
                             <!-- เนือหาของ Modal ทั้งหมด -->
-                            <div class="modal-content">
+                            <div class="modal-content modal-body-test" style="overflow-y:hidden;">
                                 <!-- ส่วนหัวของ Modal -->
                                 <div class="modal-header">
                                     <!-- ปุ่มกดปิด (X) ตรงส่วนหัวของ Modal -->
@@ -221,7 +263,7 @@
                                                 <label>หมวดหมู่ของเมนู</label>
                                                 <select name="menuGroupNo" id="edit_menu_stock_cat" class="form-control"
                                                         required>
-                                                    <option disabled selected>เลือกหมวดหมู่เมนู</option>
+                                                    <option disabled selected value="">เลือกหมวดหมู่เมนู</option>
                                                     <c:forEach items="${menuGroups}" var="mc">
                                                         <option value="${mc.menuGroupNo}">${mc.menuGroupNameTH}</option>
                                                     </c:forEach>
@@ -233,6 +275,50 @@
                                                           id="edit_menu_desc"
                                                           placeholder="รายละเอียด"></textarea>
 
+                                            </div>
+                                            <div class="col-md-12 col-sm-12 col-xs-12">
+                                                <label>เลือกวัตถุดิบที่ใช้ในเมนูนี้</label>
+                                                <table class="table table-bordered table-striped material-datatable">
+                                                    <thead>
+                                                    <tr>
+                                                        <th style="text-align:center;">ชื่อวัตถุดิบอาหาร</th>
+                                                        <th style="text-align:center;">ประเภท</th>
+                                                        <th style="text-align:center;">จำนวนที่ใช้</th>
+                                                    </tr>
+                                                    </thead>
+                                                    <tbody style="text-align:center;">
+                                                    <c:forEach items="${materialItems}" var="mi">
+                                                        <tr>
+                                                            <td style="width:40%;">${mi.matItemName}</td>
+                                                            <td style="width:30%;">${mi.materialCategory.matCatName}</td>
+                                                            <td style="width:30%;">
+                                                                <div class="col-md-6">
+                                                                    <input matItemNo="${mi.matItemNo}" type="number"
+                                                                           matItemName="${mi.matItemName}"
+                                                                           unit="${mi.unit.unitName}"
+                                                                           class="materialamount2"
+                                                                           name="materialamount${mi.matItemNo}"
+                                                                           style="text-align:center;"
+                                                                           value="0" min="0" max="1000"
+                                                                           step="0.001"
+                                                                           required>
+                                                                </div>
+                                                                <div class="col-md-6">
+                                                                        ${mi.unit.unitName}
+                                                                </div>
+                                                            </td>
+                                                        </tr>
+                                                    </c:forEach>
+                                                    </tbody>
+                                                </table>
+                                            </div>
+                                            <div class="col-md-12" style="text-align:center;margin-top:20px;">
+                                                <div class="well" style="overflow: auto">
+                                                    <span style="font-weight:bold;">ส่วนผสมของเมนูอาหารมีดังนี้</span>
+                                                    <div id="display_material_desc2"
+                                                         style="margin-bottom:20px;margin-top:20px;"
+                                                         class="submit-clear"></div>
+                                                </div>
                                             </div>
                                         </div>
                                         <div class="modal-footer">
@@ -268,6 +354,11 @@
 <jsp:include page="../_include/bottomenv.jsp"/>
 <script>
     $(document).ready(function () {
+        $(".material-datatable").DataTable({
+            paging: false,
+            order: [[1, "asc"]]
+        });
+
         $("#datatable-menu").DataTable({
             order: [[0, "asc"]],
             columnDefs: [
@@ -316,6 +407,24 @@
         });
 
         $("#filter_by_category").change(refresh_table);
+
+        $(".materialamount").on('change keyup', function () {
+            $("#display_material_desc").empty();
+            $(".materialamount").each(function () {
+                if ($(this).val() > 0) {
+                    $("#display_material_desc").append('<div class="col-md-4 col-md-offset-2" style="text-align:left;white-space:nowrap;overflow:hidden;text-overflow: ellipsis;">' + $(this).attr('matItemName') + '</div><div class="col-md-3 col-md-offset-2" style="text-align:left;">' + $(this).val() + ' ' + $(this).attr('unit') + '</div><br>');
+                }
+            });
+        });
+
+        $(".materialamount2").on('change keyup', function () {
+            $("#display_material_desc2").empty();
+            $(".materialamount2").each(function () {
+                if ($(this).val() > 0) {
+                    $("#display_material_desc2").append('<div class="col-md-4 col-md-offset-2" style="text-align:left;white-space:nowrap;overflow:hidden;text-overflow: ellipsis;">' + $(this).attr('matItemName') + '</div><div class="col-md-3 col-md-offset-2" style="text-align:left;">' + $(this).val() + ' ' + $(this).attr('unit') + '</div><br>');
+                }
+            });
+        });
 
         refresh_table();
     });
@@ -391,9 +500,17 @@
                             $("#menu_thumbnail").append(div);
                         }
                     }
+
+                    if (json[0].length + json[1].length == 0) {
+                        $("#menu_thumbnail").append('\
+                            <div class="well col-md-12" style="overflow: auto">\
+                                <p style="text-align:center;font-weight:bold;"> ไม่พบข้อมูลเมนูอาหารแบบเดี่ยว จากการค้นหาหมวดหมู่อาหาร ' + $("#filter_by_category option:selected").text() + ' </p>\
+                            </div>\
+                            ');
+                    }
                 } else {
                     $("#menu_thumbnail").append('\
-                    <div class="well" style="overflow: auto">\
+                    <div class="well col-md-12" style="overflow: auto">\
                         <p style="text-align:center;font-weight:bold;"> ไม่พบข้อมูลเมนูอาหารแบบเดี่ยว จากการค้นหาหมวดหมู่อาหาร ' + $("#filter_by_category option:selected").text() + ' </p>\
                     </div>\
                     ');
@@ -480,6 +597,28 @@
                     $("#edit_menu_available").parent().removeClass('checked');
                     $("#edit_menu_available").attr('checked', false);
                 }
+
+                /////////////////////
+                $(".materialamount2").val(0);
+                menuMaterials = menu.menuMaterials;
+                for (var i = 0; i < menuMaterials.length; i++) {
+                    console.log(menuMaterials[i]);
+                    $(".materialamount2[matitemno='" + menuMaterials[i].matItemNo + "']").val(menuMaterials[i].quantity);
+                }
+
+                $("#display_material_desc2").empty();
+                $(".materialamount2").attr('disabled', false);
+                $(".materialamount2").each(function () {
+                    if ($(this).val() > 0) {
+                        $("#display_material_desc2").append('<div class="col-md-4 col-md-offset-2" style="text-align:left;white-space:nowrap;overflow:hidden;text-overflow: ellipsis;">' + $(this).attr('matItemName') + '</div><div class="col-md-3 col-md-offset-2" style="text-align:left;">' + $(this).val() + ' ' + $(this).attr('unit') + '</div><br>');
+                    }
+
+                    if ($(this).attr('matitemno') == menuMaterials.matItemNo) {
+                        $(this).attr('disabled', true);
+                    }
+                });
+                /////////////////////
+
                 $("#showpic_edit").attr('src', menu.menuPicPath == null ? '../images/default_upload_image.png' : ('../images/menu/' + menu.menuPicPath));
             }
         });

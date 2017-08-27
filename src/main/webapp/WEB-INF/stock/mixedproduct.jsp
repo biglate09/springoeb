@@ -286,6 +286,7 @@
 <script>
     $(document).ready(function () {
         $("#datatable-matitem").DataTable({
+            paging: false,
             order: [[0, "asc"]],
             columnDefs: [
                 {orderable: false, targets: [-1]}
@@ -464,15 +465,22 @@
                 $("#mixed_prod_unit2").html($("#edit_unit_no option:selected").text());
                 $("#mixed_quantity").val(result.quantity);
 
+                $(".materialamount2").val(0);
+
                 var item_list = result.materialItemList;
                 for (var i = 0; i < item_list.length; i++) {
                     $(".materialamount2[matitemno='" + item_list[i].itemNo + "']").val(item_list[i].quantity);
                 }
 
                 $("#display_material_desc2").empty();
+                $(".materialamount2").attr('disabled',false);
                 $(".materialamount2").each(function () {
                     if ($(this).val() > 0) {
                         $("#display_material_desc2").append('<div class="col-md-4 col-md-offset-2" style="text-align:left;white-space:nowrap;overflow:hidden;text-overflow: ellipsis;">' + $(this).attr('matItemName') + '</div><div class="col-md-3 col-md-offset-2" style="text-align:left;">' + $(this).val() + ' ' + $(this).attr('unit') + '</div><br>');
+                    }
+
+                    if($(this).attr('matitemno') == result.matItemNo){
+                        $(this).attr('disabled',true);
                     }
                 });
             }

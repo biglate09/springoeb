@@ -1,5 +1,6 @@
 package com.springoeb.stock.model;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.springoeb.menu.model.Menu;
 import com.springoeb.stock.model_key.MenuMaterialId;
 
@@ -17,6 +18,7 @@ public class MenuMaterial {
     private Integer matItemNo;
     private Double quantity;
 
+    @JsonIgnore
     @ManyToOne
     @JoinColumn(name = "menu_no",updatable = false,insertable = false)
     private Menu menu;

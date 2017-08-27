@@ -18,6 +18,10 @@ public class MaterialItemService {
         return materialItemRepository.findByMatFlag(MaterialItem.flagForMixed);
     }
 
+    public List<MaterialItem> getAllMaterials(){
+        return materialItemRepository.findAll();
+    }
+
     public List<MaterialItem> getMaterials(){
         return materialItemRepository.findAll();
     }

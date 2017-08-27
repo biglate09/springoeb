@@ -178,7 +178,7 @@ public class StockController {
     public String toMixedProductIndex(Model model) {
         List<MaterialCategory> materialCategories = materialCategoryService.getMaterialCategories();
         List<MaterialUnit> materialUnits = materialUnitService.getMaterialUnits();
-        List<MaterialItem> materialItems = materialItemService.getMaterialItems();
+        List<MaterialItem> materialItems = materialItemService.getAllMaterials();
         model.addAttribute("materialItems", materialItems);
         model.addAttribute("matCategories", materialCategories);
         model.addAttribute("units", materialUnits);
