@@ -161,15 +161,23 @@ public class MenuController {
     @Transactional
     @ResponseBody
     @PostMapping("/promoteofficial")
-    public void promoteOfficial(HttpServletRequest request, HttpSession session) {
+    public void promoteOfficial(HttpServletRequest request, HttpSession session) throws Exception {
         int branchNo = ((BranchUser) (session.getAttribute("branchUser"))).getBranchNo();
         Menu menu = menuService.getMenuByMenuNo(Integer.parseInt(request.getParameter("menuno")));
+        List<MenuInSet> menuInSets = menu.getMenuInSets();
+        if(menuInSets != null){
+            for(MenuInSet mis : menuInSets){
+                if(mis.getMenu().getLocalFlag() != Menu.OFFICIAL_MENU_FLAG){
+                    throw new Exception();
+                }
+            }
+        }
         menu.setLocalFlag(Menu.OFFICIAL_MENU_FLAG);
         menuService.save(menu);
 
         List<Branch> branches = branchService.getAllBranches();
         for(Branch b : branches){
-            if(b.getBranchNo() != branchNo) {
+            if(b.getBranchNo() != menu.getMenuNo()) {
                 BranchMenu bm = new BranchMenu();
                 bm.setMenuNo(menu.getMenuNo());
                 bm.setBranchNo(b.getBranchNo());

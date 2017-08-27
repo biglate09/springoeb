@@ -16,7 +16,7 @@ public class BranchMenuService {
     private BranchMenuRepository branchMenuRepository;
 
     public List<BranchMenu> getMenuSets(int branchNo) {
-        return branchMenuRepository.findByBranchNoAndMenu_MenuFlagOrderByMenu_LocalFlagAsc(branchNo, Menu.flagForMenuSet);
+        return branchMenuRepository.findByBranchNoAndMenu_MenuFlagOrderByMenu_LocalFlagAscAvailableDesc(branchNo, Menu.flagForMenuSet);
     }
 
     public BranchMenu getMenuByMenuNo(int menuNo, int branchNo) {
@@ -29,14 +29,14 @@ public class BranchMenuService {
 
 
     public Set<BranchMenu> getMenusSubBranch(int branchNo) {
-        return branchMenuRepository.findByMenu_MenuFlagAndBranchNoOrderByMenu_LocalFlagAsc(Menu.flagForMenu, branchNo);
+        return branchMenuRepository.findByMenu_MenuFlagAndBranchNoOrderByMenu_LocalFlagAscAvailableDesc(Menu.flagForMenu, branchNo);
     }
 
     public Set<BranchMenu> getMenusByMenuGroupSubBranch(int menuGroupNo, int branchNo) {
         if (menuGroupNo == MenuGroup.ALL_GROUP) {
-            return branchMenuRepository.findByMenu_MenuFlagAndBranchNoOrderByMenu_LocalFlagAsc(Menu.flagForMenu, branchNo);
+            return branchMenuRepository.findByMenu_MenuFlagAndBranchNoOrderByMenu_LocalFlagAscAvailableDesc(Menu.flagForMenu, branchNo);
         } else {
-            return branchMenuRepository.findByMenu_MenuGroupNoAndMenu_MenuFlagAndBranchNoOrderByMenu_LocalFlagAsc(menuGroupNo, Menu.flagForMenu, branchNo);
+            return branchMenuRepository.findByMenu_MenuGroupNoAndMenu_MenuFlagAndBranchNoOrderByMenu_LocalFlagAscAvailableDesc(menuGroupNo, Menu.flagForMenu, branchNo);
         }
     }
 

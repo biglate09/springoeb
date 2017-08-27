@@ -138,6 +138,7 @@
                                                                                menuName="${m.menuNameTH} / ${m.menuNameEN}"
                                                                                class="menusetamount"
                                                                                name="menuamount${m.menuNo}"
+                                                                               mymenu="${m.localFlag == branchUser.branchNo}"
                                                                                style="text-align:center;"
                                                                                value="0" min="0" max="1000" step="1"
                                                                                required>
@@ -424,7 +425,7 @@
                             </div>\
                             <div class="col-md-6 caption" style="height:100%;color:#73879C">\
                             <div class="col-md-9 cardname" data-toggle="modal" data-target="#editMenuSet" onclick="set_menuset(' + menu.menuNo + ')" style="font-weight:bold;white-space:nowrap;overflow:hidden;text-overflow: ellipsis;cursor:pointer;">' + menu.menuNameTH + ' / ' + menu.menuNameEN + '</div>\
-                            <div class="col-md-3" style="color:white;background-color:' + (menu.localFlag == 0 ? "#73879C" : "red") + ';border-radius:4px;text-align:center;">' + (menu.localFlag == 0 ? "ทุกสาขา" : "สาขา" + (menu.localFlag ==${Branch.MAIN_BRANCH} ? "นี้" : " " + menu.localFlag)) + '</div>\
+                            <div class="col-md-3" style="color:white;background-color:' + (menu.localFlag == 0 ? "#73879C" : "red") + ';border-radius:4px;text-align:center;">' + (menu.localFlag == 0 ? "ทุกสาขา" : "สาขา" + (menu.localFlag ==${branchUser.branchNo} ? "นี้" : " " + menu.localFlag)) + '</div>\
                             <div class="col-md-12 foodDesc">\
                             <div>\
                             <p style="text-align:center;font-weight:bold;">รายการเมนู</p>';
@@ -466,7 +467,7 @@
                             </div>\
                             </div>\
                             <div class="col-md-6 caption" style="height:100%;color:#73879C">\
-                            <div class="col-md-9 cardname" data-toggle="modal" data-target="#editMenuSet" onclick="set_menuset(' + menu.menuNo + ')" style="font-weight:bold;white-space:nowrap;overflow:hidden;text-overflow: ellipsis;cursor:pointer;">' + menu.menuNameTH + ' / ' + menu.menuNameEN + '</div>\
+                            <div class="col-md-9 cardname" style="font-weight:bold;white-space:nowrap;overflow:hidden;text-overflow: ellipsis;">' + menu.menuNameTH + ' / ' + menu.menuNameEN + '</div>\
                             <div class="col-md-3" style="color:white;background-color:yellowgreen;border-radius:4px;text-align:center;">' + (menu.localFlag == 0 ? "ทุกสาขา" : "สาขา " + menu.localFlag) + '</div>\
                             <div class="col-md-12 foodDesc">\
                             <div>\
@@ -503,13 +504,18 @@
 
     $("#add_menuset").submit(function () {
         var hasmenu = false;
+        var hasmymenu = false;
         $(".menusetamount").each(function () {
             if ($(this).val() > 0) {
                 hasmenu = true;
-                return false;
+                if($(this).attr('mymenu')){
+                    hasmymenu = true;
+                    return false;
+                }
             }
         });
-        if (hasmenu) {
+
+        if (hasmenu && (!hasmymenu || !$("#add_menu_official").is(':checked'))) {
             var formdata = new FormData($("#add_menuset")[0]);
             $.ajax({
                 type: "POST",
@@ -528,7 +534,9 @@
                     swal("ไม่สำเร็จ", "ชื่อภาษาไทยหรืออังกฤษอาจซ้ำ กรุณาลองใหม่ในภายหลัง", "error");
                 }
             });
-        } else {
+        } else if(hasmymenu) {
+            swal("ไม่สำเร็จ", "ชุดนี้มีเมนูเฉพาะสาขาอยู่ จึงไม่สามารถเป็นชุดเมนูทุกสาขาได้", "error");
+        }else{
             swal("ไม่สำเร็จ", "กรุณาเลือกเมนูอาหารในชุดนี้ก่อน", "error");
         }
 
@@ -714,7 +722,7 @@
                     success: function (result) {
                         refresh_table();
                     }, error: function (result) {
-                        swal("ไม่สำเร็จ", "กรุณาลองใหม่ภายหลัง", "error");
+                        swal("ไม่สำเร็จ", "มีเมนูเดี่ยวที่เป็นของเฉพาะสาขาอยู่", "error");
                     }
                 });
             });
