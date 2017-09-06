@@ -17,8 +17,8 @@
             </div>
             <div class="profile_info">
                 <span>ยินดีต้อนรับ,</span>
-                <h2 style="white-space:nowrap;overflow:hidden;text-overflow: ellipsis;">${branchUser.username}</h2>
-                <h2 style="white-space:nowrap;overflow:hidden;text-overflow: ellipsis;">(${branchUser.branch.branchName})</h2>
+                <h2 style="white-space:nowrap;overflow:hidden;text-overflow: ellipsis;margin-bottom:5px;">(${branchUser.branch.branchName})</h2>
+                <h2 style="white-space:nowrap;overflow:hidden;text-overflow: ellipsis;">สาขาที่ ${branchUser.branch.branchNo}</h2>
             </div>
         </div>
         <!-- /menu profile quick info -->

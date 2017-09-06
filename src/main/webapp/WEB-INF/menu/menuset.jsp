@@ -261,7 +261,7 @@
                                                             <thead>
                                                             <tr>
                                                                 <th style="text-align:center;">ชื่อเมนูอาหาร</th>
-                                                                <th style="text-align:center;"></th>
+                                                                <th style="text-align:center;">หมวดหมู่</th>
                                                                 <th style="text-align:center;">ราคา</th>
                                                                 <th style="text-align:center;">จำนวน</th>
                                                             </tr>
@@ -366,6 +366,7 @@
         });
 
         $(".datatable-menu").DataTable({
+            scrollY: "40vh",
             paging: false,
             columnDefs: [
                 {orderable: false, targets: [-1]}
@@ -500,6 +501,8 @@
                             <p style="text-align:center;font-weight:bold;"> ไม่พบข้อมูลเมนูอาหารแบบชุด </p>\
                         </div>\
                         ');
+                    }else{
+                        $("#error_show").html('');
                     }
                 } else {
                     $("#error_show").html('\
@@ -691,6 +694,7 @@
             data: {menuno: menuNo},
             url: "${contextPath}/menu/changeavailable",
             success: function (result) {
+                swal("สำเร็จ", "เปลี่ยน \"" + result.menu.menuNameTH + "\" เป็น " + (result.available==false?'ไม่':'') + "พร้อมจำหน่าย เรียบร้อยแล้ว", "success");
                 refresh_table();
             }, error: function (result) {
                 swal("ไม่สำเร็จ", "กรุณาลองใหม่ภายหลัง", "error");
@@ -723,8 +727,8 @@
 
     function turn_official(menuno) {
         swal({
-                title: "ต้องการเปลี่ยนเมนูนี้ให้เป็นเมนูของทุกสาขา",
-                text: "",
+                title: "เปลี่ยนให้เป็นเมนูของทุกสาขา",
+                text: "คุณจะไม่สามารถเปลี่ยนกลับได้",
                 type: "warning",
                 showCancelButton: true,
                 cancelButtonText: "ยกเลิก",
@@ -738,6 +742,7 @@
                     data: {menuno: menuno},
                     url: "${contextPath}/menu/promoteofficial",
                     success: function (result) {
+                        swal("สำเร็จ", "เปลี่ยน \"" + result.menuNameTH + "\" เป็น เมนูของทุกสาขา เรียบร้อยแล้ว", "success");
                         refresh_table();
                     }, error: function (result) {
                         swal("ไม่สำเร็จ", "มีเมนูเดี่ยวที่เป็นของเฉพาะสาขาอยู่", "error");

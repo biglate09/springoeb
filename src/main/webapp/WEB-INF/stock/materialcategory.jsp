@@ -61,7 +61,7 @@
                             <div class="modal-body">
                                 <form class="form-horizontal form-label-left input_mask" modelAttribute="materialCategory" id="material_category">
                                     <div class="form-group">
-                                        <div class="col-md-6 col-sm-6 col-xs-12 form-group has-feedback">
+                                        <div class="col-md-12 col-sm-12 col-xs-12 form-group has-feedback">
                                             <label>ชื่อประเภทวัตถุดิบ</label>
                                             <input type="text" class="form-control" name="matCatName" id="mat_cat_name"
                                                    placeholder="ชื่อประเภทวัตถุดิบ" required>
@@ -94,14 +94,14 @@
                             <div class="modal-header">
                                 <!-- ปุ่มกดปิด (X) ตรงส่วนหัวของ Modal -->
                                 <button type="button" class="close" data-dismiss="modal">&times;</button>
-                                <h4 class="modal-title">แก้ไขประเภทวัตถุดิบ</h4>
+                                <h4 class="modal-title">แก้ไขประเภทวัตถุดิบ <span id="matnameedit"></span></h4>
                             </div>
                             <!-- ส่วนเนื้อหาของ Modal -->
                             <div class="modal-body">
                                 <form class="form-horizontal form-label-left input_mask" modelAttribute="materialCategory" id="material_category_edit">
                                     <input type="hidden" name="matCatNo" id="hiddenmatcatno">
                                     <div class="form-group">
-                                        <div class="col-md-6 col-sm-6 col-xs-12 form-group has-feedback">
+                                        <div class="col-md-12 col-sm-12 col-xs-12 form-group has-feedback">
                                             <label>ชื่อประเภทวัตถุดิบ</label>
                                             <input type="text" class="form-control" id="edit_mat_cat_name"
                                                    name="matCatName"
@@ -184,6 +184,7 @@
             success: function (result) {
                 $("#hiddenmatcatno").val(result.matCatNo);
                 $("#edit_mat_cat_name").val(result.matCatName);
+                $("#matnameedit").html(result.matCatName);
             }
         });
     }

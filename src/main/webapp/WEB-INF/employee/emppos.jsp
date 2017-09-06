@@ -92,7 +92,7 @@
                             <div class="modal-body">
                                 <form class="form-horizontal form-label-left input_mask" modelAttribute="employeeposition" id="emp_pos_add">
                                     <div class="form-group">
-                                        <div class="col-md-6 col-sm-6 col-xs-12 form-group has-feedback">
+                                        <div class="col-md-12 col-sm-12 col-xs-12 form-group has-feedback">
                                             <label>ชื่อตำแหน่งพนักงาน</label>
                                             <input type="text" class="form-control" name="empPosName" id="emp_pos_name_add"
                                                    placeholder="ชื่อตำแหน่งพนักงาน" required>
@@ -125,14 +125,14 @@
                             <div class="modal-header">
                                 <!-- ปุ่มกดปิด (X) ตรงส่วนหัวของ Modal -->
                                 <button type="button" class="close" data-dismiss="modal">&times;</button>
-                                <h4 class="modal-title">แก้ไขตำแหน่งพนักงาน</h4>
+                                <h4 class="modal-title">แก้ไขตำแหน่งพนักงาน <span id="empposnamedit"></span></h4>
                             </div>
                             <!-- ส่วนเนื้อหาของ Modal -->
                             <div class="modal-body">
                                 <form class="form-horizontal form-label-left input_mask" modelAttribute="employeeposition" id="emp_pos_edit">
                                     <input type="hidden" name="empPosNo" id="hiddenempposno">
                                     <div class="form-group">
-                                        <div class="col-md-6 col-sm-6 col-xs-12 form-group has-feedback">
+                                        <div class="col-md-12 col-sm-12 col-xs-12 form-group has-feedback">
                                             <label>ชื่อตำแหน่งพนักงาน</label>
                                             <input type="text" class="form-control" id="editempposname"
                                                    name="empPosName"
@@ -218,6 +218,7 @@
             success: function (result) {
                 $("#hiddenempposno").val(result.empPosNo);
                 $("#editempposname").val(result.empPosName);
+                $("#empposnamedit").html(result.empPosName);
             }
         });
     }

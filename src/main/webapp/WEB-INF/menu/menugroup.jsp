@@ -48,7 +48,7 @@
                             </form>
                         </div>
                         <div class="modal fade" id="addMenuGroup" role="dialog">
-                            <div class="modal-dialog">
+                            <div class="modal-dialog modal-lg">
                                 <!-- เนือหาของ Modal ทั้งหมด -->
                                 <div class="modal-content">
                                     <!-- ส่วนหัวของ Modal -->
@@ -58,7 +58,7 @@
                                         <h4 class="modal-title">เพิ่มหมวดหมู่เมนูอาหารใหม่</h4>
                                     </div>
                                     <!-- ส่วนเนื้อหาของ Modal -->
-                                    <div class="modal-body">
+                                    <div class="modal-body ">
                                         <form class="form-horizontal form-label-left input_mask" modelAttribute="menugroup" id="add_menu_group">
                                             <div class="form-group">
                                                 <div class="col-md-6 col-sm-6 col-xs-12 form-group has-feedback">
@@ -100,7 +100,7 @@
                             </div>
                         </div>
                         <div class="modal fade" id="editMenuGroup" role="dialog">
-                            <div class="modal-dialog">
+                            <div class="modal-dialog modal-lg">
                                 <!-- เนือหาของ Modal ทั้งหมด -->
                                 <div class="modal-content">
                                     <!-- ส่วนหัวของ Modal -->

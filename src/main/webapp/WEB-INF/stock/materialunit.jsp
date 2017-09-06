@@ -61,7 +61,7 @@
                             <div class="modal-body">
                                 <form class="form-horizontal form-label-left input_mask" modelAttribute="materialUnit" id="material_unit">
                                     <div class="form-group">
-                                        <div class="col-md-6 col-sm-6 col-xs-12 form-group has-feedback">
+                                        <div class="col-md-12 col-sm-12 col-xs-12 form-group has-feedback">
                                             <label>ชื่อหน่วยของวัตถุดิบ</label>
                                             <input type="text" class="form-control" name="unitName" id="mat_unit_name"
                                                    placeholder="ชื่อหน่วยของวัตถุดิบ" required>
@@ -94,14 +94,14 @@
                             <div class="modal-header">
                                 <!-- ปุ่มกดปิด (X) ตรงส่วนหัวของ Modal -->
                                 <button type="button" class="close" data-dismiss="modal">&times;</button>
-                                <h4 class="modal-title">แก้ไขหน่วยของวัตถุดิบ</h4>
+                                <h4 class="modal-title">แก้ไขหน่วยของวัตถุดิบ <span id="matunitedit"></span></h4>
                             </div>
                             <!-- ส่วนเนื้อหาของ Modal -->
                             <div class="modal-body">
                                 <form class="form-horizontal form-label-left input_mask" modelAttribute="materialUnit" id="material_unit_edit">
                                     <input type="hidden" name="unitNo" id="hiddenunitno">
                                     <div class="form-group">
-                                        <div class="col-md-6 col-sm-6 col-xs-12 form-group has-feedback">
+                                        <div class="col-md-12 col-sm-12 col-xs-12 form-group has-feedback">
                                             <label>ชื่อหน่วยของวัตถุดิบ</label>
                                             <input type="text" class="form-control" id="edit_mat_unit_name"
                                                    name="unitName"
@@ -184,6 +184,7 @@
             success: function (result) {
                 $("#hiddenunitno").val(result.unitNo);
                 $("#edit_mat_unit_name").val(result.unitName);
+                $("#matunitedit").html(result.unitName);
             }
         });
     }

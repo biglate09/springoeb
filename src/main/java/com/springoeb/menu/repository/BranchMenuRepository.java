@@ -10,9 +10,9 @@ import java.util.Set;
 
 @Repository
 public interface BranchMenuRepository extends CrudRepository<BranchMenu,BranchMenuId> {
-    List<BranchMenu> findByBranchNoAndMenu_MenuFlagOrderByMenu_LocalFlagAscAvailableDesc(int branchNo,String menuFlag);
-    Set<BranchMenu> findByMenu_MenuGroupNoAndMenu_MenuFlagAndBranchNoOrderByMenu_LocalFlagAscAvailableDesc(int menuGroupNo,String menuFlag,int branchNo);
-    Set<BranchMenu> findByMenu_MenuFlagAndBranchNoOrderByMenu_LocalFlagAscAvailableDesc(String menuFlag,int branchNo);
+    List<BranchMenu> findByBranchNoAndMenu_MenuFlagOrderByMenu_LocalFlagAsc(int branchNo,String menuFlag);
+    Set<BranchMenu> findByMenu_MenuGroupNoAndMenu_MenuFlagAndBranchNoOrderByMenu_LocalFlagAsc(int menuGroupNo,String menuFlag,int branchNo);
+    Set<BranchMenu> findByMenu_MenuFlagAndBranchNoOrderByMenu_LocalFlagAsc(String menuFlag,int branchNo);
     BranchMenu findByMenuNoAndBranchNo(int menuNo,int branchNo);
     void save(List<BranchMenu> branchMenus);
 }

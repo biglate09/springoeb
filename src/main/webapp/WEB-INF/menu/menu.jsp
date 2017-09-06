@@ -131,7 +131,7 @@
                                                         <thead>
                                                         <tr>
                                                             <th style="text-align:center;">ชื่อวัตถุดิบอาหาร</th>
-                                                            <th style="text-align:center;">ประเภท</th>
+                                                            <th style="text-align:center;" class="order">ประเภท</th>
                                                             <th style="text-align:center;">จำนวนที่ใช้</th>
                                                         </tr>
                                                         </thead>
@@ -282,7 +282,7 @@
                                                     <thead>
                                                     <tr>
                                                         <th style="text-align:center;">ชื่อวัตถุดิบอาหาร</th>
-                                                        <th style="text-align:center;">ประเภท</th>
+                                                        <th style="text-align:center;" class="order">ประเภท</th>
                                                         <th style="text-align:center;">จำนวนที่ใช้</th>
                                                     </tr>
                                                     </thead>
@@ -355,8 +355,9 @@
 <script>
     $(document).ready(function () {
         $(".material-datatable").DataTable({
+            scrollY: "40vh",
             paging: false,
-            order: [[1, "asc"]]
+            order: [[1, "desc"]]
         });
 
         $("#datatable-menu").DataTable({
@@ -551,6 +552,7 @@
         $("#add_menu_available").attr('checked', false);
         $("#add_menu_official").parent().removeClass('checked');
         $("#add_menu_official").attr('checked', false);
+        $("#display_material_desc").empty();
     }
 
     $("#edit_menu").submit(function () {
@@ -602,7 +604,6 @@
                 $(".materialamount2").val(0);
                 menuMaterials = menu.menuMaterials;
                 for (var i = 0; i < menuMaterials.length; i++) {
-                    console.log(menuMaterials[i]);
                     $(".materialamount2[matitemno='" + menuMaterials[i].matItemNo + "']").val(menuMaterials[i].quantity);
                 }
 
@@ -657,6 +658,7 @@
             data: {menuno: menuno},
             url: "${contextPath}/menu/changeavailable",
             success: function (result) {
+                swal("สำเร็จ", "เปลี่ยน \"" + result.menu.menuNameTH + "\" เป็น " + (result.available==false?'ไม่':'') + "พร้อมจำหน่าย เรียบร้อยแล้ว", "success");
                 refresh_table();
             }, error: function (result) {
                 swal("ไม่สำเร็จ", "กรุณาลองใหม่ภายหลัง", "error");
@@ -666,8 +668,8 @@
 
     function turn_official(menuno) {
         swal({
-                title: "ต้องการเปลี่ยนเมนูนี้ให้เป็นเมนูของทุกสาขา",
-                text: "",
+                title: "เปลี่ยนให้เป็นเมนูของทุกสาขา",
+                text: "คุณจะไม่สามารถเปลี่ยนกลับได้",
                 type: "warning",
                 showCancelButton: true,
                 cancelButtonText: "ยกเลิก",
@@ -681,6 +683,7 @@
                     data: {menuno: menuno},
                     url: "${contextPath}/menu/promoteofficial",
                     success: function (result) {
+                        swal("สำเร็จ", "เปลี่ยน \"" + result.menuNameTH + "\" เป็น เมนูของทุกสาขา เรียบร้อยแล้ว", "success");
                         refresh_table();
                     }, error: function (result) {
                         swal("ไม่สำเร็จ", "กรุณาลองใหม่ภายหลัง", "error");

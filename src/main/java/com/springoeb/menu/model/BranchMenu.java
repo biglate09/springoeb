@@ -51,9 +51,4 @@ public class BranchMenu {
     public void setMenu(Menu menu) {
         this.menu = menu;
     }
-
-    public static void main(String[] args) {
-        BCryptPasswordEncoder en = new BCryptPasswordEncoder();
-        System.out.println(en.encode("kopihub2017"));
-    }
 }

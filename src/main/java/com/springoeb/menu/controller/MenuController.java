@@ -182,17 +182,17 @@ public class MenuController {
 
     @ResponseBody
     @PostMapping("/changeavailable")
-    public void changeAvailable(HttpServletRequest request, HttpSession session) {
+    public BranchMenu changeAvailable(HttpServletRequest request, HttpSession session) {
         int branchNo = ((BranchUser) (session.getAttribute("branchUser"))).getBranchNo();
         BranchMenu branchMenu = branchMenuService.getMenuByMenuNo(Integer.parseInt(request.getParameter("menuno")), branchNo);
         branchMenu.setAvailable(!branchMenu.isAvailable());
-        branchMenuService.save(branchMenu);
+        return branchMenuService.save(branchMenu);
     }
 
     @Transactional
     @ResponseBody
     @PostMapping("/promoteofficial")
-    public void promoteOfficial(HttpServletRequest request, HttpSession session) throws Exception {
+    public Menu promoteOfficial(HttpServletRequest request, HttpSession session) throws Exception {
         int branchNo = ((BranchUser) (session.getAttribute("branchUser"))).getBranchNo();
         Menu menu = menuService.getMenuByMenuNo(Integer.parseInt(request.getParameter("menuno")));
         List<MenuInSet> menuInSets = menu.getMenuInSets();
@@ -204,7 +204,7 @@ public class MenuController {
             }
         }
         menu.setLocalFlag(Menu.OFFICIAL_MENU_FLAG);
-        menuService.save(menu);
+        Menu m = menuService.save(menu);
 
         List<Branch> branches = branchService.getAllBranches();
         for(Branch b : branches){
@@ -216,6 +216,7 @@ public class MenuController {
                 branchMenuService.save(bm);
             }
         }
+        return m;
     }
 
     @Transactional

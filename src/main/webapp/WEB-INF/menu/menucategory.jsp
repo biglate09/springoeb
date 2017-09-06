@@ -61,7 +61,7 @@
                             <div class="modal-body">
                                 <form class="form-horizontal form-label-left input_mask" modelAttribute="menuCategory" id="menu_category">
                                     <div class="form-group">
-                                        <div class="col-md-6 col-sm-6 col-xs-12 form-group has-feedback">
+                                        <div class="col-md-12 col-sm-12 col-xs-12 form-group has-feedback">
                                             <label>ชื่อประเภทอาหาร</label>
                                             <input type="text" class="form-control" name="menuCatName" id="menu_cat_name"
                                                    placeholder="ชื่อประเภทอาหาร" required>
@@ -94,14 +94,14 @@
                             <div class="modal-header">
                                 <!-- ปุ่มกดปิด (X) ตรงส่วนหัวของ Modal -->
                                 <button type="button" class="close" data-dismiss="modal">&times;</button>
-                                <h4 class="modal-title">แก้ไขประเภทอาหาร</h4>
+                                <h4 class="modal-title">แก้ไขประเภทอาหาร <span id="menucatedit"></span></h4>
                             </div>
                             <!-- ส่วนเนื้อหาของ Modal -->
                             <div class="modal-body">
                                 <form class="form-horizontal form-label-left input_mask" modelAttribute="menuCategory" id="menu_category_edit">
                                     <input type="hidden" name="menuCatNo" id="hiddenmenucatno">
                                     <div class="form-group">
-                                        <div class="col-md-6 col-sm-6 col-xs-12 form-group has-feedback">
+                                        <div class="col-md-12 col-sm-12 col-xs-12 form-group has-feedback">
                                             <label>ชื่อประเภทอาหาร</label>
                                             <input type="text" class="form-control" id="edit_menu_cat_name"
                                                    name="menuCatName"
@@ -185,6 +185,7 @@
             success: function (result) {
                 $("#hiddenmenucatno").val(result.menuCatNo);
                 $("#edit_menu_cat_name").val(result.menuCatName);
+                $("#menucatedit").html(result.menuCatName);
             }
         });
     }
