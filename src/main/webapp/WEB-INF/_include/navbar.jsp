@@ -17,8 +17,8 @@
             </div>
             <div class="profile_info">
                 <span>ยินดีต้อนรับ,</span>
-                <h2 style="white-space:nowrap;overflow:hidden;text-overflow: ellipsis;margin-bottom:5px;">(${branchUser.branch.branchName})</h2>
-                <h2 style="white-space:nowrap;overflow:hidden;text-overflow: ellipsis;">สาขาที่ ${branchUser.branch.branchNo}</h2>
+                <h2 style="white-space:nowrap;overflow:hidden;text-overflow: ellipsis;margin-bottom:5px;">${branchUser.branch.branchName}</h2>
+                <h2 style="white-space:nowrap;overflow:hidden;text-overflow: ellipsis;">(สาขาที่ ${branchUser.branch.branchNo})</h2>
             </div>
         </div>
         <!-- /menu profile quick info -->
@@ -61,13 +61,12 @@
                     <li>
                         <a><i class="fa fa-spoon"></i> จัดการวัตถุดิบอาหาร <span class="fa fa-chevron-down"></span></a>
                         <ul class="nav child_menu">
-                            <%--<li><a id="currentstock" >วัตถุดิบคงเหลือ</a></li>--%>
                             <li><a id="materialcategory" href="${contextPath}/stock/materialcategory">ประเภทวัตถุดิบ</a></li>
                             <li><a id="materialunit" href="${contextPath}/stock/materialunit">หน่วยของวัตถุดิบ</a></li>
                             <li><a id="material" href="${contextPath}/stock/materialitem">วัตถุดิบ</a></li>
                             <li><a id="mixedproduct" href="${contextPath}/stock/mixedproduct">วัตถุดิบแบบผสม</a></li>
-                            <%--<li><a id="stockmanage" href="${contextPath}/stock/stockmanage">เพิ่ม / ลดวัตถุดิบ</a></li>--%>
-                            <%--<li><a id="menustock" href="${contextPath}/stock/menumaterial">วัตถุดิบในเมนูอาหาร</a></li>--%>
+                            <li><a id="stockmanage" href="${contextPath}/stock/stockmanage">เพิ่ม / ลดวัตถุดิบ</a></li>
+                            <li><a id="currentstock" href="${contextPath}/stock/stockremain">วัตถุดิบคงเหลือ</a></li>
                         </ul>
                     </li>
                 </ul>

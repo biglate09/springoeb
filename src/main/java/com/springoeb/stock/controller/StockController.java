@@ -271,4 +271,12 @@ public class StockController {
         return json;
     }
     //-----------------------------------------------------------------------------------------------------------//
+
+    @GetMapping("/stockremain")
+    public String toStockRemainIndex(Model model) {
+        return STOCK_PATH + "stockremain.jsp";
+    }
+
+    //-----------------------------------------------------------------------------------------------------------//
+
 }

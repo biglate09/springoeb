@@ -48,7 +48,7 @@
                             </div>
                             <div class="col-md-4 form-group" style="padding:0px;">
                                 <input type="text" class="form-control" id="myInput"
-                                       onkeyup="filterCard()" placeholder="ค้นหา...">
+                                       onkeyup="filterCard()" placeholder="ค้นหาด้วยชื่อเมนู...">
                                 <span class="fa fa-search form-control-feedback right"
                                       aria-hidden="true"></span>
                             </div>

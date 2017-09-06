@@ -286,7 +286,6 @@
 <script>
     $(document).ready(function () {
         $("#datatable-matitem").DataTable({
-            paging: false,
             order: [[0, "asc"]],
             columnDefs: [
                 {orderable: false, targets: [-1]}
