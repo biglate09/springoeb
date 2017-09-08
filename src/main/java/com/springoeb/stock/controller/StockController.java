@@ -211,12 +211,11 @@ public class StockController {
         String json = mapper.writeValueAsString(materialHistories);
         return json;
     }
-    //-----------------------------------------------------------------------------------------------------------//
-    @GetMapping("/menumaterial")
-    public String toMenuMaterialIndex() {
-        return STOCK_PATH + "menumaterial.jsp";
-    }
 
+    @PostMapping("managematerialhistory")
+    public void AddOrEditMaterialHistory(){
+
+    }
     //-----------------------------------------------------------------------------------------------------------//
     @GetMapping("/materialunit")
     public String toMaterialUnitIndex() {
@@ -276,6 +275,7 @@ public class StockController {
     public String toStockRemainIndex(Model model) {
         return STOCK_PATH + "stockremain.jsp";
     }
+
 
     //-----------------------------------------------------------------------------------------------------------//
 

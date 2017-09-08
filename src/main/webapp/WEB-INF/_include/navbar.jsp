@@ -52,12 +52,12 @@
                             <li><a id="menuset" href="${contextPath}/menu/menuset">เมนูอาหารแบบชุด</a></li>
                         </ul>
                     </li>
-                    <%--<li>--%>
-                        <%--<a><i class="fa fa-tags"></i> จัดการโปรโมชั่น <span class="fa fa-chevron-down"></span></a>--%>
-                        <%--<ul class="nav child_menu">--%>
-                            <%--<li><a id="promotion" href="${contextPath}/promotion/promotion">โปรโมชั่นเมนูอาหาร</a></li>--%>
-                        <%--</ul>--%>
-                    <%--</li>--%>
+                    <li>
+                        <a><i class="fa fa-tags"></i> จัดการโปรโมชั่น <span class="fa fa-chevron-down"></span></a>
+                        <ul class="nav child_menu">
+                            <li><a id="promotion" href="${contextPath}/promotion/promotion">โปรโมชั่นเมนูอาหาร</a></li>
+                        </ul>
+                    </li>
                     <li>
                         <a><i class="fa fa-spoon"></i> จัดการวัตถุดิบอาหาร <span class="fa fa-chevron-down"></span></a>
                         <ul class="nav child_menu">
@@ -65,7 +65,7 @@
                             <li><a id="materialunit" href="${contextPath}/stock/materialunit">หน่วยของวัตถุดิบ</a></li>
                             <li><a id="material" href="${contextPath}/stock/materialitem">วัตถุดิบ</a></li>
                             <li><a id="mixedproduct" href="${contextPath}/stock/mixedproduct">วัตถุดิบแบบผสม</a></li>
-                            <li><a id="stockmanage" href="${contextPath}/stock/stockmanage">เพิ่ม / ลดวัตถุดิบ</a></li>
+                            <%--<li><a id="stockmanage" href="${contextPath}/stock/stockmanage">เพิ่ม / ลดวัตถุดิบ</a></li>--%>
                             <li><a id="currentstock" href="${contextPath}/stock/stockremain">วัตถุดิบคงเหลือ</a></li>
                         </ul>
                     </li>

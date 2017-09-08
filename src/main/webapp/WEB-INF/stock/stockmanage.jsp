@@ -30,10 +30,8 @@
                         <div class="x_content">
                             <form action="#">
                                 <p>
-                                    <%--<a data-toggle="modal" data-target="#addMatItem"--%>
-                                       <%--class="btn btn-success btn-sm" disabled=""><i class="fa fa-pencil"></i>&nbsp;--%>
-                                        <%--อัพเดท</a>--%>
-                                    <a class="btn btn-success btn-sm" disabled=""><i class="fa fa-pencil"></i>&nbsp;
+                                    <a data-toggle="modal" data-target="#addMatItem"
+                                       class="btn btn-success btn-sm"><i class="fa fa-pencil"></i>&nbsp;
                                         อัพเดท</a>
                                 </p>
                                 <table id="datatable-matitem"
