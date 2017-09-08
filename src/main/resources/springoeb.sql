@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Host: 127.0.0.1
--- Generation Time: Aug 27, 2017 at 12:31 PM
+-- Generation Time: Sep 08, 2017 at 09:46 PM
 -- Server version: 10.1.21-MariaDB
 -- PHP Version: 5.6.30
 
@@ -57,23 +57,9 @@ CREATE TABLE `branch_menu` (
 --
 
 INSERT INTO `branch_menu` (`branch_no`, `menu_no`, `available`) VALUES
-(1, 1, 1),
-(1, 2, 0),
-(1, 3, 1),
-(1, 4, 1),
-(1, 5, 1),
-(1, 6, 1),
-(1, 7, 0),
-(2, 1, 0),
-(2, 2, 0),
-(2, 5, 0),
-(2, 6, 0),
-(2, 7, 0),
-(3, 1, 0),
-(3, 2, 0),
-(3, 5, 0),
-(3, 6, 0),
-(3, 7, 0);
+(1, 11, 1),
+(2, 11, 0),
+(3, 11, 0);
 
 -- --------------------------------------------------------
 
@@ -141,6 +127,13 @@ CREATE TABLE `employee_pay` (
   `date` datetime NOT NULL,
   `emp_no` int(8) NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8 ROW_FORMAT=COMPACT;
+
+--
+-- Dumping data for table `employee_pay`
+--
+
+INSERT INTO `employee_pay` (`emp_pay_no`, `pay`, `date`, `emp_no`) VALUES
+(1, 30.00, '2017-09-08 12:16:11', 6);
 
 -- --------------------------------------------------------
 
@@ -218,6 +211,17 @@ CREATE TABLE `material_category` (
   `mat_cat_name` varchar(200) NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8;
 
+--
+-- Dumping data for table `material_category`
+--
+
+INSERT INTO `material_category` (`mat_cat_no`, `mat_cat_name`) VALUES
+(2, 'แป้ง'),
+(3, 'เนื้อสัตว์'),
+(4, 'ผัก'),
+(5, 'เครื่องปรุงพิเศษ'),
+(6, 'น้ำมัน');
+
 -- --------------------------------------------------------
 
 --
@@ -230,11 +234,23 @@ CREATE TABLE `material_history` (
   `mat_quantity` double NOT NULL,
   `date` date NOT NULL,
   `time` time NOT NULL,
-  `importer` varchar(50) NOT NULL,
-  `supplier` varchar(50) NOT NULL,
+  `importer` varchar(50) DEFAULT NULL,
+  `supplier` varchar(50) DEFAULT NULL,
   `mat_item_no` int(11) NOT NULL,
-  `branch_no` int(11) NOT NULL
+  `branch_no` int(11) NOT NULL,
+  `of_mat_hist_no` int(11) DEFAULT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8;
+
+--
+-- Dumping data for table `material_history`
+--
+
+INSERT INTO `material_history` (`mat_hist_no`, `mat_name`, `mat_quantity`, `date`, `time`, `importer`, `supplier`, `mat_item_no`, `branch_no`, `of_mat_hist_no`) VALUES
+(112, 'แป้งซาลาเปาหมูแดงทอด', 300, '2017-09-09', '02:20:25', 'บิ๊กเอง', 'เจ๊จิ๋ม', 13, 1, NULL),
+(113, 'น้ำมันพืช', -60, '2017-09-09', '02:20:25', NULL, NULL, 10, 1, 112),
+(114, 'แป้งข้าวเจ้า', -120, '2017-09-09', '02:20:25', NULL, NULL, 11, 1, 112),
+(115, 'น้ำสต็อก', -240, '2017-09-09', '02:20:25', NULL, NULL, 12, 1, 112),
+(116, 'ส่วนผสมอีกที', -120, '2017-09-09', '02:20:25', NULL, NULL, 15, 1, 112);
 
 -- --------------------------------------------------------
 
@@ -251,6 +267,19 @@ CREATE TABLE `material_item` (
   `unit_no` int(11) NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8;
 
+--
+-- Dumping data for table `material_item`
+--
+
+INSERT INTO `material_item` (`mat_item_no`, `mat_item_name`, `quantity`, `mat_flag`, `mat_cat_no`, `unit_no`) VALUES
+(9, 'หมูแดง', 1, 'I', 3, 2),
+(10, 'น้ำมันพืช', 1, 'I', 6, 3),
+(11, 'แป้งข้าวเจ้า', 1, 'I', 2, 2),
+(12, 'น้ำสต็อก', 1, 'I', 5, 3),
+(13, 'แป้งซาลาเปาหมูแดงทอด', 25, 'M', 2, 2),
+(14, 'ไข่', 1, 'I', 3, 2),
+(15, 'ส่วนผสมอีกที', 10, 'M', 2, 2);
+
 -- --------------------------------------------------------
 
 --
@@ -263,6 +292,18 @@ CREATE TABLE `material_mixed` (
   `quantity` double NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8;
 
+--
+-- Dumping data for table `material_mixed`
+--
+
+INSERT INTO `material_mixed` (`mixed_prod_no`, `item_no`, `quantity`) VALUES
+(13, 10, 5),
+(13, 11, 10),
+(13, 12, 20),
+(13, 15, 10),
+(15, 10, 30),
+(15, 12, 20);
+
 -- --------------------------------------------------------
 
 --
@@ -273,6 +314,14 @@ CREATE TABLE `material_unit` (
   `unit_no` int(11) NOT NULL,
   `unit_name` varchar(100) NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8;
+
+--
+-- Dumping data for table `material_unit`
+--
+
+INSERT INTO `material_unit` (`unit_no`, `unit_name`) VALUES
+(2, 'กรัม'),
+(3, 'มิลลิลิตร');
 
 -- --------------------------------------------------------
 
@@ -297,13 +346,7 @@ CREATE TABLE `menu` (
 --
 
 INSERT INTO `menu` (`menu_no`, `menu_name_TH`, `menu_name_EN`, `menu_desc`, `menu_price`, `menu_pic_path`, `menu_flag`, `local_flag`, `menu_group_no`) VALUES
-(1, 'ข้าวโพดอ่อนแต้มหน้าหมู', 'Baby Corn Served on Steamed Pork', 'ติ่มซำข้าวโพดอ่อนห่อด้วยหมูสับปรุงรสสูตรลับพิเศษของทางร้าน แต้มหน้าเล็กน้อยด้วยแครอทวิเศษ', 25.00, '1503828477942Dimsum_Baby_Corn1.jpg', 'M', 0, 2),
-(2, 'ซี่โครงหมูเต้าซี่', 'Blackbean Garlic Sauce Steamed Pork', 'ซี่โครงหมูเต้าซี่อบพริกไทยดำที่แสนเข้ากัน หมักด้วยซอสหมักหมูสูตรลับของทางร้าน', 30.00, '1503828559766Dimsum_Blackbean_Garlic1.jpg', 'M', 0, 2),
-(3, 'บร็อคโคลี่ไส้กุ้ง', 'Broccoli served on Steamed Shrimp', 'บร็อคโคลี่นอก พันด้วยกุ้งสับละเอียดด้วยมือพ่อครัวที่แสนอ่อนโยน แต้มหน้าด้วยแครอทวิเศษ', 30.00, '1503828626785Dimsum_Broccoli1.jpg', 'M', 1, 2),
-(4, 'กะหล่ำห่อกุ้งปูอัด', 'Steamed Cabbage Roll Stuffed with Shrimp', 'ติ่มซำเพื่อคนรักสุขภาพที่ประกอบไปด้วยกะหล่ำห่อแสนหอมและหมูสับแสนอร่อย', 30.00, '1503828682785Dimsum_Cabbage_Rolls1.jpg', 'M', 1, 2),
-(5, 'ขนมจีบปู', 'Crab Chinese Steamed Dumpling', 'ขนมจีบปู ดูเหมือนธรรมดา แต่ไม่ธรรมดาเพราะเป็นปูจากอลาสก้าที่ปรุงพิเศษขึ้นมาสำหรับการรับประทานแบบชนชั้นสูงโดยเฉพาะ', 30.00, '1503828764406Dimsum_Crab_Dumpling1.jpg', 'M', 0, 2),
-(6, 'ซาลาเปาไส้ครีม', 'Sweet Cream Bun', 'ซาลาเปาหอมกรุ่น ทำชิ้นต่อชิ้นเมื่อสั่งเท่านั้น', 30.00, '1503828813021Dimsum_Custard_Bun1.jpg', 'M', 0, 3),
-(7, 'ปลาหมึกกระดองแต้มหน้าหมู', 'Cuttlefish served on Steamed Pork', 'ติ่มซำปลาหมึกกระดองแบบแรร์ ใช้เฉพาะปลาหมึกที่อยู่ในทะเลเมดิเตอร์เรเนียนที่อยู่ลึกกว่า 1 กิโลเมตรเท่านั้น', 30.00, '1503829094555Dimsum_Cuttleffish1.jpg', 'M', 0, 2);
+(11, 'ซาลาเปาหมูแดงทอด', 'Fried Red Pork Bun', 'ซาลาเปาหมูแดงทอดแสนอร่อย หอมกรุ่น', 30.00, '1504672276939Bann.png', 'M', 0, 3);
 
 -- --------------------------------------------------------
 
@@ -374,6 +417,15 @@ CREATE TABLE `menu_material` (
   `quantity` double NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8;
 
+--
+-- Dumping data for table `menu_material`
+--
+
+INSERT INTO `menu_material` (`menu_no`, `mat_item_no`, `quantity`) VALUES
+(11, 9, 15),
+(11, 10, 10),
+(11, 13, 30);
+
 -- --------------------------------------------------------
 
 --
@@ -443,7 +495,8 @@ INSERT INTO `work_history` (`work_hist_no`, `work_date`, `work_start`, `work_end
 (10, '2017-08-25', NULL, NULL, 215.83, 5, 50, 2, NULL),
 (11, '2017-08-25', NULL, NULL, 200.00, 8, 0, 4, NULL),
 (12, '2017-08-25', NULL, NULL, 189.75, 5, 45, 5, NULL),
-(13, '2017-08-25', NULL, NULL, 300.00, 7, 0, 6, NULL);
+(13, '2017-08-25', NULL, NULL, 300.00, 7, 0, 6, NULL),
+(14, '2017-08-27', '23:46:21', '23:48:35', 1.00, 0, 2, 1, 2);
 
 --
 -- Indexes for dumped tables
@@ -515,7 +568,8 @@ ALTER TABLE `material_category`
 ALTER TABLE `material_history`
   ADD PRIMARY KEY (`mat_hist_no`),
   ADD KEY `mat_no` (`mat_item_no`,`branch_no`),
-  ADD KEY `branch_no` (`branch_no`);
+  ADD KEY `branch_no` (`branch_no`),
+  ADD KEY `of_mat_item_no` (`of_mat_hist_no`);
 
 --
 -- Indexes for table `material_item`
@@ -530,6 +584,7 @@ ALTER TABLE `material_item`
 -- Indexes for table `material_mixed`
 --
 ALTER TABLE `material_mixed`
+  ADD PRIMARY KEY (`mixed_prod_no`,`item_no`),
   ADD KEY `item_no` (`item_no`),
   ADD KEY `mixed_prod_no` (`mixed_prod_no`,`item_no`);
 
@@ -621,7 +676,7 @@ ALTER TABLE `employee`
 -- AUTO_INCREMENT for table `employee_pay`
 --
 ALTER TABLE `employee_pay`
-  MODIFY `emp_pay_no` int(8) NOT NULL AUTO_INCREMENT;
+  MODIFY `emp_pay_no` int(8) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=2;
 --
 -- AUTO_INCREMENT for table `employee_position`
 --
@@ -636,27 +691,27 @@ ALTER TABLE `employee_table`
 -- AUTO_INCREMENT for table `material_category`
 --
 ALTER TABLE `material_category`
-  MODIFY `mat_cat_no` int(11) NOT NULL AUTO_INCREMENT;
+  MODIFY `mat_cat_no` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=7;
 --
 -- AUTO_INCREMENT for table `material_history`
 --
 ALTER TABLE `material_history`
-  MODIFY `mat_hist_no` int(11) NOT NULL AUTO_INCREMENT;
+  MODIFY `mat_hist_no` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=117;
 --
 -- AUTO_INCREMENT for table `material_item`
 --
 ALTER TABLE `material_item`
-  MODIFY `mat_item_no` int(11) NOT NULL AUTO_INCREMENT;
+  MODIFY `mat_item_no` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=16;
 --
 -- AUTO_INCREMENT for table `material_unit`
 --
 ALTER TABLE `material_unit`
-  MODIFY `unit_no` int(11) NOT NULL AUTO_INCREMENT;
+  MODIFY `unit_no` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=4;
 --
 -- AUTO_INCREMENT for table `menu`
 --
 ALTER TABLE `menu`
-  MODIFY `menu_no` int(8) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=8;
+  MODIFY `menu_no` int(8) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=12;
 --
 -- AUTO_INCREMENT for table `menu_category`
 --
@@ -681,7 +736,7 @@ ALTER TABLE `role`
 -- AUTO_INCREMENT for table `work_history`
 --
 ALTER TABLE `work_history`
-  MODIFY `work_hist_no` int(8) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=14;
+  MODIFY `work_hist_no` int(8) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=15;
 --
 -- Constraints for dumped tables
 --
@@ -724,7 +779,8 @@ ALTER TABLE `employee_table`
 --
 ALTER TABLE `material_history`
   ADD CONSTRAINT `material_history_ibfk_1` FOREIGN KEY (`mat_item_no`) REFERENCES `material_item` (`mat_item_no`),
-  ADD CONSTRAINT `material_history_ibfk_2` FOREIGN KEY (`branch_no`) REFERENCES `branch` (`branch_no`);
+  ADD CONSTRAINT `material_history_ibfk_2` FOREIGN KEY (`branch_no`) REFERENCES `branch` (`branch_no`),
+  ADD CONSTRAINT `material_history_ibfk_3` FOREIGN KEY (`of_mat_hist_no`) REFERENCES `material_history` (`mat_hist_no`) ON DELETE CASCADE ON UPDATE CASCADE;
 
 --
 -- Constraints for table `material_item`
@@ -763,7 +819,7 @@ ALTER TABLE `menu_in_set`
 -- Constraints for table `menu_material`
 --
 ALTER TABLE `menu_material`
-  ADD CONSTRAINT `menu_material_ibfk_1` FOREIGN KEY (`menu_no`) REFERENCES `menu` (`menu_no`),
+  ADD CONSTRAINT `menu_material_ibfk_1` FOREIGN KEY (`menu_no`) REFERENCES `menu` (`menu_no`) ON DELETE CASCADE ON UPDATE CASCADE,
   ADD CONSTRAINT `menu_material_ibfk_2` FOREIGN KEY (`mat_item_no`) REFERENCES `material_item` (`mat_item_no`);
 
 --

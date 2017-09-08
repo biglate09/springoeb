@@ -23,6 +23,8 @@ public class MaterialHistory {
     @JoinColumn(name = "mat_item_no",updatable = false,insertable = false)
     private MaterialItem materialItem;
 
+    private Integer ofMatHistNo;
+
     public Integer getMatHistNo() {
         return matHistNo;
     }
@@ -101,5 +103,13 @@ public class MaterialHistory {
 
     public void setSupplier(String supplier) {
         this.supplier = supplier;
+    }
+
+    public Integer getOfMatHistNo() {
+        return ofMatHistNo;
+    }
+
+    public void setOfMatHistNo(Integer ofMatHistNo) {
+        this.ofMatHistNo = ofMatHistNo;
     }
 }

@@ -307,6 +307,7 @@
         });
 
         $("#add_mixed_product_datatable").DataTable({
+            paging:false,
             scrollY: "40vh",
             order: [[1, "asc"]],
             columnDefs: [
@@ -315,6 +316,7 @@
         });
 
         $("#edit_mixed_product_datatable").DataTable({
+            paging:false,
             scrollY: "40vh",
             order: [[1, "asc"]],
             columnDefs: [
