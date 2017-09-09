@@ -365,12 +365,17 @@
             }
         });
 
-        $(".datatable-menu").DataTable({
-            scrollY: "40vh",
-            paging: false,
-            columnDefs: [
-                {orderable: false, targets: [-1]}
-            ]
+        $(".modal").on('shown.bs.modal', function () {
+            $('#myInput').focus();
+
+            $(".datatable-menu").DataTable({
+                destroy: true,
+                scrollY: "40vh",
+                paging: false,
+                columnDefs: [
+                    {orderable: false, targets: [-1]}
+                ]
+            });
         });
 
         refresh_table();

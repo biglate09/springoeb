@@ -285,43 +285,48 @@
 <jsp:include page="../_include/bottomenv.jsp"/>
 <script>
     $(document).ready(function () {
-        $("#datatable-matitem").DataTable({
-            order: [[0, "asc"]],
-            columnDefs: [
-                {orderable: false, targets: [-1]}
-            ],
-            columns: [
-                {
-                    data: 'matItemName'
-                },
-                {
-                    data: 'item'
-                },
-                {
-                    data: 'unit'
-                },
-                {
-                    data: 'option'
-                }
-            ]
-        });
 
-        $("#add_mixed_product_datatable").DataTable({
-            paging:false,
-            scrollY: "40vh",
-            order: [[1, "asc"]],
-            columnDefs: [
-                {orderable: false, targets: [-1]}
-            ]
-        });
+            $("#datatable-matitem").DataTable({
+                order: [[0, "asc"]],
+                columnDefs: [
+                    {orderable: false, targets: [-1]}
+                ],
+                columns: [
+                    {
+                        data: 'matItemName'
+                    },
+                    {
+                        data: 'item'
+                    },
+                    {
+                        data: 'unit'
+                    },
+                    {
+                        data: 'option'
+                    }
+                ]
+            });
+        $(".modal").on('shown.bs.modal', function () {
+            $('#myInput').focus();
+            $("#add_mixed_product_datatable").DataTable({
+                destroy: true,
+                paging: false,
+                scrollY: "40vh",
+                order: [[1, "asc"]],
+                columnDefs: [
+                    {orderable: false, targets: [-1]}
+                ]
+            });
 
-        $("#edit_mixed_product_datatable").DataTable({
-            paging:false,
-            scrollY: "40vh",
-            order: [[1, "asc"]],
-            columnDefs: [
-                {orderable: false, targets: [-1]}
-            ]
+            $("#edit_mixed_product_datatable").DataTable({
+                destroy: true,
+                paging: false,
+                scrollY: "40vh",
+                order: [[1, "asc"]],
+                columnDefs: [
+                    {orderable: false, targets: [-1]}
+                ]
+            });
         });
         refresh_table();
     });

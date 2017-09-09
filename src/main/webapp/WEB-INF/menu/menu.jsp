@@ -127,12 +127,12 @@
                                                 </div>
                                                 <div class="col-md-12 col-sm-12 col-xs-12">
                                                     <label>เลือกวัตถุดิบที่ใช้ในเมนูนี้</label>
-                                                    <table class="table table-bordered table-striped material-datatable">
+                                                    <table class="table table-bordered table-striped material-datatable" >
                                                         <thead>
                                                         <tr>
-                                                            <th style="text-align:center;">ชื่อวัตถุดิบอาหาร</th>
-                                                            <th style="text-align:center;" class="order">ประเภท</th>
-                                                            <th style="text-align:center;">จำนวนที่ใช้</th>
+                                                            <th style="text-align:center;width:40%;">ชื่อวัตถุดิบอาหาร</th>
+                                                            <th style="text-align:center;width:30%;" class="order">ประเภท</th>
+                                                            <th style="text-align:center;width:30%;">จำนวนที่ใช้</th>
                                                         </tr>
                                                         </thead>
                                                         <tbody style="text-align:center;">
@@ -353,38 +353,54 @@
 </div>
 <jsp:include page="../_include/bottomenv.jsp"/>
 <script>
-    $(document).ready(function () {
-        $(".material-datatable").DataTable({
-            scrollY: "40vh",
-            paging: false,
-            order: [[1, "desc"]]
-        });
+//    $('a[data-toggle="modal"]').one('click',function(){
+//        setTimeout(function(){
+//            $(".material-datatable").DataTable({
+//                scrollY: "40vh",
+//                paging: false,
+//                order: [[1, "desc"]],
+//                responsive: true
+//            });
+//        },0);
+//    });
 
-        $("#datatable-menu").DataTable({
-            order: [[0, "asc"]],
-            columnDefs: [
-                {orderable: false, targets: [-1]}
-            ],
-            columns: [
-                {
-                    data: 'menuPicPath'
-                },
-                {
-                    data: 'menuName'
-                },
-                {
-                    data: 'menuDesc'
-                },
-                {
-                    data: 'menuPrice'
-                },
-                {
-                    data: 'group'
-                },
-                {
-                    data: 'option'
-                }
-            ]
+    $(document).ready(function () {
+        $(".modal").on('shown.bs.modal', function () {
+            $('#myInput').focus();
+
+            $(".material-datatable").DataTable({
+                destroy: true,
+                scrollY: "40vh",
+                paging: false,
+                order: [[1, "desc"]]
+            });
+
+            $("#datatable-menu").DataTable({
+                order: [[0, "asc"]],
+                columnDefs: [
+                    {orderable: false, targets: [-1]}
+                ],
+                columns: [
+                    {
+                        data: 'menuPicPath'
+                    },
+                    {
+                        data: 'menuName'
+                    },
+                    {
+                        data: 'menuDesc'
+                    },
+                    {
+                        data: 'menuPrice'
+                    },
+                    {
+                        data: 'group'
+                    },
+                    {
+                        data: 'option'
+                    }
+                ]
+            });
         });
 
         $("#showpic").click(function () {
