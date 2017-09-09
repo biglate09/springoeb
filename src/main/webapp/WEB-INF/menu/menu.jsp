@@ -25,25 +25,18 @@
                 <div class="col-md-12 col-sm-12 col-xs-12">
                     <div class="x_panel">
                         <div class="x_title">
-                            <h4>เมนูอาหารแบบเดี่ยว</h4>
+                            <h4>
+                                เมนูอาหารแบบเดี่ยว
+                            </h4>
                         </div>
                         <div class="x_content">
                             <form action="#">
-                                <div class="col-md-9" style="padding:0px;">
+                                <div class="col-md-4" style="padding:0px;">
                                     <a data-toggle="modal" data-target="#addMenu"
                                        class="btn btn-success btn-sm"><i class="fa fa-plus-circle"></i>&nbsp;
                                         เพิ่มเมนู</a>
                                 </div>
-                                <%--<div class="col-cm-1 btn-group" style="padding:0px; margin-left: 1px">--%>
-                                <%--<button id="displayThumbnail" class="btn btn-default" type="button">--%>
-                                <%--<span class="fa fa-th-large"></span>--%>
-                                <%--</button>--%>
-                                <%--<button id="displayTable" class="btn btn-default" type="button">--%>
-                                <%--<span class="fa fa-align-justify"></span>--%>
-                                <%--</button>--%>
-                                <%--</div>--%>
-                                <div class="col-md-3 form-group has-feedback" style="padding:0px;">
-                                    <%--<label>ตัวกรองจากหมวดหมู่ของอาหาร</label>--%>
+                                <div class="col-md-3 form-group has-feedback">
                                     <select class="form-control" id="filter_by_category">
                                         <option disabled>ตัวกรองจากหมวดหมู่ของอาหาร</option>
                                         <option value="0">ทั้งหมด</option>
@@ -53,9 +46,41 @@
                                         </c:forEach>
                                     </select>
                                 </div>
-                                <div id="menu_thumbnail">
-
+                                <div class="col-md-4 form-group" style="padding:0px;">
+                                    <input type="text" class="form-control" id="myInput"
+                                           onkeyup="filterCard()" placeholder="ค้นหาด้วยชื่อเมนู...">
+                                    <span class="fa fa-search form-control-feedback right"
+                                          aria-hidden="true"></span>
                                 </div>
+                                <%--<div class="col-md-1 btn-group">--%>
+                                <div class="btn-group col-md-1" data-toggle="buttons">
+                                    <label id="displayThumbnail" class="btn btn-default display_toggle active"
+                                           type="button" title="แสดงแบบรูป">
+                                        <span class="fa fa-th-large"></span>
+                                    </label>
+                                    <label id="displayTable" class="btn btn-default display_toggle" type="button"
+                                           title="แสดงแบบตาราง">
+                                        <span class="fa fa-align-justify"></span>
+                                    </label>
+                                </div>
+                                <%--</div>--%>
+                                <div id="menu_thumbnail"></div>
+                                <div id="datatable-menu-div" style="display:none;">
+                                    <table id="datatable-menu" class="table table-striped table-bordered">
+                                        <thead>
+                                        <tr>
+                                            <th style="text-align:center;width:40%;">ชื่อเมนู</th>
+                                            <th style="text-align:center;width:20%;">ประเภทเมนู</th>
+                                            <th style="text-align:center;width:20%;">ราคา</th>
+                                            <th style="text-align:center;width:20%;">ตัวเลือก</th>
+                                        </tr>
+                                        </thead>
+                                        <tbody style="text-align:center;">
+
+                                        </tbody>
+                                    </table>
+                                </div>
+                                <div id="error_show"></div>
                             </form>
                         </div>
                         <div class="modal fade" id="addMenu" role="dialog">
@@ -127,11 +152,15 @@
                                                 </div>
                                                 <div class="col-md-12 col-sm-12 col-xs-12">
                                                     <label>เลือกวัตถุดิบที่ใช้ในเมนูนี้</label>
-                                                    <table class="table table-bordered table-striped" id="material-datatable-1">
+                                                    <table class="table table-bordered table-striped"
+                                                           id="material-datatable-1">
                                                         <thead>
                                                         <tr>
-                                                            <th style="text-align:center;width:40%;">ชื่อวัตถุดิบอาหาร</th>
-                                                            <th style="text-align:center;width:30%;" class="order">ประเภท</th>
+                                                            <th style="text-align:center;width:40%;">ชื่อวัตถุดิบอาหาร
+                                                            </th>
+                                                            <th style="text-align:center;width:30%;" class="order">
+                                                                ประเภท
+                                                            </th>
                                                             <th style="text-align:center;width:30%;">จำนวนที่ใช้</th>
                                                         </tr>
                                                         </thead>
@@ -278,7 +307,8 @@
                                             </div>
                                             <div class="col-md-12 col-sm-12 col-xs-12">
                                                 <label>เลือกวัตถุดิบที่ใช้ในเมนูนี้</label>
-                                                <table class="table table-bordered table-striped" id="material-datatable-2">
+                                                <table class="table table-bordered table-striped"
+                                                       id="material-datatable-2">
                                                     <thead>
                                                     <tr>
                                                         <th style="text-align:center;">ชื่อวัตถุดิบอาหาร</th>
@@ -358,7 +388,7 @@
         var editfirsttime = true;
 
         $("#addMenu").on('shown.bs.modal', function () {
-            if(addfirsttime) {
+            if (addfirsttime) {
                 addfirsttime = false;
                 $("#material-datatable-1").DataTable({
                     scrollY: "40vh",
@@ -369,7 +399,7 @@
         });
 
         $("#editMenu").on('shown.bs.modal', function () {
-            if(editfirsttime) {
+            if (editfirsttime) {
                 editfirsttime = false;
                 $("#material-datatable-2").DataTable({
                     scrollY: "40vh",
@@ -380,32 +410,30 @@
         });
 
 
-            $("#datatable-menu").DataTable({
-                order: [[0, "asc"]],
-                columnDefs: [
-                    {orderable: false, targets: [-1]}
-                ],
-                columns: [
-                    {
-                        data: 'menuPicPath'
-                    },
-                    {
-                        data: 'menuName'
-                    },
-                    {
-                        data: 'menuDesc'
-                    },
-                    {
-                        data: 'menuPrice'
-                    },
-                    {
-                        data: 'group'
-                    },
-                    {
-                        data: 'option'
+        $("#datatable-menu").DataTable({
+            order: [[0, "asc"]],
+            columnDefs: [
+                {orderable: false, targets: [-1]}
+            ],
+            columns: [
+                {
+                    data: 'menuName'
+                },
+                {
+                    data: 'group'
+                },
+                {
+                    data: {
+                        _: 'menuPrice.display',
+                        sort: 'menuPrice.order'
                     }
-                ]
-            });
+                },
+
+                {
+                    data: 'option'
+                }
+            ]
+        });
 
         $("#showpic").click(function () {
             $("#add_menu_pic").click();
@@ -447,6 +475,29 @@
             });
         });
 
+        $(".display_toggle").click(function () {
+            $(".display_toggle").removeClass("active");
+            $(this).addClass("active");
+        });
+
+        $("#displayThumbnail").click(function () {
+            $("#datatable-menu-div").css('display', 'none');
+            $("#menu_thumbnail").css('display', '');
+            $("#filter_by_category").css('visibility','');
+            $("#myInput").parent().css('visibility','');
+            refresh_table();
+        });
+
+        $("#displayTable").click(function () {
+            $("#datatable-menu-div").css('display', '');
+            $("#menu_thumbnail").css('display', 'none');
+            $("#filter_by_category").css('visibility','hidden');
+            $("#filter_by_category").val(0);
+            $("#myInput").parent().css('visibility','hidden');
+            $("#myInput").val('');
+            refresh_table();
+        });
+
         refresh_table();
     });
 
@@ -458,11 +509,13 @@
             success: function (json) {
                 //remove
                 $("#menu_thumbnail").empty();
+                var data_array = [];
                 if (json.length != 0) {
                     var mymenu = json[0];
                     for (var i = 0; i < mymenu.length; i++) {
                         var obj = mymenu[i];
                         var menu = obj.menu;
+                        //Gallery
                         var div = '\
                         <div class="col-md-55">\
                         <div class="thumbnail thumbnail_inline">\
@@ -476,7 +529,7 @@
                         </div>\
                         </div>\
                         <div class="caption col-md-12" style="color:#73879C">\
-                        <p class="col-md-12" style="text-align:center;font-weight:bold;white-space:nowrap;overflow:hidden;text-overflow: ellipsis;cursor:pointer;" data-toggle="modal" data-target="#editMenu" onclick="set_menu(' + menu.menuNo + ')">' + menu.menuNameTH + " / " + menu.menuNameEN + '</p>\
+                        <p class="cardname col-md-12" style="text-align:center;font-weight:bold;white-space:nowrap;overflow:hidden;text-overflow: ellipsis;cursor:pointer;" data-toggle="modal" data-target="#editMenu" onclick="set_menu(' + menu.menuNo + ')">' + menu.menuNameTH + " / " + menu.menuNameEN + '</p>\
                         <p class="col-md-12" style="text-align:center;white-space: nowrap;overflow:hidden;text-overflow: ellipsis;">หมวดหมู่ : ' + menu.menuGroup.menuGroupNameTH + '</p>\
                         <p class="col-md-12" style="text-align:center">' + menu.menuPrice.toFixed(2).replace(/\B(?=(\d{3})+(?!\d))/g, ",") + " บาท" + '</p>\
                         <div style="text-align:left;" class="col-md-7">\
@@ -490,6 +543,23 @@
                         </div>\
                         ';
                         $("#menu_thumbnail").append(div);
+                        var price_order = (menu.menuPrice.toFixed(2) * 100000) + "";
+                        for (var j = price_order.length; j < 20; j++) {
+                            price_order = "0" + price_order;
+                        }
+
+                        //Table
+                        var data_refresh = {
+                            menuName: '<p class="cardname col-md-12" style="text-align:center;font-weight:bold;white-space:nowrap;overflow:hidden;text-overflow: ellipsis;cursor:pointer;" data-toggle="modal" data-target="#editMenu" onclick="set_menu(' + menu.menuNo + ')">' + menu.menuNameTH + " / " + menu.menuNameEN + '</p>',
+                            group: menu.menuGroup.menuGroupNameTH,
+                            menuPrice: {
+                                display: menu.menuPrice.toFixed(2).replace(/\B(?=(\d{3})+(?!\d))/g, ",") + " บาท",
+                                order: price_order
+                            },
+                            option: '<a onclick="set_menu(' + menu.menuNo + ')" class="btn btn-warning btn-sm" data-toggle="modal" data-target="#editMenu"><i class="fa fa-pencil"></i>&nbsp; แก้ไข </a>' +
+                            '<a onclick="del_menu(' + menu.menuNo + ',\'' + menu.menuNameTH + '\')" class="btn btn-danger btn-sm"> <i class="fa fa-trash"></i>&nbsp; ลบ</a>',
+                        };
+                        data_array.push(data_refresh);
                     }
                     if (json.length == 2) {
                         var othermenu = json[1];
@@ -519,23 +589,32 @@
                             </div>\
                             ';
                             $("#menu_thumbnail").append(div);
+
+                            $("#menu_thumbnail").append(div);
+                            var price_order = (menu.menuPrice.toFixed(2) * 100000) + "";
+                            for (var j = price_order.length; j < 20; j++) {
+                                price_order = "0" + price_order;
+                            }
+
+                            var data_refresh = {
+                                menuName: '<p class="cardname col-md-12" style="text-align:center;font-weight:bold;white-space:nowrap;overflow:hidden;text-overflow: ellipsis;cursor:pointer;" data-toggle="modal" data-target="#editMenu" onclick="set_menu(' + menu.menuNo + ')">' + menu.menuNameTH + " / " + menu.menuNameEN + '</p>',
+                                group: menu.menuGroup.menuGroupNameTH,
+                                menuPrice: {
+                                    display: menu.menuPrice.toFixed(2).replace(/\B(?=(\d{3})+(?!\d))/g, ",") + " บาท",
+                                    order: price_order
+                                },
+                                option: '<a onclick="set_menu(' + menu.menuNo + ')" class="btn btn-warning btn-sm" data-toggle="modal" data-target="#editMenu"><i class="fa fa-pencil"></i>&nbsp; แก้ไข </a>' +
+                                '<a onclick="del_menu(' + menu.menuNo + ',\'' + menu.menuNameTH + '\')" class="btn btn-danger btn-sm"> <i class="fa fa-trash"></i>&nbsp; ลบ</a>',
+                            };
+                            data_array.push(data_refresh);
                         }
                     }
-
-                    if (json[0].length + json[1].length == 0) {
-                        $("#menu_thumbnail").append('\
-                            <div class="well col-md-12" style="overflow: auto">\
-                                <p style="text-align:center;font-weight:bold;"> ไม่พบข้อมูลเมนูอาหารแบบเดี่ยว จากการค้นหาหมวดหมู่อาหาร ' + $("#filter_by_category option:selected").text() + ' </p>\
-                            </div>\
-                            ');
-                    }
-                } else {
-                    $("#menu_thumbnail").append('\
-                    <div class="well col-md-12" style="overflow: auto">\
-                        <p style="text-align:center;font-weight:bold;"> ไม่พบข้อมูลเมนูอาหารแบบเดี่ยว จากการค้นหาหมวดหมู่อาหาร ' + $("#filter_by_category option:selected").text() + ' </p>\
-                    </div>\
-                    ');
+                    $("#error_show").html('');
+                    $("#datatable-menu").DataTable().clear();
+                    $("#datatable-menu").DataTable().rows.add(data_array).draw(false);
                 }
+
+                filterCard();
             }
         });
     }
@@ -678,7 +757,7 @@
             data: {menuno: menuno},
             url: "${contextPath}/menu/changeavailable",
             success: function (result) {
-                swal("สำเร็จ", "เปลี่ยน \"" + result.menu.menuNameTH + "\" เป็น " + (result.available==false?'ไม่':'') + "พร้อมจำหน่าย เรียบร้อยแล้ว", "success");
+                swal("สำเร็จ", "เปลี่ยน \"" + result.menu.menuNameTH + "\" เป็น " + (result.available == false ? 'ไม่' : '') + "พร้อมจำหน่าย เรียบร้อยแล้ว", "success");
                 refresh_table();
             }, error: function (result) {
                 swal("ไม่สำเร็จ", "กรุณาลองใหม่ภายหลัง", "error");
@@ -695,7 +774,7 @@
                 cancelButtonText: "ยกเลิก",
                 confirmButtonText: "ใช่, ต้องการเปลี่ยน",
                 confirmButtonColor: "#DD6B55",
-                closeOnConfirm: true
+                closeOnConfirm: false
             },
             function () {
                 $.ajax({
@@ -705,11 +784,34 @@
                     success: function (result) {
                         swal("สำเร็จ", "เปลี่ยน \"" + result.menuNameTH + "\" เป็น เมนูของทุกสาขา เรียบร้อยแล้ว", "success");
                         refresh_table();
-                    }, error: function (result) {
+                    }, error: function () {
                         swal("ไม่สำเร็จ", "กรุณาลองใหม่ภายหลัง", "error");
                     }
                 });
             });
+    }
+
+    function filterCard() {
+        var input = $("#myInput").val();
+        var hascard = false;
+        $(".cardname").each(function () {
+            if (($(this).text().toLowerCase()).indexOf(input.toLowerCase()) == -1) {
+                $(this).parent().parent().parent().css('display', 'none');
+            } else {
+                $(this).parent().parent().parent().css('display', '');
+                hascard = true;
+            }
+        });
+
+        if (!hascard) {
+            $("#error_show").html('\
+                    <div class="well col-md-12" style="overflow: auto">\
+                        <p style="text-align:center;font-weight:bold;"> ไม่พบข้อมูลเมนูอาหารแบบเดี่ยว จากการค้นหาหมวดหมู่อาหาร ' + $("#filter_by_category option:selected").text() + ($("#myInput").val() != '' ? (' ด้วยคำค้นหา \"' + $("#myInput").val() + '\"') : '') + ' </p>\
+                    </div>\
+                    ');
+        } else {
+            $("#error_show").html('');
+        }
     }
 </script>
 

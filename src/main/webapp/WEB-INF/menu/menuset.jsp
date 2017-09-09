@@ -39,21 +39,45 @@
                             <h4>เมนูอาหารแบบชุด</h4>
                         </div>
                         <div class="x_content">
-                            <div class="col-md-8" style="padding:0px;">
+                            <div class="col-md-4" style="padding:0px;">
                                 <p>
                                     <a data-toggle="modal" data-target="#addMenuSet"
                                        class="btn btn-success btn-sm"><i class="fa fa-plus-circle"></i>&nbsp;
                                         เพิ่มชุดเมนู</a>
                                 </p>
                             </div>
-                            <div class="col-md-4 form-group" style="padding:0px;">
+                            <div class="col-md-4 col-md-offset-3 form-group" style="padding:0px;">
                                 <input type="text" class="form-control" id="myInput"
                                        onkeyup="filterCard()" placeholder="ค้นหาด้วยชื่อเมนู...">
                                 <span class="fa fa-search form-control-feedback right"
                                       aria-hidden="true"></span>
                             </div>
+                            <div class="btn-group col-md-1" data-toggle="buttons">
+                                <label id="displayThumbnail" class="btn btn-default display_toggle active"
+                                       type="button" title="แสดงแบบรูป">
+                                    <span class="fa fa-th-large"></span>
+                                </label>
+                                <label id="displayTable" class="btn btn-default display_toggle" type="button"
+                                       title="แสดงแบบตาราง">
+                                    <span class="fa fa-align-justify"></span>
+                                </label>
+                            </div>
 
-                            <div id="menuset_thumbnail">
+                            <div id="menuset_thumbnail" style="clear:both">
+                            </div>
+                            <div id="datatable-menuset-div" style="display:none;">
+                                <table id="datatable-menuset" class="table table-striped table-bordered">
+                                    <thead>
+                                    <tr>
+                                        <th style="text-align:center;width:40%;">ชื่อเมนู</th>
+                                        <th style="text-align:center;width:20%;">ราคา</th>
+                                        <th style="text-align:center;width:20%;">ตัวเลือก</th>
+                                    </tr>
+                                    </thead>
+                                    <tbody style="text-align:center;">
+
+                                    </tbody>
+                                </table>
                             </div>
 
                             <div id="error_show">
@@ -376,6 +400,28 @@
             }
         });
 
+        $("#datatable-menuset").DataTable({
+            order: [[0, "asc"]],
+            columnDefs: [
+                {orderable: false, targets: [-1]}
+            ],
+            columns: [
+                {
+                    data: 'menuName'
+                },
+                {
+                    data: {
+                        _: 'menuPrice.display',
+                        sort: 'menuPrice.order'
+                    }
+                },
+
+                {
+                    data: 'option'
+                }
+            ]
+        });
+
         $("#showpic_menuset").click(function () {
             $("#add_menuset_pic").click();
         });
@@ -394,6 +440,26 @@
             if ($("#edit_menuset_pic").val() == '') {
                 $("#showpic_menuset_edit").attr('src', '../images/default_upload_image.png');
             }
+        });
+
+        $(".display_toggle").click(function () {
+            $(".display_toggle").removeClass("active");
+            $(this).addClass("active");
+        });
+
+        $("#displayThumbnail").click(function () {
+            $("#datatable-menuset-div").css('display', 'none');
+            $("#menuset_thumbnail").css('display', '');
+            $("#myInput").parent().css('visibility','');
+            refresh_table();
+        });
+
+        $("#displayTable").click(function () {
+            $("#datatable-menuset-div").css('display', '');
+            $("#menuset_thumbnail").css('display', 'none');
+            $("#myInput").parent().css('visibility','hidden');
+            $("#myInput").val('');
+            refresh_table();
         });
 
         refresh_table();
@@ -432,6 +498,7 @@
             dataType: "json",
             success: function (json) {
                 $("#menuset_thumbnail").empty();
+                var data_array = [];
                 if (json.length != 0) {
                     var data_array = [];
                     var price = 0;
@@ -474,6 +541,24 @@
                             </div>\
                             </div>';
 
+                        $("#menu_thumbnail").append(div);
+                        var price_order = (menu.menuPrice.toFixed(2) * 100000) + "";
+                        for (var j = price_order.length; j < 20; j++) {
+                            price_order = "0" + price_order;
+                        }
+
+                        //Table
+                        var data_refresh = {
+                            menuName: '<p class="cardname col-md-12" style="text-align:center;font-weight:bold;white-space:nowrap;overflow:hidden;text-overflow: ellipsis;cursor:pointer;" data-toggle="modal" data-target="#editMenuSet" onclick="set_menuset(' + menu.menuNo + ')">' + menu.menuNameTH + " / " + menu.menuNameEN + '</p>',
+                            menuPrice: {
+                                display: menu.menuPrice.toFixed(2).replace(/\B(?=(\d{3})+(?!\d))/g, ",") + " บาท",
+                                order: price_order
+                            },
+                            option: '<a onclick="set_menuset(' + menu.menuNo + ')" class="btn btn-warning btn-sm" data-toggle="modal" data-target="#editMenuSet"><i class="fa fa-pencil"></i>&nbsp; แก้ไข </a>' +
+                            '<a onclick="del_menuset(' + menu.menuNo + ',\'' + menu.menuNameTH + '\')" class="btn btn-danger btn-sm"> <i class="fa fa-trash"></i>&nbsp; ลบ</a>',
+                        };
+                        data_array.push(data_refresh);
+
                         $("#menuset_thumbnail").append(div);
                     }
 
@@ -515,6 +600,23 @@
                             </div>';
 
                             $("#menuset_thumbnail").append(div);
+
+                            $("#menu_thumbnail").append(div);
+                            var price_order = (menu.menuPrice.toFixed(2) * 100000) + "";
+                            for (var j = price_order.length; j < 20; j++) {
+                                price_order = "0" + price_order;
+                            }
+
+                            var data_refresh = {
+                                menuName: '<p class="cardname col-md-12" style="text-align:center;font-weight:bold;white-space:nowrap;overflow:hidden;text-overflow: ellipsis;cursor:pointer;" data-toggle="modal" data-target="#editMenuSety" onclick="set_menu(' + menu.menuNo + ')">' + menu.menuNameTH + " / " + menu.menuNameEN + '</p>',
+                                menuPrice: {
+                                    display: menu.menuPrice.toFixed(2).replace(/\B(?=(\d{3})+(?!\d))/g, ",") + " บาท",
+                                    order: price_order
+                                },
+                                option: '<a onclick="set_menuset(' + menu.menuNo + ')" class="btn btn-warning btn-sm" data-toggle="modal" data-target="#editMenu"><i class="fa fa-pencil"></i>&nbsp; แก้ไข </a>' +
+                                '<a onclick="del_menuset(' + menu.menuNo + ',\'' + menu.menuNameTH + '\')" class="btn btn-danger btn-sm"> <i class="fa fa-trash"></i>&nbsp; ลบ</a>',
+                            };
+                            data_array.push(data_refresh);
                         }
                     }
 
@@ -534,6 +636,9 @@
                     </div>\
                     ');
                 }
+
+                $("#datatable-menuset").DataTable().clear();
+                $("#datatable-menuset").DataTable().rows.add(data_array).draw(false);
             }
         });
     }
@@ -757,7 +862,7 @@
                 cancelButtonText: "ยกเลิก",
                 confirmButtonText: "ใช่, ต้องการเปลี่ยน",
                 confirmButtonColor: "#DD6B55",
-                closeOnConfirm: true
+                closeOnConfirm: false
             },
             function () {
                 $.ajax({
