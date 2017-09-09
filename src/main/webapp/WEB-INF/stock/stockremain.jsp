@@ -26,9 +26,24 @@
                             <h4>วัตถุดิบคงเหลือ</h4>
                         </div>
                         <div class="x_content">
-                            <button onclick="getMaterials()">ปุ่มทดสอบ getmaterials</button>
-                            <button onclick="manageMaterialHistory()">ปุ่มทดสอบ managematerialhistory</button>
-                            <button onclick="getHistories(9)">ปุ่มทดสอบ getmaterialhistory</button>
+                            <%--<button onclick="getMaterials()">ปุ่มทดสอบ getmaterials</button>--%>
+                            <%--<button onclick="manageMaterialHistory()">ปุ่มทดสอบ managematerialhistory</button>--%>
+                            <%--<button onclick="getHistories(9)">ปุ่มทดสอบ getmaterialhistory</button>--%>
+                            <form action="#">
+                                <table id="datatable-stockremain"
+                                       class="table table-striped table-bordered bulk_action1">
+                                    <thead>
+                                    <tr>
+                                        <th style="width:20%;text-align:center;">ชื่อวัตถุดิบ</th>
+                                        <th style="width:20%;text-align:center;">ประเภทวัตถุดิบ</th>
+                                        <th style="width:20%;text-align:center;">คงเหลือ</th>
+                                        <th style="width:20%;text-align:center;">ตัวเลือก</th>
+                                    </tr>
+                                    </thead>
+                                    <tbody style="text-align:center;">
+                                    </tbody>
+                                </table>
+                            </form>
                         </div>
                     </div>
                 </div>
@@ -39,6 +54,56 @@
 
 <jsp:include page="../_include/bottomenv.jsp"/>
 <script>
+    $(document).ready(function () {
+
+        $("#datatable-stockremain").DataTable({
+            order: [[0, "asc"]],
+            columnDefs: [
+                {orderable: false, targets: [-1]}
+            ],
+            columns: [
+                {
+                    data: 'matItemName'
+                },
+                {
+                    data: 'item'
+                },
+                {
+                    data: 'remain'
+                },
+                {
+                    data: 'option'
+                }
+            ]
+        });
+        refresh_table();
+    });
+
+    function refresh_table() {
+        $.ajax({
+            type: "POST",
+            url: "${contextPath}/stock/getmaterials",
+            dataType: "json",
+            success: function (json) {
+                var data_array = [];
+                for (var i = 0; i < json.length; i++) {
+                    var obj = json[i];
+                    var data = {
+                        matItemName: '<a style="cursor:pointer;font-weight:bold;" onclick = "manageMaterialHistory(' + obj.matItemNo + ')" data-toggle = "modal" data-target = "#updateMaterial">' + obj.matItemName + '</a>',
+                        item: obj.materialCategory.matCatName,
+                        remain: obj.getMaterials(),
+                        option: '<a onclick = "manageMaterialHistory(' + obj.matItemNo + ')" class = "btn btn-warning btn-sm" data-toggle = "modal" data-target = "#add"> <i class = "fa fa-pencil"> </i> &nbsp; อัพเดต </a>' +
+                        '<a onclick = "manageMaterialHistory(' + obj.matItemNo + ',\'' + obj.matItemName + '\')" class = "btn btn-danger btn-sm"> <i class = "fa fa-trash"></i> &nbsp; รายละเอียด </a>'
+                    }
+                    data_array.push(data);
+                }
+                $("#datatable-stockremain").DataTable().clear();
+                $("#datatable-stockremain").DataTable().rows.add(data_array).draw(false);
+            }
+        });
+    }
+
+
     function manageMaterialHistory() {
         $.ajax({
             type: "POST",
@@ -57,6 +122,28 @@
             }
         });
     }
+
+    $("#update").submit(function () {
+        var object = $("#update").serialize();
+        $.ajax({
+            type: "POST",
+            data: new FormData($("#update")[0]),
+            enctype: 'multipart/form-data',
+            cache: false,
+            contentType: false,
+            processData: false,
+            url: "${contextPath}/stock/managematerialhistory",
+            success: function (result) {
+                swal("สำเร็จ", "เมนูนี้ถูกแก้ไขเรียบร้อยแล้ว", "success");
+                $("#update")[0].reset();
+                $("#updateMatRemain").modal('toggle');
+                refresh_table();
+            }, error: function (result) {
+                swal("ไม่สำเร็จ", "ชื่อภาษาไทยหรืออังกฤษอาจซ้ำ กรุณาลองใหม่ในภายหลัง", "error");
+            }
+        });
+        return false;
+    });
 
     function getMaterials() {
         $.ajax({
