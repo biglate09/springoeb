@@ -47,7 +47,7 @@
                         </div>
 
 
-
+                        <%-- Stock remain information--%>
                         <div class="modal fade" id="matHistoriesInfo" role="dialog">
                             <div class="modal-dialog">
                                 <!-- เนือหาของ Modal ทั้งหมด -->
@@ -105,8 +105,79 @@
                             </div>
                         </div>
 
-
-
+                         <%--Update stock remain--%>
+                        <div class="modal fade" id="updateStockRemain" role="dialog">
+                            <div class="modal-dialog">
+                                <!-- เนือหาของ Modal ทั้งหมด -->
+                                <div class="modal-content modal-body-test" style="overflow-y:hidden;">
+                                    <!-- ส่วนหัวของ Modal -->
+                                    <div class="modal-header">
+                                        <!-- ปุ่มกดปิด (X) ตรงส่วนหัวของ Modal -->
+                                        <button type="button" class="close" data-dismiss="modal">&times;</button>
+                                        <h4 class="modal-title">อัพเดตวัตถุดิบ <span
+                                                id="show_mat_item_name_for_update"></span></h4>
+                                    </div>
+                                    <!-- ส่วนเนื้อหาของ Modal -->
+                                    <div class="modal-body">
+                                        <form class="form-horizontal form-label-left input_mask"
+                                              modelAttribute="matitem" id="update">
+                                            <input type="hidden" name="mat_item_no" id="hiddenitemno">
+                                            <div class="form-group">
+                                                <div class="col-md-6 col-sm-6 col-xs-12 form-group has-feedback">
+                                                    <label>ผู้นำเข้าวัตถุดิบ</label>
+                                                    <input type="text" class="form-control" id="update_importer"
+                                                           name="importer"
+                                                           placeholder="ชื่อผู้นำเข้าวัตถุดิบ" required>
+                                                    <span class="fa fa-pencil form-control-feedback right"
+                                                          aria-hidden="true"></span>
+                                                </div>
+                                                <div class="col-md-6 col-sm-6 col-xs-12 form-group has-feedback">
+                                                    <label>ชื่อ Supplier</label>
+                                                    <input type="text" class="form-control" id="update_supplier"
+                                                           name="supplier"
+                                                           placeholder="ชื่อ Supplier" required>
+                                                    <span class="fa fa-pencil form-control-feedback right"
+                                                          aria-hidden="true"></span>
+                                                </div>
+                                                <div class="col-md-6 col-sm-6 col-xs-12 form-group has-feedback">
+                                                    <label style="display: inline-block;float: left;clear: left;text-align: right;width: 60%">เพิ่มวัตถุดิบ</label>
+                                                    <input type="number" class="form-control" id="update_inc_pack"
+                                                           name="inc_pack" style="width: 20%;display: inline-block;float: left;margin-left: 3%;margin-right: 2%"
+                                                           value="1" min="0" required><b>แพค</b>
+                                                </div>
+                                                <div class="col-md-6 col-sm-6 col-xs-12 form-group has-feedback">
+                                                    <label style="display: inline-block;float: left;clear: left;text-align: right;">แพคละ</label>
+                                                        <input type="number" class="form-control" id="update_inc_quantity"
+                                                           name="inc_quantity" style="width: 20%;display: inline-block;float: left;margin-left: 3%;margin-right: 2%"
+                                                           value="1" min="0" required><b>กรัม</b>
+                                                </div>
+                                                <div class="col-md-6 col-sm-6 col-xs-12 form-group has-feedback">
+                                                    <label style="display: inline-block;float: left;clear: left;text-align: right;width: 60%">ลดวัตถุดิบ</label>
+                                                        <input type="number" class="form-control" id="update_dec_pack"
+                                                           name="inc_pack" style="width: 20%;display: inline-block;float: left;margin-left: 3%;margin-right: 2%"
+                                                           value="1" min="0" required><b>แพค</b>
+                                                </div>
+                                                <div class="col-md-6 col-sm-6 col-xs-12 form-group has-feedback">
+                                                    <label style="display: inline-block;float: left;clear: left;text-align: right;">แพคละ</label>
+                                                    <input type="number" class="form-control" id="update_dec_quantity"
+                                                           name="inc_quantity" style="width: 20%;display: inline-block;float: left;margin-left: 3%;margin-right: 2%"
+                                                           value="1" min="0" required><b>กรัม</b>
+                                                </div>
+                                            </div>
+                                            <div class="modal-footer">
+                                                <!-- ปุ่มกดปิด (Close) ตรงส่วนล่างของ Modal -->
+                                                <div class="col-md-9 col-sm-9 col-xs-12 col-md-offset-3">
+                                                    <button type="submit" class="btn btn-success">ตกลง</button>
+                                                    <button type="button" class="btn btn-default" data-dismiss="modal">
+                                                        ยกเลิก
+                                                    </button>
+                                                </div>
+                                            </div>
+                                        </form>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
 
 
 
@@ -169,7 +240,7 @@
                         matItemName: '<a style="cursor:pointer;font-weight:bold;" onclick = "set_mat_item(' + obj.matItemNo + ')" data-toggle = "modal" data-target = "#editMatItem">' + obj.matItemName + '</a>',
                         item: obj.materialCategory.matCatName,
                         remain:  + ' ' + obj.unit.unitName,
-                        option: '<a onclick = "manageMaterialHistory(' + obj.matItemNo + ')" class = "btn btn-warning btn-sm" data-toggle = "modal" data-target = "#add"> <i class = "fa fa-pencil"> </i> &nbsp; อัพเดต </a>' +
+                        option: '<a onclick = "manageMaterialHistory(' + obj.matItemNo + ')" class = "btn btn-warning btn-sm" data-toggle = "modal" data-target = "#updateStockRemain"> <i class = "fa fa-pencil"> </i> &nbsp; อัพเดต </a>' +
                                 '<a onclick = "manageMaterialHistory(' + obj.matItemNo + ')" class = "btn btn-primary btn-sm" data-toggle = "modal" data-target = "#matHistoriesInfo"> <i class = "fa fa-info-circle"></i> &nbsp; รายละเอียด </a>'
                     }
                     data_array.push(data);
@@ -211,12 +282,12 @@
             processData: false,
             url: "${contextPath}/stock/managematerialhistory",
             success: function (result) {
-                swal("สำเร็จ", "เมนูนี้ถูกแก้ไขเรียบร้อยแล้ว", "success");
+                swal("สำเร็จ", "วัตถุดิบนี้ถูกอัพเดตเรียบร้อยแล้ว", "success");
                 $("#update")[0].reset();
-                $("#updateMatRemain").modal('toggle');
+                $("#updateStockRemain").modal('toggle');
                 refresh_table();
             }, error: function (result) {
-                swal("ไม่สำเร็จ", "ชื่อภาษาไทยหรืออังกฤษอาจซ้ำ กรุณาลองใหม่ในภายหลัง", "error");
+                swal("ไม่สำเร็จ", "เซิร์ฟเวอร์อาจมีปัญหา", "error");
             }
         });
         return false;
@@ -243,6 +314,25 @@
             }
         });
     }
+
+    function set_mat_remain(matNo) {
+        $.ajax({
+            type: "PUT",
+            url: "${contextPath}/stock/getmaterialhistory/" + matNo,
+            dataType: "json",
+            success: function (result) {
+                $("#hiddenitemno").val(result.matNo);
+                $("#update_importer").val(result.importer);
+                $("#update_supplier").val(result.supplier);
+                $("#update_inc_pack").val(result.inc_pack);
+                $("#update_dec_pack").val(result.dec_pack);
+                $("#update_inc_quantity").val(result.inc_quantity);
+                $("#update_dec_quantity").val(result.dec_quantity);
+
+            }
+        });
+    }
+
 </script>
 </body>
 </html>
