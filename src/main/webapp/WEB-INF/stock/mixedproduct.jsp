@@ -285,49 +285,58 @@
 <jsp:include page="../_include/bottomenv.jsp"/>
 <script>
     $(document).ready(function () {
+        var addfirsttime = true;
+        var editfirsttime = true;
 
-            $("#datatable-matitem").DataTable({
-                order: [[0, "asc"]],
-                columnDefs: [
-                    {orderable: false, targets: [-1]}
-                ],
-                columns: [
-                    {
-                        data: 'matItemName'
-                    },
-                    {
-                        data: 'item'
-                    },
-                    {
-                        data: 'unit'
-                    },
-                    {
-                        data: 'option'
-                    }
-                ]
-            });
-        $(".modal").on('shown.bs.modal', function () {
-            $('#myInput').focus();
-            $("#add_mixed_product_datatable").DataTable({
-                destroy: true,
-                paging: false,
-                scrollY: "40vh",
-                order: [[1, "asc"]],
-                columnDefs: [
-                    {orderable: false, targets: [-1]}
-                ]
-            });
-
-            $("#edit_mixed_product_datatable").DataTable({
-                destroy: true,
-                paging: false,
-                scrollY: "40vh",
-                order: [[1, "asc"]],
-                columnDefs: [
-                    {orderable: false, targets: [-1]}
-                ]
-            });
+        $("#addMatItem").on('shown.bs.modal', function () {
+            if(addfirsttime) {
+                addfirsttime = false;
+                $("#add_mixed_product_datatable").DataTable({
+                    paging: false,
+                    scrollY: "40vh",
+                    order: [[1, "asc"]],
+                    columnDefs: [
+                        {orderable: false, targets: [-1]}
+                    ]
+                });
+            }
         });
+
+        $("#editMatItem").on('shown.bs.modal', function () {
+            if(editfirsttime) {
+                editfirsttime = false;
+                $("#edit_mixed_product_datatable").DataTable({
+                    paging: false,
+                    scrollY: "40vh",
+                    order: [[1, "asc"]],
+                    columnDefs: [
+                        {orderable: false, targets: [-1]}
+                    ]
+                });
+            }
+        });
+
+        $("#datatable-matitem").DataTable({
+            order: [[0, "asc"]],
+            columnDefs: [
+                {orderable: false, targets: [-1]}
+            ],
+            columns: [
+                {
+                    data: 'matItemName'
+                },
+                {
+                    data: 'item'
+                },
+                {
+                    data: 'unit'
+                },
+                {
+                    data: 'option'
+                }
+            ]
+        });
+
         refresh_table();
     });
 
@@ -413,17 +422,17 @@
                     swal("ไม่สำเร็จ", "ชื่ออาจซ้ำ กรุณาลองใหม่ในภายหลัง", "error");
                 }
             });
-        }else{
+        } else {
             swal("ไม่สำเร็จ", "กรุณาเลือกส่วนผสมของวัตถุดิบก่อน", "error");
         }
         return false;
     });
 
-    $('.modal').on('hidden.bs.modal', function(){
+    $('.modal').on('hidden.bs.modal', function () {
         reset_field();
     });
 
-    function reset_field(){
+    function reset_field() {
         $(".submit-clear").empty();
         $("#add_mat_item")[0].reset();
     }
@@ -481,14 +490,14 @@
                 }
 
                 $("#display_material_desc2").empty();
-                $(".materialamount2").attr('disabled',false);
+                $(".materialamount2").attr('disabled', false);
                 $(".materialamount2").each(function () {
                     if ($(this).val() > 0) {
                         $("#display_material_desc2").append('<div class="col-md-4 col-md-offset-2" style="text-align:left;white-space:nowrap;overflow:hidden;text-overflow: ellipsis;">' + $(this).attr('matItemName') + '</div><div class="col-md-3 col-md-offset-2" style="text-align:left;">' + $(this).val() + ' ' + $(this).attr('unit') + '</div><br>');
                     }
 
-                    if($(this).attr('matitemno') == result.matItemNo){
-                        $(this).attr('disabled',true);
+                    if ($(this).attr('matitemno') == result.matItemNo) {
+                        $(this).attr('disabled', true);
                     }
                 });
             }

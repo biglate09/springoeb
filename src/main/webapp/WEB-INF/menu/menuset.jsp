@@ -113,7 +113,8 @@
                                                     </div>
                                                     <div class="col-md-12">
                                                         <label>เลือกเมนูอาหารที่อยู่ในชุดอาหารนี้</label>
-                                                        <table class="datatable-menu table table-striped table-bordered">
+                                                        <table class="table table-striped table-bordered"
+                                                               id="datatable-menu-1">
                                                             <thead>
                                                             <tr>
                                                                 <th style="text-align:center;">ชื่อเมนูอาหาร</th>
@@ -257,7 +258,8 @@
                                                     </div>
                                                     <div class="col-md-12">
                                                         <label>เลือกเมนูอาหารที่อยู่ในชุดอาหารนี้</label>
-                                                        <table class="datatable-menu table table-striped table-bordered">
+                                                        <table class="table table-striped table-bordered"
+                                                               id="datatable-menu-2">
                                                             <thead>
                                                             <tr>
                                                                 <th style="text-align:center;">ชื่อเมนูอาหาร</th>
@@ -345,6 +347,35 @@
 <jsp:include page="../_include/bottomenv.jsp"/>
 <script>
     $(document).ready(function () {
+        var addfirsttime = true;
+        var editfirsttime = true;
+
+        $("#addMenuSet").on('shown.bs.modal', function () {
+            if (addfirsttime) {
+                addfirsttime = false;
+                $("#datatable-menu-1").DataTable({
+                    scrollY: "40vh",
+                    paging: false,
+                    columnDefs: [
+                        {orderable: false, targets: [-1]}
+                    ]
+                });
+            }
+        });
+
+        $("#editMenuSet").on('shown.bs.modal', function () {
+            if (editfirsttime) {
+                editfirsttime = false;
+                $("#datatable-menu-2").DataTable({
+                    scrollY: "40vh",
+                    paging: false,
+                    columnDefs: [
+                        {orderable: false, targets: [-1]}
+                    ]
+                });
+            }
+        });
+
         $("#showpic_menuset").click(function () {
             $("#add_menuset_pic").click();
         });
@@ -363,19 +394,6 @@
             if ($("#edit_menuset_pic").val() == '') {
                 $("#showpic_menuset_edit").attr('src', '../images/default_upload_image.png');
             }
-        });
-
-        $(".modal").on('shown.bs.modal', function () {
-            $('#myInput').focus();
-
-            $(".datatable-menu").DataTable({
-                destroy: true,
-                scrollY: "40vh",
-                paging: false,
-                columnDefs: [
-                    {orderable: false, targets: [-1]}
-                ]
-            });
         });
 
         refresh_table();
@@ -506,7 +524,7 @@
                             <p style="text-align:center;font-weight:bold;"> ไม่พบข้อมูลเมนูอาหารแบบชุด </p>\
                         </div>\
                         ');
-                    }else{
+                    } else {
                         $("#error_show").html('');
                     }
                 } else {
@@ -699,7 +717,7 @@
             data: {menuno: menuNo},
             url: "${contextPath}/menu/changeavailable",
             success: function (result) {
-                swal("สำเร็จ", "เปลี่ยน \"" + result.menu.menuNameTH + "\" เป็น " + (result.available==false?'ไม่':'') + "พร้อมจำหน่าย เรียบร้อยแล้ว", "success");
+                swal("สำเร็จ", "เปลี่ยน \"" + result.menu.menuNameTH + "\" เป็น " + (result.available == false ? 'ไม่' : '') + "พร้อมจำหน่าย เรียบร้อยแล้ว", "success");
                 refresh_table();
             }, error: function (result) {
                 swal("ไม่สำเร็จ", "กรุณาลองใหม่ภายหลัง", "error");
@@ -722,7 +740,7 @@
         if (!hascard) {
             $("#error_show").html('\
                     <div class="well col-md-12" style="overflow: auto">\
-                        <p style="text-align:center;font-weight:bold;">ไม่พบข้อมูลเมนูอาหารแบบชุด' + (input==''?'' : 'ด้วยคำค้นหา ' +'"' + input + '"') + '</p>\
+                        <p style="text-align:center;font-weight:bold;">ไม่พบข้อมูลเมนูอาหารแบบชุด' + (input == '' ? '' : 'ด้วยคำค้นหา ' + '"' + input + '"') + '</p>\
                     </div>\
                     ');
         } else {

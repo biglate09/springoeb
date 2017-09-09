@@ -127,7 +127,7 @@
                                                 </div>
                                                 <div class="col-md-12 col-sm-12 col-xs-12">
                                                     <label>เลือกวัตถุดิบที่ใช้ในเมนูนี้</label>
-                                                    <table class="table table-bordered table-striped material-datatable" >
+                                                    <table class="table table-bordered table-striped" id="material-datatable-1">
                                                         <thead>
                                                         <tr>
                                                             <th style="text-align:center;width:40%;">ชื่อวัตถุดิบอาหาร</th>
@@ -278,7 +278,7 @@
                                             </div>
                                             <div class="col-md-12 col-sm-12 col-xs-12">
                                                 <label>เลือกวัตถุดิบที่ใช้ในเมนูนี้</label>
-                                                <table class="table table-bordered table-striped material-datatable">
+                                                <table class="table table-bordered table-striped" id="material-datatable-2">
                                                     <thead>
                                                     <tr>
                                                         <th style="text-align:center;">ชื่อวัตถุดิบอาหาร</th>
@@ -353,27 +353,32 @@
 </div>
 <jsp:include page="../_include/bottomenv.jsp"/>
 <script>
-//    $('a[data-toggle="modal"]').one('click',function(){
-//        setTimeout(function(){
-//            $(".material-datatable").DataTable({
-//                scrollY: "40vh",
-//                paging: false,
-//                order: [[1, "desc"]],
-//                responsive: true
-//            });
-//        },0);
-//    });
-
     $(document).ready(function () {
-        $(".modal").on('shown.bs.modal', function () {
-            $('#myInput').focus();
+        var addfirsttime = true;
+        var editfirsttime = true;
 
-            $(".material-datatable").DataTable({
-                destroy: true,
-                scrollY: "40vh",
-                paging: false,
-                order: [[1, "desc"]]
-            });
+        $("#addMenu").on('shown.bs.modal', function () {
+            if(addfirsttime) {
+                addfirsttime = false;
+                $("#material-datatable-1").DataTable({
+                    scrollY: "40vh",
+                    paging: false,
+                    order: [[1, "desc"]]
+                });
+            }
+        });
+
+        $("#editMenu").on('shown.bs.modal', function () {
+            if(editfirsttime) {
+                editfirsttime = false;
+                $("#material-datatable-2").DataTable({
+                    scrollY: "40vh",
+                    paging: false,
+                    order: [[1, "desc"]]
+                });
+            }
+        });
+
 
             $("#datatable-menu").DataTable({
                 order: [[0, "asc"]],
@@ -401,7 +406,6 @@
                     }
                 ]
             });
-        });
 
         $("#showpic").click(function () {
             $("#add_menu_pic").click();
