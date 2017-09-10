@@ -73,23 +73,22 @@
                     <li>
                         <a><i class="fa fa-table"></i> จัดการโต๊ะและการจอง <span class="fa fa-chevron-down"></span></a>
                         <ul class="nav child_menu">
-                            <li><a id="table" href="${contextPath}/">โต๊ะ</a></li>
-                            <li><a id="reservation" href="${contextPath}/">การจอง</a></li>
-                            <li><a id="tablemanage" href="${contextPath}/">จัดการโต๊ะ</a></li>
+                            <li><a id="table" href="${contextPath}/table/table">โต๊ะ</a></li>
+                            <li><a id="reservation" href="${contextPath}/table/reservation">การจอง</a></li>
                         </ul>
                     </li>
                     <li>
                         <a><i class="fa fa-home"></i> จัดการสาขาและสมาชิก <span class="fa fa-chevron-down"></span></a>
                         <ul class="nav child_menu">
-                            <li><a id="branch" href="${contextPath}/">สาขา</a></li>
-                            <li><a id="member" href="${contextPath}/">สมาชิก</a></li>
+                            <li><a id="branch" href="${contextPath}/branch/branch">สาขา</a></li>
+                            <li><a id="member" href="${contextPath}/branch/member">สมาชิก</a></li>
                         </ul>
                     </li>
                     <li>
                         <a><i class="fa fa-book"></i> จัดการบัญชี <span class="fa fa-chevron-down"></span></a>
                         <ul class="nav child_menu">
-                            <li><a id="ledgertype" href="${contextPath}/">ประเภทบัญชี</a></li>
-                            <li><a id="ledger" href="${contextPath}/">บัญชี</a></li>
+                            <li><a id="ledgertype" href="${contextPath}/ledger/ledgertype">ประเภทบัญชี</a></li>
+                            <li><a id="ledger" href="${contextPath}/ledger/ledger">บัญชี</a></li>
                         </ul>
                     </li>
                     <li>
