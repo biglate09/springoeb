@@ -69,10 +69,13 @@
                                     <table id="datatable-menu" class="table table-striped table-bordered">
                                         <thead>
                                         <tr>
-                                            <th style="text-align:center;width:40%;">ชื่อเมนู</th>
-                                            <th style="text-align:center;width:20%;">ประเภทเมนู</th>
-                                            <th style="text-align:center;width:20%;">ราคา</th>
-                                            <th style="text-align:center;width:20%;">ตัวเลือก</th>
+                                            <th style="text-align:center;">ชื่อเมนู</th>
+                                            <c:if test="${branchUser.branchNo == Branch.MAIN_BRANCH}">
+                                                <th style="text-align:center;">สาขา</th>
+                                            </c:if>
+                                            <th style="text-align:center;">ประเภทเมนู</th>
+                                            <th style="text-align:center;">ราคา</th>
+                                            <th style="text-align:center;">ตัวเลือก</th>
                                         </tr>
                                         </thead>
                                         <tbody style="text-align:center;">
@@ -419,6 +422,14 @@
                 {
                     data: 'menuName'
                 },
+                <c:if test="${branchUser.branchNo == Branch.MAIN_BRANCH}">
+                {
+                    data: {
+                        _: 'branch.display',
+                        sort: 'branch.order'
+                    }
+                },
+                </c:if>
                 {
                     data: 'group'
                 },
@@ -483,17 +494,17 @@
         $("#displayThumbnail").click(function () {
             $("#datatable-menu-div").css('display', 'none');
             $("#menu_thumbnail").css('display', '');
-            $("#filter_by_category").css('visibility','');
-            $("#myInput").parent().css('visibility','');
+            $("#filter_by_category").css('visibility', '');
+            $("#myInput").parent().css('visibility', '');
             refresh_table();
         });
 
         $("#displayTable").click(function () {
             $("#datatable-menu-div").css('display', '');
             $("#menu_thumbnail").css('display', 'none');
-            $("#filter_by_category").css('visibility','hidden');
+            $("#filter_by_category").css('visibility', 'hidden');
             $("#filter_by_category").val(0);
-            $("#myInput").parent().css('visibility','hidden');
+            $("#myInput").parent().css('visibility', 'hidden');
             $("#myInput").val('');
             refresh_table();
         });
@@ -551,13 +562,18 @@
                         //Table
                         var data_refresh = {
                             menuName: '<p class="cardname col-md-12" style="text-align:center;font-weight:bold;white-space:nowrap;overflow:hidden;text-overflow: ellipsis;cursor:pointer;" data-toggle="modal" data-target="#editMenu" onclick="set_menu(' + menu.menuNo + ')">' + menu.menuNameTH + " / " + menu.menuNameEN + '</p>',
+                            branch: {
+                                display: menu.localFlag == 0 ? 'ทุกสาขา' : 'สาขาที่ ' + menu.localFlag,
+                                order: menu.localFlag
+                            },
                             group: menu.menuGroup.menuGroupNameTH,
                             menuPrice: {
                                 display: menu.menuPrice.toFixed(2).replace(/\B(?=(\d{3})+(?!\d))/g, ",") + " บาท",
                                 order: price_order
                             },
-                            option: '<a onclick="set_menu(' + menu.menuNo + ')" class="btn btn-warning btn-sm" data-toggle="modal" data-target="#editMenu"><i class="fa fa-pencil"></i>&nbsp; แก้ไข </a>' +
-                            '<a onclick="del_menu(' + menu.menuNo + ',\'' + menu.menuNameTH + '\')" class="btn btn-danger btn-sm"> <i class="fa fa-trash"></i>&nbsp; ลบ</a>',
+                            option: '<a onclick="change_available(' + menu.menuNo + ')" class="btn btn-info btn-sm"><i class="fa ' + (obj.available ? 'fa-check-square-o' : 'fa-square-o') + '"></i>&nbsp; พร้อมจำหน่าย </a>' +
+                            (menu.localFlag == 0 && ${branchUser.branchNo != Branch.MAIN_BRANCH} ? '' : ('<a onclick="set_menu(' + menu.menuNo + ')" class="btn btn-warning btn-sm" data-toggle="modal" data-target="#editMenu"><i class="fa fa-pencil"></i>&nbsp; แก้ไข </a>' +
+                            '<a onclick="del_menu(' + menu.menuNo + ',\'' + menu.menuNameTH + '\')" class="btn btn-danger btn-sm"> <i class="fa fa-trash"></i>&nbsp; ลบ</a>')),
                         };
                         data_array.push(data_refresh);
                     }
@@ -590,7 +606,6 @@
                             ';
                             $("#menu_thumbnail").append(div);
 
-                            $("#menu_thumbnail").append(div);
                             var price_order = (menu.menuPrice.toFixed(2) * 100000) + "";
                             for (var j = price_order.length; j < 20; j++) {
                                 price_order = "0" + price_order;
@@ -599,12 +614,15 @@
                             var data_refresh = {
                                 menuName: '<p class="cardname col-md-12" style="text-align:center;font-weight:bold;white-space:nowrap;overflow:hidden;text-overflow: ellipsis;cursor:pointer;" data-toggle="modal" data-target="#editMenu" onclick="set_menu(' + menu.menuNo + ')">' + menu.menuNameTH + " / " + menu.menuNameEN + '</p>',
                                 group: menu.menuGroup.menuGroupNameTH,
+                                branch: {
+                                    display: menu.localFlag == 0 ? 'ทุกสาขา' : 'สาขาที่ ' + menu.localFlag,
+                                    order: menu.localFlag
+                                },
                                 menuPrice: {
                                     display: menu.menuPrice.toFixed(2).replace(/\B(?=(\d{3})+(?!\d))/g, ",") + " บาท",
                                     order: price_order
                                 },
-                                option: '<a onclick="set_menu(' + menu.menuNo + ')" class="btn btn-warning btn-sm" data-toggle="modal" data-target="#editMenu"><i class="fa fa-pencil"></i>&nbsp; แก้ไข </a>' +
-                                '<a onclick="del_menu(' + menu.menuNo + ',\'' + menu.menuNameTH + '\')" class="btn btn-danger btn-sm"> <i class="fa fa-trash"></i>&nbsp; ลบ</a>',
+                                option: (menu.localFlag != 0 && ${branchUser.branchNo == Branch.MAIN_BRANCH} ? '<a onclick="turn_official(' + menu.menuNo + ')" class="btn btn-primary btn-sm"><i class="fa fa-users"></i>&nbsp; ทำให้เป็นเมนูของทุกสาขา </a>' : '')
                             };
                             data_array.push(data_refresh);
                         }

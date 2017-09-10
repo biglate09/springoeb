@@ -44,7 +44,7 @@
                                     <div class="control-group col-md-12">
                                         <form id="filterdate" method="POST">
                                             <div class="col-md-offset-4 col-md-3" style="padding-right:0px;">
-                                                <input type="text" name="filterdate" id="reservation"
+                                                <input type="text" name="filterdate" id="test"
                                                        class="form-control" required>
                                             </div>
                                             <div class="input-group-btn">
@@ -279,6 +279,8 @@
 <script src="${contextPath}/vendors/bootstrap-daterangepicker/daterangepicker.js"></script>
 <script>
     $(document).ready(function () {
+        $('#test').daterangepicker();
+
         $("#datatable-work").DataTable({
             order: [[0, "desc"]],
             columnDefs: [
@@ -294,18 +296,6 @@
                 {
                     data: "empname",
                 },
-//                {
-//                    data: {
-//                        _: "workstart.display",
-//                        sort: "workstart.order"
-//                    }
-//                },
-//                {
-//                    data: {
-//                        _: "workend.display",
-//                        sort: "workend.order"
-//                    }
-//                },
                 {
                     data: {
                         _: "hour.display",

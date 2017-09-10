@@ -69,6 +69,20 @@
                             <li><a id="currentstock" href="${contextPath}/stock/stockremain">วัตถุดิบคงเหลือ</a></li>
                         </ul>
                     </li>
+                    <li>
+                        <a><i class="fa fa-table"></i> จัดการโต๊ะและการจอง <span class="fa fa-chevron-down"></span></a>
+                        <ul class="nav child_menu">
+                            <li><a id="table" href="${contextPath}/">โต๊ะ</a></li>
+                            <li><a id="reservation" href="${contextPath}/">การจอง</a></li>
+                        </ul>
+                    </li>
+                    <li>
+                        <a><i class="fa fa-home"></i> จัดการสาขาและสมาชิก <span class="fa fa-chevron-down"></span></a>
+                        <ul class="nav child_menu">
+                            <li><a id="branch" href="${contextPath}/">สาขา</a></li>
+                            <li><a id="member" href="${contextPath}/">สมาชิก</a></li>
+                        </ul>
+                    </li>
                 </ul>
             </div>
         </div>
