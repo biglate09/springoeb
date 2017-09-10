@@ -247,6 +247,8 @@
                 }
                 $("#datatable-stockremain").DataTable().clear();
                 $("#datatable-stockremain").DataTable().rows.add(data_array).draw(false);
+//                $('#indicator').show();
+//                $('#someModal').get(anUrl, someData, function() { $('#indicator').hide(); });
             }
         });
     }
@@ -283,7 +285,7 @@
             url: "${contextPath}/stock/managematerialhistory",
             success: function (result) {
                 swal("สำเร็จ", "วัตถุดิบนี้ถูกอัพเดตเรียบร้อยแล้ว", "success");
-                $("#update")[0].reset();
+                reset_field();
                 $("#updateStockRemain").modal('toggle');
                 refresh_table();
             }, error: function (result) {
@@ -292,6 +294,14 @@
         });
         return false;
     });
+
+    $('.modal').on('hidden.bs.modal', function () {
+        reset_field();
+    });
+
+    function reset_field() {
+        $("#update")[0].reset();
+    }
 
     function getMaterials() {
         $.ajax({
