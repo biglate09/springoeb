@@ -38,17 +38,12 @@
                                     <a data-toggle="modal" data-target="#addEmp"
                                        class="btn btn-success btn-sm"><i class="fa fa-plus-circle"></i>&nbsp;
                                         เพิ่มพนักงาน</a>
-                                    <%--<button type="submit" name="submit" value="del"--%>
-                                    <%--class="btn btn-danger btn-sm" disabled><i class="fa fa-trash"></i>&nbsp;--%>
-                                    <%--ลบที่เลือก--%>
                                     <%--</button>--%>
                                 </p>
                                 <table id="datatable-employee"
                                        class="table table-striped table-bordered bulk_action1">
                                     <thead>
                                     <tr>
-                                        <%--<th><input title="checkall" type="checkbox" class="flat" id="check-all-1"--%>
-                                        <%--disabled></th>--%>
                                         <th style="width:20%;text-align:center;">ชื่อ</th>
                                         <th style="width:20%;text-align:center;">ประเภท</th>
                                         <th style="width:20%;text-align:center;">ประเภทการจ้าง</th>
@@ -57,34 +52,6 @@
                                     </tr>
                                     </thead>
                                     <tbody style="text-align:center;">
-                                    <%--<c:forEach items="${employees}" var="e" varStatus="vs">--%>
-                                    <%--<tr>--%>
-                                    <%--<td>--%>
-                                    <%--<b style="cursor:pointer" onclick="editEmp(${e.empNo})"--%>
-                                    <%--data-toggle="modal"--%>
-                                    <%--data-target="#editEmp" style="font-weight: bold;">${e.empName}</b>--%>
-                                    <%--</td>--%>
-                                    <%--<td>--%>
-                                    <%--${e.empType == Employee.FULL_TIME ? 'Full-Time' : e.empType == Employee.PART_TIME ? 'Part-Time' : 'Training'}--%>
-                                    <%--</td>--%>
-                                    <%--<td>--%>
-                                    <%--ราย${e.payType == Employee.HOUR ? 'ชั่วโมง' : 'วัน'}--%>
-                                    <%--</td>--%>
-                                    <%--<td data-order="<fmt:formatNumber value="20" pattern="0000000000000"/>">--%>
-                                    <%--<fmt:formatNumber value="${e.pay}" pattern="#,###,##0.00"/> บาท--%>
-                                    <%--/ ${e.payType == Employee.HOUR ? 'ชั่วโมง' : 'วัน'}--%>
-                                    <%--</td>--%>
-                                    <%--<td>--%>
-                                    <%--<a onclick="editEmp(${e.empNo})" class="btn btn-warning btn-sm"--%>
-                                    <%--data-toggle="modal"--%>
-                                    <%--data-target="#editEmp"><i class="fa fa-pencil"></i>&nbsp;--%>
-                                    <%--แก้ไข </a>--%>
-                                    <%--<a href="${contextPath}/employee/deleteemployee/${e.empNo}" )--%>
-                                    <%--class="btn btn-danger btn-sm">--%>
-                                    <%--<i class="fa fa-trash"></i>&nbsp; ลบ</a>--%>
-                                    <%--</td>--%>
-                                    <%--</tr>--%>
-                                    <%--</c:forEach>--%>
                                     </tbody>
                                 </table>
                             </form>
