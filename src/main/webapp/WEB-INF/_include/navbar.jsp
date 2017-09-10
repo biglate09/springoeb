@@ -53,12 +53,6 @@
                         </ul>
                     </li>
                     <li>
-                        <a><i class="fa fa-tags"></i> จัดการโปรโมชั่น <span class="fa fa-chevron-down"></span></a>
-                        <ul class="nav child_menu">
-                            <li><a id="promotion" href="${contextPath}/promotion/promotion">โปรโมชั่นเมนูอาหาร</a></li>
-                        </ul>
-                    </li>
-                    <li>
                         <a><i class="fa fa-spoon"></i> จัดการวัตถุดิบอาหาร <span class="fa fa-chevron-down"></span></a>
                         <ul class="nav child_menu">
                             <li><a id="materialcategory" href="${contextPath}/stock/materialcategory">ประเภทวัตถุดิบ</a></li>
@@ -70,10 +64,18 @@
                         </ul>
                     </li>
                     <li>
+                        <a><i class="fa fa-tags"></i> จัดการโปรโมชั่น <span class="fa fa-chevron-down"></span></a>
+                        <ul class="nav child_menu">
+                            <li><a id="promotion" href="${contextPath}/promotion/promotion">โปรโมชั่นเมนูอาหาร</a></li>
+                            <li><a id="api" href="${contextPath}/promotion/promotion">โฆษณาผ่าน API</a></li>
+                        </ul>
+                    </li>
+                    <li>
                         <a><i class="fa fa-table"></i> จัดการโต๊ะและการจอง <span class="fa fa-chevron-down"></span></a>
                         <ul class="nav child_menu">
                             <li><a id="table" href="${contextPath}/">โต๊ะ</a></li>
                             <li><a id="reservation" href="${contextPath}/">การจอง</a></li>
+                            <li><a id="tablemanage" href="${contextPath}/">จัดการโต๊ะ</a></li>
                         </ul>
                     </li>
                     <li>
@@ -81,6 +83,22 @@
                         <ul class="nav child_menu">
                             <li><a id="branch" href="${contextPath}/">สาขา</a></li>
                             <li><a id="member" href="${contextPath}/">สมาชิก</a></li>
+                        </ul>
+                    </li>
+                    <li>
+                        <a><i class="fa fa-book"></i> จัดการบัญชี <span class="fa fa-chevron-down"></span></a>
+                        <ul class="nav child_menu">
+                            <li><a id="ledgertype" href="${contextPath}/">ประเภทบัญชี</a></li>
+                            <li><a id="ledger" href="${contextPath}/">บัญชี</a></li>
+                        </ul>
+                    </li>
+                    <li>
+                        <a><i class="fa fa-line-chart"></i> รายงานผลประกอบการ <span class="fa fa-chevron-down"></span></a>
+                        <ul class="nav child_menu">
+                            <li><a id="report1" href="${contextPath}/">รายงานแบบ 1</a></li>
+                            <li><a id="report2" href="${contextPath}/">รายงานแบบ 2</a></li>
+                            <li><a id="report3" href="${contextPath}/">รายงานแบบ 3</a></li>
+                            <li><a id="report4" href="${contextPath}/">รายงานแบบ 4</a></li>
                         </ul>
                     </li>
                 </ul>
