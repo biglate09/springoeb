@@ -143,25 +143,29 @@
                                                     <label style="display: inline-block;float: left;clear: left;text-align: right;width: 60%">เพิ่มวัตถุดิบ</label>
                                                     <input type="number" class="form-control" id="update_inc_pack"
                                                            name="inc_pack" style="width: 20%;display: inline-block;float: left;margin-left: 3%;margin-right: 2%"
-                                                           value="1" min="0" required><b>แพค</b>
+                                                           value="1" min="0" required> หน่วย
                                                 </div>
                                                 <div class="col-md-6 col-sm-6 col-xs-12 form-group has-feedback">
-                                                    <label style="display: inline-block;float: left;clear: left;text-align: right;">แพคละ</label>
+                                                    <label style="display: inline-block;float: left;clear: left;text-align: right;">หน่วยละ</label>
                                                         <input type="number" class="form-control" id="update_inc_quantity"
                                                            name="inc_quantity" style="width: 20%;display: inline-block;float: left;margin-left: 3%;margin-right: 2%"
-                                                           value="1" min="0" required><b>กรัม</b>
+                                                           value="1" min="0" required>
+                                                        <span style="font-weight:normal"
+                                                              class="submit-clear"
+                                                              id="stock_remain_unit"></span>
                                                 </div>
                                                 <div class="col-md-6 col-sm-6 col-xs-12 form-group has-feedback">
                                                     <label style="display: inline-block;float: left;clear: left;text-align: right;width: 60%">ลดวัตถุดิบ</label>
                                                         <input type="number" class="form-control" id="update_dec_pack"
                                                            name="inc_pack" style="width: 20%;display: inline-block;float: left;margin-left: 3%;margin-right: 2%"
-                                                           value="1" min="0" required><b>แพค</b>
+                                                           value="1" min="0" required> หน่วย
                                                 </div>
                                                 <div class="col-md-6 col-sm-6 col-xs-12 form-group has-feedback">
-                                                    <label style="display: inline-block;float: left;clear: left;text-align: right;">แพคละ</label>
+                                                    <label style="display: inline-block;float: left;clear: left;text-align: right;">หน่วยละ</label>
                                                     <input type="number" class="form-control" id="update_dec_quantity"
                                                            name="inc_quantity" style="width: 20%;display: inline-block;float: left;margin-left: 3%;margin-right: 2%"
-                                                           value="1" min="0" required><b>กรัม</b>
+                                                           value="1" min="0" required>
+
                                                 </div>
                                             </div>
                                             <div class="modal-footer">
@@ -178,21 +182,6 @@
                                 </div>
                             </div>
                         </div>
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
                     </div>
                 </div>
             </div>
@@ -253,6 +242,9 @@
         });
     }
 
+    $("#add_unit").on('change keyup', function () {
+        $("#stock_remain_unit").html($(this).val());
+    });
 
     function manageMaterialHistory() {
         $.ajax({
@@ -338,7 +330,8 @@
                 $("#update_dec_pack").val(result.dec_pack);
                 $("#update_inc_quantity").val(result.inc_quantity);
                 $("#update_dec_quantity").val(result.dec_quantity);
-
+                $("#stock_remain_unit").html($("#add_unit").val());
+                $("#show_mat_item_name_for_update").html(result.matItemName);
             }
         });
     }
