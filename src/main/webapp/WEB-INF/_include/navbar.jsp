@@ -1,5 +1,6 @@
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 <%@page contentType="text/html" pageEncoding="UTF-8" %>
+<%@ page import="com.springoeb.system.model.Branch" %>
 <c:set scope="page" var="contextPath" value="${pageContext.request.contextPath}"/>
 <div class="col-md-3 left_col">
     <div class="left_col scroll-view">
@@ -18,7 +19,8 @@
             <div class="profile_info">
                 <span>ยินดีต้อนรับ,</span>
                 <h2 style="white-space:nowrap;overflow:hidden;text-overflow: ellipsis;margin-bottom:5px;">${branchUser.branch.branchName}</h2>
-                <h2 style="white-space:nowrap;overflow:hidden;text-overflow: ellipsis;">(สาขาที่ ${branchUser.branch.branchNo})</h2>
+                <h2 style="white-space:nowrap;overflow:hidden;text-overflow: ellipsis;">
+                    (สาขาที่ ${branchUser.branch.branchNo})</h2>
             </div>
         </div>
         <!-- /menu profile quick info -->
@@ -28,7 +30,8 @@
             <div class="menu_section">
                 <ul class="nav side-menu">
                     <li>
-                        <a id="emptab"><i class="fa fa-users"></i> จัดการพนักงาน <span class="fa fa-chevron-down"></span></a>
+                        <a id="emptab"><i class="fa fa-users"></i> จัดการพนักงาน <span
+                                class="fa fa-chevron-down"></span></a>
                         <ul class="nav child_menu">
                             <li><a id="empdata" href="${contextPath}/employee/index">ข้อมูลพนักงาน</a></li>
                             <li><a id="emppos" href="${contextPath}/employee/position">ตำแหน่งพนักงาน</a></li>
@@ -44,8 +47,10 @@
                         <ul class="nav child_menu">
                             <li><a>ประเภทอาหาร<span class="fa fa-chevron-down"></span></a>
                                 <ul class="nav child_menu">
-                                    <li class="sub_menu"><a id="menucategory" href="${contextPath}/menu/menucategory">ประเภท</a></li>
-                                    <li class="sub_menu"> <a id="menugroup" href="${contextPath}/menu/menugroup">หมวดหมู่</a></li>
+                                    <li class="sub_menu"><a id="menucategory" href="${contextPath}/menu/menucategory">ประเภท</a>
+                                    </li>
+                                    <li class="sub_menu"><a id="menugroup"
+                                                            href="${contextPath}/menu/menugroup">หมวดหมู่</a></li>
                                 </ul>
                             </li>
                             <li><a id="menu" href="${contextPath}/menu/menu">เมนูอาหารแบบเดี่ยว</a></li>
@@ -55,7 +60,8 @@
                     <li>
                         <a><i class="fa fa-spoon"></i> จัดการวัตถุดิบอาหาร <span class="fa fa-chevron-down"></span></a>
                         <ul class="nav child_menu">
-                            <li><a id="materialcategory" href="${contextPath}/stock/materialcategory">ประเภทวัตถุดิบ</a></li>
+                            <li><a id="materialcategory" href="${contextPath}/stock/materialcategory">ประเภทวัตถุดิบ</a>
+                            </li>
                             <li><a id="materialunit" href="${contextPath}/stock/materialunit">หน่วยของวัตถุดิบ</a></li>
                             <li><a id="material" href="${contextPath}/stock/materialitem">วัตถุดิบ</a></li>
                             <li><a id="mixedproduct" href="${contextPath}/stock/mixedproduct">วัตถุดิบแบบผสม</a></li>
@@ -80,8 +86,11 @@
                     <li>
                         <a><i class="fa fa-home"></i> จัดการสาขาและสมาชิก <span class="fa fa-chevron-down"></span></a>
                         <ul class="nav child_menu">
-                            <li><a id="branch" href="${contextPath}/branch/branch">สาขา</a></li>
-                            <li><a id="member" href="${contextPath}/branch/member">สมาชิก</a></li>
+                            <c:if test="${branchUser.branchNo == Branch.MAIN_BRANCH}">
+                                <li><a id="branches" href="${contextPath}/branch/branches">สาขาทั้งหมด</a></li>
+                            </c:if>
+                            <li><a id="mybranch" href="${contextPath}/branch/mybranch">สาขานี้</a></li>
+                            <li><a id="member" href="${contextPath}/branch/member">สมาชิกของสาขานี้</a></li>
                         </ul>
                     </li>
                     <li>
@@ -92,7 +101,8 @@
                         </ul>
                     </li>
                     <li>
-                        <a><i class="fa fa-line-chart"></i> รายงานผลประกอบการ <span class="fa fa-chevron-down"></span></a>
+                        <a><i class="fa fa-line-chart"></i> รายงานผลประกอบการ <span
+                                class="fa fa-chevron-down"></span></a>
                         <ul class="nav child_menu">
                             <li><a id="report1" href="${contextPath}/">รายงานแบบ 1</a></li>
                             <li><a id="report2" href="${contextPath}/">รายงานแบบ 2</a></li>

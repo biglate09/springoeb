@@ -5,7 +5,7 @@
 <html>
 <head>
     <jsp:include page="../_include/topenv.jsp"/>
-    <title>จัดการสาขา</title>
+    <title>จัดการสาขาทั้งหมด</title>
 </head>
 <body class="nav-md">
 <div class="container body">

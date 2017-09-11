@@ -10,9 +10,14 @@ public class BranchController {
     private static final String BRANCH_PATH = "/WEB-INF/branch/";
 
     //-----------------------------------------------------------------------------------------------------------//
-    @GetMapping("/branch")
+    @GetMapping("/branches")
     public String toBranchIndex(){
-        return BRANCH_PATH + "branch.jsp";
+        return BRANCH_PATH + "branches.jsp";
+    }
+    //-----------------------------------------------------------------------------------------------------------//
+    @GetMapping("/mybranch")
+    public String toMyBranchIndex(){
+        return BRANCH_PATH + "mybranch.jsp";
     }
     //-----------------------------------------------------------------------------------------------------------//
     @GetMapping("/member")
