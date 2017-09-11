@@ -1,7 +1,5 @@
 package com.springoeb.stock.model;
 
-import com.fasterxml.jackson.annotation.JsonIgnore;
-
 import javax.persistence.*;
 import java.util.List;
 
@@ -30,7 +28,6 @@ public class MaterialItem {
     @OneToMany(fetch = FetchType.LAZY, mappedBy = "mixedProduct")
     private List<MaterialMixed> materialItemList;
 
-    @JsonIgnore
     @OneToMany(fetch = FetchType.LAZY, mappedBy = "materialItem")
     private List<MaterialHistory> materialHistories;
 

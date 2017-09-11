@@ -1,5 +1,7 @@
 package com.springoeb.stock.model;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
+
 import javax.persistence.*;
 import java.sql.Date;
 import java.sql.Time;
@@ -19,6 +21,7 @@ public class MaterialHistory {
     private Integer matItemNo;
     @Column(name = "branch_no",insertable = true,updatable = true)
     private Integer branchNo;
+    @JsonIgnore
     @ManyToOne
     @JoinColumn(name = "mat_item_no",updatable = false,insertable = false)
     private MaterialItem materialItem;
