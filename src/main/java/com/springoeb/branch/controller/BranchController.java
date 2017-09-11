@@ -40,11 +40,11 @@ public class BranchController {
         return json;
     }
 
-//    @ResponseBody
-//    @PostMapping("/branch/managemybranch")
-//    public String addOrEditMyBranch(@ModelAttribute("branch") Branch branch){
-//
-//    }
+    @ResponseBody
+    @PostMapping("/branch/managemybranch")
+    public void addOrEditMyBranch(@ModelAttribute("branch") Branch branch){
+
+    }
 
     //-----------------------------------------------------------------------------------------------------------//
     @GetMapping("/member")

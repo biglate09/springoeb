@@ -9,6 +9,6 @@ import java.util.List;
 @Repository
 public interface MaterialHistoryRepository extends CrudRepository<MaterialHistory,Integer>{
     List<MaterialHistory> findByBranchNo(int branchNo);
-    List<MaterialHistory> findByMatItemNoAndBranchNo(int matItemNo,int branchNo);
+    List<MaterialHistory> findByMatItemNoAndBranchNoAndOfMatHistNoIsNull(int matItemNo,int branchNo);
     MaterialHistory save(MaterialHistory materialHistory);
 }

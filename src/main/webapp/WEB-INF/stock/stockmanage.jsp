@@ -35,7 +35,7 @@
                                         อัพเดท</a>
                                 </p>
                                 <table id="datatable-matitem"
-                                       class="table table-striped table-bordered bulk_action1">
+                                       class="table table-striped table-bordered">
                                     <thead>
                                     <tr>
                                         <th style="width:25%;text-align:center;">ชื่อวัตถุดิบ</th>
