@@ -133,29 +133,29 @@
                                                           aria-hidden="true"></span>
                                                 </div>
                                                 <div class="col-md-6 col-sm-6 col-xs-12 form-group has-feedback">
-                                                    <label style="display: inline-block;float: left;clear: left;text-align: right;width: 60%">เพิ่มวัตถุดิบ</label>
+                                                    <label style="display: inline-block;float: left;clear: left;text-align: right;width: 50%">เพิ่มวัตถุดิบ</label>
                                                     <input type="number" class="form-control" id="update_inc_pack"
-                                                           name="inc_pack" style="width: 20%;display: inline-block;float: left;margin-left: 3%;margin-right: 2%"
+                                                           name="inc_pack" style="width: 30%;display: inline-block;float: left;margin-left: 3%;margin-right: 2%"
                                                            value="1" min="0" required> หน่วย
                                                 </div>
                                                 <div class="col-md-6 col-sm-6 col-xs-12 form-group has-feedback">
-                                                    <label style="width:17%;display: inline-block;float: left;clear: left;text-align: right;">หน่วยละ</label>
+                                                    <label style="width:10%;display: inline-block;float: left;clear: left;text-align: right;">หน่วยละ</label>
                                                         <input type="number" class="form-control" id="update_inc_quantity"
-                                                           name="inc_quantity" style="width: 20%;display: inline-block;float: left;margin-left: 3%;margin-right: 2%"
+                                                           name="inc_quantity" style="width: 30%;display: inline-block;float: left;margin-left: 3%;margin-right: 2%"
                                                            value="0" min="0" required>
                                                         <span style="font-weight:normal"
                                                               class="unit"></span>
                                                 </div>
                                                 <div class="col-md-6 col-sm-6 col-xs-12 form-group has-feedback">
-                                                    <label style="display: inline-block;float: left;clear: left;text-align: right;width: 60%">ลดวัตถุดิบ</label>
+                                                    <label style="display: inline-block;float: left;clear: left;text-align: right;width: 50%">ลดวัตถุดิบ</label>
                                                         <input type="number" class="form-control" id="update_dec_pack"
-                                                           name="inc_pack" style="width: 20%;display: inline-block;float: left;margin-left: 3%;margin-right: 2%"
+                                                           name="inc_pack" style="width: 30%;display: inline-block;float: left;margin-left: 3%;margin-right: 2%"
                                                            value="1" min="0" required> หน่วย
                                                 </div>
                                                 <div class="col-md-6 col-sm-6 col-xs-12 form-group has-feedback">
-                                                    <label style="width:17%;display: inline-block;float: left;clear: left;text-align: right;">หน่วยละ</label>
+                                                    <label style="width:10%;display: inline-block;float: left;clear: left;text-align: right;">หน่วยละ</label>
                                                     <input type="number" class="form-control" id="update_dec_quantity"
-                                                           name="inc_quantity" style="width: 20%;display: inline-block;float: left;margin-left: 3%;margin-right: 2%"
+                                                           name="inc_quantity" style="width: 30%;display: inline-block;float: left;margin-left: 3%;margin-right: 2%"
                                                            value="0" min="0" required>
                                                     <span style="font-weight:normal"
                                                           class="unit"></span>
