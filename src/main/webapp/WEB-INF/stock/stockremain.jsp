@@ -31,7 +31,7 @@
                             <%--<button onclick="getHistories(9)">ปุ่มทดสอบ getmaterialhistory</button>--%>
                             <form action="#">
                                 <table id="datatable-stockremain"
-                                       class="table table-striped table-bordered bulk_action1">
+                                       class="table table-striped table-bordered ">
                                     <thead>
                                     <tr>
                                         <th style="width:20%;text-align:center;">ชื่อวัตถุดิบ</th>
@@ -149,7 +149,7 @@
                                                     <label style="width:17%;display: inline-block;float: left;clear: left;text-align: right;">หน่วยละ</label>
                                                         <input type="number" class="form-control" id="update_inc_quantity"
                                                            name="inc_quantity" style="width: 20%;display: inline-block;float: left;margin-left: 3%;margin-right: 2%"
-                                                           value="1" min="0" required>
+                                                           value="0" min="0" required>
                                                         <span style="font-weight:normal"
                                                               class="unit"></span>
                                                 </div>
@@ -163,7 +163,7 @@
                                                     <label style="width:17%;display: inline-block;float: left;clear: left;text-align: right;">หน่วยละ</label>
                                                     <input type="number" class="form-control" id="update_dec_quantity"
                                                            name="inc_quantity" style="width: 20%;display: inline-block;float: left;margin-left: 3%;margin-right: 2%"
-                                                           value="1" min="0" required>
+                                                           value="0" min="0" required>
                                                     <span style="font-weight:normal"
                                                           class="unit"></span>
 
@@ -192,8 +192,8 @@
 
 <jsp:include page="../_include/bottomenv.jsp"/>
 <script>
-    $(document).ready(function () {
 
+    $(document).ready(function () {
         $("#datatable-stockremain").DataTable({
             order: [[0, "asc"]],
             columnDefs: [
@@ -214,10 +214,6 @@
                 }
             ]
         });
-        refresh_table();
-    });
-
-    $(document).ready(function () {
 
         $("#stockRemainsInfo").DataTable({
             order: [[0, "asc"]],
@@ -254,10 +250,16 @@
                 var data_array = [];
                 for (var i = 0; i < json.length; i++) {
                     var obj = json[i];
+
+                    matRemain = 0;
+                    for(j=0 ;j < obj.materialHistories.length ;j++){
+                        matRemain += obj.materialHistories[j].matQuantity;
+                    }
+
                     var data = {
                         matItemName: '<a style="cursor:pointer;font-weight:bold;" onclick = "set_mat_remain(' + obj.matItemNo + ',\'' + obj.matItemName +'\',\'' + obj.unit.unitName + '\')" data-toggle = "modal" data-target = "#updateStockRemain">' + obj.matItemName + '</a>',
                         item: obj.materialCategory.matCatName,
-                        remain: obj.unit.unitName,
+                        remain: matRemain + ' ' + obj.unit.unitName,
                         option: '<a onclick = "set_mat_remain(' + obj.matItemNo + ',\'' + obj.matItemName +'\',\'' + obj.unit.unitName + '\')" class = "btn btn-warning btn-sm" data-toggle = "modal" data-target = "#updateStockRemain"> <i class = "fa fa-pencil"> </i> &nbsp; อัพเดต </a>' +
                                 '<a onclick = "manageMaterialHistory(' + obj.matItemNo + ')" class = "btn btn-primary btn-sm" data-toggle = "modal" data-target = "#matHistoriesInfo"> <i class = "fa fa-info-circle"></i> &nbsp; รายละเอียด </a>'
                     }
