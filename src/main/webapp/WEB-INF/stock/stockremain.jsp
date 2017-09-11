@@ -84,14 +84,7 @@
                                                     </table>
                                                 </div>
                                             </div>
-                                            <div class="modal-footer">
-                                                <!-- ปุ่มกดปิด (Close) ตรงส่วนล่างของ Modal -->
-                                                <div class="col-md-9 col-sm-9 col-xs-12 col-md-offset-3">
-                                                    <button type="button" class="btn btn-default" data-dismiss="modal">
-                                                        ยกเลิก
-                                                    </button>
-                                                </div>
-                                            </div>
+
                                         </form>
                                     </div>
                                 </div>
@@ -149,13 +142,13 @@
                                                 <div class="col-md-6 col-sm-6 col-xs-12 form-group has-feedback">
                                                     <label style="display: inline-block;float: left;clear: left;text-align: right;width: 60%">ลดวัตถุดิบ</label>
                                                         <input type="number" class="form-control" id="update_dec_pack"
-                                                           name="inc_pack" style="width: 20%;display: inline-block;float: left;margin-left: 3%;margin-right: 2%"
+                                                           name="dec_pack" style="width: 20%;display: inline-block;float: left;margin-left: 3%;margin-right: 2%"
                                                            value="1" min="0" required> หน่วย
                                                 </div>
                                                 <div class="col-md-6 col-sm-6 col-xs-12 form-group has-feedback">
                                                     <label style="width:17%;display: inline-block;float: left;clear: left;text-align: right;">หน่วยละ</label>
                                                     <input type="number" class="form-control" id="update_dec_quantity"
-                                                           name="inc_quantity" style="width: 20%;display: inline-block;float: left;margin-left: 3%;margin-right: 2%"
+                                                           name="dec_quantity" style="width: 20%;display: inline-block;float: left;margin-left: 3%;margin-right: 2%"
                                                            value="0" min="0" required>
                                                     <span style="font-weight:normal"
                                                           class="unit"></span>
@@ -254,7 +247,7 @@
                         item: obj.materialCategory.matCatName,
                         remain: matRemain + ' ' + obj.unit.unitName,
                         option: '<a onclick = "set_mat_remain(' + obj.matItemNo + ',\'' + obj.matItemName +'\',\'' + obj.unit.unitName + '\')" class = "btn btn-warning btn-sm" data-toggle = "modal" data-target = "#updateStockRemain"> <i class = "fa fa-pencil"> </i> &nbsp; อัพเดต </a>' +
-                                '<a onclick = "getHistories(' + obj.matItemNo + ',\'' + obj.matItemName +'\')" class = "btn btn-primary btn-sm" data-toggle = "modal" data-target = "#matHistoriesInfo"> <i class = "fa fa-info-circle"></i> &nbsp; รายละเอียด </a>'
+                                '<a onclick = "getHistories(' + obj.matItemNo + ',\'' + obj.matItemName +'\',\'' + obj.unit.unitName + '\')" class = "btn btn-primary btn-sm" data-toggle = "modal" data-target = "#matHistoriesInfo"> <i class = "fa fa-info-circle"></i> &nbsp; รายละเอียด </a>'
                     }
                     data_array.push(data);
                 }
@@ -321,7 +314,7 @@
         });
     }
 
-    function getHistories(matNo ,matName) {
+    function getHistories(matNo ,matName, unit) {
         $.ajax({
             type: "PUT",
             url: "${contextPath}/stock/getmaterialhistory/" + matNo,
@@ -329,15 +322,17 @@
             success: function (result) {
                 console.log(result);
                 var data_array = [];
+                var sum = 0;
                 for (var k = 0 ; k < result.length ; k++){
                     var obj= result[k];
+                    sum += obj.matQuantity;
                     console.log(obj);
                     var data = {
                         latestUpdate: obj.date + ' ' + obj.time,
-                        matQuantity: obj.matQuantity,
+                        matQuantity: obj.matQuantity + ' ' + unit,
                         supplier: obj.supplier,
                         importer: obj.importer,
-                        matRemain: obj.matRemain
+                        matRemain: sum + ' ' + unit
                     };
                     data_array.push(data);
                 }
@@ -345,6 +340,7 @@
                 $("#stockRemainsInfo").DataTable().rows.add(data_array).draw(false);
             }
         });
+        $('#show_mat_item_name_for_info').html(matName);
     }
 
     function set_mat_remain(matNo,matName,unitName) {
