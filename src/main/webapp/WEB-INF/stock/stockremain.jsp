@@ -65,7 +65,7 @@
                                             <input type="hidden" name="matFlag" value="M">
                                             <div class="form-group">
                                                 <div class="col-md-12 col-sm-12 col-xs-12">
-                                                    <table id="stock_remains_datatable"
+                                                    <table id="stockRemainsInfo"
                                                            class="table table-bordered table-striped">
                                                         <thead>
                                                         <tr>
@@ -210,6 +210,34 @@
                 },
                 {
                     data: 'option'
+                }
+            ]
+        });
+        refresh_table();
+    });
+
+    $(document).ready(function () {
+
+        $("#stockRemainsInfo").DataTable({
+            order: [[0, "asc"]],
+            columnDefs: [
+                {orderable: false, targets: [-1]}
+            ],
+            columns: [
+                {
+                    data: 'matName'
+                },
+                {
+                    data: 'matQuantity'
+                },
+                {
+                    data: 'supplier'
+                },
+                {
+                    data: 'importer'
+                },
+                {
+                    data: 'matQuantity'
                 }
             ]
         });
