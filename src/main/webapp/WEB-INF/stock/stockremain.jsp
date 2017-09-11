@@ -132,7 +132,7 @@
                                                           aria-hidden="true"></span>
                                                 </div>
                                                 <div class="col-md-6 col-sm-6 col-xs-12 form-group has-feedback">
-                                                    <label>ชื่อ Supplier</label>
+                                                    <label>Supplier</label>
                                                     <input type="text" class="form-control" id="update_supplier"
                                                            name="supplier"
                                                            placeholder="ชื่อ Supplier" required>
@@ -146,7 +146,7 @@
                                                            value="1" min="0" required> หน่วย
                                                 </div>
                                                 <div class="col-md-6 col-sm-6 col-xs-12 form-group has-feedback">
-                                                    <label style="display: inline-block;float: left;clear: left;text-align: right;">หน่วยละ</label>
+                                                    <label style="width:17%;display: inline-block;float: left;clear: left;text-align: right;">หน่วยละ</label>
                                                         <input type="number" class="form-control" id="update_inc_quantity"
                                                            name="inc_quantity" style="width: 20%;display: inline-block;float: left;margin-left: 3%;margin-right: 2%"
                                                            value="1" min="0" required>
@@ -161,7 +161,7 @@
                                                            value="1" min="0" required> หน่วย
                                                 </div>
                                                 <div class="col-md-6 col-sm-6 col-xs-12 form-group has-feedback">
-                                                    <label style="display: inline-block;float: left;clear: left;text-align: right;">หน่วยละ</label>
+                                                    <label style="width:17%;display: inline-block;float: left;clear: left;text-align: right;">หน่วยละ</label>
                                                     <input type="number" class="form-control" id="update_dec_quantity"
                                                            name="inc_quantity" style="width: 20%;display: inline-block;float: left;margin-left: 3%;margin-right: 2%"
                                                            value="1" min="0" required>
@@ -270,8 +270,9 @@
         });
     }
 
-    $("#add_unit").on('change keyup', function () {
-        $("#stock_remain_unit").html($(this).val());
+
+    $("#add_unit").on('change', function () {
+        $("#stock_remain_unit").html($("#add_unit option:selected").text());
     });
 
     function manageMaterialHistory() {
@@ -358,7 +359,7 @@
                 $("#update_dec_pack").val(result.dec_pack);
                 $("#update_inc_quantity").val(result.inc_quantity);
                 $("#update_dec_quantity").val(result.dec_quantity);
-                $("#stock_remain_unit").html($("#add_unit").val());
+                $("#stock_remain_unit").html($("#add_unit option:selected").text());
                 $("#show_mat_item_name_for_update").html(result.matItemName);
             }
         });
