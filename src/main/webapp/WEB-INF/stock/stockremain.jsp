@@ -1,6 +1,7 @@
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 <%@ page contentType="text/html;charset=UTF-8" language="java" %>
 <c:set var="contextPath" value="${pageContext.request.contextPath}"/>
+<!DOCTYPE HTML>
 <html>
 <head>
     <jsp:include page="../_include/topenv.jsp"/>
@@ -56,7 +57,8 @@
                                     <div class="modal-header">
                                         <!-- ปุ่มกดปิด (X) ตรงส่วนหัวของ Modal -->
                                         <button type="button" class="close" data-dismiss="modal">&times;</button>
-                                        <h4 class="modal-title">รายละเอียดของ</h4>
+                                        <h4 class="modal-title">รายละเอียดของ <span
+                                                id="show_mat_item_name_for_info"></span> </h4>
                                     </div>
                                     <!-- ส่วนเนื้อหาของ Modal -->
                                     <div class="modal-body">
@@ -77,15 +79,7 @@
                                                         </tr>
                                                         </thead>
                                                         <tbody style="text-align:center;">
-                                                        <c:forEach items="${stockRemains}" var="sr">
-                                                            <tr>
-                                                                <td style="width:40%;">${sr.matName}</td>
-                                                                <td style="width:30%;">${sr.matQuantity}</td>
-                                                                <td style="width:40%;">${sr.supplier}</td>
-                                                                <td style="width:30%;">${sr.importer}</td>
-                                                                <td style="width:40%;"></td>
-                                                            </tr>
-                                                        </c:forEach>
+
                                                         </tbody>
                                                     </table>
                                                 </div>
@@ -93,7 +87,6 @@
                                             <div class="modal-footer">
                                                 <!-- ปุ่มกดปิด (Close) ตรงส่วนล่างของ Modal -->
                                                 <div class="col-md-9 col-sm-9 col-xs-12 col-md-offset-3">
-                                                    <button type="submit" class="btn btn-success">ตกลง</button>
                                                     <button type="button" class="btn btn-default" data-dismiss="modal">
                                                         ยกเลิก
                                                     </button>
@@ -222,7 +215,7 @@
             ],
             columns: [
                 {
-                    data: 'matName'
+                    data: 'latestUpdate'
                 },
                 {
                     data: 'matQuantity'
@@ -234,7 +227,7 @@
                     data: 'importer'
                 },
                 {
-                    data: 'matQuantity'
+                    data: 'matRemain'
                 }
             ]
         });
@@ -261,7 +254,7 @@
                         item: obj.materialCategory.matCatName,
                         remain: matRemain + ' ' + obj.unit.unitName,
                         option: '<a onclick = "set_mat_remain(' + obj.matItemNo + ',\'' + obj.matItemName +'\',\'' + obj.unit.unitName + '\')" class = "btn btn-warning btn-sm" data-toggle = "modal" data-target = "#updateStockRemain"> <i class = "fa fa-pencil"> </i> &nbsp; อัพเดต </a>' +
-                                '<a onclick = "manageMaterialHistory(' + obj.matItemNo + ')" class = "btn btn-primary btn-sm" data-toggle = "modal" data-target = "#matHistoriesInfo"> <i class = "fa fa-info-circle"></i> &nbsp; รายละเอียด </a>'
+                                '<a onclick = "getHistories(' + obj.matItemNo + ',\'' + obj.matItemName +'\')" class = "btn btn-primary btn-sm" data-toggle = "modal" data-target = "#matHistoriesInfo"> <i class = "fa fa-info-circle"></i> &nbsp; รายละเอียด </a>'
                     }
                     data_array.push(data);
                 }
@@ -328,13 +321,28 @@
         });
     }
 
-    function getHistories(matNo) {
+    function getHistories(matNo ,matName) {
         $.ajax({
             type: "PUT",
             url: "${contextPath}/stock/getmaterialhistory/" + matNo,
             dataType: "json",
             success: function (result) {
                 console.log(result);
+                var data_array = [];
+                for (var k = 0 ; k < result.length ; k++){
+                    var obj= result[k];
+                    console.log(obj);
+                    var data = {
+                        latestUpdate: obj.date + ' ' + obj.time,
+                        matQuantity: obj.matQuantity,
+                        supplier: obj.supplier,
+                        importer: obj.importer,
+                        matRemain: obj.matRemain
+                    };
+                    data_array.push(data);
+                }
+                $("#stockRemainsInfo").DataTable().clear();
+                $("#stockRemainsInfo").DataTable().rows.add(data_array).draw(false);
             }
         });
     }
