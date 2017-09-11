@@ -1,5 +1,7 @@
 package com.springoeb.system.model;
 
+import com.springoeb.branch.model.Branch;
+
 import javax.persistence.*;
 
 @Entity

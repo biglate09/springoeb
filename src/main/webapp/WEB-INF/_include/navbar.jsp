@@ -1,6 +1,6 @@
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 <%@page contentType="text/html" pageEncoding="UTF-8" %>
-<%@ page import="com.springoeb.system.model.Branch" %>
+<%@ page import="com.springoeb.branch.model.Branch" %>
 <c:set scope="page" var="contextPath" value="${pageContext.request.contextPath}"/>
 <div class="col-md-3 left_col">
     <div class="left_col scroll-view">
