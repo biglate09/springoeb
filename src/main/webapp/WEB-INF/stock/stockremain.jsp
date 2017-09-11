@@ -151,8 +151,7 @@
                                                            name="inc_quantity" style="width: 20%;display: inline-block;float: left;margin-left: 3%;margin-right: 2%"
                                                            value="1" min="0" required>
                                                         <span style="font-weight:normal"
-                                                              class="submit-clear"
-                                                              id="stock_remain_unit"></span>
+                                                              class="unit"></span>
                                                 </div>
                                                 <div class="col-md-6 col-sm-6 col-xs-12 form-group has-feedback">
                                                     <label style="display: inline-block;float: left;clear: left;text-align: right;width: 60%">ลดวัตถุดิบ</label>
@@ -165,6 +164,8 @@
                                                     <input type="number" class="form-control" id="update_dec_quantity"
                                                            name="inc_quantity" style="width: 20%;display: inline-block;float: left;margin-left: 3%;margin-right: 2%"
                                                            value="1" min="0" required>
+                                                    <span style="font-weight:normal"
+                                                          class="unit"></span>
 
                                                 </div>
                                             </div>
@@ -254,24 +255,22 @@
                 for (var i = 0; i < json.length; i++) {
                     var obj = json[i];
                     var data = {
-                        matItemName: '<a style="cursor:pointer;font-weight:bold;" onclick = "set_mat_item(' + obj.matItemNo + ')" data-toggle = "modal" data-target = "#editMatItem">' + obj.matItemName + '</a>',
+                        matItemName: '<a style="cursor:pointer;font-weight:bold;" onclick = "set_mat_remain(' + obj.matItemNo + ',\'' + obj.matItemName +'\',\'' + obj.unit.unitName + '\')" data-toggle = "modal" data-target = "#updateStockRemain">' + obj.matItemName + '</a>',
                         item: obj.materialCategory.matCatName,
-                        remain:  + ' ' + obj.unit.unitName,
-                        option: '<a onclick = "manageMaterialHistory(' + obj.matItemNo + ')" class = "btn btn-warning btn-sm" data-toggle = "modal" data-target = "#updateStockRemain"> <i class = "fa fa-pencil"> </i> &nbsp; อัพเดต </a>' +
+                        remain: obj.unit.unitName,
+                        option: '<a onclick = "set_mat_remain(' + obj.matItemNo + ',\'' + obj.matItemName +'\',\'' + obj.unit.unitName + '\')" class = "btn btn-warning btn-sm" data-toggle = "modal" data-target = "#updateStockRemain"> <i class = "fa fa-pencil"> </i> &nbsp; อัพเดต </a>' +
                                 '<a onclick = "manageMaterialHistory(' + obj.matItemNo + ')" class = "btn btn-primary btn-sm" data-toggle = "modal" data-target = "#matHistoriesInfo"> <i class = "fa fa-info-circle"></i> &nbsp; รายละเอียด </a>'
                     }
                     data_array.push(data);
                 }
                 $("#datatable-stockremain").DataTable().clear();
                 $("#datatable-stockremain").DataTable().rows.add(data_array).draw(false);
-//                $('#indicator').show();
-//                $('#someModal').get(anUrl, someData, function() { $('#indicator').hide(); });
             }
         });
     }
 
 
-    $("#add_unit").on('change', function () {
+    $("#add_unit").on('changechange', function () {
         $("#stock_remain_unit").html($("#add_unit option:selected").text());
     });
 
@@ -346,23 +345,10 @@
         });
     }
 
-    function set_mat_remain(matNo) {
-        $.ajax({
-            type: "PUT",
-            url: "${contextPath}/stock/getmaterialhistory/" + matNo,
-            dataType: "json",
-            success: function (result) {
-                $("#hiddenitemno").val(result.matNo);
-                $("#update_importer").val(result.importer);
-                $("#update_supplier").val(result.supplier);
-                $("#update_inc_pack").val(result.inc_pack);
-                $("#update_dec_pack").val(result.dec_pack);
-                $("#update_inc_quantity").val(result.inc_quantity);
-                $("#update_dec_quantity").val(result.dec_quantity);
-                $("#stock_remain_unit").html($("#add_unit option:selected").text());
-                $("#show_mat_item_name_for_update").html(result.matItemName);
-            }
-        });
+    function set_mat_remain(matNo,matName,unitName) {
+        $('#show_mat_item_name_for_update').html(matName);
+        $('.submit-clear').html(unitName);
+        $('#hiddenitemno').val(matNo);
     }
 
 </script>

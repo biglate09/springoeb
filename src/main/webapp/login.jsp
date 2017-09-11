@@ -2,39 +2,23 @@
 <%@page contentType="text/html" pageEncoding="UTF-8" %>
 <c:set var="contextPath" value="${pageContext.request.contextPath}"/>
 <!DOCTYPE html>
-<html lang="en">
+<html   >
 
 <head>
-
     <meta charset="utf-8">
-    <meta http-equiv="X-UA-Compatible" content="Chrome">
-    <meta name="viewport" content="width=device-width, initial-scale=1">
     <title>ลงชื่อเข้าใช้</title>
 
     <!-- CSS -->
-    <link rel="stylesheet" href="${contextPath}assets/bootstrap/css/bootstrap.min.css" />
-    <link rel="stylesheet" href="${contextPath}assets/css/font-awesome.min.css" />
-    <link rel="stylesheet" href="${contextPath}assets/css/form-elements.css" />
-    <link rel="stylesheet" href="${contextPath}assets/css/styles.css" />
-    <link rel="stylesheet" href="http://fonts.googleapis.com/css?family=Roboto:400,100,300,500">
+    <link href="http://fonts.googleapis.com/css?family=Roboto:400,100,300,500" rel="stylesheet" >
+    <link href="${contextPath}/assets/bootstrap/css/bootstrap.min.css" rel="stylesheet" />
+    <link href="${contextPath}/assets/css/font-awesome.min.css" rel="stylesheet" />
+    <link href="${contextPath}/assets/css/form-elements.css" rel="stylesheet" />
+    <link href="${contextPath}/assets/css/styles.css" rel="stylesheet" />
+
     <%--<link rel="stylesheet" href="../webapp/assets/bootstrap/css/bootstrap.min.css">--%>
     <%--<link rel="stylesheet" href="../webapp/assets/font-awesome/css/font-awesome.min.css">--%>
     <%--<link rel="stylesheet" href="../webapp/assets/css/form-elements.css">--%>
     <%--<link rel="stylesheet" href="../webapp/assets/css/style.css">--%>
-
-    <!-- HTML5 Shim and Respond.js IE8 support of HTML5 elements and media queries -->
-    <!-- WARNING: Respond.js doesn't work if you view the page via file:// -->
-    <!--[if lt IE 9]>
-    <script src="https://oss.maxcdn.com/libs/html5shiv/3.7.0/html5shiv.js"></script>
-    <script src="https://oss.maxcdn.com/libs/respond.js/1.4.2/respond.min.js"></script>
-    <![endif]-->
-
-    <!-- Favicon and touch icons -->
-    <link rel="shortcut icon" href="assets/ico/favicon.png">
-    <link rel="apple-touch-icon-precomposed" sizes="144x144" href="../webapp/assets/ico/apple-touch-icon-144-precomposed.png">
-    <link rel="apple-touch-icon-precomposed" sizes="114x114" href="../webapp/assets/ico/apple-touch-icon-114-precomposed.png">
-    <link rel="apple-touch-icon-precomposed" sizes="72x72" href="../webapp/assets/ico/apple-touch-icon-72-precomposed.png">
-    <link rel="apple-touch-icon-precomposed" href="../webapp/assets/ico/apple-touch-icon-57-precomposed.png">
 
 </head>
 
@@ -45,17 +29,6 @@
 
     <div class="inner-bg">
         <div class="container">
-            <!-- <div class="row">
-                <div class="col-sm-8 col-sm-offset-2 text">
-                    <h1><strong>Bootstrap</strong> Login Form</h1>
-                    <div class="description">
-                        <p>
-                            This is a free responsive login form made with Bootstrap.
-                            Download it on <a href="http://azmind.com"><strong>AZMIND</strong></a>, customize and use it as you like!
-                        </p>
-                    </div>
-                </div>
-            </div> -->
             <div class="row">
                 <div class="col-sm-6 col-sm-offset-3 form-box">
                     <div class="form-top">
@@ -79,33 +52,17 @@
                                 <input type="password" name="password" placeholder="รหัสผ่าน..." class="form-password form-control
                                 ${username!=null?'wrong-entry':''}" id="form-password">
                             </div>
-                            <%--<div class="remember checkbox">--%>
-                                <%--<label>--%>
-                                    <%--<input type="checkbox" name="remember-me" ${rememberme?'checked':''}>จำรหัสผ่าน--%>
-                                <%--</label>--%>
-                            <%--</div>--%>
+                            <div class="remember checkbox">
+                                <label>
+                                    <input type="checkbox" name="remember-me" ${rememberme?'checked':''}>จำรหัสผ่าน
+                                </label>
+                            </div>
                             <button type="submit" class="btn">ลงชื่อเข้าใช้!</button>
                             <p style="color:red;text-align:center;font-size:13px;">${msg}</p>
                         </form>
                     </div>
                 </div>
             </div>
-            <!-- <div class="row">
-                <div class="col-sm-6 col-sm-offset-3 social-login">
-                    <h3>...or login with:</h3>
-                    <div class="social-login-buttons">
-                        <a class="btn btn-link-2" href="#">
-                            <i class="fa fa-facebook"></i> Facebook
-                        </a>
-                        <a class="btn btn-link-2" href="#">
-                            <i class="fa fa-twitter"></i> Twitter
-                        </a>
-                        <a class="btn btn-link-2" href="#">
-                            <i class="fa fa-google-plus"></i> Google Plus
-                        </a>
-                    </div>
-                </div>
-            </div> -->
         </div>
     </div>
 
@@ -113,14 +70,11 @@
 
 
 <!-- Javascript -->
-<script src="assets/js/jquery-1.11.1.min.js"></script>
-<script src="assets/bootstrap/js/bootstrap.min.js"></script>
-<script src="assets/js/jquery.backstretch.min.js"></script>
-<script src="assets/js/scripts.js"></script>
+<script src="${contextPath}/assets/js/jquery-1.11.1.min.js"></script>
+<script src="${contextPath}/assets/bootstrap/js/bootstrap.min.js"></script>
+<script src="${contextPath}/assets/js/jquery.backstretch.min.js"></script>
+<script src="${contextPath}/assets/js/scripts.js"></script>
 
-<!--[if lt IE 10]>
-<script src="assets/js/placeholder.js"></script>
-<![endif]-->
 
 </body>
 
