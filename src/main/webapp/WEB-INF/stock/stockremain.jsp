@@ -270,10 +270,6 @@
     }
 
 
-    $("#add_unit").on('changechange', function () {
-        $("#stock_remain_unit").html($("#add_unit option:selected").text());
-    });
-
     function manageMaterialHistory() {
         $.ajax({
             type: "POST",
@@ -297,11 +293,7 @@
         var object = $("#update").serialize();
         $.ajax({
             type: "POST",
-            data: new FormData($("#update")[0]),
-            enctype: 'multipart/form-data',
-            cache: false,
-            contentType: false,
-            processData: false,
+            data: object,
             url: "${contextPath}/stock/managematerialhistory",
             success: function (result) {
                 swal("สำเร็จ", "วัตถุดิบนี้ถูกอัพเดตเรียบร้อยแล้ว", "success");
@@ -347,7 +339,7 @@
 
     function set_mat_remain(matNo,matName,unitName) {
         $('#show_mat_item_name_for_update').html(matName);
-        $('.submit-clear').html(unitName);
+        $('.unit').html(unitName);
         $('#hiddenitemno').val(matNo);
     }
 
