@@ -71,17 +71,17 @@
                                               aria-hidden="true"></span>
                                     </div>
                                     <div class="col-md-12 col-sm-12 col-xs-12 form-group has-feedback">
-                                        <label>อีเมลสาขานี้</label>
+                                        <label>อีเมลสาขา</label>
                                         <input type="email" class="form-control" name="matCatName" id="branch_email"
-                                               placeholder="mybranch@mail.com" required>
-                                        <span class="fa fa-pencil form-control-feedback right"
+                                               placeholder="เช่น mybranch@mail.com" required>
+                                        <span class="fa fa-envelope form-control-feedback right"
                                               aria-hidden="true"></span>
                                     </div>
                                     <div class="col-md-12 col-sm-12 col-xs-12 form-group has-feedback">
-                                        <label>Username ของสาขานี้</label>
+                                        <label>Username ของสาขา</label>
                                         <input type="text" class="form-control" name="matCatName" id="branch_username"
                                                placeholder="Username" required>
-                                        <span class="fa fa-pencil form-control-feedback right"
+                                        <span class="fa fa-user form-control-feedback right"
                                               aria-hidden="true"></span>
                                     </div>
                                 </div>
@@ -111,6 +111,7 @@
                         </div>
                         <div class="modal-body">
                             <form class="form-horizontal form-label-left input_mask" modelAttribute="branches" id="edit_branch">
+                                <input type="hidden" name="branchNo" id="hiddenbranchno">
                                 <div class="form-group">
                                     <div class="col-md-12 col-sm-12 col-xs-12 form-group has-feedback">
                                         <label>ชื่อสาขา</label>
@@ -120,17 +121,17 @@
                                               aria-hidden="true"></span>
                                     </div>
                                     <div class="col-md-12 col-sm-12 col-xs-12 form-group has-feedback">
-                                        <label>อีเมลสาขานี้</label>
+                                        <label>อีเมลสาขา</label>
                                         <input type="email" class="form-control" name="matCatName" id="edit_branch_email"
-                                               placeholder="mybranch@mail.com" required>
-                                        <span class="fa fa-pencil form-control-feedback right"
+                                               placeholder="เช่น mybranch@mail.com" required>
+                                        <span class="fa fa-envelope form-control-feedback right"
                                               aria-hidden="true"></span>
                                     </div>
                                     <div class="col-md-12 col-sm-12 col-xs-12 form-group has-feedback">
-                                        <label>Username ของสาขานี้</label>
+                                        <label>Username ของสาขา</label>
                                         <input type="text" class="form-control" name="matCatName" id="edit_branch_username"
                                                placeholder="Username" required>
-                                        <span class="fa fa-pencil form-control-feedback right"
+                                        <span class="fa fa-user form-control-feedback right"
                                               aria-hidden="true"></span>
                                     </div>
                                 </div>
@@ -173,7 +174,94 @@
         refresh_table();
     });
 
+    $("#addBranch").submit(function(){
+        var object = $("#addBranch").serialize();
+        $.ajax({
+            type: "POST",
+            data: object,
+            url: "${contextPath}/branch/",
+            success: function (result) {
+                swal("สำเร็จ", "ประเภท " + $("#branc_name").val() + " ถูกเพิ่มเรียบร้อยแล้ว", "success");
+                reset_field();
+                $("#addBranch").modal('toggle');
+                refresh_table();
+            },error: function(result){
+                swal("ไม่สำเร็จ", "ชื่อประเภทอาจซ้ำหรือเซิร์ฟเวอร์มีปัญหา", "error");
+            }
+        });
+        return false;
+    });
 
+    $('.modal').on('hidden.bs.modal', function(){
+        reset_field();
+    });
+
+    function reset_field(){
+        $("#addBranch")[0].reset();
+    }
+
+    function refresh_table() {
+        $.ajax({
+            type: "POST",
+            url: "${contextPath}/branch/",
+            dataType: "json",
+            success: function (json) {
+                var data_array = [];
+                for (var iterator = 0; iterator < json.length; iterator++) {
+                    var obj = json[iterator];
+                    var data_refresh = {
+                        branchName: '<a onclick = "set_branch(' + obj.branchNo + ',\'' + obj.branchName +'\')" data-toggle = "modal" data-target = "#addBranch" style = "font-weight: bold;cursor:pointer;" >' + obj.branchName + '</a>',
+                        option: '<a onclick = "set_branch(' + obj.branchNo + ',\'' + obj.branchName +'\')" class = "btn btn-warning btn-sm" data-toggle = "modal" data-target = "#editBranch"> <i class = "fa fa-pencil"> </i> &nbsp; แก้ไข </a>' +
+                        '<a onclick = "del_branch(' + obj.branchNo + ',\'' + obj.branchName +'\')") class = "btn btn-danger btn-sm"> <i class = "fa fa-trash"></i> &nbsp; ลบ </a>'
+                    };
+                    data_array.push(data_refresh);
+                }
+
+                $("#datatable-branches").DataTable().clear();
+                $("#datatable-branches").DataTable().rows.add(data_array).draw(false);
+            }
+        });
+    }
+
+    function set_branch(branchNo, branchName) {
+        $.ajax({
+            type: "PUT",
+            url: "${contextPath}/branch/" + '',
+            dataType: "json",
+            success: function (result) {
+                branch = result.branch;
+                $("#hiddenbranchno").val(branchNo);
+                $("#edit_branch_name").val(branchName);
+                $("#show_branch_name").html(branchName);
+            }
+        });
+    }
+
+    function del_branch(branchNo, branchName) {
+        swal({
+                title: "ยืนยันการลบ " + branchName,
+                text: "เมื่อยืนยัน จะไม่สามารถนำข้อมูล " + branchName + " กลับมาได้",
+                type: "warning",
+                showCancelButton: true,
+                cancelButtonText: "ยกเลิก",
+                confirmButtonText: "ใช่, ต้องการลบ",
+                confirmButtonColor: "#DD6B55",
+                closeOnConfirm: false
+            },
+            function () {
+                $.ajax({
+                    type: "DELETE",
+                    url: "${contextPath}/branch/" + '',
+                    success: function (json) {
+                        swal("สำเร็จ", branchName + " ถูกลบเรียบร้อยแล้ว", "success");
+                        refresh_table();
+                    },
+                    error: function (json) {
+                        swal("ไม่สำเร็จ", "เซิร์ฟเวอร์อาจมีปัญหา", "error");
+                    }
+                });
+            });
+    }
 </script>
 </body>
 </html>
