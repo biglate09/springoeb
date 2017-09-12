@@ -215,10 +215,16 @@
             ],
             columns: [
                 {
-                    data: 'latestUpdate'
+                    data: {
+                        _: 'update.display',
+                        sort: 'update.order'
+                    }
                 },
                 {
-                    data: 'matQuantity'
+                    data: {
+                        _: 'amount.display',
+                        sort: 'amount.order'
+                    }
                 },
                 {
                     data: 'supplier'
@@ -252,7 +258,7 @@
                     var data = {
                         matItemName: '<a style="cursor:pointer;font-weight:bold;" onclick = "set_mat_remain(' + obj.matItemNo + ',\'' + obj.matItemName +'\',\'' + obj.unit.unitName + '\')" data-toggle = "modal" data-target = "#updateStockRemain">' + obj.matItemName + '</a>',
                         item: obj.materialCategory.matCatName,
-                        remain: matRemain + ' ' + obj.unit.unitName,
+                        remain: '<div style="color ' + (matRemain < 0 ? ':red' : '' ) + '">'+ matRemain +'</div>',
                         option: '<a onclick = "set_mat_remain(' + obj.matItemNo + ',\'' + obj.matItemName +'\',\'' + obj.unit.unitName + '\')" class = "btn btn-warning btn-sm" data-toggle = "modal" data-target = "#updateStockRemain"> <i class = "fa fa-pencil"> </i> &nbsp; อัพเดต </a>' +
                                 '<a onclick = "getHistories(' + obj.matItemNo + ',\'' + obj.matItemName +'\')" class = "btn btn-primary btn-sm" data-toggle = "modal" data-target = "#matHistoriesInfo"> <i class = "fa fa-info-circle"></i> &nbsp; รายละเอียด </a>'
                     }
@@ -332,21 +338,32 @@
                 for (var k = 0 ; k < result.length ; k++){
                     var obj= result[k];
                     console.log(obj);
+                    var date = new Date(obj.date.substring(0, 4), obj.date.substring(5, 7), obj.date.substring(8, 11), obj.time.substring(0, 2), obj.time.substring(3, 5), obj.time.substring(7, 9), 0);
+                    amount_order = obj.matQuantity * 1000;
+                    for (var j = ("" + amount_order).length; j < 30; j++) {
+                        amount_order = "0" + amount_order;
+                    }
                     var data = {
-                        latestUpdate: obj.date + ' ' + obj.time,
-                        matQuantity: obj.matQuantity,
+                        update: {
+                            display: ((date.getDate() < 10 ? "0" + date.getDate() : date.getDate()) + "/" + ((date.getMonth()) < 10 ? "0" + (date.getMonth()) : date.getMonth()) + "/" + date.getFullYear() + " " + (date.getHours() < 10 ? "0" + date.getHours() : date.getHours()) + "." + (date.getMinutes() < 10 ? "0" + date.getMinutes() : date.getMinutes()) + " น."),
+                            order: "" + date.getFullYear() + date.getMonth() + date.getDate() + date.getHours() + date.getMinutes() + date.getSeconds()
+                        },
+                        amount: {
+                            display: '<div style="color ' + (obj.matQuantity < 0 ? ':red' : ':green' ) + '">'+ obj.matQuantity +'</div>',
+                            order: amount_order
+                        },
                         supplier: obj.supplier,
                         importer: obj.importer,
                         matRemain: obj.matRemain
                     };
                     data_array.push(data);
                 }
+                $('#show_mat_item_name_for_info').html(matName);
                 $("#stockRemainsInfo").DataTable().clear();
                 $("#stockRemainsInfo").DataTable().rows.add(data_array).draw(false);
             }
         });
     }
-
     function set_mat_remain(matNo,matName,unitName) {
         $('#show_mat_item_name_for_update').html(matName);
         $('.unit').html(unitName);
