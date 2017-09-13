@@ -271,6 +271,8 @@
 
                     if (isMinus) {
                         matRemainOrder = "-" + matRemainOrder;
+                        matRemainOrder = 100000000000000000000+parseInt(matRemainOrder);
+                        matRemainOrder = "-" + matRemainOrder;
                     }
 
                     var data = {
@@ -336,6 +338,8 @@
                         amount_order = "0" + amount_order;
                     }
                     if(isMinus){
+                        amount_order = "-" + amount_order;
+                        amount_order = 100000000000000000000+parseInt(amount_order);
                         amount_order = "-" + amount_order;
                     }
                     var data = {
