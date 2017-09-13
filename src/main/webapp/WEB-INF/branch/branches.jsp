@@ -45,6 +45,7 @@
                                    class="table table-striped table-bordered">
                                 <thead>
                                 <tr>
+                                    <th style="width:5%;text-align:center;">ลำดับ</th>
                                     <th style="width:20%;text-align:center;">ชื่อสาขา</th>
                                     <th style="width:20%;text-align:center;">ตัวเลือก</th>
                                 </tr>
@@ -169,6 +170,9 @@
             ],
             columns: [
                 {
+                    data: 'No'
+                },
+                {
                     data: 'branchName'
                 },
                 {
@@ -215,7 +219,11 @@
                 var data_array = [];
                 for (var iterator = 0; iterator < json.length; iterator++) {
                     var obj = json[iterator];
+                    var number = [];
+                    for (var i = 1; i != 4; ++i) number.push(i);
+
                     var data_refresh = {
+                        No: number,
                         branchName: '<a onclick = "set_branch(' + obj.branchNo + ',\'' + obj.branchName +'\')" data-toggle = "modal" data-target = "#addBranch" style = "font-weight: bold;cursor:pointer;" >' + obj.branchName + '</a>',
                         option: '<a onclick = "set_branch(' + obj.branchNo + ',\'' + obj.branchName +'\')" class = "btn btn-warning btn-sm" data-toggle = "modal" data-target = "#editBranch"> <i class = "fa fa-pencil"> </i> &nbsp; แก้ไข </a>' +
                         '<a onclick = "del_branch(' + obj.branchNo + ',\'' + obj.branchName +'\')") class = "btn btn-danger btn-sm"> <i class = "fa fa-trash"></i> &nbsp; ลบ </a>'
