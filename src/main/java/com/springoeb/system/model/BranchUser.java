@@ -1,6 +1,7 @@
 package com.springoeb.system.model;
 
 import com.springoeb.branch.model.Branch;
+import com.springoeb.employee.model.Employee;
 
 import javax.persistence.*;
 
@@ -10,13 +11,19 @@ public class BranchUser {
     private Integer branchUserNo;
     private String username;
     private String password;
-    @Column(name = "branchNo", updatable = true,insertable = true)
+    @Column(name = "branch_no", updatable = true,insertable = true)
     private Integer branchNo;
     private Integer roleNo;
+    @Column(name = "emp_no", updatable = true,insertable = true)
+    private Integer empNo;
 
     @ManyToOne
-    @JoinColumn(name = "branchNo",updatable = false,insertable = false)
+    @JoinColumn(name = "branch_no",updatable = false,insertable = false)
     private Branch branch;
+
+    @OneToOne(cascade = CascadeType.ALL)
+    @JoinColumn(name = "emp_no", updatable = false,insertable = false)
+    private Employee employee;
 
     public Integer getBranchUserNo() {
         return branchUserNo;
@@ -66,14 +73,19 @@ public class BranchUser {
         this.branch = branch;
     }
 
-    @Override
-    public String toString() {
-        return "BranchUser{" +
-                "branchUserNo=" + branchUserNo +
-                ", username='" + username + '\'' +
-                ", password='" + password + '\'' +
-                ", branchNo=" + branchNo +
-                ", roleNo=" + roleNo +
-                '}';
+    public Integer getEmpNo() {
+        return empNo;
+    }
+
+    public void setEmpNo(Integer empNo) {
+        this.empNo = empNo;
+    }
+
+    public Employee getEmployee() {
+        return employee;
+    }
+
+    public void setEmployee(Employee employee) {
+        this.employee = employee;
     }
 }

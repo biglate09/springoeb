@@ -233,7 +233,7 @@ public class StockController {
     @ResponseBody
     public void AddOrEditMaterialHistory(HttpServletRequest request,HttpSession session){
         int branchNo = ((BranchUser)(session.getAttribute("branchUser"))).getBranchNo();
-        String importer = request.getParameter("importer");
+        String importer = ((BranchUser)(session.getAttribute("branchUser"))).getEmployee() == null ? "แอดมินสาขา" : ((BranchUser)(session.getAttribute("branchUser"))).getEmployee().getEmpName();
         String supplier = request.getParameter("supplier");
         Integer matItemNo = Integer.parseInt(request.getParameter("mat_item_no"));
         String incPack = request.getParameter("inc_pack");

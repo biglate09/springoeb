@@ -16,7 +16,7 @@ public class MaterialHistoryService {
         return materialHistoryRepository.findByBranchNo(branchNo);
     }
     public List<MaterialHistory> getMaterialHistoriesByMaterialNo(int matNo,int branchNo){
-        return materialHistoryRepository.findByMatItemNoAndBranchNoOrderByMatHistNoDesc(matNo,branchNo);
+        return materialHistoryRepository.findByMatItemNoAndBranchNoAndOfMatHistNoIsNullOrderByMatHistNoDesc(matNo,branchNo);
     }
     public MaterialHistory save(MaterialHistory materialHistory){
         return materialHistoryRepository.save(materialHistory);

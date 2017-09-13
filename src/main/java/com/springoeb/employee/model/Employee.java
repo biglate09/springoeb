@@ -1,5 +1,7 @@
 package com.springoeb.employee.model;
 
+import com.springoeb.system.model.BranchUser;
+
 import javax.persistence.*;
 import java.io.Serializable;
 import java.util.List;
@@ -25,6 +27,8 @@ public class Employee implements Serializable{
     private List<EmployeePay> employeePays;
     @OneToMany(fetch = FetchType.LAZY, mappedBy = "employee")
     private List<WorkHistory> workHistories;
+    @OneToOne(mappedBy = "employee")
+    private BranchUser branchUser;
 
     public static String FULL_TIME = "1";
     public static String PART_TIME = "2";
@@ -128,5 +132,13 @@ public class Employee implements Serializable{
 
     public void setWorkHistories(List<WorkHistory> workHistories) {
         this.workHistories = workHistories;
+    }
+
+    public BranchUser getBranchUser() {
+        return branchUser;
+    }
+
+    public void setBranchUser(BranchUser branchUser) {
+        this.branchUser = branchUser;
     }
 }
