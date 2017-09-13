@@ -9,6 +9,12 @@
     <jsp:include page="../_include/topenv.jsp"/>
     <link href="${contextPath}/vendors/bootstrap-daterangepicker/daterangepicker.css" rel="stylesheet">
     <title>ประวัติการทำงาน</title>
+    <style>
+        .required:after {
+            content:" *";
+            color:red;
+        }
+    </style>
 </head>
 <body class="nav-md">
 <div class="container body">
