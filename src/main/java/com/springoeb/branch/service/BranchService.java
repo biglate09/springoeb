@@ -14,5 +14,10 @@ public class BranchService {
     public Branch getBranch(int branchNo){
         return branchRepository.findByBranchNo(branchNo);
     }
-    public List<Branch> getAllBranches(){ return branchRepository.findAll();}
+    public List<Branch> getAllBranches(){
+        return branchRepository.findAll();
+    }
+    public void save(Branch branch){
+        branchRepository.save(branch);
+    }
 }

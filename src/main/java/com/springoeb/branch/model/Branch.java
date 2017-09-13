@@ -15,11 +15,11 @@ public class Branch {
     private String branchName;
     private String branchDesc;
     private String addressName;
-    private String district;
-    private String subDistrict;
+    private Integer districtNo;
+    private Integer subDistrictNo;
     private String road;
-    private String province;
-    private String zip;
+    private Integer provinceNo;
+    private Integer zipNo;
     private String tel;
     private String line;
     private String fb;
@@ -61,20 +61,20 @@ public class Branch {
         this.addressName = addressName;
     }
 
-    public String getDistrict() {
-        return district;
+    public Integer getDistrictNo() {
+        return districtNo;
     }
 
-    public void setDistrict(String district) {
-        this.district = district;
+    public void setDistrictNo(Integer districtNo) {
+        this.districtNo = districtNo;
     }
 
-    public String getSubDistrict() {
-        return subDistrict;
+    public Integer getSubDistrictNo() {
+        return subDistrictNo;
     }
 
-    public void setSubDistrict(String subDistrict) {
-        this.subDistrict = subDistrict;
+    public void setSubDistrictNo(Integer subDistrictNo) {
+        this.subDistrictNo = subDistrictNo;
     }
 
     public String getRoad() {
@@ -85,20 +85,20 @@ public class Branch {
         this.road = road;
     }
 
-    public String getProvince() {
-        return province;
+    public Integer getProvinceNo() {
+        return provinceNo;
     }
 
-    public void setProvince(String province) {
-        this.province = province;
+    public void setProvinceNo(Integer provinceNo) {
+        this.provinceNo = provinceNo;
     }
 
-    public String getZip() {
-        return zip;
+    public Integer getZipNo() {
+        return zipNo;
     }
 
-    public void setZip(String zip) {
-        this.zip = zip;
+    public void setZipNo(Integer zipNo) {
+        this.zipNo = zipNo;
     }
 
     public String getTel() {
