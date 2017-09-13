@@ -6,6 +6,12 @@
 <head>
     <jsp:include page="../_include/topenv.jsp"/>
     <title>จัดการสาขาทั้งหมด</title>
+    <style>
+        .required:after {
+            content:" *";
+            color:red;
+        }
+    </style>
 </head>
 <body class="nav-md">
 <div class="container body">
@@ -64,21 +70,21 @@
                             <form class="form-horizontal form-label-left input_mask" modelAttribute="branches" id="add_branch">
                                 <div class="form-group">
                                     <div class="col-md-12 col-sm-12 col-xs-12 form-group has-feedback">
-                                        <label>ชื่อสาขา</label>
+                                        <label class="required">ชื่อสาขา</label>
                                         <input type="text" class="form-control" name="matCatName" id="branch_name"
                                                placeholder="ชื่อสาขา" required>
                                         <span class="fa fa-pencil form-control-feedback right"
                                               aria-hidden="true"></span>
                                     </div>
                                     <div class="col-md-12 col-sm-12 col-xs-12 form-group has-feedback">
-                                        <label>อีเมลสาขา</label>
+                                        <label class="required">อีเมลสาขา</label>
                                         <input type="email" class="form-control" name="matCatName" id="branch_email"
                                                placeholder="เช่น mybranch@mail.com" required>
                                         <span class="fa fa-envelope form-control-feedback right"
                                               aria-hidden="true"></span>
                                     </div>
                                     <div class="col-md-12 col-sm-12 col-xs-12 form-group has-feedback">
-                                        <label>Username ของสาขา</label>
+                                        <label class="required">Username ของสาขา</label>
                                         <input type="text" class="form-control" name="matCatName" id="branch_username"
                                                placeholder="Username" required>
                                         <span class="fa fa-user form-control-feedback right"
@@ -114,21 +120,21 @@
                                 <input type="hidden" name="branchNo" id="hiddenbranchno">
                                 <div class="form-group">
                                     <div class="col-md-12 col-sm-12 col-xs-12 form-group has-feedback">
-                                        <label>ชื่อสาขา</label>
+                                        <label class="required">ชื่อสาขา</label>
                                         <input type="text" class="form-control" name="matCatName" id="edit_branch_name"
                                                placeholder="ชื่อสาขา" required>
                                         <span class="fa fa-pencil form-control-feedback right"
                                               aria-hidden="true"></span>
                                     </div>
                                     <div class="col-md-12 col-sm-12 col-xs-12 form-group has-feedback">
-                                        <label>อีเมลสาขา</label>
+                                        <label class="required">อีเมลสาขา</label>
                                         <input type="email" class="form-control" name="matCatName" id="edit_branch_email"
                                                placeholder="เช่น mybranch@mail.com" required>
                                         <span class="fa fa-envelope form-control-feedback right"
                                               aria-hidden="true"></span>
                                     </div>
                                     <div class="col-md-12 col-sm-12 col-xs-12 form-group has-feedback">
-                                        <label>Username ของสาขา</label>
+                                        <label class="required">Username ของสาขา</label>
                                         <input type="text" class="form-control" name="matCatName" id="edit_branch_username"
                                                placeholder="Username" required>
                                         <span class="fa fa-user form-control-feedback right"

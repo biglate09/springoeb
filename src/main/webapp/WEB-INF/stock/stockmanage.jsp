@@ -7,6 +7,12 @@
 <head>
     <jsp:include page="../_include/topenv.jsp"/>
     <title>เพิ่ม / ลดวัตถุดิบ</title>
+    <style>
+        .required:after {
+            content:" *";
+            color:red;
+        }
+    </style>
 </head>
 <body class="nav-md">
 <div class="container body">
@@ -68,7 +74,7 @@
                                             <input type="hidden" name="matFlag" value="M">
                                             <div class="form-group">
                                                 <div class="col-md-6 form-group has-feedback">
-                                                    <label>ชื่อผู้นำเข้าวัตถุดิบ</label>
+                                                    <label class="required">ชื่อผู้นำเข้าวัตถุดิบ</label>
                                                     <input type="text" class="form-control" name="importer"
                                                            id="add_importer"
                                                            placeholder="ชื่อผู้นำเข้าวัตถุดิบ" required>
@@ -76,7 +82,7 @@
                                                           aria-hidden="true"></span>
                                                 </div>
                                                 <div class="col-md-6 form-group has-feedback">
-                                                    <label>ชื่อ Supplier</label>
+                                                    <label class="required">ชื่อ Supplier</label>
                                                     <input type="text" class="form-control" name="supplier"
                                                            id="add_supplier"
                                                            placeholder="ชื่อ Supplier" required>
@@ -84,7 +90,7 @@
                                                           aria-hidden="true"></span>
                                                 </div>
                                                 <div class="col-md-12 col-sm-12 col-xs-12">
-                                                    <label>เลือกวัตถุดิบอาหารที่ต้องการอัพเดท</label>
+                                                    <label class="required">เลือกวัตถุดิบอาหารที่ต้องการอัพเดท</label>
                                                     <table id="add_mixed_product_datatable"
                                                            class="table table-bordered table-striped">
                                                         <thead>
@@ -92,7 +98,7 @@
                                                             <th style="text-align:center;">ชื่อวัตถุดิบอาหาร</th>
                                                             <th style="text-align:center;">ประเภท</th>
                                                             <th style="text-align:center;">คงเหลือ</th>
-                                                            <th style="text-align:center;">จำนวนที่เปลี่ยนแปลง</th>
+                                                            <th style="text-align:center;"><span class="required">จำนวนที่เปลี่ยนแปลง</span></th>
                                                         </tr>
                                                         </thead>
                                                         <tbody style="text-align:center;">
@@ -197,7 +203,7 @@
                                             <input type="hidden" name="matItemNo" id="hiddenmatitemno">
                                             <div class="form-group">
                                                 <div class="col-md-4 col-sm-4 col-xs-12 form-group has-feedback">
-                                                    <label>ชื่อวัตถุดิบอาหารแบบผสม</label>
+                                                    <label class="required">ชื่อวัตถุดิบอาหารแบบผสม</label>
                                                     <input type="text" class="form-control" name="matItemName"
                                                            id="edit_mat_item_name"
                                                            placeholder="ชื่อวัตถุดิบอาหารแบบผสม" required>
@@ -206,7 +212,7 @@
                                                 </div>
 
                                                 <div class="col-md-4 col-sm-4 col-xs-12 form-group has-feedback">
-                                                    <label>ชื่อวัตถุดิบอาหารแบบผสม</label>
+                                                    <label class="required">ชื่อวัตถุดิบอาหารแบบผสม</label>
                                                     <input type="number" class="form-control" name="matItemName"
                                                            id="edit_mat_item_quntity"
                                                            placeholder="จำนวนที่เปลี่ยนแปลง" required>
@@ -215,7 +221,7 @@
                                                 </div>
 
                                                 <div class="col-md-4 col-sm-4 col-xs-12 form-group has-feedback">
-                                                    <label>หน่วยวัตถุดิบ</label>
+                                                    <label class="required">หน่วยวัตถุดิบ</label>
                                                     <select name="unitNo" id="edit_unit_no" class="form-control"
                                                             required>
                                                         <option value="" disabled selected>เลือกหน่วย</option>

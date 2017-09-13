@@ -36,6 +36,11 @@
 .plusemp{
 	font-size:25px;
 }
+
+.required:before {
+    content:" *";
+    color:red;
+}
 /*
 .btn-default{
 	border-radius: 1px 4px 4px 1px;

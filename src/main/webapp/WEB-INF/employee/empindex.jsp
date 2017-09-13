@@ -12,6 +12,12 @@
     <link href="${contextPath}/vendors/fullcalendar/dist/fullcalendar.css" rel="stylesheet">
     <link href="${contextPath}/vendors/fullcalendar/dist/fullcalendar.print.css" rel="stylesheet" media="print">
     <title>ข้อมูลพนักงาน</title>
+    <style>
+        .required:after {
+            content:" *";
+            color:red;
+        }
+    </style>
 </head>
 <body class="nav-md">
 <div class="container body">
@@ -75,7 +81,7 @@
                                 <form class="form-horizontal form-label-left input_mask" id="add_emp"
                                       modelAttribute="employee">
                                     <div class="col-md-6 col-sm-6 col-xs-12 form-group has-feedback">
-                                        <label>ชื่อพนักงาน</label>
+                                        <label class="required">ชื่อพนักงาน</label>
                                         <input type="text" class="form-control" name="empName"
                                                placeholder="ชื่อพนักงาน" id="empname_add" required>
                                         <span class="fa fa-user form-control-feedback right"
@@ -83,7 +89,7 @@
                                     </div>
                                     <div class="form-group">
                                         <div class="col-md-6 col-sm-6 col-xs-12 form-group has-feedback">
-                                            <label>เพศ</label>
+                                            <label class="required">เพศ</label>
                                             <div class="form-group">
                                                 <div class="btn-group" data-toggle="buttons">
                                                     <label class="btn btn-default clear-active"
@@ -112,7 +118,7 @@
                                                   aria-hidden="true"></span>
                                         </div>
                                         <div class="col-md-6 col-sm-6 col-xs-12 form-group has-feedback">
-                                            <label>ประเภทพนักงาน</label>
+                                            <label class="required">ประเภทพนักงาน</label>
                                             <div class="form-group">
                                                 <div class="btn-group" data-toggle="buttons">
                                                     <label class="btn btn-default clear-active empTypeItem"
@@ -138,7 +144,7 @@
                                         </div>
                                         <div class="col-md-6 col-sm-6 col-xs-12 form-group has-feedback"
                                              style="clear: both;">
-                                            <label>ประเภทการจ่าย</label>
+                                            <label class="required">ประเภทการจ่าย</label>
                                             <select name="payType" class="form-control" required>
                                                 <option value="" selected disabled>เลือกประเภทการจ่าย</option>
                                                 <option value="${Employee.HOUR}">รายชั่วโมง</option>
@@ -147,7 +153,7 @@
                                         </div>
 
                                         <div class="col-md-6 col-sm-6 col-xs-12 form-group has-feedback">
-                                            <label>ค่าจ้างต่อหน่วยเวลา</label>
+                                            <label class="required">ค่าจ้างต่อหน่วยเวลา</label>
                                             <input type="number" step="any" class="form-control"
                                                    placeholder="ค่าจ้างต่อหน่วยเวลา" name="pay" max="999999.99"
                                                    required>
@@ -227,7 +233,7 @@
                                       modelAttribute="employee">
                                     <input type="hidden" name="empNo" id="hiddenempno">
                                     <div class="col-md-6 col-sm-6 col-xs-12 form-group has-feedback">
-                                        <label>ชื่อพนักงาน</label>
+                                        <label class="required">ชื่อพนักงาน</label>
                                         <input type="text" class="form-control" id="editempname" name="empName"
                                                placeholder="ชื่อพนักงาน" required>
                                         <span class="fa fa-user form-control-feedback right"
@@ -235,7 +241,7 @@
                                     </div>
                                     <div class="form-group">
                                         <div class="col-md-6 col-sm-6 col-xs-12 form-group has-feedback">
-                                            <label>เพศ</label>
+                                            <label class="required">เพศ</label>
                                             <div class="form-group">
                                                 <div class="btn-group" data-toggle="buttons">
                                                     <label class="btn btn-default clear-active"
@@ -266,7 +272,7 @@
                                                   aria-hidden="true"></span>
                                         </div>
                                         <div class="col-md-6 col-sm-6 col-xs-12 form-group has-feedback">
-                                            <label>ประเภทพนักงาน</label>
+                                            <label class="required">ประเภทพนักงาน</label>
                                             <div class="form-group">
                                                 <div class="btn-group" data-toggle="buttons">
                                                     <label class="btn btn-default empTypeItem clear-active"
@@ -299,7 +305,7 @@
                                     </div>
                                     <div class="col-md-6 col-sm-6 col-xs-12 form-group has-feedback"
                                          style="clear: both;">
-                                        <label>ประเภทการจ่าย</label>
+                                        <label class="required">ประเภทการจ่าย</label>
                                         <select id="editpaytype" name="payType" class="form-control" required>
                                             <option value="" disabled>เลือกประเภทการจ่าย</option>
                                             <option value="${Employee.HOUR}">รายชั่วโมง</option>
@@ -308,7 +314,7 @@
                                     </div>
 
                                     <div class="col-md-6 col-sm-6 col-xs-12 form-group has-feedback">
-                                        <label>ค่าจ้างต่อหน่วยเวลา</label>
+                                        <label class="required">ค่าจ้างต่อหน่วยเวลา</label>
                                         <input type="number" step="any" class="form-control"
                                                placeholder="ค่าจ้างต่อหน่วยเวลา" name="pay" id="editpay"
                                                max="999999.99" required>

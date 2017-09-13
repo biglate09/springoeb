@@ -17,6 +17,11 @@
             margin-bottom: 10px;
             background-color: #fff;
         }
+        .required:after {
+            content:" *";
+            color:red;
+        }
+
     </style>
 </head>
 <body class="nav-md">
@@ -46,13 +51,13 @@
                                         เพิ่มชุดเมนู</a>
                                 </p>
                             </div>
-                            <div class="col-md-4 col-md-offset-3 form-group" style="padding:0px;">
+                            <div class="col-md-4 col-md-offset-3 form-group" style="padding:0px;margin-right: 5px;">
                                 <input type="text" class="form-control" id="myInput"
                                        onkeyup="filterCard()" placeholder="ค้นหาด้วยชื่อเมนู...">
                                 <span class="fa fa-search form-control-feedback right"
                                       aria-hidden="true"></span>
                             </div>
-                            <div class="btn-group col-md-1" data-toggle="buttons">
+                            <div class="btn-group col" data-toggle="buttons">
                                 <label id="displayThumbnail" class="btn btn-default display_toggle active"
                                        type="button" title="แสดงแบบรูป">
                                     <span class="fa fa-th-large"></span>
@@ -116,7 +121,7 @@
                                                     </div>
 
                                                     <div class="col-md-6 col-sm-6 col-xs-12 form-group has-feedback">
-                                                        <label>ชื่อชุดเมนูอาหารภาษาไทย</label>
+                                                        <label class="required">ชื่อชุดเมนูอาหารภาษาไทย</label>
                                                         <input type="text" class="form-control" name="menuNameTH"
                                                                id="add_menuset_nameTH"
                                                                placeholder="ชื่อชุดเมนูอาหารภาษาไทย" required>
@@ -124,7 +129,7 @@
                                                               aria-hidden="true"></span>
                                                     </div>
                                                     <div class="col-md-6 col-sm-6 col-xs-12 form-group has-feedback">
-                                                        <label>ชื่อชุดเมนูอาหารภาษาอังกฤษ</label>
+                                                        <label class="required">ชื่อชุดเมนูอาหารภาษาอังกฤษ</label>
                                                         <input type="text" class="form-control" name="menuNameEN"
                                                                id="add_menuset_nameEN"
                                                                placeholder="ชื่อชุดเมนูอาหารภาษาอังกฤษ" required>
@@ -147,7 +152,7 @@
                                                                 <th style="text-align:center;">ชื่อเมนูอาหาร</th>
                                                                 <th style="text-align:center;">หมวดหมู่</th>
                                                                 <th style="text-align:center;">ราคา</th>
-                                                                <th style="text-align:center;">จำนวน</th>
+                                                                <th style="text-align:center;"><span class="required">จำนวน</span></th>
                                                             </tr>
                                                             </thead>
                                                             <tbody style="text-align:center;">
@@ -186,7 +191,7 @@
                                                         </div>
                                                     </div>
                                                     <div class="col-md-6">
-                                                        <label>ราคาชุดเมนูอาหารนี้ (บาท)</label>
+                                                        <label class="required">ราคาชุดเมนูอาหารนี้ (บาท)</label>
                                                         <input type="number" min="0" step="0.25" class="form-control"
                                                                name="menuPrice"
                                                                placeholder="ราคาชุดเมนูอาหารนี้ (บาท)" required>
@@ -261,7 +266,7 @@
                                                     </div>
 
                                                     <div class="col-md-6 col-sm-6 col-xs-12 form-group has-feedback">
-                                                        <label>ชื่อชุดเมนูอาหารภาษาไทย</label>
+                                                        <label class="required">ชื่อชุดเมนูอาหารภาษาไทย</label>
                                                         <input type="text" class="form-control" name="menuNameTH"
                                                                id="edit_menuset_nameTH"
                                                                placeholder="ชื่อชุดเมนูอาหารภาษาไทย" required>
@@ -269,7 +274,7 @@
                                                               aria-hidden="true"></span>
                                                     </div>
                                                     <div class="col-md-6 col-sm-6 col-xs-12 form-group has-feedback">
-                                                        <label>ชื่อชุดเมนูอาหารภาษาอังกฤษ</label>
+                                                        <label class="required">ชื่อชุดเมนูอาหารภาษาอังกฤษ</label>
                                                         <input type="text" class="form-control" name="menuNameEN"
                                                                id="edit_menuset_nameEN"
                                                                placeholder="ชื่อชุดเมนูอาหารภาษาอังกฤษ" required>
@@ -292,7 +297,7 @@
                                                                 <th style="text-align:center;">ชื่อเมนูอาหาร</th>
                                                                 <th style="text-align:center;">หมวดหมู่</th>
                                                                 <th style="text-align:center;">ราคา</th>
-                                                                <th style="text-align:center;">จำนวน</th>
+                                                                <th style="text-align:center;"><span class="required">จำนวน</span></th>
                                                             </tr>
                                                             </thead>
                                                             <tbody style="text-align:center;">
@@ -331,7 +336,7 @@
                                                         </div>
                                                     </div>
                                                     <div class="col-md-6">
-                                                        <label>ราคาชุดเมนูอาหารนี้ (บาท)</label>
+                                                        <label class="required">ราคาชุดเมนูอาหารนี้ (บาท)</label>
                                                         <input type="number" min="0" step="0.25" class="form-control"
                                                                name="menuPrice" id="edit_menuset_price"
                                                                placeholder="ราคาชุดเมนูอาหารนี้ (บาท)" required>

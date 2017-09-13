@@ -9,6 +9,12 @@
     <jsp:include page="../_include/topenv.jsp"/>
     <link href="${contextPath}/vendors/bootstrap-daterangepicker/daterangepicker.css" rel="stylesheet">
     <title>ประวัติการทำงาน</title>
+    <style>
+        .required:after {
+            content:" *";
+            color:red;
+        }
+    </style>
 </head>
 <body class="nav-md">
 <div class="container body">
@@ -167,7 +173,7 @@
                                         <div>
                                             <div class="col-md-4 col-sm-4 col-xs-4 form-group has-feedback"
                                                  style="clear:both;">
-                                                <label>ชื่อพนักงาน</label>
+                                                <label class="required">ชื่อพนักงาน</label>
                                                 <select name="empNo" class="form-control chooseEmpName" required>
                                                     <c:forEach items="${employees}" var="e">
                                                         <option value="${e.empNo}">${e.empName}</option>
@@ -232,7 +238,7 @@
                                                   aria-hidden="true"></span>
                                         </div>
                                         <div class="col-md-6 col-sm-6 col-xs-6 form-group has-feedback">
-                                            <label>ชื่อพนักงาน</label>
+                                            <label class="required">ชื่อพนักงาน</label>
                                             <select class="form-control chooseEmpName" id="editEmpNo" disabled required>
                                                 <c:forEach items="${employees}" var="e">
                                                     <option value="${e.empNo}">${e.empName}</option>

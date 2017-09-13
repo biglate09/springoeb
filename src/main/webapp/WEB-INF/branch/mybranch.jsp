@@ -7,6 +7,12 @@
 <head>
     <jsp:include page="../_include/topenv.jsp"/>
     <title>จัดการสาขานี้</title>
+    <style>
+        .required:after {
+            content:" *";
+            color:red;
+        }
+    </style>
 </head>
 <body class="nav-md">
 <div class="container body">

@@ -6,6 +6,12 @@
 <head>
     <jsp:include page="../_include/topenv.jsp"/>
     <title>หมวดหมู่เมนูอาหาร</title>
+    <style>
+        .required:after {
+            content:" *";
+            color:red;
+        }
+    </style>
 </head>
 <body class="nav-md">
 <div class="container body">
@@ -62,21 +68,21 @@
                                         <form class="form-horizontal form-label-left input_mask" modelAttribute="menugroup" id="add_menu_group">
                                             <div class="form-group">
                                                 <div class="col-md-6 col-sm-6 col-xs-12 form-group has-feedback">
-                                                    <label>ชื่อหมวดหมู่อาหารภาษาไทย</label>
+                                                    <label class="required">ชื่อหมวดหมู่อาหารภาษาไทย</label>
                                                     <input type="text" class="form-control" name="menuGroupNameTH" id="add_menu_group_nameTH"
                                                            placeholder="ชื่อหมวดหมู่อาหารภาษาไทย" required>
                                                     <span class="fa fa-pencil form-control-feedback right"
                                                           aria-hidden="true"></span>
                                                 </div>
                                                 <div class="col-md-6 col-sm-6 col-xs-12 form-group has-feedback">
-                                                    <label>ชื่อหมวดหมู่อาหารภาษาอังกฤษ</label>
+                                                    <label class="required">ชื่อหมวดหมู่อาหารภาษาอังกฤษ</label>
                                                     <input type="text" class="form-control" name="menuGroupNameEN" id="add_menu_group_nameEN"
                                                            placeholder="ชื่อหมวดหมู่อาหารภาษาอังกฤษ" required>
                                                     <span class="fa fa-pencil form-control-feedback right"
                                                           aria-hidden="true"></span>
                                                 </div>
                                                 <div class="col-md-6 col-sm-6 col-xs-12 form-group has-feedback">
-                                                    <label>ประเภทอาหาร</label>
+                                                    <label class="required">ประเภทอาหาร</label>
                                                     <select name="menuCatNo" id="add_menu_cat" class="form-control" required>
                                                         <option value="" disabled selected>เลือกประเภทอาหาร</option>
                                                         <c:forEach items="${menuCategories}" var="mc">
@@ -115,21 +121,21 @@
                                             <input type="hidden" name="menuGroupNo" id="hiddenmenugroupno">
                                             <div class="form-group">
                                                 <div class="col-md-6 col-sm-6 col-xs-12 form-group has-feedback">
-                                                    <label>ชื่อหมวดหมู่อาหารภาษาไทย</label>
+                                                    <label class="required">ชื่อหมวดหมู่อาหารภาษาไทย</label>
                                                     <input type="text" class="form-control" name="menuGroupNameTH" id="edit_menu_group_nameTH"
                                                            placeholder="ชื่อหมวดหมู่อาหารภาษาไทย" required>
                                                     <span class="fa fa-pencil form-control-feedback right"
                                                           aria-hidden="true"></span>
                                                 </div>
                                                 <div class="col-md-6 col-sm-6 col-xs-12 form-group has-feedback">
-                                                    <label>ชื่อหมวดหมู่อาหารภาษาอังกฤษ</label>
+                                                    <label class="required">ชื่อหมวดหมู่อาหารภาษาอังกฤษ</label>
                                                     <input type="text" class="form-control" name="menuGroupNameEN" id="edit_menu_group_nameEN"
                                                            placeholder="ชื่อหมวดหมู่อาหารภาษาอังกฤษ" required>
                                                     <span class="fa fa-pencil form-control-feedback right"
                                                           aria-hidden="true"></span>
                                                 </div>
                                                 <div class="col-md-6 col-sm-6 col-xs-12 form-group has-feedback">
-                                                    <label>ประเภทอาหาร</label>
+                                                    <label class="required">ประเภทอาหาร</label>
                                                     <select name="menuCatNo" id="edit_menu_group_no" class="form-control" required>
                                                         <option value="" disabled>เลือกประเภทอาหาร</option>
                                                         <c:forEach items="${menuCategories}" var="mc">

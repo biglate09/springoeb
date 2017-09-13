@@ -6,6 +6,12 @@
 <head>
     <jsp:include page="../_include/topenv.jsp"/>
     <title>หน่วยของวัตถุดิบ</title>
+    <style>
+        .required:after {
+            content:" *";
+            color:red;
+        }
+    </style>
 </head>
 <body class="nav-md">
 <div class="container body">
@@ -62,7 +68,7 @@
                                 <form class="form-horizontal form-label-left input_mask" modelAttribute="materialUnit" id="material_unit">
                                     <div class="form-group">
                                         <div class="col-md-12 col-sm-12 col-xs-12 form-group has-feedback">
-                                            <label>ชื่อหน่วยของวัตถุดิบ</label>
+                                            <label class="required">ชื่อหน่วยของวัตถุดิบ</label>
                                             <input type="text" class="form-control" name="unitName" id="mat_unit_name"
                                                    placeholder="ชื่อหน่วยของวัตถุดิบ" required>
                                             <span class="fa fa-pencil form-control-feedback right"
@@ -102,7 +108,7 @@
                                     <input type="hidden" name="unitNo" id="hiddenunitno">
                                     <div class="form-group">
                                         <div class="col-md-12 col-sm-12 col-xs-12 form-group has-feedback">
-                                            <label>ชื่อหน่วยของวัตถุดิบ</label>
+                                            <label class="required">ชื่อหน่วยของวัตถุดิบ</label>
                                             <input type="text" class="form-control" id="edit_mat_unit_name"
                                                    name="unitName"
                                                    placeholder="ชื่อหน่วยของวัตถุดิบ" required>

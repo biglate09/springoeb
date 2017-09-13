@@ -11,6 +11,12 @@
     <meta name="viewport" content="width=device-width, initial-scale=1">
 
     <title>ตารางการทำงาน</title>
+    <style>
+        .required:after {
+            content:" *";
+            color:red;
+        }
+    </style>
 
     <jsp:include page="../_include/topenv.jsp"/>
     <link href="${contextPath}/vendors/fullcalendar/dist/fullcalendar.css" rel="stylesheet">
@@ -75,7 +81,7 @@
                         </div>
                         <div style="clear:both">
                             <div class="col-md-4 col-sm-3 col-xs-3 form-group has-feedback">
-                                <label>ชื่อพนักงาน</label>
+                                <label class="required">ชื่อพนักงาน</label>
                                 <select name="empNo" class="form-control" required>
                                     <c:forEach items="${employees}" var="e">
                                         <option value="${e.empNo}">${e.empName}</option>
@@ -83,7 +89,7 @@
                                 </select>
                             </div>
                             <div class="col-md-4 col-sm-3 col-xs-3 form-group has-feedback">
-                                <label>ตำแหน่ง</label>
+                                <label class="required">ตำแหน่ง</label>
                                 <select name="empPosNo" class="form-control" required>
                                     <c:forEach items="${employeePositions}" var="ep">
                                         <option value="${ep.empPosNo}">${ep.empPosName}</option>
@@ -91,7 +97,7 @@
                                 </select>
                             </div>
                             <div class="btn-group col-md-3" data-toggle="buttons">
-                                <label>ช่วงเวลาทำงาน</label>
+                                <label class="required">ช่วงเวลาทำงาน</label>
                                 <select name="workTime" class="form-control" required>
                                     <option value="00:00:00">เช้า</option>
                                     <option value="13:00:00">บ่าย</option>
@@ -129,7 +135,7 @@
                     <input type="hidden" name="date" id="hidden_date_edit">
                     <div class="form-group" style="padding: 5px 20px;">
                         <div class="col-md-4 col-sm-3 col-xs-3 form-group has-feedback">
-                            <label>ชื่อพนักงาน</label>
+                            <label class="required">ชื่อพนักงาน</label>
                             <select name="empNo" class="form-control" id="empNo_edit" required>
                                 <c:forEach items="${employees}" var="e">
                                     <option value="${e.empNo}">${e.empName}</option>
@@ -137,7 +143,7 @@
                             </select>
                         </div>
                         <div class="col-md-4 col-sm-3 col-xs-3 form-group has-feedback">
-                            <label>ตำแหน่ง</label>
+                            <label class="required">ตำแหน่ง</label>
                             <select name="empPosNo" class="form-control" id="empPosNo_edit" required>
                                 <c:forEach items="${employeePositions}" var="ep">
                                     <option value="${ep.empPosNo}">${ep.empPosName}</option>
@@ -145,7 +151,7 @@
                             </select>
                         </div>
                         <div class="btn-group col-md-3" data-toggle="buttons">
-                            <label>ช่วงเวลาทำงาน</label>
+                            <label class="required">ช่วงเวลาทำงาน</label>
                             <select name="workTime" class="form-control" id="time_edit" required>
                                 <option value="00:00:00">เช้า</option>
                                 <option value="13:00:00">บ่าย</option>

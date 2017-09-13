@@ -6,6 +6,12 @@
 <head>
     <jsp:include page="../_include/topenv.jsp"/>
     <title>ประเภทวัตถุดิบ</title>
+    <style>
+        .required:after {
+            content:" *";
+            color:red;
+        }
+    </style>
 </head>
 <body class="nav-md">
 <div class="container body">
@@ -61,21 +67,21 @@
                                         <form class="form-horizontal form-label-left input_mask" modelAttribute="stockcategory" id="add_stock_category">
                                             <div class="form-group">
                                                 <div class="col-md-6 col-sm-6 col-xs-12 form-group has-feedback">
-                                                    <label>ชื่อประเภทวัถุดิบภาษาไทย</label>
+                                                    <label class="required">ชื่อประเภทวัถุดิบภาษาไทย</label>
                                                     <input type="text" class="form-control" name="stockCatNameTH" id="add_stock_cat_nameTH"
                                                            placeholder="ชื่อประเภทวัตถุดิบภาษาไทย" required>
                                                     <span class="fa fa-pencil form-control-feedback right"
                                                           aria-hidden="true"></span>
                                                 </div>
                                                 <div class="col-md-6 col-sm-6 col-xs-12 form-group has-feedback">
-                                                    <label>ชื่อประเภทวัตถุดิบภาษาอังกฤษ</label>
+                                                    <label class="required">ชื่อประเภทวัตถุดิบภาษาอังกฤษ</label>
                                                     <input type="text" class="form-control" name="stockCatNameEN" id="add_stock_cat_nameEN"
                                                            placeholder="ชื่อประเภทวัตถุดิบภาษาอังกฤษ" required>
                                                     <span class="fa fa-pencil form-control-feedback right"
                                                           aria-hidden="true"></span>
                                                 </div>
                                                 <div class="col-md-6 col-sm-6 col-xs-12 form-group has-feedback">
-                                                    <label>หมวดหมู่ของประเภทวัตถุดิบ</label>
+                                                    <label class="required">หมวดหมู่ของประเภทวัตถุดิบ</label>
                                                     <select name="stockCatNo" id="add_stock_cat_stock_cat" class="form-control" required>
                                                         <option value="">---เลือกหมวดหมู่---</option>
                                                         <c:forEach items="${stockCategories}" var="sc">
@@ -114,21 +120,21 @@
                                             <input type="hidden" name="stockCatNo" id="hiddenstockcatno">
                                             <div class="form-group">
                                                 <div class="col-md-6 col-sm-6 col-xs-12 form-group has-feedback">
-                                                    <label>ชื่อประเภทวัตถุดิบภาษาไทย</label>
+                                                    <label class="required">ชื่อประเภทวัตถุดิบภาษาไทย</label>
                                                     <input type="text" class="form-control" name="stockCatNameTH" id="edit_stock_cat_nameTH"
                                                            placeholder="ชื่อประเภทวัตถุดิบภาษาไทย" required>
                                                     <span class="fa fa-pencil form-control-feedback right"
                                                           aria-hidden="true"></span>
                                                 </div>
                                                 <div class="col-md-6 col-sm-6 col-xs-12 form-group has-feedback">
-                                                    <label>ชื่อประเภทวัตถุดิบภาษาอังกฤษ</label>
+                                                    <label class="required">ชื่อประเภทวัตถุดิบภาษาอังกฤษ</label>
                                                     <input type="text" class="form-control" name="stockCatNameEN" id="edit_stock_cat_nameEN"
                                                            placeholder="ชื่อประเภทวัตถุดิบภาษาอังกฤษ" required>
                                                     <span class="fa fa-pencil form-control-feedback right"
                                                           aria-hidden="true"></span>
                                                 </div>
                                                 <div class="col-md-6 col-sm-6 col-xs-12 form-group has-feedback">
-                                                    <label>หมวดหมู่ของประเภทวัตถุดิบ</label>
+                                                    <label class="required">หมวดหมู่ของประเภทวัตถุดิบ</label>
                                                     <select name="stockCatNo" id="edit_stock_cat_no" class="form-control" required>
                                                         <option value="" disabled>เลือกหมวดหมู่</option>
                                                         <c:forEach items="${stockCategories}" var="sc">
