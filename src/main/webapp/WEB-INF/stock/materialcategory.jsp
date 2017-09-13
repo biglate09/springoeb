@@ -6,6 +6,12 @@
 <head>
     <jsp:include page="../_include/topenv.jsp"/>
     <title>ประเภทวัตถุดิบ</title>
+    <style>
+        .required:after {
+            content:" *";
+            color:red;
+        }
+    </style>
 </head>
 <body class="nav-md">
 <div class="container body">
@@ -62,7 +68,7 @@
                                 <form class="form-horizontal form-label-left input_mask" modelAttribute="materialCategory" id="material_category">
                                     <div class="form-group">
                                         <div class="col-md-12 col-sm-12 col-xs-12 form-group has-feedback">
-                                            <label>ชื่อประเภทวัตถุดิบ</label>
+                                            <label class="required">ชื่อประเภทวัตถุดิบ</label>
                                             <input type="text" class="form-control" name="matCatName" id="mat_cat_name"
                                                    placeholder="ชื่อประเภทวัตถุดิบ" required>
                                             <span class="fa fa-pencil form-control-feedback right"
@@ -102,7 +108,7 @@
                                     <input type="hidden" name="matCatNo" id="hiddenmatcatno">
                                     <div class="form-group">
                                         <div class="col-md-12 col-sm-12 col-xs-12 form-group has-feedback">
-                                            <label>ชื่อประเภทวัตถุดิบ</label>
+                                            <label class="required">ชื่อประเภทวัตถุดิบ</label>
                                             <input type="text" class="form-control" id="edit_mat_cat_name"
                                                    name="matCatName"
                                                    placeholder="ชื่อประเภทวัตถุดิบ" required>

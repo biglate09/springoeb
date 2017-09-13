@@ -6,6 +6,12 @@
 <head>
     <jsp:include page="../_include/topenv.jsp"/>
     <title>วัตถุดิบคงเหลือ</title>
+    <style>
+        .required:after {
+            content:" *";
+            color:red;
+        }
+    </style>
 </head>
 <body class="nav-md">
 <div class="container body">
@@ -93,16 +99,12 @@
                         <%--Update stock remain--%>
                         <div class="modal fade" id="updateStockRemain" role="dialog">
                             <div class="modal-dialog">
-                                <!-- เนือหาของ Modal ทั้งหมด -->
-                                <div class="modal-content modal-body-test" style="overflow-y:hidden;">
-                                    <!-- ส่วนหัวของ Modal -->
+                                <div class="modal-content ">
                                     <div class="modal-header">
-                                        <!-- ปุ่มกดปิด (X) ตรงส่วนหัวของ Modal -->
                                         <button type="button" class="close" data-dismiss="modal">&times;</button>
                                         <h4 class="modal-title">อัพเดตวัตถุดิบ <span
                                                 id="show_mat_item_name_for_update"></span></h4>
                                     </div>
-                                    <!-- ส่วนเนื้อหาของ Modal -->
                                     <div class="modal-body">
                                         <form class="form-horizontal form-label-left input_mask"
                                               modelAttribute="matitem" id="update">
@@ -116,46 +118,49 @@
                                                 <%--<span class="fa fa-pencil form-control-feedback right"--%>
                                                 <%--aria-hidden="true"></span>--%>
                                                 <%--</div>--%>
-                                                <div class="col-md-6 col-sm-6 col-xs-12 form-group has-feedback">
-                                                    <label>Supplier</label>
+                                                <div class="col-md-12 col-sm-12 col-xs-12 form-group has-feedback">
+                                                    <label class="required">Supplier</label>
                                                     <input type="text" class="form-control" id="update_supplier"
                                                            name="supplier"
                                                            placeholder="ชื่อ Supplier" required>
                                                     <span class="fa fa-pencil form-control-feedback right"
                                                           aria-hidden="true"></span>
                                                 </div>
-                                                <div class="col-md-6 col-sm-6 col-xs-12 form-group has-feedback">
-                                                    <label style="display: inline-block;float: left;clear: left;text-align: right;width: 60%">เพิ่มวัตถุดิบ</label>
-                                                    <input type="number" class="form-control" id="update_inc_pack"
-                                                           name="inc_pack"
-                                                           style="width: 20%;display: inline-block;float: left;margin-left: 3%;margin-right: 2%"
-                                                           value="1" min="0" required> หน่วย
-                                                </div>
-                                                <div class="col-md-6 col-sm-6 col-xs-12 form-group has-feedback">
-                                                    <label style="width:17%;display: inline-block;float: left;clear: left;text-align: right;">หน่วยละ</label>
-                                                    <input type="number" class="form-control" id="update_inc_quantity"
-                                                           name="inc_quantity"
-                                                           style="width: 20%;display: inline-block;float: left;margin-left: 3%;margin-right: 2%"
-                                                           value="0" min="0" required>
-                                                    <span style="font-weight:normal"
-                                                          class="unit"></span>
-                                                </div>
-                                                <div class="col-md-6 col-sm-6 col-xs-12 form-group has-feedback">
-                                                    <label style="display: inline-block;float: left;clear: left;text-align: right;width: 60%">ลดวัตถุดิบ</label>
-                                                    <input type="number" class="form-control" id="update_dec_pack"
-                                                           name="dec_pack"
-                                                           style="width: 20%;display: inline-block;float: left;margin-left: 3%;margin-right: 2%"
-                                                           value="1" min="0" required> หน่วย
-                                                </div>
-                                                <div class="col-md-6 col-sm-6 col-xs-12 form-group has-feedback">
-                                                    <label style="width:17%;display: inline-block;float: left;clear: left;text-align: right;">หน่วยละ</label>
-                                                    <input type="number" class="form-control" id="update_dec_quantity"
-                                                           name="dec_quantity"
-                                                           style="width: 20%;display: inline-block;float: left;margin-left: 3%;margin-right: 2%"
-                                                           value="0" min="0" required>
-                                                    <span style="font-weight:normal"
-                                                          class="unit"></span>
+                                                <div class="col-md-12" >
+                                                    <div class="col-md-6 col-sm-6 col-xs-12 form-group has-feedback block">
+                                                        <label style="width: 30%;display: inline-block;float: left;clear: left;text-align: right;" class="required">เพิ่มวัตถุดิบ</label>
+                                                        <input type="number" class="form-control" id="update_inc_pack"
+                                                               name="inc_pack"
+                                                               style="width: 50%;display: inline-block;float: left;margin-left: 5px;margin-right: 5px;"
+                                                               value="1" min="0" required> หน่วย
+                                                    </div>
+                                                    <div class="col-md-6 col-sm-6 col-xs-12 form-group has-feedback block">
+                                                        <label style="display: inline-block;float: left;clear: left;text-align: right;" class="required">หน่วยละ</label>
+                                                        <input type="number" class="form-control" id="update_inc_quantity"
+                                                               name="inc_quantity"
+                                                               style="width: 50%;display: inline-block;float: left;margin-left: 5px;margin-right: 5px;"
+                                                               value="0" min="0" required>
+                                                        <span style="font-weight:normal"
+                                                              class="unit"></span>
+                                                    </div>
 
+                                                    <div class="col-md-6 col-sm-6 col-xs-12 form-group has-feedback block">
+                                                        <label style="width: 30%;display: inline-block;float: left;clear: left;text-align: right;" class="required"> ลดวัตถุดิบ</label>
+                                                        <input type="number" class="form-control" id="update_dec_pack"
+                                                               name="dec_pack"
+                                                               style="width: 50%;display: inline-block;float: left;margin-left: 5px;margin-right: 5px;"
+                                                               value="1" min="0" required> หน่วย
+                                                    </div>
+                                                    <div class="col-md-6 col-sm-6 col-xs-12 form-group has-feedback block">
+                                                        <label style="display: inline-block;float: left;clear: left;text-align: right;" class="required">หน่วยละ</label>
+                                                        <input type="number" class="form-control" id="update_dec_quantity"
+                                                               name="dec_quantity"
+                                                               style="width: 50%;display: inline-block;float: left;margin-left: 5px;margin-right: 5px;"
+                                                               value="0" min="0" required>
+                                                        <span style="font-weight:normal"
+                                                              class="unit"></span>
+
+                                                    </div>
                                                 </div>
                                             </div>
                                             <div class="modal-footer">

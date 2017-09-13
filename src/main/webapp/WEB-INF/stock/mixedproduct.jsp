@@ -6,6 +6,12 @@
 <head>
     <jsp:include page="../_include/topenv.jsp"/>
     <title>วัตถุดิบอาหารแบบผสม</title>
+    <style>
+        .required:after {
+            content:" *";
+            color:red;
+        }
+    </style>
 </head>
 <body class="nav-md">
 <div class="container body">
@@ -65,7 +71,7 @@
                                             <input type="hidden" name="matFlag" value="M">
                                             <div class="form-group">
                                                 <div class="col-md-4 col-sm-4 col-xs-12 form-group has-feedback">
-                                                    <label>ชื่อวัตถุดิบอาหารแบบผสม</label>
+                                                    <label class="required">ชื่อวัตถุดิบอาหารแบบผสม</label>
                                                     <input type="text" class="form-control" name="matItemName"
                                                            id="add_mat_item_name"
                                                            placeholder="ชื่อวัตถุดิบอาหารแบบผสม" required>
@@ -73,7 +79,7 @@
                                                           aria-hidden="true"></span>
                                                 </div>
                                                 <div class="col-md-4 col-sm-4 col-xs-12 form-group has-feedback">
-                                                    <label>ประเภทวัตถุดิบ</label>
+                                                    <label class="required">ประเภทวัตถุดิบ</label>
                                                     <select name="matCatNo" id="add_mat_cat" class="form-control"
                                                             required>
                                                         <option value="" disabled selected>เลือกวัตถุดิบ</option>
@@ -83,7 +89,7 @@
                                                     </select>
                                                 </div>
                                                 <div class="col-md-4 col-sm-4 col-xs-12 form-group has-feedback">
-                                                    <label>หน่วยวัตถุดิบ</label>
+                                                    <label class="required">หน่วยวัตถุดิบ</label>
                                                     <select name="unitNo" id="add_unit_no" class="form-control"
                                                             required>
                                                         <option value="" disabled selected>เลือกหน่วย</option>
@@ -100,7 +106,7 @@
                                                         <tr>
                                                             <th style="text-align:center;">ชื่อวัตถุดิบอาหาร</th>
                                                             <th style="text-align:center;">ประเภท</th>
-                                                            <th style="text-align:center;">จำนวนที่ใช้</th>
+                                                            <th style="text-align:center;"><span class="required">จำนวนที่ใช้</span></th>
                                                         </tr>
                                                         </thead>
                                                         <tbody style="text-align:center;">
@@ -135,9 +141,9 @@
                                                         <div id="display_material_desc"
                                                              style="margin-bottom:20px;margin-top:20px;"
                                                              class="submit-clear"></div>
-                                                        <div style="font-weight:bold">
+                                                        <div style="font-weight:bold" >
                                                             รวมเป็น <span style="font-weight:normal"
-                                                                          class="submit-clear"
+                                                                          class="submit-clear required"
                                                                           id="mixed_prod_name"></span> ทั้งหมด :
                                                             <input style="width:10%;" type="number" step="0.001"
                                                                    min="0.001" name="quantity" value="1" required>
@@ -179,7 +185,7 @@
                                             <input type="hidden" name="matItemNo" id="hiddenmatitemno">
                                             <div class="form-group">
                                                 <div class="col-md-4 col-sm-4 col-xs-12 form-group has-feedback">
-                                                    <label>ชื่อวัตถุดิบอาหารแบบผสม</label>
+                                                    <label class="required">ชื่อวัตถุดิบอาหารแบบผสม</label>
                                                     <input type="text" class="form-control" name="matItemName"
                                                            id="edit_mat_item_name"
                                                            placeholder="ชื่อวัตถุดิบอาหารแบบผสม" required>
@@ -187,7 +193,7 @@
                                                           aria-hidden="true"></span>
                                                 </div>
                                                 <div class="col-md-4 col-sm-4 col-xs-12 form-group has-feedback">
-                                                    <label>ประเภทวัตถุดิบ</label>
+                                                    <label class="required">ประเภทวัตถุดิบ</label>
                                                     <select name="matCatNo" id="edit_mat_cat_no" class="form-control"
                                                             required>
                                                         <option value="" disabled>เลือกวัตถุดิบ</option>
@@ -197,7 +203,7 @@
                                                     </select>
                                                 </div>
                                                 <div class="col-md-4 col-sm-4 col-xs-12 form-group has-feedback">
-                                                    <label>หน่วยวัตถุดิบ</label>
+                                                    <label class="required">หน่วยวัตถุดิบ</label>
                                                     <select name="unitNo" id="edit_unit_no" class="form-control"
                                                             required>
                                                         <option value="" disabled selected>เลือกหน่วย</option>
@@ -214,7 +220,7 @@
                                                         <tr>
                                                             <th style="text-align:center;">ชื่อวัตถุดิบอาหาร</th>
                                                             <th style="text-align:center;">ประเภท</th>
-                                                            <th style="text-align:center;">จำนวนที่ใช้</th>
+                                                            <th style="text-align:center;"><span class="required">จำนวนที่ใช้</span></th>
                                                         </tr>
                                                         </thead>
                                                         <tbody style="text-align:center;">
@@ -249,9 +255,9 @@
                                                         <div id="display_material_desc2"
                                                              style="margin-bottom:20px;margin-top:20px;"
                                                              class="submit-clear"></div>
-                                                        <div style="font-weight:bold">
+                                                        <div style="font-weight:bold" >
                                                             รวมเป็น <span style="font-weight:normal"
-                                                                          class="submit-clear"
+                                                                          class="submit-clear required"
                                                                           id="mixed_prod_name2"></span> ทั้งหมด :
                                                             <input style="width:10%;" type="number" step="0.001"
                                                                    min="0.001" name="quantity" value="1"

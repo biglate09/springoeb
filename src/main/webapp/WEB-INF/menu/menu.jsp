@@ -7,6 +7,13 @@
 <head>
     <jsp:include page="../_include/topenv.jsp"/>
     <title>เมนูอาหารแบบเดี่ยว</title>
+    <style>
+        .required:after {
+             content:" *";
+             color:red;
+         }
+    </style>
+
 </head>
 <body class="nav-md">
 <div class="container body">
@@ -46,14 +53,14 @@
                                         </c:forEach>
                                     </select>
                                 </div>
-                                <div class="col-md-4 form-group" style="padding:0px;">
+                                <div class="col-md-4 form-group" style="padding:0px;margin-right: 5px;">
                                     <input type="text" class="form-control" id="myInput"
                                            onkeyup="filterCard()" placeholder="ค้นหาด้วยชื่อเมนู...">
                                     <span class="fa fa-search form-control-feedback right"
                                           aria-hidden="true"></span>
                                 </div>
                                 <%--<div class="col-md-1 btn-group">--%>
-                                <div class="btn-group col-md-1" data-toggle="buttons">
+                                <div class="btn-group col" data-toggle="buttons">
                                     <label id="displayThumbnail" class="btn btn-default display_toggle active"
                                            type="button" title="แสดงแบบรูป">
                                         <span class="fa fa-th-large"></span>
@@ -113,8 +120,8 @@
                                                            onchange="document.getElementById('showpic').src = window.URL.createObjectURL(this.files[0])"
                                                            placeholder="อัพโหลดรูปภาพ">
                                                 </div>
-                                                <div class="col-md-6 col-sm-6 col-xs-12 form-group has-feedback">
-                                                    <label>ชื่อเมนูอาหารภาษาไทย</label>
+                                                <div class="col-md-6 col-sm-6 col-xs-12 form-group has-feedback ">
+                                                    <label class="required">ชื่อเมนูอาหารภาษาไทย</label>
                                                     <input type="text" class="form-control" name="menuNameTH"
                                                            id="add_menu_nameTH"
                                                            placeholder="ชื่อเมนูอาหารภาษาไทย" required>
@@ -122,7 +129,7 @@
                                                           aria-hidden="true"></span>
                                                 </div>
                                                 <div class="col-md-6 col-sm-6 col-xs-12 form-group has-feedback">
-                                                    <label>ชื่อเมนูอาหารภาษาอังกฤษ</label>
+                                                    <label class="required">ชื่อเมนูอาหารภาษาอังกฤษ</label>
                                                     <input type="text" class="form-control" name="menuNameEN"
                                                            id="add_menu_nameEN"
                                                            placeholder="ชื่อเมนูอาหารภาษาอังกฤษ" required>
@@ -130,15 +137,15 @@
                                                           aria-hidden="true"></span>
                                                 </div>
                                                 <div class="col-md-6 col-sm-6 col-xs-12 form-group has-feedback">
-                                                    <label>ราคา (บาท)</label>
+                                                    <label class="required">ราคา (บาท)</label>
                                                     <input type="number" class="form-control" name="menuPrice"
                                                            id="add_menu_price"
                                                            placeholder="ราคา" min="0" step="0.25" required>
                                                     <span class="fa fa-money form-control-feedback right"
                                                           aria-hidden="true"></span>
                                                 </div>
-                                                <div class="col-md-6 col-sm-6 col-xs-12 form-group has-feedback">
-                                                    <label>หมวดหมู่ของเมนู</label>
+                                                <div class="col-md-6 col-sm-6 col-xs-12 form-group has-feedback ">
+                                                    <label class="required">หมวดหมู่ของเมนู</label>
                                                     <select name="menuGroupNo" id="add_menu_stock_cat"
                                                             class="form-control" required>
                                                         <option disabled selected value="">เลือกหมวดหมู่เมนู</option>
@@ -164,10 +171,10 @@
                                                             <th style="text-align:center;width:30%;" class="order">
                                                                 ประเภท
                                                             </th>
-                                                            <th style="text-align:center;width:30%;">จำนวนที่ใช้</th>
+                                                            <th style="text-align:center;width:30%;"><span class="required">จำนวนที่ใช้</span></th>
                                                         </tr>
                                                         </thead>
-                                                        <tbody style="text-align:center;">
+                                                        <tbody style="text-align:center;" >
                                                         <c:forEach items="${materialItems}" var="mi">
                                                             <tr>
                                                                 <td style="width:40%;">${mi.matItemName}</td>
@@ -268,7 +275,7 @@
                                                        placeholder="อัพโหลดรูปภาพ">
                                             </div>
                                             <div class="col-md-6 col-sm-6 col-xs-12 form-group has-feedback">
-                                                <label>ชื่อเมนูอาหารภาษาไทย</label>
+                                                <label class="required">ชื่อเมนูอาหารภาษาไทย</label>
                                                 <input type="text" class="form-control" name="menuNameTH"
                                                        id="edit_menu_nameTH"
                                                        placeholder="ชื่อเมนูอาหารภาษาไทย" required>
@@ -276,7 +283,7 @@
                                                       aria-hidden="true"></span>
                                             </div>
                                             <div class="col-md-6 col-sm-6 col-xs-12 form-group has-feedback">
-                                                <label>ชื่อเมนูอาหารภาษาอังกฤษ</label>
+                                                <label class="required">ชื่อเมนูอาหารภาษาอังกฤษ</label>
                                                 <input type="text" class="form-control" name="menuNameEN"
                                                        id="edit_menu_nameEN"
                                                        placeholder="ชื่อเมนูอาหารภาษาอังกฤษ" required>
@@ -284,15 +291,15 @@
                                                       aria-hidden="true"></span>
                                             </div>
                                             <div class="col-md-6 col-sm-6 col-xs-12 form-group has-feedback">
-                                                <label>ราคา (บาท)</label>
+                                                <label class="required">ราคา (บาท)</label>
                                                 <input type="number" class="form-control" name="menuPrice"
                                                        id="edit_menu_price"
                                                        placeholder="ราคา" min="0" step="0.25" required>
                                                 <span class="fa fa-money form-control-feedback right"
                                                       aria-hidden="true"></span>
                                             </div>
-                                            <div class="col-md-6 col-sm-6 col-xs-12 form-group has-feedback">
-                                                <label>หมวดหมู่ของเมนู</label>
+                                            <div class="col-md-6 col-sm-6 col-xs-12 form-group has-feedback ">
+                                                <label class="required">หมวดหมู่ของเมนู</label>
                                                 <select name="menuGroupNo" id="edit_menu_stock_cat" class="form-control"
                                                         required>
                                                     <option disabled selected value="">เลือกหมวดหมู่เมนู</option>
@@ -316,7 +323,7 @@
                                                     <tr>
                                                         <th style="text-align:center;">ชื่อวัตถุดิบอาหาร</th>
                                                         <th style="text-align:center;" class="order">ประเภท</th>
-                                                        <th style="text-align:center;">จำนวนที่ใช้</th>
+                                                        <th style="text-align:center;"><span class="required">จำนวนที่ใช้</span></th>
                                                     </tr>
                                                     </thead>
                                                     <tbody style="text-align:center;">

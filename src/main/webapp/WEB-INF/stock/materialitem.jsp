@@ -6,6 +6,12 @@
 <head>
     <jsp:include page="../_include/topenv.jsp"/>
     <title>วัตถุดิบ</title>
+    <style>
+        .required:after {
+            content:" *";
+            color:red;
+        }
+    </style>
 </head>
 <body class="nav-md">
 <div class="container body">
@@ -64,14 +70,14 @@
                                             <input type="hidden" name="matFlag" value="I">
                                             <div class="form-group">
                                                 <div class="col-md-4 col-sm-4 col-xs-12 form-group has-feedback">
-                                                    <label>ชื่อวัตถุดิบ</label>
+                                                    <label class="required">ชื่อวัตถุดิบ</label>
                                                     <input type="text" class="form-control" name="matItemName" id="add_mat_item_name"
                                                            placeholder="ชื่อวัตถุดิบ" required>
                                                     <span class="fa fa-pencil form-control-feedback right"
                                                           aria-hidden="true"></span>
                                                 </div>
                                                 <div class="col-md-4 col-sm-4 col-xs-12 form-group has-feedback">
-                                                    <label>ประเภทวัตถุดิบ</label>
+                                                    <label class="required">ประเภทวัตถุดิบ</label>
                                                     <select name="matCatNo" id="add_mat_cat" class="form-control" required>
                                                         <option value="" disabled selected>เลือกประเภทวัตถุดิบ</option>
                                                         <c:forEach items="${matCategories}" var="mc">
@@ -80,7 +86,7 @@
                                                     </select>
                                                 </div>
                                                 <div class="col-md-4 col-sm-4 col-xs-12 form-group has-feedback">
-                                                    <label>หน่วยวัตถุดิบ</label>
+                                                    <label class="required">หน่วยวัตถุดิบ</label>
                                                     <select name="unitNo" id="add_unit_no" class="form-control" required>
                                                         <option value="" disabled selected>เลือกหน่วย</option>
                                                         <c:forEach items="${units}" var="u">
@@ -120,14 +126,14 @@
                                             <input type="hidden" name="matItemNo" id="hiddenmatitemno">
                                             <div class="form-group">
                                                 <div class="col-md-4 col-sm-4 col-xs-12 form-group has-feedback">
-                                                    <label>ชื่อวัตถุดิบ</label>
+                                                    <label class="required">ชื่อวัตถุดิบ</label>
                                                     <input type="text" class="form-control" name="matItemName" id="edit_mat_item_name"
                                                            placeholder="ชื่อวัตถุดิบ" required>
                                                     <span class="fa fa-pencil form-control-feedback right"
                                                           aria-hidden="true"></span>
                                                 </div>
                                                 <div class="col-md-4 col-sm-4 col-xs-12 form-group has-feedback">
-                                                    <label>ประเภทวัตถุดิบ</label>
+                                                    <label class="required">ประเภทวัตถุดิบ</label>
                                                     <select name="matCatNo" id="edit_mat_cat_no" class="form-control" required>
                                                         <option value="" disabled>เลือกประเภทวัตถุดิบ</option>
                                                         <c:forEach items="${matCategories}" var="mc">
@@ -136,7 +142,7 @@
                                                     </select>
                                                 </div>
                                                 <div class="col-md-4 col-sm-4 col-xs-12 form-group has-feedback">
-                                                    <label>หน่วยวัตถุดิบ</label>
+                                                    <label class="required">หน่วยวัตถุดิบ</label>
                                                     <select name="unitNo" id="edit_unit_no" class="form-control" required>
                                                         <option value="" disabled selected>เลือกหน่วย</option>
                                                         <c:forEach items="${units}" var="u">
