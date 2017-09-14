@@ -5,6 +5,8 @@ import com.springoeb.system.repository.BranchUserRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import java.util.List;
+
 @Service
 public class BranchUserService {
     @Autowired
@@ -16,5 +18,13 @@ public class BranchUserService {
 
     public void save(BranchUser branchUser){
         branchUserRepository.save(branchUser);
+    }
+
+    public List<BranchUser> findAll(){
+        return branchUserRepository.findAll();
+    }
+
+    public List<BranchUser> findByPasswordIsNull(){
+        return branchUserRepository.findByPasswordIsNull();
     }
 }

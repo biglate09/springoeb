@@ -44,10 +44,8 @@
                     <div class="clearfix"></div>
 
                     <div class="separator">
-
                         <div class="clearfix"></div>
-                        <br />
-
+                        <br/>
                         <div>
                             <h1><i class="fa fa-cutlery"></i> Order Eat Bill</h1>
                             <p>©2017 All Rights Reserved. Order Eat Bill. Privacy and Terms</p>
