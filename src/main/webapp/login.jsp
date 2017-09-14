@@ -6,6 +6,7 @@
 <head>
     <meta charset="UTF-8">
     <title>ลงชื่อเข้าใช้</title>
+    <link rel="icon" type="image/png" href="${contextPath}/images/OEB_LOGO.png">
     <link rel='stylesheet prefetch' href='http://maxcdn.bootstrapcdn.com/font-awesome/4.2.0/css/font-awesome.min.css'>
     <style>
         * {

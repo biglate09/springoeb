@@ -27,4 +27,8 @@ public class BranchUserService {
     public List<BranchUser> findByPasswordIsNull(){
         return branchUserRepository.findByPasswordIsNull();
     }
+
+    public BranchUser findByBranchUserNo(int userNo){
+        return branchUserRepository.findByBranchUserNo(userNo);
+    }
 }

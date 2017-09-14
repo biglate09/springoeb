@@ -37,7 +37,7 @@ public class ManageController {
     @PostMapping("/login")
     public String login(@ModelAttribute("branchUser") BranchUser branchUser, HttpServletRequest request, HttpServletResponse response, HttpSession session, Model model) {
         BCryptPasswordEncoder encoder = new BCryptPasswordEncoder();
-        String target = request.getContextPath()+"/login.jsp";
+        String target = "/login.jsp";
         BranchUser branchUserResult = branchUserService.findByUsername(branchUser.getUsername());
         boolean login_pass = false;
 
@@ -69,7 +69,7 @@ public class ManageController {
 
     @GetMapping("/logout")
     public String logout(HttpSession session, HttpServletRequest request, HttpServletResponse response) {
-        String target = request.getContextPath()+"/login.jsp";
+        String target = "/login.jsp";
         session.invalidate();
         Cookie cookie = new Cookie("username", null);
         cookie.setPath(request.getContextPath());
@@ -80,24 +80,36 @@ public class ManageController {
 
     @GetMapping("/register/{bcryptusername}")
     public String register(@PathVariable("bcryptusername") String bcryptUsername, Model model, HttpServletRequest request) {
-        String target = request.getContextPath() + "/setuser.jsp";
+        String target = "/setuser.jsp";
         BCryptPasswordEncoder bCryptPasswordEncoder = new BCryptPasswordEncoder();
         List<BranchUser> branchUsers = branchUserService.findByPasswordIsNull();
         String username = null;
+        Integer userNo = null;
         for (BranchUser branchUser : branchUsers) {
-            if (bCryptPasswordEncoder.matches(branchUser.getUsername(), bcryptUsername) && branchUser.getPassword() == null) {
+            if (bCryptPasswordEncoder.matches(branchUser.getUsername(),bcryptUsername) && branchUser.getPassword() == null) {
                 username = branchUser.getUsername();
+                userNo = branchUser.getBranchUserNo();
                 break;
             }
         }
 
-        if(username != null) {
+        if(username != null && userNo != null) {
             model.addAttribute("username", username);
+            model.addAttribute("userNo", userNo);
         }else {
-            target = request.getContextPath() + "/404error.jsp";
+            target = "/404error.jsp";
         }
-
         return target;
+    }
+
+    @PostMapping("/registeruser/{userNo}")
+    @ResponseBody
+    public String registerUser(@PathVariable("userNo") int userNo,HttpServletRequest request){
+        BCryptPasswordEncoder bCryptPasswordEncoder = new BCryptPasswordEncoder();
+        BranchUser branchUser = branchUserService.findByBranchUserNo(userNo);
+        branchUser.setPassword(bCryptPasswordEncoder.encode(request.getParameter("password")));
+        branchUserService.save(branchUser);
+        return request.getScheme() + "://" + request.getServerName() + ":" + request.getServerPort() + request.getContextPath();
     }
 
     //------------------------------------------------------------------------------------//

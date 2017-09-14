@@ -7,6 +7,7 @@
 <head>
     <meta charset="utf-8">
     <title>ตั้งค่าการลงชื่อเข้าใช้ระบบ </title>
+    <link rel="icon" type="image/png" href="${contextPath}/images/OEB_LOGO.png">
     <!-- Bootstrap -->
     <link href="${contextPath}/vendors/bootstrap/dist/css/bootstrap.min.css" rel="stylesheet">
     <!-- Font Awesome -->
@@ -18,27 +19,30 @@
 
     <!-- Custom Theme Style -->
     <link href="${contextPath}/build/css/custom.min.css" rel="stylesheet">
+    <link href="${contextPath}/vendors/sweetalert/sweetalert.css" rel="stylesheet">
 </head>
 
 <body class="login">
 <div>
-
     <div class="login_wrapper">
         <div class="animate form login_form">
             <section class="login_content">
-                <form>
+                <form id="adduser">
                     <h1>ตั้งค่าการลงชื่อเข้าใช้</h1>
                     <div>
-                        <input type="text" class="form-control" placeholder="Username" name="username" required="" />
+                        <input type="text" class="form-control" placeholder="Username" name="username" required=""
+                               value="${username}" ${username != null ? 'readonly' : ''} minlength="8"/>
                     </div>
                     <div>
-                        <input type="password" class="form-control" placeholder="Password" name="password" required="" />
+                        <input type="password" class="form-control" placeholder="Password" name="password" id="password"
+                               required="" minlength="8"/>
                     </div>
                     <div>
-                        <input type="password" class="form-control" placeholder="Confirm Password" name="confirmpassword" required="" />
+                        <input type="password" class="form-control" placeholder="Confirm Password" id="confirmpassword"
+                               name="confirmpassword" required="" minlength="8"/>
                     </div>
                     <div>
-                        <button class="btn btn-primary submit form-control" style="text-align: center" >ตกลง</button>
+                        <button class="btn btn-primary submit form-control" style="text-align: center">ตกลง</button>
                     </div>
 
                     <div class="clearfix"></div>
@@ -54,9 +58,32 @@
                 </form>
             </section>
         </div>
-
-
     </div>
 </div>
 </body>
+<script src="${contextPath}/vendors/sweetalert/sweetalert.min.js"></script>
+<script src="${contextPath}/vendors/jquery/dist/jquery.min.js"></script>
+<script>
+    $("#adduser").submit(function () {
+        if ($("#password").val() == $("#confirmpassword").val()) {
+            $.ajax({
+                url: "${contextPath}/system/registeruser/" + ${userNo},
+                data: $("#adduser").serialize(),
+                method: "POST",
+                success: function (target) {
+                    swal("สมัครสมาชิกสำเร็จ","กรุณารอสักครู่", "success");
+                    setTimeout(function () {
+                        window.location.replace(target);
+                    },2000);
+                },
+                error: function () {
+                    swal("ไม่สำเร็จ", "กรุณาลองอีกครั้ง", "error");
+                }
+            });
+        } else {
+            swal("ไม่สำเร็จ", "กรุณากรอก Password ให้ตรงกัน", "error");
+        }
+        return false;
+    });
+</script>
 </html>

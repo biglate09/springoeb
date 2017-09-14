@@ -74,7 +74,7 @@ public class BranchController {
         String email = request.getParameter("email");
         String subject = "[ระบบ OrderEatBill] ตั้งค่าการลงชื่อเข้าใช้ระบบใบฐานะแอดมิน";
         String tokenUsername = getBcrypt(username);
-        String msg = "Username : " + username + "\nกรุณาคลิกลิงก์ด้านล่างเพื่อสร้าง Password\n" + request.getScheme() + "://" + request.getServerName() + "/system/register/" + tokenUsername;
+        String msg = "Username : " + username + "\nกรุณาคลิกลิงก์ด้านล่างเพื่อสร้าง Password\n" + request.getScheme() + "://" + request.getServerName() + ":" + request.getServerPort() + request.getContextPath() + "/system/register/" + tokenUsername;
         emailService.sendMail(email, subject, msg);
     }
 

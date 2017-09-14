@@ -139,12 +139,12 @@
             data: object,
             url: "${contextPath}/branch/managebranch",
             success: function (result) {
-                swal("สำเร็จ", "ประเภท " + $("#branc_name").val() + " ถูกเพิ่มเรียบร้อยแล้ว", "success");
+                swal("สำเร็จ", "สาขา " + $("#branchName").val() + " ถูกเพิ่มเรียบร้อยแล้ว", "success");
                 reset_field();
                 $("#addBranch").modal('toggle');
                 refresh_table();
             },error: function(result){
-                swal("ไม่สำเร็จ", "ชื่อประเภทอาจซ้ำหรือเซิร์ฟเวอร์มีปัญหา", "error");
+                swal("ไม่สำเร็จ", "กรุณาลองใหม่อีกครั้ง", "error");
             }
         });
         return false;

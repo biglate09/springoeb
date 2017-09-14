@@ -21,6 +21,7 @@
 
     <!-- Custom Theme Style -->
     <link href="${contextPath}/build/css/custom.min.css" rel="stylesheet">
+    <link rel="icon" type="image/png" href="${contextPath}/images/OEB_LOGO.png">
 </head>
 
 <body class="nav-md">
