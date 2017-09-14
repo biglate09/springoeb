@@ -20,6 +20,7 @@ import javax.servlet.http.Cookie;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
+import java.util.List;
 
 @Controller
 @RequestMapping("/system")
@@ -36,7 +37,7 @@ public class ManageController {
     @PostMapping("/login")
     public String login(@ModelAttribute("branchUser") BranchUser branchUser, HttpServletRequest request, HttpServletResponse response, HttpSession session, Model model) {
         BCryptPasswordEncoder encoder = new BCryptPasswordEncoder();
-        String target = "/login.jsp";
+        String target = request.getContextPath()+"/login.jsp";
         BranchUser branchUserResult = branchUserService.findByUsername(branchUser.getUsername());
         boolean login_pass = false;
 
@@ -46,8 +47,8 @@ public class ManageController {
                 session.setAttribute("branchUser", branchUserResult);
                 target = "/";
 
-                if(request.getParameter("remember-me") != null){
-                    Cookie cookie = new Cookie("username",branchUserResult.getUsername());
+                if (request.getParameter("remember-me") != null) {
+                    Cookie cookie = new Cookie("username", branchUserResult.getUsername());
                     cookie.setPath(request.getContextPath());
                     cookie.setMaxAge(Integer.MAX_VALUE);
                     response.addCookie(cookie);
@@ -55,10 +56,10 @@ public class ManageController {
             }
         }
 
-        if(!login_pass){
-            model.addAttribute("username",branchUser.getUsername());
-            model.addAttribute("msg","ชื่อผู้ใช้หรือรหัสผ่านไม่ถูกต้อง กรุณาลองใหม่อีกครั้ง");
-            if(request.getParameter("remember-me") != null) {
+        if (!login_pass) {
+            model.addAttribute("username", branchUser.getUsername());
+            model.addAttribute("msg", "ชื่อผู้ใช้หรือรหัสผ่านไม่ถูกต้อง กรุณาลองใหม่อีกครั้ง");
+            if (request.getParameter("remember-me") != null) {
                 model.addAttribute("rememberme", true);
             }
         }
@@ -67,13 +68,35 @@ public class ManageController {
     }
 
     @GetMapping("/logout")
-    public String logout(HttpSession session,HttpServletRequest request,HttpServletResponse response){
-        String target = "/login.jsp";
+    public String logout(HttpSession session, HttpServletRequest request, HttpServletResponse response) {
+        String target = request.getContextPath()+"/login.jsp";
         session.invalidate();
-        Cookie cookie = new Cookie("username",null);
+        Cookie cookie = new Cookie("username", null);
         cookie.setPath(request.getContextPath());
         cookie.setMaxAge(0);
         response.addCookie(cookie);
+        return target;
+    }
+
+    @GetMapping("/register/{bcryptusername}")
+    public String register(@PathVariable("bcryptusername") String bcryptUsername, Model model, HttpServletRequest request) {
+        String target = request.getContextPath() + "/setuser.jsp";
+        BCryptPasswordEncoder bCryptPasswordEncoder = new BCryptPasswordEncoder();
+        List<BranchUser> branchUsers = branchUserService.findByPasswordIsNull();
+        String username = null;
+        for (BranchUser branchUser : branchUsers) {
+            if (bCryptPasswordEncoder.matches(branchUser.getUsername(), bcryptUsername) && branchUser.getPassword() == null) {
+                username = branchUser.getUsername();
+                break;
+            }
+        }
+
+        if(username != null) {
+            model.addAttribute("username", username);
+        }else {
+            target = request.getContextPath() + "/404error.jsp";
+        }
+
         return target;
     }
 
