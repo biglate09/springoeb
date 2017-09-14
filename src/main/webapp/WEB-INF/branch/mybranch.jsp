@@ -7,12 +7,7 @@
 <head>
     <jsp:include page="../_include/topenv.jsp"/>
     <title>จัดการสาขานี้</title>
-    <style>
-        .required:after {
-            content:" *";
-            color:red;
-        }
-    </style>
+
 </head>
 <body class="nav-md">
 <div class="container body">
@@ -35,7 +30,7 @@
                         <form method="POST" action="${contextPath}/branch/managemybranch" modelAttribute="branch">
                             <div class="x_content">
                                 <div class="col align-self-start form-group has-feedback">
-                                    <label>ชื่อสาขา</label>
+                                    <label class="required">ชื่อสาขา</label>
                                     <input class="form-control" style="width: 50%" name="branchName"
                                            placeholder="ชื่อสาขา"
                                            value="${branch.branchName}">
@@ -54,17 +49,17 @@
                                 </div>
                                 <div class="col-md-6">
                                     <div class="col form-group has-feedback">
-                                        <label>ที่อยู่</label>
+                                        <label class="required">ที่อยู่</label>
                                         <input class="form-control" placeholder="1/350 ..." name="addressName"
                                                value="${branch.addressName}">
                                     </div>
                                     <div class="col form-group has-feedback">
-                                        <label>ถนน</label>
+                                        <label class="required">ถนน</label>
                                         <input class="form-control" placeholder="พุทธบูชา 36" name="road"
                                                value="${branch.road}">
                                     </div>
                                     <div class="col form-group has-feedback">
-                                        <label>จังหวัด</label>
+                                        <label class="required">จังหวัด</label>
                                         <select change="province" progress="1" class="form-control depend-field"
                                                 name="provinceNo">
                                             <option value="">เลือก</option>
@@ -74,21 +69,21 @@
                                         </select>
                                     </div>
                                     <div class="col form-group has-feedback">
-                                        <label>อำเภอ/เขต</label>
+                                        <label class="required">อำเภอ/เขต</label>
                                         <select change="district" progress="2" class="form-control depend-field"
                                                 name="districtNo">
                                             <option value="">เลือก</option>
                                         </select>
                                     </div>
                                     <div class="col form-group has-feedback">
-                                        <label>ตำบล/แขวง</label>
+                                        <label class="required">ตำบล/แขวง</label>
                                         <select change="subDistrict" progress="3" class="form-control depend-field"
                                                 name="subDistrictNo">
                                             <option value="">เลือก</option>
                                         </select>
                                     </div>
                                     <div class="col form-group has-feedback">
-                                        <label>รหัสไปรษณีย์</label>
+                                        <label class="required">รหัสไปรษณีย์</label>
                                         <select change="zipcode" progress="4" class="form-control depend-field"
                                                 name="zipNo">
                                             <option value="">เลือก</option>
