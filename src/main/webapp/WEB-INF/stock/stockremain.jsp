@@ -213,7 +213,7 @@
         });
 
         $("#stockRemainsInfo").DataTable({
-            order: [[0, "asc"]],
+            order: [[0, "desc"]],
             columnDefs: [
                 {orderable: false, targets: [-1]}
             ],

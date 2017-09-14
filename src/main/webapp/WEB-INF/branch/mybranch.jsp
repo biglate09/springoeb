@@ -118,9 +118,6 @@
                                 <button type="submit" style="margin-left:5px;width: 100px;"
                                         class="btn btn-warning">แก้ไข
                                 </button>
-                                <button type="button" class="btn btn-default" style="width: 100px;">
-                                    ยกเลิก
-                                </button>
                             </div>
                         </form>
                     </div>

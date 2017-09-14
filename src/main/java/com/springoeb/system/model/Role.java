@@ -9,6 +9,9 @@ public class Role {
     private Integer roleNo;
     private Integer roleName;
 
+    public static Integer MANAGER = 1;
+    public static Integer EMPLOYEE = 2;
+
     public Integer getRoleNo() {
         return roleNo;
     }

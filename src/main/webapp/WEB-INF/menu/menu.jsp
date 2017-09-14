@@ -60,7 +60,7 @@
                                           aria-hidden="true"></span>
                                 </div>
                                 <%--<div class="col-md-1 btn-group">--%>
-                                <div class="btn-group col" data-toggle="buttons">
+                                <div class="btn-group" data-toggle="buttons">
                                     <label id="displayThumbnail" class="btn btn-default display_toggle active"
                                            type="button" title="แสดงแบบรูป">
                                         <span class="fa fa-th-large"></span>

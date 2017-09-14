@@ -13,4 +13,8 @@ public class BranchUserService {
     public BranchUser findByUsername(String username){
         return branchUserRepository.findByUsernameIgnoreCase(username);
     }
+
+    public void save(BranchUser branchUser){
+        branchUserRepository.save(branchUser);
+    }
 }

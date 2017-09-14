@@ -8,6 +8,7 @@ import javax.persistence.*;
 @Entity
 public class BranchUser {
     @Id
+    @GeneratedValue(strategy = GenerationType.AUTO)
     private Integer branchUserNo;
     private String username;
     private String password;

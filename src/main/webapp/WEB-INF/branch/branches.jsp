@@ -45,7 +45,7 @@
                                    class="table table-striped table-bordered">
                                 <thead>
                                 <tr>
-                                    <th style="width:5%;text-align:center;">ลำดับ</th>
+                                    <th style="width:5%;text-align:center;">หมายเลขสาขา</th>
                                     <th style="width:20%;text-align:center;">ชื่อสาขา</th>
                                     <th style="width:20%;text-align:center;">ตัวเลือก</th>
                                 </tr>
@@ -68,25 +68,25 @@
                             <h4 class="modal-title">เพิ่มสาขาใหม่</h4>
                         </div>
                         <div class="modal-body">
-                            <form class="form-horizontal form-label-left input_mask" modelAttribute="branches" id="add_branch">
+                            <form class="form-horizontal form-label-left input_mask" modelAttribute="branch" id="add_branch">
                                 <div class="form-group">
                                     <div class="col-md-12 col-sm-12 col-xs-12 form-group has-feedback">
                                         <label class="required">ชื่อสาขา</label>
-                                        <input type="text" class="form-control" name="matCatName" id="branch_name"
+                                        <input type="text" class="form-control" name="branchName" id="branchName"
                                                placeholder="ชื่อสาขา" required>
                                         <span class="fa fa-pencil form-control-feedback right"
                                               aria-hidden="true"></span>
                                     </div>
                                     <div class="col-md-12 col-sm-12 col-xs-12 form-group has-feedback">
                                         <label class="required">อีเมลสาขา</label>
-                                        <input type="email" class="form-control" name="matCatName" id="branch_email"
+                                        <input type="email" class="form-control" name="email" id="email"
                                                placeholder="เช่น mybranch@mail.com" required>
                                         <span class="fa fa-envelope form-control-feedback right"
                                               aria-hidden="true"></span>
                                     </div>
                                     <div class="col-md-12 col-sm-12 col-xs-12 form-group has-feedback">
                                         <label class="required">Username ของสาขา</label>
-                                        <input type="text" class="form-control" name="matCatName" id="branch_username"
+                                        <input type="text" class="form-control" name="username" id="username"
                                                placeholder="Username" required>
                                         <span class="fa fa-user form-control-feedback right"
                                               aria-hidden="true"></span>
@@ -107,56 +107,6 @@
                 </div>
             </div>
             <!-- /Modal Content (Add Branch)-->
-            <!-- Modal Content (Edit Branch)-->
-            <div class="modal fade" id="editBranch" role="dialog">
-                <div class="modal-dialog">
-                    <div class="modal-content">
-                        <div class="modal-header">
-                            <button type="button" class="close" data-dismiss="modal">&times;</button>
-                            <h4 class="modal-title">แก้ไขข้อมูลของสาขา <span
-                                    id="show_branch_name"></span></h4>
-                        </div>
-                        <div class="modal-body">
-                            <form class="form-horizontal form-label-left input_mask" modelAttribute="branches" id="edit_branch">
-                                <input type="hidden" name="branchNo" id="hiddenbranchno">
-                                <div class="form-group">
-                                    <div class="col-md-12 col-sm-12 col-xs-12 form-group has-feedback">
-                                        <label class="required">ชื่อสาขา</label>
-                                        <input type="text" class="form-control" name="matCatName" id="edit_branch_name"
-                                               placeholder="ชื่อสาขา" required>
-                                        <span class="fa fa-pencil form-control-feedback right"
-                                              aria-hidden="true"></span>
-                                    </div>
-                                    <div class="col-md-12 col-sm-12 col-xs-12 form-group has-feedback">
-                                        <label class="required">อีเมลสาขา</label>
-                                        <input type="email" class="form-control" name="matCatName" id="edit_branch_email"
-                                               placeholder="เช่น mybranch@mail.com" required>
-                                        <span class="fa fa-envelope form-control-feedback right"
-                                              aria-hidden="true"></span>
-                                    </div>
-                                    <div class="col-md-12 col-sm-12 col-xs-12 form-group has-feedback">
-                                        <label class="required">Username ของสาขา</label>
-                                        <input type="text" class="form-control" name="matCatName" id="edit_branch_username"
-                                               placeholder="Username" required>
-                                        <span class="fa fa-user form-control-feedback right"
-                                              aria-hidden="true"></span>
-                                    </div>
-                                </div>
-                                <div class="modal-footer">
-                                    <!-- ปุ่มกดปิด (Close) ตรงส่วนล่างของ Modal -->
-                                    <div class="col-md-9 col-sm-9 col-xs-12 col-md-offset-3">
-                                        <button type="submit" class="btn btn-success">ตกลง</button>
-                                        <button type="button" class="btn btn-default" data-dismiss="modal">
-                                            ยกเลิก
-                                        </button>
-                                    </div>
-                                </div>
-                            </form>
-                        </div>
-                    </div>
-                </div>
-            </div>
-            <!-- /Modal Content (Edit Branch)-->
         </div>
     </div>
 </div>
@@ -170,7 +120,10 @@
             ],
             columns: [
                 {
-                    data: 'No'
+                    data: {
+                        _ : 'No.display',
+                        sort : 'No.order'
+                    }
                 },
                 {
                     data: 'branchName'
@@ -185,11 +138,11 @@
     });
 
     $("#addBranch").submit(function(){
-        var object = $("#addBranch").serialize();
+        var object = $("#add_branch").serialize();
         $.ajax({
             type: "POST",
             data: object,
-            url: "${contextPath}/branch/",
+            url: "${contextPath}/branch/managebranch",
             success: function (result) {
                 swal("สำเร็จ", "ประเภท " + $("#branc_name").val() + " ถูกเพิ่มเรียบร้อยแล้ว", "success");
                 reset_field();
@@ -207,46 +160,36 @@
     });
 
     function reset_field(){
-        $("#addBranch")[0].reset();
+        $("#add_branch")[0].reset();
     }
 
     function refresh_table() {
         $.ajax({
             type: "POST",
-            url: "${contextPath}/branch/",
+            url: "${contextPath}/branch/getbranches",
             dataType: "json",
             success: function (json) {
                 var data_array = [];
                 for (var iterator = 0; iterator < json.length; iterator++) {
                     var obj = json[iterator];
-                    var number = [];
-                    for (var i = 1; i != 4; ++i) number.push(i);
+                    branchsort = obj.branchNo;
+                    for(var i = (obj.branchNo+'').length ; i<10 ; i++){
+                        branchsort += "0" + branchsort;
+                    }
 
                     var data_refresh = {
-                        No: number,
-                        branchName: '<a onclick = "set_branch(' + obj.branchNo + ',\'' + obj.branchName +'\')" data-toggle = "modal" data-target = "#addBranch" style = "font-weight: bold;cursor:pointer;" >' + obj.branchName + '</a>',
-                        option: '<a onclick = "set_branch(' + obj.branchNo + ',\'' + obj.branchName +'\')" class = "btn btn-warning btn-sm" data-toggle = "modal" data-target = "#editBranch"> <i class = "fa fa-pencil"> </i> &nbsp; แก้ไข </a>' +
-                        '<a onclick = "del_branch(' + obj.branchNo + ',\'' + obj.branchName +'\')") class = "btn btn-danger btn-sm"> <i class = "fa fa-trash"></i> &nbsp; ลบ </a>'
+                        No: {
+                            display : obj.branchNo,
+                            order : branchsort
+                        },
+                        branchName: obj.branchName,
+                        option: '<a onclick = "del_branch(' + obj.branchNo + ',\'' + obj.branchName +'\')") class = "btn btn-danger btn-sm"> <i class = "fa fa-trash"></i> &nbsp; ลบ </a>'
                     };
                     data_array.push(data_refresh);
                 }
 
                 $("#datatable-branches").DataTable().clear();
                 $("#datatable-branches").DataTable().rows.add(data_array).draw(false);
-            }
-        });
-    }
-
-    function set_branch(branchNo, branchName) {
-        $.ajax({
-            type: "PUT",
-            url: "${contextPath}/branch/" + '',
-            dataType: "json",
-            success: function (result) {
-                branch = result.branch;
-                $("#hiddenbranchno").val(branchNo);
-                $("#edit_branch_name").val(branchName);
-                $("#show_branch_name").html(branchName);
             }
         });
     }
@@ -265,7 +208,7 @@
             function () {
                 $.ajax({
                     type: "DELETE",
-                    url: "${contextPath}/branch/" + '',
+                    url: "${contextPath}/branch/deletebranch/" + branchNo,
                     success: function (json) {
                         swal("สำเร็จ", branchName + " ถูกลบเรียบร้อยแล้ว", "success");
                         refresh_table();

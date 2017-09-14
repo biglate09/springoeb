@@ -1,16 +1,15 @@
 package com.springoeb.branch.model;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.springoeb.system.model.BranchUser;
 
-import javax.persistence.Entity;
-import javax.persistence.FetchType;
-import javax.persistence.Id;
-import javax.persistence.OneToMany;
+import javax.persistence.*;
 import java.util.List;
 
 @Entity
 public class Branch {
     @Id
+    @GeneratedValue(strategy = GenerationType.AUTO)
     private Integer branchNo;
     private String branchName;
     private String branchDesc;
@@ -26,6 +25,7 @@ public class Branch {
 
     public static int MAIN_BRANCH = 1;
 
+    @JsonIgnore
     @OneToMany(fetch = FetchType.LAZY, mappedBy = "branch")
     private List<BranchUser> branchUsers;
 
