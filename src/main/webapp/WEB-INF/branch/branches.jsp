@@ -178,13 +178,25 @@
                             order : branchsort
                         },
                         branchName: obj.branchName,
-                        option: '<a onclick = "del_branch(' + obj.branchNo + ',\'' + obj.branchName +'\')") class = "btn btn-danger btn-sm"> <i class = "fa fa-trash"></i> &nbsp; ลบ </a>'
+                        option: '<a onclick = "resent(' + obj.branchNo + ')" class = "btn btn-warning btn-sm"> <i class = "fa fa-envelope"></i> &nbsp; ส่งอีกครั้ง </a>' +
+                        '<a onclick = "del_branch(' + obj.branchNo + ',\'' + obj.branchName +'\')" class = "btn btn-danger btn-sm"> <i class = "fa fa-trash"></i> &nbsp; ลบ </a>'
                     };
                     data_array.push(data_refresh);
                 }
 
                 $("#datatable-branches").DataTable().clear();
                 $("#datatable-branches").DataTable().rows.add(data_array).draw(false);
+            }
+        });
+    }
+
+    function resent(branchNo) {
+        $.ajax({
+            type: "PUT",
+            url: "",
+            dataType: "json",
+            success: function (result) {
+
             }
         });
     }
