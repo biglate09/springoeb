@@ -19,7 +19,8 @@ import java.util.*;
 public class SessionFilter implements Filter {
     private static final Set<String> ALLOW_PATHS = Collections.unmodifiableSet(new HashSet<>(
             Arrays.asList("/login.jsp", "/loginpage", "/system/login", "/system/logout")));
-
+    private static final Set<String> START_PATHS = Collections.unmodifiableSet(new HashSet<>(
+            Arrays.asList("/system/register/","/system/registeruser/")));
     private final static String SESSION_NAME = "branchUser";
     private final static String COOKIE_NAME = "username";
 
@@ -34,9 +35,14 @@ public class SessionFilter implements Filter {
         HttpServletResponse response = (HttpServletResponse) servletResponse;
         HttpSession hs = request.getSession(false);
         String path = request.getRequestURI().substring(request.getContextPath().length()).replaceAll("[/]+$", "");
-
         boolean loggedIn = (hs != null && hs.getAttribute(SESSION_NAME) != null);
         boolean allowedPath = ALLOW_PATHS.contains(path);
+        for(String sp : START_PATHS){
+            if(path.startsWith(sp)){
+                allowedPath = true;
+                break;
+            }
+        }
 
         if (!loggedIn) {
             Cookie[] cookies = request.getCookies();

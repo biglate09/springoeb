@@ -78,9 +78,10 @@ public class ManageController {
         return target;
     }
 
-    @GetMapping("/register/{bcryptusername}")
-    public String register(@PathVariable("bcryptusername") String bcryptUsername, Model model, HttpServletRequest request) {
+    @GetMapping("/register")
+    public String register(Model model,HttpServletRequest request) {
         String target = "/setuser.jsp";
+        String bcryptUsername = request.getParameter("username");
         BCryptPasswordEncoder bCryptPasswordEncoder = new BCryptPasswordEncoder();
         List<BranchUser> branchUsers = branchUserService.findByPasswordIsNull();
         String username = null;
