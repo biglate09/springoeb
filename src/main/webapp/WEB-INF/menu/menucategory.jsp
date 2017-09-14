@@ -246,7 +246,7 @@
                     var data_refresh = {
                         menuCatName: '<a onclick = "setMenuCat(' + menu_cat_obj.menuCatNo + ')" data-toggle = "modal" data-target = "#editMenuCat" style = "font-weight: bold;cursor:pointer;" >' + menu_cat_obj.menuCatName + '</a>',
                         option: '<a onclick = "setMenuCat(' + menu_cat_obj.menuCatNo + ')" class = "btn btn-warning btn-sm" data-toggle = "modal" data-target = "#editMenuCat"> <i class = "fa fa-pencil"> </i> &nbsp; แก้ไข </a>' +
-                        '<a onclick = "delMenuCat(' + menu_cat_obj.menuCatNo + ',\'' + menu_cat_obj.menuCatName +'\')") class = "btn btn-danger btn-sm"> <i class = "fa fa-trash"></i> &nbsp; ลบ </a>'
+                        '<a onclick = "delMenuCat(' + menu_cat_obj.menuCatNo + ',\'' + menu_cat_obj.menuCatName +'\')" class = "btn btn-danger btn-sm"> <i class = "fa fa-trash"></i> &nbsp; ลบ </a>'
                     };
                     data_array.push(data_refresh);
                 }
