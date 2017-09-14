@@ -155,12 +155,30 @@
                                             <span class="fa fa-bitcoin form-control-feedback right"
                                                   aria-hidden="true"></span>
                                         </div>
+
+
+                                        <div class="col-md-6 col-sm-6 col-xs-12 form-group has-feedback">
+                                            <label class="required">อีเมล์</label>
+                                            <input type="email" class="form-control"
+                                                   placeholder="อีเมล์" name="email" required>
+                                            <span class="fa fa-envelope form-control-feedback right"
+                                                  aria-hidden="true"></span>
+                                        </div>
+
+                                        <div class="col-md-6 col-sm-6 col-xs-12 form-group has-feedback">
+                                            <label>สถานะของพนักงาน</label>
+                                            <div class="checkbox">
+                                                <label>
+                                                    <input type="checkbox" name="isAdmin"
+                                                           id="isAdmin"
+                                                           class="flat"> เป็นแอดมิน
+                                                </label>
+                                            </div>
+                                        </div>
+
                                         <div class="form-group col-md-12">
                                             <label>สีป้ายชื่อพนักงานในตารางการทำงาน</label>
                                             <div class="well" style="overflow: auto">
-                                                <%--<div style="text-align:center;" class="col-md-12">--%>
-                                                <%--<span>ตัวอย่างป้ายตารางการทำงาน</span>--%>
-                                                <%--</div>--%>
                                                 <div class="col-md-4"
                                                      style="margin-left:30%;width:40%;margin-bottom:10px;">
                                                     <a class="fc-day-grid-event fc-event" id="row_example"
@@ -314,12 +332,30 @@
                                         <span class="fa fa-bitcoin form-control-feedback right"
                                               aria-hidden="true"></span>
                                     </div>
-                                    <div class="form-group col-md-12">
+
+                                        <div class="col-md-6 col-sm-6 col-xs-12 form-group has-feedback">
+                                            <label class="required">อีเมล์</label>
+                                            <input type="email" class="form-control"
+                                                   placeholder="อีเมล์" name="email" required>
+                                            <span class="fa fa-envelope form-control-feedback right"
+                                                  aria-hidden="true"></span>
+                                        </div>
+
+                                        <div class="col-md-6 col-sm-6 col-xs-12 form-group has-feedback">
+                                            <label>สถานะของพนักงาน</label>
+                                            <div class="checkbox">
+                                                <label>
+                                                    <input type="checkbox" name="isAdmin"
+                                                           id="isAdmin"
+                                                           class="flat"> เป็นแอดมิน
+                                                </label>
+                                            </div>
+                                        </div>
+
+                                        <div class="form-group col-md-12">
                                         <label>สีป้ายชื่อพนักงานในตารางการทำงาน</label>
                                         <div class="well" style="overflow: auto">
-                                            <%--<div style="text-align:center;" class="col-md-12">--%>
-                                            <%--<span>ตัวอย่างป้ายตารางการทำงาน</span>--%>
-                                            <%--</div>--%>
+
                                             <div class="col-md-4"
                                                  style="margin-left:30%;width:40%;margin-bottom:10px;">
                                                 <a class="fc-day-grid-event fc-event" id="edit_row_example"
