@@ -204,11 +204,9 @@
                                             <button type="button" class="btn btn-default" data-dismiss="modal">
                                                 ยกเลิก
                                             </button>
-
                                         </div>
                                     </div>
                                 </form>
-
                             </div>
                         </div>
                     </div>
@@ -302,7 +300,7 @@
                                                 </div>
                                             </div>
                                         </div>
-                                    </div>
+
                                     <div class="col-md-6 col-sm-6 col-xs-12 form-group has-feedback"
                                          style="clear: both;">
                                         <label class="required">ประเภทการจ่าย</label>
@@ -358,6 +356,7 @@
                                                 </div>
                                             </div>
                                         </div>
+                                    </div>
                                     </div>
                                     <div class="modal-footer">
                                         <!-- ปุ่มกดปิด (Close) ตรงส่วนล่างของ Modal -->
