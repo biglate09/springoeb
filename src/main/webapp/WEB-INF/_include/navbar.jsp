@@ -90,7 +90,6 @@
                                 <li><a id="branches" href="${contextPath}/branch/branches">สาขาทั้งหมด</a></li>
                             </c:if>
                             <li><a id="mybranch" href="${contextPath}/branch/mybranch">สาขานี้</a></li>
-                            <li><a id="member" href="${contextPath}/branch/member">สมาชิกของสาขานี้</a></li>
                         </ul>
                     </li>
                     <li>
