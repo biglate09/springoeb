@@ -36,3 +36,7 @@
 .plusemp{
 	font-size:25px;
 }
+.required:after {
+    content:" *";
+    color:red;
+}

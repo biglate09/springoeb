@@ -11,12 +11,6 @@
     <meta name="viewport" content="width=device-width, initial-scale=1">
 
     <title>ตารางการทำงาน</title>
-    <style>
-        .required:after {
-            content:" *";
-            color:red;
-        }
-    </style>
 
     <jsp:include page="../_include/topenv.jsp"/>
     <link href="${contextPath}/vendors/fullcalendar/dist/fullcalendar.css" rel="stylesheet">

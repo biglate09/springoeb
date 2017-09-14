@@ -6,12 +6,6 @@
 <head>
     <jsp:include page="../_include/topenv.jsp"/>
     <title>ประเภทอาหาร</title>
-    <style>
-        .required:after {
-            content:" *";
-            color:red;
-        }
-    </style>
 
 </head>
 <body class="nav-md">

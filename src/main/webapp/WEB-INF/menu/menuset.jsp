@@ -17,11 +17,6 @@
             margin-bottom: 10px;
             background-color: #fff;
         }
-        .required:after {
-            content:" *";
-            color:red;
-        }
-
     </style>
 </head>
 <body class="nav-md">
