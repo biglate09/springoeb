@@ -5,6 +5,7 @@
 <html>
 <head>
     <jsp:include page="../_include/topenv.jsp"/>
+    <link href="../vendors/bootstrap-daterangepicker/bootstrap-datetimepicker.min.css" rel="stylesheet" media="screen">
     <title>จัดการการจอง</title>
 </head>
 <body class="nav-md">
@@ -84,23 +85,19 @@
                                         </div>
                                         <div class="col-md-6 col-sm-6 col-xs-12 form-group has-feedback">
                                             <label class="required">เบอร์โทรศัพท์</label>
-                                            <input type="text" class="form-control" id="telNo" placeholder="เบอร์โทรศัพท์">
+                                            <input type="text" class="form-control" id="" placeholder="เบอร์โทรศัพท์">
                                             <span class="fa fa-phone form-control-feedback right" aria-hidden="true"></span>
                                         </div>
-                                        <div class="col-md-3 col-sm-3 col-xs-6 form-group has-feedback">
-                                            <label class="required">วันที่จอง</label>
-                                            <input type="date" id="workDate" class="form-control workdate"
-                                                   name="workDate"
-                                                   required>
-                                            <span class="fa fa-calendar form-control-feedback right"
-                                                  aria-hidden="true"></span>
-                                        </div>
-                                        <div class="col-md-3 col-sm-3 col-xs-6 form-group has-feedback">
-                                                    <label class="required">เวลาที่จอง</label>
-                                                    <input type="text" class="form-control" placeholder="hh:mm">
-                                                    <span class="fa fa-clock-o  form-control-feedback right" aria-hidden="true"></span>
+                                        <div class="form-group">
+                                            <label class="required">วันเวลาที่จอง</label>
+                                            <div class="input-group date form_datetime col-md-6 col-sm-6 col-xs-12" data-date-format="dd MM yyyy - HH:ii p" data-link-field="dtp_input1">
+                                                <input class="form-control" type="text" placeholder="วันเวลาที่จอง">
+                                                <span class="input-group-addon"><span class="glyphicon glyphicon-remove"></span></span>
+                                            </div>
+                                            <input type="hidden" id="dtp_input1" value="" /><br/>
                                         </div>
                                     </div>
+
                                     <div class="modal-footer">
                                         <!-- ปุ่มกดปิด (Close) ตรงส่วนล่างของ Modal -->
                                         <div class="col-md-9 col-sm-9 col-xs-12 col-md-offset-3">
@@ -198,6 +195,9 @@
     </div>
 </div>
 <jsp:include page="../_include/bottomenv.jsp"/>
+<!-- bootstrap-daterangepicker -->
+<script src="../vendors/bootstrap-daterangepicker/bootstrap-datetimepicker.js" charset="UTF-8"></script>
+<script src="../vendors/bootstrap-daterangepicker/bootstrap-datetimepicker.fr.js" charset="UTF-8"></script>
 </body>
 <script>
     $(document).ready(function () {
@@ -253,6 +253,37 @@
             }
         });
     }
+    $('.form_datetime').datetimepicker({
+        //language:  'fr',
+        weekStart: 1,
+        todayBtn:  1,
+        autoclose: 1,
+        todayHighlight: 1,
+        startView: 2,
+        forceParse: 0,
+        showMeridian: 1
+    });
+    $('.form_date').datetimepicker({
+        language:  'fr',
+        weekStart: 1,
+        todayBtn:  1,
+        autoclose: 1,
+        todayHighlight: 1,
+        startView: 2,
+        minView: 2,
+        forceParse: 0
+    });
+    $('.form_time').datetimepicker({
+        language:  'fr',
+        weekStart: 1,
+        todayBtn:  1,
+        autoclose: 1,
+        todayHighlight: 1,
+        startView: 1,
+        minView: 0,
+        maxView: 1,
+        forceParse: 0
+    });
 
 
 </script>
