@@ -18,9 +18,9 @@ import java.util.*;
 @Component("SessionFilter")
 public class SessionFilter implements Filter {
     private static final Set<String> ALLOW_PATHS = Collections.unmodifiableSet(new HashSet<>(
-            Arrays.asList("/login.jsp", "/loginpage", "/system/login", "/system/logout")));
+            Arrays.asList("/login.jsp", "/404error.jsp", "/WEB-INF/setuser.jsp", "/loginpage", "/system/login", "/system/logout")));
     private static final Set<String> START_PATHS = Collections.unmodifiableSet(new HashSet<>(
-            Arrays.asList("/system/register/","/system/registeruser/")));
+            Arrays.asList("/system/register","/system/registeruserprocess","/system/registeremp","/system/registerempprocess","/images","/vendors","/build")));
     private final static String SESSION_NAME = "branchUser";
     private final static String COOKIE_NAME = "username";
 
@@ -62,6 +62,7 @@ public class SessionFilter implements Filter {
                 }
             }
         }
+
 
         if (loggedIn || allowedPath) {
             filterChain.doFilter(request, response);

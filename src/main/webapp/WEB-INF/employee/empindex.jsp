@@ -169,8 +169,7 @@
                                             <label>สถานะของพนักงาน</label>
                                             <div class="checkbox">
                                                 <label>
-                                                    <input type="checkbox" name="isAdmin"
-                                                           id="isAdmin"
+                                                    <input type="checkbox" value="true" name="isAdmin"
                                                            class="flat"> เป็นแอดมิน
                                                 </label>
                                             </div>
@@ -314,29 +313,29 @@
                                             </div>
                                         </div>
 
-                                    <div class="col-md-6 col-sm-6 col-xs-12 form-group has-feedback"
-                                         style="clear: both;">
-                                        <label class="required">ประเภทการจ่าย</label>
-                                        <select id="editpaytype" name="payType" class="form-control" required>
-                                            <option value="" disabled>เลือกประเภทการจ่าย</option>
-                                            <option value="${Employee.HOUR}">รายชั่วโมง</option>
-                                            <option value="${Employee.DAY}">รายวัน</option>
-                                        </select>
-                                    </div>
+                                        <div class="col-md-6 col-sm-6 col-xs-12 form-group has-feedback"
+                                             style="clear: both;">
+                                            <label class="required">ประเภทการจ่าย</label>
+                                            <select id="editpaytype" name="payType" class="form-control" required>
+                                                <option value="" disabled>เลือกประเภทการจ่าย</option>
+                                                <option value="${Employee.HOUR}">รายชั่วโมง</option>
+                                                <option value="${Employee.DAY}">รายวัน</option>
+                                            </select>
+                                        </div>
 
-                                    <div class="col-md-6 col-sm-6 col-xs-12 form-group has-feedback">
-                                        <label class="required">ค่าจ้างต่อหน่วยเวลา</label>
-                                        <input type="number" step="any" class="form-control"
-                                               placeholder="ค่าจ้างต่อหน่วยเวลา" name="pay" id="editpay"
-                                               max="999999.99" required>
-                                        <span class="fa fa-bitcoin form-control-feedback right"
-                                              aria-hidden="true"></span>
-                                    </div>
+                                        <div class="col-md-6 col-sm-6 col-xs-12 form-group has-feedback">
+                                            <label class="required">ค่าจ้างต่อหน่วยเวลา</label>
+                                            <input type="number" step="any" class="form-control"
+                                                   placeholder="ค่าจ้างต่อหน่วยเวลา" name="pay" id="editpay"
+                                                   max="999999.99" required>
+                                            <span class="fa fa-bitcoin form-control-feedback right"
+                                                  aria-hidden="true"></span>
+                                        </div>
 
                                         <div class="col-md-6 col-sm-6 col-xs-12 form-group has-feedback">
                                             <label class="required">อีเมล์</label>
                                             <input type="email" class="form-control"
-                                                   placeholder="อีเมล์" name="email" required>
+                                                   placeholder="อีเมล์" name="email" id="email" required>
                                             <span class="fa fa-envelope form-control-feedback right"
                                                   aria-hidden="true"></span>
                                         </div>
@@ -345,49 +344,48 @@
                                             <label>สถานะของพนักงาน</label>
                                             <div class="checkbox">
                                                 <label>
-                                                    <input type="checkbox" name="isAdmin"
-                                                           id="isAdmin"
+                                                    <input id="isAdmin" type="checkbox" name="isAdmin" value="true"
                                                            class="flat"> เป็นแอดมิน
                                                 </label>
                                             </div>
                                         </div>
 
                                         <div class="form-group col-md-12">
-                                        <label>สีป้ายชื่อพนักงานในตารางการทำงาน</label>
-                                        <div class="well" style="overflow: auto">
+                                            <label>สีป้ายชื่อพนักงานในตารางการทำงาน</label>
+                                            <div class="well" style="overflow: auto">
 
-                                            <div class="col-md-4"
-                                                 style="margin-left:30%;width:40%;margin-bottom:10px;">
-                                                <a class="fc-day-grid-event fc-event" id="edit_row_example"
-                                                   style="padding:7px;background-color:#000000;border-color:#000000;color:#ffffff;">
-                                                    <div class="fc-content">
-                                                        <span class="fc-time"> </span>
-                                                        <span class="fc-title">[เช้า]  ... ชื่อพนักงาน (เสิร์ฟอาหาร)</span>
-                                                    </div>
-                                                </a>
-                                            </div>
-                                            <div class="col-md-6 col-sm-6 col-xs-12">
-                                                <div class="input-group demo2 colorpicker-element"
-                                                     id="edit_bgColor">
-                                                    <input type="text" value="#000000" name="bgColor"
-                                                           class="form-control">
-                                                    <span class="input-group-addon">
+                                                <div class="col-md-4"
+                                                     style="margin-left:30%;width:40%;margin-bottom:10px;">
+                                                    <a class="fc-day-grid-event fc-event" id="edit_row_example"
+                                                       style="padding:7px;background-color:#000000;border-color:#000000;color:#ffffff;">
+                                                        <div class="fc-content">
+                                                            <span class="fc-time"> </span>
+                                                            <span class="fc-title">[เช้า]  ... ชื่อพนักงาน (เสิร์ฟอาหาร)</span>
+                                                        </div>
+                                                    </a>
+                                                </div>
+                                                <div class="col-md-6 col-sm-6 col-xs-12">
+                                                    <div class="input-group demo2 colorpicker-element"
+                                                         id="edit_bgColor">
+                                                        <input type="text" value="#000000" name="bgColor"
+                                                               class="form-control">
+                                                        <span class="input-group-addon">
                                                             <i style="background-color: rgb(0, 0, 0);"></i>
                                                         </span>
+                                                    </div>
                                                 </div>
-                                            </div>
-                                            <div class="col-md-6 col-sm-6 col-xs-12">
-                                                <div class="input-group demo2 colorpicker-element"
-                                                     id="edit_fontColor">
-                                                    <input type="text" value="#FFFFFF" name="fontColor"
-                                                           class="form-control">
-                                                    <span class="input-group-addon">
+                                                <div class="col-md-6 col-sm-6 col-xs-12">
+                                                    <div class="input-group demo2 colorpicker-element"
+                                                         id="edit_fontColor">
+                                                        <input type="text" value="#FFFFFF" name="fontColor"
+                                                               class="form-control">
+                                                        <span class="input-group-addon">
                                                             <i style="background-color: rgb(255, 255, 255);"></i>
                                                         </span>
+                                                    </div>
                                                 </div>
                                             </div>
                                         </div>
-                                    </div>
                                     </div>
                                     <div class="modal-footer">
                                         <!-- ปุ่มกดปิด (Close) ตรงส่วนล่างของ Modal -->
@@ -488,11 +486,11 @@
         return false;
     });
 
-    $('.modal').on('hidden.bs.modal', function(){
+    $('.modal').on('hidden.bs.modal', function () {
         reset_field();
     });
 
-    function reset_field(){
+    function reset_field() {
         $("#add_emp")[0].reset();
         $(".clear-active").removeClass('active');
     }
@@ -511,6 +509,14 @@
                 $("#editemptype" + result.empType).click();
                 $("#editpaytype").val(result.payType);
                 $("#editpay").val((result.pay).toFixed(2));
+                $("#email").val(result.email);
+                if (result.admin) {
+                    $("#isAdmin").parent().addClass('checked');
+                    $("#isAdmin").attr('checked', true);
+                } else {
+                    $("#isAdmin").parent().removeClass('checked');
+                    $("#isAdmin").attr('checked', false);
+                }
                 edit_bgColor.colorpicker('setValue', result.bgColor == '' ? '#000000' : result.bgColor);
                 edit_fontColor.colorpicker('setValue', result.fontColor == '' ? '#FFFFFF' : result.fontColor);
             }
@@ -591,13 +597,59 @@
                             display: pay_format + ' บาท / ' + (emp_obj.payType == '${Employee.HOUR}' ? 'ชั่วโมง' : 'วัน'),
                             order: pay_order
                         },
-                        empNo: '<a onclick="editEmp(' + emp_obj.empNo + ')" class="btn btn-warning btn-sm" data-toggle="modal" data-target="#editEmp"><i class="fa fa-pencil"></i>&nbsp; แก้ไข </a>' +
+                        empNo: (!emp_obj.successRegister ? '<a onclick="resent(' + emp_obj.empNo + ')" class="btn btn-info btn-sm"><i class="fa fa-envelope"></i>&nbsp; ส่งซ้ำ</a>' : '') +
+                        '<a onclick="editEmp(' + emp_obj.empNo + ')" class="btn btn-warning btn-sm" data-toggle="modal" data-target="#editEmp"><i class="fa fa-pencil"></i>&nbsp; แก้ไข </a>' +
                         '<a onclick="delEmp(' + emp_obj.empNo + ',\'' + emp_obj.empName + '\')" class="btn btn-danger btn-sm"> <i class="fa fa-trash"></i>&nbsp; ลบ</a>'
                     };
                     data_array.push(data_refresh);
                 }
                 $("#datatable-employee").DataTable().clear();
                 $("#datatable-employee").DataTable().rows.add(data_array).draw(false);
+            }
+        });
+    }
+
+    function resent(empNo) {
+        $.ajax({
+            type: "POST",
+            url: "${contextPath}/employee/confirmresent/"+empNo,
+            dataType: "json",
+            success: function (result) {
+                swal({
+                    title: "คุณต้องการส่งซ้ำ",
+                    text: "การสมัครสมาชิกของ \"" + result.empName + "\" ไปยังอีเมล",
+                    type: "input",
+                    showCancelButton: true,
+                    closeOnConfirm: false,
+                    inputPlaceholder: "Input Email",
+                    inputValue: result.email
+                }, function (email) {
+                    if (email === false) return false;
+                    if (email === "") {
+                        swal.showInputError("กรุณากรอกอีเมล");
+                        return false;
+                    }
+                    var re = /^(([^<>()\[\]\\.,;:\s@"]+(\.[^<>()\[\]\\.,;:\s@"]+)*)|(".+"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/;
+                    if (!re.test(email)){
+                        swal.showInputError("กรุณากรอกรูปแบบอีเมลให้ถูกต้อง");
+                        return false;
+                    }
+
+                    $.ajax({
+                        type: "POST",
+                        data: {
+                            'empNo' : empNo,
+                            'email' : email
+                        },
+                        url: "${contextPath}/employee/resent",
+                        success: function(){
+                            swal("สำเร็จ", "ส่งซ้ำเรียบร้อยแล้ว", "success");
+                        },
+                        error: function(){
+                            swal("ไม่สำเร็จ", "อีเมลอาจผิด กรุณาลองอีกครั้ง", "error");
+                        }
+                    });
+                });
             }
         });
     }

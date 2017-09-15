@@ -178,7 +178,7 @@
                             order : branchsort
                         },
                         branchName: obj.branchName,
-                        option: '<a onclick = "resent(' + obj.branchNo + ')" class = "btn btn-warning btn-sm"> <i class = "fa fa-envelope"></i> &nbsp; ส่งอีกครั้ง </a>' +
+                        option: (!obj.hasAdmin ? '<a onclick = "resent(' + obj.branchNo + ')" class = "btn btn-warning btn-sm"> <i class = "fa fa-envelope"></i> &nbsp; ส่งอีกครั้ง </a>' : '') +
                         '<a onclick = "del_branch(' + obj.branchNo + ',\'' + obj.branchName +'\')" class = "btn btn-danger btn-sm"> <i class = "fa fa-trash"></i> &nbsp; ลบ </a>'
                     };
                     data_array.push(data_refresh);
@@ -192,11 +192,45 @@
 
     function resent(branchNo) {
         $.ajax({
-            type: "PUT",
-            url: "",
+            type: "POST",
+            url: "${contextPath}/branch/confirmresent/"+branchNo,
             dataType: "json",
             success: function (result) {
+                swal({
+                    title: "คุณต้องการส่งซ้ำ",
+                    text: "Username : " + result.username + ' ไปยังอีเมล',
+                    type: "input",
+                    showCancelButton: true,
+                    closeOnConfirm: false,
+                    inputPlaceholder: "Input Email",
+                    inputValue: result.sentEmail
+                }, function (email) {
+                    if (email === false) return false;
+                    if (email === "") {
+                        swal.showInputError("กรุณากรอกอีเมล");
+                        return false;
+                    }
+                    var re = /^(([^<>()\[\]\\.,;:\s@"]+(\.[^<>()\[\]\\.,;:\s@"]+)*)|(".+"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/;
+                    if (!re.test(email)){
+                        swal.showInputError("กรุณากรอกรูปแบบอีเมลให้ถูกต้อง");
+                        return false;
+                    }
 
+                    $.ajax({
+                        type: "POST",
+                        data: {
+                            'branchNo' : branchNo,
+                            'email' : email
+                        },
+                        url: "${contextPath}/branch/resent",
+                        success: function(){
+                            swal("สำเร็จ", "ส่งซ้ำเรียบร้อยแล้ว", "success");
+                        },
+                        error: function(){
+                            swal("ไม่สำเร็จ", "อีเมลอาจผิด กรุณาลองอีกครั้ง", "error");
+                        }
+                    });
+                });
             }
         });
     }

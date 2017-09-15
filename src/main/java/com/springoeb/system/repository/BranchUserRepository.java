@@ -10,6 +10,8 @@ import java.util.List;
 public interface BranchUserRepository extends CrudRepository<BranchUser,Integer>{
     BranchUser findByUsernameIgnoreCase(String username);
     BranchUser findByBranchUserNo(int userNo);
+    BranchUser findByBranchNoAndPasswordIsNull(int branchNo);
+    BranchUser findByEmpNo(int empNo);
     List<BranchUser> findAll();
     List<BranchUser> findByPasswordIsNull();
 }

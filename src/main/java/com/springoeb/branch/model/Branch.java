@@ -1,6 +1,7 @@
 package com.springoeb.branch.model;
 
 import com.fasterxml.jackson.annotation.JsonIgnore;
+import com.springoeb.employee.model.Employee;
 import com.springoeb.system.model.BranchUser;
 
 import javax.persistence.*;
@@ -22,12 +23,17 @@ public class Branch {
     private String tel;
     private String line;
     private String fb;
+    private boolean hasAdmin;
 
     public static int MAIN_BRANCH = 1;
 
     @JsonIgnore
     @OneToMany(fetch = FetchType.LAZY, mappedBy = "branch")
     private List<BranchUser> branchUsers;
+
+    @JsonIgnore
+    @OneToMany(fetch = FetchType.LAZY, mappedBy = "branch")
+    private List<Employee> employees;
 
     public Integer getBranchNo() {
         return branchNo;
@@ -131,5 +137,13 @@ public class Branch {
 
     public void setBranchUsers(List<BranchUser> branchUsers) {
         this.branchUsers = branchUsers;
+    }
+
+    public boolean isHasAdmin() {
+        return hasAdmin;
+    }
+
+    public void setHasAdmin(boolean hasAdmin) {
+        this.hasAdmin = hasAdmin;
     }
 }

@@ -25,8 +25,8 @@ public class EmployeeService {
         return employee;
     }
 
-    public void save(Employee employee){
-        employeeRepository.save(employee);
+    public Employee save(Employee employee){
+        return employeeRepository.save(employee);
     }
 
     public void removeByEmpNoAndBranchNo(int empNo,int branchNo){
@@ -40,5 +40,13 @@ public class EmployeeService {
         }else{
             return false;
         }
+    }
+
+    public List<Employee> findByUnsuccessRegister(){
+        return employeeRepository.findBySuccessRegister(false);
+    }
+
+    public Employee findByEmpNo(int empNo){
+        return employeeRepository.findByEmpNo(empNo);
     }
 }

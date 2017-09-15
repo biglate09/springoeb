@@ -12,6 +12,7 @@ public class BranchUser {
     private Integer branchUserNo;
     private String username;
     private String password;
+    private String sentEmail;
     @Column(name = "branch_no", updatable = true,insertable = true)
     private Integer branchNo;
     private Integer roleNo;
@@ -88,5 +89,13 @@ public class BranchUser {
 
     public void setEmployee(Employee employee) {
         this.employee = employee;
+    }
+
+    public String getSentEmail() {
+        return sentEmail;
+    }
+
+    public void setSentEmail(String sentEmail) {
+        this.sentEmail = sentEmail;
     }
 }

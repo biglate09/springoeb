@@ -67,7 +67,7 @@
     $("#adduser").submit(function () {
         if ($("#password").val() == $("#confirmpassword").val()) {
             $.ajax({
-                url: "${contextPath}/system/registeruser/" + ${userNo},
+                url: "${contextPath}/system/register${userNo != null ? 'user' : 'emp'}process/"+ ${userNo != null ? userNo : empNo},
                 data: $("#adduser").serialize(),
                 method: "POST",
                 success: function (target) {
@@ -77,7 +77,7 @@
                     },2000);
                 },
                 error: function () {
-                    swal("ไม่สำเร็จ", "กรุณาลองอีกครั้ง", "error");
+                    swal("ไม่สำเร็จ", "username อาจซ้ำ กรุณาลองใหม่อีกครั้ง", "error");
                 }
             });
         } else {

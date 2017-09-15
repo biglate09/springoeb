@@ -2,10 +2,11 @@ package com.springoeb.system.controller;
 
 import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.databind.ObjectMapper;
-import com.springoeb.system.model.BranchUser;
-import com.springoeb.system.model.District;
-import com.springoeb.system.model.Province;
-import com.springoeb.system.model.SubDistrict;
+import com.springoeb.branch.model.Branch;
+import com.springoeb.branch.service.BranchService;
+import com.springoeb.employee.model.Employee;
+import com.springoeb.employee.service.EmployeeService;
+import com.springoeb.system.model.*;
 import com.springoeb.system.service.BranchUserService;
 import com.springoeb.system.service.DistrictService;
 import com.springoeb.system.service.ProvinceService;
@@ -20,6 +21,9 @@ import javax.servlet.http.Cookie;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
+import javax.transaction.Transactional;
+import java.io.UnsupportedEncodingException;
+import java.net.URLEncoder;
 import java.util.List;
 
 @Controller
@@ -33,6 +37,10 @@ public class ManageController {
     private DistrictService districtService;
     @Autowired
     private SubDistrictService subDistrictService;
+    @Autowired
+    private BranchService branchService;
+    @Autowired
+    private EmployeeService employeeService;
 
     @PostMapping("/login")
     public String login(@ModelAttribute("branchUser") BranchUser branchUser, HttpServletRequest request, HttpServletResponse response, HttpSession session, Model model) {
@@ -80,8 +88,8 @@ public class ManageController {
 
     @GetMapping("/register")
     public String register(Model model,HttpServletRequest request) {
-        String target = "/setuser.jsp";
-        String bcryptUsername = request.getParameter("username");
+        String target = "/WEB-INF/setuser.jsp";
+        String bcryptUsername = request.getParameter("apiKey");
         BCryptPasswordEncoder bCryptPasswordEncoder = new BCryptPasswordEncoder();
         List<BranchUser> branchUsers = branchUserService.findByPasswordIsNull();
         String username = null;
@@ -103,14 +111,66 @@ public class ManageController {
         return target;
     }
 
-    @PostMapping("/registeruser/{userNo}")
+    @GetMapping("/registeremp")
+    public String registerEmp(Model model,HttpServletRequest request) {
+        String target = "/WEB-INF/setuser.jsp";
+        String apiKey = request.getParameter("apiKey");
+        BCryptPasswordEncoder bCryptPasswordEncoder = new BCryptPasswordEncoder();
+        List<Employee> employees = employeeService.findByUnsuccessRegister();
+        boolean pass = false;
+        Integer empNo = null;
+        for (Employee employee : employees) {
+            if (bCryptPasswordEncoder.matches(employee.getEmpNo() + "|" + employee.getEmpName() + "|" + employee.getEmail(),apiKey)) {
+                pass = true;
+                empNo = employee.getEmpNo();
+                break;
+            }
+        }
+
+        if(pass && branchUserService.findByEmpNo(empNo) != null){
+            pass = false;
+        }
+
+        if(pass) {
+            model.addAttribute("empNo", empNo);
+        }else {
+            target = "/404error.jsp";
+        }
+        return target;
+    }
+
+    @Transactional
+    @PostMapping("/registerempprocess/{empNo}")
     @ResponseBody
-    public String registerUser(@PathVariable("userNo") int userNo,HttpServletRequest request){
+    public String registerEmpProcess(@PathVariable("empNo") int empNo,HttpServletRequest request) throws UnsupportedEncodingException {
+        BCryptPasswordEncoder bCryptPasswordEncoder = new BCryptPasswordEncoder();
+        Employee employee = employeeService.findByEmpNo(empNo);
+        employee.setSuccessRegister(true);
+        employeeService.save(employee);
+        BranchUser branchUser = new BranchUser();
+        branchUser.setUsername(request.getParameter("username"));
+        branchUser.setPassword(bCryptPasswordEncoder.encode(request.getParameter("password")));
+        branchUser.setEmpNo(empNo);
+        branchUser.setSentEmail(employee.getEmail());
+        branchUser.setBranchNo(employee.getBranchNo());
+        branchUser.setRoleNo(employee.isAdmin() ? Role.MANAGER : Role.EMPLOYEE);
+        branchUser.setEmpNo(employee.getEmpNo());
+        branchUserService.save(branchUser);
+        return request.getScheme() + "://" + request.getServerName() + ":" + request.getServerPort() + request.getContextPath() + "/loginpage?username=" + URLEncoder.encode(branchUser.getUsername(), "UTF-8");
+    }
+
+    @Transactional
+    @PostMapping("/registeruserprocess/{userNo}")
+    @ResponseBody
+    public String registerUserProcess(@PathVariable("userNo") int userNo,HttpServletRequest request) throws UnsupportedEncodingException {
         BCryptPasswordEncoder bCryptPasswordEncoder = new BCryptPasswordEncoder();
         BranchUser branchUser = branchUserService.findByBranchUserNo(userNo);
         branchUser.setPassword(bCryptPasswordEncoder.encode(request.getParameter("password")));
         branchUserService.save(branchUser);
-        return request.getScheme() + "://" + request.getServerName() + ":" + request.getServerPort() + request.getContextPath();
+        Branch branch = branchService.getBranch(branchUser.getBranchNo());
+        branch.setHasAdmin(true);
+        branchService.save(branch);
+        return request.getScheme() + "://" + request.getServerName() + ":" + request.getServerPort() + request.getContextPath() + "/loginpage?username=" + URLEncoder.encode(branchUser.getUsername(), "UTF-8");
     }
 
     //------------------------------------------------------------------------------------//

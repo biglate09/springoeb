@@ -178,12 +178,12 @@
 
         <div class="form-group ">
             <input type="text" class="form-control" placeholder="ชื่อผู้ใช้" name="username" value="${username}"
-                   autofocus onfocus="this.value = this.value" required>
+                   ${username == null ? 'autofocus' : '' } onfocus="this.value = this.value" required>
             <i class="fa fa-user"></i>
         </div>
         <div class="form-group log-status">
             <input type="password" class="form-control ${username!=null?'wrong-entry':''}" placeholder="รหัสผ่าน"
-                   name="password" required minlength="8">
+                   name="password" ${username != null ? 'autofocus' : '' } required minlength="8">
             <i class="fa fa-lock"></i>
         </div>
         <div class="remember checkbox">

@@ -31,4 +31,11 @@ public class BranchUserService {
     public BranchUser findByBranchUserNo(int userNo){
         return branchUserRepository.findByBranchUserNo(userNo);
     }
+
+    public BranchUser findByBranchNoAndPasswordIsNull(int branchNo){
+        return branchUserRepository.findByBranchNoAndPasswordIsNull(branchNo);
+    }
+    public BranchUser findByEmpNo(int empNo){
+        return branchUserRepository.findByEmpNo(empNo);
+    }
 }

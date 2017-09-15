@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Host: 127.0.0.1
--- Generation Time: Sep 13, 2017 at 07:53 PM
+-- Generation Time: Sep 15, 2017 at 04:03 PM
 -- Server version: 10.1.21-MariaDB
 -- PHP Version: 5.6.30
 
@@ -38,17 +38,18 @@ CREATE TABLE `branch` (
   `zip_no` int(11) DEFAULT NULL,
   `tel` varchar(30) DEFAULT NULL,
   `line` varchar(30) DEFAULT NULL,
-  `fb` varchar(100) DEFAULT NULL
+  `fb` varchar(100) DEFAULT NULL,
+  `has_admin` tinyint(1) NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8;
 
 --
 -- Dumping data for table `branch`
 --
 
-INSERT INTO `branch` (`branch_no`, `branch_name`, `branch_desc`, `address_name`, `district_no`, `sub_district_no`, `road`, `province_no`, `zip_no`, `tel`, `line`, `fb`) VALUES
-(1, 'บางแสน', 'ทดสอบ', '1/350', 139, 1122, 'พุทธบูชา 36', 11, 983, '0813026157', 'Line', 'fb.com/xxxx'),
-(2, 'บางแค', '', '', 0, 0, '', 0, 0, '', '', ''),
-(3, 'เอกมัย', '', '', 0, 0, '', 0, 0, '', '', '');
+INSERT INTO `branch` (`branch_no`, `branch_name`, `branch_desc`, `address_name`, `district_no`, `sub_district_no`, `road`, `province_no`, `zip_no`, `tel`, `line`, `fb`, `has_admin`) VALUES
+(1, 'บางแสน', 'ทดสอบ', '1/350', 139, 1122, 'พุทธบูชา 36', 11, 983, '0813026159', 'Line', 'fb.com/xxxx', 1),
+(2, 'บางแค', '', '', 0, 0, '', 0, 0, '', '', '', 1),
+(3, 'เอกมัย', '', '', 0, 0, '', 0, 0, '', '', '', 1);
 
 -- --------------------------------------------------------
 
@@ -99,8 +100,9 @@ INSERT INTO `branch_menu` (`branch_no`, `menu_no`, `available`) VALUES
 
 CREATE TABLE `branch_user` (
   `branch_user_no` int(11) NOT NULL,
-  `username` varchar(30) NOT NULL,
-  `password` varchar(200) NOT NULL,
+  `username` varchar(30) DEFAULT NULL,
+  `password` varchar(200) DEFAULT NULL,
+  `sent_email` varchar(200) DEFAULT NULL,
   `branch_no` int(11) NOT NULL,
   `role_no` int(11) NOT NULL,
   `emp_no` int(11) DEFAULT NULL
@@ -110,10 +112,10 @@ CREATE TABLE `branch_user` (
 -- Dumping data for table `branch_user`
 --
 
-INSERT INTO `branch_user` (`branch_user_no`, `username`, `password`, `branch_no`, `role_no`, `emp_no`) VALUES
-(1, 'kopihub-master', '$2a$10$E3FxBBuaGdRCnb4PULE1x.FtZp3wDv18mwLoRCwTYB.rGaNAwW5R2', 1, 1, NULL),
-(2, 'kopihub-bangkae', '$2a$10$T6iCPE2YKLr/C/5p5myUZeVgprGzHaNHvdm4JBQy/WzIVgV8zqBPK', 2, 1, NULL),
-(3, 'kopihub-ekkamai', '$2a$10$./rT3rhc13NT1p0yRfZP7.OmdT780bTdLPmveX8oh3UzrSFN6Sg5C', 3, 1, NULL);
+INSERT INTO `branch_user` (`branch_user_no`, `username`, `password`, `sent_email`, `branch_no`, `role_no`, `emp_no`) VALUES
+(1, 'kopihub-master', '$2a$10$E3FxBBuaGdRCnb4PULE1x.FtZp3wDv18mwLoRCwTYB.rGaNAwW5R2', NULL, 1, 1, NULL),
+(2, 'kopihub-bangkae', '$2a$10$T6iCPE2YKLr/C/5p5myUZeVgprGzHaNHvdm4JBQy/WzIVgV8zqBPK', NULL, 2, 1, NULL),
+(3, 'kopihub-ekkamai', '$2a$10$./rT3rhc13NT1p0yRfZP7.OmdT780bTdLPmveX8oh3UzrSFN6Sg5C', NULL, 3, 1, NULL);
 
 -- --------------------------------------------------------
 
@@ -1177,6 +1179,9 @@ CREATE TABLE `employee` (
   `emp_type` varchar(30) NOT NULL,
   `pay_type` varchar(30) NOT NULL,
   `pay` double(8,2) NOT NULL,
+  `email` varchar(200) DEFAULT NULL,
+  `is_admin` tinyint(1) NOT NULL,
+  `success_register` tinyint(1) NOT NULL,
   `bg_color` varchar(50) NOT NULL,
   `font_color` varchar(50) NOT NULL,
   `branch_no` int(8) NOT NULL
@@ -1186,13 +1191,9 @@ CREATE TABLE `employee` (
 -- Dumping data for table `employee`
 --
 
-INSERT INTO `employee` (`emp_no`, `emp_name`, `emp_tel`, `emp_gender`, `emp_type`, `pay_type`, `pay`, `bg_color`, `font_color`, `branch_no`) VALUES
-(1, 'แซม', '', 'M', '2', '1', 30.00, '#ff0000', '#ffffff', 1),
-(2, 'บิ๊ก', '', 'M', '1', '1', 37.00, '#00a8bf', '#ffffff', 1),
-(3, 'นิ้ง', '', 'F', '3', '1', 28.00, '#097000', '#FFFFFF', 1),
-(4, 'นนท์', '', 'M', '2', '2', 200.00, '#db9e00', '#FFFFFF', 1),
-(5, 'จุ๊บแจง', '0813026159', 'F', '2', '1', 33.00, '#8a6300', '#FFFFFF', 1),
-(6, 'เจมส์', '', 'M', '1', '2', 40.00, '#000000', '#ffffff', 1);
+INSERT INTO `employee` (`emp_no`, `emp_name`, `emp_tel`, `emp_gender`, `emp_type`, `pay_type`, `pay`, `email`, `is_admin`, `success_register`, `bg_color`, `font_color`, `branch_no`) VALUES
+(21, 'บิ๊ก', '0813026159', 'M', '1', '2', 300.00, 'biglate_09@hotmail.com', 0, 0, '#000000', '#FFFFFF', 1),
+(23, 'เป้', '0851131980', 'M', '1', '1', 30.00, 'nirun0851131980@hotmail.com', 1, 0, '#000000', '#ffffff', 1);
 
 -- --------------------------------------------------------
 
@@ -1206,14 +1207,6 @@ CREATE TABLE `employee_pay` (
   `date` datetime NOT NULL,
   `emp_no` int(8) NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8 ROW_FORMAT=COMPACT;
-
---
--- Dumping data for table `employee_pay`
---
-
-INSERT INTO `employee_pay` (`emp_pay_no`, `pay`, `date`, `emp_no`) VALUES
-(1, 30.00, '2017-09-08 12:16:11', 6),
-(2, 4.00, '2017-09-11 19:08:28', 6);
 
 -- --------------------------------------------------------
 
@@ -1251,34 +1244,6 @@ CREATE TABLE `employee_table` (
   `emp_pos_no` int(8) DEFAULT NULL,
   `emp_no` int(8) NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8;
-
---
--- Dumping data for table `employee_table`
---
-
-INSERT INTO `employee_table` (`emp_time_no`, `date`, `time_start`, `time_end`, `emp_pos_no`, `emp_no`) VALUES
-(1, '2017-08-27', '13:00:00', '13:00:00', 3, 2),
-(2, '2017-08-27', '00:00:00', '00:00:00', 1, 1),
-(3, '2017-08-27', '18:00:00', '18:00:00', 4, 4),
-(4, '2017-08-27', '00:00:00', '00:00:00', 5, 3),
-(5, '2017-08-27', '18:00:00', '18:00:00', 2, 5),
-(6, '2017-08-27', '00:00:00', '00:00:00', 3, 6),
-(7, '2017-08-28', '18:00:00', '18:00:00', 4, 1),
-(8, '2017-08-28', '13:00:00', '13:00:00', 1, 4),
-(9, '2017-08-28', '18:00:00', '18:00:00', 2, 2),
-(10, '2017-08-28', '00:00:00', '00:00:00', 5, 3),
-(11, '2017-08-28', '18:00:00', '18:00:00', 3, 5),
-(12, '2017-08-26', '18:00:00', '18:00:00', 3, 1),
-(13, '2017-08-26', '13:00:00', '13:00:00', 2, 2),
-(14, '2017-08-26', '18:00:00', '18:00:00', 4, 3),
-(15, '2017-08-26', '00:00:00', '00:00:00', 5, 4),
-(16, '2017-08-25', '18:00:00', '18:00:00', 3, 2),
-(17, '2017-08-25', '00:00:00', '00:00:00', 1, 4),
-(18, '2017-08-25', '18:00:00', '18:00:00', 1, 6),
-(19, '2017-08-25', '13:00:00', '13:00:00', 4, 5),
-(20, '2017-08-23', '18:00:00', '18:00:00', 4, 3),
-(21, '2017-08-23', '18:00:00', '18:00:00', 3, 4),
-(22, '2017-08-23', '18:00:00', '18:00:00', 5, 6);
 
 -- --------------------------------------------------------
 
@@ -1769,7 +1734,9 @@ INSERT INTO `material_history` (`mat_hist_no`, `mat_name`, `mat_quantity`, `date
 (552, 'น้ำสต็อก', -240, '2017-09-11', '17:36:08', NULL, NULL, 12, 1, 549),
 (553, 'ส่วนผสมอีกที', -120, '2017-09-11', '17:36:08', NULL, NULL, 15, 1, 549),
 (554, 'น้ำมันพืช', 20, '2017-09-13', '19:27:45', 'แอดมินสาขา', 'เจ๊เปา', 10, 1, NULL),
-(555, 'น้ำมันพืช', -5, '2017-09-13', '20:08:53', 'แอดมินสาขา', '2', 10, 1, NULL);
+(555, 'น้ำมันพืช', -5, '2017-09-13', '20:08:53', 'แอดมินสาขา', '2', 10, 1, NULL),
+(556, 'น้ำสต็อก', 800, '2017-09-14', '01:36:54', 'แอดมินสาขา', 'เจ๊เฮง', 12, 1, NULL),
+(557, 'น้ำสต็อก', 20, '2017-09-14', '01:37:22', 'แอดมินสาขา', 'ตาปี', 12, 1, NULL);
 
 -- --------------------------------------------------------
 
@@ -2087,7 +2054,8 @@ CREATE TABLE `role` (
 --
 
 INSERT INTO `role` (`role_no`, `role_name`) VALUES
-(1, 'manager');
+(1, 'manager'),
+(2, 'employee');
 
 -- --------------------------------------------------------
 
@@ -11028,27 +10996,6 @@ CREATE TABLE `work_history` (
   `emp_time_no` int(11) DEFAULT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8;
 
---
--- Dumping data for table `work_history`
---
-
-INSERT INTO `work_history` (`work_hist_no`, `work_date`, `work_start`, `work_end`, `work_pay`, `work_hour`, `work_min`, `emp_no`, `emp_time_no`) VALUES
-(1, '2017-08-27', NULL, NULL, 105.00, 3, 30, 1, NULL),
-(2, '2017-08-27', NULL, NULL, 215.83, 5, 50, 2, NULL),
-(3, '2017-08-27', NULL, NULL, 224.00, 8, 0, 3, NULL),
-(4, '2017-08-27', NULL, NULL, 200.00, 7, 45, 4, NULL),
-(5, '2017-08-27', NULL, NULL, 192.50, 5, 50, 5, NULL),
-(6, '2017-08-27', NULL, NULL, 300.00, 6, 35, 6, NULL),
-(7, '2017-08-23', NULL, NULL, 224.00, 8, 0, 3, NULL),
-(8, '2017-08-23', NULL, NULL, 200.00, 7, 45, 4, NULL),
-(9, '2017-08-23', NULL, NULL, 300.00, 6, 13, 6, NULL),
-(10, '2017-08-25', NULL, NULL, 215.83, 5, 50, 2, NULL),
-(11, '2017-08-25', NULL, NULL, 200.00, 8, 0, 4, NULL),
-(12, '2017-08-25', NULL, NULL, 189.75, 5, 45, 5, NULL),
-(13, '2017-08-25', NULL, NULL, 300.00, 7, 0, 6, NULL),
-(14, '2017-08-27', '23:46:21', '23:48:35', 1.00, 0, 2, 1, 2),
-(15, '2017-09-11', NULL, NULL, 40.00, 2, 20, 6, NULL);
-
 -- --------------------------------------------------------
 
 --
@@ -18538,7 +18485,8 @@ INSERT INTO `zipcode` (`zipcode_no`, `sub_district_code`, `province_no`, `distri
 -- Indexes for table `branch`
 --
 ALTER TABLE `branch`
-  ADD PRIMARY KEY (`branch_no`);
+  ADD PRIMARY KEY (`branch_no`),
+  ADD UNIQUE KEY `branch_name` (`branch_name`);
 
 --
 -- Indexes for table `branch_menu`
@@ -18578,6 +18526,7 @@ ALTER TABLE `district`
 --
 ALTER TABLE `employee`
   ADD PRIMARY KEY (`emp_no`),
+  ADD UNIQUE KEY `email` (`email`),
   ADD KEY `branch_no` (`branch_no`),
   ADD KEY `branch_no_2` (`branch_no`);
 
@@ -18726,12 +18675,12 @@ ALTER TABLE `zipcode`
 -- AUTO_INCREMENT for table `branch`
 --
 ALTER TABLE `branch`
-  MODIFY `branch_no` int(8) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=4;
+  MODIFY `branch_no` int(8) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=20;
 --
 -- AUTO_INCREMENT for table `branch_user`
 --
 ALTER TABLE `branch_user`
-  MODIFY `branch_user_no` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=4;
+  MODIFY `branch_user_no` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=24;
 --
 -- AUTO_INCREMENT for table `customer_table`
 --
@@ -18746,7 +18695,7 @@ ALTER TABLE `district`
 -- AUTO_INCREMENT for table `employee`
 --
 ALTER TABLE `employee`
-  MODIFY `emp_no` int(8) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=7;
+  MODIFY `emp_no` int(8) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=24;
 --
 -- AUTO_INCREMENT for table `employee_pay`
 --
@@ -18771,7 +18720,7 @@ ALTER TABLE `material_category`
 -- AUTO_INCREMENT for table `material_history`
 --
 ALTER TABLE `material_history`
-  MODIFY `mat_hist_no` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=556;
+  MODIFY `mat_hist_no` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=558;
 --
 -- AUTO_INCREMENT for table `material_item`
 --
@@ -18811,7 +18760,7 @@ ALTER TABLE `province`
 -- AUTO_INCREMENT for table `role`
 --
 ALTER TABLE `role`
-  MODIFY `role_no` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=2;
+  MODIFY `role_no` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=3;
 --
 -- AUTO_INCREMENT for table `sub_district`
 --

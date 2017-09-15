@@ -21,6 +21,8 @@ import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 import javax.transaction.Transactional;
 import java.io.IOException;
+import java.io.UnsupportedEncodingException;
+import java.net.URLEncoder;
 import java.util.List;
 
 @RequestMapping("/branch")
@@ -62,19 +64,45 @@ public class BranchController {
     @Transactional
     @PostMapping("/managebranch")
     @ResponseBody
-    public void managebranch(@ModelAttribute("branch") Branch branch, HttpServletRequest request) {
+    public void managebranch(@ModelAttribute("branch") Branch branch, HttpServletRequest request) throws JsonProcessingException, UnsupportedEncodingException {
         String username = request.getParameter("username");
+        String email = request.getParameter("email");
         Branch insertedBranch = branchService.save(branch);
         int branchNo = insertedBranch.getBranchNo();
         BranchUser branchUser = new BranchUser();
         branchUser.setBranchNo(branchNo);
+        branchUser.setSentEmail(email);
         branchUser.setUsername(username);
         branchUser.setRoleNo(Role.MANAGER);
         branchUserService.save(branchUser);
-        String email = request.getParameter("email");
         String subject = "[ระบบ OrderEatBill] ตั้งค่าการลงชื่อเข้าใช้ระบบใบฐานะแอดมิน";
         String tokenUsername = getBcrypt(username);
-        String msg = "Username : " + username + "\nกรุณาคลิกลิงก์ด้านล่างเพื่อสร้าง Password\n" + request.getScheme() + "://" + request.getServerName() + ":" + request.getServerPort() + request.getContextPath() + "/system/register?username=" + tokenUsername;
+        String msg = "Username : " + username + "\nกรุณาคลิกลิงก์ด้านล่างเพื่อสร้าง Password\n" + request.getScheme() + "://" + request.getServerName() + ":" + request.getServerPort() + request.getContextPath() + "/system/register?apiKey=" +  URLEncoder.encode(tokenUsername, "UTF-8");
+        emailService.sendMail(email, subject, msg);
+    }
+
+    @Transactional
+    @PostMapping("/confirmresent/{branchNo}")
+    @ResponseBody
+    public String confirmResent(@PathVariable("branchNo") int branchNo) throws JsonProcessingException {
+        BranchUser branchUser = branchUserService.findByBranchNoAndPasswordIsNull(branchNo);
+        ObjectMapper mapper = new ObjectMapper();
+        String json = mapper.writeValueAsString(branchUser);
+        return json;
+    }
+
+    @PostMapping("/resent")
+    @ResponseBody
+    public void resent(HttpServletRequest request) throws UnsupportedEncodingException {
+        String email = request.getParameter("email");
+        int branchNo = Integer.parseInt(request.getParameter("branchNo"));
+        BranchUser branchUser = branchUserService.findByBranchNoAndPasswordIsNull(branchNo);
+        branchUser.setSentEmail(email);
+        branchUserService.save(branchUser);
+        String username = branchUser.getUsername();
+        String subject = "[ระบบ OrderEatBill] ตั้งค่าการลงชื่อเข้าใช้ระบบใบฐานะแอดมิน";
+        String tokenUsername = getBcrypt(username);
+        String msg = "Username : " + username + "\nกรุณาคลิกลิงก์ด้านล่างเพื่อสร้าง Password\n" + request.getScheme() + "://" + request.getServerName() + ":" + request.getServerPort() + request.getContextPath() + "/system/register?apiKey=" + URLEncoder.encode(tokenUsername, "UTF-8");
         emailService.sendMail(email, subject, msg);
     }
 

@@ -1,14 +1,13 @@
 package com.springoeb.employee.model;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
+import com.springoeb.branch.model.Branch;
 import com.springoeb.system.model.BranchUser;
 
 import javax.persistence.*;
 import java.io.Serializable;
 import java.util.List;
 
-/**
- * Created by bighead on 6/9/17.
- */
 @Entity
 public class Employee implements Serializable{
     @Id
@@ -22,13 +21,21 @@ public class Employee implements Serializable{
     private String empGender;
     private String bgColor;
     private String fontColor;
+    @Column(name = "branch_no",updatable = true,insertable = true)
     private Integer branchNo;
+    private boolean isAdmin;
+    private boolean successRegister;
+    private String email;
     @OneToMany(fetch = FetchType.LAZY, mappedBy = "employee")
     private List<EmployeePay> employeePays;
     @OneToMany(fetch = FetchType.LAZY, mappedBy = "employee")
     private List<WorkHistory> workHistories;
-    @OneToOne(mappedBy = "employee")
+    @JsonIgnore
+    @OneToOne(mappedBy = "employee",cascade = CascadeType.ALL)
     private BranchUser branchUser;
+    @ManyToOne
+    @JoinColumn(name = "branch_no",updatable = false,insertable = false)
+    private Branch branch;
 
     public static String FULL_TIME = "1";
     public static String PART_TIME = "2";
@@ -140,5 +147,37 @@ public class Employee implements Serializable{
 
     public void setBranchUser(BranchUser branchUser) {
         this.branchUser = branchUser;
+    }
+
+    public String getEmail() {
+        return email;
+    }
+
+    public void setEmail(String email) {
+        this.email = email;
+    }
+
+    public boolean isAdmin() {
+        return isAdmin;
+    }
+
+    public void setAdmin(boolean admin) {
+        isAdmin = admin;
+    }
+
+    public boolean isSuccessRegister() {
+        return successRegister;
+    }
+
+    public void setSuccessRegister(boolean successRegister) {
+        this.successRegister = successRegister;
+    }
+
+    public Branch getBranch() {
+        return branch;
+    }
+
+    public void setBranch(Branch branch) {
+        this.branch = branch;
     }
 }
