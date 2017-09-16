@@ -71,6 +71,15 @@
                                         <span class="fa fa-pencil form-control-feedback right"
                                               aria-hidden="true"></span>
                                     </div>
+                                    <div class="col-md-12 col-sm-12 col-xs-12 form-group has-feedback">
+                                        <label class="required">ประเภทบัญชีรายรับ/รายจ่าย</label>
+                                        <select class="form-control" name="ledgerPayNo"
+                                               id="pay_type" required>
+                                            <option disabled selected value="">เลือกประเภทบัญชี</option>
+                                            <option value="2">บัญชีรายรับ</option>
+                                            <option value="1">บัญชีรายจ่าย</option>
+                                        </select>
+                                    </div>
                                 </div>
                                 <div class="modal-footer">
                                     <!-- ปุ่มกดปิด (Close) ตรงส่วนล่างของ Modal -->
@@ -112,6 +121,15 @@
                                                placeholder="ชื่อประเภทบัญชี" required>
                                         <span class="fa fa-pencil form-control-feedback right"
                                               aria-hidden="true"></span>
+                                    </div>
+                                    <div class="col-md-12 col-sm-12 col-xs-12 form-group has-feedback">
+                                        <label class="required">ประเภทบัญชีรายรับ/รายจ่าย</label>
+                                        <select class="form-control" name="ledgerPayNo"
+                                                id="edit_pay_type" required>
+                                            <option disabled selected value="">เลือกประเภทบัญชี</option>
+                                            <option value="2">บัญชีรายรับ</option>
+                                            <option value="1">บัญชีรายจ่าย</option>
+                                        </select>
                                     </div>
                                 </div>
                                 <div class="modal-footer">
@@ -188,6 +206,7 @@
                 $("#hiddenledgertypeno").val(result.ledgerTypeNo);
                 $("#edit_ledger_type_name").val(result.ledgerTypeName);
                 $("#show_ledger_type_name").html(result.ledgerTypeName);
+                $("#edit_pay_type").val(result.ledgerPayNo);
             }
         });
     }
@@ -245,7 +264,7 @@
                     var obj = json[iterator];
                     var data_refresh = {
                         ledgerTypeName: '<a onclick = "setLedgerType(' + obj.ledgerTypeNo + ',\'' + obj.ledgerTypeName + '\')" data-toggle = "modal" data-target = "#editLedgerType" style = "font-weight: bold;cursor:pointer;" >' + obj.ledgerTypeName + '</a>',
-                        option: '<a onclick = "setLedgerType(' + obj.ledgerTypeNo + ')" class = "btn btn-warning btn-sm" data-toggle = "modal" data-target = "#editLedgerType"> <i class = "fa fa-pencil"> </i> &nbsp; แก้ไข </a>' +
+                        option: '<a onclick = "setLedgerType(' + obj.ledgerTypeNo + ',' + obj.ledgerPayNo + ')" class = "btn btn-warning btn-sm" data-toggle = "modal" data-target = "#editLedgerType"> <i class = "fa fa-pencil"> </i> &nbsp; แก้ไข </a>' +
                         '<a onclick = "delLedgerType(' + obj.ledgerTypeNo + ',\'' + obj.ledgerTypeName + '\')" class = "btn btn-danger btn-sm"> <i class = "fa fa-trash"></i> &nbsp; ลบ </a>'
                     };
                     data_array.push(data_refresh);
