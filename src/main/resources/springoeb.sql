@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Host: 127.0.0.1
--- Generation Time: Sep 16, 2017 at 03:47 PM
+-- Generation Time: Sep 16, 2017 at 04:10 PM
 -- Server version: 10.1.21-MariaDB
 -- PHP Version: 5.6.30
 
@@ -1249,13 +1249,33 @@ CREATE TABLE `employee_table` (
 -- --------------------------------------------------------
 
 --
+-- Table structure for table `ledger_pay`
+--
+
+CREATE TABLE `ledger_pay` (
+  `ledger_pay_no` int(11) NOT NULL,
+  `ledger_pay_name` varchar(20) NOT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=utf8;
+
+--
+-- Dumping data for table `ledger_pay`
+--
+
+INSERT INTO `ledger_pay` (`ledger_pay_no`, `ledger_pay_name`) VALUES
+(1, 'รายรับ'),
+(2, 'รายจ่าย');
+
+-- --------------------------------------------------------
+
+--
 -- Table structure for table `ledger_type`
 --
 
 CREATE TABLE `ledger_type` (
   `ledger_type_no` int(11) NOT NULL,
   `ledger_type_name` varchar(100) NOT NULL,
-  `default_type` tinyint(1) NOT NULL
+  `default_type` tinyint(1) NOT NULL,
+  `ledger_pay_no` int(11) NOT NULL COMMENT '1 = income , 2 = expense'
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8;
 
 -- --------------------------------------------------------
@@ -18593,10 +18613,17 @@ ALTER TABLE `employee_table`
   ADD KEY `employee_table_ibfk_2` (`emp_pos_no`);
 
 --
+-- Indexes for table `ledger_pay`
+--
+ALTER TABLE `ledger_pay`
+  ADD PRIMARY KEY (`ledger_pay_no`);
+
+--
 -- Indexes for table `ledger_type`
 --
 ALTER TABLE `ledger_type`
-  ADD PRIMARY KEY (`ledger_type_no`);
+  ADD PRIMARY KEY (`ledger_type_no`),
+  ADD KEY `ledger_pay_no` (`ledger_pay_no`);
 
 --
 -- Indexes for table `material_category`
@@ -18882,6 +18909,12 @@ ALTER TABLE `employee_pay`
 ALTER TABLE `employee_table`
   ADD CONSTRAINT `employee_table_ibfk_1` FOREIGN KEY (`emp_no`) REFERENCES `employee` (`emp_no`) ON DELETE CASCADE ON UPDATE CASCADE,
   ADD CONSTRAINT `employee_table_ibfk_2` FOREIGN KEY (`emp_pos_no`) REFERENCES `employee_position` (`emp_pos_no`) ON DELETE CASCADE ON UPDATE CASCADE;
+
+--
+-- Constraints for table `ledger_type`
+--
+ALTER TABLE `ledger_type`
+  ADD CONSTRAINT `ledger_type_ibfk_1` FOREIGN KEY (`ledger_pay_no`) REFERENCES `ledger_pay` (`ledger_pay_no`);
 
 --
 -- Constraints for table `material_history`
