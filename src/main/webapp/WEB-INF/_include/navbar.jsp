@@ -73,7 +73,7 @@
                         <a><i class="fa fa-tags"></i> จัดการโปรโมชั่น <span class="fa fa-chevron-down"></span></a>
                         <ul class="nav child_menu">
                             <li><a id="promotion" href="${contextPath}/promotion/promotion">โปรโมชั่นเมนูอาหาร</a></li>
-                            <li><a id="api" href="${contextPath}/promotion/promotion">โฆษณาผ่าน API</a></li>
+                            <%--<li><a id="api" href="${contextPath}/promotion/promotion">โฆษณาผ่าน API</a></li>--%>
                         </ul>
                     </li>
                     <li>
