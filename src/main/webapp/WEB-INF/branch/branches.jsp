@@ -178,7 +178,7 @@
                             order : branchsort
                         },
                         branchName: obj.branchName,
-                        option: (!obj.hasAdmin ? '<a onclick = "resent(' + obj.branchNo + ')" class = "btn btn-warning btn-sm"> <i class = "fa fa-envelope"></i> &nbsp; ส่งอีกครั้ง </a>' : '') +
+                        option: (!obj.hasAdmin ? '<a onclick = "resent(' + obj.branchNo + ')" class = "btn btn-info btn-sm"> <i class = "fa fa-envelope"></i> &nbsp; ส่งอีกครั้ง </a>' : '') +
                         '<a onclick = "del_branch(' + obj.branchNo + ',\'' + obj.branchName +'\')" class = "btn btn-danger btn-sm"> <i class = "fa fa-trash"></i> &nbsp; ลบ </a>'
                     };
                     data_array.push(data_refresh);
