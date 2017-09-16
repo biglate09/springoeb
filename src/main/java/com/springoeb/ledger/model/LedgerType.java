@@ -12,6 +12,10 @@ public class LedgerType {
     private Integer ledgerTypeNo;
     private String ledgerTypeName;
     private boolean defaultType;
+    private int ledgerPayNo;
+
+    public static int INCOME = 1;
+    public static int EXPENSE = 2;
 
     public Integer getLedgerTypeNo() {
         return ledgerTypeNo;
@@ -35,5 +39,13 @@ public class LedgerType {
 
     public void setDefaultType(boolean defaultType) {
         this.defaultType = defaultType;
+    }
+
+    public int getLedgerPayNo() {
+        return ledgerPayNo;
+    }
+
+    public void setLedgerPayNo(int ledgerPayNo) {
+        this.ledgerPayNo = ledgerPayNo;
     }
 }
