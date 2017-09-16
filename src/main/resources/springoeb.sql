@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Host: 127.0.0.1
--- Generation Time: Sep 15, 2017 at 04:03 PM
+-- Generation Time: Sep 16, 2017 at 03:47 PM
 -- Server version: 10.1.21-MariaDB
 -- PHP Version: 5.6.30
 
@@ -115,7 +115,8 @@ CREATE TABLE `branch_user` (
 INSERT INTO `branch_user` (`branch_user_no`, `username`, `password`, `sent_email`, `branch_no`, `role_no`, `emp_no`) VALUES
 (1, 'kopihub-master', '$2a$10$E3FxBBuaGdRCnb4PULE1x.FtZp3wDv18mwLoRCwTYB.rGaNAwW5R2', NULL, 1, 1, NULL),
 (2, 'kopihub-bangkae', '$2a$10$T6iCPE2YKLr/C/5p5myUZeVgprGzHaNHvdm4JBQy/WzIVgV8zqBPK', NULL, 2, 1, NULL),
-(3, 'kopihub-ekkamai', '$2a$10$./rT3rhc13NT1p0yRfZP7.OmdT780bTdLPmveX8oh3UzrSFN6Sg5C', NULL, 3, 1, NULL);
+(3, 'kopihub-ekkamai', '$2a$10$./rT3rhc13NT1p0yRfZP7.OmdT780bTdLPmveX8oh3UzrSFN6Sg5C', NULL, 3, 1, NULL),
+(24, 'biglate09', '$2a$10$MhUh1FHfwGDqsL2.BS82Q.io6vWQ0K9E4ZO0bIbQeYc.KwCSBsPj2', 'biglate_09@hotmail.com', 1, 2, 21);
 
 -- --------------------------------------------------------
 
@@ -1192,7 +1193,7 @@ CREATE TABLE `employee` (
 --
 
 INSERT INTO `employee` (`emp_no`, `emp_name`, `emp_tel`, `emp_gender`, `emp_type`, `pay_type`, `pay`, `email`, `is_admin`, `success_register`, `bg_color`, `font_color`, `branch_no`) VALUES
-(21, 'บิ๊ก', '0813026159', 'M', '1', '2', 300.00, 'biglate_09@hotmail.com', 0, 0, '#000000', '#FFFFFF', 1),
+(21, 'บิ๊ก', '0813026159', 'M', '1', '2', 300.00, 'biglate_09@hotmail.com', 0, 1, '#000000', '#FFFFFF', 1),
 (23, 'เป้', '0851131980', 'M', '1', '1', 30.00, 'nirun0851131980@hotmail.com', 1, 0, '#000000', '#ffffff', 1);
 
 -- --------------------------------------------------------
@@ -1243,6 +1244,18 @@ CREATE TABLE `employee_table` (
   `time_end` time NOT NULL,
   `emp_pos_no` int(8) DEFAULT NULL,
   `emp_no` int(8) NOT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=utf8;
+
+-- --------------------------------------------------------
+
+--
+-- Table structure for table `ledger_type`
+--
+
+CREATE TABLE `ledger_type` (
+  `ledger_type_no` int(11) NOT NULL,
+  `ledger_type_name` varchar(100) NOT NULL,
+  `default_type` tinyint(1) NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8;
 
 -- --------------------------------------------------------
@@ -2037,6 +2050,33 @@ INSERT INTO `province` (`province_no`, `province_code`, `province_name`) VALUES
 (75, '95', 'ยะลา   '),
 (76, '96', 'นราธิวาส   '),
 (77, '97', 'บึงกาฬ');
+
+-- --------------------------------------------------------
+
+--
+-- Table structure for table `reservation`
+--
+
+CREATE TABLE `reservation` (
+  `reserve_no` int(11) NOT NULL,
+  `date` date NOT NULL,
+  `time` time NOT NULL,
+  `number_of_person` int(11) NOT NULL,
+  `status` varchar(10) NOT NULL DEFAULT 'reserved' COMMENT 'reserved,arrived,cancelled',
+  `user_name` varchar(100) DEFAULT NULL,
+  `tel` varchar(20) DEFAULT NULL,
+  `user_no` int(11) DEFAULT NULL,
+  `branch_no` int(11) NOT NULL,
+  `bill_no` int(11) DEFAULT NULL,
+  `que_code` int(11) DEFAULT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=utf8;
+
+--
+-- Dumping data for table `reservation`
+--
+
+INSERT INTO `reservation` (`reserve_no`, `date`, `time`, `number_of_person`, `status`, `user_name`, `tel`, `user_no`, `branch_no`, `bill_no`, `que_code`) VALUES
+(7, '1996-04-09', '03:20:00', 1, 'reserved', 'คุณบิ๊กเฮ้ด', '0813026159', NULL, 1, NULL, NULL);
 
 -- --------------------------------------------------------
 
@@ -18553,6 +18593,12 @@ ALTER TABLE `employee_table`
   ADD KEY `employee_table_ibfk_2` (`emp_pos_no`);
 
 --
+-- Indexes for table `ledger_type`
+--
+ALTER TABLE `ledger_type`
+  ADD PRIMARY KEY (`ledger_type_no`);
+
+--
 -- Indexes for table `material_category`
 --
 ALTER TABLE `material_category`
@@ -18642,6 +18688,13 @@ ALTER TABLE `province`
   ADD PRIMARY KEY (`province_no`);
 
 --
+-- Indexes for table `reservation`
+--
+ALTER TABLE `reservation`
+  ADD PRIMARY KEY (`reserve_no`),
+  ADD KEY `user_no` (`user_no`,`branch_no`,`bill_no`);
+
+--
 -- Indexes for table `role`
 --
 ALTER TABLE `role`
@@ -18675,17 +18728,17 @@ ALTER TABLE `zipcode`
 -- AUTO_INCREMENT for table `branch`
 --
 ALTER TABLE `branch`
-  MODIFY `branch_no` int(8) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=20;
+  MODIFY `branch_no` int(8) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=4;
 --
 -- AUTO_INCREMENT for table `branch_user`
 --
 ALTER TABLE `branch_user`
-  MODIFY `branch_user_no` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=24;
+  MODIFY `branch_user_no` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=25;
 --
 -- AUTO_INCREMENT for table `customer_table`
 --
 ALTER TABLE `customer_table`
-  MODIFY `table_no` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=27;
+  MODIFY `table_no` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=26;
 --
 -- AUTO_INCREMENT for table `district`
 --
@@ -18700,7 +18753,7 @@ ALTER TABLE `employee`
 -- AUTO_INCREMENT for table `employee_pay`
 --
 ALTER TABLE `employee_pay`
-  MODIFY `emp_pay_no` int(8) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=3;
+  MODIFY `emp_pay_no` int(8) NOT NULL AUTO_INCREMENT;
 --
 -- AUTO_INCREMENT for table `employee_position`
 --
@@ -18710,7 +18763,12 @@ ALTER TABLE `employee_position`
 -- AUTO_INCREMENT for table `employee_table`
 --
 ALTER TABLE `employee_table`
-  MODIFY `emp_time_no` int(8) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=23;
+  MODIFY `emp_time_no` int(8) NOT NULL AUTO_INCREMENT;
+--
+-- AUTO_INCREMENT for table `ledger_type`
+--
+ALTER TABLE `ledger_type`
+  MODIFY `ledger_type_no` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=4;
 --
 -- AUTO_INCREMENT for table `material_category`
 --
@@ -18757,6 +18815,11 @@ ALTER TABLE `promotion`
 ALTER TABLE `province`
   MODIFY `province_no` int(5) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=78;
 --
+-- AUTO_INCREMENT for table `reservation`
+--
+ALTER TABLE `reservation`
+  MODIFY `reserve_no` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=8;
+--
 -- AUTO_INCREMENT for table `role`
 --
 ALTER TABLE `role`
@@ -18770,7 +18833,7 @@ ALTER TABLE `sub_district`
 -- AUTO_INCREMENT for table `work_history`
 --
 ALTER TABLE `work_history`
-  MODIFY `work_hist_no` int(8) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=16;
+  MODIFY `work_hist_no` int(8) NOT NULL AUTO_INCREMENT;
 --
 -- AUTO_INCREMENT for table `zipcode`
 --
