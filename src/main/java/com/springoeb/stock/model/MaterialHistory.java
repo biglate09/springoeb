@@ -17,6 +17,7 @@ public class MaterialHistory {
     private Time time;
     private String importer;
     private String supplier;
+    private Double price;
     @Column(name = "mat_item_no",insertable = true,updatable = true)
     private Integer matItemNo;
     @Column(name = "branch_no",insertable = true,updatable = true)
@@ -114,5 +115,13 @@ public class MaterialHistory {
 
     public void setOfMatHistNo(Integer ofMatHistNo) {
         this.ofMatHistNo = ofMatHistNo;
+    }
+
+    public Double getPrice() {
+        return price;
+    }
+
+    public void setPrice(Double price) {
+        this.price = price;
     }
 }

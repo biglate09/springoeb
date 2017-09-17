@@ -104,7 +104,7 @@ public class StockController {
     @PostMapping("/getmaterialitems")
     @ResponseBody
     public String getMaterialItems() throws JsonProcessingException {
-        List<MaterialItem> materialItems = materialItemService.getMaterialItems();
+        List<MaterialItem> materialItems = materialItemService.getMaterials();
         ObjectMapper mapper = new ObjectMapper();
         String json = mapper.writeValueAsString(materialItems);
         return json;
@@ -234,7 +234,7 @@ public class StockController {
     public void AddOrEditMaterialHistory(HttpServletRequest request,HttpSession session){
         int branchNo = ((BranchUser)(session.getAttribute("branchUser"))).getBranchNo();
         String importer = ((BranchUser)(session.getAttribute("branchUser"))).getEmployee() == null ? "แอดมินสาขา" : ((BranchUser)(session.getAttribute("branchUser"))).getEmployee().getEmpName();
-        String supplier = request.getParameter("supplier");
+        String supplier = request.getParameter("supplier").trim().equals("")?null:request.getParameter("supplier");
         Integer matItemNo = Integer.parseInt(request.getParameter("mat_item_no"));
         String incPack = request.getParameter("inc_pack");
         String decPack = request.getParameter("dec_pack");
@@ -244,6 +244,7 @@ public class StockController {
             if (incQuantity != null && Double.parseDouble(incQuantity) > 0) {
                 MaterialHistory materialHistory = new MaterialHistory();
                 MaterialItem material = materialItemService.getMaterialItem(matItemNo);
+                materialHistory.setPrice(Double.parseDouble(request.getParameter("price")));
                 materialHistory.setImporter(importer);
                 materialHistory.setSupplier(supplier);
                 materialHistory.setBranchNo(branchNo);
@@ -261,7 +262,6 @@ public class StockController {
             if (decQuantity != null && Double.parseDouble(decQuantity) > 0) {
                 MaterialHistory materialHistory = new MaterialHistory();
                 materialHistory.setImporter(importer);
-                materialHistory.setSupplier(supplier);
                 materialHistory.setBranchNo(branchNo);
                 materialHistory.setMatItemNo(matItemNo);
                 materialHistory.setMatName(materialItemService.getMaterialItem(matItemNo).getMatItemName());
