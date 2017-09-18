@@ -10,6 +10,7 @@ import com.springoeb.system.model.Role;
 import com.springoeb.system.service.BranchUserService;
 import com.springoeb.system.service.EmailService;
 import com.springoeb.system.service.ProvinceService;
+import com.springoeb.system.service.RoleService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.stereotype.Controller;
@@ -35,7 +36,9 @@ public class BranchController {
     @Autowired
     private ProvinceService provinceService;
     @Autowired
-    EmailService emailService;
+    private EmailService emailService;
+    @Autowired
+    private RoleService roleService;
 
     private static final String BRANCH_PATH = "/WEB-INF/branch/";
 
@@ -137,7 +140,9 @@ public class BranchController {
 
     //-----------------------------------------------------------------------------------------------------------//
     @GetMapping("/member")
-    public String toMemberIndex() {
+    public String toMemberIndex(Model model) {
+        List<Role> roles = roleService.findAll();
+        model.addAttribute("roles",roles);
         return BRANCH_PATH + "member.jsp";
     }
     //-----------------------------------------------------------------------------------------------------------//
