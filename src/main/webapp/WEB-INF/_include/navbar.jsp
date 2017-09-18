@@ -89,7 +89,7 @@
                             <c:if test="${branchUser.branchNo == Branch.MAIN_BRANCH}">
                                 <li><a id="branches" href="${contextPath}/branch/branches">สาขาทั้งหมด</a></li>
                             </c:if>
-                            <li><a id="mybranch" href="${contextPath}/branch/mybranch">สาขานี้</a></li>
+                            <li><a id="mybranch" href="${contextPath}/branch/mybranch">สาขา${branchUser.branch.branchName}</a></li>
                         </ul>
                     </li>
                     <li>

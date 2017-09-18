@@ -76,7 +76,7 @@
                                                             <th style="text-align:center;">การอัปเดตล่าสุด</th>
                                                             <th style="text-align:center;">จำนวน</th>
                                                             <th style="text-align:center;">Supplier</th>
-                                                            <th style="text-align:center;">ผู้นำเข้า</th>
+                                                            <th style="text-align:center;">ผู้บันทึกข้อมูล</th>
                                                             <th style="text-align:center;">ราคา</th>
                                                         </tr>
                                                         </thead>
