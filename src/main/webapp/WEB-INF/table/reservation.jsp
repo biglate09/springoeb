@@ -35,8 +35,8 @@
                                 </div>
                                 <div class="col-md-offset-1 col-md-2 well" style="overflow:auto;text-align:center;">
                                     <div class="checkbox">
-                                        <input type="checkbox" value="true" id="today_input" class="flat">&nbsp;
-                                        <span>ดูเฉพาะวันนี้</span>
+                                        <input type="checkbox" value="true" id="today_input" class="flat" checked>&nbsp;
+                                        <span>ข้อมูลลูกค้าที่จองวันนี้</span>
                                     </div>
                                 </div>
                                 <table id="datatable-reservation"

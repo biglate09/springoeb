@@ -103,7 +103,6 @@ public class TableController {
     @ResponseBody
     public void addOrEditReservation(@ModelAttribute("reservation") Reservation reservation, HttpSession session,HttpServletRequest request){
         int branchNo = ((BranchUser) (session.getAttribute("branchUser"))).getBranchNo();
-        reservation.setStatus(Reservation.RESERVED);
         reservation.setBranchNo(branchNo);
         reservation.setDate(Date.valueOf(request.getParameter("dateformat")));
         reservation.setTime(Time.valueOf(request.getParameter("timeformat").substring(0,5) + ":00"));
