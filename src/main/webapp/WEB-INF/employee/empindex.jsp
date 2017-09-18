@@ -329,7 +329,7 @@
                                             <span class="fa fa-envelope form-control-feedback right"
                                                   aria-hidden="true"></span>
                                         </div>
-                                        
+
                                         <div class="form-group col-md-12">
                                             <label>สีป้ายชื่อพนักงานในตารางการทำงาน</label>
                                             <div class="well" style="overflow: auto">
@@ -568,6 +568,7 @@
                     if (pay_format.length >= 7) {
                         pay_format = pay_format.replace(/\B(?=(\d{3})+(?!\d))/g, ",");
                     }
+
                     var data_refresh = {
                         empName: '<a style="cursor:pointer;font-weight:bold;" onclick="editEmp(' + emp_obj.empNo + ')" data-toggle="modal"' +
                         'data-target="#editEmp" style="font-weight: bold;">' + emp_obj.empName + '</a>',
@@ -577,7 +578,7 @@
                             display: pay_format + ' บาท / ' + (emp_obj.payType == '${Employee.HOUR}' ? 'ชั่วโมง' : 'วัน'),
                             order: pay_order
                         },
-                        empNo: (!emp_obj.successRegister ? '<a onclick="resent(' + emp_obj.empNo + ')" class="btn btn-info btn-sm"><i class="fa fa-envelope"></i>&nbsp; ส่งซ้ำ</a>' : '') +
+                        empNo: (emp_obj.branchUser == null ? '<a onclick="resent(' + emp_obj.empNo + ')" class="btn btn-info btn-sm"><i class="fa fa-envelope"></i>&nbsp; ส่งซ้ำ</a>' : '') +
                         '<a onclick="editEmp(' + emp_obj.empNo + ')" class="btn btn-warning btn-sm" data-toggle="modal" data-target="#editEmp"><i class="fa fa-pencil"></i>&nbsp; แก้ไข </a>' +
                         '<a onclick="delEmp(' + emp_obj.empNo + ',\'' + emp_obj.empName + '\')" class="btn btn-danger btn-sm"> <i class="fa fa-trash"></i>&nbsp; ลบ</a>'
                     };

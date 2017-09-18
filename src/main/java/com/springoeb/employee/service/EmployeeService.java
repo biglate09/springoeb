@@ -42,8 +42,8 @@ public class EmployeeService {
         }
     }
 
-    public List<Employee> findByUnsuccessRegister(){
-        return employeeRepository.findBySuccessRegister(false);
+    public List<Employee> findAll(){
+        return employeeRepository.findAll();
     }
 
     public Employee findByEmpNo(int empNo){

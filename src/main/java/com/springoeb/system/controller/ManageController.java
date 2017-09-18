@@ -116,7 +116,7 @@ public class ManageController {
         String target = "/WEB-INF/setuser.jsp";
         String apiKey = request.getParameter("apiKey");
         BCryptPasswordEncoder bCryptPasswordEncoder = new BCryptPasswordEncoder();
-        List<Employee> employees = employeeService.findByUnsuccessRegister();
+        List<Employee> employees = employeeService.findAll();
         boolean pass = false;
         Integer empNo = null;
         for (Employee employee : employees) {
@@ -152,6 +152,7 @@ public class ManageController {
         branchUser.setEmpNo(empNo);
         branchUser.setSentEmail(employee.getEmail());
         branchUser.setBranchNo(employee.getBranchNo());
+        branchUser.setRoleNo(Role.EMPLOYEE);
         branchUser.setEmpNo(employee.getEmpNo());
         branchUserService.save(branchUser);
         return request.getScheme() + "://" + request.getServerName() + ":" + request.getServerPort() + request.getContextPath() + "/loginpage?username=" + URLEncoder.encode(branchUser.getUsername(), "UTF-8");

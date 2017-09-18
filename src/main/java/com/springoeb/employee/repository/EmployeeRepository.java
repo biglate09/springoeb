@@ -12,10 +12,10 @@ import java.util.List;
 @Repository
 public interface EmployeeRepository extends CrudRepository<Employee,Integer>{
     Employee save(Employee employee);
+    List<Employee> findAll();
     List<Employee> findByBranchNo(int branchNo);
     void removeByEmpNoAndBranchNo(int empNo,int branchNo);
     Employee findByEmpNoAndBranchNo(int empNo,int branchNo);
     Employee findByEmpNo(int empNo);
     List<Employee> findByEmpNameIgnoreCaseAndBranchNo(String empName,int branchNo);
-    List<Employee> findBySuccessRegister(boolean successRegister);
 }

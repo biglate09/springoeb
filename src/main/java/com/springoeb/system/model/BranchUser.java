@@ -1,6 +1,7 @@
 package com.springoeb.system.model;
 
 import com.fasterxml.jackson.annotation.JsonBackReference;
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.springoeb.branch.model.Branch;
 import com.springoeb.employee.model.Employee;
 
@@ -12,6 +13,7 @@ public class BranchUser {
     @GeneratedValue(strategy = GenerationType.AUTO)
     private Integer branchUserNo;
     private String username;
+    @JsonIgnore
     private String password;
     private String sentEmail;
     @Column(name = "branch_no", updatable = true,insertable = true)
