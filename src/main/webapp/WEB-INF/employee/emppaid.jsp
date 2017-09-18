@@ -32,8 +32,7 @@
                             </div>
                             <div class="x_content">
                                 <div class="well" style="overflow: auto">
-                                    <p style="text-align:center;">ค่าจ้างคงเหลือของพนักงานทุกคนคือ : <b
-                                            id="all_sum_pay"></b> บาท</p>
+                                    <p style="text-align:center;">ค่าจ้างคงเหลือของพนักงานทุกคนคือ : <b id="all_sum_pay"></b> บาท</p>
                                 </div>
                                 <table id="datatable-pay" class="table table-striped table-bordered">
                                     <thead>
@@ -292,8 +291,10 @@
                 //workhistory iterator
                 var whi = 0;
                 workhist = workHistories[whi];
-                workhist_sumpay = workHistories[whi].workPay; // เงินประวัติชั่วคราว
-
+                workhist_sumpay = 0;
+                if(workhist != null) {
+                    workhist_sumpay = workhist.workPay; // เงินประวัติชั่วคราว
+                }
                 for (var i = 0; i < employeePays.length; i++) {
                     var employeePay = employeePays[i];
                     var date = new Date(employeePay.date);

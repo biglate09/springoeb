@@ -15,26 +15,10 @@ public class Reservation {
     private Date date;
     private Time time;
     private Integer numberOfPerson;
-    private String status;
-    private Integer queCode;
     private String userName;
     private String tel;
 
-    private Integer userNo;
     private Integer branchNo;
-    private Integer billNo;
-
-    public static final String RESERVED = "reserved";
-    public static final String ARRIVED = "arrived";
-    public static final String CANCELLED = "cancelled";
-
-    public String getTel() {
-        return tel;
-    }
-
-    public void setTel(String tel) {
-        this.tel = tel;
-    }
 
     public Integer getReserveNo() {
         return reserveNo;
@@ -68,22 +52,6 @@ public class Reservation {
         this.numberOfPerson = numberOfPerson;
     }
 
-    public String getStatus() {
-        return status;
-    }
-
-    public void setStatus(String status) {
-        this.status = status;
-    }
-
-    public Integer getQueCode() {
-        return queCode;
-    }
-
-    public void setQueCode(Integer queCode) {
-        this.queCode = queCode;
-    }
-
     public String getUserName() {
         return userName;
     }
@@ -92,12 +60,12 @@ public class Reservation {
         this.userName = userName;
     }
 
-    public Integer getUserNo() {
-        return userNo;
+    public String getTel() {
+        return tel;
     }
 
-    public void setUserNo(Integer userNo) {
-        this.userNo = userNo;
+    public void setTel(String tel) {
+        this.tel = tel;
     }
 
     public Integer getBranchNo() {
@@ -106,13 +74,5 @@ public class Reservation {
 
     public void setBranchNo(Integer branchNo) {
         this.branchNo = branchNo;
-    }
-
-    public Integer getBillNo() {
-        return billNo;
-    }
-
-    public void setBillNo(Integer billNo) {
-        this.billNo = billNo;
     }
 }

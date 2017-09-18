@@ -9,8 +9,8 @@ import java.util.List;
 
 @Repository
 public interface ReservationRepository extends CrudRepository<Reservation,Integer>{
-    List<Reservation> findByBranchNoAndStatusAndQueCodeIsNull(int branchNo,String status);
-    List<Reservation> findByBranchNoAndDateAndStatusAndQueCodeIsNull(int branchNo, Date date, String status);
+    List<Reservation> findByBranchNoAndDateGreaterThanEqual(int branchNo,Date date);
+    List<Reservation> findByBranchNoAndDate(int branchNo, Date date);
     Reservation findByReserveNo(int reserveNo);
     void removeByReserveNo(int reserveNo);
 }

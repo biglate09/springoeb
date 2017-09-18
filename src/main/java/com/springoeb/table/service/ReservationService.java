@@ -14,11 +14,11 @@ public class ReservationService {
     private ReservationRepository reservationRepository;
 
     public List<Reservation> findReserved(int branchNo){
-        return reservationRepository.findByBranchNoAndStatusAndQueCodeIsNull(branchNo,Reservation.RESERVED);
+        return reservationRepository.findByBranchNoAndDateGreaterThanEqual(branchNo,new Date(System.currentTimeMillis()));
     }
 
     public List<Reservation> findReservedToday(int branchNo){
-        return reservationRepository.findByBranchNoAndDateAndStatusAndQueCodeIsNull(branchNo,new Date(System.currentTimeMillis()),Reservation.RESERVED);
+        return reservationRepository.findByBranchNoAndDate(branchNo,new Date(System.currentTimeMillis()));
     }
 
     public Reservation findByReserveNo(int reserveNo){
