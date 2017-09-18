@@ -129,7 +129,7 @@
                                                 id="edit_pay_type" required>
                                             <option disabled selected value="">เลือกประเภทบัญชี</option>
                                             <option value="1">บัญชีรายรับ</option>
-                                            <option value="2x">บัญชีรายจ่าย</option>
+                                            <option value="2">บัญชีรายจ่าย</option>
                                         </select>
                                     </div>
                                 </div>
@@ -210,7 +210,6 @@
                 $("#hiddenledgertypeno").val(result.ledgerTypeNo);
                 $("#edit_ledger_type_name").val(result.ledgerTypeName);
                 $("#show_ledger_type_name").html(result.ledgerTypeName);
-                console.log(result.ledgerPayNo);
                 $("#edit_pay_type").val(result.ledgerPayNo);
             }
         });

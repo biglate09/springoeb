@@ -234,7 +234,10 @@ public class StockController {
     public void AddOrEditMaterialHistory(HttpServletRequest request,HttpSession session){
         int branchNo = ((BranchUser)(session.getAttribute("branchUser"))).getBranchNo();
         String importer = ((BranchUser)(session.getAttribute("branchUser"))).getEmployee() == null ? "แอดมินสาขา" : ((BranchUser)(session.getAttribute("branchUser"))).getEmployee().getEmpName();
-        String supplier = request.getParameter("supplier").trim().equals("")?null:request.getParameter("supplier");
+        String supplier = request.getParameter("supplier");
+        if(supplier != null) {
+            supplier = supplier.trim();
+        }
         Integer matItemNo = Integer.parseInt(request.getParameter("mat_item_no"));
         String incPack = request.getParameter("inc_pack");
         String decPack = request.getParameter("dec_pack");
@@ -244,7 +247,7 @@ public class StockController {
             if (incQuantity != null && Double.parseDouble(incQuantity) > 0) {
                 MaterialHistory materialHistory = new MaterialHistory();
                 MaterialItem material = materialItemService.getMaterialItem(matItemNo);
-                materialHistory.setPrice(Double.parseDouble(request.getParameter("price")));
+                materialHistory.setPrice(request.getParameter("price") == null ? null : Double.parseDouble(request.getParameter("price")));
                 materialHistory.setImporter(importer);
                 materialHistory.setSupplier(supplier);
                 materialHistory.setBranchNo(branchNo);

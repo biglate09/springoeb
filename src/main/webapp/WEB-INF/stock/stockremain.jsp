@@ -155,7 +155,7 @@
                                                         <input type="text" class="form-control" id="update_supplier"
                                                                name="supplier"
                                                                placeholder="ชื่อ Supplier" required>
-                                                        <span class="fa fa-pencil form-control-feedback right"
+                                                        <span class="fa fa-user form-control-feedback right"
                                                               aria-hidden="true"></span>
                                                     </div>
                                                     <div class="col-md-6 col-sm-6 col-xs-12 form-group has-feedback for_inc_sub">
@@ -294,7 +294,7 @@
                             display: '<span style="color ' + (matRemain < 0 ? ':red' : '' ) + '">' + matRemain.toFixed(2).replace(/\B(?=(\d{3})+(?!\d))/g, ",") + ' ' + obj.unit.unitName + '</span>',
                             order: matRemainOrder
                         },
-                        option: '<a onclick = "set_mat_remain(' + obj.matItemNo + ',\'' + obj.matItemName + '\',\'' + obj.unit.unitName + '\',\'' + obj.matFlag + '\')" class = "btn btn-warning btn-sm" data-toggle = "modal" data-target = "#updateStockRemain"> <i class = "fa fa-pencil"> </i> &nbsp; อัปเดต </a>' +
+                        option: '<a onclick = "set_mat_remain(' + obj.matItemNo + ',\'' + obj.matItemName + '\',\'' + obj.unit.unitName + '\',\'' + obj.matFlag + '\')" class = "btn btn-warning btn-sm" data-toggle = "modal" data-target = "#updateStockRemain"> <i class = "fa fa-upload"> </i> &nbsp; อัปเดต </a>' +
                         '<a onclick = "getHistories(' + obj.matItemNo + ',\'' + obj.matItemName + '\',\'' + obj.unit.unitName + '\')" class = "btn btn-primary btn-sm" data-toggle = "modal" data-target = "#matHistoriesInfo"> <i class = "fa fa-info-circle"></i> &nbsp; รายละเอียด </a>'
                     }
                     data_array.push(data);
@@ -395,8 +395,10 @@
         $('#hiddenitemno').val(matNo);
         if(matFlag == '${MaterialItem.flagForItem}'){
             $(".for_inc_sub").css('display','');
+            $(".for_inc_sub :input").attr('disabled',true);
         }else{
             $(".for_inc_sub").css('display','none');
+            $(".for_inc_sub :input").attr('disabled',true);
         }
 
     }
@@ -407,9 +409,15 @@
         var result = "";
         if (inc > 0) {
             result += "เพิ่ม" + $("#show_mat_item_name_for_update").html() + " จำนวน " + inc + " " + $(".unit").eq(0).html();
-            $("#for_inc").css('display','');
+            $("#for_inc").css('display', '');
+            if($(".for_inc_sub").css('display') == 'none') {
+                $(".for_inc_sub :input").attr('disabled',true);
+            }else{
+                $(".for_inc_sub :input").attr('disabled',false);
+            }
         } else {
             $("#for_inc").css('display','none');
+            $(".for_inc_sub :input").attr('disabled',true);
         }
 
         if (dec > 0) {
