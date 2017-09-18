@@ -1,5 +1,6 @@
 package com.springoeb.system.model;
 
+import com.fasterxml.jackson.annotation.JsonBackReference;
 import com.springoeb.branch.model.Branch;
 import com.springoeb.employee.model.Employee;
 
@@ -23,6 +24,7 @@ public class BranchUser {
     @JoinColumn(name = "branch_no",updatable = false,insertable = false)
     private Branch branch;
 
+    @JsonBackReference
     @OneToOne(cascade = CascadeType.ALL)
     @JoinColumn(name = "emp_no", updatable = false,insertable = false)
     private Employee employee;

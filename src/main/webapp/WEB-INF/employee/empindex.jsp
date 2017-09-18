@@ -580,6 +580,7 @@
                 var data_array = [];
                 for (var iterator = 0; iterator < json.length; iterator++) {
                     var emp_obj = json[iterator];
+                    console.log(emp_obj);
                     var pay_order = emp_obj.payType == '${Employee.HOUR}' ? (emp_obj.pay * 800 + "") : (emp_obj.pay * 100 + "");
                     for (var i = pay_order.length; i < 20; i++) {
                         pay_order = "0" + pay_order;
