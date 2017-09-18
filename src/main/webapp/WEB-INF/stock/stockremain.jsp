@@ -175,7 +175,11 @@
                                             </div>
                                             <div class="modal-footer">
                                                 <!-- ปุ่มกดปิด (Close) ตรงส่วนล่างของ Modal -->
-                                                <div class="col-md-9 col-sm-9 col-xs-12 col-md-offset-3">
+                                                <div class="col-md-4" style="text-align: left;font-size: 15px">
+                                                <span style="font-weight: bold;">ปัจจุบันคงเหลือ</span>
+                                                    <span id="update_remain"></span> <span class="unit"></span></h2>
+                                                </div>
+                                                <div class="col-md-8 col-sm-8 col-xs-12">
                                                     <button type="submit" class="btn btn-success">ตกลง</button>
                                                     <button type="button" class="btn btn-default" data-dismiss="modal">
                                                         ยกเลิก
@@ -288,13 +292,13 @@
                     }
 
                     var data = {
-                        matItemName: '<a style="cursor:pointer;font-weight:bold;" onclick = "set_mat_remain(' + obj.matItemNo + ',\'' + obj.matItemName + '\',\'' + obj.unit.unitName + '\')" data-toggle = "modal" data-target = "#updateStockRemain">' + obj.matItemName + '</a>',
+                        matItemName: '<a style="cursor:pointer;font-weight:bold;" onclick = "set_mat_remain(' + obj.matItemNo + ',\'' + obj.matItemName + '\',\'' + obj.unit.unitName + '\',\'' + obj.matFlag + '\',' + matRemain.toFixed(2).replace(/\\B(?=(\\d{3})+(?!\\d))/g, ",") + ')" data-toggle = "modal" data-target = "#updateStockRemain">' + obj.matItemName + '</a>',
                         item: obj.materialCategory.matCatName,
                         remain: {
                             display: '<span style="color ' + (matRemain < 0 ? ':red' : '' ) + '">' + matRemain.toFixed(2).replace(/\B(?=(\d{3})+(?!\d))/g, ",") + ' ' + obj.unit.unitName + '</span>',
                             order: matRemainOrder
                         },
-                        option: '<a onclick = "set_mat_remain(' + obj.matItemNo + ',\'' + obj.matItemName + '\',\'' + obj.unit.unitName + '\',\'' + obj.matFlag + '\')" class = "btn btn-warning btn-sm" data-toggle = "modal" data-target = "#updateStockRemain"> <i class = "fa fa-upload"> </i> &nbsp; อัปเดต </a>' +
+                        option: '<a onclick = "set_mat_remain(' + obj.matItemNo + ',\'' + obj.matItemName + '\',\'' + obj.unit.unitName + '\',\'' + obj.matFlag + '\',' + matRemain.toFixed(2).replace(/\\B(?=(\\d{3})+(?!\\d))/g, ",") + ')" class = "btn btn-warning btn-sm" data-toggle = "modal" data-target = "#updateStockRemain"> <i class = "fa fa-pencil"> </i> &nbsp; อัปเดต </a>' +
                         '<a onclick = "getHistories(' + obj.matItemNo + ',\'' + obj.matItemName + '\',\'' + obj.unit.unitName + '\')" class = "btn btn-primary btn-sm" data-toggle = "modal" data-target = "#matHistoriesInfo"> <i class = "fa fa-info-circle"></i> &nbsp; รายละเอียด </a>'
                     }
                     data_array.push(data);
@@ -389,10 +393,11 @@
         });
     }
 
-    function set_mat_remain(matNo, matName, unitName, matFlag) {
+    function set_mat_remain(matNo, matName, unitName, matFlag, matRemain) {
         $('#show_mat_item_name_for_update').html(matName);
         $('.unit').html(unitName);
         $('#hiddenitemno').val(matNo);
+        $('#update_remain').html(matRemain);
         if(matFlag == '${MaterialItem.flagForItem}'){
             $(".for_inc_sub").css('display','');
             $(".for_inc_sub :input").attr('disabled',true);

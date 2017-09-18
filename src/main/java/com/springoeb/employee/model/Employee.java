@@ -1,6 +1,6 @@
 package com.springoeb.employee.model;
 
-import com.fasterxml.jackson.annotation.JsonIgnore;
+import com.fasterxml.jackson.annotation.JsonManagedReference;
 import com.springoeb.branch.model.Branch;
 import com.springoeb.system.model.BranchUser;
 
@@ -30,7 +30,7 @@ public class Employee implements Serializable{
     private List<EmployeePay> employeePays;
     @OneToMany(fetch = FetchType.LAZY, mappedBy = "employee")
     private List<WorkHistory> workHistories;
-    @JsonIgnore
+    @JsonManagedReference
     @OneToOne(mappedBy = "employee",cascade = CascadeType.ALL)
     private BranchUser branchUser;
     @ManyToOne
