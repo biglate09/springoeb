@@ -165,16 +165,6 @@
                                                   aria-hidden="true"></span>
                                         </div>
 
-                                        <div class="col-md-6 col-sm-6 col-xs-12 form-group has-feedback">
-                                            <label>สถานะของพนักงาน</label>
-                                            <div class="checkbox">
-                                                <label>
-                                                    <input type="checkbox" value="true" name="isAdmin"
-                                                           class="flat"> เป็นแอดมิน
-                                                </label>
-                                            </div>
-                                        </div>
-
                                         <div class="form-group col-md-12">
                                             <label>สีป้ายชื่อพนักงานในตารางการทำงาน</label>
                                             <div class="well" style="overflow: auto">
@@ -339,17 +329,7 @@
                                             <span class="fa fa-envelope form-control-feedback right"
                                                   aria-hidden="true"></span>
                                         </div>
-
-                                        <div class="col-md-6 col-sm-6 col-xs-12 form-group has-feedback">
-                                            <label>สถานะของพนักงาน</label>
-                                            <div class="checkbox">
-                                                <label>
-                                                    <input id="isAdmin" type="checkbox" name="isAdmin" value="true"
-                                                           class="flat"> เป็นแอดมิน
-                                                </label>
-                                            </div>
-                                        </div>
-
+                                        
                                         <div class="form-group col-md-12">
                                             <label>สีป้ายชื่อพนักงานในตารางการทำงาน</label>
                                             <div class="well" style="overflow: auto">

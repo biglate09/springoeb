@@ -145,7 +145,6 @@ public class ManageController {
     public String registerEmpProcess(@PathVariable("empNo") int empNo,HttpServletRequest request) throws UnsupportedEncodingException {
         BCryptPasswordEncoder bCryptPasswordEncoder = new BCryptPasswordEncoder();
         Employee employee = employeeService.findByEmpNo(empNo);
-        employee.setSuccessRegister(true);
         employeeService.save(employee);
         BranchUser branchUser = new BranchUser();
         branchUser.setUsername(request.getParameter("username"));
@@ -153,7 +152,6 @@ public class ManageController {
         branchUser.setEmpNo(empNo);
         branchUser.setSentEmail(employee.getEmail());
         branchUser.setBranchNo(employee.getBranchNo());
-        branchUser.setRoleNo(employee.isAdmin() ? Role.MANAGER : Role.EMPLOYEE);
         branchUser.setEmpNo(employee.getEmpNo());
         branchUserService.save(branchUser);
         return request.getScheme() + "://" + request.getServerName() + ":" + request.getServerPort() + request.getContextPath() + "/loginpage?username=" + URLEncoder.encode(branchUser.getUsername(), "UTF-8");

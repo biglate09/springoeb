@@ -23,8 +23,6 @@ public class Employee implements Serializable{
     private String fontColor;
     @Column(name = "branch_no",updatable = true,insertable = true)
     private Integer branchNo;
-    private boolean isAdmin;
-    private boolean successRegister;
     private String email;
     @OneToMany(fetch = FetchType.LAZY, mappedBy = "employee")
     private List<EmployeePay> employeePays;
@@ -155,22 +153,6 @@ public class Employee implements Serializable{
 
     public void setEmail(String email) {
         this.email = email;
-    }
-
-    public boolean isAdmin() {
-        return isAdmin;
-    }
-
-    public void setAdmin(boolean admin) {
-        isAdmin = admin;
-    }
-
-    public boolean isSuccessRegister() {
-        return successRegister;
-    }
-
-    public void setSuccessRegister(boolean successRegister) {
-        this.successRegister = successRegister;
     }
 
     public Branch getBranch() {

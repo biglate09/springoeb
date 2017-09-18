@@ -72,13 +72,12 @@ public class EmployeeController {
         }
 
         if(!isDuplicate) {
-            employee.setAdmin(Boolean.parseBoolean(request.getParameter("isAdmin")));
             employee = employeeService.save(employee);
             if (isAdd) {
-                String subject = "[ระบบ OrderEatBill] ตั้งค่าการลงชื่อเข้าใช้ระบบใบฐานะ" + (employee.isAdmin() ? "แอดมิน" : "พนักงานร้านอาหาร");
+                String subject = "[ระบบ OrderEatBill] ตั้งค่าการลงชื่อเข้าใช้ระบบใบฐานะพนักงานร้านอาหาร";
                 String token = getBcrypt(employee.getEmpNo() + "|" + employee.getEmpName() + "|" + employee.getEmail());
                 String msg = "กรุณาคลิกลิงก์ด้านล่างเพื่อสร้าง บัญชีผู้ใช้ในการใช้งานระบบ\n" +
-                        "ตำแหน่ง : " + (employee.isAdmin() ? "แอดมินของสาขา " : "พนักงานร้านอาหารของสาขา ") + ((BranchUser)(session.getAttribute("branchUser"))).getBranch().getBranchName() + "\n" +
+                        "ตำแหน่ง : พนักงานร้านอาหารของสาขา " + ((BranchUser)(session.getAttribute("branchUser"))).getBranch().getBranchName() + "\n" +
                         "ชื่อ : " + employee.getEmpName() + "\n" +
                         request.getScheme() + "://" + request.getServerName() + ":" + request.getServerPort() + request.getContextPath() + "/system/registeremp?apiKey=" + URLEncoder.encode(token, "UTF-8");
                 emailService.sendMail(employee.getEmail(), subject, msg);
@@ -111,10 +110,10 @@ public class EmployeeController {
         Employee employee = employeeService.findByEmpNoAndBranchNo(empNo,branchNo);
         employee.setEmail(email);
         employee = employeeService.save(employee);
-        String subject = "[ระบบ OrderEatBill] ตั้งค่าการลงชื่อเข้าใช้ระบบใบฐานะ" + (employee.isAdmin() ? "แอดมิน" : "พนักงานร้านอาหาร");
+        String subject = "[ระบบ OrderEatBill] ตั้งค่าการลงชื่อเข้าใช้ระบบใบฐานะพนักงานร้านอาหาร";
         String token = getBcrypt(employee.getEmpNo() + "|" + employee.getEmpName() + "|" + employee.getEmail());
         String msg = "กรุณาคลิกลิงก์ด้านล่างเพื่อสร้าง บัญชีผู้ใช้ในการใช้งานระบบ\n" +
-                "ตำแหน่ง : " + (employee.isAdmin() ? "แอดมินของสาขา " : "พนักงานร้านอาหารของสาขา ") + ((BranchUser)(session.getAttribute("branchUser"))).getBranch().getBranchName() + "\n" +
+                "ตำแหน่ง : พนักงานร้านอาหารของสาขา " + ((BranchUser)(session.getAttribute("branchUser"))).getBranch().getBranchName() + "\n" +
                 "ชื่อ : " + employee.getEmpName() + "\n" +
                 request.getScheme() + "://" + request.getServerName() + ":" + request.getServerPort() + request.getContextPath() + "/system/registeremp?apiKey=" + URLEncoder.encode(token, "UTF-8");
         emailService.sendMail(employee.getEmail(), subject, msg);

@@ -11,6 +11,8 @@ public class Role {
 
     public static Integer MANAGER = 1;
     public static Integer EMPLOYEE = 2;
+    public static Integer KITCHEN = 3;
+    public static Integer CASHIER = 4;
 
     public Integer getRoleNo() {
         return roleNo;
