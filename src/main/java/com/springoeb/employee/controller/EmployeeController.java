@@ -101,6 +101,7 @@ public class EmployeeController {
         return json;
     }
 
+    @Transactional
     @PostMapping("/resent")
     @ResponseBody
     public void resent(HttpServletRequest request, HttpSession session) throws UnsupportedEncodingException {
@@ -144,6 +145,21 @@ public class EmployeeController {
         ObjectMapper mapper = new ObjectMapper();
         String json = mapper.writeValueAsString(employee);
         return json;
+    }
+
+    @Transactional
+    @PutMapping("/resetpassword/{empNo}")
+    @ResponseBody
+    public void resetPassword(@PathVariable("empNo") int empNo,HttpServletRequest request,HttpSession session) throws UnsupportedEncodingException {
+        Employee employee = employeeService.findByEmpNo(empNo);
+        BranchUser branchUser = employee.getBranchUser();
+        String subject = "[ระบบ OrderEatBill] ตั้งค่าการลงชื่อเข้าใช้ระบบใบฐานะพนักงานร้านอาหาร";
+        String token = getBcrypt(branchUser.getUsername());
+        String msg = "กรุณาคลิกลิงก์ด้านล่างเพื่อสร้าง บัญชีผู้ใช้ในการใช้งานระบบ\n" +
+                "ตำแหน่ง : พนักงานร้านอาหารของสาขา " + ((BranchUser)(session.getAttribute("branchUser"))).getBranch().getBranchName() + "\n" +
+                "ชื่อ : " + employee.getEmpName() + "\n" +
+                request.getScheme() + "://" + request.getServerName() + ":" + request.getServerPort() + request.getContextPath() + "/system/reset?apiKey=" + URLEncoder.encode(token, "UTF-8");
+        emailService.sendMail(employee.getEmail(), subject, msg);
     }
 
     //----------------------------------------------------------------------------------------------------------//

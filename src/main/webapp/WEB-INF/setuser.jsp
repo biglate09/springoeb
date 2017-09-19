@@ -6,7 +6,7 @@
 <html lang="en">
 <head>
     <meta charset="utf-8">
-    <title>ตั้งค่าการลงชื่อเข้าใช้ระบบ </title>
+    <title>${reset == null ? 'ตั้งค่าการลงชื่อเข้าใช้ระบบ' : 'รีเซ็ตรหัสผ่าน'} </title>
     <link rel="icon" type="image/png" href="${contextPath}/images/OEB_LOGO.png">
     <!-- Bootstrap -->
     <link href="${contextPath}/vendors/bootstrap/dist/css/bootstrap.min.css" rel="stylesheet">
@@ -28,7 +28,7 @@
         <div class="animate form login_form">
             <section class="login_content">
                 <form id="adduser">
-                    <h1>ตั้งค่าการลงชื่อเข้าใช้</h1>
+                    <h1>${reset == null ? 'ตั้งค่าการลงชื่อเข้าใช้ระบบ' : 'รีเซ็ตรหัสผ่าน'}</h1>
                     <div>
                         <input type="text" class="form-control" placeholder="Username" name="username" required=""
                                value="${username}" ${username != null ? 'readonly' : ''} minlength="8"/>
@@ -71,7 +71,7 @@
                 data: $("#adduser").serialize(),
                 method: "POST",
                 success: function (target) {
-                    swal("สมัครสมาชิกสำเร็จ","กรุณารอสักครู่", "success");
+                    swal("${reset == null ? 'สมัครสมาชิกสำเร็จ' : 'รีเซ็ตรหัสผ่านสำเร็จ'}","กรุณารอสักครู่", "success");
                     setTimeout(function () {
                         window.location.replace(target);
                     },2000);

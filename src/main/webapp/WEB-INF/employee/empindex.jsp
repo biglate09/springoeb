@@ -550,7 +550,7 @@
             });
     }
 
-    function resetpassword(empName,username) {
+    function resetpassword(empNo,empName) {
         swal({
                 title: "รีเซ็ตรหัสผ่านของ " + empName ,
                 text: "ต้องการรีเซ็ตรหัสผ่านของ " + empName + " ใช่หรือไม่",
@@ -564,7 +564,7 @@
             function () {
                 $.ajax({
                     type: "PUT",
-                    url: "${contextPath}/employee/",
+                    url: "${contextPath}/employee/resetpassword/"+empNo,
                     success: function (result) {
                         swal("สำเร็จ", "รหัสผ่านของ " + empName + " ถูกรีเซ็ตเรียบร้อยแล้ว", "success");
                         refresh_table();
@@ -586,7 +586,6 @@
                 var data_array = [];
                 for (var iterator = 0; iterator < json.length; iterator++) {
                     var emp_obj = json[iterator];
-                    console.log(emp_obj);
                     var pay_order = emp_obj.payType == '${Employee.HOUR}' ? (emp_obj.pay * 800 + "") : (emp_obj.pay * 100 + "");
                     for (var i = pay_order.length; i < 20; i++) {
                         pay_order = "0" + pay_order;
@@ -604,7 +603,7 @@
                             display: pay_format + ' บาท / ' + (emp_obj.payType == '${Employee.HOUR}' ? 'ชั่วโมง' : 'วัน'),
                             order: pay_order
                         },
-                        empNo: (!emp_obj.branchUser ? '<a onclick="resent(' + emp_obj.empNo + ')" class="btn btn-info btn-sm"><i class="fa fa-envelope"></i>&nbsp; ส่งซ้ำ</a>' : '<a onclick="resetpassword(\'' + emp_obj.empName + '\',\'' + emp_obj.username + '\')" class="btn btn-dark btn-sm"><i class="fa fa-undo"></i>&nbsp; รีเซ็ต</a>') +
+                        empNo: (!emp_obj.branchUser ? '<a onclick="resent(' + emp_obj.empNo + ')" class="btn btn-info btn-sm"><i class="fa fa-envelope"></i>&nbsp; ส่งซ้ำ</a>' : '<a onclick="resetpassword('+emp_obj.empNo+',\'' + emp_obj.empName + '\')" class="btn btn-dark btn-sm"><i class="fa fa-undo"></i>&nbsp; รีเซ็ต</a>') +
                         '<a onclick="editEmp(' + emp_obj.empNo + ')" class="btn btn-warning btn-sm" data-toggle="modal" data-target="#editEmp"><i class="fa fa-pencil"></i>&nbsp; แก้ไข </a>' +
                         '<a onclick="delEmp(' + emp_obj.empNo + ',\'' + emp_obj.empName + '\')" class="btn btn-danger btn-sm"> <i class="fa fa-trash"></i>&nbsp; ลบ</a>'
                     };

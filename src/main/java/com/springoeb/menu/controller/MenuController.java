@@ -51,7 +51,6 @@ public class MenuController {
     private MenuMaterialService menuMaterialService;
 
     private static final String MENU_PATH = "/WEB-INF/menu/";
-//    private static final String UPLOADED_FOLDER = "/src/main/webapp/images/";
 
     //-----------------------------------------------------------------------------------------------------------//
     @GetMapping("/menu")
@@ -125,7 +124,7 @@ public class MenuController {
                     }
                 }
                 //pic path before change
-                String filename = System.currentTimeMillis() + file.getOriginalFilename();
+                String filename = System.currentTimeMillis() + file.getOriginalFilename().substring(file.getOriginalFilename().lastIndexOf('.'));
                 Path path = Paths.get(request.getServletContext().getRealPath("/images") + "/menu/" + filename);
                 Files.write(path, bytes);
                 menu.setMenuPicPath(filename);
@@ -310,7 +309,7 @@ public class MenuController {
                     }
                 }
                 //pic path before change
-                String filename = System.currentTimeMillis() + file.getOriginalFilename();
+                String filename = System.currentTimeMillis() + file.getOriginalFilename().substring(file.getOriginalFilename().lastIndexOf('.'));
                 Path path = Paths.get(request.getServletContext().getRealPath("/images") + "/menuset/" + filename);
                 Files.write(path, bytes);
                 menuSet.setMenuPicPath(filename);

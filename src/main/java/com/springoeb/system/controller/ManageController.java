@@ -111,8 +111,62 @@ public class ManageController {
         return target;
     }
 
+    @GetMapping("/reset")
+    public String reset(Model model,HttpServletRequest request) {
+        String target = "/WEB-INF/setuser.jsp";
+        String bcryptUsername = request.getParameter("apiKey");
+        BCryptPasswordEncoder bCryptPasswordEncoder = new BCryptPasswordEncoder();
+        List<BranchUser> branchUsers = branchUserService.findAll();
+        String username = null;
+        Integer userNo = null;
+        for (BranchUser branchUser : branchUsers) {
+            if (bCryptPasswordEncoder.matches(branchUser.getUsername(),bcryptUsername)) {
+                username = branchUser.getUsername();
+                userNo = branchUser.getBranchUserNo();
+                break;
+            }
+        }
+
+        if(username != null && userNo != null) {
+            model.addAttribute("username", username);
+            model.addAttribute("userNo", userNo);
+            model.addAttribute("reset",true);
+        }else {
+            target = "/404error.jsp";
+        }
+        return target;
+    }
+
     @GetMapping("/registeremp")
     public String registerEmp(Model model,HttpServletRequest request) {
+        String target = "/WEB-INF/setuser.jsp";
+        String apiKey = request.getParameter("apiKey");
+        BCryptPasswordEncoder bCryptPasswordEncoder = new BCryptPasswordEncoder();
+        List<Employee> employees = employeeService.findAll();
+        boolean pass = false;
+        Integer empNo = null;
+        for (Employee employee : employees) {
+            if (bCryptPasswordEncoder.matches(employee.getEmpNo() + "|" + employee.getEmpName() + "|" + employee.getEmail(),apiKey)) {
+                pass = true;
+                empNo = employee.getEmpNo();
+                break;
+            }
+        }
+
+        if(pass && branchUserService.findByEmpNo(empNo) != null){
+            pass = false;
+        }
+
+        if(pass) {
+            model.addAttribute("empNo", empNo);
+        }else {
+            target = "/404error.jsp";
+        }
+        return target;
+    }
+
+    @GetMapping("/resetemp")
+    public String resetEmp(Model model,HttpServletRequest request) {
         String target = "/WEB-INF/setuser.jsp";
         String apiKey = request.getParameter("apiKey");
         BCryptPasswordEncoder bCryptPasswordEncoder = new BCryptPasswordEncoder();

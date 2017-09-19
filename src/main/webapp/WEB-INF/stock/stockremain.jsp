@@ -405,7 +405,6 @@
             $(".for_inc_sub").css('display','none');
             $(".for_inc_sub :input").attr('disabled',true);
         }
-
     }
 
     $(".depend-field").on('change keyup', function () {
@@ -413,7 +412,7 @@
         var dec = $("#update_dec_pack").val() * $("#update_dec_quantity").val();
         var result = "";
         if (inc > 0) {
-            result += "เพิ่ม" + $("#show_mat_item_name_for_update").html() + " จำนวน " + inc + " " + $(".unit").eq(0).html();
+            result += "<div class='col-md-offset-2 col-md-3' style='text-align:left;'>เพิ่ม" + $("#show_mat_item_name_for_update").html() + "</div><div class='col-md-offset-1 col-md-4' style='text-align:left;'> จำนวน " + inc + " " + $(".unit").eq(0).html() + "</div>";
             $("#for_inc").css('display', '');
             if($(".for_inc_sub").css('display') == 'none') {
                 $(".for_inc_sub :input").attr('disabled',true);
@@ -429,7 +428,7 @@
             if (inc > 0) {
                 result += "<br>";
             }
-            result += "ลด" + $("#show_mat_item_name_for_update").html() + " จำนวน " + dec + " " + $(".unit").eq(0).html();
+            result += "<div class='col-md-offset-2 col-md-3' style='text-align:left;'>ลด" + $("#show_mat_item_name_for_update").html() + "</div><div class='col-md-offset-1 col-md-4' style='text-align:left;'> จำนวน " + dec + " " + $(".unit").eq(0).html() + "</div>";
         }
 
         $("#update_result").html(result);
