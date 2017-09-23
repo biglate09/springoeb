@@ -144,7 +144,7 @@
                                                                id="discount"
                                                                placeholder="ใส่เปอร์เซ็นต์ในการลดราคา 0 - 100"
                                                                required>
-                                                        <span class="fa fa-clock-o form-control-feedback right"
+                                                        <span class="fa fa-percent form-control-feedback right"
                                                               aria-hidden="true"></span>
                                                     </div>
                                                     <div class="col-md-12 col-sm-12 col-xs-12 form-group has-feedback">
@@ -289,7 +289,7 @@
         if (!hascard) {
             $("#error_show").html('\
                     <div class="well col-md-12" style="overflow: auto">\
-                        <p style="text-align:center;font-weight:bold;">ไม่พบข้อมูลเมนูอาหารแบบชุด' + (input == '' ? '' : 'ด้วยคำค้นหา ' + '"' + input + '"') + '</p>\
+                        <p style="text-align:center;font-weight:bold;">ไม่พบข้อมูลโปรโมชั่น' + (input == '' ? '' : 'ด้วยคำค้นหา ' + '"' + input + '"') + '</p>\
                     </div>\
                     ');
         } else {
@@ -374,7 +374,7 @@
             processData: false,
             url: "${contextPath}/promotion/managepromotion",
             success: function (result) {
-                swal("สำเร็จ", "โปรโมชั่นถูกเพิ่มเรียบร้อยแล้ว", "success");
+                swal("สำเร็จ", "โปรโมชั่นถูก"+($("#promotionNo").val() == '' ? 'เพิ่ม' : 'แก้ไข')+"เรียบร้อยแล้ว", "success");
                 reset_field();
                 $("#promotion_modal").modal('toggle');
                 refresh_table();
@@ -441,7 +441,7 @@
                 } else {
                     $("#error_show").html('\
                     <div class="well col-md-12" style="overflow: auto">\
-                        <p style="text-align:center;font-weight:bold;"> ไม่พบข้อมูลเมนูอาหารแบบชุด </p>\
+                        <p style="text-align:center;font-weight:bold;"> ไม่พบข้อมูลโปรโมชั่น </p>\
                     </div>\
                     ');
                 }

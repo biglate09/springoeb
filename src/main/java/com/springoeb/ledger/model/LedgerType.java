@@ -1,9 +1,9 @@
 package com.springoeb.ledger.model;
 
-import javax.persistence.Entity;
-import javax.persistence.GeneratedValue;
-import javax.persistence.GenerationType;
-import javax.persistence.Id;
+import com.fasterxml.jackson.annotation.JsonIgnore;
+
+import javax.persistence.*;
+import java.util.List;
 
 @Entity
 public class LedgerType {
@@ -13,6 +13,10 @@ public class LedgerType {
     private String ledgerTypeName;
     private boolean defaultType;
     private int ledgerPayNo;
+
+    @JsonIgnore
+    @OneToMany(fetch = FetchType.LAZY, mappedBy = "ledgerType")
+    private List<Ledger> ledgers;
 
     public static int INCOME = 1;
     public static int EXPENSE = 2;
