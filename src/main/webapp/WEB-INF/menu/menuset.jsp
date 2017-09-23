@@ -11,7 +11,7 @@
     <style>
         .foodDesc {
             width: 100%;
-            height: 60%;
+            height: 43%;
             overflow-y: scroll;
             margin-top: 10px;
             margin-bottom: 10px;
@@ -600,8 +600,9 @@
                         list += '</div>\
                             </div>\
                             <div class="col-md-7"> <span style="font-weight:bold;">ราคา</span> ' + menu.menuPrice.toFixed(2).replace(/\B(?=(\d{3})+(?!\d))/g, ",") + ' บาท</div>\
-                            <div class="col-md-5" style="text-align:right;">\
-                            <div class="panel_menuset">\
+                            <p class="col-md-12 description" style="white-space:nowrap;overflow:hidden;text-overflow: ellipsis;" >'+ "รายละเอียด : " + menu.menuDesc +'</p>\
+                            <div class="col-md-5" style="text-align:right;position:absolute;right:5px;bottom:0px;">\
+                            <div class="panel_menuset" >\
                             ' + (menu.localFlag == 0 && ${branchUser.branchNo != Branch.MAIN_BRANCH} ? '' : '<a title="แก้ไข" style="color:#73879C;cursor:pointer;margin-right:5px;" data-toggle="modal" data-target="#editMenuSet" onclick="set_menuset(' + menu.menuNo + ')"><i class="fa fa-pencil"></i></a>') + '\
                             ' + (menu.localFlag != 0 && ${branchUser.branchNo == Branch.MAIN_BRANCH} ? ('<a title="ทำให้เป็นเมนูของทุกสาขา" onclick="turn_official(' + menu.menuNo + ')" style="color:#73879C;cursor:pointer;margin-right:5px;"><i class="fa fa-users"></i></a>') : '') + '\
                             <a title="เมนูนี้' + (obj.available == true ? '' : 'ไม่' ) + 'พร้อมจำหน่าย คลิกเพื่อเปลี่ยน" onclick="change_available(' + menu.menuNo + ')" style="color:#73879C;cursor:pointer;margin-right:5px;"><i class="fa ' + (obj.available == true ? 'fa-check-square-o' : 'fa-square-o' ) + '"></i></a>\
@@ -702,8 +703,9 @@
                             list += '</div>\
                             </div>\
                             <div class="col-md-7"> <span style="font-weight:bold;">ราคา</span> ' + menu.menuPrice.toFixed(2).replace(/\B(?=(\d{3})+(?!\d))/g, ",") + ' บาท</div>\
-                            <div class="col-md-5" style="text-align:right;">\
-                            <div class="panel_menuset">\
+                            <p class="col-md-12 description" style="white-space:nowrap;overflow:hidden;text-overflow: ellipsis;" >'+ "รายละเอียด : " + menu.menuDesc +'</p>\
+                            <div class="col-md-5" style="text-align:right;position:absolute;right:5px;bottom:0px;">\
+                            <div class="panel_menuset" >\
                             <a title="ทำให้เป็นเมนูของทุกสาขา" onclick="turn_official(' + menu.menuNo + ')" style="color:#73879C;cursor:pointer;margin-right:5px;"><i class="fa fa-users"></i></a>\
                             </div>\
                             </div>\

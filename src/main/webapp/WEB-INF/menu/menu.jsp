@@ -496,6 +496,7 @@
         $("#displayThumbnail").click(function () {
             $("#menu_thumbnail_list").css('display', 'none');
             $("#menu_thumbnail").css('display', '');
+            $('.pagination').css('display', 'none');
             $("#filter_by_category").css('visibility', '');
             $("#myInput").parent().css('visibility', '');
             refresh_table();
@@ -504,6 +505,7 @@
         $("#displayTable").click(function () {
             $("#menu_thumbnail_list").css('display', '');
             $("#menu_thumbnail").css('display', 'none');
+            $('.pagination').css('display', '');
             $("#filter_by_category").css('visibility', '');
 //            $("#filter_by_category").val(0);
             $("#myInput").parent().css('visibility', '');
@@ -586,7 +588,7 @@
                         <img style="height: 100%; display: block;margin:auto;" src="' + (menu.menuPicPath != null ? ('../images/menu/' + menu.menuPicPath) : ('../images/default_upload_image.png')) + '" alt="image"/>\
                         <div class="mask" style="height:100%">\
                         <p style="white-space: nowrap;overflow:hidden;text-overflow: ellipsis;">' + (menu.menuDesc == '' || menu.menuDesc == null ? 'ไม่มีรายละเอียด' : menu.menuDesc) + '</p>\
-                        <div class="tools tools-bottom" style="margin: 110px 0 0;">\
+                        <div class="tools tools-bottom" style="margin: 100px 0 0;">\
                         <a title="เมนูของทุกสาขา" style="color:white;margin-right:5px;"><i class="fa ' + (menu.localFlag == 0 ? 'fa-users' : 'fa-user' ) + '"></i> <span style="font-size:14px">' + (menu.localFlag == 0 ? ' เป็นเมนูของทุกสาขา' : ' เป็นเมนูเฉพาะสาขานี้') + '</span></a>\
                         </div>\
                         </div>\
