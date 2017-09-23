@@ -13,9 +13,11 @@ import java.util.List;
 @Repository
 public interface WorkHistoryRepository extends CrudRepository<WorkHistory,Integer>{
     WorkHistory findByWorkHistNoAndEmployee_BranchNo(int workHistNo, int branchNo);
+    List<WorkHistory> findByEmpNo(int empNo);
     List<WorkHistory> findByEmployee_BranchNoAndWorkPayIsNotNullOrderByWorkDateDescWorkHistNoDesc(int branchNo);
     List<WorkHistory> findByEmployee_BranchNoAndEmployee_EmpNo(int branchNo,int empNo);
     List<WorkHistory> findByWorkDate(Date date);
     List<WorkHistory> findByWorkDateBetween(Date d1, Date d2);
+    List<WorkHistory> findByEmpNoAndWorkDateBetween(int empNo,Date d1, Date d2);
     void removeByWorkHistNoAndEmployee_BranchNo(int workHistNo,int branchNo);
 }

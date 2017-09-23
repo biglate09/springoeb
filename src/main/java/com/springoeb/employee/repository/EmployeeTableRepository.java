@@ -17,7 +17,9 @@ public interface EmployeeTableRepository extends CrudRepository<EmployeeTable,In
     List<EmployeeTable> findAllByEmpPosNo(int empPosNo);
     List<EmployeeTable> findAllByEmployee_BranchNoAndDateAndTimeStartBeforeAndTimeEndAfter(int branchNo, Date date , Time startTime, Time endTime);
     List<EmployeeTable> findAllByEmployee_BranchNoAndDate(int branchNo, Date date);
+    List<EmployeeTable> findAllByEmployee_BranchNoAndDateAndEmpNo(int branchNo, Date date,int empNo);
     List<EmployeeTable> findAllByEmployee_BranchNoAndEmpNoAndDateAndTimeStartBeforeAndTimeEndAfter(int branchNo,int empNo,Date date,Time startTime,Time endTime);
     List<EmployeeTable> findAllByDate(Date date);
+    List<EmployeeTable> findByEmpNo(int empNo);
     void removeByEmpTimeNoAndEmployee_BranchNo(int empTimeNo, int branchNo);
 }

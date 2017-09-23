@@ -32,6 +32,10 @@ public class WorkHistoryService {
         return workHistoryRepository.findByWorkDateBetween(date1,date2);
     }
 
+    public List<WorkHistory> findByEmpNoAndWorkDate(int empNo,Date date1,Date date2){
+        return workHistoryRepository.findByEmpNoAndWorkDateBetween(empNo,date1,date2);
+    }
+
     public void removeByWorkHist(int workHistNo,int branchNo){
         workHistoryRepository.removeByWorkHistNoAndEmployee_BranchNo(workHistNo,branchNo);
     }
@@ -51,5 +55,9 @@ public class WorkHistoryService {
             sum += wh.getWorkPay();
         }
         return sum;
+    }
+
+    public List<WorkHistory> findByEmpNo(int empNo){
+        return workHistoryRepository.findByEmpNo(empNo);
     }
 }

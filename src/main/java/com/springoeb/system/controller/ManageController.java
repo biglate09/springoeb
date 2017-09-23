@@ -254,4 +254,14 @@ public class ManageController {
         String json = mapper.writeValueAsString(subDistrict);
         return json;
     }
+
+    @GetMapping("/blankkitchen")
+    public String toBlankKitchen() {
+        return "/blank.jsp";
+    }
+
+    @GetMapping("/blankcashier")
+    public String toBlankCashier() {
+        return "/blank.jsp";
+    }
 }

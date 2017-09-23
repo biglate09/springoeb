@@ -5,6 +5,7 @@ import com.fasterxml.jackson.databind.ObjectMapper;
 import com.springoeb.employee.model.*;
 import com.springoeb.employee.service.*;
 import com.springoeb.system.model.BranchUser;
+import com.springoeb.system.model.Role;
 import com.springoeb.system.service.EmailService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
@@ -57,7 +58,7 @@ public class EmployeeController {
     @Transactional
     @PostMapping("/manageemployee")
     public void addAndEditEmployee(@ModelAttribute("employee") Employee employee, HttpSession session, HttpServletRequest request, HttpServletResponse response) throws Exception {
-        int branchNo = ((BranchUser)(session.getAttribute("branchUser"))).getBranchNo();
+        int branchNo = ((BranchUser) (session.getAttribute("branchUser"))).getBranchNo();
         employee.setBranchNo(branchNo);
         boolean isAdd = (employee.getEmpNo() == null);
         boolean isDuplicate = true;
@@ -71,13 +72,13 @@ public class EmployeeController {
             }
         }
 
-        if(!isDuplicate) {
+        if (!isDuplicate) {
             employee = employeeService.save(employee);
             if (isAdd) {
                 String subject = "[ระบบ OrderEatBill] ตั้งค่าการลงชื่อเข้าใช้ระบบใบฐานะพนักงานร้านอาหาร";
                 String token = getBcrypt(employee.getEmpNo() + "|" + employee.getEmpName() + "|" + employee.getEmail());
                 String msg = "กรุณาคลิกลิงก์ด้านล่างเพื่อสร้าง บัญชีผู้ใช้ในการใช้งานระบบ\n" +
-                        "ตำแหน่ง : พนักงานร้านอาหารของสาขา " + ((BranchUser)(session.getAttribute("branchUser"))).getBranch().getBranchName() + "\n" +
+                        "ตำแหน่ง : พนักงานร้านอาหารของสาขา " + ((BranchUser) (session.getAttribute("branchUser"))).getBranch().getBranchName() + "\n" +
                         "ชื่อ : " + employee.getEmpName() + "\n" +
                         request.getScheme() + "://" + request.getServerName() + ":" + request.getServerPort() + request.getContextPath() + "/system/registeremp?apiKey=" + URLEncoder.encode(token, "UTF-8");
                 emailService.sendMail(employee.getEmail(), subject, msg);
@@ -85,10 +86,10 @@ public class EmployeeController {
         }
     }
 
-    private String getBcrypt(String username){
+    private String getBcrypt(String username) {
         BCryptPasswordEncoder bCryptPasswordEncoder = new BCryptPasswordEncoder();
         String bCrypt = bCryptPasswordEncoder.encode(username);
-        if(bCrypt.endsWith(".")){
+        if (bCrypt.endsWith(".")) {
             bCrypt = bCryptPasswordEncoder.encode(username);
         }
         return bCrypt;
@@ -97,9 +98,9 @@ public class EmployeeController {
     @Transactional
     @PostMapping("/confirmresent/{empNo}")
     @ResponseBody
-    public String confirmResent(@PathVariable("empNo") int empNo,HttpSession session) throws JsonProcessingException {
-        int branchNo = ((BranchUser)(session.getAttribute("branchUser"))).getBranchNo();
-        Employee employee = employeeService.findByEmpNoAndBranchNo(empNo,branchNo);
+    public String confirmResent(@PathVariable("empNo") int empNo, HttpSession session) throws JsonProcessingException {
+        int branchNo = ((BranchUser) (session.getAttribute("branchUser"))).getBranchNo();
+        Employee employee = employeeService.findByEmpNoAndBranchNo(empNo, branchNo);
         ObjectMapper mapper = new ObjectMapper();
         String json = mapper.writeValueAsString(employee);
         return json;
@@ -110,15 +111,15 @@ public class EmployeeController {
     @ResponseBody
     public void resent(HttpServletRequest request, HttpSession session) throws UnsupportedEncodingException {
         String email = request.getParameter("email");
-        int branchNo = ((BranchUser)(session.getAttribute("branchUser"))).getBranchNo();
+        int branchNo = ((BranchUser) (session.getAttribute("branchUser"))).getBranchNo();
         int empNo = Integer.parseInt(request.getParameter("empNo"));
-        Employee employee = employeeService.findByEmpNoAndBranchNo(empNo,branchNo);
+        Employee employee = employeeService.findByEmpNoAndBranchNo(empNo, branchNo);
         employee.setEmail(email);
         employee = employeeService.save(employee);
         String subject = "[ระบบ OrderEatBill] ตั้งค่าการลงชื่อเข้าใช้ระบบใบฐานะพนักงานร้านอาหาร";
         String token = getBcrypt(employee.getEmpNo() + "|" + employee.getEmpName() + "|" + employee.getEmail());
         String msg = "กรุณาคลิกลิงก์ด้านล่างเพื่อสร้าง บัญชีผู้ใช้ในการใช้งานระบบ\n" +
-                "ตำแหน่ง : พนักงานร้านอาหารของสาขา " + ((BranchUser)(session.getAttribute("branchUser"))).getBranch().getBranchName() + "\n" +
+                "ตำแหน่ง : พนักงานร้านอาหารของสาขา " + ((BranchUser) (session.getAttribute("branchUser"))).getBranch().getBranchName() + "\n" +
                 "ชื่อ : " + employee.getEmpName() + "\n" +
                 request.getScheme() + "://" + request.getServerName() + ":" + request.getServerPort() + request.getContextPath() + "/system/registeremp?apiKey=" + URLEncoder.encode(token, "UTF-8");
         emailService.sendMail(employee.getEmail(), subject, msg);
@@ -127,14 +128,14 @@ public class EmployeeController {
     @Transactional
     @GetMapping("/deleteemployee/{empNo}")
     public void delEmployee(@PathVariable("empNo") int empNo, HttpSession session, HttpServletRequest request, HttpServletResponse response) throws IOException {
-        int branchNo = ((BranchUser)(session.getAttribute("branchUser"))).getBranchNo();
+        int branchNo = ((BranchUser) (session.getAttribute("branchUser"))).getBranchNo();
         employeeService.removeByEmpNoAndBranchNo(empNo, branchNo);
     }
 
     @GetMapping("/ajax/getemployee/{empNo}")
     @ResponseBody
     public String getEmployee(@PathVariable("empNo") int empNo, HttpSession session) throws JsonProcessingException {
-        int branchNo = ((BranchUser)(session.getAttribute("branchUser"))).getBranchNo();
+        int branchNo = ((BranchUser) (session.getAttribute("branchUser"))).getBranchNo();
         Employee employee = employeeService.findByEmpNoAndBranchNo(empNo, branchNo);
         ObjectMapper mapper = new ObjectMapper();
         String json = mapper.writeValueAsString(employee);
@@ -144,7 +145,7 @@ public class EmployeeController {
     @PostMapping("/ajax/getemployees")
     @ResponseBody
     public String getJsonEmployees(HttpSession session) throws JsonProcessingException {
-        int branchNo = ((BranchUser)(session.getAttribute("branchUser"))).getBranchNo();
+        int branchNo = ((BranchUser) (session.getAttribute("branchUser"))).getBranchNo();
         List<Employee> employee = employeeService.findByBranchNo(branchNo);
         ObjectMapper mapper = new ObjectMapper();
         String json = mapper.writeValueAsString(employee);
@@ -154,13 +155,13 @@ public class EmployeeController {
     @Transactional
     @PutMapping("/resetpassword/{empNo}")
     @ResponseBody
-    public void resetPassword(@PathVariable("empNo") int empNo,HttpServletRequest request,HttpSession session) throws UnsupportedEncodingException {
+    public void resetPassword(@PathVariable("empNo") int empNo, HttpServletRequest request, HttpSession session) throws UnsupportedEncodingException {
         Employee employee = employeeService.findByEmpNo(empNo);
         BranchUser branchUser = employee.getBranchUser();
         String subject = "[ระบบ OrderEatBill] ตั้งค่าการลงชื่อเข้าใช้ระบบใบฐานะพนักงานร้านอาหาร";
         String token = getBcrypt(branchUser.getUsername());
         String msg = "กรุณาคลิกลิงก์ด้านล่างเพื่อสร้าง บัญชีผู้ใช้ในการใช้งานระบบ\n" +
-                "ตำแหน่ง : พนักงานร้านอาหารของสาขา " + ((BranchUser)(session.getAttribute("branchUser"))).getBranch().getBranchName() + "\n" +
+                "ตำแหน่ง : พนักงานร้านอาหารของสาขา " + ((BranchUser) (session.getAttribute("branchUser"))).getBranch().getBranchName() + "\n" +
                 "ชื่อ : " + employee.getEmpName() + "\n" +
                 request.getScheme() + "://" + request.getServerName() + ":" + request.getServerPort() + request.getContextPath() + "/system/reset?apiKey=" + URLEncoder.encode(token, "UTF-8");
         emailService.sendMail(employee.getEmail(), subject, msg);
@@ -175,7 +176,7 @@ public class EmployeeController {
 
     @PostMapping("/manageemployeeposition")
     public void addAndEditPosition(@ModelAttribute("employeePosition") EmployeePosition employeePosition, HttpServletRequest request, HttpServletResponse response, HttpSession session) throws Exception {
-        int branchNo = ((BranchUser)(session.getAttribute("branchUser"))).getBranchNo();
+        int branchNo = ((BranchUser) (session.getAttribute("branchUser"))).getBranchNo();
         if (!employeePositionService.chkDuplicateEmpPosisitonName(employeePosition.getEmpPosName())) {
             employeePositionService.save(employeePosition);
         } else {
@@ -212,7 +213,7 @@ public class EmployeeController {
 
     @RequestMapping("/workhistory")
     public String toEmployeeWorkHistory(Model model, HttpSession session) {
-        int branchNo = ((BranchUser)(session.getAttribute("branchUser"))).getBranchNo();
+        int branchNo = ((BranchUser) (session.getAttribute("branchUser"))).getBranchNo();
         List<Employee> employees = employeeService.findByBranchNo(branchNo);
         model.addAttribute("employees", employees);
         return EMP_PATH + "empworkhist.jsp";
@@ -220,7 +221,7 @@ public class EmployeeController {
 
     @PostMapping("/manageworkhistory")
     public void save(HttpServletResponse response, HttpServletRequest request, HttpSession session) throws IOException, ParseException {
-        int branchNo = ((BranchUser)(session.getAttribute("branchUser"))).getBranchNo();
+        int branchNo = ((BranchUser) (session.getAttribute("branchUser"))).getBranchNo();
         List<WorkHistory> workHistories = new ArrayList<WorkHistory>();
         String stWorkDate = request.getParameter("workDate");
         String stEmpNos[] = request.getParameterValues("empNo");
@@ -238,7 +239,7 @@ public class EmployeeController {
             double pay = employee.getPay();
             int workHour = 0;
             int workMinute = 0;
-            if(stWorkHours[i] != null && !stWorkHours[i].equals("")){
+            if (stWorkHours[i] != null && !stWorkHours[i].equals("")) {
                 workHour = Integer.parseInt(stWorkHours[i]);
             }
             if (stWorkMinutes[i] != null && !stWorkMinutes[i].equals("")) {
@@ -270,16 +271,17 @@ public class EmployeeController {
     @Transactional
     @GetMapping("/deleteworkhistory/{workHistNo}")
     public void removeByWorkHistNo(@PathVariable("workHistNo") int workHistNo, HttpServletResponse response, HttpServletRequest request, HttpSession session) throws IOException {
-        int branchNo = ((BranchUser)(session.getAttribute("branchUser"))).getBranchNo();
+        int branchNo = ((BranchUser) (session.getAttribute("branchUser"))).getBranchNo();
         workHistoryService.removeByWorkHist(workHistNo, branchNo);
         response.sendRedirect(request.getContextPath() + "/employee/workhistory");
     }
 
     @PostMapping("/ajax/getworkhistories")
     @ResponseBody
-    public String getJsonWorkHistories(HttpSession session) throws JsonProcessingException {
-        int branchNo = ((BranchUser)(session.getAttribute("branchUser"))).getBranchNo();
-        List<WorkHistory> workHistories = workHistoryService.findAll(branchNo);
+    public String getJsonWorkHistories(HttpSession session, HttpServletRequest request) throws JsonProcessingException {
+        int branchNo = ((BranchUser) (session.getAttribute("branchUser"))).getBranchNo();
+        String empNo = request.getParameter("empNo");
+        List<WorkHistory> workHistories = (empNo == null || empNo.equals("") ? workHistoryService.findAll(branchNo) : workHistoryService.findByEmpNo(Integer.parseInt(empNo)));
         for (WorkHistory wh : workHistories) {
             wh.setEmpName(wh.getEmployee().getEmpName());
         }
@@ -291,7 +293,7 @@ public class EmployeeController {
     @GetMapping("/ajax/getworkhistory/{workHistNo}")
     @ResponseBody
     public String getJsonWorkHistories(@PathVariable("workHistNo") int workHistNo, HttpSession session) throws JsonProcessingException {
-        int branchNo = ((BranchUser)(session.getAttribute("branchUser"))).getBranchNo();
+        int branchNo = ((BranchUser) (session.getAttribute("branchUser"))).getBranchNo();
         WorkHistory workHistory = workHistoryService.getWorkHistory(workHistNo, branchNo);
         ObjectMapper mapper = new ObjectMapper();
         String json = mapper.writeValueAsString(workHistory);
@@ -301,7 +303,7 @@ public class EmployeeController {
     @PostMapping("/ajax/smartgenworkhistory")
     @ResponseBody
     public String smartGenWorkHistory(HttpSession session, HttpServletRequest request, HttpServletResponse response) throws JsonProcessingException {
-        int branchNo = ((BranchUser)(session.getAttribute("branchUser"))).getBranchNo();
+        int branchNo = ((BranchUser) (session.getAttribute("branchUser"))).getBranchNo();
         Date d = Date.valueOf(request.getParameter("date"));
         List<WorkHistory> workHistories = workHistoryService.findByWorkDate(d);
         List<EmployeeTable> employeeTables = employeeTableService.findAllByDate(d);
@@ -324,12 +326,13 @@ public class EmployeeController {
     @PostMapping("/ajax/filterworkhistory")
     @ResponseBody
     public String filterWorkByDate(HttpSession session, HttpServletRequest request, HttpServletResponse response) throws JsonProcessingException {
+        String empNo = request.getParameter("empNo");
         String filterDate = request.getParameter("filterdate");
         String fromddmmyyyy = filterDate.substring(0, 10);
         String toddmmyyyy = filterDate.substring(13, 23);
         Date fromDate = Date.valueOf(fromddmmyyyy.substring(6, 10) + "-" + fromddmmyyyy.substring(3, 5) + "-" + fromddmmyyyy.substring(0, 2));
         Date toDate = Date.valueOf(toddmmyyyy.substring(6, 10) + "-" + toddmmyyyy.substring(3, 5) + "-" + toddmmyyyy.substring(0, 2));
-        List<WorkHistory> workHistories = workHistoryService.findByWorkDate(fromDate, toDate);
+        List<WorkHistory> workHistories = (empNo == null || empNo.equals("") ? workHistoryService.findByWorkDate(fromDate, toDate) : workHistoryService.findByEmpNoAndWorkDate(Integer.parseInt(empNo),fromDate,toDate));
         for (WorkHistory wh : workHistories) {
             wh.setEmpName(wh.getEmployee().getEmpName());
         }
@@ -341,7 +344,7 @@ public class EmployeeController {
 
     @RequestMapping("/pay")
     public String toEmployeePayIndex(Model model, HttpSession session) {
-        int branchNo = ((BranchUser)(session.getAttribute("branchUser"))).getBranchNo();
+        int branchNo = ((BranchUser) (session.getAttribute("branchUser"))).getBranchNo();
         List<Employee> employees = employeeService.findByBranchNo(branchNo);
         model.addAttribute("employees", employees);
         return EMP_PATH + "/emppaid.jsp";
@@ -350,7 +353,7 @@ public class EmployeeController {
     @PostMapping("/payforemp")
     public void pay(Model model, HttpServletRequest request, HttpServletResponse response, HttpSession session) throws Exception {
         int empNo = Integer.parseInt(request.getParameter("empNo"));
-        int branchNo = ((BranchUser)(session.getAttribute("branchUser"))).getBranchNo();
+        int branchNo = ((BranchUser) (session.getAttribute("branchUser"))).getBranchNo();
         double pay = Double.parseDouble(request.getParameter("pay"));
 //        double remainPay = workHistoryService.getWorkSum(branchNo, empNo) - employeePayService.getPaySum(branchNo, empNo);
 //        if (pay <= remainPay) {
@@ -367,13 +370,19 @@ public class EmployeeController {
 
     @RequestMapping("/table")
     public String toEmployeeTable(Model model, HttpSession session) {
-        int branchNo = ((BranchUser)(session.getAttribute("branchUser"))).getBranchNo();
-        List<EmployeeTable> employeeTables = employeeTableService.findAll(branchNo);
-        List<Employee> employees = employeeService.findByBranchNo(branchNo);
-        List<EmployeePosition> employeePositions = employeePositionService.findAll();
-        model.addAttribute("employees", employees);
-        model.addAttribute("employeePositions", employeePositions);
-        model.addAttribute("employeeTables", employeeTables);
+        BranchUser branchUser = (BranchUser) (session.getAttribute("branchUser"));
+        int branchNo = branchUser.getBranchNo();
+        if (branchUser.getRoleNo() == Role.EMPLOYEE) {
+            List<EmployeeTable> employeeTables = employeeTableService.findByEmpNo(branchUser.getEmpNo());
+            model.addAttribute("employeeTables", employeeTables);
+        } else {
+            List<EmployeeTable> employeeTables = employeeTableService.findAll(branchNo);
+            List<Employee> employees = employeeService.findByBranchNo(branchNo);
+            List<EmployeePosition> employeePositions = employeePositionService.findAll();
+            model.addAttribute("employees", employees);
+            model.addAttribute("employeePositions", employeePositions);
+            model.addAttribute("employeeTables", employeeTables);
+        }
         return EMP_PATH + "/emptable.jsp";
     }
 
@@ -409,7 +418,7 @@ public class EmployeeController {
     @Transactional
     @RequestMapping("/deletetable/{empTimeNo}")
     public void removeByEmpTimeNo(@PathVariable("empTimeNo") int empTimeNo, HttpServletRequest request, HttpServletResponse response, HttpSession session) throws IOException {
-        int branchNo = ((BranchUser)(session.getAttribute("branchUser"))).getBranchNo();
+        int branchNo = ((BranchUser) (session.getAttribute("branchUser"))).getBranchNo();
         employeeTableService.removeByEmpTimeNoAndBranchNo(empTimeNo, branchNo);
         response.sendRedirect(request.getContextPath() + "/employee/table");
     }
@@ -418,11 +427,16 @@ public class EmployeeController {
 
     @RequestMapping("/check")
     public String toEmployeeCheck(Model model, HttpSession session) {
-        int branchNo = ((BranchUser)(session.getAttribute("branchUser"))).getBranchNo();
+        BranchUser branchUser = ((BranchUser) (session.getAttribute("branchUser")));
+        int branchNo = branchUser.getBranchNo();
         Date date = new Date(System.currentTimeMillis());
-        Time time = new Time(System.currentTimeMillis());
-        List<EmployeeTable> employeeTables = employeeTableService.findEmployeeTableNow(branchNo, date);
-        model.addAttribute("employeeTables", employeeTables);
+        if(branchUser.getEmpNo() == null) {
+            List<EmployeeTable> employeeTables = employeeTableService.findEmployeeTableNow(branchNo, date);
+            model.addAttribute("employeeTables", employeeTables);
+        }else{
+            List<EmployeeTable> employeeTables = employeeTableService.findEmployeeTableNowByEmpNo(branchNo, date,branchUser.getEmpNo());
+            model.addAttribute("employeeTables", employeeTables);
+        }
         return EMP_PATH + "empcheck.jsp";
     }
 
@@ -442,10 +456,10 @@ public class EmployeeController {
     }
 
     @RequestMapping("/clockout")
-    public void clockOut(HttpServletRequest request, HttpServletResponse response,HttpSession session) throws IOException {
-        int branchNo = ((BranchUser)(session.getAttribute("branchUser"))).getBranchNo();
+    public void clockOut(HttpServletRequest request, HttpServletResponse response, HttpSession session) throws IOException {
+        int branchNo = ((BranchUser) (session.getAttribute("branchUser"))).getBranchNo();
         int workHistNo = Integer.parseInt(request.getParameter("workHistNo"));
-        WorkHistory workHistory = workHistoryService.getWorkHistory(workHistNo,branchNo);
+        WorkHistory workHistory = workHistoryService.getWorkHistory(workHistNo, branchNo);
         Employee employee = workHistory.getEmployee();
 
         Time workStart = workHistory.getWorkStart();
@@ -459,12 +473,12 @@ public class EmployeeController {
         int hourEnd = localWorkEnd.getHour();
         int minEnd = localWorkEnd.getMinute();
 
-        int hour = 0,minute = 0;
+        int hour = 0, minute = 0;
 
-        if(minEnd < minStart){
+        if (minEnd < minStart) {
             hour = hourEnd - hourStart - 1;
             minute = (60 - minStart) + minEnd;
-        }else{
+        } else {
             hour = hourEnd - hourStart;
             minute = minEnd - minStart;
         }
@@ -472,7 +486,7 @@ public class EmployeeController {
 
         double workPay = employee.getPay();
         if (employee.getPayType().equals(Employee.HOUR)) {
-            workPay = workPay * ( hour + ((minute*5)/300d) );
+            workPay = workPay * (hour + ((minute * 5) / 300d));
         }
 
         workHistory.setWorkEnd(workEnd);

@@ -1,6 +1,7 @@
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 <%@page contentType="text/html" pageEncoding="UTF-8" %>
 <%@ page import="com.springoeb.branch.model.Branch" %>
+<%@ page import="com.springoeb.system.model.Role" %>
 <c:set scope="page" var="contextPath" value="${pageContext.request.contextPath}"/>
 <div class="col-md-3 left_col">
     <div class="left_col scroll-view">
@@ -18,7 +19,8 @@
             </div>
             <div class="profile_info">
                 <span>ยินดีต้อนรับ,</span>
-                <h2 style="white-space:nowrap;overflow:hidden;text-overflow: ellipsis;margin-bottom:5px;">สาขา${branchUser.branch.branchName}</h2>
+                <h2 style="white-space:nowrap;overflow:hidden;text-overflow: ellipsis;margin-bottom:5px;">
+                    สาขา${branchUser.branch.branchName}</h2>
                 <h2 style="white-space:nowrap;overflow:hidden;text-overflow: ellipsis;">
                     (สาขาที่ ${branchUser.branch.branchNo})</h2>
             </div>
@@ -29,86 +31,124 @@
         <div id="sidebar-menu" class="main_menu_side hidden-print main_menu">
             <div class="menu_section">
                 <ul class="nav side-menu">
-                    <li>
-                        <a id="emptab"><i class="fa fa-users"></i> จัดการพนักงาน <span
-                                class="fa fa-chevron-down"></span></a>
-                        <ul class="nav child_menu">
-                            <li><a id="empdata" href="${contextPath}/employee/index">ข้อมูลพนักงาน</a></li>
-                            <li><a id="emppos" href="${contextPath}/employee/position">ตำแหน่งพนักงาน</a></li>
-                            <li><a id="emptable" href="${contextPath}/employee/table">ตารางการทำงาน</a></li>
-                            <li><a id="workhist" href="${contextPath}/employee/workhistory">ประวัติการทำงาน</a></li>
-                            <li><a id="emppaid" href="${contextPath}/employee/pay">จ่ายเงินพนักงาน</a></li>
-                            <li><a id="empcheck" href="${contextPath}/employee/check">เช็คชื่อพนักงาน</a></li>
-                        </ul>
-                    </li>
-                    <li>
-                        <a id="menutab"><i class="fa fa-cutlery"></i> จัดการเมนูอาหาร <span
-                                class="fa fa-chevron-down"></span></a>
-                        <ul class="nav child_menu">
-                            <li><a>ประเภทอาหาร<span class="fa fa-chevron-down"></span></a>
-                                <ul class="nav child_menu">
-                                    <li class="sub_menu"><a id="menucategory" href="${contextPath}/menu/menucategory">ประเภท</a>
+                    <c:if test="${branchUser.roleNo == Role.MANAGER || branchUser.roleNo == Role.EMPLOYEE}">
+                        <li>
+                            <a id="emptab"><i class="fa fa-users"></i> จัดการพนักงาน <span
+                                    class="fa fa-chevron-down"></span></a>
+                            <ul class="nav child_menu">
+                                <c:if test="${branchUser.roleNo == Role.MANAGER}">
+                                    <li><a id="empdata" href="${contextPath}/employee/index">ข้อมูลพนักงาน</a></li>
+                                    <li><a id="emppos" href="${contextPath}/employee/position">ตำแหน่งพนักงาน</a></li>
+                                </c:if>
+                                <li><a id="emptable" href="${contextPath}/employee/table">ตารางการทำงาน</a></li>
+                                <li><a id="workhist" href="${contextPath}/employee/workhistory">ประวัติการทำงาน</a></li>
+                                <c:if test="${branchUser.roleNo == Role.MANAGER}">
+                                    <li><a id="emppaid" href="${contextPath}/employee/pay">จ่ายเงินพนักงาน</a></li>
+                                </c:if>
+                                <li><a id="empcheck" href="${contextPath}/employee/check">เช็คชื่อพนักงาน</a></li>
+                            </ul>
+                        </li>
+                    </c:if>
+                    <c:if test="${branchUser.roleNo == Role.MANAGER}">
+                        <li>
+                            <a id="menutab"><i class="fa fa-cutlery"></i> จัดการเมนูอาหาร <span
+                                    class="fa fa-chevron-down"></span></a>
+                            <ul class="nav child_menu">
+                                <li><a>ประเภทอาหาร<span class="fa fa-chevron-down"></span></a>
+                                    <ul class="nav child_menu">
+                                        <li class="sub_menu"><a id="menucategory"
+                                                                href="${contextPath}/menu/menucategory">ประเภท</a>
+                                        </li>
+                                        <li class="sub_menu"><a id="menugroup"
+                                                                href="${contextPath}/menu/menugroup">หมวดหมู่</a></li>
+                                    </ul>
+                                </li>
+                                <li><a id="menu" href="${contextPath}/menu/menu">เมนูอาหารแบบเดี่ยว</a></li>
+                                <li><a id="menuset" href="${contextPath}/menu/menuset">เมนูอาหารแบบชุด</a></li>
+                            </ul>
+                        </li>
+                    </c:if>
+                    <c:if test="${branchUser.roleNo == Role.MANAGER || branchUser.roleNo == Role.EMPLOYEE}">
+                        <li>
+                            <a><i class="fa fa-spoon"></i> จัดการวัตถุดิบอาหาร <span class="fa fa-chevron-down"></span></a>
+                            <ul class="nav child_menu">
+                                <c:if test="${branchUser.roleNo == Role.MANAGER}">
+                                    <li><a id="materialcategory" href="${contextPath}/stock/materialcategory">ประเภทวัตถุดิบ</a>
                                     </li>
-                                    <li class="sub_menu"><a id="menugroup"
-                                                            href="${contextPath}/menu/menugroup">หมวดหมู่</a></li>
-                                </ul>
-                            </li>
-                            <li><a id="menu" href="${contextPath}/menu/menu">เมนูอาหารแบบเดี่ยว</a></li>
-                            <li><a id="menuset" href="${contextPath}/menu/menuset">เมนูอาหารแบบชุด</a></li>
-                        </ul>
-                    </li>
-                    <li>
-                        <a><i class="fa fa-spoon"></i> จัดการวัตถุดิบอาหาร <span class="fa fa-chevron-down"></span></a>
-                        <ul class="nav child_menu">
-                            <li><a id="materialcategory" href="${contextPath}/stock/materialcategory">ประเภทวัตถุดิบ</a>
-                            </li>
-                            <li><a id="materialunit" href="${contextPath}/stock/materialunit">หน่วยของวัตถุดิบ</a></li>
-                            <li><a id="material" href="${contextPath}/stock/materialitem">วัตถุดิบ</a></li>
-                            <li><a id="mixedproduct" href="${contextPath}/stock/mixedproduct">วัตถุดิบแบบผสม</a></li>
-                            <%--<li><a id="stockmanage" href="${contextPath}/stock/stockmanage">เพิ่ม / ลดวัตถุดิบ</a></li>--%>
-                            <li><a id="currentstock" href="${contextPath}/stock/stockremain">วัตถุดิบคงเหลือ</a></li>
-                        </ul>
-                    </li>
-                    <li>
-                        <a><i class="fa fa-tags"></i> จัดการโปรโมชั่น <span class="fa fa-chevron-down"></span></a>
-                        <ul class="nav child_menu">
-                            <li><a id="promotion" href="${contextPath}/promotion/promotion">โปรโมชั่นเมนูอาหาร</a></li>
-                            <%--<li><a id="api" href="${contextPath}/promotion/promotion">โฆษณาผ่าน API</a></li>--%>
-                        </ul>
-                    </li>
-                    <li>
-                        <a><i class="fa fa-table"></i> จัดการโต๊ะและการจอง <span class="fa fa-chevron-down"></span></a>
-                        <ul class="nav child_menu">
-                            <li><a id="table" href="${contextPath}/table/table">โต๊ะ</a></li>
-                            <li><a id="reservation" href="${contextPath}/table/reservation">การจอง</a></li>
-                        </ul>
-                    </li>
-                    <li>
-                        <a><i class="fa fa-home"></i> จัดการสาขาและสมาชิก <span class="fa fa-chevron-down"></span></a>
-                        <ul class="nav child_menu">
-                            <c:if test="${branchUser.branchNo == Branch.MAIN_BRANCH}">
-                                <li><a id="branches" href="${contextPath}/branch/branches">สาขาทั้งหมด</a></li>
-                            </c:if>
-                            <li><a id="mybranch" href="${contextPath}/branch/mybranch">สาขา${branchUser.branch.branchName}</a></li>
-                            <li><a id="member" href="${contextPath}/branch/member">สมาชิกของสาขา</a></li>
-                        </ul>
-                    </li>
-                    <li>
-                        <a><i class="fa fa-book"></i> จัดการบัญชี <span class="fa fa-chevron-down"></span></a>
-                        <ul class="nav child_menu">
-                            <li><a id="ledgertype" href="${contextPath}/ledger/ledgertype">ประเภทบัญชี</a></li>
-                            <li><a id="ledger" href="${contextPath}/ledger/ledger">บัญชี</a></li>
-                        </ul>
-                    </li>
-                    <li>
-                        <a style="color:black;"><i class="fa fa-line-chart"></i> รายงานผลประกอบการ</a>
-                    </li>
-                    <li>
-                        <a style="color:black;"><i class="fa fa-tasks"></i> ระบบหลังครัว</a>
-                    </li>
-                    <li>
-                        <a style="color:black;"><i class="fa fa-money"></i> ระบบแคชเชียร์ </a>
-                    </li>
+                                    <li><a id="materialunit"
+                                           href="${contextPath}/stock/materialunit">หน่วยของวัตถุดิบ</a>
+                                    </li>
+                                    <li><a id="material" href="${contextPath}/stock/materialitem">วัตถุดิบ</a></li>
+                                    <li><a id="mixedproduct" href="${contextPath}/stock/mixedproduct">วัตถุดิบแบบผสม</a>
+                                    </li>
+                                </c:if>
+                                <li><a id="currentstock" href="${contextPath}/stock/stockremain">วัตถุดิบคงเหลือ</a>
+                                </li>
+                            </ul>
+                        </li>
+                    </c:if>
+                    <c:if test="${branchUser.roleNo == Role.MANAGER}">
+                        <li>
+                            <a><i class="fa fa-tags"></i> จัดการโปรโมชั่น <span class="fa fa-chevron-down"></span></a>
+                            <ul class="nav child_menu">
+                                <li><a id="promotion" href="${contextPath}/promotion/promotion">โปรโมชั่นเมนูอาหาร</a>
+                                </li>
+                                    <%--<li><a id="api" href="${contextPath}/promotion/promotion">โฆษณาผ่าน API</a></li>--%>
+                            </ul>
+                        </li>
+                    </c:if>
+                    <c:if test="${branchUser.roleNo == Role.MANAGER}">
+                        <li>
+                            <a><i class="fa fa-table"></i> จัดการโต๊ะและการจอง <span class="fa fa-chevron-down"></span></a>
+                            <ul class="nav child_menu">
+                                <li><a id="table" href="${contextPath}/table/table">โต๊ะ</a></li>
+                                <li><a id="reservation" href="${contextPath}/table/reservation">การจอง</a></li>
+                            </ul>
+                        </li>
+                    </c:if>
+
+                    <c:if test="${branchUser.roleNo == Role.MANAGER}">
+                        <li>
+                            <a><i class="fa fa-home"></i> จัดการสาขาและสมาชิก <span
+                                    class="fa fa-chevron-down"></span></a>
+                            <ul class="nav child_menu">
+                                <c:if test="${branchUser.branchNo == Branch.MAIN_BRANCH}">
+                                    <li><a id="branches" href="${contextPath}/branch/branches">สาขาทั้งหมด</a></li>
+                                </c:if>
+                                <li><a id="mybranch"
+                                       href="${contextPath}/branch/mybranch">สาขา${branchUser.branch.branchName}</a>
+                                </li>
+                                <li><a id="member" href="${contextPath}/branch/member">สมาชิกของสาขา</a></li>
+                            </ul>
+                        </li>
+                    </c:if>
+                    <c:if test="${branchUser.roleNo == Role.MANAGER}">
+                        <li>
+                            <a><i class="fa fa-book"></i> จัดการบัญชี <span class="fa fa-chevron-down"></span></a>
+                            <ul class="nav child_menu">
+                                <li><a id="ledgertype" href="${contextPath}/ledger/ledgertype">ประเภทบัญชี</a></li>
+                                <li><a id="ledger" href="${contextPath}/ledger/ledger">บัญชี</a></li>
+                            </ul>
+                        </li>
+                    </c:if>
+                    <c:if test="${branchUser.roleNo == Role.MANAGER}">
+                        <li>
+                            <a style="color:black;"><i class="fa fa-line-chart"></i> รายงานผลประกอบการ</a>
+                        </li>
+                    </c:if>
+                    <c:if test="${branchUser.roleNo == Role.MANAGER || branchUser.roleNo == Role.KITCHEN}">
+                        <li>
+                            <a style="color:black;" href="${contextPath}/system/blankkitchen"><i
+                                    class="fa fa-tasks"></i> ระบบหลังครัว</a>
+                        </li>
+                    </c:if>
+                    <c:if test="${branchUser.roleNo == Role.MANAGER || branchUser.roleNo == Role.CASHIER}">
+
+                        <li>
+                            <a style="color:black;" href="${contextPath}/system/blankcashier"><i
+                                    class="fa fa-money"></i> ระบบแคชเชียร์ </a>
+                        </li>
+                    </c:if>
                 </ul>
             </div>
         </div>

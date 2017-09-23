@@ -173,7 +173,7 @@
 <script>
     $(document).ready(function () {
         $("#datatable-members").DataTable({
-            order: [[0, "asc"]],
+            order: [[1, "asc"]],
             columnDefs: [
                 {orderable: false, targets: [-1]}
             ],
@@ -182,7 +182,10 @@
                     data: 'username'
                 },
                 {
-                    data: 'role'
+                    data: {
+                        _ : 'role.display',
+                        sort : 'role.order'
+                    }
                 },
                 {
                     data: 'option'
@@ -257,7 +260,10 @@
                     var member = json[i];
                     var data_refresh = {
                         username : member.username,
-                        role : member.role.roleName,
+                        role : {
+                            display : member.role.roleName,
+                            order : member.role.roleNo
+                        },
                         option : '<a onclick="resetpassword('+member.branchUserNo+',\'' + member.username + '\')"  data-toggle="modal" data-target="#resetMember" class="btn btn-dark btn-sm"><i class="fa fa-undo"></i>&nbsp; รีเซ็ต</a>' +
                         (member.branchUserNo == ${branchUser.branchUserNo} ? '' : '<a onclick="delMember(' + member.branchUserNo + ',\'' + member.username + '\')" class="btn btn-danger btn-sm"> <i class="fa fa-trash"></i>&nbsp; ลบ</a>')
                     };

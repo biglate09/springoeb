@@ -44,6 +44,7 @@
                                     </div>
                                     <div class="control-group col-md-12">
                                         <form id="filterdate" method="POST">
+                                            <input type="hidden" name="empNo" value="${branchUser.empNo != null ? branchUser.empNo : ''}">
                                             <div class="col-md-offset-4 col-md-3" style="padding-right:0px;">
                                                 <input type="text" name="filterdate" id="test"
                                                        class="form-control" required>

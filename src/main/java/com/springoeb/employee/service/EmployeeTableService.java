@@ -32,8 +32,11 @@ public class EmployeeTableService {
     }
 
     public List<EmployeeTable> findEmployeeTableNow(int branchNo, Date date){
-//        return employeeTableRepository.findAllByEmployee_BranchNoAndDateAndTimeStartBeforeAndTimeEndAfter(branchNo,date,timeNow,timeNow);
         return employeeTableRepository.findAllByEmployee_BranchNoAndDate(branchNo,date);
+    }
+
+    public List<EmployeeTable> findEmployeeTableNowByEmpNo(int branchNo,Date date,int empNo){
+        return employeeTableRepository.findAllByEmployee_BranchNoAndDateAndEmpNo(branchNo,date,empNo);
     }
 
     public void removeByEmpTimeNoAndBranchNo(int empTimeNo, int branchNo){
@@ -51,5 +54,9 @@ public class EmployeeTableService {
 
     public List<EmployeeTable> findAllByDate(Date date){
         return employeeTableRepository.findAllByDate(date);
+    }
+
+    public List<EmployeeTable> findByEmpNo(int empNo){
+        return employeeTableRepository.findByEmpNo(empNo);
     }
 }

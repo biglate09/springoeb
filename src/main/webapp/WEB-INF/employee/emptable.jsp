@@ -1,6 +1,7 @@
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 <%@ page contentType="text/html;charset=UTF-8" language="java" %>
 <c:set var="contextPath" value="${pageContext.request.contextPath}"/>
+<%@ page import="com.springoeb.system.model.Role" %>
 <!DOCTYPE html>
 <html lang="en">
 <head>
@@ -64,7 +65,8 @@
                 <h4 class="modal-title" id="myModalLabel">เพิ่มตารางการทำงานของวันที่ <span id="modal_date"></span></h4>
             </div>
             <div class="modal-body">
-                <form class="form-horizontal form-label-left input_mask" id="table_add" action="${contextPath}/employee/managetable">
+                <form class="form-horizontal form-label-left input_mask" id="table_add"
+                      action="${contextPath}/employee/managetable">
                     <input type="hidden" id="hiddendate_1" name="date">
                     <div class="form-group" id="addworkfield">
                         <div class="col-md-12" style="margin-bottom:2vh;">
@@ -232,12 +234,14 @@
                 // right: 'month,agendaWeek,agendaDay,listMonth'
                 right: 'month'
             },
-            firstDay : 1,
+            firstDay: 1,
             selectable: true,
 //            eventLimit: true,
             selectHelper: true,
             select: function (start, end, allDay) {
+                <c:if test="${branchUser.roleNo == Role.MANAGER}">
                 $('#fc_create').click();
+                </c:if>
                 dateobj = start._d;
 
                 date_d = (dateobj.getDate()) < 10 ? ("0" + dateobj.getDate()) : (dateobj.getDate());
@@ -288,6 +292,7 @@
                 $("#modal_date").html(format_date);
                 $("#hiddendate_1").val(java_date);
             },
+            <c:if test="${branchUser.roleNo == Role.MANAGER}">
             eventClick: function (calEvent, jsEvent, view) {
                 $('#fc_edit').click();
                 $('#title2').val(calEvent.title);
@@ -300,6 +305,7 @@
                 categoryClass = $("#event_type").val();
                 calendar.fullCalendar('unselect');
             },
+            </c:if>
             editable: false,
             events: events
         });
