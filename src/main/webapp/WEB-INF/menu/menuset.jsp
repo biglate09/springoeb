@@ -381,6 +381,7 @@
             if (addfirsttime) {
                 addfirsttime = false;
                 $("#datatable-menu-1").DataTable({
+                    order: [[1, "asc"]],
                     scrollY: "40vh",
                     paging: false,
                     columnDefs: [
@@ -394,6 +395,7 @@
             if (editfirsttime) {
                 editfirsttime = false;
                 $("#datatable-menu-2").DataTable({
+                    order: [[1, "asc"]],
                     scrollY: "40vh",
                     paging: false,
                     columnDefs: [
@@ -666,13 +668,13 @@
         $(".menusetamount").each(function () {
             if ($(this).val() > 0) {
                 hasmenu = true;
-                if ($(this).attr('mymenu') == true) {
+                if ($(this).attr('mymenu') == "true") {
                     hasmymenu = true;
                     return false;
                 }
             }
         });
-
+console.log(hasmymenu);
         if (hasmenu && (!hasmymenu || !$("#add_menu_official").is(':checked'))) {
             var formdata = new FormData($("#add_menuset")[0]);
             $.ajax({
@@ -713,6 +715,7 @@
         $("#add_menuset_available").attr('checked', false);
         $("#add_menu_official").parent().removeClass('checked');
         $("#add_menu_official").attr('checked', false);
+        $("#display_sum_menu").empty();
     }
 
     function set_menuset(menuNo) {
