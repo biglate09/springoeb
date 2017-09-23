@@ -15,6 +15,9 @@ public class MenuGroupService {
     public List<MenuGroup> getMenuGroups(){
         return menuGroupRepository.findAll();
     }
+    public List<MenuGroup> getMenuGroupsOrderByMenuCatNo(){
+        return menuGroupRepository.findByMenuGroupNoIsNotNullOrderByMenuCatNo();
+    }
 
     public void save(MenuGroup menuGroup){
         menuGroupRepository.save(menuGroup);
