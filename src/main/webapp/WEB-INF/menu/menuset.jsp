@@ -66,21 +66,21 @@
                             <div id="menuset_thumbnail" style="clear:both">
                             </div>
                             <div id="datatable-menuset-div" style="display:none;">
-                                <table id="datatable-menuset" class="table table-striped table-bordered">
-                                    <thead>
-                                    <tr>
-                                        <th style="text-align:center;">ชื่อเมนู</th>
-                                        <c:if test="${branchUser.branchNo == Branch.MAIN_BRANCH}">
-                                            <th style="text-align:center;">สาขา</th>
-                                        </c:if>
-                                        <th style="text-align:center;">ราคา</th>
-                                        <th style="text-align:center;">ตัวเลือก</th>
-                                    </tr>
-                                    </thead>
-                                    <tbody style="text-align:center;">
+                                <%--<table id="datatable-menuset" class="table table-striped table-bordered">--%>
+                                    <%--<thead>--%>
+                                    <%--<tr>--%>
+                                        <%--<th style="text-align:center;">ชื่อเมนู</th>--%>
+                                        <%--<c:if test="${branchUser.branchNo == Branch.MAIN_BRANCH}">--%>
+                                            <%--<th style="text-align:center;">สาขา</th>--%>
+                                        <%--</c:if>--%>
+                                        <%--<th style="text-align:center;">ราคา</th>--%>
+                                        <%--<th style="text-align:center;">ตัวเลือก</th>--%>
+                                    <%--</tr>--%>
+                                    <%--</thead>--%>
+                                    <%--<tbody style="text-align:center;">--%>
 
-                                    </tbody>
-                                </table>
+                                    <%--</tbody>--%>
+                                <%--</table>--%>
                             </div>
 
                             <div id="error_show">

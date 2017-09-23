@@ -66,24 +66,25 @@
                                 </div>
                                 <%--</div>--%>
                                 <div id="menu_thumbnail"></div>
-                                <div id="datatable-menu-div" style="display:none;">
-                                    <table id="datatable-menu" class="table table-striped table-bordered">
-                                        <thead>
-                                        <tr>
-                                            <th style="text-align:center;">ชื่อเมนู</th>
-                                            <c:if test="${branchUser.branchNo == Branch.MAIN_BRANCH}">
-                                                <th style="text-align:center;">สาขา</th>
-                                            </c:if>
-                                            <th style="text-align:center;">ประเภทเมนู</th>
-                                            <th style="text-align:center;">ราคา</th>
-                                            <th style="text-align:center;">ตัวเลือก</th>
-                                        </tr>
-                                        </thead>
-                                        <tbody style="text-align:center;">
+                                <div id="menu_thumbnail_list" style="display:none;"></div>
+                                <%--<div id="datatable-menu-div" style="display:none;">--%>
+                                    <%--<table id="datatable-menu" class="table table-striped table-bordered">--%>
+                                        <%--<thead>--%>
+                                        <%--<tr>--%>
+                                            <%--<th style="text-align:center;">ชื่อเมนู</th>--%>
+                                            <%--<c:if test="${branchUser.branchNo == Branch.MAIN_BRANCH}">--%>
+                                                <%--<th style="text-align:center;">สาขา</th>--%>
+                                            <%--</c:if>--%>
+                                            <%--<th style="text-align:center;">ประเภทเมนู</th>--%>
+                                            <%--<th style="text-align:center;">ราคา</th>--%>
+                                            <%--<th style="text-align:center;">ตัวเลือก</th>--%>
+                                        <%--</tr>--%>
+                                        <%--</thead>--%>
+                                        <%--<tbody style="text-align:center;">--%>
 
-                                        </tbody>
-                                    </table>
-                                </div>
+                                        <%--</tbody>--%>
+                                    <%--</table>--%>
+                                <%--</div>--%>
                                 <div id="error_show"></div>
                             </form>
                         </div>
@@ -493,7 +494,7 @@
         });
 
         $("#displayThumbnail").click(function () {
-            $("#datatable-menu-div").css('display', 'none');
+            $("#menu_thumbnail_list").css('display', 'none');
             $("#menu_thumbnail").css('display', '');
             $("#filter_by_category").css('visibility', '');
             $("#myInput").parent().css('visibility', '');
@@ -501,11 +502,11 @@
         });
 
         $("#displayTable").click(function () {
-            $("#datatable-menu-div").css('display', '');
+            $("#menu_thumbnail_list").css('display', '');
             $("#menu_thumbnail").css('display', 'none');
-            $("#filter_by_category").css('visibility', 'hidden');
-            $("#filter_by_category").val(0);
-            $("#myInput").parent().css('visibility', 'hidden');
+            $("#filter_by_category").css('visibility', '');
+//            $("#filter_by_category").val(0);
+            $("#myInput").parent().css('visibility', '');
             $("#myInput").val('');
             refresh_table();
         });
@@ -521,6 +522,7 @@
             success: function (json) {
                 //remove
                 $("#menu_thumbnail").empty();
+                $("#menu_thumbnail_list").empty();
                 var data_array = [];
                 if (json.length != 0) {
                     var mymenu = json[0];
@@ -561,22 +563,55 @@
                         }
 
                         //Table
-                        var data_refresh = {
-                            menuName: '<p class="cardname col-md-12" style="text-align:center;font-weight:bold;white-space:nowrap;overflow:hidden;text-overflow: ellipsis;cursor:pointer;" data-toggle="modal" data-target="#editMenu" onclick="set_menu(' + menu.menuNo + ')">' + menu.menuNameTH + " / " + menu.menuNameEN + '</p>',
-                            branch: {
-                                display: menu.localFlag == 0 ? 'ทุกสาขา' : 'สาขาที่ ' + menu.localFlag,
-                                order: menu.localFlag
-                            },
-                            group: menu.menuGroup.menuGroupNameTH,
-                            menuPrice: {
-                                display: menu.menuPrice.toFixed(2).replace(/\B(?=(\d{3})+(?!\d))/g, ",") + " บาท",
-                                order: price_order
-                            },
-                            option: '<a onclick="change_available(' + menu.menuNo + ')" class="btn btn-info btn-sm"><i class="fa ' + (obj.available ? 'fa-check-square-o' : 'fa-square-o') + '"></i>&nbsp; พร้อมจำหน่าย </a>' +
-                            (menu.localFlag == 0 && ${branchUser.branchNo != Branch.MAIN_BRANCH} ? '' : ('<a onclick="set_menu(' + menu.menuNo + ')" class="btn btn-warning btn-sm" data-toggle="modal" data-target="#editMenu"><i class="fa fa-pencil"></i>&nbsp; แก้ไข </a>' +
-                            '<a onclick="del_menu(' + menu.menuNo + ',\'' + menu.menuNameTH + '\')" class="btn btn-danger btn-sm"> <i class="fa fa-trash"></i>&nbsp; ลบ</a>')),
-                        };
-                        data_array.push(data_refresh);
+                        <%--var data_refresh = {--%>
+                            <%--menuName: '<p class="cardname col-md-12" style="text-align:center;font-weight:bold;white-space:nowrap;overflow:hidden;text-overflow: ellipsis;cursor:pointer;" data-toggle="modal" data-target="#editMenu" onclick="set_menu(' + menu.menuNo + ')">' + menu.menuNameTH + " / " + menu.menuNameEN + '</p>',--%>
+                            <%--branch: {--%>
+                                <%--display: menu.localFlag == 0 ? 'ทุกสาขา' : 'สาขาที่ ' + menu.localFlag,--%>
+                                <%--order: menu.localFlag--%>
+                            <%--},--%>
+                            <%--group: menu.menuGroup.menuGroupNameTH,--%>
+                            <%--menuPrice: {--%>
+                                <%--display: menu.menuPrice.toFixed(2).replace(/\B(?=(\d{3})+(?!\d))/g, ",") + " บาท",--%>
+                                <%--order: price_order--%>
+                            <%--},--%>
+                            <%--option: '<a onclick="change_available(' + menu.menuNo + ')" class="btn btn-info btn-sm"><i class="fa ' + (obj.available ? 'fa-check-square-o' : 'fa-square-o') + '"></i>&nbsp; พร้อมจำหน่าย </a>' +--%>
+                            <%--(menu.localFlag == 0 && ${branchUser.branchNo != Branch.MAIN_BRANCH} ? '' : ('<a onclick="set_menu(' + menu.menuNo + ')" class="btn btn-warning btn-sm" data-toggle="modal" data-target="#editMenu"><i class="fa fa-pencil"></i>&nbsp; แก้ไข </a>' +--%>
+                                <%--'<a onclick="del_menu(' + menu.menuNo + ',\'' + menu.menuNameTH + '\')" class="btn btn-danger btn-sm"> <i class="fa fa-trash"></i>&nbsp; ลบ</a>')),--%>
+                        <%--};--%>
+                        <%--data_array.push(data_refresh);--%>
+                        var list = '\
+                        <div class="col-md-12">\
+                        <div class="thumbnail thumbnail_list">\
+                        <div class="image view view-first col-md-4" style="height:100%">\
+                        <img style="height: 100%; display: block;margin:auto;" src="' + (menu.menuPicPath != null ? ('../images/menu/' + menu.menuPicPath) : ('../images/default_upload_image.png')) + '" alt="image"/>\
+                        <div class="mask" style="height:100%">\
+                        <p style="white-space: nowrap;overflow:hidden;text-overflow: ellipsis;">' + (menu.menuDesc == '' || menu.menuDesc == null ? 'ไม่มีรายละเอียด' : menu.menuDesc) + '</p>\
+                        <div class="tools tools-bottom" style="margin: 110px 0 0;">\
+                        <a title="เมนูของทุกสาขา" style="color:white;margin-right:5px;"><i class="fa ' + (menu.localFlag == 0 ? 'fa-users' : 'fa-user' ) + '"></i> <span style="font-size:14px">' + (menu.localFlag == 0 ? ' เป็นเมนูของทุกสาขา' : ' เป็นเมนูเฉพาะสาขานี้') + '</span></a>\
+                        </div>\
+                        </div>\
+                        </div>\
+                        <div class="caption col-md-8" style="color:#73879C;height:100%;">\
+                        <p class="cardname col-md-12" style="font-weight:bold;white-space:nowrap;overflow:hidden;text-overflow: ellipsis;cursor:pointer;" data-toggle="modal" data-target="#editMenu" onclick="set_menu(' + menu.menuNo + ')">' + menu.menuNameTH + " / " + menu.menuNameEN + '</p>\
+                        <p class="col-md-12" style="white-space: nowrap;overflow:hidden;text-overflow: ellipsis;">หมวดหมู่ : ' + menu.menuGroup.menuGroupNameTH + '</p>\
+                        <p class="col-md-12" >' + "ราคา : " + menu.menuPrice.toFixed(2).replace(/\B(?=(\d{3})+(?!\d))/g, ",") + " บาท" + '</p>\
+                        <p class="col-md-12 description" >'+ "รายละเอียด : " + menu.menuDesc +'</p>\
+                        <div style="text-align:right;bottom:0px;position: absolute;right:5px;" class="col-md-4">\
+                        ' + (menu.localFlag == 0 && ${branchUser.branchNo != Branch.MAIN_BRANCH} ? '' : '<a title="แก้ไข" style="color:#73879C;cursor:pointer;margin-right:5px;" data-toggle="modal" data-target="#editMenu" onclick="set_menu(' + menu.menuNo + ')"><i class="fa fa-pencil"></i></a>') + '\
+                        ' + (menu.localFlag != 0 && ${branchUser.branchNo == Branch.MAIN_BRANCH} ? ('<a title="ทำให้เป็นเมนูของทุกสาขา" onclick="turn_official(' + menu.menuNo + ')" style="color:#73879C;cursor:pointer;margin-right:5px;"><i class="fa fa-users"></i></a>') : '') + '\
+                        <a title="เมนูนี้' + (obj.available == true ? '' : 'ไม่' ) + 'พร้อมจำหน่าย คลิกเพื่อเปลี่ยน" onclick="change_available(' + menu.menuNo + ')" style="color:#73879C;cursor:pointer;margin-right:5px;"><i class="fa ' + (obj.available == true ? 'fa-check-square-o' : 'fa-square-o' ) + '"></i></a>\
+                        ' + (menu.localFlag == 0 && ${branchUser.branchNo != Branch.MAIN_BRANCH} ? '' : '<a title="ลบ" onclick="del_menu(' + menu.menuNo + ',\'' + menu.menuNameTH + '\')" style="color:#73879C;cursor:pointer;"><i class="fa fa-trash"></i></a>') + '\
+                        </div>\
+                        <div style="color:white;background-color:' + (menu.localFlag == 0 ? "#73879C" : "red") + ';border-radius:4px;text-align:center;top:0px;position: absolute;right:5px;" class="col-md-4">' + (menu.localFlag == 0 ? "ทุกสาขา" : "สาขา" + (menu.localFlag ==${branchUser.branchNo} ? "นี้" : " " + menu.localFlag)) + '</div>\
+                        </div>\
+                        </div>\
+                        ';
+                        $("#menu_thumbnail_list").append(list);
+                        var price_order = (menu.menuPrice.toFixed(2) * 100000) + "";
+                        for (var j = price_order.length; j < 20; j++) {
+                            price_order = "0" + price_order;
+                        }
+
                     }
                     if (json.length == 2) {
                         var othermenu = json[1];
@@ -612,20 +647,50 @@
                                 price_order = "0" + price_order;
                             }
 
-                            var data_refresh = {
-                                menuName: '<p class="cardname col-md-12" style="text-align:center;font-weight:bold;white-space:nowrap;overflow:hidden;text-overflow: ellipsis;cursor:pointer;" data-toggle="modal" data-target="#editMenu" onclick="set_menu(' + menu.menuNo + ')">' + menu.menuNameTH + " / " + menu.menuNameEN + '</p>',
-                                group: menu.menuGroup.menuGroupNameTH,
-                                branch: {
-                                    display: menu.localFlag == 0 ? 'ทุกสาขา' : 'สาขาที่ ' + menu.localFlag,
-                                    order: menu.localFlag
-                                },
-                                menuPrice: {
-                                    display: menu.menuPrice.toFixed(2).replace(/\B(?=(\d{3})+(?!\d))/g, ",") + " บาท",
-                                    order: price_order
-                                },
-                                option: (menu.localFlag != 0 && ${branchUser.branchNo == Branch.MAIN_BRANCH} ? '<a onclick="turn_official(' + menu.menuNo + ')" class="btn btn-primary btn-sm"><i class="fa fa-users"></i>&nbsp; ทำให้เป็นเมนูของทุกสาขา </a>' : '')
-                            };
-                            data_array.push(data_refresh);
+                            <%--var data_refresh = {--%>
+                                <%--menuName: '<p class="cardname col-md-12" style="text-align:center;font-weight:bold;white-space:nowrap;overflow:hidden;text-overflow: ellipsis;cursor:pointer;" data-toggle="modal" data-target="#editMenu" onclick="set_menu(' + menu.menuNo + ')">' + menu.menuNameTH + " / " + menu.menuNameEN + '</p>',--%>
+                                <%--group: menu.menuGroup.menuGroupNameTH,--%>
+                                <%--branch: {--%>
+                                    <%--display: menu.localFlag == 0 ? 'ทุกสาขา' : 'สาขาที่ ' + menu.localFlag,--%>
+                                    <%--order: menu.localFlag--%>
+                                <%--},--%>
+                                <%--menuPrice: {--%>
+                                    <%--display: menu.menuPrice.toFixed(2).replace(/\B(?=(\d{3})+(?!\d))/g, ",") + " บาท",--%>
+                                    <%--order: price_order--%>
+                                <%--},--%>
+                                <%--option: (menu.localFlag != 0 && ${branchUser.branchNo == Branch.MAIN_BRANCH} ? '<a onclick="turn_official(' + menu.menuNo + ')" class="btn btn-primary btn-sm"><i class="fa fa-users"></i>&nbsp; ทำให้เป็นเมนูของทุกสาขา </a>' : '')--%>
+                            <%--};--%>
+                            <%--data_array.push(data_refresh);--%>
+                            var list = '\
+                            <div class="col-md-12">\
+                            <div class="thumbnail thumbnail_inline_list">\
+                            <div class="image view view-first col-md-4" style="height:100%"">\
+                            <img style="height: 100%; display: block;margin:auto;" src="' + (menu.menuPicPath != null ? ('../images/menu/' + menu.menuPicPath) : ('../images/default_upload_image.png')) + '" alt="image"/>\
+                            <div class="mask" style="height:100%">\
+                            <p style="white-space: nowrap;overflow:hidden;text-overflow: ellipsis;">' + (menu.menuDesc == '' || menu.menuDesc == null ? 'ไม่มีรายละเอียด' : menu.menuDesc) + '</p>\
+                            <div class="tools tools-bottom" style="margin: 110px 0 0;" >\
+                            <a title="เมนูของทุกสาขา" style="color:white;margin-right:5px;"><i class="fa ' + (menu.localFlag == 0 ? 'fa-users' : 'fa-user' ) + '"></i> <span style="font-size:14px">' + (menu.localFlag == 0 ? ' เป็นเมนูของทุกสาขา' : ' เป็นเมนูเฉพาะสาขา ' + menu.localFlag ) + '</span></a>\
+                            </div>\
+                            </div>\
+                            </div>\
+                            <div class="caption col-md-8" style="color:#73879C;height:100%;">\
+                            <p class="col-md-12" style="font-weight:bold;white-space:nowrap;overflow:hidden;text-overflow: ellipsis;">' + menu.menuNameTH + " / " + menu.menuNameEN + '</p>\
+                            <p class="col-md-12" style="white-space: nowrap;overflow:hidden;text-overflow: ellipsis;">หมวดหมู่ : ' + menu.menuGroup.menuGroupNameTH + '</p>\
+                            <p class="col-md-12" >' + "ราคา : " + menu.menuPrice.toFixed(2).replace(/\B(?=(\d{3})+(?!\d))/g, ",") + " บาท" + '</p>\
+                            <p class="col-md-12 description" >'+ "รายละเอียด : " + menu.menuDesc +'</p>\
+                            <div style="text-align:right;position:absolute;right:5px;bottom:0px;" class="col-md-4">\
+                            <a title="ทำให้เป็นเมนูของทุกสาขา" onclick="turn_official(' + menu.menuNo + ')" style="color:#73879C;cursor:pointer;margin-right:5px;"><i class="fa fa-users"></i></a>\
+                            </div>\
+                            <div style="color:white;background-color:yellowgreen;border-radius:4px;text-align:center;top:0px;position:absolute;right:5px" class="col-md-4">' + (menu.localFlag == 0 ? "ทุกสาขา" : "สาขา " + menu.localFlag) + '</div>\
+                            </div>\
+                            </div>\
+                            ';
+                            $("#menu_thumbnail_list").append(list);
+                            var price_order = (menu.menuPrice.toFixed(2) * 100000) + "";
+                            for (var j = price_order.length; j < 20; j++) {
+                                price_order = "0" + price_order;
+                            }
+
                         }
                     }
                     $("#error_show").html('');
@@ -832,12 +897,24 @@
             $("#error_show").html('');
         }
     }
+
 </script>
 
 <style>
     .thumbnail_inline {
         height: 250px !important;
     }
+    .thumbnail_list {
+        height: 200px !important;
+    }
+    .description{
+        line-height: 1.5em;
+        display: -webkit-box;
+        -webkit-line-clamp: 3;
+        -webkit-box-orient: vertical;
+        overflow: hidden;
+    }
+
 </style>
 </body>
 </html>
