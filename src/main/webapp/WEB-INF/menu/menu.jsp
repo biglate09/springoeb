@@ -597,7 +597,7 @@
                         <p class="cardname col-md-12" style="font-weight:bold;white-space:nowrap;overflow:hidden;text-overflow: ellipsis;cursor:pointer;" data-toggle="modal" data-target="#editMenu" onclick="set_menu(' + menu.menuNo + ')">' + menu.menuNameTH + " / " + menu.menuNameEN + '</p>\
                         <p class="col-md-12" style="white-space: nowrap;overflow:hidden;text-overflow: ellipsis;">หมวดหมู่ : ' + menu.menuGroup.menuGroupNameTH + '</p>\
                         <p class="col-md-12" >' + "ราคา : " + menu.menuPrice.toFixed(2).replace(/\B(?=(\d{3})+(?!\d))/g, ",") + " บาท" + '</p>\
-                        <p class="col-md-12 description" >'+ "รายละเอียด : " + menu.menuDesc +'</p>\
+                        <p class="col-md-12 description" >'+ "รายละเอียด : " + (menu.menuDesc==null?'-':menu.menuDesc) +'</p>\
                         <div style="text-align:right;bottom:0px;position: absolute;right:5px;" class="col-md-4">\
                         ' + (menu.localFlag == 0 && ${branchUser.branchNo != Branch.MAIN_BRANCH} ? '' : '<a title="แก้ไข" style="color:#73879C;cursor:pointer;margin-right:5px;" data-toggle="modal" data-target="#editMenu" onclick="set_menu(' + menu.menuNo + ')"><i class="fa fa-pencil"></i></a>') + '\
                         ' + (menu.localFlag != 0 && ${branchUser.branchNo == Branch.MAIN_BRANCH} ? ('<a title="ทำให้เป็นเมนูของทุกสาขา" onclick="turn_official(' + menu.menuNo + ')" style="color:#73879C;cursor:pointer;margin-right:5px;"><i class="fa fa-users"></i></a>') : '') + '\

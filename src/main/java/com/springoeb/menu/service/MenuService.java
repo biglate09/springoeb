@@ -101,4 +101,8 @@ public class MenuService {
             return menuRepository.findByMenuFlagAndMenuGroupNoAndLocalFlagNotInOrderByLocalFlagAsc(Menu.flagForMenu,menuGroupNo,myBranches);
         }
     }
+
+    public List<Menu> getMenuOfficial(){
+        return menuRepository.findByLocalFlag(0);
+    }
 }
