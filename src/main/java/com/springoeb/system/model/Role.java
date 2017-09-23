@@ -7,7 +7,8 @@ import javax.persistence.Id;
 public class Role {
     @Id
     private Integer roleNo;
-    private Integer roleName;
+    private String roleName;
+    private boolean canAdd;
 
     public static Integer MANAGER = 1;
     public static Integer EMPLOYEE = 2;
@@ -22,11 +23,19 @@ public class Role {
         this.roleNo = roleNo;
     }
 
-    public Integer getRoleName() {
+    public String getRoleName() {
         return roleName;
     }
 
-    public void setRoleName(Integer roleName) {
+    public void setRoleName(String roleName) {
         this.roleName = roleName;
+    }
+
+    public boolean isCanAdd() {
+        return canAdd;
+    }
+
+    public void setCanAdd(boolean canAdd) {
+        this.canAdd = canAdd;
     }
 }

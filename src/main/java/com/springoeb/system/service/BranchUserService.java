@@ -38,4 +38,12 @@ public class BranchUserService {
     public BranchUser findByEmpNo(int empNo){
         return branchUserRepository.findByEmpNo(empNo);
     }
+
+    public List<BranchUser> getAllBranchUsers(int branchNo){
+        return branchUserRepository.findByBranchNoAndEmpNoIsNull(branchNo);
+    }
+
+    public void removeByBranchUserNoAndBranchNo(int memberNo, int branchNo){
+        branchUserRepository.removeByBranchUserNoAndBranchNo(memberNo,branchNo);
+    }
 }

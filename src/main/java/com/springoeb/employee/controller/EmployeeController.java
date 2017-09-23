@@ -87,7 +87,11 @@ public class EmployeeController {
 
     private String getBcrypt(String username){
         BCryptPasswordEncoder bCryptPasswordEncoder = new BCryptPasswordEncoder();
-        return bCryptPasswordEncoder.encode(username);
+        String bCrypt = bCryptPasswordEncoder.encode(username);
+        if(bCrypt.endsWith(".")){
+            bCrypt = bCryptPasswordEncoder.encode(username);
+        }
+        return bCrypt;
     }
 
     @Transactional

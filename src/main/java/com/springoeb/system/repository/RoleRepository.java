@@ -9,4 +9,5 @@ import java.util.List;
 @Repository
 public interface RoleRepository extends CrudRepository<Role,Integer>{
     List<Role> findAll();
+    List<Role> findByCanAdd(boolean canAdd);
 }

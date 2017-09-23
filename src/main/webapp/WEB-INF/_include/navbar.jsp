@@ -101,14 +101,13 @@
                         </ul>
                     </li>
                     <li>
-                        <a><i class="fa fa-line-chart"></i> รายงานผลประกอบการ <span
-                                class="fa fa-chevron-down"></span></a>
-                        <ul class="nav child_menu">
-                            <li><a id="report1" href="${contextPath}/">รายงานแบบ 1</a></li>
-                            <li><a id="report2" href="${contextPath}/">รายงานแบบ 2</a></li>
-                            <li><a id="report3" href="${contextPath}/">รายงานแบบ 3</a></li>
-                            <li><a id="report4" href="${contextPath}/">รายงานแบบ 4</a></li>
-                        </ul>
+                        <a style="color:black;"><i class="fa fa-line-chart"></i> รายงานผลประกอบการ</a>
+                    </li>
+                    <li>
+                        <a style="color:black;"><i class="fa fa-tasks"></i> ระบบหลังครัว</a>
+                    </li>
+                    <li>
+                        <a style="color:black;"><i class="fa fa-money"></i> ระบบแคชเชียร์ </a>
                     </li>
                 </ul>
             </div>

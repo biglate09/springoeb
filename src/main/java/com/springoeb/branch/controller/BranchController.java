@@ -111,7 +111,11 @@ public class BranchController {
 
     private String getBcrypt(String username){
         BCryptPasswordEncoder bCryptPasswordEncoder = new BCryptPasswordEncoder();
-        return bCryptPasswordEncoder.encode(username);
+        String bCrypt = bCryptPasswordEncoder.encode(username);
+        if(bCrypt.endsWith(".")){
+            bCrypt = bCryptPasswordEncoder.encode(username);
+        }
+        return bCrypt;
     }
 
     //-----------------------------------------------------------------------------------------------------------//
@@ -141,9 +145,41 @@ public class BranchController {
     //-----------------------------------------------------------------------------------------------------------//
     @GetMapping("/member")
     public String toMemberIndex(Model model) {
-        List<Role> roles = roleService.findAll();
-        model.addAttribute("roles",roles);
+        model.addAttribute("roles", roleService.findByCanAdd());
         return BRANCH_PATH + "member.jsp";
+    }
+
+    @PostMapping("/getmembers")
+    @ResponseBody
+    public String getMembers(HttpSession session) throws JsonProcessingException {
+        int branchNo = ((BranchUser)(session.getAttribute("branchUser"))).getBranchNo();
+        List<BranchUser> branchUser = branchUserService.getAllBranchUsers(branchNo);
+        ObjectMapper mapper = new ObjectMapper();
+        String json = mapper.writeValueAsString(branchUser);
+        return json;
+    }
+
+    @Transactional
+    @DeleteMapping("/deletemember/{memberNo}")
+    @ResponseBody
+    public void deleteMember(@PathVariable("memberNo") int memberNo,HttpSession session) throws JsonProcessingException {
+        int branchNo = ((BranchUser)(session.getAttribute("branchUser"))).getBranchNo();
+        branchUserService.removeByBranchUserNoAndBranchNo(memberNo,branchNo);
+    }
+
+    @PostMapping("/managemember")
+    @ResponseBody
+    public void addOrEditMember(@ModelAttribute("branchUser") BranchUser branchUser, HttpSession session, HttpServletRequest request) throws IOException {
+        String cryptPassword = getBcrypt(branchUser.getPassword());
+        if(branchUser.getBranchUserNo() != null){
+            branchUser = branchUserService.findByBranchUserNo(branchUser.getBranchUserNo());
+        }else {
+            int branchNo = ((BranchUser) (session.getAttribute("branchUser"))).getBranchNo();
+            branchUser.setBranchNo(branchNo);
+        }
+        branchUser.setPassword(cryptPassword);
+
+        branchUserService.save(branchUser);
     }
     //-----------------------------------------------------------------------------------------------------------//
 }

@@ -552,7 +552,6 @@
                             </div>\
                             </div>';
 
-                        $("#menu_thumbnail").append(div);
                         var price_order = (menu.menuPrice.toFixed(2) * 100000) + "";
                         for (var j = price_order.length; j < 20; j++) {
                             price_order = "0" + price_order;

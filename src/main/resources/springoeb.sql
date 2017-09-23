@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Host: 127.0.0.1
--- Generation Time: Sep 18, 2017 at 01:34 PM
+-- Generation Time: Sep 23, 2017 at 08:47 AM
 -- Server version: 10.1.21-MariaDB
 -- PHP Version: 5.6.30
 
@@ -158,10 +158,9 @@ CREATE TABLE `branch` (
 --
 
 INSERT INTO `branch` (`branch_no`, `branch_name`, `branch_desc`, `address_name`, `district_no`, `sub_district_no`, `road`, `province_no`, `zip_no`, `tel`, `line`, `fb`, `has_admin`) VALUES
-(1, 'บางแสน', 'ทดสอบ', '1/350', 185, 1495, 'พุทธบูชา 36', 15, 1290, '0813026159', 'Line', 'fb.com/xxxx', 0),
+(1, 'บางแสน', 'ทดสอบ', '1/350', 185, 1495, 'พุทธบูชา 36', 15, 1290, '0813026159', 'Line', 'fb.com/xxxx', 1),
 (2, 'บางแค', '', '', 0, 0, '', 0, 0, '', '', '', 1),
-(3, 'เอกมัย', '', '', 0, 0, '', 0, 0, '', '', '', 1),
-(4, 'บางยี่โถ', NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, 1);
+(3, 'เอกมัย', '', '', 0, 0, '', 0, 0, '', '', '', 1);
 
 -- --------------------------------------------------------
 
@@ -225,11 +224,10 @@ CREATE TABLE `branch_user` (
 --
 
 INSERT INTO `branch_user` (`branch_user_no`, `username`, `password`, `sent_email`, `branch_no`, `role_no`, `emp_no`) VALUES
-(1, 'kopihub-master', '$2a$10$E3FxBBuaGdRCnb4PULE1x.FtZp3wDv18mwLoRCwTYB.rGaNAwW5R2', NULL, 1, 1, NULL),
+(1, 'kopihub-master', '$2a$10$lV/4TymNZz6erniQcpTS/eckz8XfeYtD21jHQAfCNo9pPASpWmLue', NULL, 1, 1, NULL),
 (2, 'kopihub-bangkae', '$2a$10$T6iCPE2YKLr/C/5p5myUZeVgprGzHaNHvdm4JBQy/WzIVgV8zqBPK', NULL, 2, 1, NULL),
 (3, 'kopihub-ekkamai', '$2a$10$./rT3rhc13NT1p0yRfZP7.OmdT780bTdLPmveX8oh3UzrSFN6Sg5C', NULL, 3, 1, NULL),
-(25, 'biglate09', '$2a$10$Jkp/ji5igMChf1Z5kEKree8sGM0MbHlwIHCayDZkFhmA8kGgTXGte', 'biglate_09@hotmail.com', 1, 2, 24),
-(26, 'kopihub-bangyeeto', '$2a$10$L5VGTKP9XsD31yd1Ft2JOe4Q/ZwWVttSWMFNhuHrVEvmhlXOFnzcy', 'biglate_09@hotmail.com', 4, 1, NULL);
+(28, 'bighead09', '$2a$10$pzIWPa5tktHfc2iAEONZFexcintCHTVaR1jrA0D32GmCnozSc/30C', 'biglate_09@hotmail.com', 1, 2, 26);
 
 -- --------------------------------------------------------
 
@@ -1294,8 +1292,6 @@ CREATE TABLE `employee` (
   `pay_type` varchar(30) NOT NULL,
   `pay` double(8,2) NOT NULL,
   `email` varchar(200) DEFAULT NULL,
-  `is_admin` tinyint(1) NOT NULL,
-  `success_register` tinyint(1) NOT NULL,
   `bg_color` varchar(50) NOT NULL,
   `font_color` varchar(50) NOT NULL,
   `branch_no` int(8) NOT NULL
@@ -1305,9 +1301,9 @@ CREATE TABLE `employee` (
 -- Dumping data for table `employee`
 --
 
-INSERT INTO `employee` (`emp_no`, `emp_name`, `emp_tel`, `emp_gender`, `emp_type`, `pay_type`, `pay`, `email`, `is_admin`, `success_register`, `bg_color`, `font_color`, `branch_no`) VALUES
-(23, 'เป้', '0851131980', 'M', '1', '1', 30.00, 'nirun0851131980@hotmail.com', 1, 0, '#000000', '#ffffff', 1),
-(24, 'บิ๊ก', '0813026159', 'M', '2', '1', 30.00, 'biglate_09@hotmail.com', 0, 1, '#000000', '#FFFFFF', 1);
+INSERT INTO `employee` (`emp_no`, `emp_name`, `emp_tel`, `emp_gender`, `emp_type`, `pay_type`, `pay`, `email`, `bg_color`, `font_color`, `branch_no`) VALUES
+(23, 'เป้', '0851131980', 'M', '1', '1', 30.00, 'nirun0851131980@hotmail.com', '#000000', '#ffffff', 1),
+(26, 'BigHEAD', '0813026159', 'M', '1', '1', 30.00, 'biglate_09@hotmail.com', '#000000', '#ffffff', 1);
 
 -- --------------------------------------------------------
 
@@ -1492,7 +1488,16 @@ INSERT INTO `material_history` (`mat_hist_no`, `mat_name`, `mat_quantity`, `date
 (609, 'แป้งข้าวเจ้า', -16, '2017-09-18', '18:31:26', NULL, NULL, NULL, 11, 1, 607),
 (610, 'น้ำสต็อก', -32, '2017-09-18', '18:31:26', NULL, NULL, NULL, 12, 1, 607),
 (611, 'ส่วนผสมอีกที', -16, '2017-09-18', '18:31:26', NULL, NULL, NULL, 15, 1, 607),
-(612, 'แป้งซาลาเปาหมูแดงทอด', -20, '2017-09-18', '18:31:26', 'แอดมินสาขา', NULL, NULL, 13, 1, NULL);
+(612, 'แป้งซาลาเปาหมูแดงทอด', -20, '2017-09-18', '18:31:26', 'แอดมินสาขา', NULL, NULL, 13, 1, NULL),
+(613, 'แป้งซาลาเปาหมูแดงทอด', 80, '2017-09-18', '18:37:19', 'แอดมินสาขา', NULL, NULL, 13, 1, NULL),
+(614, 'น้ำมันพืช', -16, '2017-09-18', '18:37:19', NULL, NULL, NULL, 10, 1, 613),
+(615, 'แป้งข้าวเจ้า', -32, '2017-09-18', '18:37:19', NULL, NULL, NULL, 11, 1, 613),
+(616, 'น้ำสต็อก', -64, '2017-09-18', '18:37:19', NULL, NULL, NULL, 12, 1, 613),
+(617, 'ส่วนผสมอีกที', -32, '2017-09-18', '18:37:19', NULL, NULL, NULL, 15, 1, 613),
+(618, 'แป้งซาลาเปาหมูแดงทอด', -100, '2017-09-18', '18:37:24', 'แอดมินสาขา', NULL, NULL, 13, 1, NULL),
+(619, 'ส่วนผสมอีกที', 30, '2017-09-18', '18:47:26', 'แอดมินสาขา', NULL, NULL, 15, 1, NULL),
+(620, 'น้ำมันพืช', -90, '2017-09-18', '18:47:26', NULL, NULL, NULL, 10, 1, 619),
+(621, 'น้ำสต็อก', -60, '2017-09-18', '18:47:26', NULL, NULL, NULL, 12, 1, 619);
 
 -- --------------------------------------------------------
 
@@ -1646,6 +1651,26 @@ INSERT INTO `menu_group` (`menu_group_no`, `menu_group_name_TH`, `menu_group_nam
 -- --------------------------------------------------------
 
 --
+-- Table structure for table `menu_group_promotion`
+--
+
+CREATE TABLE `menu_group_promotion` (
+  `promotion_no` int(11) NOT NULL,
+  `menu_group_no` int(11) NOT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=utf8;
+
+--
+-- Dumping data for table `menu_group_promotion`
+--
+
+INSERT INTO `menu_group_promotion` (`promotion_no`, `menu_group_no`) VALUES
+(10, 2),
+(10, 4),
+(10, 6);
+
+-- --------------------------------------------------------
+
+--
 -- Table structure for table `menu_in_set`
 --
 
@@ -1691,13 +1716,23 @@ INSERT INTO `menu_material` (`menu_no`, `mat_item_no`, `quantity`) VALUES
 
 CREATE TABLE `promotion` (
   `promotion_no` int(11) NOT NULL,
-  `promotion_name` varchar(200) NOT NULL,
-  `promotion_desc` varchar(1000) NOT NULL,
+  `promotion_name_TH` varchar(200) NOT NULL,
+  `promotion_name_EN` varchar(200) NOT NULL,
+  `promotion_desc` varchar(1000) DEFAULT NULL,
+  `discount` double NOT NULL,
+  `promotion_pic_path` varchar(300) DEFAULT NULL,
   `from_date` date NOT NULL,
   `to_date` date NOT NULL,
-  `repeat` varchar(3) NOT NULL,
+  `day` varchar(3) NOT NULL,
   `available` tinyint(1) NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8;
+
+--
+-- Dumping data for table `promotion`
+--
+
+INSERT INTO `promotion` (`promotion_no`, `promotion_name_TH`, `promotion_name_EN`, `promotion_desc`, `discount`, `promotion_pic_path`, `from_date`, `to_date`, `day`, `available`) VALUES
+(10, 'ทดสอบ', 'ทดสอบ', 'Lorem IpsumLorem IpsumLorem IpsumLorem IpsumLorem IpsumLorem IpsumLorem IpsumLorem IpsumLorem IpsumLorem IpsumLorem IpsumLorem IpsumLorem IpsumLorem IpsumLorem IpsumLorem IpsumLorem IpsumLorem IpsumLorem IpsumLorem IpsumLorem IpsumLorem IpsumLorem IpsumLorem IpsumLorem IpsumLorem IpsumLorem IpsumLorem IpsumLorem IpsumLorem IpsumLorem IpsumLorem IpsumLorem IpsumLorem IpsumLorem IpsumLorem IpsumLorem IpsumLorem IpsumLorem IpsumLorem IpsumLorem IpsumLorem IpsumLorem IpsumLorem IpsumLorem IpsumLorem IpsumLorem IpsumLorem IpsumLorem IpsumLorem IpsumLorem IpsumLorem IpsumLorem IpsumLorem IpsumLorem IpsumLorem IpsumLorem IpsumLorem IpsumLorem IpsumLorem IpsumLorem IpsumLorem IpsumLorem Ipsum', 12, NULL, '2017-09-23', '2017-09-23', 'EVE', 1);
 
 -- --------------------------------------------------------
 
@@ -1805,21 +1840,18 @@ CREATE TABLE `reservation` (
   `date` date NOT NULL,
   `time` time NOT NULL,
   `number_of_person` int(11) NOT NULL,
-  `status` varchar(10) NOT NULL DEFAULT 'reserved' COMMENT 'reserved,arrived,cancelled',
   `user_name` varchar(100) DEFAULT NULL,
   `tel` varchar(20) DEFAULT NULL,
-  `user_no` int(11) DEFAULT NULL,
-  `branch_no` int(11) NOT NULL,
-  `bill_no` int(11) DEFAULT NULL,
-  `que_code` int(11) DEFAULT NULL
+  `branch_no` int(11) NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8;
 
 --
 -- Dumping data for table `reservation`
 --
 
-INSERT INTO `reservation` (`reserve_no`, `date`, `time`, `number_of_person`, `status`, `user_name`, `tel`, `user_no`, `branch_no`, `bill_no`, `que_code`) VALUES
-(7, '1996-04-09', '03:20:00', 1, 'reserved', 'คุณบิ๊กเฮ้ด', '0813026159', NULL, 1, NULL, NULL);
+INSERT INTO `reservation` (`reserve_no`, `date`, `time`, `number_of_person`, `user_name`, `tel`, `branch_no`) VALUES
+(7, '1996-04-09', '03:20:00', 1, 'คุณบิ๊กเฮ้ด', '0813026159', 1),
+(9, '2017-09-18', '00:30:00', 3, 'ทดสอบ', '0813026159', 1);
 
 -- --------------------------------------------------------
 
@@ -1829,16 +1861,19 @@ INSERT INTO `reservation` (`reserve_no`, `date`, `time`, `number_of_person`, `st
 
 CREATE TABLE `role` (
   `role_no` int(11) NOT NULL,
-  `role_name` varchar(100) NOT NULL
+  `role_name` varchar(100) NOT NULL,
+  `can_add` tinyint(1) NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8;
 
 --
 -- Dumping data for table `role`
 --
 
-INSERT INTO `role` (`role_no`, `role_name`) VALUES
-(1, 'manager'),
-(2, 'employee');
+INSERT INTO `role` (`role_no`, `role_name`, `can_add`) VALUES
+(1, 'แอดมิน', 1),
+(2, 'พนักงาน', 0),
+(3, 'พนักงานครัว', 1),
+(4, 'แคชเชียร์', 1);
 
 -- --------------------------------------------------------
 
@@ -18423,6 +18458,14 @@ ALTER TABLE `menu_group`
   ADD KEY `stock_cat_no` (`menu_cat_no`);
 
 --
+-- Indexes for table `menu_group_promotion`
+--
+ALTER TABLE `menu_group_promotion`
+  ADD PRIMARY KEY (`menu_group_no`,`promotion_no`),
+  ADD KEY `menu_group_no` (`menu_group_no`,`promotion_no`),
+  ADD KEY `promotion_no` (`promotion_no`);
+
+--
 -- Indexes for table `menu_in_set`
 --
 ALTER TABLE `menu_in_set`
@@ -18443,7 +18486,8 @@ ALTER TABLE `menu_material`
 -- Indexes for table `promotion`
 --
 ALTER TABLE `promotion`
-  ADD PRIMARY KEY (`promotion_no`);
+  ADD PRIMARY KEY (`promotion_no`),
+  ADD UNIQUE KEY `promotion_name_TH` (`promotion_name_TH`,`promotion_name_EN`);
 
 --
 -- Indexes for table `province`
@@ -18456,7 +18500,7 @@ ALTER TABLE `province`
 --
 ALTER TABLE `reservation`
   ADD PRIMARY KEY (`reserve_no`),
-  ADD KEY `user_no` (`user_no`,`branch_no`,`bill_no`);
+  ADD KEY `user_no` (`branch_no`);
 
 --
 -- Indexes for table `role`
@@ -18492,7 +18536,7 @@ ALTER TABLE `zipcode`
 -- AUTO_INCREMENT for table `addon`
 --
 ALTER TABLE `addon`
-  MODIFY `addOnNo` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=113;
+  MODIFY `addOnNo` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=90;
 --
 -- AUTO_INCREMENT for table `bill`
 --
@@ -18502,12 +18546,12 @@ ALTER TABLE `bill`
 -- AUTO_INCREMENT for table `branch`
 --
 ALTER TABLE `branch`
-  MODIFY `branch_no` int(8) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=5;
+  MODIFY `branch_no` int(8) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=4;
 --
 -- AUTO_INCREMENT for table `branch_user`
 --
 ALTER TABLE `branch_user`
-  MODIFY `branch_user_no` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=27;
+  MODIFY `branch_user_no` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=44;
 --
 -- AUTO_INCREMENT for table `customer_table`
 --
@@ -18522,7 +18566,7 @@ ALTER TABLE `district`
 -- AUTO_INCREMENT for table `employee`
 --
 ALTER TABLE `employee`
-  MODIFY `emp_no` int(8) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=25;
+  MODIFY `emp_no` int(8) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=27;
 --
 -- AUTO_INCREMENT for table `employee_pay`
 --
@@ -18552,7 +18596,7 @@ ALTER TABLE `material_category`
 -- AUTO_INCREMENT for table `material_history`
 --
 ALTER TABLE `material_history`
-  MODIFY `mat_hist_no` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=613;
+  MODIFY `mat_hist_no` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=622;
 --
 -- AUTO_INCREMENT for table `material_item`
 --
@@ -18582,7 +18626,7 @@ ALTER TABLE `menu_group`
 -- AUTO_INCREMENT for table `promotion`
 --
 ALTER TABLE `promotion`
-  MODIFY `promotion_no` int(11) NOT NULL AUTO_INCREMENT;
+  MODIFY `promotion_no` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=11;
 --
 -- AUTO_INCREMENT for table `province`
 --
@@ -18592,12 +18636,12 @@ ALTER TABLE `province`
 -- AUTO_INCREMENT for table `reservation`
 --
 ALTER TABLE `reservation`
-  MODIFY `reserve_no` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=9;
+  MODIFY `reserve_no` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=10;
 --
 -- AUTO_INCREMENT for table `role`
 --
 ALTER TABLE `role`
-  MODIFY `role_no` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=3;
+  MODIFY `role_no` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=5;
 --
 -- AUTO_INCREMENT for table `sub_district`
 --
@@ -18696,6 +18740,13 @@ ALTER TABLE `menu`
 --
 ALTER TABLE `menu_group`
   ADD CONSTRAINT `menu_group_ibfk_1` FOREIGN KEY (`menu_cat_no`) REFERENCES `menu_category` (`menu_cat_no`) ON DELETE CASCADE ON UPDATE CASCADE;
+
+--
+-- Constraints for table `menu_group_promotion`
+--
+ALTER TABLE `menu_group_promotion`
+  ADD CONSTRAINT `menu_group_promotion_ibfk_1` FOREIGN KEY (`menu_group_no`) REFERENCES `menu_group` (`menu_group_no`) ON DELETE CASCADE ON UPDATE CASCADE,
+  ADD CONSTRAINT `menu_group_promotion_ibfk_2` FOREIGN KEY (`promotion_no`) REFERENCES `promotion` (`promotion_no`) ON DELETE CASCADE ON UPDATE CASCADE;
 
 --
 -- Constraints for table `menu_in_set`

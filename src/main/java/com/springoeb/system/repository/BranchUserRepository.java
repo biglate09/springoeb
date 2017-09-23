@@ -14,4 +14,6 @@ public interface BranchUserRepository extends CrudRepository<BranchUser,Integer>
     BranchUser findByEmpNo(int empNo);
     List<BranchUser> findAll();
     List<BranchUser> findByPasswordIsNull();
+    List<BranchUser> findByBranchNoAndEmpNoIsNull(int branchNo);
+    void removeByBranchUserNoAndBranchNo(int memberNo,int branchNo);
 }

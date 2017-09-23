@@ -1,6 +1,7 @@
 package com.springoeb.menu.model;
 
 import com.fasterxml.jackson.annotation.JsonIgnore;
+import com.springoeb.promotion.model.MenuGroupPromotion;
 
 import javax.persistence.*;
 import java.io.Serializable;
@@ -17,6 +18,9 @@ public class MenuGroup implements Serializable {
     private String menuGroupNameEN;
     @Column(name = "menu_cat_no",insertable = true,updatable = true)
     private Integer menuCatNo;
+    @JsonIgnore
+    @OneToMany(fetch = FetchType.LAZY, mappedBy = "menuGroup")
+    private List<MenuGroupPromotion> menuGroupPromotions;
 
     public static final int ALL_GROUP = 0;
 
@@ -74,6 +78,14 @@ public class MenuGroup implements Serializable {
 
     public void setMenuCategory(MenuCategory menuCategory) {
         this.menuCategory = menuCategory;
+    }
+
+    public List<MenuGroupPromotion> getMenuGroupPromotions() {
+        return menuGroupPromotions;
+    }
+
+    public void setMenuGroupPromotions(List<MenuGroupPromotion> menuGroupPromotions) {
+        this.menuGroupPromotions = menuGroupPromotions;
     }
 
     @Override

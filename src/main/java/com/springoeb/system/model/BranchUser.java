@@ -18,6 +18,7 @@ public class BranchUser {
     private String sentEmail;
     @Column(name = "branch_no", updatable = true,insertable = true)
     private Integer branchNo;
+    @Column(name = "role_no", updatable = true,insertable = true)
     private Integer roleNo;
     @Column(name = "emp_no", updatable = true,insertable = true)
     private Integer empNo;
@@ -25,6 +26,10 @@ public class BranchUser {
     @ManyToOne
     @JoinColumn(name = "branch_no",updatable = false,insertable = false)
     private Branch branch;
+
+    @ManyToOne
+    @JoinColumn(name = "role_no",updatable = false,insertable = false)
+    private Role role;
 
     @JsonBackReference
     @OneToOne(cascade = CascadeType.ALL)
@@ -101,5 +106,13 @@ public class BranchUser {
 
     public void setSentEmail(String sentEmail) {
         this.sentEmail = sentEmail;
+    }
+
+    public Role getRole() {
+        return role;
+    }
+
+    public void setRole(Role role) {
+        this.role = role;
     }
 }
