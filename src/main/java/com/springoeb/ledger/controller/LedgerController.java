@@ -2,13 +2,20 @@ package com.springoeb.ledger.controller;
 
 import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.databind.ObjectMapper;
+import com.springoeb.ledger.model.Ledger;
 import com.springoeb.ledger.model.LedgerType;
+import com.springoeb.ledger.service.LedgerService;
 import com.springoeb.ledger.service.LedgerTypeService;
+import com.springoeb.system.model.BranchUser;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
+import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
 
+import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpSession;
 import javax.transaction.Transactional;
+import java.sql.Date;
 import java.util.List;
 
 @RequestMapping("/ledger")
@@ -17,6 +24,8 @@ public class LedgerController {
     private static final String LEDGER_PATH = "/WEB-INF/ledger/";
     @Autowired
     private LedgerTypeService ledgerTypeService;
+    @Autowired
+    private LedgerService ledgerService;
 
     //-----------------------------------------------------------------------------------------------------------//
     @GetMapping("/ledgertype")
@@ -57,8 +66,57 @@ public class LedgerController {
     }
     //-----------------------------------------------------------------------------------------------------------//
     @GetMapping("/ledger")
-    public String toLedgerIndex(){
+    public String toLedgerIndex(Model model){
+        model.addAttribute("ledgerType",ledgerTypeService.findAllNotDefault());
         return LEDGER_PATH + "ledger.jsp";
+    }
+
+    @PostMapping("/getledgers")
+    @ResponseBody
+    public String getLedgers(HttpSession session) throws JsonProcessingException {
+        int branchNo = ((BranchUser)(session.getAttribute("branchUser"))).getBranchNo();
+        List<Ledger> ledgers = ledgerService.findByBranchNo(branchNo);
+        ObjectMapper mapper = new ObjectMapper();
+        String json = mapper.writeValueAsString(ledgers);
+        return json;
+    }
+
+    @Transactional
+    @DeleteMapping("/deleteledger/{ledgerNo}")
+    @ResponseBody
+    public void deleteLedger(@PathVariable("ledgerNo") int ledgerNo,HttpSession session){
+        int branchNo = ((BranchUser)(session.getAttribute("branchUser"))).getBranchNo();
+        ledgerService.removeByLedgerNoAndBranchNo(ledgerNo,branchNo);
+    }
+
+    @PostMapping("/manageledger")
+    @ResponseBody
+    public void manageLedger(@ModelAttribute("ledger") Ledger ledger, HttpSession session, HttpServletRequest request){
+        int branchNo = ((BranchUser)(session.getAttribute("branchUser"))).getBranchNo();
+        String date = request.getParameter("date_unformat");
+        LedgerType ledgerType = ledgerTypeService.findByLedgerTypeNo(ledger.getLedgerTypeNo());
+        if(ledgerType.getLedgerPayNo() == LedgerType.EXPENSE){
+            ledger.setAmount(-1 * ledger.getAmount());
+        }
+        ledger.setDate(Date.valueOf(date.substring(6, 10) + "-" + date.substring(3, 5) + "-" + date.substring(0, 2)));
+        ledger.setBranchNo(branchNo);
+        ledgerService.save(ledger);
+    }
+
+    @PutMapping("/getledger/{ledgerNo}")
+    @ResponseBody
+    public String getLedger(@PathVariable("ledgerNo") int ledgerNo) throws JsonProcessingException {
+        Ledger ledger = ledgerService.findByLedgerNo(ledgerNo);
+        ObjectMapper mapper = new ObjectMapper();
+        String json = mapper.writeValueAsString(ledger);
+        return json;
+    }
+
+    @PostMapping("/summaryledger")
+    @ResponseBody
+    public void summaryLedger(HttpSession session){
+        int branchNo = ((BranchUser)(session.getAttribute("branchUser"))).getBranchNo();
+
     }
     //-----------------------------------------------------------------------------------------------------------//
 }
