@@ -898,13 +898,14 @@
         }
     }
 
+
 </script>
 
 <style>
     .thumbnail_inline {
         height: 250px !important;
     }
-    .thumbnail_list {
+    .thumbnail_inline_list {
         height: 200px !important;
     }
     .description{
