@@ -38,13 +38,16 @@
                             <ul class="nav child_menu">
                                 <c:if test="${branchUser.roleNo == Role.MANAGER}">
                                     <li><a id="empdata" href="${contextPath}/employee/index">ข้อมูลพนักงาน</a></li>
+                                </c:if>
+                                <c:if test="${branchUser.roleNo == Role.MANAGER}">
                                     <li><a id="emppos" href="${contextPath}/employee/position">ตำแหน่งพนักงาน</a></li>
                                 </c:if>
                                 <li><a id="emptable" href="${contextPath}/employee/table">ตารางการทำงาน</a></li>
-                                <li><a id="workhist" href="${contextPath}/employee/workhistory">ประวัติการทำงาน</a></li>
                                 <c:if test="${branchUser.roleNo == Role.MANAGER}">
-                                    <li><a id="emppaid" href="${contextPath}/employee/pay">จ่ายเงินพนักงาน</a></li>
+                                    <li><a id="workhist" href="${contextPath}/employee/workhistory">ประวัติการทำงาน</a>
+                                    </li>
                                 </c:if>
+                                <li><a id="emppaid" href="${contextPath}/employee/pay">${branchUser.roleNo == Role.EMPLOYEE ? 'ประวัติการทำงาน' : 'จ่ายเงินพนักงาน'}</a></li>
                                 <li><a id="empcheck" href="${contextPath}/employee/check">เช็คชื่อพนักงาน</a></li>
                             </ul>
                         </li>

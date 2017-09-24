@@ -145,8 +145,9 @@ public class EmployeeController {
     @PostMapping("/ajax/getemployees")
     @ResponseBody
     public String getJsonEmployees(HttpSession session) throws JsonProcessingException {
-        int branchNo = ((BranchUser) (session.getAttribute("branchUser"))).getBranchNo();
-        List<Employee> employee = employeeService.findByBranchNo(branchNo);
+        BranchUser branchUser = (BranchUser) (session.getAttribute("branchUser"));
+        int branchNo = branchUser.getBranchNo();
+        List<Employee> employee = branchUser.getRoleNo() == Role.EMPLOYEE ? employeeService.findByEmpNoReturnList(branchUser.getEmpNo()) : employeeService.findByBranchNo(branchNo);
         ObjectMapper mapper = new ObjectMapper();
         String json = mapper.writeValueAsString(employee);
         return json;

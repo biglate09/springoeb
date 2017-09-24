@@ -44,7 +44,8 @@
                                     </div>
                                     <div class="control-group col-md-12">
                                         <form id="filterdate" method="POST">
-                                            <input type="hidden" name="empNo" value="${branchUser.empNo != null ? branchUser.empNo : ''}">
+                                            <input type="hidden" name="empNo"
+                                                   value="${branchUser.empNo != null ? branchUser.empNo : ''}">
                                             <div class="col-md-offset-4 col-md-3" style="padding-right:0px;">
                                                 <input type="text" name="filterdate" id="test"
                                                        class="form-control" required>
@@ -53,14 +54,14 @@
                                                 <button class="btn btn-default"
                                                         type="submit"
                                                         id="css-irow">
-                                                        <i class="glyphicon glyphicon-search fa fa-search"></i>
-                                                        ค้นหา
+                                                    <i class="glyphicon glyphicon-search fa fa-search"></i>
+                                                    ค้นหา
                                                 </button>
                                             </div>
                                         </form>
                                     </div>
                                     <div class="col-md-12">
-                                        <p style="text-align:center;" id="sumofpay"></p>
+                                        <p style="text-align:center;margin-top:10px;" id="sumofpay"></p>
                                     </div>
                                 </div>
                             </div>

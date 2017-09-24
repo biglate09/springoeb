@@ -17,5 +17,6 @@ public interface EmployeeRepository extends CrudRepository<Employee,Integer>{
     void removeByEmpNoAndBranchNo(int empNo,int branchNo);
     Employee findByEmpNoAndBranchNo(int empNo,int branchNo);
     Employee findByEmpNo(int empNo);
+    List<Employee> findAllByEmpNo(int empNo);
     List<Employee> findByEmpNameIgnoreCaseAndBranchNo(String empName,int branchNo);
 }

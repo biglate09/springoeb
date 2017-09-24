@@ -49,4 +49,8 @@ public class EmployeeService {
     public Employee findByEmpNo(int empNo){
         return employeeRepository.findByEmpNo(empNo);
     }
+
+    public List<Employee> findByEmpNoReturnList(int empNo){
+        return employeeRepository.findAllByEmpNo(empNo);
+    }
 }

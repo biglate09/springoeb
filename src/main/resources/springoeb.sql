@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Host: 127.0.0.1
--- Generation Time: Sep 23, 2017 at 08:47 AM
+-- Generation Time: Sep 24, 2017 at 12:52 PM
 -- Server version: 10.1.21-MariaDB
 -- PHP Version: 5.6.30
 
@@ -33,87 +33,6 @@ CREATE TABLE `addon` (
   `qty` int(11) DEFAULT NULL,
   `price` int(11) DEFAULT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=latin1;
-
---
--- Dumping data for table `addon`
---
-
-INSERT INTO `addon` (`addOnNo`, `menuNo`, `matNo`, `qty`, `price`) VALUES
-(1, 44, 27, 2, 0),
-(2, 44, 28, 2, 0),
-(3, 44, 29, 2, 0),
-(4, 35, 4, 2, 15),
-(5, 44, 3, 2, 15),
-(6, 45, 3, 2, 15),
-(7, 45, 27, 2, 0),
-(8, 45, 28, 2, 0),
-(9, 45, 29, 2, 0),
-(10, 54, 16, 2, 5),
-(11, 54, 18, 2, 5),
-(12, 54, 20, 2, 5),
-(13, 54, 21, 2, 5),
-(14, 54, 22, 2, 5),
-(15, 55, 73, 3, 5),
-(16, 55, 74, 3, 5),
-(17, 55, 92, 3, 5),
-(18, 56, 8, 2, 10),
-(19, 56, 9, 1, 5),
-(20, 56, 17, 2, 0),
-(21, 56, 19, 2, 0),
-(22, 56, 2, 2, 5),
-(23, 56, 73, 3, 5),
-(24, 56, 74, 3, 5),
-(25, 56, 92, 3, 5),
-(26, 57, 18, 2, 0),
-(27, 57, 29, 2, 0),
-(28, 57, 74, 3, 5),
-(29, 57, 76, 2, 5),
-(30, 59, 4, 2, 15),
-(31, 60, 6, 2, 10),
-(32, 60, 75, 3, 10),
-(33, 61, 2, 2, 10),
-(34, 61, 75, 3, 10),
-(35, 62, 3, 2, 15),
-(36, 62, 75, 3, 10),
-(37, 63, 3, 2, 15),
-(38, 63, 9, 1, 5),
-(39, 63, 75, 3, 10),
-(40, 64, 5, 2, 10),
-(41, 64, 9, 1, 5),
-(42, 64, 75, 3, 10),
-(43, 65, 2, 2, 10),
-(44, 65, 9, 1, 5),
-(45, 65, 75, 3, 10),
-(46, 66, 31, 2, 10),
-(47, 67, 1, 2, 10),
-(48, 67, 3, 2, 15),
-(49, 68, 3, 2, 15),
-(50, 68, 92, 3, 10),
-(51, 69, 1, 2, 10),
-(52, 69, 92, 3, 10),
-(53, 70, 1, 2, 10),
-(54, 70, 73, 3, 10),
-(55, 71, 5, 3, 15),
-(56, 72, 16, 2, 0),
-(57, 72, 24, 2, 0),
-(58, 72, 97, 2, 15),
-(73, 73, 7, 2, 15),
-(74, 73, 102, 2, 10),
-(75, 73, 103, 2, 0),
-(76, 73, 104, 2, 0),
-(77, 74, 1, 2, 10),
-(78, 74, 7, 2, 15),
-(79, 74, 6, 2, 10),
-(80, 75, 1, 2, 10),
-(81, 75, 2, 2, 10),
-(82, 75, 5, 2, 10),
-(83, 75, 8, 2, 15),
-(84, 75, 9, 1, 5),
-(85, 75, 12, 2, 15),
-(86, 76, 1, 2, 10),
-(87, 76, 75, 3, 10),
-(88, 76, 94, 2, 10),
-(89, 76, 95, 2, 10);
 
 -- --------------------------------------------------------
 
@@ -151,7 +70,7 @@ CREATE TABLE `branch` (
   `line` varchar(30) DEFAULT NULL,
   `fb` varchar(100) DEFAULT NULL,
   `has_admin` tinyint(1) NOT NULL
-) ENGINE=InnoDB DEFAULT CHARSET=utf8;
+) ENGINE=InnoDB DEFAULT CHARSET=utf8 ROW_FORMAT=COMPACT;
 
 --
 -- Dumping data for table `branch`
@@ -160,7 +79,7 @@ CREATE TABLE `branch` (
 INSERT INTO `branch` (`branch_no`, `branch_name`, `branch_desc`, `address_name`, `district_no`, `sub_district_no`, `road`, `province_no`, `zip_no`, `tel`, `line`, `fb`, `has_admin`) VALUES
 (1, 'บางแสน', 'ทดสอบ', '1/350', 185, 1495, 'พุทธบูชา 36', 15, 1290, '0813026159', 'Line', 'fb.com/xxxx', 1),
 (2, 'บางแค', '', '', 0, 0, '', 0, 0, '', '', '', 1),
-(3, 'เอกมัย', '', '', 0, 0, '', 0, 0, '', '', '', 1);
+(3, 'เอกมัย', NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, 0);
 
 -- --------------------------------------------------------
 
@@ -179,29 +98,75 @@ CREATE TABLE `branch_menu` (
 --
 
 INSERT INTO `branch_menu` (`branch_no`, `menu_no`, `available`) VALUES
+(1, 1, 1),
+(1, 2, 1),
+(1, 3, 1),
+(1, 4, 1),
+(1, 5, 0),
+(1, 6, 1),
+(1, 7, 1),
+(1, 8, 1),
+(1, 9, 1),
+(1, 10, 0),
+(1, 11, 0),
+(1, 12, 0),
+(1, 13, 0),
 (1, 14, 1),
 (1, 15, 0),
 (1, 16, 1),
-(1, 17, 1),
-(1, 18, 1),
+(1, 17, 0),
+(1, 18, 0),
 (1, 19, 1),
+(1, 20, 0),
 (1, 21, 1),
-(2, 14, 1),
-(2, 15, 1),
-(2, 16, 1),
+(1, 22, 0),
+(1, 23, 0),
+(1, 24, 1),
+(1, 25, 0),
+(2, 1, 0),
+(2, 2, 0),
+(2, 3, 0),
+(2, 4, 0),
+(2, 5, 0),
+(2, 6, 0),
+(2, 7, 0),
+(2, 8, 0),
+(2, 9, 0),
+(2, 10, 0),
+(2, 11, 0),
+(2, 12, 0),
+(2, 13, 0),
+(2, 14, 0),
+(2, 15, 0),
+(2, 16, 0),
 (2, 17, 0),
 (2, 18, 0),
-(2, 19, 0),
 (2, 21, 0),
 (2, 22, 0),
 (2, 23, 0),
+(2, 25, 0),
+(3, 1, 0),
+(3, 2, 0),
+(3, 3, 0),
+(3, 4, 0),
+(3, 5, 0),
+(3, 6, 0),
+(3, 7, 0),
+(3, 8, 0),
+(3, 9, 0),
+(3, 10, 0),
+(3, 11, 0),
+(3, 12, 0),
+(3, 13, 0),
 (3, 14, 0),
 (3, 15, 0),
 (3, 16, 0),
 (3, 17, 0),
 (3, 18, 0),
-(3, 19, 0),
-(3, 21, 0);
+(3, 21, 0),
+(3, 22, 0),
+(3, 23, 0),
+(3, 25, 0);
 
 -- --------------------------------------------------------
 
@@ -226,8 +191,10 @@ CREATE TABLE `branch_user` (
 INSERT INTO `branch_user` (`branch_user_no`, `username`, `password`, `sent_email`, `branch_no`, `role_no`, `emp_no`) VALUES
 (1, 'kopihub-master', '$2a$10$lV/4TymNZz6erniQcpTS/eckz8XfeYtD21jHQAfCNo9pPASpWmLue', NULL, 1, 1, NULL),
 (2, 'kopihub-bangkae', '$2a$10$T6iCPE2YKLr/C/5p5myUZeVgprGzHaNHvdm4JBQy/WzIVgV8zqBPK', NULL, 2, 1, NULL),
-(3, 'kopihub-ekkamai', '$2a$10$./rT3rhc13NT1p0yRfZP7.OmdT780bTdLPmveX8oh3UzrSFN6Sg5C', NULL, 3, 1, NULL),
-(28, 'bighead09', '$2a$10$pzIWPa5tktHfc2iAEONZFexcintCHTVaR1jrA0D32GmCnozSc/30C', 'biglate_09@hotmail.com', 1, 2, 26);
+(4, 'biglate09', '$2a$10$/Zh.BVqymXK1PA.u5YC5iuzapnsvb3Hiq3eSulQK.BqGRPoLnntlG', 'biglate_09@hotmail.com', 1, 2, 1),
+(5, 'kopihub-ekkamai', NULL, 'biglate_09@hotmail.com', 3, 1, NULL),
+(6, 'kitchen-master', '$2a$10$WSEA2zL36FEtd5olRniWreH065AY3md48anYLWThuvsR6u91vMqPC', NULL, 1, 3, NULL),
+(7, 'cashier-master', '$2a$10$6MO6fcHstNNf7.vRv7QDSOErGmq9cd4eph2uUriMlBJVQ5xkNuaQa', NULL, 1, 4, NULL);
 
 -- --------------------------------------------------------
 
@@ -242,23 +209,6 @@ CREATE TABLE `customer_table` (
   `is_available` tinyint(1) NOT NULL,
   `branch_no` int(11) NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8;
-
---
--- Dumping data for table `customer_table`
---
-
-INSERT INTO `customer_table` (`table_no`, `table_name`, `seat_amount`, `is_available`, `branch_no`) VALUES
-(14, 'โต๊ะที่ 1', 2, 1, 1),
-(16, 'โต๊ะที่ 3', 2, 1, 1),
-(17, 'โต๊ะที่ 4', 2, 1, 1),
-(18, 'โต๊ะที่ 5', 2, 1, 1),
-(19, 'โต๊ะที่ 6', 2, 1, 1),
-(20, 'โต๊ะที่ 7', 2, 1, 1),
-(21, 'โต๊ะที่ 8', 2, 1, 1),
-(22, 'โต๊ะที่ 9', 2, 1, 1),
-(23, 'โต๊ะที่ 10', 2, 1, 1),
-(24, 'โต๊ะที่ 11', 2, 1, 1),
-(25, 'โต๊ะที่ 12', 2, 1, 1);
 
 -- --------------------------------------------------------
 
@@ -1302,8 +1252,9 @@ CREATE TABLE `employee` (
 --
 
 INSERT INTO `employee` (`emp_no`, `emp_name`, `emp_tel`, `emp_gender`, `emp_type`, `pay_type`, `pay`, `email`, `bg_color`, `font_color`, `branch_no`) VALUES
-(23, 'เป้', '0851131980', 'M', '1', '1', 30.00, 'nirun0851131980@hotmail.com', '#000000', '#ffffff', 1),
-(26, 'BigHEAD', '0813026159', 'M', '1', '1', 30.00, 'biglate_09@hotmail.com', '#000000', '#ffffff', 1);
+(1, 'บิ๊ก', '0813026159', 'M', '1', '1', 35.00, 'biglate_09@hotmail.com', '#ff9300', '#ffffff', 1),
+(3, 'นิ้ง', '0933166336', 'F', '1', '2', 300.00, 'ning_lazy39@hotmail.com', '#ff0000', '#ffffff', 1),
+(4, 'นนท์', '0877766778', 'M', '1', '1', 30.00, 'natthanon@hotmail.com', '#000000', '#ffffff', 1);
 
 -- --------------------------------------------------------
 
@@ -1335,10 +1286,12 @@ CREATE TABLE `employee_position` (
 
 INSERT INTO `employee_position` (`emp_pos_no`, `emp_pos_name`) VALUES
 (1, 'พนักงานเสิร์ฟ'),
-(2, 'กุ๊ก'),
-(3, 'เชฟ'),
-(4, 'เคาน์เตอร์'),
-(5, 'พนักงานต้อนรับ');
+(2, 'แคชเชียร์'),
+(3, 'พ่อครัว / แม่ครัว'),
+(4, 'ผู้ช่วยครัว'),
+(5, 'พนักงานต้อนรับ'),
+(6, 'ล้างจาน'),
+(7, 'พนักงานทำความสะอาด');
 
 -- --------------------------------------------------------
 
@@ -1353,6 +1306,33 @@ CREATE TABLE `employee_table` (
   `time_end` time NOT NULL,
   `emp_pos_no` int(8) DEFAULT NULL,
   `emp_no` int(8) NOT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=utf8;
+
+--
+-- Dumping data for table `employee_table`
+--
+
+INSERT INTO `employee_table` (`emp_time_no`, `date`, `time_start`, `time_end`, `emp_pos_no`, `emp_no`) VALUES
+(1, '2017-09-25', '00:00:00', '00:00:00', 1, 1),
+(2, '2017-09-25', '18:00:00', '18:00:00', 2, 3),
+(3, '2017-09-25', '18:00:00', '18:00:00', 3, 4),
+(4, '2017-09-24', '00:00:00', '00:00:00', 1, 1),
+(5, '2017-09-24', '00:00:00', '00:00:00', 1, 3);
+
+-- --------------------------------------------------------
+
+--
+-- Table structure for table `ledger`
+--
+
+CREATE TABLE `ledger` (
+  `ledger_no` int(11) NOT NULL,
+  `ledger_name` varchar(200) NOT NULL,
+  `ledger_desc` varchar(500) DEFAULT NULL,
+  `ledger_type_no` int(11) NOT NULL,
+  `amount` double NOT NULL,
+  `date` date NOT NULL,
+  `branch_no` int(11) NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8;
 
 -- --------------------------------------------------------
@@ -1385,16 +1365,14 @@ CREATE TABLE `ledger_type` (
   `ledger_type_name` varchar(100) NOT NULL,
   `default_type` tinyint(1) NOT NULL,
   `ledger_pay_no` int(11) NOT NULL COMMENT '1 = income , 2 = expense'
-) ENGINE=InnoDB DEFAULT CHARSET=utf8;
+) ENGINE=InnoDB DEFAULT CHARSET=utf8 ROW_FORMAT=COMPACT;
 
 --
 -- Dumping data for table `ledger_type`
 --
 
 INSERT INTO `ledger_type` (`ledger_type_no`, `ledger_type_name`, `default_type`, `ledger_pay_no`) VALUES
-(4, 'ทดสอบ', 0, 2),
-(5, 'ค่าน้ำ', 0, 2),
-(6, 'ค่าพนักงาน', 0, 2);
+(1, 'ค่าเช่าร้าน', 0, 2);
 
 -- --------------------------------------------------------
 
@@ -1405,18 +1383,7 @@ INSERT INTO `ledger_type` (`ledger_type_no`, `ledger_type_name`, `default_type`,
 CREATE TABLE `material_category` (
   `mat_cat_no` int(11) NOT NULL,
   `mat_cat_name` varchar(200) NOT NULL
-) ENGINE=InnoDB DEFAULT CHARSET=utf8;
-
---
--- Dumping data for table `material_category`
---
-
-INSERT INTO `material_category` (`mat_cat_no`, `mat_cat_name`) VALUES
-(2, 'แป้ง'),
-(3, 'เนื้อสัตว์'),
-(4, 'ผัก'),
-(5, 'เครื่องปรุงพิเศษ'),
-(6, 'น้ำมัน');
+) ENGINE=InnoDB DEFAULT CHARSET=utf8 ROW_FORMAT=COMPACT;
 
 -- --------------------------------------------------------
 
@@ -1438,67 +1405,6 @@ CREATE TABLE `material_history` (
   `of_mat_hist_no` int(11) DEFAULT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8;
 
---
--- Dumping data for table `material_history`
---
-
-INSERT INTO `material_history` (`mat_hist_no`, `mat_name`, `mat_quantity`, `date`, `time`, `importer`, `supplier`, `price`, `mat_item_no`, `branch_no`, `of_mat_hist_no`) VALUES
-(567, 'หมูแดง', 20, '2017-09-17', '14:49:57', 'แอดมินสาขา', 'ทดสอบ', 30, 9, 1, NULL),
-(568, 'หมูแดง', -10, '2017-09-17', '14:49:57', 'แอดมินสาขา', NULL, NULL, 9, 1, NULL),
-(569, 'หมูแดง', 80, '2017-09-17', '14:50:32', 'แอดมินสาขา', NULL, 50, 9, 1, NULL),
-(570, 'น้ำมันพืช', 20, '2017-09-17', '19:05:06', 'แอดมินสาขา', 'ทดสอบ', 20, 10, 1, NULL),
-(571, 'น้ำมันพืช', 100, '2017-09-18', '13:49:41', 'แอดมินสาขา', 'เจ๊จิ๋ม', 200, 10, 1, NULL),
-(572, 'น้ำมันพืช', -20, '2017-09-18', '13:49:41', 'แอดมินสาขา', NULL, NULL, 10, 1, NULL),
-(573, 'แป้งซาลาเปาหมูแดงทอด', 25, '2017-09-18', '13:55:41', 'แอดมินสาขา', 'A', 25, 13, 1, NULL),
-(574, 'น้ำมันพืช', -5, '2017-09-18', '13:55:41', NULL, NULL, NULL, 10, 1, 573),
-(575, 'แป้งข้าวเจ้า', -10, '2017-09-18', '13:55:41', NULL, NULL, NULL, 11, 1, 573),
-(576, 'น้ำสต็อก', -20, '2017-09-18', '13:55:41', NULL, NULL, NULL, 12, 1, 573),
-(577, 'ส่วนผสมอีกที', -10, '2017-09-18', '13:55:41', NULL, NULL, NULL, 15, 1, 573),
-(578, 'น้ำสต็อก', 20, '2017-09-18', '17:34:13', 'แอดมินสาขา', NULL, 200, 12, 1, NULL),
-(579, 'แป้งข้าวเจ้า', -90, '2017-09-18', '17:34:19', 'แอดมินสาขา', NULL, NULL, 11, 1, NULL),
-(580, 'แป้งข้าวเจ้า', -2, '2017-09-18', '17:45:53', 'แอดมินสาขา', NULL, NULL, 11, 1, NULL),
-(581, 'แป้งข้าวเจ้า', 200, '2017-09-18', '17:49:00', 'แอดมินสาขา', 'A', 200, 11, 1, NULL),
-(582, 'ส่วนผสมอีกที', -90, '2017-09-18', '17:51:34', 'แอดมินสาขา', NULL, NULL, 15, 1, NULL),
-(583, 'น้ำสต็อก', -200, '2017-09-18', '17:51:51', 'แอดมินสาขา', NULL, NULL, 12, 1, NULL),
-(584, 'ไข่', -20, '2017-09-18', '18:05:41', 'แอดมินสาขา', NULL, NULL, 14, 1, NULL),
-(585, 'หมูแดง', -10, '2017-09-18', '18:07:08', 'แอดมินสาขา', NULL, NULL, 9, 1, NULL),
-(586, 'น้ำสต็อก', 20, '2017-09-18', '18:07:41', 'แอดมินสาขา', 'A', 50, 12, 1, NULL),
-(587, 'ส่วนผสมอีกที', 20, '2017-09-18', '18:21:35', 'แอดมินสาขา', NULL, NULL, 15, 1, NULL),
-(588, 'น้ำมันพืช', -60, '2017-09-18', '18:21:35', NULL, NULL, NULL, 10, 1, 587),
-(589, 'น้ำสต็อก', -40, '2017-09-18', '18:21:35', NULL, NULL, NULL, 12, 1, 587),
-(590, 'ส่วนผสมอีกที', 50, '2017-09-18', '18:25:43', 'แอดมินสาขา', NULL, NULL, 15, 1, NULL),
-(591, 'น้ำมันพืช', -150, '2017-09-18', '18:25:43', NULL, NULL, NULL, 10, 1, 590),
-(592, 'น้ำสต็อก', -100, '2017-09-18', '18:25:43', NULL, NULL, NULL, 12, 1, 590),
-(593, 'แป้งซาลาเปาหมูแดงทอด', -25, '2017-09-18', '18:25:58', 'แอดมินสาขา', NULL, NULL, 13, 1, NULL),
-(594, 'แป้งซาลาเปาหมูแดงทอด', 100, '2017-09-18', '18:26:03', 'แอดมินสาขา', NULL, NULL, 13, 1, NULL),
-(595, 'น้ำมันพืช', -20, '2017-09-18', '18:26:03', NULL, NULL, NULL, 10, 1, 594),
-(596, 'แป้งข้าวเจ้า', -40, '2017-09-18', '18:26:03', NULL, NULL, NULL, 11, 1, 594),
-(597, 'น้ำสต็อก', -80, '2017-09-18', '18:26:03', NULL, NULL, NULL, 12, 1, 594),
-(598, 'ส่วนผสมอีกที', -40, '2017-09-18', '18:26:03', NULL, NULL, NULL, 15, 1, 594),
-(599, 'น้ำสต็อก', -20, '2017-09-18', '18:30:02', 'แอดมินสาขา', NULL, NULL, 12, 1, NULL),
-(600, 'น้ำมันพืช', -15, '2017-09-18', '18:30:06', 'แอดมินสาขา', NULL, NULL, 10, 1, NULL),
-(601, 'น้ำสต็อก', 420, '2017-09-18', '18:30:16', 'แอดมินสาขา', 'A', 20, 12, 1, NULL),
-(602, 'ส่วนผสมอีกที', 70, '2017-09-18', '18:30:24', 'แอดมินสาขา', NULL, NULL, 15, 1, NULL),
-(603, 'น้ำมันพืช', -210, '2017-09-18', '18:30:24', NULL, NULL, NULL, 10, 1, 602),
-(604, 'น้ำสต็อก', -140, '2017-09-18', '18:30:24', NULL, NULL, NULL, 12, 1, 602),
-(605, 'น้ำมันพืช', -200, '2017-09-18', '18:30:59', 'แอดมินสาขา', NULL, NULL, 10, 1, NULL),
-(606, 'น้ำมันพืช', 560, '2017-09-18', '18:31:16', 'แอดมินสาขา', 'A', 20, 10, 1, NULL),
-(607, 'แป้งซาลาเปาหมูแดงทอด', 40, '2017-09-18', '18:31:26', 'แอดมินสาขา', NULL, NULL, 13, 1, NULL),
-(608, 'น้ำมันพืช', -8, '2017-09-18', '18:31:26', NULL, NULL, NULL, 10, 1, 607),
-(609, 'แป้งข้าวเจ้า', -16, '2017-09-18', '18:31:26', NULL, NULL, NULL, 11, 1, 607),
-(610, 'น้ำสต็อก', -32, '2017-09-18', '18:31:26', NULL, NULL, NULL, 12, 1, 607),
-(611, 'ส่วนผสมอีกที', -16, '2017-09-18', '18:31:26', NULL, NULL, NULL, 15, 1, 607),
-(612, 'แป้งซาลาเปาหมูแดงทอด', -20, '2017-09-18', '18:31:26', 'แอดมินสาขา', NULL, NULL, 13, 1, NULL),
-(613, 'แป้งซาลาเปาหมูแดงทอด', 80, '2017-09-18', '18:37:19', 'แอดมินสาขา', NULL, NULL, 13, 1, NULL),
-(614, 'น้ำมันพืช', -16, '2017-09-18', '18:37:19', NULL, NULL, NULL, 10, 1, 613),
-(615, 'แป้งข้าวเจ้า', -32, '2017-09-18', '18:37:19', NULL, NULL, NULL, 11, 1, 613),
-(616, 'น้ำสต็อก', -64, '2017-09-18', '18:37:19', NULL, NULL, NULL, 12, 1, 613),
-(617, 'ส่วนผสมอีกที', -32, '2017-09-18', '18:37:19', NULL, NULL, NULL, 15, 1, 613),
-(618, 'แป้งซาลาเปาหมูแดงทอด', -100, '2017-09-18', '18:37:24', 'แอดมินสาขา', NULL, NULL, 13, 1, NULL),
-(619, 'ส่วนผสมอีกที', 30, '2017-09-18', '18:47:26', 'แอดมินสาขา', NULL, NULL, 15, 1, NULL),
-(620, 'น้ำมันพืช', -90, '2017-09-18', '18:47:26', NULL, NULL, NULL, 10, 1, 619),
-(621, 'น้ำสต็อก', -60, '2017-09-18', '18:47:26', NULL, NULL, NULL, 12, 1, 619);
-
 -- --------------------------------------------------------
 
 --
@@ -1512,20 +1418,7 @@ CREATE TABLE `material_item` (
   `mat_flag` varchar(1) NOT NULL COMMENT 'I = item, M = mixed product',
   `mat_cat_no` int(11) NOT NULL,
   `unit_no` int(11) NOT NULL
-) ENGINE=InnoDB DEFAULT CHARSET=utf8;
-
---
--- Dumping data for table `material_item`
---
-
-INSERT INTO `material_item` (`mat_item_no`, `mat_item_name`, `quantity`, `mat_flag`, `mat_cat_no`, `unit_no`) VALUES
-(9, 'หมูแดง', 1, 'I', 3, 2),
-(10, 'น้ำมันพืช', 1, 'I', 6, 3),
-(11, 'แป้งข้าวเจ้า', 1, 'I', 2, 2),
-(12, 'น้ำสต็อก', 1, 'I', 5, 3),
-(13, 'แป้งซาลาเปาหมูแดงทอด', 25, 'M', 2, 2),
-(14, 'ไข่', 1, 'I', 3, 2),
-(15, 'ส่วนผสมอีกที', 10, 'M', 2, 2);
+) ENGINE=InnoDB DEFAULT CHARSET=utf8 ROW_FORMAT=COMPACT;
 
 -- --------------------------------------------------------
 
@@ -1539,18 +1432,6 @@ CREATE TABLE `material_mixed` (
   `quantity` double NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8;
 
---
--- Dumping data for table `material_mixed`
---
-
-INSERT INTO `material_mixed` (`mixed_prod_no`, `item_no`, `quantity`) VALUES
-(13, 10, 5),
-(13, 11, 10),
-(13, 12, 20),
-(13, 15, 10),
-(15, 10, 30),
-(15, 12, 20);
-
 -- --------------------------------------------------------
 
 --
@@ -1560,15 +1441,7 @@ INSERT INTO `material_mixed` (`mixed_prod_no`, `item_no`, `quantity`) VALUES
 CREATE TABLE `material_unit` (
   `unit_no` int(11) NOT NULL,
   `unit_name` varchar(100) NOT NULL
-) ENGINE=InnoDB DEFAULT CHARSET=utf8;
-
---
--- Dumping data for table `material_unit`
---
-
-INSERT INTO `material_unit` (`unit_no`, `unit_name`) VALUES
-(2, 'กรัม'),
-(3, 'มิลลิลิตร');
+) ENGINE=InnoDB DEFAULT CHARSET=utf8 ROW_FORMAT=COMPACT;
 
 -- --------------------------------------------------------
 
@@ -1586,22 +1459,38 @@ CREATE TABLE `menu` (
   `menu_flag` varchar(1) NOT NULL COMMENT 'M = menu , S = menuset',
   `local_flag` int(11) NOT NULL COMMENT '0 = Official, อื่นๆ = Local อิงตาม BranchNo',
   `menu_group_no` int(8) DEFAULT NULL
-) ENGINE=InnoDB DEFAULT CHARSET=utf8;
+) ENGINE=InnoDB DEFAULT CHARSET=utf8 ROW_FORMAT=COMPACT;
 
 --
 -- Dumping data for table `menu`
 --
 
 INSERT INTO `menu` (`menu_no`, `menu_name_TH`, `menu_name_EN`, `menu_desc`, `menu_price`, `menu_pic_path`, `menu_flag`, `local_flag`, `menu_group_no`) VALUES
-(14, 'ซาลาเปาหมูแดงทอด', 'Fried Red Pork Bun', 'Test', 30.00, '1504975198650Bann.png', 'M', 0, 3),
-(15, 'ซาลาเปาไส้ครีม', 'Sweet Cream Bun', 'Test', 30.00, '1504975244378Dimsum_Custard_Bun1.jpg', 'M', 0, 3),
-(16, 'ข้าวโพดอ่อนแต้มหน้าหมู', 'Baby Corn Served on Steamed Pork', 'Test', 20.00, '1504975343688Dimsum_Baby_Corn1.jpg', 'M', 0, 2),
-(17, 'ซี่โครงหมูเต้าซี่', 'Blackbean Garlic Sauce Steamed Pork', 'Test', 30.00, '1504975368694Dimsum_Blackbean_Garlic1.jpg', 'M', 0, 2),
-(18, 'บร็อคโคลี่ไส้กุ้ง', 'Broccoli served on Steamed Shrimp', 'Test', 30.00, '1504976558685Dimsum_Broccoli1.jpg', 'M', 0, 2),
-(19, 'ชุดซาลาเปาแสนอร่อย', 'Salapao Aroi', '30', 79.00, '1504977883822Bann.png', 'S', 0, NULL),
-(21, 'ชานมเย็นโบราณ', 'Tranditional Iced Milk Tea', 'Test', 35.00, '1505023872033ชานมเย็นโบราณ.png', 'M', 0, 5),
-(22, 'Test', 'Test', 'Test', 30.00, '1505025215664Dimsum_Crab_Dumpling1.jpg', 'M', 2, 1),
-(23, 'บร็อคโคลี่ไส้กุ้งd', 'Broccoli served on Steamed Shrimpd', 'Test', 29.00, '1505025607534Dimsum_Broccoli1.jpg', 'S', 2, NULL);
+(1, 'บักกุดเต๋', 'Bak Kut Teh', 'บักกุดเต๋ แสนอร่อยที่ซุปทำจากสมุนไพรจีน 50% อีก 50% คือน้ำซุปสูตรลับของทางร้าน', 129.00, '1506187898423.jpg', 'M', 0, 7),
+(2, 'บัวลอยน้ำขิง', 'Black Sesame Dumpling in Ginger Tea', 'บัวลอยน้ำขิง ทำเองฝีมือสูตรแม่น้อย บางระจัน', 45.00, '1506188542004.jpg', 'M', 0, 4),
+(3, 'ขาไก่ (จาน)', 'Chicken\'s Legs with Special Sauce', NULL, 79.00, '1506189363550.jpg', 'M', 0, 7),
+(4, 'ชาจีนกา (ร้อน)', 'Chinese Tea (Hot)', NULL, 25.00, '1506189430081.jpg', 'M', 0, 5),
+(5, 'ทับทิมกรอบ', 'Crispy Chestnusts in CoconutMilk', NULL, 45.00, '1506189472303.jpg', 'M', 0, 4),
+(6, 'ข้าวโพดอ่อนแต้มหน้าหมู', 'Baby Corn Served on Steamed Pork', NULL, 25.00, '1506189502074.jpg', 'M', 0, 1),
+(7, 'ซี่โครงหมูเต้าซี่', 'Blackbean Garlic Sauce Steamed Pork', NULL, 30.00, '1506189938186.jpg', 'M', 0, 1),
+(8, 'บร็อคโคลี่ไส้กุ้ง', 'Broccoli served on Steamed Shrimp', NULL, 30.00, '1506189965511.jpg', 'M', 0, 1),
+(9, 'กะหล่ำห่อกุ้งปูอัด', 'Steamed Cabbage Roll Stuffed with Shrimp', NULL, 30.00, '1506189991241.jpg', 'M', 0, 1),
+(10, 'ขนมจีบปู', 'Crab Chinese Steamed Dumpling', NULL, 30.00, '1506190025735.jpg', 'M', 0, 1),
+(11, 'ซาลาเปาไส้ครีม', 'Sweet Cream Bun', NULL, 30.00, '1506190050276.jpg', 'M', 0, 2),
+(12, 'ซาลาเปาโชคดีลาวา', 'Chokdee Lava Custard Bun', NULL, 39.00, '1506190089904.jpg', 'M', 0, 2),
+(13, 'บิ๊กเปาหมูสับ', 'Pork Big Bun', NULL, 25.00, '1506190116413.jpg', 'M', 0, 2),
+(14, 'ซาลาเปาไส้หมูสับ', 'Pork Bun', NULL, 30.00, '1506190160747.jpg', 'M', 0, 2),
+(15, 'เกี๊ยวซ่า', 'Steamed Dumpling', NULL, 25.00, '1506190211222.jpg', 'M', 0, 1),
+(16, 'กุ้งราดซอส XO', 'Fried Shrimp XO Sauce', NULL, 79.00, '1506190244991.jpg', 'M', 0, 7),
+(17, 'เกี๊ยวกุ้งทอด', 'Fried Shrimp Wonton', NULL, 30.00, '1506190297033.jpg', 'M', 0, 7),
+(18, 'ชาอู่หลง', 'Olong Tea', NULL, 100.00, '1506190354649.jpg', 'M', 0, 5),
+(19, 'ข้าวปลาราดซอสเหล้าจีน', 'Fried Fish with Cooking Wine Sauce served with Rice', NULL, 89.00, '1506190394977.jpg', 'M', 1, 7),
+(20, 'เก๊กฮวย', 'Chrysanthemun Tea', NULL, 39.00, '1506190529448.jpg', 'M', 1, 8),
+(21, 'กาแฟเย็นโบราณ', 'Iced Coffee', NULL, 35.00, '1506191108591.jpg', 'M', 0, 8),
+(22, 'โอเลี้ยง', 'Iced Black Coffee', NULL, 35.00, '1506191349735.jpg', 'M', 0, 8),
+(23, 'น้ำมะนาว', 'Lime Juice', NULL, 35.00, '1506191406348.jpg', 'M', 0, 5),
+(24, 'บัวลอยเผือก', 'Tro Ball in Coconot Cream', NULL, 45.00, '1506191442149.jpg', 'M', 1, 4),
+(25, 'ครบเครื่องไทยไทย', 'Thai Delicious Set', NULL, 129.00, '1506191557906.jpg', 'S', 0, NULL);
 
 -- --------------------------------------------------------
 
@@ -1612,7 +1501,7 @@ INSERT INTO `menu` (`menu_no`, `menu_name_TH`, `menu_name_EN`, `menu_desc`, `men
 CREATE TABLE `menu_category` (
   `menu_cat_no` int(8) NOT NULL,
   `menu_cat_name` varchar(200) NOT NULL
-) ENGINE=InnoDB DEFAULT CHARSET=utf8;
+) ENGINE=InnoDB DEFAULT CHARSET=utf8 ROW_FORMAT=COMPACT;
 
 --
 -- Dumping data for table `menu_category`
@@ -1634,19 +1523,21 @@ CREATE TABLE `menu_group` (
   `menu_group_name_TH` varchar(200) NOT NULL,
   `menu_group_name_EN` varchar(200) NOT NULL,
   `menu_cat_no` int(8) NOT NULL
-) ENGINE=InnoDB DEFAULT CHARSET=utf8;
+) ENGINE=InnoDB DEFAULT CHARSET=utf8 ROW_FORMAT=COMPACT;
 
 --
 -- Dumping data for table `menu_group`
 --
 
 INSERT INTO `menu_group` (`menu_group_no`, `menu_group_name_TH`, `menu_group_name_EN`, `menu_cat_no`) VALUES
-(1, 'เค้ก', 'Cake', 3),
-(2, 'ติ่มซำตะมุตะมิอิอิ', 'Dim-sum', 1),
-(3, 'ซาลาเปา', 'Pao Bun', 1),
-(4, 'น้ำอัดลม', 'Soft Drink', 2),
-(5, 'น้ำเพื่อสุขภาพ', 'Healthy Drink', 2),
-(6, 'อาหารจานเดียว', 'Individual Dish', 1);
+(1, 'ติ่มซำ', 'Dimsum', 1),
+(2, 'ซาลาเปา', 'Pao Bun', 1),
+(3, 'บิงซู', 'Bingsu', 3),
+(4, 'ขนมไทย', 'Thai Dessert', 3),
+(5, 'เครื่องดื่มน้ำสมุนไพร', 'Herbal Drinks', 2),
+(6, 'น้ำอัดลม', 'Sparkling Water', 2),
+(7, 'อาหารจานเดียว', 'Individual Dish', 1),
+(8, 'เครื่องดื่มทั่วไป', 'Common Drinks', 1);
 
 -- --------------------------------------------------------
 
@@ -1658,15 +1549,6 @@ CREATE TABLE `menu_group_promotion` (
   `promotion_no` int(11) NOT NULL,
   `menu_group_no` int(11) NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8;
-
---
--- Dumping data for table `menu_group_promotion`
---
-
-INSERT INTO `menu_group_promotion` (`promotion_no`, `menu_group_no`) VALUES
-(10, 2),
-(10, 4),
-(10, 6);
 
 -- --------------------------------------------------------
 
@@ -1685,9 +1567,10 @@ CREATE TABLE `menu_in_set` (
 --
 
 INSERT INTO `menu_in_set` (`menu_no`, `menu_sub_no`, `amount`) VALUES
-(19, 14, 1),
-(19, 15, 2),
-(23, 14, 1);
+(25, 5, 1),
+(25, 17, 1),
+(25, 23, 1),
+(25, 24, 1);
 
 -- --------------------------------------------------------
 
@@ -1700,13 +1583,6 @@ CREATE TABLE `menu_material` (
   `mat_item_no` int(11) NOT NULL,
   `quantity` double NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8;
-
---
--- Dumping data for table `menu_material`
---
-
-INSERT INTO `menu_material` (`menu_no`, `mat_item_no`, `quantity`) VALUES
-(15, 11, 2);
 
 -- --------------------------------------------------------
 
@@ -1725,14 +1601,7 @@ CREATE TABLE `promotion` (
   `to_date` date NOT NULL,
   `day` varchar(3) NOT NULL,
   `available` tinyint(1) NOT NULL
-) ENGINE=InnoDB DEFAULT CHARSET=utf8;
-
---
--- Dumping data for table `promotion`
---
-
-INSERT INTO `promotion` (`promotion_no`, `promotion_name_TH`, `promotion_name_EN`, `promotion_desc`, `discount`, `promotion_pic_path`, `from_date`, `to_date`, `day`, `available`) VALUES
-(10, 'ทดสอบ', 'ทดสอบ', 'Lorem IpsumLorem IpsumLorem IpsumLorem IpsumLorem IpsumLorem IpsumLorem IpsumLorem IpsumLorem IpsumLorem IpsumLorem IpsumLorem IpsumLorem IpsumLorem IpsumLorem IpsumLorem IpsumLorem IpsumLorem IpsumLorem IpsumLorem IpsumLorem IpsumLorem IpsumLorem IpsumLorem IpsumLorem IpsumLorem IpsumLorem IpsumLorem IpsumLorem IpsumLorem IpsumLorem IpsumLorem IpsumLorem IpsumLorem IpsumLorem IpsumLorem IpsumLorem IpsumLorem IpsumLorem IpsumLorem IpsumLorem IpsumLorem IpsumLorem IpsumLorem IpsumLorem IpsumLorem IpsumLorem IpsumLorem IpsumLorem IpsumLorem IpsumLorem IpsumLorem IpsumLorem IpsumLorem IpsumLorem IpsumLorem IpsumLorem IpsumLorem IpsumLorem IpsumLorem IpsumLorem IpsumLorem IpsumLorem Ipsum', 12, NULL, '2017-09-23', '2017-09-23', 'EVE', 1);
+) ENGINE=InnoDB DEFAULT CHARSET=utf8 ROW_FORMAT=COMPACT;
 
 -- --------------------------------------------------------
 
@@ -1844,14 +1713,6 @@ CREATE TABLE `reservation` (
   `tel` varchar(20) DEFAULT NULL,
   `branch_no` int(11) NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8;
-
---
--- Dumping data for table `reservation`
---
-
-INSERT INTO `reservation` (`reserve_no`, `date`, `time`, `number_of_person`, `user_name`, `tel`, `branch_no`) VALUES
-(7, '1996-04-09', '03:20:00', 1, 'คุณบิ๊กเฮ้ด', '0813026159', 1),
-(9, '2017-09-18', '00:30:00', 3, 'ทดสอบ', '0813026159', 1);
 
 -- --------------------------------------------------------
 
@@ -10814,6 +10675,14 @@ CREATE TABLE `work_history` (
   `emp_time_no` int(11) DEFAULT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8;
 
+--
+-- Dumping data for table `work_history`
+--
+
+INSERT INTO `work_history` (`work_hist_no`, `work_date`, `work_start`, `work_end`, `work_pay`, `work_hour`, `work_min`, `emp_no`, `emp_time_no`) VALUES
+(1, '2017-09-24', NULL, NULL, 128.33, 3, 40, 1, NULL),
+(2, '2017-09-24', NULL, NULL, 300.00, 4, 50, 3, NULL);
+
 -- --------------------------------------------------------
 
 --
@@ -18385,6 +18254,14 @@ ALTER TABLE `employee_table`
   ADD KEY `employee_table_ibfk_2` (`emp_pos_no`);
 
 --
+-- Indexes for table `ledger`
+--
+ALTER TABLE `ledger`
+  ADD PRIMARY KEY (`ledger_no`),
+  ADD KEY `ledger_type_no` (`ledger_type_no`),
+  ADD KEY `branch_no` (`branch_no`);
+
+--
 -- Indexes for table `ledger_pay`
 --
 ALTER TABLE `ledger_pay`
@@ -18536,7 +18413,7 @@ ALTER TABLE `zipcode`
 -- AUTO_INCREMENT for table `addon`
 --
 ALTER TABLE `addon`
-  MODIFY `addOnNo` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=90;
+  MODIFY `addOnNo` int(11) NOT NULL AUTO_INCREMENT;
 --
 -- AUTO_INCREMENT for table `bill`
 --
@@ -18551,12 +18428,12 @@ ALTER TABLE `branch`
 -- AUTO_INCREMENT for table `branch_user`
 --
 ALTER TABLE `branch_user`
-  MODIFY `branch_user_no` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=44;
+  MODIFY `branch_user_no` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=8;
 --
 -- AUTO_INCREMENT for table `customer_table`
 --
 ALTER TABLE `customer_table`
-  MODIFY `table_no` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=26;
+  MODIFY `table_no` int(11) NOT NULL AUTO_INCREMENT;
 --
 -- AUTO_INCREMENT for table `district`
 --
@@ -18566,7 +18443,7 @@ ALTER TABLE `district`
 -- AUTO_INCREMENT for table `employee`
 --
 ALTER TABLE `employee`
-  MODIFY `emp_no` int(8) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=27;
+  MODIFY `emp_no` int(8) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=5;
 --
 -- AUTO_INCREMENT for table `employee_pay`
 --
@@ -18576,42 +18453,47 @@ ALTER TABLE `employee_pay`
 -- AUTO_INCREMENT for table `employee_position`
 --
 ALTER TABLE `employee_position`
-  MODIFY `emp_pos_no` int(8) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=6;
+  MODIFY `emp_pos_no` int(8) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=8;
 --
 -- AUTO_INCREMENT for table `employee_table`
 --
 ALTER TABLE `employee_table`
-  MODIFY `emp_time_no` int(8) NOT NULL AUTO_INCREMENT;
+  MODIFY `emp_time_no` int(8) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=6;
+--
+-- AUTO_INCREMENT for table `ledger`
+--
+ALTER TABLE `ledger`
+  MODIFY `ledger_no` int(11) NOT NULL AUTO_INCREMENT;
 --
 -- AUTO_INCREMENT for table `ledger_type`
 --
 ALTER TABLE `ledger_type`
-  MODIFY `ledger_type_no` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=7;
+  MODIFY `ledger_type_no` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=2;
 --
 -- AUTO_INCREMENT for table `material_category`
 --
 ALTER TABLE `material_category`
-  MODIFY `mat_cat_no` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=7;
+  MODIFY `mat_cat_no` int(11) NOT NULL AUTO_INCREMENT;
 --
 -- AUTO_INCREMENT for table `material_history`
 --
 ALTER TABLE `material_history`
-  MODIFY `mat_hist_no` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=622;
+  MODIFY `mat_hist_no` int(11) NOT NULL AUTO_INCREMENT;
 --
 -- AUTO_INCREMENT for table `material_item`
 --
 ALTER TABLE `material_item`
-  MODIFY `mat_item_no` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=16;
+  MODIFY `mat_item_no` int(11) NOT NULL AUTO_INCREMENT;
 --
 -- AUTO_INCREMENT for table `material_unit`
 --
 ALTER TABLE `material_unit`
-  MODIFY `unit_no` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=4;
+  MODIFY `unit_no` int(11) NOT NULL AUTO_INCREMENT;
 --
 -- AUTO_INCREMENT for table `menu`
 --
 ALTER TABLE `menu`
-  MODIFY `menu_no` int(8) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=24;
+  MODIFY `menu_no` int(8) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=26;
 --
 -- AUTO_INCREMENT for table `menu_category`
 --
@@ -18621,12 +18503,12 @@ ALTER TABLE `menu_category`
 -- AUTO_INCREMENT for table `menu_group`
 --
 ALTER TABLE `menu_group`
-  MODIFY `menu_group_no` int(8) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=7;
+  MODIFY `menu_group_no` int(8) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=9;
 --
 -- AUTO_INCREMENT for table `promotion`
 --
 ALTER TABLE `promotion`
-  MODIFY `promotion_no` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=11;
+  MODIFY `promotion_no` int(11) NOT NULL AUTO_INCREMENT;
 --
 -- AUTO_INCREMENT for table `province`
 --
@@ -18636,7 +18518,7 @@ ALTER TABLE `province`
 -- AUTO_INCREMENT for table `reservation`
 --
 ALTER TABLE `reservation`
-  MODIFY `reserve_no` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=10;
+  MODIFY `reserve_no` int(11) NOT NULL AUTO_INCREMENT;
 --
 -- AUTO_INCREMENT for table `role`
 --
@@ -18651,7 +18533,7 @@ ALTER TABLE `sub_district`
 -- AUTO_INCREMENT for table `work_history`
 --
 ALTER TABLE `work_history`
-  MODIFY `work_hist_no` int(8) NOT NULL AUTO_INCREMENT;
+  MODIFY `work_hist_no` int(8) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=3;
 --
 -- AUTO_INCREMENT for table `zipcode`
 --
@@ -18700,6 +18582,13 @@ ALTER TABLE `employee_pay`
 ALTER TABLE `employee_table`
   ADD CONSTRAINT `employee_table_ibfk_1` FOREIGN KEY (`emp_no`) REFERENCES `employee` (`emp_no`) ON DELETE CASCADE ON UPDATE CASCADE,
   ADD CONSTRAINT `employee_table_ibfk_2` FOREIGN KEY (`emp_pos_no`) REFERENCES `employee_position` (`emp_pos_no`) ON DELETE CASCADE ON UPDATE CASCADE;
+
+--
+-- Constraints for table `ledger`
+--
+ALTER TABLE `ledger`
+  ADD CONSTRAINT `ledger_ibfk_1` FOREIGN KEY (`ledger_type_no`) REFERENCES `ledger_type` (`ledger_type_no`),
+  ADD CONSTRAINT `ledger_ibfk_2` FOREIGN KEY (`branch_no`) REFERENCES `branch` (`branch_no`) ON DELETE CASCADE ON UPDATE CASCADE;
 
 --
 -- Constraints for table `ledger_type`

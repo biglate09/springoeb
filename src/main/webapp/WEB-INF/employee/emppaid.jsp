@@ -1,6 +1,7 @@
 <%@ taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt" %>
 <%@page import="java.util.List" %>
 <%@page import="com.springoeb.employee.model.Employee" %>
+<%@page import="com.springoeb.system.model.Role" %>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 <c:set var="contextPath" value="${pageContext.request.contextPath}"/>
 <%@page contentType="text/html" pageEncoding="UTF-8" %>
@@ -8,7 +9,7 @@
 <html>
 <head>
     <jsp:include page="../_include/topenv.jsp"/>
-    <title>จ่ายเงินพนักงาน</title>
+    <title>${branchUser.roleNo == Role.EMPLOYEE ? 'ประวัติการทำงาน' : 'จ่ายเงินพนักงาน'}</title>
 </head>
 <body class="nav-md">
 <div class="container body">
@@ -28,11 +29,12 @@
                     <div class="col-md-12 col-sm-12 col-xs-12">
                         <div class="x_panel">
                             <div class="x_title">
-                                <h4>จ่ายเงินพนักงาน</h4>
+                                <h4>${branchUser.roleNo == Role.EMPLOYEE ? 'ประวัติการทำงาน' : 'จ่ายเงินพนักงาน'}</h4>
                             </div>
                             <div class="x_content">
                                 <div class="well" style="overflow: auto">
-                                    <p style="text-align:center;">ค่าจ้างคงเหลือของพนักงานทุกคนคือ : <b id="all_sum_pay"></b> บาท</p>
+                                    <p style="text-align:center;">ค่าจ้างคงเหลือของ${branchUser.roleNo == Role.EMPLOYEE ? 'คุณ' : 'พนักงานทุกคนคือ'} : <b
+                                            id="all_sum_pay"></b> บาท</p>
                                 </div>
                                 <table id="datatable-pay" class="table table-striped table-bordered">
                                     <thead>
@@ -106,19 +108,21 @@
                                             <div class="col-md-4" style="text-align:left;">
                                                 คงเหลือ : <span id="sumpay" style="font-weight: bold;"></span> บาท
                                             </div>
-                                            <div class="col-md-4">
-                                                <div class="input-group">
-                                                    <input type="number" name="pay" id="input-withdraw"
-                                                           class="form-control"
-                                                           step="0.25"
-                                                           placeholder="กรุณาใส่จำนวนเงิน..">
-                                                    <input type="hidden" id="empno" name="empNo">
-                                                    <span class="input-group-btn">
+                                            <c:if test="${branchUser.roleNo == Role.MANAGER}">
+                                                <div class="col-md-4">
+                                                    <div class="input-group">
+                                                        <input type="number" name="pay" id="input-withdraw"
+                                                               class="form-control"
+                                                               step="0.25"
+                                                               placeholder="กรุณาใส่จำนวนเงิน..">
+                                                        <input type="hidden" id="empno" name="empNo">
+                                                        <span class="input-group-btn">
                                                     <button class="btn btn-default" type="submit"
                                                             id="css-irow">จ่ายเงิน</button>
                                                 </span>
+                                                    </div>
                                                 </div>
-                                            </div>
+                                            </c:if>
                                         </form>
                                     </div>
                                 </div>
@@ -292,7 +296,7 @@
                 var whi = 0;
                 workhist = workHistories[whi];
                 workhist_sumpay = 0;
-                if(workhist != null) {
+                if (workhist != null) {
                     workhist_sumpay = workhist.workPay; // เงินประวัติชั่วคราว
                 }
                 for (var i = 0; i < employeePays.length; i++) {
@@ -310,7 +314,7 @@
                     var ofTheseDays = "";
 
                     while (tmppay >= workhist_sumpay) {
-                        if(workhist_sumpay != null) {
+                        if (workhist_sumpay != null) {
                             ofTheseDays += 'เบิกวันที่ : ' + workhist.workDate + ' จำนวน ' + workhist_sumpay.toFixed(2).replace(/\B(?=(\d{3})+(?!\d))/g, ",") + " บาท\\n";
                             tmppay = tmppay - workhist_sumpay;
                         }
@@ -391,11 +395,11 @@
         return false;
     });
 
-    $('.modal').on('hidden.bs.modal', function(){
+    $('.modal').on('hidden.bs.modal', function () {
         reset_field();
     });
 
-    function reset_field(){
+    function reset_field() {
         $("#input-withdraw").val('');
     }
 
@@ -452,7 +456,7 @@
                             display: (sumpay.toFixed(2).replace(/\B(?=(\d{3})+(?!\d))/g, ",")) + " บาท",
                             order: sumpay_order
                         },
-                        option: '<button class="btn btn-primary btn-sm" data-toggle="modal" data-target="#paidDetail" onclick="setemppaid(' + emp_obj.empNo + ')"><i class="fa fa-money"></i>&nbsp; จ่ายเงิน </button>'
+                        option: '<button class="btn btn-primary btn-sm" data-toggle="modal" data-target="#paidDetail" onclick="setemppaid(' + emp_obj.empNo + ')"><i class="fa fa-${branchUser.roleNo == Role.EMPLOYEE ? 'search' : 'money'}"></i>&nbsp; ${branchUser.roleNo == Role.EMPLOYEE ? 'ดูรายละเอียด' : 'จ่ายเงิน'} </button>'
                     };
                     data_array.push(data_refresh);
                 }
