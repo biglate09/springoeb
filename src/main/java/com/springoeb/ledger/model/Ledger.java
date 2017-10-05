@@ -8,7 +8,6 @@ public class Ledger {
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)
     private Integer ledgerNo;
-    private String ledgerName;
     private String ledgerDesc;
     @Column(name = "ledger_type_no",updatable = true,insertable = true)
     private Integer ledgerTypeNo;
@@ -34,14 +33,6 @@ public class Ledger {
 
     public void setLedgerNo(Integer ledgerNo) {
         this.ledgerNo = ledgerNo;
-    }
-
-    public String getLedgerName() {
-        return ledgerName;
-    }
-
-    public void setLedgerName(String ledgerName) {
-        this.ledgerName = ledgerName;
     }
 
     public String getLedgerDesc() {
@@ -82,18 +73,5 @@ public class Ledger {
 
     public void setLedgerType(LedgerType ledgerType) {
         this.ledgerType = ledgerType;
-    }
-
-    @Override
-    public String toString() {
-        return "Ledger{" +
-                "ledgerNo=" + ledgerNo +
-                ", ledgerName='" + ledgerName + '\'' +
-                ", ledgerDesc='" + ledgerDesc + '\'' +
-                ", ledgerTypeNo=" + ledgerTypeNo +
-                ", amount=" + amount +
-                ", date=" + date +
-                ", branchNo=" + branchNo +
-                '}';
     }
 }

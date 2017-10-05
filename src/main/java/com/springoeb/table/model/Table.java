@@ -1,5 +1,7 @@
 package com.springoeb.table.model;
 
+import com.springoeb.branch.model.Branch;
+
 import javax.persistence.*;
 
 @Entity(name = "customer_table")
@@ -10,7 +12,12 @@ public class Table {
     private String tableName;
     private Double seatAmount;
     private boolean isAvailable;
+    @Column(name = "branch_no",updatable = true,insertable = true)
     private Integer branchNo;
+
+    @ManyToOne
+    @JoinColumn(name = "branch_no",updatable = false,insertable = false)
+    private Branch branch;
 
     public Integer getTableNo() {
         return tableNo;
@@ -50,5 +57,13 @@ public class Table {
 
     public void setBranchNo(Integer branchNo) {
         this.branchNo = branchNo;
+    }
+
+    public Branch getBranch() {
+        return branch;
+    }
+
+    public void setBranch(Branch branch) {
+        this.branch = branch;
     }
 }

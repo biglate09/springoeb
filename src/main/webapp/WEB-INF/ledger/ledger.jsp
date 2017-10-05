@@ -65,14 +65,6 @@
                                     <input type="hidden" name="ledgerNo" id="ledgerNo">
                                     <div class="form-group">
                                         <div class="col-md-6 col-sm-6 col-xs-12 form-group has-feedback">
-                                            <label class="required">ชื่อรายการบัญชี</label>
-                                            <input type="text" class="form-control" name="ledgerName"
-                                                   id="ledgerName"
-                                                   placeholder="ชื่อรายการบัญชี" required>
-                                            <span class="fa fa-pencil form-control-feedback right"
-                                                  aria-hidden="true"></span>
-                                        </div>
-                                        <div class="col-md-6 col-sm-6 col-xs-12 form-group has-feedback">
                                             <label class="required">ประเภทรายการบัญชี</label>
                                             <select name="ledgerTypeNo" id="ledgerTypeNo" class="form-control" required>
                                                 <c:forEach items="${ledgerType}" var="l">

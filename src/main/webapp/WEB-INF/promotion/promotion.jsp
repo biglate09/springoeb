@@ -311,6 +311,7 @@
                 $("#discount").val(promo.discount);
                 $("#promotionDesc").val(promo.promotionDesc);
                 $("#promotionNo").val(promo.promotionNo);
+                $("#promotionPicture").attr('src','../images/promotion/'+promo.promotionPicPath);
                 if(promo.available == true){
                     $("#available").iCheck("check");
                 }
@@ -398,7 +399,7 @@
                         var menugroup = promotion.menuGroupPromotions;
                         var menugroup_txt = "";
                         for(var j = 0; j < menugroup.length; j++){
-                            menugroup_txt += "<span style='white-space:nowrap;overflow:hidden;text-overflow: ellipsis;'>" + menugroup[j].menuGroup.menuGroupNameTH + " / " + menugroup[j].menuGroup.menuGroupNameEN +"</span><br>";
+                            menugroup_txt += "<span style='white-space:nowrap;overflow:hidden;text-overflow: ellipsis;'>" + menugroup[j].menuGroup.menuGroupNameTH + "</span><br>";
                         }
                         var div = '<div class="col-md-6 col-sm-6 col-xs-12">\
                             <div class="thumbnail">\

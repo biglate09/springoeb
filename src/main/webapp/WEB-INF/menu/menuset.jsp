@@ -11,7 +11,6 @@
     <style>
         .foodDesc {
             width: 100%;
-            height: 43%;
             overflow-y: scroll;
             margin-top: 10px;
             margin-bottom: 10px;
@@ -592,7 +591,7 @@
                             <div class="col-md-7 caption" style="height:100%;color:#73879C">\
                             <div class="col-md-9 cardname" data-toggle="modal" data-target="#editMenuSet" onclick="set_menuset(' + menu.menuNo + ')" style="font-weight:bold;white-space:nowrap;overflow:hidden;text-overflow: ellipsis;cursor:pointer;">' + menu.menuNameTH + ' / ' + menu.menuNameEN + '</div>\
                             <div class="col-md-3" style="color:white;background-color:' + (menu.localFlag == 0 ? "#73879C" : "red") + ';border-radius:4px;text-align:center;">' + (menu.localFlag == 0 ? "ทุกสาขา" : "สาขา" + (menu.localFlag ==${branchUser.branchNo} ? "นี้" : " " + menu.localFlag)) + '</div>\
-                            <div class="col-md-12 foodDesc">\
+                            <div class="col-md-12 foodDesc" style="width:50%">\
                             <div>\
                             <p style="text-align:center;font-weight:bold;">รายการเมนู</p>';
                         for (var j = 0; j < menu.menuInSets.length; j++) {
@@ -601,8 +600,8 @@
                         }
                         list += '</div>\
                             </div>\
+                            <p class="col-md-6 description" style="white-space:nowrap;overflow:hidden;text-overflow: ellipsis;" >'+ "รายละเอียด : " + (menu.menuDesc == null ? '-' : menu.menuDesc) +'</p>\
                             <div class="col-md-7"> <span style="font-weight:bold;">ราคา</span> ' + menu.menuPrice.toFixed(2).replace(/\B(?=(\d{3})+(?!\d))/g, ",") + ' บาท</div>\
-                            <p class="col-md-12 description" style="white-space:nowrap;overflow:hidden;text-overflow: ellipsis;" >'+ "รายละเอียด : " + menu.menuDesc +'</p>\
                             <div class="col-md-5" style="text-align:right;position:absolute;right:5px;bottom:0px;">\
                             <div class="panel_menuset" >\
                             ' + (menu.localFlag == 0 && ${branchUser.branchNo != Branch.MAIN_BRANCH} ? '' : '<a title="แก้ไข" style="color:#73879C;cursor:pointer;margin-right:5px;" data-toggle="modal" data-target="#editMenuSet" onclick="set_menuset(' + menu.menuNo + ')"><i class="fa fa-pencil"></i></a>') + '\
@@ -695,7 +694,7 @@
                             <div class="col-md-7 caption" style="height:100%;color:#73879C">\
                             <div class="col-md-9 cardname" style="font-weight:bold;white-space:nowrap;overflow:hidden;text-overflow: ellipsis;">' + menu.menuNameTH + ' / ' + menu.menuNameEN + '</div>\
                             <div class="col-md-3" style="color:white;background-color:yellowgreen;border-radius:4px;text-align:center;">' + (menu.localFlag == 0 ? "ทุกสาขา" : "สาขา " + menu.localFlag) + '</div>\
-                            <div class="col-md-12 foodDesc">\
+                            <div class="col-md-12 foodDesc" style="width:50%">\
                             <div>\
                             <p style="text-align:center;font-weight:bold;">รายการเมนู</p>';
                             for (var j = 0; j < menu.menuInSets.length; j++) {
@@ -704,8 +703,8 @@
                             }
                             list += '</div>\
                             </div>\
+                            <p class="col-md-6 description" style="white-space:nowrap;overflow:hidden;text-overflow: ellipsis;" >'+ "รายละเอียด : " + (menu.menuDesc == null ? '-' : menu.menuDesc) +'</p>\
                             <div class="col-md-7"> <span style="font-weight:bold;">ราคา</span> ' + menu.menuPrice.toFixed(2).replace(/\B(?=(\d{3})+(?!\d))/g, ",") + ' บาท</div>\
-                            <p class="col-md-12 description" style="white-space:nowrap;overflow:hidden;text-overflow: ellipsis;" >'+ "รายละเอียด : " + menu.menuDesc +'</p>\
                             <div class="col-md-5" style="text-align:right;position:absolute;right:5px;bottom:0px;">\
                             <div class="panel_menuset" >\
                             <a title="ทำให้เป็นเมนูของทุกสาขา" onclick="turn_official(' + menu.menuNo + ')" style="color:#73879C;cursor:pointer;margin-right:5px;"><i class="fa fa-users"></i></a>\

@@ -255,11 +255,6 @@ public class ManageController {
         return json;
     }
 
-    @GetMapping("/blankkitchen")
-    public String toBlankKitchen() {
-        return "/blank.jsp";
-    }
-
     @GetMapping("/blankcashier")
     public String toBlankCashier() {
         return "/blank.jsp";
