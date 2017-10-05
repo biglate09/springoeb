@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Host: 127.0.0.1
--- Generation Time: Sep 24, 2017 at 12:52 PM
+-- Generation Time: Oct 05, 2017 at 02:27 PM
 -- Server version: 10.1.21-MariaDB
 -- PHP Version: 5.6.30
 
@@ -42,13 +42,19 @@ CREATE TABLE `addon` (
 
 CREATE TABLE `bill` (
   `bill_no` int(11) NOT NULL,
-  `total_amount` int(11) NOT NULL,
+  `total_amount` double DEFAULT NULL,
   `bill_date` date NOT NULL,
   `bill_time` time NOT NULL,
-  `table_no` int(11) NOT NULL,
   `status` varchar(10) NOT NULL,
-  `reserve_no` int(11) NOT NULL
+  `table_no` int(11) NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8;
+
+--
+-- Dumping data for table `bill`
+--
+
+INSERT INTO `bill` (`bill_no`, `total_amount`, `bill_date`, `bill_time`, `status`, `table_no`) VALUES
+(2, NULL, '2017-10-05', '06:26:00', 'unpaid', 1);
 
 -- --------------------------------------------------------
 
@@ -199,6 +205,28 @@ INSERT INTO `branch_user` (`branch_user_no`, `username`, `password`, `sent_email
 -- --------------------------------------------------------
 
 --
+-- Table structure for table `customer_order`
+--
+
+CREATE TABLE `customer_order` (
+  `order_no` int(11) NOT NULL,
+  `quantity` int(11) NOT NULL,
+  `amount` double NOT NULL,
+  `status` varchar(10) NOT NULL,
+  `menu_no` int(11) NOT NULL,
+  `bill_no` int(11) NOT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=utf8;
+
+--
+-- Dumping data for table `customer_order`
+--
+
+INSERT INTO `customer_order` (`order_no`, `quantity`, `amount`, `status`, `menu_no`, `bill_no`) VALUES
+(1, 1, 20, 'waiting', 1, 2);
+
+-- --------------------------------------------------------
+
+--
 -- Table structure for table `customer_table`
 --
 
@@ -209,6 +237,13 @@ CREATE TABLE `customer_table` (
   `is_available` tinyint(1) NOT NULL,
   `branch_no` int(11) NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8;
+
+--
+-- Dumping data for table `customer_table`
+--
+
+INSERT INTO `customer_table` (`table_no`, `table_name`, `seat_amount`, `is_available`, `branch_no`) VALUES
+(1, 'โต๊ะที่ 1', 2, 1, 1);
 
 -- --------------------------------------------------------
 
@@ -1327,7 +1362,6 @@ INSERT INTO `employee_table` (`emp_time_no`, `date`, `time_start`, `time_end`, `
 
 CREATE TABLE `ledger` (
   `ledger_no` int(11) NOT NULL,
-  `ledger_name` varchar(200) NOT NULL,
   `ledger_desc` varchar(500) DEFAULT NULL,
   `ledger_type_no` int(11) NOT NULL,
   `amount` double NOT NULL,
@@ -1550,6 +1584,13 @@ CREATE TABLE `menu_group_promotion` (
   `menu_group_no` int(11) NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8;
 
+--
+-- Dumping data for table `menu_group_promotion`
+--
+
+INSERT INTO `menu_group_promotion` (`promotion_no`, `menu_group_no`) VALUES
+(4, 7);
+
 -- --------------------------------------------------------
 
 --
@@ -1602,6 +1643,13 @@ CREATE TABLE `promotion` (
   `day` varchar(3) NOT NULL,
   `available` tinyint(1) NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8 ROW_FORMAT=COMPACT;
+
+--
+-- Dumping data for table `promotion`
+--
+
+INSERT INTO `promotion` (`promotion_no`, `promotion_name_TH`, `promotion_name_EN`, `promotion_desc`, `discount`, `promotion_pic_path`, `from_date`, `to_date`, `day`, `available`) VALUES
+(4, '12', '12', '12', 12, '1506283745748.png', '2017-09-25', '2017-09-25', 'EVE', 0);
 
 -- --------------------------------------------------------
 
@@ -18180,7 +18228,8 @@ ALTER TABLE `addon`
 -- Indexes for table `bill`
 --
 ALTER TABLE `bill`
-  ADD PRIMARY KEY (`bill_no`);
+  ADD PRIMARY KEY (`bill_no`),
+  ADD KEY `table_no` (`table_no`);
 
 --
 -- Indexes for table `branch`
@@ -18207,6 +18256,15 @@ ALTER TABLE `branch_user`
   ADD KEY `branch_no` (`branch_no`),
   ADD KEY `role_no_2` (`role_no`),
   ADD KEY `emp_no` (`emp_no`);
+
+--
+-- Indexes for table `customer_order`
+--
+ALTER TABLE `customer_order`
+  ADD PRIMARY KEY (`order_no`),
+  ADD KEY `menu_no` (`menu_no`,`bill_no`),
+  ADD KEY `bill_no` (`bill_no`),
+  ADD KEY `status` (`status`);
 
 --
 -- Indexes for table `customer_table`
@@ -18418,7 +18476,7 @@ ALTER TABLE `addon`
 -- AUTO_INCREMENT for table `bill`
 --
 ALTER TABLE `bill`
-  MODIFY `bill_no` int(11) NOT NULL AUTO_INCREMENT;
+  MODIFY `bill_no` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=3;
 --
 -- AUTO_INCREMENT for table `branch`
 --
@@ -18430,10 +18488,15 @@ ALTER TABLE `branch`
 ALTER TABLE `branch_user`
   MODIFY `branch_user_no` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=8;
 --
+-- AUTO_INCREMENT for table `customer_order`
+--
+ALTER TABLE `customer_order`
+  MODIFY `order_no` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=2;
+--
 -- AUTO_INCREMENT for table `customer_table`
 --
 ALTER TABLE `customer_table`
-  MODIFY `table_no` int(11) NOT NULL AUTO_INCREMENT;
+  MODIFY `table_no` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=2;
 --
 -- AUTO_INCREMENT for table `district`
 --
@@ -18508,7 +18571,7 @@ ALTER TABLE `menu_group`
 -- AUTO_INCREMENT for table `promotion`
 --
 ALTER TABLE `promotion`
-  MODIFY `promotion_no` int(11) NOT NULL AUTO_INCREMENT;
+  MODIFY `promotion_no` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=5;
 --
 -- AUTO_INCREMENT for table `province`
 --
@@ -18544,6 +18607,12 @@ ALTER TABLE `zipcode`
 --
 
 --
+-- Constraints for table `bill`
+--
+ALTER TABLE `bill`
+  ADD CONSTRAINT `bill_ibfk_1` FOREIGN KEY (`table_no`) REFERENCES `customer_table` (`table_no`) ON DELETE NO ACTION ON UPDATE NO ACTION;
+
+--
 -- Constraints for table `branch_menu`
 --
 ALTER TABLE `branch_menu`
@@ -18557,6 +18626,13 @@ ALTER TABLE `branch_user`
   ADD CONSTRAINT `branch_user_ibfk_1` FOREIGN KEY (`branch_no`) REFERENCES `branch` (`branch_no`) ON DELETE CASCADE ON UPDATE CASCADE,
   ADD CONSTRAINT `branch_user_ibfk_2` FOREIGN KEY (`role_no`) REFERENCES `role` (`role_no`),
   ADD CONSTRAINT `branch_user_ibfk_3` FOREIGN KEY (`emp_no`) REFERENCES `employee` (`emp_no`) ON DELETE CASCADE ON UPDATE CASCADE;
+
+--
+-- Constraints for table `customer_order`
+--
+ALTER TABLE `customer_order`
+  ADD CONSTRAINT `customer_order_ibfk_1` FOREIGN KEY (`menu_no`) REFERENCES `menu` (`menu_no`) ON DELETE NO ACTION ON UPDATE NO ACTION,
+  ADD CONSTRAINT `customer_order_ibfk_2` FOREIGN KEY (`bill_no`) REFERENCES `bill` (`bill_no`) ON DELETE NO ACTION ON UPDATE NO ACTION;
 
 --
 -- Constraints for table `customer_table`
