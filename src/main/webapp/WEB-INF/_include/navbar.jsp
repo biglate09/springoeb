@@ -141,7 +141,7 @@
                     </c:if>
                     <c:if test="${branchUser.roleNo == Role.MANAGER || branchUser.roleNo == Role.KITCHEN}">
                         <li>
-                            <a style="color:black;" href="${contextPath}/kitchen/kitchen"><i
+                            <a href="${contextPath}/kitchen/kitchen"><i
                                     class="fa fa-tasks"></i> ระบบหลังครัว</a>
                         </li>
                     </c:if>
