@@ -8,7 +8,7 @@ import java.util.List;
 
 @Repository
 public interface OrderRepository extends CrudRepository<Order,Integer>{
-    List<Order> findByBill_StatusAndBill_Table_BranchNoOrderByOrderNoDesc(String status,int branchNo);
+    List<Order> findByBill_StatusAndBill_Table_BranchNoOrderByOrderNoDescMenuNoDescStatusDesc(String status,int branchNo);
     Order findByOrderNo(int orderNo);
     void removeByOrderNo(int orderNo);
 }
