@@ -101,19 +101,21 @@
                     var obj = json[i];
                     var amountOrder = obj.quantity + "";
                     for (var j = amountOrder.length; j < 10; j++) {
+                        if (status = "waiting"){
+                            amountOrder += amountOrder;
+                        }
                         amountOrder = "0" + amountOrder;
                     }
                     var data_refresh = {
                         menuName: obj.menu.menuNameTH + " / " + obj.menu.menuNameEN,
-                        tableName: obj.bill.table.tableName,
+                        tableName: obj.bill.table.tableName + " (" + obj.quantity + " จาน)",
                         amount: obj.quantity + " จาน",
-                        status: (obj.status ? '<a onclick="change_status(' + obj.orderNo + ',' + obj.menuNo + ',\'' + obj.status + '\')" class="btn btn-default">เมนูที่ได้รับมา</a>' :
-                            '<a onclick="change_status(' + obj.orderNo + ',' + obj.menuNo + ',\'' + obj.status + '\')" class="btn btn-primary">เมนูที่กำลังปรุง</a>') +
+                        status: (obj.status ? '<a onclick="change_status(' + obj.orderNo + ',\'' + obj.status + '\')" class="btn btn-default">เมนูที่ได้รับมา</a>' :
+                            '<a onclick="change_status(' + obj.orderNo + ',\'' + obj.status + '\')" class="btn btn-primary">เมนูที่กำลังปรุง</a>') +
                         '<a onclick="cancel_menu(' + obj.orderNo + ',\'' + obj.status + '\' )" class="btn btn-danger">ยกเลิกเมนู</a>'
                     };
-//                    (table.available ? '<span style="color:green;font-weight:bold;">ว่าง</span>' : '<span style="color:red;font-weight:bold;">ไม่ว่าง</span>')
                     data_array.push(data_refresh);
-                    console.log(obj);
+                    console.log(json);
                 }
 
                 $("#datatable_kitchen_status").DataTable().clear();
@@ -122,7 +124,7 @@
         });
     }
 
-    function change_status(orderNo, menuNo, status) {
+    function change_status(orderNo, status) {
         $.ajax({
             type: "POST",
             url: "${contextPath}/kitchen/changestatus/" + orderNo,
