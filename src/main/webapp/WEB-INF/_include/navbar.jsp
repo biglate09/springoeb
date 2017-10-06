@@ -148,7 +148,7 @@
                     <c:if test="${branchUser.roleNo == Role.MANAGER || branchUser.roleNo == Role.CASHIER}">
 
                         <li>
-                            <a style="color:black;" href="${contextPath}/system/blankcashier"><i
+                            <a href="${contextPath}/cashier/cashier"><i
                                     class="fa fa-money"></i> ระบบแคชเชียร์ </a>
                         </li>
                     </c:if>

@@ -1,5 +1,7 @@
 package com.springoeb.cashier.model;
 
+import com.springoeb.menu.model.Menu;
+
 import javax.persistence.*;
 
 @Entity(name = "customer_order")
@@ -9,12 +11,16 @@ public class Order {
     private Integer quantity;
     private Double amount;
     private String status;
-    private Integer menuNo;
     @Column(name = "bill_no",updatable = true,insertable = true)
     private Integer billNo;
+    @Column(name = "menu_no",updatable = true,insertable = true)
+    private Integer menuNo;
     @ManyToOne
     @JoinColumn(name = "bill_no",updatable = false,insertable = false)
     private Bill bill;
+    @ManyToOne
+    @JoinColumn(name = "menu_no",updatable = false,insertable = false)
+    private Menu menu;
 
     public static String RESERVED = "reserved";
     public static String WAITING = "waiting";
@@ -68,5 +74,21 @@ public class Order {
 
     public void setBillNo(Integer billNo) {
         this.billNo = billNo;
+    }
+
+    public Bill getBill() {
+        return bill;
+    }
+
+    public void setBill(Bill bill) {
+        this.bill = bill;
+    }
+
+    public Menu getMenu() {
+        return menu;
+    }
+
+    public void setMenu(Menu menu) {
+        this.menu = menu;
     }
 }
