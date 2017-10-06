@@ -67,7 +67,10 @@
 <script>
     $(document).ready(function () {
         $("#datatable_kitchen_status").DataTable({
-            order: [[0, "desc"]],
+            order: [[0, "asc"]],
+            columnDefs: [
+                {orderable: false, targets: [-1]}
+            ],
             columns: [
                 {
                     data: "menuName"
@@ -96,13 +99,17 @@
                 var data_array = [];
                 for (var i = 0; i < json.length; i++) {
                     var obj = json[i];
+                    var amountOrder = obj.quantity + "";
+                    for (var j = amountOrder.length; j < 10; j++) {
+                        amountOrder = "0" + amountOrder;
+                    }
                     var data_refresh = {
-                        menuName: obj.orderNo,
-                        tableName: obj.tableName,
-                        amount: obj.amount,
+                        menuName: obj.menu.menuNameTH + " / " + obj.menu.menuNameEN,
+                        tableName: obj.bill.table.tableName,
+                        amount: obj.quantity + " จาน",
                         status: (obj.status ? '<a onclick="change_status(' + obj.orderNo + ',' + obj.menuNo + ',\'' + obj.status + '\')" class="btn btn-default">เมนูที่ได้รับมา</a>' :
-                            '<a onclick="change_status(' + obj.orderNo + ',' + obj.menuNo + ',\' + obj.status + '\')" class="btn btn-primary">เมนูที่กำลังปรุง</a>' +
-                        '<a onclick="cancel_menu(' + obj.orderNo + ',\'' + obj.status + '\' )" class="btn btn-danger">เมนูที่ถูกยกเลิก</a>'
+                            '<a onclick="change_status(' + obj.orderNo + ',' + obj.menuNo + ',\'' + obj.status + '\')" class="btn btn-primary">เมนูที่กำลังปรุง</a>') +
+                        '<a onclick="cancel_menu(' + obj.orderNo + ',\'' + obj.status + '\' )" class="btn btn-danger">ยกเลิกเมนู</a>'
                     };
 //                    (table.available ? '<span style="color:green;font-weight:bold;">ว่าง</span>' : '<span style="color:red;font-weight:bold;">ไม่ว่าง</span>')
                     data_array.push(data_refresh);
@@ -110,7 +117,7 @@
                 }
 
                 $("#datatable_kitchen_status").DataTable().clear();
-                $("#ddatatable_kitchen_status").DataTable().rows.add(data_array).draw(false);
+                $("#datatable_kitchen_status").DataTable().rows.add(data_array).draw(false);
             }
         });
     }
