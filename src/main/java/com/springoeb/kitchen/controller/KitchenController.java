@@ -24,7 +24,7 @@ public class KitchenController {
     public String toKitchenIndex() {
         return KITCHEN_PATH + "kitchen.jsp";
     }
-
+    @ResponseBody
     @PutMapping("/getorders")
     public String getOrders(HttpSession session) throws JsonProcessingException {
         int branchNo = ((BranchUser) (session.getAttribute("branchUser"))).getBranchNo();
@@ -33,7 +33,7 @@ public class KitchenController {
         String json = mapper.writeValueAsString(orders);
         return json;
     }
-
+    @ResponseBody
     @DeleteMapping("/cancelorder/{orderNo}")
     public void cancelOrder(@PathVariable("orderNo")int orderNo){
         Order order = orderService.findByOrderNo(orderNo);
@@ -45,7 +45,7 @@ public class KitchenController {
             orderService.save(order);
         }
     }
-
+    @ResponseBody
     @PostMapping("/changestatus/{orderNo}")
     public void changeStatus(@PathVariable("orderNo")int orderNo){
         Order order = orderService.findByOrderNo(orderNo);

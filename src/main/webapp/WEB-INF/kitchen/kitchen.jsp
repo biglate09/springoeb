@@ -67,13 +67,91 @@
 <script>
     $(document).ready(function () {
         $("#datatable_kitchen_status").DataTable({
-            "order": [[2, "asc"]],
-            "columnDefs": [
+            order: [[0, "desc"]],
+            columns: [
                 {
-                    orderable: false, targets: [-1]
+                    data: "menuName"
+                },
+                {
+                    data: "tableName"
+                },
+                {
+                    data: "amount"
+                },
+                {
+                    data: "status"
                 }
             ]
         });
+        refresh_table();
+        setInterval(refresh_table, 5000);
     });
+
+    function refresh_table() {
+        $.ajax({
+            type: "PUT",
+            url: "${contextPath}/kitchen/getorders",
+            dataType: "json",
+            success: function (json) {
+                var data_array = [];
+                for (var i = 0; i < json.length; i++) {
+                    var obj = json[i];
+                    var data_refresh = {
+                        menuName: obj.orderNo,
+                        tableName: obj.tableName,
+                        amount: obj.amount,
+                        status: (obj.status ? '<a onclick="change_status(' + obj.orderNo + ',' + obj.menuNo + ',\'' + obj.status + '\')" class="btn btn-default">เมนูที่ได้รับมา</a>' :
+                            '<a onclick="change_status(' + obj.orderNo + ',' + obj.menuNo + ',\' + obj.status + '\')" class="btn btn-primary">เมนูที่กำลังปรุง</a>' +
+                        '<a onclick="cancel_menu(' + obj.orderNo + ',\'' + obj.status + '\' )" class="btn btn-danger">เมนูที่ถูกยกเลิก</a>'
+                    };
+//                    (table.available ? '<span style="color:green;font-weight:bold;">ว่าง</span>' : '<span style="color:red;font-weight:bold;">ไม่ว่าง</span>')
+                    data_array.push(data_refresh);
+                    console.log(obj);
+                }
+
+                $("#datatable_kitchen_status").DataTable().clear();
+                $("#ddatatable_kitchen_status").DataTable().rows.add(data_array).draw(false);
+            }
+        });
+    }
+
+    function change_status(orderNo, menuNo, status) {
+        $.ajax({
+            type: "POST",
+            url: "${contextPath}/kitchen/changestatus/" + orderNo,
+            dataType: "json",
+            success: function (result) {
+                swal("ออเดอร์เปลี่ยนสถานะเป็น "+ status + " แล้ว", "success");
+                refresh_table();
+            }
+        });
+    }
+
+    function cancel_menu(orderNo, status) {
+        swal({
+                title: "ยืนยันการยกเลิกออเดอร์ที่ " + orderNo,
+                text: "เมื่อยืนยัน ออเดอร์ที่ "+ orderNo +" ของโต๊ะ " + tableName + " จะถูกยกเลิก",
+                type: "warning",
+                showCancelButton: true,
+                confirmButtonColor: "#DD6B55",
+                confirmButtonText: "ใช่, ต้องการยกเลิก",
+                cancelButtonText: "ไม่",
+                closeOnConfirm: false
+            },
+            function () {
+                $.ajax({
+                    type: "DELETE",
+                    url: "${contextPath}/kitchen/cancelorder/" + orderNo,
+                    dataType: "json",
+                    success: function (result) {
+                        swal("สำเร็จ", "ออเดอร์ที่ " + orderNo + " ถูกยกเลิกเรียบร้อยแล้ว", "success");
+                        refresh_table();
+                    }, error: function (xhr, status, error) {
+                        swal("ไม่สำเร็จ", "กรุณาลองใหม่ในภายหลัง", "error");
+                    }
+                });
+            }
+        );
+    }
 </script>
 </html>
