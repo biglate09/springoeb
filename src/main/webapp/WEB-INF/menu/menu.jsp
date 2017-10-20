@@ -161,20 +161,21 @@
                                                            id="material-datatable-1">
                                                         <thead>
                                                         <tr>
-                                                            <th style="text-align:center;width:40%;">ชื่อวัตถุดิบอาหาร
+                                                            <th style="text-align:center;">ชื่อวัตถุดิบอาหาร
                                                             </th>
-                                                            <th style="text-align:center;width:30%;" class="order">
+                                                            <th style="text-align:center;" class="order">
                                                                 ประเภท
                                                             </th>
-                                                            <th style="text-align:center;width:30%;"><span class="required">จำนวนที่ใช้</span></th>
+                                                            <th style="text-align:center;"><span class="required">จำนวนที่ใช้</span></th>
+                                                            <th style="text-align:center;">add-on</th>
                                                         </tr>
                                                         </thead>
                                                         <tbody style="text-align:center;" >
                                                         <c:forEach items="${materialItems}" var="mi">
                                                             <tr>
-                                                                <td style="width:40%;">${mi.matItemName}</td>
-                                                                <td style="width:30%;">${mi.materialCategory.matCatName}</td>
-                                                                <td style="width:30%;">
+                                                                <td style="width:30%;">${mi.matItemName}</td>
+                                                                <td style="width:20%;">${mi.materialCategory.matCatName}</td>
+                                                                <td style="width:20%;">
                                                                     <div class="col-md-6">
                                                                         <input matItemNo="${mi.matItemNo}" type="number"
                                                                                matItemName="${mi.matItemName}"
@@ -185,6 +186,17 @@
                                                                                value="0" min="0" max="1000"
                                                                                step="0.001"
                                                                                required>
+                                                                    </div>
+                                                                    <div class="col-md-6">
+                                                                            ${mi.unit.unitName}
+                                                                    </div>
+                                                                </td>
+                                                                <td style="width:20%;">
+                                                                    <div class="col-md-6">
+                                                                        <input type="number"
+                                                                               style="text-align:center;width: 100%;"
+                                                                               value="0" min="0"
+                                                                               step="0.01">
                                                                     </div>
                                                                     <div class="col-md-6">
                                                                             ${mi.unit.unitName}
@@ -319,14 +331,15 @@
                                                         <th style="text-align:center;">ชื่อวัตถุดิบอาหาร</th>
                                                         <th style="text-align:center;" class="order">ประเภท</th>
                                                         <th style="text-align:center;"><span class="required">จำนวนที่ใช้</span></th>
+                                                        <th style="text-align:center;">add-on</th>
                                                     </tr>
                                                     </thead>
                                                     <tbody style="text-align:center;">
                                                     <c:forEach items="${materialItems}" var="mi">
                                                         <tr>
-                                                            <td style="width:40%;">${mi.matItemName}</td>
-                                                            <td style="width:30%;">${mi.materialCategory.matCatName}</td>
-                                                            <td style="width:30%;">
+                                                            <td style="width:30%;">${mi.matItemName}</td>
+                                                            <td style="width:20%;">${mi.materialCategory.matCatName}</td>
+                                                            <td style="width:20%;">
                                                                 <div class="col-md-6">
                                                                     <input matItemNo="${mi.matItemNo}" type="number"
                                                                            matItemName="${mi.matItemName}"
@@ -337,6 +350,15 @@
                                                                            value="0" min="0" max="1000"
                                                                            step="0.001"
                                                                            required>
+                                                                </div>
+                                                                <div class="col-md-6">
+                                                                        ${mi.unit.unitName}
+                                                                </div>
+                                                            </td>
+                                                            </td>
+                                                            <td style="width: 20%;">
+                                                                <div class="col-md-6">
+                                                                    <input type="number" min="0" step="0.01" style="width: 100%;text-align: center;">
                                                                 </div>
                                                                 <div class="col-md-6">
                                                                         ${mi.unit.unitName}
