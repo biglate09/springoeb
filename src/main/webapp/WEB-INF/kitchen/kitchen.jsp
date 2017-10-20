@@ -34,24 +34,13 @@
                                 <table id="datatable_kitchen_status" class="table table-striped table-bordered">
                                     <thead>
                                     <tr>
-                                        <th class="table-rows">ชื่ออาหาร</th>
-                                        <th class="table-rows">โต๊ะที่สั่ง</th>
-                                        <th class="table-rows">จำนวน</th>
-                                        <th class="table-rows">สถานะอาหาร</th>
+                                        <th class="table-rows" style="width: 30%">ชื่ออาหาร</th>
+                                        <th class="table-rows" style="width: 20%">โต๊ะที่สั่ง</th>
+                                        <th class="table-rows" style="width: 20%">จำนวน</th>
+                                        <th class="table-rows" style="width: 30%">สถานะอาหาร</th>
                                     </tr>
                                     </thead>
-                                    <tbody>
-                                        <tr>
-                                            <td style="text-align:center;"></td>
-                                            <td style="text-align:center;"></td>
-                                            <td style="text-align:center;"></td>
-                                            <td style="text-align:center;">
-                                                <button type="button" class="btn btn-default">เมนูที่ได้รับมา</button>
-                                                <button type="button" class="btn btn-primary">เมนูที่กำลังปรุง</button>
-                                                <button type="button" class="btn btn-success">เมนูที่พร้อมเสิร์ฟ</button>
-                                                <button type="button" class="btn btn-danger">เมนูที่ถูกยกเลิก</button>
-                                            </td>
-                                        </tr>
+                                    <tbody style="text-align:center;">
                                     </tbody>
                                 </table>
                             </div>
