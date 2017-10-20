@@ -17,7 +17,9 @@ public class Reservation {
     @Column(name = "numberOfPerson")
     private Integer numberOfPerson;
     @Column(name = "userNo")
-    private String userNo;
+    private Integer userNo;
+    @Column(name = "userName")
+    private String userName;
     @Column(name = "telNo")
     private String tel;
     @Column(name = "branchNo")
@@ -71,11 +73,19 @@ public class Reservation {
         this.branchNo = branchNo;
     }
 
-    public String getUserNo() {
+    public Integer getUserNo() {
         return userNo;
     }
 
-    public void setUserNo(String userNo) {
+    public void setUserNo(Integer userNo) {
         this.userNo = userNo;
+    }
+
+    public String getUserName() {
+        return userName;
+    }
+
+    public void setUserName(String userName) {
+        this.userName = userName;
     }
 }
