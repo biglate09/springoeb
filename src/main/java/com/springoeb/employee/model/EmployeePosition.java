@@ -6,14 +6,13 @@ import javax.persistence.*;
 import java.io.Serializable;
 import java.util.List;
 
-/**
- * Created by bighead on 6/9/17.
- */
-@Entity
+@Entity(name = "EmployeePosition")
 public class EmployeePosition implements Serializable{
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)
+    @Column(name = "empPosNo")
     private Integer empPosNo;
+    @Column(name = "empPosName")
     private String empPosName;
     @JsonIgnore
     @OneToMany(mappedBy = "employeePosition", cascade = CascadeType.ALL)

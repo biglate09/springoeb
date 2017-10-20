@@ -1,15 +1,14 @@
 package com.springoeb.stock.model;
 
-import javax.persistence.Entity;
-import javax.persistence.GeneratedValue;
-import javax.persistence.GenerationType;
-import javax.persistence.Id;
+import javax.persistence.*;
 
-@Entity
+@Entity(name = "MaterialUnit")
 public class MaterialUnit {
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)
+    @Column(name = "unitNo")
     private Integer unitNo;
+    @Column(name = "unitName")
     private String unitName;
 
     public Integer getUnitNo() {

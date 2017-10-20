@@ -1,23 +1,26 @@
 package com.springoeb.table.model;
 
-import javax.persistence.Entity;
-import javax.persistence.GeneratedValue;
-import javax.persistence.GenerationType;
-import javax.persistence.Id;
+import javax.persistence.*;
 import java.sql.Date;
 import java.sql.Time;
 
-@Entity
+@Entity(name = "Reservation")
 public class Reservation {
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)
+    @Column(name = "reserveNo")
     private Integer reserveNo;
+    @Column(name = "date")
     private Date date;
+    @Column(name = "time")
     private Time time;
+    @Column(name = "numberOfPerson")
     private Integer numberOfPerson;
-    private String userName;
+    @Column(name = "userNo")
+    private String userNo;
+    @Column(name = "telNo")
     private String tel;
-
+    @Column(name = "branchNo")
     private Integer branchNo;
 
     public Integer getReserveNo() {
@@ -52,14 +55,6 @@ public class Reservation {
         this.numberOfPerson = numberOfPerson;
     }
 
-    public String getUserName() {
-        return userName;
-    }
-
-    public void setUserName(String userName) {
-        this.userName = userName;
-    }
-
     public String getTel() {
         return tel;
     }
@@ -74,5 +69,13 @@ public class Reservation {
 
     public void setBranchNo(Integer branchNo) {
         this.branchNo = branchNo;
+    }
+
+    public String getUserNo() {
+        return userNo;
+    }
+
+    public void setUserNo(String userNo) {
+        this.userNo = userNo;
     }
 }

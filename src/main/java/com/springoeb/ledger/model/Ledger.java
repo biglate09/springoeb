@@ -3,16 +3,21 @@ package com.springoeb.ledger.model;
 import javax.persistence.*;
 import java.sql.Date;
 
-@Entity
+@Entity(name = "ledger")
 public class Ledger {
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)
+    @Column(name = "ledgerNo")
     private Integer ledgerNo;
+    @Column(name = "ledgerDesc")
     private String ledgerDesc;
-    @Column(name = "ledger_type_no",updatable = true,insertable = true)
+    @Column(name = "ledgerTypeNo",updatable = true,insertable = true)
     private Integer ledgerTypeNo;
+    @Column(name = "amount")
     private Double amount;
+    @Column(name = "date")
     private Date date;
+    @Column(name = "branchNo")
     private Integer branchNo;
 
     public Integer getBranchNo() {
@@ -24,7 +29,7 @@ public class Ledger {
     }
 
     @ManyToOne
-    @JoinColumn(name = "ledger_type_no",updatable = false,insertable = false)
+    @JoinColumn(name = "ledgerTypeNo",updatable = false,insertable = false)
     private LedgerType ledgerType;
 
     public Integer getLedgerNo() {

@@ -5,25 +5,26 @@ import com.springoeb.stock.model_key.MaterialMixedId;
 
 import javax.persistence.*;
 
-@Entity
+@Entity(name = "MaterialMixed")
 @IdClass(MaterialMixedId.class)
 
 public class MaterialMixed {
     @Id
-    @Column(name="mixed_prod_no",insertable = true,updatable = true)
+    @Column(name="mixedProdNo",insertable = true,updatable = true)
     private Integer mixedProdNo;
     @Id
-    @Column(name="item_no",insertable = true,updatable = true)
+    @Column(name="itemNo",insertable = true,updatable = true)
     private Integer itemNo;
+    @Column(name = "quantity")
     private Double quantity;
 
     @JsonIgnore
     @ManyToOne
-    @JoinColumn(name = "mixed_prod_no",updatable = false,insertable = false)
+    @JoinColumn(name = "mixedProdNo",updatable = false,insertable = false)
     private MaterialItem mixedProduct;
 
     @ManyToOne
-    @JoinColumn(name = "item_no",updatable = false,insertable = false)
+    @JoinColumn(name = "itemNo",updatable = false,insertable = false)
     private MaterialItem materialItem;
 
     public Integer getMixedProdNo() {

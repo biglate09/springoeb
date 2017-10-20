@@ -6,23 +6,23 @@ import javax.persistence.*;
 import java.io.Serializable;
 import java.sql.Timestamp;
 
-/**
- * Created by bighead on 6/9/17.
- */
-@Entity
+@Entity(name = "EmployeePay")
 public class EmployeePay implements Serializable{
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)
+    @Column(name = "empPayNo")
     private Integer empPayNo;
+    @Column(name = "pay")
     private Double pay;
+    @Column(name = "date")
     private Timestamp date;
 
-    @Column(name = "emp_no",updatable = true,insertable = true)
+    @Column(name = "empNo",updatable = true,insertable = true)
     private Integer empNo;
 
     @JsonIgnore
     @ManyToOne
-    @JoinColumn(name = "emp_no",updatable = false,insertable = false)
+    @JoinColumn(name = "empNo",updatable = false,insertable = false)
     private Employee employee;
 
     public Integer getEmpPayNo() {

@@ -8,21 +8,31 @@ import javax.persistence.*;
 import java.io.Serializable;
 import java.util.List;
 
-@Entity
+@Entity(name = "Employee")
 public class Employee implements Serializable{
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)
+    @Column(name = "empNo")
     private Integer empNo;
+    @Column(name = "empName")
     private String empName;
+    @Column(name = "empTel")
     private String empTel;
+    @Column(name = "empType")
     private String empType; // Full-time,Part-time,Training
+    @Column(name = "payType")
     private String payType; // วัน,ชั่วโมง
+    @Column(name = "pay")
     private double pay;
+    @Column(name = "empGender")
     private String empGender;
+    @Column(name = "bgColor")
     private String bgColor;
+    @Column(name = "fontColor")
     private String fontColor;
-    @Column(name = "branch_no",updatable = true,insertable = true)
+    @Column(name = "branchNo",updatable = true,insertable = true)
     private Integer branchNo;
+    @Column(name = "email")
     private String email;
     @OneToMany(fetch = FetchType.LAZY, mappedBy = "employee")
     private List<EmployeePay> employeePays;
@@ -32,7 +42,7 @@ public class Employee implements Serializable{
     @OneToOne(mappedBy = "employee",cascade = CascadeType.ALL)
     private BranchUser branchUser;
     @ManyToOne
-    @JoinColumn(name = "branch_no",updatable = false,insertable = false)
+    @JoinColumn(name = "branchNo",updatable = false,insertable = false)
     private Branch branch;
 
     public static String FULL_TIME = "1";

@@ -6,18 +6,23 @@ import javax.persistence.*;
 import java.sql.Date;
 import java.sql.Time;
 
-@Entity(name = "bill")
+@Entity(name = "Bill")
 public class Bill {
     @Id
+    @Column(name = "billNo")
     private Integer billNo;
+    @Column(name = "totalAmount")
     private Double totalAmount;
+    @Column(name = "billDate")
     private Date billDate;
+    @Column(name = "billTime")
     private Time billTime;
+    @Column(name = "status")
     private String status;
-    @Column(name = "table_no",updatable = true,insertable = true)
+    @Column(name = "tableNo",updatable = true,insertable = true)
     private Integer tableNo;
     @ManyToOne
-    @JoinColumn(name = "table_no",updatable = false,insertable = false)
+    @JoinColumn(name = "tableNo",updatable = false,insertable = false)
     private Table table;
 
     public static String PAID = "paid";

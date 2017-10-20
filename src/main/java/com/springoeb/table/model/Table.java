@@ -4,19 +4,23 @@ import com.springoeb.branch.model.Branch;
 
 import javax.persistence.*;
 
-@Entity(name = "customer_table")
+@Entity(name = "CustomerTable")
 public class Table {
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)
+    @Column(name = "tableNo")
     private Integer tableNo;
+    @Column(name = "tableName")
     private String tableName;
+    @Column(name = "seatAmount")
     private Double seatAmount;
+    @Column(name = "isAvailable")
     private boolean isAvailable;
-    @Column(name = "branch_no",updatable = true,insertable = true)
+    @Column(name = "branchNo",updatable = true,insertable = true)
     private Integer branchNo;
 
     @ManyToOne
-    @JoinColumn(name = "branch_no",updatable = false,insertable = false)
+    @JoinColumn(name = "branchNo",updatable = false,insertable = false)
     private Branch branch;
 
     public Integer getTableNo() {

@@ -1,15 +1,14 @@
 package com.springoeb.system.model;
 
-import javax.persistence.Entity;
-import javax.persistence.FetchType;
-import javax.persistence.Id;
-import javax.persistence.OneToMany;
+import javax.persistence.*;
 import java.util.List;
 
-@Entity
+@Entity(name = "Province")
 public class Province {
     @Id
+    @Column(name = "provinceNo")
     private Integer provinceNo;
+    @Column(name = "provinceName")
     private String provinceName;
 
     @OneToMany(fetch = FetchType.LAZY, mappedBy = "province")

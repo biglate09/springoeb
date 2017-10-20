@@ -7,29 +7,35 @@ import javax.persistence.*;
 import java.io.Serializable;
 import java.util.List;
 
-@Entity
+@Entity(name = "Menu")
 public class Menu implements Serializable{
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)
+    @Column(name = "menuNo")
     private Integer menuNo;
-    @Column(name = "menu_name_TH")
+    @Column(name = "menuNameTH")
     private String menuNameTH;
-    @Column(name = "menu_name_EN")
+    @Column(name = "menuNameEN")
     private String menuNameEN;
+    @Column(name = "menuDesc")
     private String menuDesc;
+    @Column(name = "menuPrice")
     private Double menuPrice;
+    @Column(name = "menuPicPath")
     private String menuPicPath;
+    @Column(name = "menuFlag")
     private String menuFlag;
+    @Column(name = "localFlag")
     private Integer localFlag;
+    @Column(name = "menuGroupNo",insertable = true,updatable = true)
+    private Integer menuGroupNo;
+
     @JsonIgnore
     @OneToMany(fetch = FetchType.LAZY, mappedBy = "menu")
     private List<BranchMenu> branchMenu;
 
-    @Column(name = "menu_group_no",insertable = true,updatable = true)
-    private Integer menuGroupNo;
-
     @ManyToOne
-    @JoinColumn(name = "menu_group_no",updatable = false,insertable = false)
+    @JoinColumn(name = "menuGroupNo",updatable = false,insertable = false)
     private MenuGroup menuGroup;
 
     @OneToMany(fetch = FetchType.LAZY, mappedBy = "menuSet")

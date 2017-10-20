@@ -3,26 +3,30 @@ package com.springoeb.stock.model;
 import javax.persistence.*;
 import java.util.List;
 
-@Entity
+@Entity(name = "Material")
 public class MaterialItem {
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)
+    @Column(name = "matNo")
     private Integer matItemNo;
+    @Column(name = "matName")
     private String matItemName;
+    @Column(name = "matFlag")
     private String matFlag;
+    @Column(name = "matQuantity")
     private Double quantity;
-    @Column(name = "mat_cat_no",insertable = true,updatable = true)
+    @Column(name = "matTypeNo",insertable = true,updatable = true)
     private Integer matCatNo;
 
     @ManyToOne
-    @JoinColumn(name = "mat_cat_no",updatable = false,insertable = false)
+    @JoinColumn(name = "matTypeNo",updatable = false,insertable = false)
     private MaterialCategory materialCategory;
 
-    @Column(name = "unit_no",insertable = true,updatable = true)
+    @Column(name = "unitNo",insertable = true,updatable = true)
     private Integer unitNo;
 
     @ManyToOne
-    @JoinColumn(name = "unit_no",updatable = false,insertable = false)
+    @JoinColumn(name = "unitNo",updatable = false,insertable = false)
     private MaterialUnit unit;
 
     @OneToMany(fetch = FetchType.LAZY, mappedBy = "mixedProduct")

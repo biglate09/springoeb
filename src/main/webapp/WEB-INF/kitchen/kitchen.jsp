@@ -96,6 +96,7 @@
             url: "${contextPath}/kitchen/getorders",
             dataType: "json",
             success: function (json) {
+                console.log(json);
                 var data_array = [];
                 for (var i = 0; i < json.length; i++) {
                     var obj = json[i];
@@ -115,11 +116,12 @@
                         '<a onclick="cancel_menu(' + obj.orderNo + ',\'' + obj.status + '\' )" class="btn btn-danger">ยกเลิกเมนู</a>'
                     };
                     data_array.push(data_refresh);
-                    console.log(json);
                 }
 
                 $("#datatable_kitchen_status").DataTable().clear();
                 $("#datatable_kitchen_status").DataTable().rows.add(data_array).draw(false);
+            },error: function (json) {
+                swal("การเชื่อมต่อถูกตัดขาด", "กรุณาเช็คสัญญาณอินเทอร์เน็ต", "error");
             }
         });
     }

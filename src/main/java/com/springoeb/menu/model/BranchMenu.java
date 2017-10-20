@@ -1,23 +1,23 @@
 package com.springoeb.menu.model;
 
 import com.springoeb.menu.model_key.BranchMenuId;
-import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 
 import javax.persistence.*;
 
-@Entity
+@Entity(name = "Branch_Menu")
 @IdClass(BranchMenuId.class)
 public class BranchMenu {
     @Id
-    @Column(name="branch_no",insertable = true,updatable = true)
+    @Column(name="branchNo",insertable = true,updatable = true)
     private Integer branchNo;
     @Id
-    @Column(name="menu_no",insertable = true,updatable = true)
+    @Column(name="menuNo",insertable = true,updatable = true)
     private Integer menuNo;
+    @Column(name = "isAvailable")
     private boolean available;
 
     @ManyToOne
-    @JoinColumn(name = "menu_no",updatable = false,insertable = false)
+    @JoinColumn(name = "menuNo",updatable = false,insertable = false)
     private Menu menu;
 
     public Integer getBranchNo() {

@@ -5,17 +5,19 @@ import com.fasterxml.jackson.annotation.JsonIgnore;
 import javax.persistence.*;
 import java.util.List;
 
-@Entity
+@Entity(name = "District")
 public class District {
     @Id
+    @Column(name = "districtNo")
     private Integer districtNo;
+    @Column(name = "districtName")
     private String districtName;
-    @Column(name = "province_no",insertable = true,updatable = true)
+    @Column(name = "provinceNo",insertable = true,updatable = true)
     private Integer provinceNo;
 
     @JsonIgnore
     @ManyToOne
-    @JoinColumn(name = "province_no",insertable = false,updatable = false)
+    @JoinColumn(name = "provinceNo",insertable = false,updatable = false)
     private Province province;
 
     @OneToMany(fetch = FetchType.LAZY, mappedBy = "district")

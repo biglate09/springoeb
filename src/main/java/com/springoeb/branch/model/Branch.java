@@ -7,22 +7,35 @@ import com.springoeb.system.model.BranchUser;
 import javax.persistence.*;
 import java.util.List;
 
-@Entity
+@Entity(name = "Branch")
 public class Branch {
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)
+    @Column(name = "branchNo")
     private Integer branchNo;
+    @Column(name = "branchName")
     private String branchName;
+    @Column(name = "branchDesc")
     private String branchDesc;
+    @Column(name = "addressName")
     private String addressName;
+    @Column(name = "district")
     private Integer districtNo;
+    @Column(name = "subDistrict")
     private Integer subDistrictNo;
+    @Column(name = "road")
     private String road;
+    @Column(name = "province")
     private Integer provinceNo;
+    @Column(name = "zip")
     private Integer zipNo;
+    @Column(name = "tel")
     private String tel;
+    @Column(name = "line")
     private String line;
+    @Column(name = "fb")
     private String fb;
+    @Column(name = "hasAdmin")
     private boolean hasAdmin;
 
     public static int MAIN_BRANCH = 1;

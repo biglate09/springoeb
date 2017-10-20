@@ -7,16 +7,17 @@ import javax.persistence.*;
 import java.io.Serializable;
 import java.util.List;
 
-@Entity
+@Entity(name = "MenuGroup")
 public class MenuGroup implements Serializable {
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)
+    @Column(name = "menuGroupNo")
     private Integer menuGroupNo;
-    @Column(name = "menu_group_name_TH")
+    @Column(name = "menuGroupNameTH")
     private String menuGroupNameTH;
-    @Column(name = "menu_group_name_EN")
+    @Column(name = "menuGroupNameEN")
     private String menuGroupNameEN;
-    @Column(name = "menu_cat_no",insertable = true,updatable = true)
+    @Column(name = "menuTypeNo",insertable = true,updatable = true)
     private Integer menuCatNo;
     @JsonIgnore
     @OneToMany(fetch = FetchType.LAZY, mappedBy = "menuGroup")
@@ -29,7 +30,7 @@ public class MenuGroup implements Serializable {
     List<Menu> menus;
 
     @ManyToOne
-    @JoinColumn(name="menu_cat_no",insertable = false,updatable = false)
+    @JoinColumn(name="menuTypeNo",insertable = false,updatable = false)
     private MenuCategory menuCategory;
 
     public Integer getMenuGroupNo() {

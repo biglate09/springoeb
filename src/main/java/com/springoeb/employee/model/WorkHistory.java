@@ -8,39 +8,43 @@ import java.io.Serializable;
 import java.sql.Date;
 import java.sql.Time;
 
-/**
- * Created by bighead on 6/9/17.
- */
-@Entity
+@Entity(name = "WorkHistory")
 public class WorkHistory implements Serializable{
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)
+    @Column(name = "workHistNo")
     private Integer workHistNo;
+    @Column(name = "workDate")
     private Date workDate;
+    @Column(name = "workStart")
     private Time workStart;
+    @Column(name = "workEnd")
     private Time workEnd;
+    @Column(name = "workPay")
     private Double workPay;
+    @Column(name = "workHour")
     private Integer workHour;
+    @Column(name = "workMin")
     private Integer workMin;
 
-    @Column(name = "emp_no",updatable = true,insertable = true)
+    @Column(name = "empNo",updatable = true,insertable = true)
     private Integer empNo;
 
     @Transient
     private String empName;
 
-    @Column(name = "emp_time_no",updatable = true,insertable = true)
+    @Column(name = "empTableNo",updatable = true,insertable = true)
     @Nullable
     private Integer empTimeNo;
 
     @JsonIgnore
     @OneToOne
-    @JoinColumn(name = "emp_time_no",updatable = false,insertable = false)
+    @JoinColumn(name = "empTableNo",updatable = false,insertable = false)
     private EmployeeTable employeeTable;
 
     @JsonIgnore
     @ManyToOne
-    @JoinColumn(name = "emp_no",updatable = false,insertable = false)
+    @JoinColumn(name = "empNo",updatable = false,insertable = false)
     private Employee employee;
 
     public Integer getWorkHistNo() {

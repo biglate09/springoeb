@@ -6,21 +6,29 @@ import javax.persistence.*;
 import java.sql.Date;
 import java.util.List;
 
-@Entity
+@Entity(name = "Promotion")
 public class Promotion {
     @GeneratedValue(strategy = GenerationType.AUTO)
     @Id
+    @Column(name = "proNo")
     private Integer promotionNo;
-    @Column(name = "promotion_name_TH")
+    @Column(name = "proNameTH")
     private String promotionNameTH;
-    @Column(name = "promotion_name_EN")
+    @Column(name = "proNameEN")
     private String promotionNameEN;
+    @Column(name = "proDesc")
     private String promotionDesc;
+    @Column(name = "proDiscount")
     private Double discount;
+    @Column(name = "proPicPath")
     private String promotionPicPath;
+    @Column(name = "proFromDate")
     private Date fromDate;
+    @Column(name = "proToDate")
     private Date toDate;
+    @Column(name = "proDay")
     private String day;
+    @Column(name = "available")
     private boolean available;
 
     @JsonManagedReference

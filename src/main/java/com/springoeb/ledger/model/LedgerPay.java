@@ -1,15 +1,14 @@
 package com.springoeb.ledger.model;
 
-import javax.persistence.Entity;
-import javax.persistence.GeneratedValue;
-import javax.persistence.GenerationType;
-import javax.persistence.Id;
+import javax.persistence.*;
 
-@Entity
+@Entity(name = "LedgerPay")
 public class LedgerPay {
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)
+    @Column(name = "ledgerPayNo")
     private Integer ledgerPayNo;
+    @Column(name = "ledgerPayName")
     private String ledgerPayName;
 
     public Integer getLedgerPayNo() {

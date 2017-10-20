@@ -7,33 +7,37 @@ import com.springoeb.employee.model.Employee;
 
 import javax.persistence.*;
 
-@Entity
+@Entity(name = "Branch_User")
 public class BranchUser {
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)
+    @Column(name = "branchUserNo")
     private Integer branchUserNo;
+    @Column(name = "branchUsername")
     private String username;
     @JsonIgnore
+    @Column(name = "branchPassword")
     private String password;
+    @Column(name = "sentEmail")
     private String sentEmail;
-    @Column(name = "branch_no", updatable = true,insertable = true)
+    @Column(name = "branchNo", updatable = true,insertable = true)
     private Integer branchNo;
-    @Column(name = "role_no", updatable = true,insertable = true)
+    @Column(name = "roleNo", updatable = true,insertable = true)
     private Integer roleNo;
-    @Column(name = "emp_no", updatable = true,insertable = true)
+    @Column(name = "empNo", updatable = true,insertable = true)
     private Integer empNo;
 
     @ManyToOne
-    @JoinColumn(name = "branch_no",updatable = false,insertable = false)
+    @JoinColumn(name = "branchNo",updatable = false,insertable = false)
     private Branch branch;
 
     @ManyToOne
-    @JoinColumn(name = "role_no",updatable = false,insertable = false)
+    @JoinColumn(name = "roleNo",updatable = false,insertable = false)
     private Role role;
 
     @JsonBackReference
     @OneToOne(cascade = CascadeType.ALL)
-    @JoinColumn(name = "emp_no", updatable = false,insertable = false)
+    @JoinColumn(name = "empNo", updatable = false,insertable = false)
     private Employee employee;
 
     public Integer getBranchUserNo() {

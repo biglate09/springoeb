@@ -6,28 +6,36 @@ import javax.persistence.*;
 import java.sql.Date;
 import java.sql.Time;
 
-@Entity
+@Entity(name = "MaterialHistory")
 public class MaterialHistory {
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)
+    @Column(name = "mat_hist_no")
     private Integer matHistNo;
+    @Column(name = "mat_name")
     private String matName;
+    @Column(name = "mat_quantity")
     private Double matQuantity;
+    @Column(name = "date")
     private Date date;
+    @Column(name = "time")
     private Time time;
+    @Column(name = "importer")
     private String importer;
+    @Column(name = "supplier")
     private String supplier;
+    @Column(name = "price")
     private Double price;
     @Column(name = "mat_item_no",insertable = true,updatable = true)
     private Integer matItemNo;
     @Column(name = "branch_no",insertable = true,updatable = true)
     private Integer branchNo;
+    @Column(name = "of_mat_hist_no")
+    private Integer ofMatHistNo;
     @JsonIgnore
     @ManyToOne
     @JoinColumn(name = "mat_item_no",updatable = false,insertable = false)
     private MaterialItem materialItem;
-
-    private Integer ofMatHistNo;
 
     public Integer getMatHistNo() {
         return matHistNo;

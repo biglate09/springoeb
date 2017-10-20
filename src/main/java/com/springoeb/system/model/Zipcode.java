@@ -4,21 +4,24 @@ import com.fasterxml.jackson.annotation.JsonIgnore;
 
 import javax.persistence.*;
 
-@Entity
+@Entity(name = "Zipcode")
 public class Zipcode {
     @Id
+    @Column(name = "zipcodeNo")
     private String zipcodeNo;
+    @Column(name = "provinceNo")
     private Integer provinceNo;
+    @Column(name = "districtNo")
     private Integer districtNo;
     @Column(name = "zipcode")
     private String zipcodeName;
 
-    @Column(name = "sub_district_no",insertable = true,updatable = true)
+    @Column(name = "subDistrictNo",insertable = true,updatable = true)
     private Integer subDistrictNo;
 
     @JsonIgnore
     @ManyToOne
-    @JoinColumn(name = "sub_district_no",insertable = false,updatable = false)
+    @JoinColumn(name = "subDistrictNo",insertable = false,updatable = false)
     private SubDistrict subDistrict;
 
 

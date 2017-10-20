@@ -5,13 +5,17 @@ import com.fasterxml.jackson.annotation.JsonIgnore;
 import javax.persistence.*;
 import java.util.List;
 
-@Entity
+@Entity(name = "LedgerType")
 public class LedgerType {
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)
+    @Column(name = "ledgerTypeNo")
     private Integer ledgerTypeNo;
+    @Column(name = "ledgerTypeName")
     private String ledgerTypeName;
+    @Column(name = "defaultType")
     private boolean defaultType;
+    @Column(name = "ledgerPayNo")
     private int ledgerPayNo;
 
     @JsonIgnore

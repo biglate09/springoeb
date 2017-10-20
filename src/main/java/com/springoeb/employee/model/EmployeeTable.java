@@ -5,28 +5,29 @@ import java.io.Serializable;
 import java.sql.Date;
 import java.sql.Time;
 
-/**
- * Created by bighead on 6/9/17.
- */
-@Entity
+@Entity(name = "EmployeeTable")
 public class EmployeeTable implements Serializable{
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)
+    @Column(name = "empTableNo")
     private Integer empTimeNo;
+    @Column(name = "date")
     private Date date;
+    @Column(name = "timeStart")
     private Time timeStart;
+    @Column(name = "timeEnd")
     private Time timeEnd;
 
-    @Column(name = "emp_pos_no",updatable = true,insertable = true)
+    @Column(name = "empPosNo",updatable = true,insertable = true)
     private Integer empPosNo;
-    @Column(name = "emp_no",updatable = true,insertable = true)
+    @Column(name = "empNo",updatable = true,insertable = true)
     private Integer empNo;
     @ManyToOne
-    @JoinColumn(name = "emp_pos_no",updatable = false,insertable = false)
+    @JoinColumn(name = "empPosNo",updatable = false,insertable = false)
     private EmployeePosition employeePosition;
 
     @ManyToOne
-    @JoinColumn(name = "emp_no",updatable = false,insertable = false)
+    @JoinColumn(name = "empNo",updatable = false,insertable = false)
     private Employee employee;
 
     @OneToOne(fetch = FetchType.LAZY, mappedBy = "employeeTable")

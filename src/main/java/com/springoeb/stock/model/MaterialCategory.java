@@ -1,16 +1,15 @@
 package com.springoeb.stock.model;
 
-import javax.persistence.Entity;
-import javax.persistence.GeneratedValue;
-import javax.persistence.GenerationType;
-import javax.persistence.Id;
+import javax.persistence.*;
 import java.io.Serializable;
 
-@Entity
+@Entity(name = "MaterialType")
 public class MaterialCategory implements Serializable {
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)
+    @Column(name = "matTypeNo")
     private Integer matCatNo;
+    @Column(name = "matTypeName")
     private String matCatName;
 
     public Integer getMatCatNo() {

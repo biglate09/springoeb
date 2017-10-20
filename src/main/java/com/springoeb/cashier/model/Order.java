@@ -4,22 +4,26 @@ import com.springoeb.menu.model.Menu;
 
 import javax.persistence.*;
 
-@Entity(name = "customer_order")
+@Entity(name = "Order")
 public class Order {
     @Id
+    @Column(name = "orderNo")
     private Integer orderNo;
+    @Column(name = "quantity")
     private Integer quantity;
+    @Column(name = "amount")
     private Double amount;
+    @Column(name = "status")
     private String status;
-    @Column(name = "bill_no",updatable = true,insertable = true)
+    @Column(name = "billNo",updatable = true,insertable = true)
     private Integer billNo;
-    @Column(name = "menu_no",updatable = true,insertable = true)
+    @Column(name = "menuNo",updatable = true,insertable = true)
     private Integer menuNo;
     @ManyToOne
-    @JoinColumn(name = "bill_no",updatable = false,insertable = false)
+    @JoinColumn(name = "billNo",updatable = false,insertable = false)
     private Bill bill;
     @ManyToOne
-    @JoinColumn(name = "menu_no",updatable = false,insertable = false)
+    @JoinColumn(name = "menuNo",updatable = false,insertable = false)
     private Menu menu;
 
     public static String RESERVED = "reserved";

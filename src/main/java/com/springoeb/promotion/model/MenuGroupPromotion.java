@@ -6,23 +6,23 @@ import com.springoeb.promotion.model_key.MenuGroupPromotionId;
 
 import javax.persistence.*;
 
-@Entity(name = "menu_group_promotion")
+@Entity(name = "MenuGroup_Promotion")
 @IdClass(MenuGroupPromotionId.class)
 public class MenuGroupPromotion {
     @Id
-    @Column(name = "promotion_no",updatable = true,insertable = true)
+    @Column(name = "promotionNo",updatable = true,insertable = true)
     private Integer promotionNo;
     @Id
-    @Column(name = "menu_group_no",updatable = true,insertable = true)
+    @Column(name = "menuGroupNo",updatable = true,insertable = true)
     private Integer menuGroupNo;
 
     @JsonBackReference
     @ManyToOne
-    @JoinColumn(name = "promotion_no",updatable = false,insertable = false)
+    @JoinColumn(name = "promotionNo",updatable = false,insertable = false)
     private Promotion promotion;
 
     @ManyToOne
-    @JoinColumn(name = "menu_group_no",updatable = false,insertable = false)
+    @JoinColumn(name = "menuGroupNo",updatable = false,insertable = false)
     private MenuGroup menuGroup;
 
     public Integer getPromotionNo() {

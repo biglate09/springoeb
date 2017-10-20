@@ -1,13 +1,17 @@
 package com.springoeb.system.model;
 
+import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.Id;
 
-@Entity
+@Entity(name = "Role")
 public class Role {
     @Id
+    @Column(name = "roleNo")
     private Integer roleNo;
+    @Column(name = "roleName")
     private String roleName;
+    @Column(name = "canAdd")
     private boolean canAdd;
 
     public static Integer MANAGER = 1;

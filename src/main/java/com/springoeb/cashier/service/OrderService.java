@@ -14,7 +14,7 @@ public class OrderService {
     private OrderRepository orderRepository;
 
     public List<Order> getOrders(int branchNo){
-        return orderRepository.findByBill_StatusAndBill_Table_BranchNoOrderByOrderNoDescMenuNoDescStatusDesc(Bill.UNPAID,branchNo);
+        return orderRepository.findByBill_StatusAndBill_Table_BranchNoOrderByOrderNoAsc(Bill.UNPAID,branchNo);
     }
 
     public Order findByOrderNo(int orderNo){

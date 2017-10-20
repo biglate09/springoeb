@@ -6,24 +6,25 @@ import com.springoeb.menu.model_key.MenuInSetId;
 import javax.persistence.*;
 import java.io.Serializable;
 
-@Entity
+@Entity(name = "Menu_MenuSet")
 @IdClass(MenuInSetId.class)
 public class MenuInSet implements Serializable {
     @Id
-    @Column(name="menu_no",insertable = true,updatable = true)
+    @Column(name="menuSetNo",insertable = true,updatable = true)
     private Integer menuNo;
     @Id
-    @Column(name="menu_sub_no",insertable = true,updatable = true)
+    @Column(name="menuNo",insertable = true,updatable = true)
     private Integer menuSubNo;
+    @Column(name = "amount")
     private Integer amount;
 
     @JsonIgnore
     @ManyToOne
-    @JoinColumn(name="menu_no",insertable = false,updatable = false)
+    @JoinColumn(name="menuSetNo",insertable = false,updatable = false)
     private Menu menuSet;
 
     @ManyToOne
-    @JoinColumn(name="menu_sub_no",insertable = false,updatable = false)
+    @JoinColumn(name="menuNo",insertable = false,updatable = false)
     private Menu menu;
 
     public Integer getMenuNo() {

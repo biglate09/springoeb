@@ -6,11 +6,13 @@ import javax.persistence.*;
 import java.io.Serializable;
 import java.util.List;
 
-@Entity
+@Entity(name = "MenuType")
 public class MenuCategory implements Serializable {
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)
+    @Column(name = "menuTypeNo")
     private Integer menuCatNo;
+    @Column(name = "menuTypeName")
     private String menuCatName;
     @JsonIgnore
     @OneToMany(fetch = FetchType.LAZY,mappedBy = "menuCategory")

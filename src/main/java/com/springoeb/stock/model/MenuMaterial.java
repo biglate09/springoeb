@@ -6,25 +6,25 @@ import com.springoeb.stock.model_key.MenuMaterialId;
 
 import javax.persistence.*;
 
-@Entity
+@Entity(name = "Menu_Material")
 @IdClass(MenuMaterialId.class)
-
 public class MenuMaterial {
     @Id
-    @Column(name="menu_no",insertable = true,updatable = true)
+    @Column(name="menuNo",insertable = true,updatable = true)
     private Integer menuNo;
     @Id
-    @Column(name="mat_item_no",insertable = true,updatable = true)
+    @Column(name="matNo",insertable = true,updatable = true)
     private Integer matItemNo;
+    @Column(name = "quantity")
     private Double quantity;
 
     @JsonIgnore
     @ManyToOne
-    @JoinColumn(name = "menu_no",updatable = false,insertable = false)
+    @JoinColumn(name = "menuNo",updatable = false,insertable = false)
     private Menu menu;
 
     @ManyToOne
-    @JoinColumn(name = "mat_item_no",updatable = false,insertable = false)
+    @JoinColumn(name = "matNo",updatable = false,insertable = false)
     private MaterialItem materialItem;
 
     public Integer getMenuNo() {
