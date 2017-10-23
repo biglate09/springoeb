@@ -3,7 +3,7 @@ package com.springoeb.ledger.model;
 import javax.persistence.*;
 import java.sql.Date;
 
-@Entity(name = "ledger")
+@Entity(name = "Ledger")
 public class Ledger {
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)
