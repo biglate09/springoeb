@@ -167,14 +167,14 @@
                 var data_array = [];
                 for (var iterator = 0; iterator < json.length; iterator++) {
                     var obj = json[iterator];
-                    branchsort = obj.branchNo;
-                    for(var i = (obj.branchNo+'').length ; i<10 ; i++){
+                    branchsort = iterator;
+                    for(var i = (iterator+'').length ; i<10 ; i++){
                         branchsort += "0" + branchsort;
                     }
 
                     var data_refresh = {
                         No: {
-                            display : obj.branchNo,
+                            display : iterator+1,
                             order : branchsort
                         },
                         branchName: obj.branchName,

@@ -88,4 +88,18 @@ public class Reservation {
     public void setUserName(String userName) {
         this.userName = userName;
     }
+
+    @Override
+    public String toString() {
+        return "Reservation{" +
+                "reserveNo=" + reserveNo +
+                ", date=" + date +
+                ", time=" + time +
+                ", numberOfPerson=" + numberOfPerson +
+                ", userNo=" + userNo +
+                ", userName='" + userName + '\'' +
+                ", tel='" + tel + '\'' +
+                ", branchNo=" + branchNo +
+                '}';
+    }
 }
