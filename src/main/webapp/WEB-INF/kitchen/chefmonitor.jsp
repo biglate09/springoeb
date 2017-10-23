@@ -39,7 +39,7 @@
                                         <th class="table-rows" style="width: 30%">สถานะอาหาร</th>
                                     </tr>
                                     </thead>
-                                    <tbody style="text-align:center;">
+                                    <tbody style="text-align:center;font-size: 250%">
                                     </tbody>
                                 </table>
                             </div>
@@ -104,8 +104,6 @@
 
                 $("#datatable_kitchen_status").DataTable().clear();
                 $("#datatable_kitchen_status").DataTable().rows.add(data_array).draw(false);
-            },error: function (json) {
-                swal("การเชื่อมต่อถูกตัดขาด", "กรุณาเช็คสัญญาณอินเทอร์เน็ต", "error");
             }
         });
     }
