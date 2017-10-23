@@ -191,18 +191,15 @@
                                                                             ${mi.unit.unitName}
                                                                     </div>
                                                                 </td>
-                                                                <td style="width:30%;">
-                                                                    <div class="col-md-4">
+                                                                <td style="width:20%;">
+                                                                    <div class="col-md-6">
                                                                         <input type="number"
                                                                                style="text-align:center;width: 100%;"
                                                                                value="0" min="0"
                                                                                step="0.01">
                                                                     </div>
-                                                                    <div class="col-md-4">
+                                                                    <div class="col-md-6">
                                                                             ${mi.unit.unitName}
-                                                                    </div>
-                                                                    <div class="col-md-4">
-                                                                        <input type="number" min="0" placeholder="ราคา" step="0.01" style="width: 100%;text-align: center;">
                                                                     </div>
                                                                 </td>
                                                             </tr>
@@ -335,7 +332,6 @@
                                                         <th style="text-align:center;" class="order">ประเภท</th>
                                                         <th style="text-align:center;"><span class="required">จำนวนที่ใช้</span></th>
                                                         <th style="text-align:center;">add-on</th>
-                                                        <%--<th style="text-align:center;">ราคา</th>--%>
                                                     </tr>
                                                     </thead>
                                                     <tbody style="text-align:center;">
@@ -360,15 +356,12 @@
                                                                 </div>
                                                             </td>
                                                             </td>
-                                                            <td style="width: 30%;">
-                                                                <div class="col-md-4">
-                                                                    <input type="number" value="0" min="0" step="0.01" style="width: 100%;text-align: center;">
+                                                            <td style="width: 20%;">
+                                                                <div class="col-md-6">
+                                                                    <input type="number" min="0" step="0.01" style="width: 100%;text-align: center;">
                                                                 </div>
-                                                                <div class="col-md-4">
+                                                                <div class="col-md-6">
                                                                         ${mi.unit.unitName}
-                                                                </div>
-                                                                <div class="col-md-4">
-                                                                    <input type="number" min="0" placeholder="ราคา" step="0.01" style="width: 100%;text-align: center;">
                                                                 </div>
                                                             </td>
                                                         </tr>
