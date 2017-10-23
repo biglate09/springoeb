@@ -6,7 +6,7 @@
 <head>
     <meta charset="UTF-8">
     <title>ลงชื่อเข้าใช้</title>
-    <link rel="icon" type="image/png" href="${contextPath}/images/OEB_LOGO.png">
+    <link rel="icon" type="image/png" href="${contextPath}/images/OEB_LOGO_TEST.png">
     <link rel='stylesheet prefetch' href='http://maxcdn.bootstrapcdn.com/font-awesome/4.2.0/css/font-awesome.min.css'>
     <style>
         * {
@@ -173,7 +173,7 @@
 <div class="login-form">
     <form action="${contextPath}/system/login" method="POST" modelAttribute="branchUser">
         <div class="col-xs-2 col-xs-0ffset-2">
-            <img class="logo" src="${contextPath}/images/OEB_LOGO.png">
+            <img class="logo" src="${contextPath}/images/OEB_LOGO_TEST.png">
         </div>
 
         <div class="form-group ">
