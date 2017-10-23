@@ -141,10 +141,10 @@
                     </c:if>
                     <c:if test="${branchUser.roleNo == Role.MANAGER || branchUser.roleNo == Role.KITCHEN}">
                         <li>
-                            <a><i class="fa fa-tasks"></i> ระบบหลังครัว</a>
+                            <a><i class="fa fa-tasks"></i> ระบบหลังครัว<span class="fa fa-chevron-down"></span></a>
                             <ul class="nav child_menu">
                                 <li><a id="kitchen" href="${contextPath}/kitchen/kitchen">พนักงานครัว</a></li>
-                                <%--<li><a id="chefmonitor" href="${contextPath}/kitchen/chefmonitor">พ่อครัว</a></li>--%>
+                                <li><a id="chefmonitor" href="${contextPath}/kitchen/chefmonitor">พ่อครัว</a></li>
                             </ul>
                         </li>
                     </c:if>
