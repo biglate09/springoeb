@@ -85,7 +85,7 @@
                                     <div class="modal-footer">
                                         <!-- ปุ่มกดปิด (Close) ตรงส่วนล่างของ Modal -->
                                         <div class="col-md-9 col-sm-9 col-xs-12 col-md-offset-3">
-                                            <button type="submit" class="btn btn-success">ตกลง</button>
+                                            <button type="submit" class="btn btn-success"><i class="fa fa-circle-o-notch fa-spin" id="loadingbtn" style="display:none"></i> ตกลง</button>
                                             <button type="button" class="btn btn-default" data-dismiss="modal">
                                                 ยกเลิก
                                             </button>
@@ -135,7 +135,7 @@
                                     <div class="modal-footer">
                                         <!-- ปุ่มกดปิด (Close) ตรงส่วนล่างของ Modal -->
                                         <div class="col-md-9 col-sm-9 col-xs-12 col-md-offset-3">
-                                            <button type="submit" class="btn btn-success">ตกลง</button>
+                                            <button type="submit" class="btn btn-success"><i class="fa fa-circle-o-notch fa-spin" id="loadingbtnedit" style="display:none"></i> ตกลง</button>
                                             <button type="button" class="btn btn-default" data-dismiss="modal">
                                                 ยกเลิก
                                             </button>
@@ -215,12 +215,14 @@
     }
 
     $("#add_table").submit(function () {
+        $('#loadingbtn').show();
         var object = $(this).serialize();
         $.ajax({
             type: "POST",
             data: object,
             url: "${contextPath}/table/managetable",
             success: function (result) {
+                $('#loadingbtn').hide();
                 swal("สำเร็จ", "โต๊ะถูกเพิ่มเรียบร้อยแล้ว", "success");
                 reset_field();
                 $("#addTable").modal('toggle');
@@ -233,12 +235,14 @@
     });
 
     $("#edit_table").submit(function () {
+        $('#loadingbtnedit').show();
         var object = $(this).serialize();
         $.ajax({
             type: "POST",
             data: object,
             url: "${contextPath}/table/managetable",
             success: function (result) {
+                $('#loadingbtnedit').hide();
                 swal("สำเร็จ", "โต๊ะถูกแก้ไขเรียบร้อยแล้ว", "success");
                 reset_field();
                 $("#editTable").modal('toggle');

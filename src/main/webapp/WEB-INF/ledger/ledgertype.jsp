@@ -85,7 +85,7 @@
                                 <div class="modal-footer">
                                     <!-- ปุ่มกดปิด (Close) ตรงส่วนล่างของ Modal -->
                                     <div class="col-md-9 col-sm-9 col-xs-12 col-md-offset-3">
-                                        <button type="submit" class="btn btn-success">ตกลง</button>
+                                        <button type="submit" class="btn btn-success"><i class="fa fa-circle-o-notch fa-spin" id="loadingbtn" style="display:none"></i> ตกลง</button>
                                         <button type="button" class="btn btn-default" data-dismiss="modal">
                                             ยกเลิก
                                         </button>
@@ -136,7 +136,7 @@
                                 <div class="modal-footer">
                                     <!-- ปุ่มกดปิด (Close) ตรงส่วนล่างของ Modal -->
                                     <div class="col-md-9 col-sm-9 col-xs-12 col-md-offset-3">
-                                        <button type="submit" class="btn btn-success">ตกลง</button>
+                                        <button type="submit" class="btn btn-success"><i class="fa fa-circle-o-notch fa-spin" id="loadingbtnedit" style="display:none"></i> ตกลง</button>
                                         <button type="button" class="btn btn-default" data-dismiss="modal">
                                             ยกเลิก
                                         </button>
@@ -176,12 +176,14 @@
     });
 
     $("#ledger_type").submit(function () {
+        $('#loadingbtn').show();
         var object = $(this).serialize();
         $.ajax({
             type: "POST",
             data: object,
             url: "${contextPath}/ledger/manageledgertype",
             success: function (result) {
+                $('#loadingbtn').hide();
                 swal("สำเร็จ", "ประเภท " + $("#ledger_type_name").val() + " ถูกเพิ่มเรียบร้อยแล้ว", "success");
                 reset_field();
                 $("#addLedgerType").modal('toggle');
@@ -202,11 +204,13 @@
     }
 
     function setLedgerType(ledgerTypeNo) {
+        $('#loadingbtnedit').show();
         $.ajax({
             type: "PUT",
             url: "${contextPath}/ledger/getledgertype/" + ledgerTypeNo,
             dataType: "json",
             success: function (result) {
+                $('#loadingbtnedit').hide();
                 $("#hiddenledgertypeno").val(result.ledgerTypeNo);
                 $("#edit_ledger_type_name").val(result.ledgerTypeName);
                 $("#show_ledger_type_name").html(result.ledgerTypeName);
@@ -216,12 +220,14 @@
     }
 
     $("#ledger_type_edit").submit(function () {
+        $('#loadingbtnedit').show();
         var object = $(this).serialize();
         $.ajax({
             type: "POST",
             data: object,
             url: "${contextPath}/ledger/manageledgertype",
             success: function (result) {
+                $('#loadingbtnedit').hide();
                 swal("สำเร็จ", "แก้ไขเรียบร้อยแล้ว", "success");
                 $("#editLedgerType").modal('toggle');
                 refresh_table();
