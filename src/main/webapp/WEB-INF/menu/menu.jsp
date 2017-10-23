@@ -65,26 +65,9 @@
                                     </label>
                                 </div>
                                 <%--</div>--%>
+
                                 <div id="menu_thumbnail"></div>
                                 <div id="menu_thumbnail_list" style="display:none;"></div>
-                                <%--<div id="datatable-menu-div" style="display:none;">--%>
-                                    <%--<table id="datatable-menu" class="table table-striped table-bordered">--%>
-                                        <%--<thead>--%>
-                                        <%--<tr>--%>
-                                            <%--<th style="text-align:center;">ชื่อเมนู</th>--%>
-                                            <%--<c:if test="${branchUser.branchNo == Branch.MAIN_BRANCH}">--%>
-                                                <%--<th style="text-align:center;">สาขา</th>--%>
-                                            <%--</c:if>--%>
-                                            <%--<th style="text-align:center;">ประเภทเมนู</th>--%>
-                                            <%--<th style="text-align:center;">ราคา</th>--%>
-                                            <%--<th style="text-align:center;">ตัวเลือก</th>--%>
-                                        <%--</tr>--%>
-                                        <%--</thead>--%>
-                                        <%--<tbody style="text-align:center;">--%>
-
-                                        <%--</tbody>--%>
-                                    <%--</table>--%>
-                                <%--</div>--%>
                                 <div id="error_show"></div>
                             </form>
                         </div>
@@ -241,7 +224,7 @@
                                                         </label>
                                                     </div>
                                                     <button type="submit" style="margin-left:5px;"
-                                                            class="btn btn-success">ตกลง
+                                                            class="btn btn-success"><i class="fa fa-circle-o-notch fa-spin" id="loadingbtn" style="display:none"></i> ตกลง
                                                     </button>
                                                     <button type="button" class="btn btn-default" data-dismiss="modal">
                                                         ยกเลิก
@@ -397,7 +380,7 @@
                                                     </label>
                                                 </div>
                                                 <button type="submit" style="margin-left:5px;" class="btn btn-success">
-                                                    ตกลง
+                                                    <i class="fa fa-circle-o-notch fa-spin" id="loadingbtnedit" style="display:none"></i> ตกลง
                                                 </button>
                                                 <button type="button" class="btn btn-default" data-dismiss="modal">
                                                     ยกเลิก
@@ -735,6 +718,7 @@
     }
 
     $("#add_menu").submit(function () {
+        $('#loadingbtn').show();
         $.ajax({
             type: "POST",
             data: new FormData($("#add_menu")[0]),
@@ -744,6 +728,7 @@
             processData: false,
             url: "${contextPath}/menu/managemenu",
             success: function (result) {
+                $('#loadingbtn').hide();
                 swal("สำเร็จ", "เมนู " + $("#add_menu").val() + " ถูกเพิ่มเรียบร้อยแล้ว", "success");
                 reset_field();
                 $("#addMenu").modal('toggle');
@@ -754,6 +739,8 @@
         });
         return false;
     });
+
+
 
     $('.modal').on('hidden.bs.modal', function () {
         reset_field();
@@ -771,6 +758,7 @@
 
     $("#edit_menu").submit(function () {
         var object = $("#edit_menu").serialize();
+        $('#loadingbtnedit').show();
         $.ajax({
             type: "POST",
             data: new FormData($("#edit_menu")[0]),
@@ -780,6 +768,7 @@
             processData: false,
             url: "${contextPath}/menu/managemenu",
             success: function (result) {
+                $('#loadingbtnedit').hide();
                 swal("สำเร็จ", "เมนูนี้ถูกแก้ไขเรียบร้อยแล้ว", "success");
                 $("#edit_menu")[0].reset();
                 $("#editMenu").modal('toggle');
@@ -928,6 +917,7 @@
             $("#error_show").html('');
         }
     }
+
 
 
 </script>

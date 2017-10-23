@@ -212,7 +212,7 @@
                                                             </label>
                                                         </div>
                                                         <button type="submit" style="margin-left:5px;"
-                                                                class="btn btn-success">ตกลง
+                                                                class="btn btn-success"><i class="fa fa-circle-o-notch fa-spin" id="loadingbtn" style="display:none"></i> ตกลง
                                                         </button>
                                                         <button type="button" class="btn btn-default"
                                                                 data-dismiss="modal">
@@ -349,7 +349,7 @@
                                                             </label>
                                                         </div>
                                                         <button type="submit" style="margin-left:5px;"
-                                                                class="btn btn-success">ตกลง
+                                                                class="btn btn-success"><i class="fa fa-circle-o-notch fa-spin" id="loadingbtnedit" style="display:none"></i> ตกลง
                                                         </button>
                                                         <button type="button" class="btn btn-default"
                                                                 data-dismiss="modal">
@@ -761,6 +761,7 @@
 console.log(hasmymenu);
         if (hasmenu && (!hasmymenu || !$("#add_menu_official").is(':checked'))) {
             var formdata = new FormData($("#add_menuset")[0]);
+            $('#loadingbtn').show();
             $.ajax({
                 type: "POST",
                 data: formdata,
@@ -770,6 +771,7 @@ console.log(hasmymenu);
                 processData: false,
                 url: "${contextPath}/menu/managemenuset",
                 success: function (result) {
+                    $('#loadingbtn').hide();
                     swal("สำเร็จ", "ชุดเมนู " + $("#add_menuset_nameTH").val() + " ถูกเพิ่มเรียบร้อยแล้ว", "success");
                     reset_field();
                     $("#addMenuSet").modal('toggle');
@@ -866,6 +868,7 @@ console.log(hasmymenu);
         });
         if (hasmenu) {
             var formdata = new FormData($("#edit_menuset")[0]);
+            $('#loadingbtnedit').show();
             $.ajax({
                 type: "POST",
                 data: formdata,
@@ -875,6 +878,7 @@ console.log(hasmymenu);
                 processData: false,
                 url: "${contextPath}/menu/managemenuset",
                 success: function (result) {
+                    $('#loadingbtnedit').hide();
                     swal("สำเร็จ", "ชุดเมนู " + $("#edit_menuset_nameTH").val() + " ถูกเพิ่มเรียบร้อยแล้ว", "success");
                     $("#edit_menuset")[0].reset();
                     $("#editMenuSet").modal('toggle');
