@@ -61,6 +61,6 @@ public class KitchenController {
     //-----------------------------------------------------------------------------------------------------------//
     @GetMapping("/chefmonitor")
     public String toChefMonitorIndex() {
-        return KITCHEN_PATH + "chefmotinor.jsp";
+        return KITCHEN_PATH + "chefmonitor.jsp";
     }
 }
