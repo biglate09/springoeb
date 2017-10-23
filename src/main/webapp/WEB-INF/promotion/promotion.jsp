@@ -201,7 +201,7 @@
                                                             พร้อมให้บริการ
                                                         </label>
                                                         <button type="submit" style="margin-left:5px;"
-                                                                class="btn btn-success">ตกลง
+                                                                class="btn btn-success"><i class="fa fa-circle-o-notch fa-spin" id="loadingbtn" style="display:none"></i> ตกลง
                                                         </button>
                                                         <button type="button" class="btn btn-default"
                                                                 data-dismiss="modal">
@@ -366,6 +366,7 @@
     }
 
     $("#managePromotion").submit(function () {
+        $('#loadingbtn').show();
         $.ajax({
             type: "POST",
             data: new FormData($("#managePromotion")[0]),
@@ -375,6 +376,7 @@
             processData: false,
             url: "${contextPath}/promotion/managepromotion",
             success: function (result) {
+                $('#loadingbtn').hide();
                 swal("สำเร็จ", "โปรโมชั่นถูก"+($("#promotionNo").val() == '' ? 'เพิ่ม' : 'แก้ไข')+"เรียบร้อยแล้ว", "success");
                 reset_field();
                 $("#promotion_modal").modal('toggle');
