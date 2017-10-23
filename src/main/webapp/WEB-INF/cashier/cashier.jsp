@@ -365,19 +365,7 @@
 <jsp:include page="../_include/bottomenv.jsp"/>
 <script>
     $(document).ready(function () {
-        var addfirsttime = true;
         var editfirsttime = true;
-
-        $("#addMenu").on('shown.bs.modal', function () {
-            if (addfirsttime) {
-                addfirsttime = false;
-                $("#material-datatable-1").DataTable({
-                    scrollY: "40vh",
-                    paging: false,
-                    order: [[1, "desc"]]
-                });
-            }
-        });
 
         $("#editMenu").on('shown.bs.modal', function () {
             if (editfirsttime) {
@@ -388,80 +376,6 @@
                     order: [[1, "desc"]]
                 });
             }
-        });
-
-
-        $("#datatable-menu").DataTable({
-            order: [[0, "asc"]],
-            columnDefs: [
-                {orderable: false, targets: [-1]}
-            ],
-            columns: [
-                {
-                    data: 'menuName'
-                },
-                <c:if test="${branchUser.branchNo == Branch.MAIN_BRANCH}">
-                {
-                    data: {
-                        _: 'branch.display',
-                        sort: 'branch.order'
-                    }
-                },
-                </c:if>
-                {
-                    data: 'group'
-                },
-                {
-                    data: {
-                        _: 'menuPrice.display',
-                        sort: 'menuPrice.order'
-                    }
-                },
-
-                {
-                    data: 'option'
-                }
-            ]
-        });
-
-        $("#showpic").click(function () {
-            $("#add_menu_pic").click();
-        });
-
-        $("#showpic_edit").click(function () {
-            $("#edit_menu_pic").click();
-        });
-
-        $("#add_menu_pic").change(function () {
-            if ($("#add_menu_pic").val() == '') {
-                $("#showpic").attr('src', '../images/default_upload_image.png');
-            }
-        });
-
-        $("#edit_menu_pic").change(function () {
-            if ($("#edit_menu_pic").val() == '') {
-                $("#showpic_edit").attr('src', '../images/default_upload_image.png');
-            }
-        });
-
-        $("#filter_by_category").change(refresh_table);
-
-        $(".materialamount").on('change keyup', function () {
-            $("#display_material_desc").empty();
-            $(".materialamount").each(function () {
-                if ($(this).val() > 0) {
-                    $("#display_material_desc").append('<div class="col-md-4 col-md-offset-2" style="text-align:left;white-space:nowrap;overflow:hidden;text-overflow: ellipsis;">' + $(this).attr('matItemName') + '</div><div class="col-md-3 col-md-offset-2" style="text-align:left;">' + $(this).val() + ' ' + $(this).attr('unit') + '</div><br>');
-                }
-            });
-        });
-
-        $(".materialamount2").on('change keyup', function () {
-            $("#display_material_desc2").empty();
-            $(".materialamount2").each(function () {
-                if ($(this).val() > 0) {
-                    $("#display_material_desc2").append('<div class="col-md-4 col-md-offset-2" style="text-align:left;white-space:nowrap;overflow:hidden;text-overflow: ellipsis;">' + $(this).attr('matItemName') + '</div><div class="col-md-3 col-md-offset-2" style="text-align:left;">' + $(this).val() + ' ' + $(this).attr('unit') + '</div><br>');
-                }
-            });
         });
 
         $(".display_toggle").click(function () {
@@ -478,133 +392,54 @@
             refresh_table();
         });
 
-        $("#displayTable").click(function () {
-            $("#menu_thumbnail_list").css('display', '');
-            $("#menu_thumbnail").css('display', 'none');
-            $('.pagination').css('display', '');
-            $("#filter_by_category").css('visibility', '');
-//            $("#filter_by_category").val(0);
-            $("#myInput").parent().css('visibility', '');
-            $("#myInput").val('');
-            refresh_table();
-        });
-
         refresh_table();
     });
 
     function refresh_table() {
         $.ajax({
             type: "POST",
-            url: "${contextPath}/menu/getmenus/" + $("#filter_by_category").val(),
+            url: "${contextPath}/menu/" + $("#filter_by_category").val(),
             dataType: "json",
             success: function (json) {
                 //remove
                 $("#menu_thumbnail").empty();
                 $("#menu_thumbnail_list").empty();
                 var data_array = [];
-                if (json.length != 0) {
-                    var mymenu = json[0];
-                    for (var i = 0; i < mymenu.length; i++) {
-                        var obj = mymenu[i];
-                        var menu = obj.menu;
-                        //Gallery
-                        var div = '\
-                        <div class="col-md-55">\
-                        <div class="thumbnail thumbnail_inline">\
-                        <div class="image view view-first">\
-                        <img style="width: 100%; display: block;" src="' + (menu.menuPicPath != null ? ('../images/menu/' + menu.menuPicPath) : ('../images/default_upload_image.png')) + '" alt="image"/>\
-                        <div class="mask">\
-                        <p style="white-space: nowrap;overflow:hidden;text-overflow: ellipsis;">' + (menu.menuDesc == '' || menu.menuDesc == null ? 'ไม่มีรายละเอียด' : menu.menuDesc) + '</p>\
-                        <div class="tools tools-bottom">\
-                        <a title="เมนูของทุกสาขา" style="color:white;margin-right:5px;"><i class="fa ' + (menu.localFlag == 0 ? 'fa-users' : 'fa-user' ) + '"></i> <span style="font-size:14px">' + (menu.localFlag == 0 ? ' เป็นเมนูของทุกสาขา' : ' เป็นเมนูเฉพาะสาขานี้') + '</span></a>\
-                        </div>\
-                        </div>\
-                        </div>\
-                        <div class="caption col-md-12" style="color:#73879C">\
-                        <p class="cardname col-md-12" style="text-align:center;font-weight:bold;white-space:nowrap;overflow:hidden;text-overflow: ellipsis;cursor:pointer;" data-toggle="modal" data-target="#editMenu" onclick="set_menu(' + menu.menuNo + ')">' + menu.menuNameTH + " / " + menu.menuNameEN + '</p>\
-                        <p class="col-md-12" style="text-align:center;white-space: nowrap;overflow:hidden;text-overflow: ellipsis;">หมวดหมู่ : ' + menu.menuGroup.menuGroupNameTH + '</p>\
-                        <p class="col-md-12" style="text-align:center">' + menu.menuPrice.toFixed(2).replace(/\B(?=(\d{3})+(?!\d))/g, ",") + " บาท" + '</p>\
-                        <div style="text-align:left;" class="col-md-7">\
-                        ' + (menu.localFlag == 0 && ${branchUser.branchNo != Branch.MAIN_BRANCH} ? '' : '<a title="แก้ไข" style="color:#73879C;cursor:pointer;margin-right:5px;" data-toggle="modal" data-target="#editMenu" onclick="set_menu(' + menu.menuNo + ')"><i class="fa fa-pencil"></i></a>') + '\
-                        ' + (menu.localFlag != 0 && ${branchUser.branchNo == Branch.MAIN_BRANCH} ? ('<a title="ทำให้เป็นเมนูของทุกสาขา" onclick="turn_official(' + menu.menuNo + ')" style="color:#73879C;cursor:pointer;margin-right:5px;"><i class="fa fa-users"></i></a>') : '') + '\
-                        <a title="เมนูนี้' + (obj.available == true ? '' : 'ไม่' ) + 'พร้อมจำหน่าย คลิกเพื่อเปลี่ยน" onclick="change_available(' + menu.menuNo + ')" style="color:#73879C;cursor:pointer;margin-right:5px;"><i class="fa ' + (obj.available == true ? 'fa-check-square-o' : 'fa-square-o' ) + '"></i></a>\
-                        ' + (menu.localFlag == 0 && ${branchUser.branchNo != Branch.MAIN_BRANCH} ? '' : '<a title="ลบ" onclick="del_menu(' + menu.menuNo + ',\'' + menu.menuNameTH + '\')" style="color:#73879C;cursor:pointer;"><i class="fa fa-trash"></i></a>') + '\
-                        </div>\
-                        <div style="color:white;background-color:' + (menu.localFlag == 0 ? "#73879C" : "red") + ';border-radius:4px;text-align:center;" class="col-md-5">' + (menu.localFlag == 0 ? "ทุกสาขา" : "สาขา" + (menu.localFlag ==${branchUser.branchNo} ? "นี้" : " " + menu.localFlag)) + '</div>\
-                        </div>\
-                        </div>\
-                        ';
+                var menu = obj.menu;
+                //Gallery
+                var div = '\
+                    <div class="col-md-55">\
+                    <div class="thumbnail thumbnail_inline">\
+                    <div class="image view view-first">\
+                    <img style="width: 100%; display: block;" src="${contextPath}/images/table.png" alt="image"/>\
+                    <div class="mask">\
+                    <div class="tools tools-bottom">\
+                    <a title="เมนูของทุกสาขา" style="color:white;margin-right:5px;"><i class="fa ' + (menu.localFlag == 0 ? 'fa-users' : 'fa-user' ) + '"></i> <span style="font-size:14px">' + (menu.localFlag == 0 ? ' เป็นเมนูของทุกสาขา' : ' เป็นเมนูเฉพาะสาขานี้') + '</span></a>\
+                    </div>\
+                    </div>\
+                    </div>\
+                    <div class="caption col-md-12" style="color:#73879C">\
+                    <p class="cardname col-md-12" style="text-align:center;font-weight:bold;white-space:nowrap;overflow:hidden;text-overflow: ellipsis;cursor:pointer;" data-toggle="modal" data-target="#editMenu" onclick="set_menu(' + menu.menuNo + ')">ใช้บริการมาแล้ว : ... นาที</p>\
+                    <p class="col-md-12" style="text-align:center;white-space: nowrap;overflow:hidden;text-overflow: ellipsis;">ราคาอาหาร : ' + menu.menuGroup.menuGroupNameTH + ' บาท</p>\
+                    <p class="col-md-12" style="text-align:center"> สถานะอาหาร : </p>\
+                    <div style="text-align:center;" class="col-md-12"><button type="button" class="btn btn-success" data-toggle="modal" data-target="#editMenu" onclick="set_menu(' + menu.menuNo + ')">จ่ายเงิน</button></div>\
+                    </div>\
+                    </div>\
+                    ';
                         $("#menu_thumbnail").append(div);
                         var price_order = (menu.menuPrice.toFixed(2) * 100000) + "";
                         for (var j = price_order.length; j < 20; j++) {
                             price_order = "0" + price_order;
                         }
-                    }
-                    if (json.length == 2) {
-                        var othermenu = json[1];
-                        for (var i = 0; i < othermenu.length; i++) {
-                            var menu = othermenu[i];
-                            var div = '\
-                            <div class="col-md-55">\
-                            <div class="thumbnail thumbnail_inline">\
-                            <div class="image view view-first">\
-                            <img style="width: 100%; display: block;" src="' + (menu.menuPicPath != null ? ('../images/menu/' + menu.menuPicPath) : ('../images/default_upload_image.png')) + '" alt="image"/>\
-                            <div class="mask">\
-                            <p style="white-space: nowrap;overflow:hidden;text-overflow: ellipsis;">' + (menu.menuDesc == '' || menu.menuDesc == null ? 'ไม่มีรายละเอียด' : menu.menuDesc) + '</p>\
-                            <div class="tools tools-bottom">\
-                            <a title="เมนูของทุกสาขา" style="color:white;margin-right:5px;"><i class="fa ' + (menu.localFlag == 0 ? 'fa-users' : 'fa-user' ) + '"></i> <span style="font-size:14px">' + (menu.localFlag == 0 ? ' เป็นเมนูของทุกสาขา' : ' เป็นเมนูเฉพาะสาขา ' + menu.localFlag ) + '</span></a>\
-                            </div>\
-                            </div>\
-                            </div>\
-                            <div class="caption col-md-12" style="color:#73879C">\
-                            <p class="col-md-12" style="text-align:center;font-weight:bold;white-space:nowrap;overflow:hidden;text-overflow: ellipsis;">' + menu.menuNameTH + " / " + menu.menuNameEN + '</p>\
-                            <p class="col-md-12" style="text-align:center;white-space: nowrap;overflow:hidden;text-overflow: ellipsis;">หมวดหมู่ : ' + menu.menuGroup.menuGroupNameTH + '</p>\
-                            <p class="col-md-12" style="text-align:center">' + menu.menuPrice.toFixed(2).replace(/\B(?=(\d{3})+(?!\d))/g, ",") + " บาท" + '</p>\
-                            <div style="text-align:left;" class="col-md-7">\
-                            <a title="ทำให้เป็นเมนูของทุกสาขา" onclick="turn_official(' + menu.menuNo + ')" style="color:#73879C;cursor:pointer;margin-right:5px;"><i class="fa fa-users"></i></a>\
-                            </div>\
-                            <div style="color:white;background-color:yellowgreen;border-radius:4px;text-align:center;" class="col-md-5">' + (menu.localFlag == 0 ? "ทุกสาขา" : "สาขา " + menu.localFlag) + '</div>\
-                            </div>\
-                            </div>\
-                            ';
-                            $("#menu_thumbnail").append(div);
 
-                            var price_order = (menu.menuPrice.toFixed(2) * 100000) + "";
-                            for (var j = price_order.length; j < 20; j++) {
-                                price_order = "0" + price_order;
-                            }
-                        }
-                    }
                     $("#error_show").html('');
-                    $("#datatable-menu").DataTable().clear();
-                    $("#datatable-menu").DataTable().rows.add(data_array).draw(false);
-                }
+//                    $("#datatable-menu").DataTable().clear();
+//                    $("#datatable-menu").DataTable().rows.add(data_array).draw(false);
 
                 filterCard();
             }
         });
     }
-
-    $("#add_menu").submit(function () {
-        $.ajax({
-            type: "POST",
-            data: new FormData($("#add_menu")[0]),
-            enctype: 'multipart/form-data',
-            cache: false,
-            contentType: false,
-            processData: false,
-            url: "${contextPath}/menu/managemenu",
-            success: function (result) {
-                swal("สำเร็จ", "เมนู " + $("#add_menu").val() + " ถูกเพิ่มเรียบร้อยแล้ว", "success");
-                reset_field();
-                $("#addMenu").modal('toggle');
-                refresh_table();
-            }, error: function (result) {
-                swal("ไม่สำเร็จ", "ชื่อภาษาไทยหรืออังกฤษอาจซ้ำ กรุณาลองใหม่ในภายหลัง", "error");
-            }
-        });
-        return false;
-    });
 
     $('.modal').on('hidden.bs.modal', function () {
         reset_field();
@@ -612,35 +447,13 @@
 
     function reset_field() {
         $("#add_menu")[0].reset();
-        $("#showpic").attr('src', '../images/default_upload_image.png');
+        $("#showpic").attr('src', '../images/table.png');
         $("#add_menu_available").parent().removeClass('checked');
         $("#add_menu_available").attr('checked', false);
         $("#add_menu_official").parent().removeClass('checked');
         $("#add_menu_official").attr('checked', false);
         $("#display_material_desc").empty();
     }
-
-    $("#edit_menu").submit(function () {
-        var object = $("#edit_menu").serialize();
-        $.ajax({
-            type: "POST",
-            data: new FormData($("#edit_menu")[0]),
-            enctype: 'multipart/form-data',
-            cache: false,
-            contentType: false,
-            processData: false,
-            url: "${contextPath}/menu/managemenu",
-            success: function (result) {
-                swal("สำเร็จ", "เมนูนี้ถูกแก้ไขเรียบร้อยแล้ว", "success");
-                $("#edit_menu")[0].reset();
-                $("#editMenu").modal('toggle');
-                refresh_table();
-            }, error: function (result) {
-                swal("ไม่สำเร็จ", "ชื่อภาษาไทยหรืออังกฤษอาจซ้ำ กรุณาลองใหม่ในภายหลัง", "error");
-            }
-        });
-        return false;
-    });
 
     function set_menu(menuNo) {
         $.ajax({
@@ -690,73 +503,6 @@
         });
     }
 
-    function del_menu(menuNo, menuNameTH) {
-        swal({
-                title: "ยืนยันการลบ " + menuNameTH,
-                text: "เมื่อยืนยัน จะไม่สามารถนำข้อมูล " + menuNameTH + " กลับมาได้",
-                type: "warning",
-                showCancelButton: true,
-                cancelButtonText: "ยกเลิก",
-                confirmButtonText: "ใช่, ต้องการลบ",
-                confirmButtonColor: "#DD6B55",
-                closeOnConfirm: false
-
-            },
-            function () {
-                $.ajax({
-                    type: "DELETE",
-                    url: "${contextPath}/menu/delmenu/" + menuNo,
-                    success: function (json) {
-                        swal("สำเร็จ", menuNameTH + " ถูกลบเรียบร้อยแล้ว", "success");
-                        refresh_table();
-                    },
-                    error: function (json) {
-                        swal("ไม่สำเร็จ", "เมนูนี้ถูกใช้ในเมนูอาหารแบบชุด \nกรุณาลบออกจากเมนูอาหารแบบชุดก่อน", "error");
-                    }
-                });
-            });
-    }
-
-    function change_available(menuno) {
-        $.ajax({
-            type: "POST",
-            data: {menuno: menuno},
-            url: "${contextPath}/menu/changeavailable",
-            success: function (result) {
-                swal("สำเร็จ", "เปลี่ยน \"" + result.menu.menuNameTH + "\" เป็น " + (result.available == false ? 'ไม่' : '') + "พร้อมจำหน่าย เรียบร้อยแล้ว", "success");
-                refresh_table();
-            }, error: function (result) {
-                swal("ไม่สำเร็จ", "กรุณาลองใหม่ภายหลัง", "error");
-            }
-        });
-    }
-
-    function turn_official(menuno) {
-        swal({
-                title: "เปลี่ยนให้เป็นเมนูของทุกสาขา",
-                text: "คุณจะไม่สามารถเปลี่ยนกลับได้",
-                type: "warning",
-                showCancelButton: true,
-                cancelButtonText: "ยกเลิก",
-                confirmButtonText: "ใช่, ต้องการเปลี่ยน",
-                confirmButtonColor: "#DD6B55",
-                closeOnConfirm: false
-            },
-            function () {
-                $.ajax({
-                    type: "POST",
-                    data: {menuno: menuno},
-                    url: "${contextPath}/menu/promoteofficial",
-                    success: function (result) {
-                        swal("สำเร็จ", "เปลี่ยน \"" + result.menuNameTH + "\" เป็น เมนูของทุกสาขา เรียบร้อยแล้ว", "success");
-                        refresh_table();
-                    }, error: function () {
-                        swal("ไม่สำเร็จ", "กรุณาลองใหม่ภายหลัง", "error");
-                    }
-                });
-            });
-    }
-
     function filterCard() {
         var input = $("#myInput").val();
         var hascard = false;
@@ -786,9 +532,6 @@
 <style>
     .thumbnail_inline {
         height: 250px !important;
-    }
-    .thumbnail_inline_list {
-        height: 200px !important;
     }
     .description{
         line-height: 1.5em;
