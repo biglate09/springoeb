@@ -104,7 +104,7 @@
                                     <div class="modal-footer">
                                         <!-- ปุ่มกดปิด (Close) ตรงส่วนล่างของ Modal -->
                                         <div class="col-md-9 col-sm-9 col-xs-12 col-md-offset-3">
-                                            <button type="submit" class="btn btn-success">ตกลง</button>
+                                            <button type="submit" class="btn btn-success"><i class="fa fa-circle-o-notch fa-spin" id="loadingbtn" style="display:none"></i> ตกลง</button>
                                             <button type="button" class="btn btn-default" data-dismiss="modal">
                                                 ยกเลิก
                                             </button>
@@ -145,7 +145,7 @@
                                     <div class="modal-footer">
                                         <!-- ปุ่มกดปิด (Close) ตรงส่วนล่างของ Modal -->
                                         <div class="col-md-9 col-sm-9 col-xs-12 col-md-offset-3">
-                                            <button type="submit" class="btn btn-success">ตกลง</button>
+                                            <button type="submit" class="btn btn-success"><i class="fa fa-circle-o-notch fa-spin" id="loadingbtnedit" style="display:none"></i> ตกลง</button>
                                             <button type="button" class="btn btn-default" data-dismiss="modal">
                                                 ยกเลิก
                                             </button>
@@ -186,11 +186,13 @@
     //TODO: Add Employee Position
     $("#emp_pos_add").submit(function(){
         var object = $("#emp_pos_add").serialize();
+        $('#loadingbtn').show();
         $.ajax({
             type: "POST",
             data: object,
             url: "${contextPath}/employee/manageemployeeposition",
             success: function (result) {
+                $('#loadingbtn').hide();
                 swal("สำเร็จ", "ตำแหน่ง " + $("#emp_pos_name_add").val() + " ถูกเพิ่มเรียบร้อยแล้ว", "success");
                 reset_field();
                 $("#addEmpPos").modal('toggle');
@@ -226,12 +228,14 @@
 
     //TODO: Edit Employee Position
     $("#emp_pos_edit").submit(function(){
+        $('#loadingbtnedit').show();
         var object = $("#emp_pos_edit").serialize();
         $.ajax({
             type: "POST",
             data: object,
             url: "${contextPath}/employee/manageemployeeposition",
             success: function (result) {
+                $('#loadingbtnedit').hide();
                 swal("สำเร็จ", "แก้ไขเรียบร้อยแล้ว", "success");
                 $("#emp_pos_edit")[0].reset();
                 $("#editEmpPos").modal('toggle');

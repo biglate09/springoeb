@@ -73,7 +73,7 @@
                                     <div class="modal-footer">
                                         <!-- ปุ่มกดปิด (Close) ตรงส่วนล่างของ Modal -->
                                         <div class="col-md-9 col-sm-9 col-xs-12 col-md-offset-3">
-                                            <button type="submit" class="btn btn-success">ตกลง</button>
+                                            <button type="submit" class="btn btn-success"><i class="fa fa-circle-o-notch fa-spin" id="loadingbtn" style="display:none"></i> ตกลง</button>
                                             <button type="button" class="btn btn-default" data-dismiss="modal">
                                                 ยกเลิก
                                             </button>
@@ -114,7 +114,7 @@
                                     <div class="modal-footer">
                                         <!-- ปุ่มกดปิด (Close) ตรงส่วนล่างของ Modal -->
                                         <div class="col-md-9 col-sm-9 col-xs-12 col-md-offset-3">
-                                            <button type="submit" class="btn btn-success">ตกลง</button>
+                                            <button type="submit" class="btn btn-success"><i class="fa fa-circle-o-notch fa-spin" id="loadingbtnedit" style="display:none"></i> ตกลง</button>
                                             <button type="button" class="btn btn-default" data-dismiss="modal">
                                                 ยกเลิก
                                             </button>
@@ -153,11 +153,13 @@
 
     $("#menu_category").submit(function(){
         var object = $("#menu_category").serialize();
+        $('#loadingbtn').show();
         $.ajax({
             type: "POST",
             data: object,
             url: "${contextPath}/menu/managemenucategory",
             success: function (result) {
+                $('#loadingbtn').hide();
                 swal("สำเร็จ", "ประเภท " + $("#menu_cat_name").val() + " ถูกเพิ่มเรียบร้อยแล้ว", "success");
                 reset_field();
                 $("#addMenuCat").modal('toggle');
@@ -193,11 +195,13 @@
 
     $("#menu_category_edit").submit(function(){
         var object = $("#menu_category_edit").serialize();
+        $('#loadingbtnedit').show();
         $.ajax({
             type: "POST",
             data: object,
             url: "${contextPath}/menu/managemenucategory",
             success: function (result) {
+                $('#loadingbtnedit').hide();
                 swal("สำเร็จ", "แก้ไขเรียบร้อยแล้ว", "success");
                 $("#menu_category_edit")[0].reset();
                 $("#editMenuCat").modal('toggle');

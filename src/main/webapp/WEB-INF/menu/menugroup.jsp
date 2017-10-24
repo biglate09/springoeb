@@ -89,7 +89,7 @@
                                             <div class="modal-footer">
                                                 <!-- ปุ่มกดปิด (Close) ตรงส่วนล่างของ Modal -->
                                                 <div class="col-md-9 col-sm-9 col-xs-12 col-md-offset-3">
-                                                    <button type="submit" class="btn btn-success">ตกลง</button>
+                                                    <button type="submit" class="btn btn-success"><i class="fa fa-circle-o-notch fa-spin" id="loadingbtn" style="display:none"></i> ตกลง</button>
                                                     <button type="button" class="btn btn-default" data-dismiss="modal">
                                                         ยกเลิก
                                                     </button>
@@ -142,7 +142,7 @@
                                             <div class="modal-footer">
                                                 <!-- ปุ่มกดปิด (Close) ตรงส่วนล่างของ Modal -->
                                                 <div class="col-md-9 col-sm-9 col-xs-12 col-md-offset-3">
-                                                    <button type="submit" class="btn btn-success">ตกลง</button>
+                                                    <button type="submit" class="btn btn-success"> <i class="fa fa-circle-o-notch fa-spin" id="loadingbtnedit" style="display:none"></i>ตกลง</button>
                                                     <button type="button" class="btn btn-default" data-dismiss="modal">
                                                         ยกเลิก
                                                     </button>
@@ -209,11 +209,13 @@
 
     $("#add_menu_group").submit(function(){
         var object = $("#add_menu_group").serialize();
+        $('#loadingbtn').show();
         $.ajax({
             type: "POST",
             data: object,
             url: "${contextPath}/menu/managemenugroup",
             success: function (result) {
+                $('#loadingbtn').hide();
                 swal("สำเร็จ", "ชื่อหมวดหมู่ " + $("#add_menu_group").val() + " ถูกเพิ่มเรียบร้อยแล้ว", "success");
                 reset_field();
                 $("#addMenuGroup").modal('toggle');
@@ -235,11 +237,13 @@
 
     $("#edit_menu_group").submit(function(){
         var object = $("#edit_menu_group").serialize();
+        $('#loadingbtnedit').show();
         $.ajax({
             type: "POST",
             data: object,
             url: "${contextPath}/menu/managemenugroup",
             success: function (result) {
+                $('#loadingbtnedit').hide();
                 swal("สำเร็จ", "ชื่อหมวดหมู่ " + $("#add_menu_group").val() + " ถูกแก้ไขเรียบร้อยแล้ว", "success");
                 $("#edit_menu_group")[0].reset();
                 $("#editMenuGroup").modal('toggle');

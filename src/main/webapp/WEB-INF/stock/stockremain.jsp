@@ -7,7 +7,9 @@
 <head>
     <jsp:include page="../_include/topenv.jsp"/>
     <title>วัตถุดิบคงเหลือ</title>
+    <style>
 
+    </style>
 </head>
 <body class="nav-md">
 <div class="container body">

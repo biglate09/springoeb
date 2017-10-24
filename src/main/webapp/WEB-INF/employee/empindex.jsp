@@ -202,7 +202,8 @@
                                     <div class="modal-footer">
                                         <!-- ปุ่มกดปิด (Close) ตรงส่วนล่างของ Modal -->
                                         <div class="col-md-9 col-sm-9 col-xs-12 col-md-offset-3">
-                                            <button type="submit" class="btn btn-success">ตกลง</button>
+                                            <button type="submit" class="btn btn-success"><i class="fa fa-circle-o-notch fa-spin" id="loadingbtn" style="display:none"></i>
+                                                ตกลง</button>
                                             <button type="button" class="btn btn-default" data-dismiss="modal">
                                                 ยกเลิก
                                             </button>
@@ -370,7 +371,8 @@
                                     <div class="modal-footer">
                                         <!-- ปุ่มกดปิด (Close) ตรงส่วนล่างของ Modal -->
                                         <div class="col-md-9 col-sm-9 col-xs-12 col-md-offset-3">
-                                            <button type="submit" class="btn btn-success">ตกลง</button>
+                                            <button type="submit" class="btn btn-success"><i class="fa fa-circle-o-notch fa-spin" id="loadingbtnedit" style="display:none"></i>
+                                                 ตกลง</button>
                                             <button type="button" class="btn btn-default" data-dismiss="modal">
                                                 ยกเลิก
                                             </button>
@@ -450,11 +452,13 @@
     $("#add_emp").submit(function () {
         var object = $("#add_emp").serialize();
         var empName = $("#empname_add").val();
+        $('#loadingbtn').show();
         $.ajax({
             type: "POST",
             data: object,
             url: "${contextPath}/employee/manageemployee",
             success: function (result) {
+                $('#loadingbtn').hide();
                 swal("สำเร็จ", "พนักงาน " + empName + " ถูกเพิ่มเรียบร้อยแล้ว", "success");
                 reset_field();
                 refresh_table();
@@ -507,11 +511,13 @@
     $("#edit_emp").submit(function () {
         var object = $("#edit_emp").serialize();
         var empName = $("#editempname").val();
+        $('#loadingbtnedit').show();
         $.ajax({
             type: "POST",
             data: object,
             url: "${contextPath}/employee/manageemployee",
             success: function (result) {
+                $('#loadingbtnedit').hide();
                 swal("สำเร็จ", "แก้ไขเรียบร้อยแล้ว", "success");
                 $("#edit_emp")[0].reset();
                 $(".clear-active").removeClass('active');

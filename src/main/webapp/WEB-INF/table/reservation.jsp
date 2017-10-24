@@ -115,7 +115,8 @@
                                     <div class="modal-footer">
                                         <!-- ปุ่มกดปิด (Close) ตรงส่วนล่างของ Modal -->
                                         <div class="col-md-9 col-sm-9 col-xs-12 col-md-offset-3">
-                                            <button type="submit" class="btn btn-success">ตกลง</button>
+                                            <button type="submit" class="btn btn-success"><i class="fa fa-circle-o-notch fa-spin" id="loadingbtn" style="display:none"></i>
+                                                 ตกลง</button>
                                             <button type="button" class="btn btn-default" data-dismiss="modal">
                                                 ยกเลิก
                                             </button>
@@ -184,7 +185,8 @@
                                     <div class="modal-footer">
                                         <!-- ปุ่มกดปิด (Close) ตรงส่วนล่างของ Modal -->
                                         <div class="col-md-9 col-sm-9 col-xs-12 col-md-offset-3">
-                                            <button type="submit" class="btn btn-success">ตกลง</button>
+                                            <button type="submit" class="btn btn-success"><i class="fa fa-circle-o-notch fa-spin" id="loadingbtnedit" style="display:none"></i>
+                                                 ตกลง</button>
                                             <button type="button" class="btn btn-default" data-dismiss="modal">
                                                 ยกเลิก
                                             </button>
@@ -320,11 +322,13 @@
     }
 
     $("#add_reservation").submit(function () {
+        $('#loadingbtn').show();
         $.ajax({
             type: "POST",
             data: $(this).serialize(),
             url: "${contextPath}/table/managereservation",
             success: function (result) {
+                $('#loadingbtn').hide();
                 swal("สำเร็จ", "เพิ่มการจองเรียบร้อย", "success");
                 $("#addReservation").modal('toggle');
                 reset_field();
@@ -337,11 +341,13 @@
     });
 
     $("#edit_reservation").submit(function () {
+        $('#loadingbtnedit').show();
         $.ajax({
             type: "POST",
             data: $(this).serialize(),
             url: "${contextPath}/table/managereservation",
             success: function (result) {
+                $('#loadingbtnedit').hide();
                 swal("สำเร็จ", "แก้ไขเรียบร้อยแล้ว", "success");
                 $("#editReservation").modal('toggle');
                 reset_field();
