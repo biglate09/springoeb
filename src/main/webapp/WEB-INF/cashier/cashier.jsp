@@ -42,8 +42,8 @@
                                     <div class="col-md-55">
                                         <div class="thumbnail thumbnail_inline">
                                             <div class="image view view-first">
-                                                <img style="height: 100%;position:relative;" src="${contextPath}/images/table.png" alt="image"/>
-                                                <div style="margin-left: auto;margin-right: auto;position: absolute;top: 50%;left: 50%;transform: translate(-50%, -50%) ">โต๊ะ 1</div>
+                                                <img style="width: 100%;position:relative;" src="${contextPath}/images/table.png" alt="image"/>
+                                                <div style="margin-left: auto;margin-right: auto;position: absolute;left: 50%;transform: translate(-50%, -50%);font-weight: bold; ">โต๊ะ 1</div>
                                                 <%--<div class="mask">--%>
                                                     <%--<div class="tools tools-bottom">--%>
                                                         <%--<a title="เมนูของทุกสาขา" style="color:white;margin-right:5px;"><i class="fa (menu.localFlag == 0 ? 'fa-users' : 'fa-user' )"></i> <span style="font-size:14px">(menu.localFlag == 0 ? ' เป็นเมนูของทุกสาขา' : ' เป็นเมนูเฉพาะสาขานี้')</span></a>--%>
