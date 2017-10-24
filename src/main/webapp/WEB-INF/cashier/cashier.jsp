@@ -6,7 +6,7 @@
 <html>
 <head>
     <jsp:include page="../_include/topenv.jsp"/>
-    <title>เมนูอาหารแบบเดี่ยว</title>
+    <title>แคชเชียร์</title>
 
 </head>
 <body class="nav-md">
@@ -27,7 +27,7 @@
                     <div class="x_panel">
                         <div class="x_title">
                             <h4>
-                                เมนูอาหารแบบเดี่ยว
+                                ระบบแคชเชียร์
                             </h4>
                         </div>
                         <div class="x_content">
