@@ -32,13 +32,32 @@
                         </div>
                         <div class="x_content">
                             <form action="#">
-                                <div class="col-md-12 form-group" style="padding:0px;margin-right: 5px;">
+                                <div class="col-md-4 col-md-offset-8 form-group" style="padding:0px;margin-right: 5px;">
                                     <input type="text" class="form-control" id="myInput"
                                            onkeyup="filterCard()" placeholder="ค้นหาด้วยชื่อเมนู...">
                                     <span class="fa fa-search form-control-feedback right"
                                           aria-hidden="true"></span>
                                 </div>
-                                <div id="menu_thumbnail"></div>
+                                <div id="menu_thumbnail">
+                                    <div class="col-md-55">
+                                        <div class="thumbnail thumbnail_inline">
+                                            <div class="image view view-first">
+                                                <img style="height: 100%; display: block;position:relative;" src="${contextPath}/images/table.png" alt="image"/>
+                                                <div style="margin-left: auto;margin-right: auto;position: absolute;: 50%;left: 50%;transform: translate(-50%, -50%) }">โต๊ะ 1</div>
+                                                <%--<div class="mask">--%>
+                                                    <%--<div class="tools tools-bottom">--%>
+                                                        <%--<a title="เมนูของทุกสาขา" style="color:white;margin-right:5px;"><i class="fa (menu.localFlag == 0 ? 'fa-users' : 'fa-user' )"></i> <span style="font-size:14px">(menu.localFlag == 0 ? ' เป็นเมนูของทุกสาขา' : ' เป็นเมนูเฉพาะสาขานี้')</span></a>--%>
+                                                    <%--</div>--%>
+                                                <%--</div>--%>
+                                            </div>
+                                            <div class="caption col-md-12" style="color:#73879C">
+                                                <p class="cardname col-md-12" style="font-weight:bold;white-space:nowrap;overflow:hidden;text-overflow: ellipsis;cursor:pointer;" onclick="set_menu(' + menu.menuNo + ')">ใช้บริการมาแล้ว : 15 นาที</p>
+                                                <p class="col-md-12" style="white-space: nowrap;overflow:hidden;text-overflow: ellipsis;">ราคาอาหาร : 135 บาท</p>
+                                                <p class="col-md-12" > สถานะอาหาร : ครบแล้ว</p>
+                                                <div style="text-align:center;" class="col-md-12"><button type="button" class="btn btn-success" data-toggle="modal" data-target="#editMenu" data-toggle="modal" data-target="#editMenu" style="width: 80%;">จ่ายเงิน</button></div>
+                                            </div>
+                                        </div>
+                                </div>
                                 <div id="error_show"></div>
                             </form>
                         </div>
@@ -398,7 +417,7 @@
     function refresh_table() {
         $.ajax({
             type: "POST",
-            url: "${contextPath}/menu/" + $("#filter_by_category").val(),
+            url: "${contextPath}/cashier/" + $("#filter_by_category").val(),
             dataType: "json",
             success: function (json) {
                 //remove
@@ -411,7 +430,10 @@
                     <div class="col-md-55">\
                     <div class="thumbnail thumbnail_inline">\
                     <div class="image view view-first">\
+                    <div style="position:relative;">\
                     <img style="width: 100%; display: block;" src="${contextPath}/images/table.png" alt="image"/>\
+                    <div style="position:absolute;top:0px;left:0px;z-index:200;">ชื่อโต๊ะ</div>\
+                    </div>\
                     <div class="mask">\
                     <div class="tools tools-bottom">\
                     <a title="เมนูของทุกสาขา" style="color:white;margin-right:5px;"><i class="fa ' + (menu.localFlag == 0 ? 'fa-users' : 'fa-user' ) + '"></i> <span style="font-size:14px">' + (menu.localFlag == 0 ? ' เป็นเมนูของทุกสาขา' : ' เป็นเมนูเฉพาะสาขานี้') + '</span></a>\
@@ -533,13 +555,13 @@
     .thumbnail_inline {
         height: 250px !important;
     }
-    .description{
-        line-height: 1.5em;
-        display: -webkit-box;
-        -webkit-line-clamp: 3;
-        -webkit-box-orient: vertical;
-        overflow: hidden;
-    }
+    /*.description{*/
+        /*line-height: 1.5em;*/
+        /*display: -webkit-box;*/
+        /*-webkit-line-clamp: 3;*/
+        /*-webkit-box-orient: vertical;*/
+        /*overflow: hidden;*/
+    /*}*/
 
 </style>
 </body>
