@@ -42,8 +42,8 @@
                                     <div class="col-md-55">
                                         <div class="thumbnail thumbnail_inline">
                                             <div class="image view view-first">
-                                                <img style="height: 100%; display: block;position:relative;" src="${contextPath}/images/table.png" alt="image"/>
-                                                <div style="margin-left: auto;margin-right: auto;position: absolute;: 50%;left: 50%;transform: translate(-50%, -50%) }">โต๊ะ 1</div>
+                                                <img style="height: 100%;position:relative;" src="${contextPath}/images/table.png" alt="image"/>
+                                                <div style="margin-left: auto;margin-right: auto;position: absolute;top: 50%;left: 50%;transform: translate(-50%, -50%) ">โต๊ะ 1</div>
                                                 <%--<div class="mask">--%>
                                                     <%--<div class="tools tools-bottom">--%>
                                                         <%--<a title="เมนูของทุกสาขา" style="color:white;margin-right:5px;"><i class="fa (menu.localFlag == 0 ? 'fa-users' : 'fa-user' )"></i> <span style="font-size:14px">(menu.localFlag == 0 ? ' เป็นเมนูของทุกสาขา' : ' เป็นเมนูเฉพาะสาขานี้')</span></a>--%>
@@ -51,15 +51,15 @@
                                                 <%--</div>--%>
                                             </div>
                                             <div class="caption col-md-12" style="color:#73879C">
-                                                <p class="cardname col-md-12" style="font-weight:bold;white-space:nowrap;overflow:hidden;text-overflow: ellipsis;cursor:pointer;" onclick="set_menu(' + menu.menuNo + ')">ใช้บริการมาแล้ว : 15 นาที</p>
+                                                <p class="cardname col-md-12" style="white-space:nowrap;overflow:hidden;text-overflow: ellipsis;" onclick="set_menu(' + menu.menuNo + ')">ใช้บริการมาแล้ว : 15 นาที</p>
                                                 <p class="col-md-12" style="white-space: nowrap;overflow:hidden;text-overflow: ellipsis;">ราคาอาหาร : 135 บาท</p>
                                                 <p class="col-md-12" > สถานะอาหาร : ครบแล้ว</p>
                                                 <div style="text-align:center;" class="col-md-12"><button type="button" class="btn btn-success" data-toggle="modal" data-target="#editMenu" data-toggle="modal" data-target="#editMenu" style="width: 80%;">จ่ายเงิน</button></div>
                                             </div>
                                         </div>
-                                </div>
+                                </div></div>
                                 <div id="error_show"></div>
-                            </form>
+                                </form>
                         </div>
                         <div class="modal fade" id="addMenu" role="dialog">
                             <div class="modal-dialog">
