@@ -11,19 +11,15 @@ import java.util.List;
 public class MaterialItemService {
     @Autowired
     private MaterialItemRepository materialItemRepository;
-    public List<MaterialItem> getMaterialItems(){
-        return materialItemRepository.findByMatFlag(MaterialItem.flagForItem);
+    public List<MaterialItem> getMaterialItems(int restNo){
+        return materialItemRepository.findByMatFlagAndRestNo(MaterialItem.flagForItem,restNo);
     }
-    public List<MaterialItem> getMixedProducts(){
-        return materialItemRepository.findByMatFlag(MaterialItem.flagForMixed);
-    }
-
-    public List<MaterialItem> getAllMaterials(){
-        return materialItemRepository.findAll();
+    public List<MaterialItem> getMixedProducts(int restNo){
+        return materialItemRepository.findByMatFlagAndRestNo(MaterialItem.flagForMixed, restNo);
     }
 
-    public List<MaterialItem> getMaterials(){
-        return materialItemRepository.findAll();
+    public List<MaterialItem> getAllMaterials(int restNo){
+        return materialItemRepository.findByRestNo(restNo);
     }
     public MaterialItem save(MaterialItem matItem){ return materialItemRepository.save(matItem);}
     public void delMaterialItem(int matItemNo){ materialItemRepository.removeByMatItemNo(matItemNo);}

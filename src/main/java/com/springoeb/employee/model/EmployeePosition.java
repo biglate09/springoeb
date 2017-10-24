@@ -14,6 +14,8 @@ public class EmployeePosition implements Serializable{
     private Integer empPosNo;
     @Column(name = "empPosName")
     private String empPosName;
+    @Column(name = "restNo")
+    private Integer restNo;
     @JsonIgnore
     @OneToMany(mappedBy = "employeePosition", cascade = CascadeType.ALL)
     private List<EmployeeTable> employeeTables;
@@ -40,5 +42,13 @@ public class EmployeePosition implements Serializable{
 
     public void setEmployeeTables(List<EmployeeTable> employeeTables) {
         this.employeeTables = employeeTables;
+    }
+
+    public Integer getRestNo() {
+        return restNo;
+    }
+
+    public void setRestNo(Integer restNo) {
+        this.restNo = restNo;
     }
 }

@@ -6,12 +6,10 @@ import org.springframework.stereotype.Repository;
 
 import java.util.List;
 
-/**
- * Created by bighead on 6/9/17.
- */
 @Repository
 public interface EmployeePositionRepository extends CrudRepository<EmployeePosition,Integer>{
     List<EmployeePosition> findAll();
+    List<EmployeePosition> findByRestNo(int restNo);
     List<EmployeePosition> findAllByEmpPosName(String empPosName);
     void removeByEmpPosNo(int empPosNo);
     EmployeePosition findByEmpPosNo(int empPosNo);

@@ -17,6 +17,8 @@ public class MaterialItem {
     private Double quantity;
     @Column(name = "matTypeNo",insertable = true,updatable = true)
     private Integer matCatNo;
+    @Column(name = "restNo")
+    private Integer restNo;
 
     @ManyToOne
     @JoinColumn(name = "matTypeNo",updatable = false,insertable = false)
@@ -114,7 +116,17 @@ public class MaterialItem {
         return materialHistories;
     }
 
+    public Integer getRestNo() {
+        return restNo;
+    }
+
+    public void setRestNo(Integer restNo) {
+        this.restNo = restNo;
+    }
+
     public void setMaterialHistories(List<MaterialHistory> materialHistories) {
         this.materialHistories = materialHistories;
+
+
     }
 }

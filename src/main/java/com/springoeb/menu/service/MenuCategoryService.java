@@ -11,8 +11,8 @@ import java.util.List;
 public class MenuCategoryService {
     @Autowired
     private MenuCategoryRepository menuCategoryRepository;
-    public List<MenuCategory> getMenuCategories(){
-        return menuCategoryRepository.findAll();
+    public List<MenuCategory> getMenuCategories(int restNo){
+        return menuCategoryRepository.findByRestNo(restNo);
     }
     public void save(MenuCategory menuCategory){ menuCategoryRepository.save(menuCategory);}
     public void delMenuCategory(int menuCatNo){ menuCategoryRepository.removeByMenuCatNo(menuCatNo);}

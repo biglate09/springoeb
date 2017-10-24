@@ -37,6 +37,8 @@ public class Branch {
     private String fb;
     @Column(name = "hasAdmin")
     private boolean hasAdmin;
+    @Column(name = "restNo")
+    private Integer restNo;
 
     public static int MAIN_BRANCH = 1;
 
@@ -158,5 +160,13 @@ public class Branch {
 
     public void setHasAdmin(boolean hasAdmin) {
         this.hasAdmin = hasAdmin;
+    }
+
+    public Integer getRestNo() {
+        return restNo;
+    }
+
+    public void setRestNo(Integer restNo) {
+        this.restNo = restNo;
     }
 }

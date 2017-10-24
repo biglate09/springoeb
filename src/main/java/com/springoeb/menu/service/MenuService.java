@@ -84,21 +84,21 @@ public class MenuService {
         return menuSets;
     }
 
-    public List<Menu> getMenuSetsOther(int branchNo){
+    public List<Menu> getMenuSetsOther(int branchNo,int restNo){
         List<Integer> myBranches = new LinkedList<>();
         myBranches.add(Menu.OFFICIAL_MENU_FLAG);
         myBranches.add(branchNo);
-        return menuRepository.findByMenuFlagAndLocalFlagNotInOrderByLocalFlagAsc(Menu.flagForMenuSet,myBranches);
+        return menuRepository.findByMenuFlagAndLocalFlagNotInAndRestNoOrderByLocalFlagAsc(Menu.flagForMenuSet,myBranches,restNo);
     }
 
-    public List<Menu> getMenusOtherByMenuGroupNo(int menuGroupNo,int branchNo){
+    public List<Menu> getMenusOtherByMenuGroupNo(int menuGroupNo,int branchNo,int restNo){
         List<Integer> myBranches = new LinkedList<>();
         myBranches.add(Menu.OFFICIAL_MENU_FLAG);
         myBranches.add(branchNo);
         if(menuGroupNo == 0){
-            return menuRepository.findByMenuFlagAndLocalFlagNotInOrderByLocalFlagAsc(Menu.flagForMenu,myBranches);
+            return menuRepository.findByMenuFlagAndLocalFlagNotInAndRestNoOrderByLocalFlagAsc(Menu.flagForMenu,myBranches,restNo);
         }else{
-            return menuRepository.findByMenuFlagAndMenuGroupNoAndLocalFlagNotInOrderByLocalFlagAsc(Menu.flagForMenu,menuGroupNo,myBranches);
+            return menuRepository.findByMenuFlagAndMenuGroupNoAndLocalFlagNotInAndRestNoOrderByLocalFlagAsc(Menu.flagForMenu,menuGroupNo,myBranches,restNo);
         }
     }
 

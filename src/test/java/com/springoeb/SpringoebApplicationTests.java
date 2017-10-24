@@ -20,6 +20,5 @@ public class SpringoebApplicationTests {
 	@Test
 	public void contextLoads() {
 		List<Order> orders = orderService.getOrders(1);
-		System.out.println(orders.size());
 	}
 }

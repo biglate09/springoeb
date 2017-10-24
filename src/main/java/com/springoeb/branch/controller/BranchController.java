@@ -50,8 +50,9 @@ public class BranchController {
 
     @PostMapping("/getbranches")
     @ResponseBody
-    public String getBranches() throws JsonProcessingException {
-        List<Branch> branches = branchService.getAllBranches();
+    public String getBranches(HttpSession session) throws JsonProcessingException {
+        BranchUser branchUser = (BranchUser)(session.getAttribute("branchUser"));
+        List<Branch> branches = branchService.getAllBranches(branchUser.getBranch().getRestNo());
         ObjectMapper mapper = new ObjectMapper();
         String json = mapper.writeValueAsString(branches);
         return json;
@@ -67,9 +68,11 @@ public class BranchController {
     @Transactional
     @PostMapping("/managebranch")
     @ResponseBody
-    public void managebranch(@ModelAttribute("branch") Branch branch, HttpServletRequest request) throws JsonProcessingException, UnsupportedEncodingException {
+    public void managebranch(@ModelAttribute("branch") Branch branch, HttpServletRequest request, HttpSession session) throws JsonProcessingException, UnsupportedEncodingException {
         String username = request.getParameter("username");
         String email = request.getParameter("email");
+        BranchUser myBranchUser = (BranchUser) (session.getAttribute("branchUser"));
+        branch.setRestNo(myBranchUser.getBranch().getRestNo());
         Branch insertedBranch = branchService.save(branch);
         int branchNo = insertedBranch.getBranchNo();
         BranchUser branchUser = new BranchUser();

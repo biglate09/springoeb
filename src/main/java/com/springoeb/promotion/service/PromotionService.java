@@ -6,7 +6,6 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import javax.transaction.Transactional;
-import java.sql.Date;
 import java.util.List;
 
 @Service
@@ -18,13 +17,13 @@ public class PromotionService {
         promotionRepository.save(promotion);
     }
 
-    public List<Promotion> findPromotions(){
-        return promotionRepository.findAll();
+    public List<Promotion> findPromotions(int restNo){
+        return promotionRepository.findByRestNoOrderByFromDate(restNo);
     }
 
-    public List<Promotion> findAvailablePromotion(){
-        return promotionRepository.findByAvailableAndFromDateGreaterThanEqualAndAvailableLessThanEqual(true,new Date(System.currentTimeMillis()),new Date(System.currentTimeMillis()));
-    }
+//    public List<Promotion> findAvailablePromotion(){
+//        return promotionRepository.findByAvailableAndFromDateGreaterThanEqualAndAvailableLessThanEqual(true,new Date(System.currentTimeMillis()),new Date(System.currentTimeMillis()));
+//    }
 
     public Promotion findByPromotionNo(int promotionNo){
         return promotionRepository.findByPromotionNo(promotionNo);

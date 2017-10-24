@@ -167,7 +167,7 @@
                                                                 ประเภท
                                                             </th>
                                                             <th style="text-align:center;"><span class="required">จำนวนที่ใช้</span></th>
-                                                            <th style="text-align:center;">add-on</th>
+                                                            <th style="text-align:center;"><span class="required">Add-on</span></th>
                                                         </tr>
                                                         </thead>
                                                         <tbody style="text-align:center;" >
@@ -196,7 +196,7 @@
                                                                         <input type="number"
                                                                                style="text-align:center;width: 100%;"
                                                                                value="0" min="0"
-                                                                               step="0.01">
+                                                                               step="0.01" required>
                                                                     </div>
                                                                     <div class="col-md-6">
                                                                             ${mi.unit.unitName}
@@ -331,7 +331,7 @@
                                                         <th style="text-align:center;">ชื่อวัตถุดิบอาหาร</th>
                                                         <th style="text-align:center;" class="order">ประเภท</th>
                                                         <th style="text-align:center;"><span class="required">จำนวนที่ใช้</span></th>
-                                                        <th style="text-align:center;">add-on</th>
+                                                        <th style="text-align:center;"><span class="required">Add-on</span></th>
                                                     </tr>
                                                     </thead>
                                                     <tbody style="text-align:center;">
@@ -358,7 +358,7 @@
                                                             </td>
                                                             <td style="width: 20%;">
                                                                 <div class="col-md-6">
-                                                                    <input type="number" min="0" step="0.01" style="width: 100%;text-align: center;">
+                                                                    <input type="number" min="0" value="0" required step="0.01" style="width: 100%;text-align: center;">
                                                                 </div>
                                                                 <div class="col-md-6">
                                                                         ${mi.unit.unitName}

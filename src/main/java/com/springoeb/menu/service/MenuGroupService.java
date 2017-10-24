@@ -12,11 +12,11 @@ public class MenuGroupService {
     @Autowired
     private MenuGroupRepository menuGroupRepository;
 
-    public List<MenuGroup> getMenuGroups(){
-        return menuGroupRepository.findAll();
+    public List<MenuGroup> getMenuGroups(int restNo){
+        return menuGroupRepository.findByRestNo(restNo);
     }
-    public List<MenuGroup> getMenuGroupsOrderByMenuCatNo(){
-        return menuGroupRepository.findByMenuGroupNoIsNotNullOrderByMenuCatNo();
+    public List<MenuGroup> getMenuGroupsOrderByMenuCatNo(int restNo){
+        return menuGroupRepository.findByMenuGroupNoIsNotNullAndRestNoOrderByMenuCatNo(restNo);
     }
 
     public void save(MenuGroup menuGroup){

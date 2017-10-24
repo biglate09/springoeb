@@ -185,11 +185,11 @@ public class EmployeeController {
     @PostMapping("/manageemployeeposition")
     public void addAndEditPosition(@ModelAttribute("employeePosition") EmployeePosition employeePosition, HttpServletRequest request, HttpServletResponse response, HttpSession session) throws Exception {
         int branchNo = ((BranchUser) (session.getAttribute("branchUser"))).getBranchNo();
-        if (!employeePositionService.chkDuplicateEmpPosisitonName(employeePosition.getEmpPosName())) {
+//        if (!employeePositionService.chkDuplicateEmpPosisitonName(employeePosition.getEmpPosName())) {
             employeePositionService.save(employeePosition);
-        } else {
-            throw new Exception();
-        }
+//        } else {
+//            throw new Exception();
+//        }
     }
 
     @Transactional
@@ -201,7 +201,7 @@ public class EmployeeController {
 
     @GetMapping("/ajax/getemployeeposition/{empPosNo}")
     @ResponseBody
-    public String getEmployee(@PathVariable("empPosNo") int empPosNo) throws JsonProcessingException {
+    public String getEmployeePosition(@PathVariable("empPosNo") int empPosNo) throws JsonProcessingException {
         EmployeePosition employeePosition = employeePositionService.findByEmpPosNo(empPosNo);
         ObjectMapper mapper = new ObjectMapper();
         String json = mapper.writeValueAsString(employeePosition);
@@ -211,7 +211,9 @@ public class EmployeeController {
     @PostMapping("/ajax/getemployeepositions")
     @ResponseBody
     public String getJsonEmployeePositions(HttpSession session) throws JsonProcessingException {
-        List<EmployeePosition> employeePositions = employeePositionService.findAll();
+        BranchUser branchUser = (BranchUser) (session.getAttribute("branchUser"));
+        int restNo = branchUser.getBranch().getRestNo();
+        List<EmployeePosition> employeePositions = employeePositionService.findAll(restNo);
         ObjectMapper mapper = new ObjectMapper();
         String json = mapper.writeValueAsString(employeePositions);
         return json;
@@ -397,7 +399,7 @@ public class EmployeeController {
         } else if(branchUser.getRoleNo() == Role.MANAGER){
             List<EmployeeTable> employeeTables = employeeTableService.findAll(branchNo);
             List<Employee> employees = employeeService.findByBranchNo(branchNo);
-            List<EmployeePosition> employeePositions = employeePositionService.findAll();
+            List<EmployeePosition> employeePositions = employeePositionService.findAll(branchUser.getBranch().getRestNo());
             model.addAttribute("employees", employees);
             model.addAttribute("employeePositions", employeePositions);
             model.addAttribute("employeeTables", employeeTables);

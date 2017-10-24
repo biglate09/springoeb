@@ -13,8 +13,8 @@ public class MaterialUnitService {
     @Autowired
     private MaterialUnitRepository materialUnitRepository;
 
-    public List<MaterialUnit> getMaterialUnits(){
-        return materialUnitRepository.findAll();
+    public List<MaterialUnit> getMaterialUnits(int restNo){
+        return materialUnitRepository.findByRestNo(restNo);
     }
     public void save(MaterialUnit materialUnit){ materialUnitRepository.save(materialUnit);}
     public void delMaterialUnit(int unitNo){ materialUnitRepository.removeByUnitNo(unitNo);}

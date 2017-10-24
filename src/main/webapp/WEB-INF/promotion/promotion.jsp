@@ -194,12 +194,12 @@
                                                 <div class="modal-footer">
                                                     <!-- ปุ่มกดปิด (Close) ตรงส่วนล่างของ Modal -->
                                                     <div class="col-md-9 col-sm-9 col-xs-12 col-md-offset-3">
-                                                        <label style="margin-right:15px;">
-                                                            <input type="checkbox" name="available"
-                                                                   id="available"
-                                                                   class="flat">
-                                                            พร้อมให้บริการ
-                                                        </label>
+                                                        <%--<label style="margin-right:15px;">--%>
+                                                            <%--<input type="checkbox" name="available"--%>
+                                                                   <%--id="available"--%>
+                                                                   <%--class="flat">--%>
+                                                            <%--พร้อมให้บริการ--%>
+                                                        <%--</label>--%>
                                                         <button type="submit" style="margin-left:5px;"
                                                                 class="btn btn-success">ตกลง
                                                         </button>
@@ -312,9 +312,9 @@
                 $("#promotionDesc").val(promo.promotionDesc);
                 $("#promotionNo").val(promo.promotionNo);
                 $("#promotionPicture").attr('src','../images/promotion/'+promo.promotionPicPath);
-                if(promo.available == true){
-                    $("#available").iCheck("check");
-                }
+//                if(promo.available == true){
+//                    $("#available").iCheck("check");
+//                }
 
                 var menugroups = promo.menuGroupPromotions;
                 for(var i = 0 ; i < menugroups.length ; i++){
@@ -351,19 +351,19 @@
             });
     }
 
-    function change_available(promotionno) {
-        $.ajax({
-            type: "POST",
-            url: "${contextPath}/promotion/changeavailable/" + promotionno,
-            dataType: "json",
-            success: function (result) {
-                swal("สำเร็จ", "เปลี่ยนเป็น " + (result.available == false ? 'ไม่' : '') + "พร้อมให้บริการ เรียบร้อยแล้ว", "success");
-                refresh_table();
-            }, error: function (result) {
-                swal("ไม่สำเร็จ", "กรุณาลองใหม่ภายหลัง", "error");
-            }
-        });
-    }
+    <%--function change_available(promotionno) {--%>
+        <%--$.ajax({--%>
+            <%--type: "POST",--%>
+            <%--url: "${contextPath}/promotion/changeavailable/" + promotionno,--%>
+            <%--dataType: "json",--%>
+            <%--success: function (result) {--%>
+                <%--swal("สำเร็จ", "เปลี่ยนเป็น " + (result.available == false ? 'ไม่' : '') + "พร้อมให้บริการ เรียบร้อยแล้ว", "success");--%>
+                <%--refresh_table();--%>
+            <%--}, error: function (result) {--%>
+                <%--swal("ไม่สำเร็จ", "กรุณาลองใหม่ภายหลัง", "error");--%>
+            <%--}--%>
+        <%--});--%>
+    <%--}--%>
 
     $("#managePromotion").submit(function () {
         $.ajax({
@@ -429,13 +429,13 @@
                             </div>\
                             <div class="col-md-12" style="font-weight:bold;text-align:right;"> \
                             <a title="แก้ไข" style="color:#73879C;cursor:pointer;margin-right:5px;" data-toggle="modal" data-target="#promotion_modal" onclick="set_promotion(' + promotion.promotionNo + ')"><i class="fa fa-pencil"></i></a>' + '\
-                            <a title="โปรโมชั่นนี้' + (promotion.available == true ? '' : 'ไม่' ) + 'พร้อมให้บริการ คลิกเพื่อเปลี่ยน" onclick="change_available(' + promotion.promotionNo + ')" style="color:#73879C;cursor:pointer;margin-right:5px;"><i class="fa ' + (promotion.available == true ? 'fa-check-square-o' : 'fa-square-o' ) + '"></i></a>\
                             <a title="ลบ" onclick="del_promotion(' + promotion.promotionNo + ')" style="color:#73879C;cursor:pointer;"><i class="fa fa-trash"></i></a>' + '\
                             </div>\
                             </div>\
                             </div>\
                             </div>';
 
+                        //<a title="โปรโมชั่นนี้' + (promotion.available == true ? '' : 'ไม่' ) + 'พร้อมให้บริการ คลิกเพื่อเปลี่ยน" onclick="change_available(' + promotion.promotionNo + ')" style="color:#73879C;cursor:pointer;margin-right:5px;"><i class="fa ' + (promotion.available == true ? 'fa-check-square-o' : 'fa-square-o' ) + '"></i></a>\
                         $("#promotion_thumbnail").append(div);
                         $("#error_show").html('');
                     }

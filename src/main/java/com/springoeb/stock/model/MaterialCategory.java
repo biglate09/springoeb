@@ -11,6 +11,8 @@ public class MaterialCategory implements Serializable {
     private Integer matCatNo;
     @Column(name = "matTypeName")
     private String matCatName;
+    @Column(name = "restNo")
+    private Integer restNo;
 
     public Integer getMatCatNo() {
         return matCatNo;
@@ -26,5 +28,13 @@ public class MaterialCategory implements Serializable {
 
     public void setMatCatName(String matCatName) {
         this.matCatName = matCatName;
+    }
+
+    public Integer getRestNo() {
+        return restNo;
+    }
+
+    public void setRestNo(Integer restNo) {
+        this.restNo = restNo;
     }
 }

@@ -19,6 +19,8 @@ public class MenuGroup implements Serializable {
     private String menuGroupNameEN;
     @Column(name = "menuTypeNo",insertable = true,updatable = true)
     private Integer menuCatNo;
+    @Column(name = "restNo")
+    private Integer restNo;
     @JsonIgnore
     @OneToMany(fetch = FetchType.LAZY, mappedBy = "menuGroup")
     private List<MenuGroupPromotion> menuGroupPromotions;
@@ -87,6 +89,14 @@ public class MenuGroup implements Serializable {
 
     public void setMenuGroupPromotions(List<MenuGroupPromotion> menuGroupPromotions) {
         this.menuGroupPromotions = menuGroupPromotions;
+    }
+
+    public Integer getRestNo() {
+        return restNo;
+    }
+
+    public void setRestNo(Integer restNo) {
+        this.restNo = restNo;
     }
 
     @Override

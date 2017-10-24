@@ -10,7 +10,8 @@ import java.util.List;
 public interface BranchRepository extends CrudRepository<Branch,Integer>{
     List<Branch> findAll();
     Branch findByBranchNo(int branchNo);
-    List<Branch> findByBranchNoIsNot(int mainBranchNo);
+    List<Branch> findByBranchNoIsNot(int branchNo);
     void removeByBranchNo(int branchNo);
     Branch save(Branch branch);
+    List<Branch> findByRestNo(int restNo);
 }

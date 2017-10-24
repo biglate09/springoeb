@@ -7,6 +7,7 @@ import com.springoeb.promotion.model.MenuGroupPromotion;
 import com.springoeb.promotion.model.Promotion;
 import com.springoeb.promotion.service.MenuGroupPromotionService;
 import com.springoeb.promotion.service.PromotionService;
+import com.springoeb.system.model.BranchUser;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -14,6 +15,7 @@ import org.springframework.web.bind.annotation.*;
 import org.springframework.web.multipart.MultipartFile;
 
 import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpSession;
 import javax.transaction.Transactional;
 import java.io.File;
 import java.io.IOException;
@@ -37,8 +39,9 @@ public class PromotionController {
 
     //-----------------------------------------------------------------------------------------------------------//
     @GetMapping("/promotion")
-    public String toPromotionIndex(Model model) {
-        model.addAttribute("menuGroups", menuGroupService.getMenuGroups());
+    public String toPromotionIndex(Model model,HttpSession session) {
+        BranchUser branchUser = (BranchUser) (session.getAttribute("branchUser"));
+        model.addAttribute("menuGroups", menuGroupService.getMenuGroups(branchUser.getBranch().getRestNo()));
         return PROMO_PATH + "promotion.jsp";
     }
 
@@ -53,8 +56,9 @@ public class PromotionController {
 
     @ResponseBody
     @PostMapping("/getpromotions")
-    public String getPromotions(Model model) throws JsonProcessingException {
-        List<Promotion> promotions = promotionService.findPromotions();
+    public String getPromotions(Model model, HttpSession session) throws JsonProcessingException {
+        BranchUser branchUser = (BranchUser) (session.getAttribute("branchUser"));
+        List<Promotion> promotions = promotionService.findPromotions(branchUser.getBranch().getRestNo());
         ObjectMapper mapper = new ObjectMapper();
         String json = mapper.writeValueAsString(promotions);
         return json;
@@ -114,7 +118,7 @@ public class PromotionController {
         promotion.setFromDate(Date.valueOf(fromDate.substring(6, 10) + "-" + fromDate.substring(3, 5) + "-" + fromDate.substring(0, 2)));
         promotion.setToDate(Date.valueOf(toDate.substring(6, 10) + "-" + toDate.substring(3, 5) + "-" + toDate.substring(0, 2)));
         promotion.setDay(request.getParameter("day"));
-        promotion.setAvailable(request.getParameter("available") != null);
+//        promotion.setAvailable(request.getParameter("available") != null);
         return promotion;
     }
 
@@ -134,7 +138,7 @@ public class PromotionController {
     @PostMapping("/changeavailable/{promotionNo}")
     public String changeAvailable(@PathVariable("promotionNo") int promotionNo) throws JsonProcessingException {
         Promotion promotion = promotionService.findByPromotionNo(promotionNo);
-        promotion.setAvailable(!promotion.isAvailable());
+//        promotion.setAvailable(!promotion.isAvailable());
         promotionService.save(promotion);
         ObjectMapper mapper = new ObjectMapper();
         String json = mapper.writeValueAsString(promotion);

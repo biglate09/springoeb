@@ -29,6 +29,8 @@ public class Menu implements Serializable{
     private Integer localFlag;
     @Column(name = "menuGroupNo",insertable = true,updatable = true)
     private Integer menuGroupNo;
+    @Column(name = "restNo",insertable = true,updatable = true)
+    private Integer restNo;
 
     @JsonIgnore
     @OneToMany(fetch = FetchType.LAZY, mappedBy = "menu")
@@ -157,10 +159,11 @@ public class Menu implements Serializable{
         this.menuMaterials = menuMaterials;
     }
 
-    @Override
-    public String toString() {
-        return "Menu{" +
-                "menuNameTH='" + menuNameTH + '\'' +
-                '}';
+    public Integer getRestNo() {
+        return restNo;
+    }
+
+    public void setRestNo(Integer restNo) {
+        this.restNo = restNo;
     }
 }

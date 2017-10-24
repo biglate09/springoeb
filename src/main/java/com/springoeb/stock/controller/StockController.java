@@ -45,8 +45,9 @@ public class StockController {
 
     @PostMapping("/getmaterialcategories")
     @ResponseBody
-    public String getMaterialCategories() throws JsonProcessingException {
-        List<MaterialCategory> materialCategories = materialCategoryService.getMaterialCategories();
+    public String getMaterialCategories(HttpSession session) throws JsonProcessingException {
+        BranchUser branchUser = (BranchUser)(session.getAttribute("branchUser"));
+        List<MaterialCategory> materialCategories = materialCategoryService.getMaterialCategories(branchUser.getBranch().getRestNo());
         ObjectMapper mapper = new ObjectMapper();
         String json = mapper.writeValueAsString(materialCategories);
         return json;
@@ -93,9 +94,10 @@ public class StockController {
 
     //-----------------------------------------------------------------------------------------------------------//
     @GetMapping("/materialitem")
-    public String toMaterialItem(Model model) {
-        List<MaterialCategory> materialCategories = materialCategoryService.getMaterialCategories();
-        List<MaterialUnit> materialUnits = materialUnitService.getMaterialUnits();
+    public String toMaterialItem(Model model,HttpSession session) {
+        BranchUser branchUser = (BranchUser)(session.getAttribute("branchUser"));
+        List<MaterialCategory> materialCategories = materialCategoryService.getMaterialCategories(branchUser.getBranch().getRestNo());
+        List<MaterialUnit> materialUnits = materialUnitService.getMaterialUnits(branchUser.getBranch().getRestNo());
         model.addAttribute("matCategories", materialCategories);
         model.addAttribute("units", materialUnits);
         return STOCK_PATH + "materialitem.jsp";
@@ -103,8 +105,9 @@ public class StockController {
 
     @PostMapping("/getmaterialitems")
     @ResponseBody
-    public String getMaterialItems() throws JsonProcessingException {
-        List<MaterialItem> materialItems = materialItemService.getMaterials();
+    public String getMaterialItems(HttpSession session) throws JsonProcessingException {
+        BranchUser branchUser = (BranchUser)(session.getAttribute("branchUser"));
+        List<MaterialItem> materialItems = materialItemService.getMaterialItems(branchUser.getBranch().getRestNo());
         ObjectMapper mapper = new ObjectMapper();
         String json = mapper.writeValueAsString(materialItems);
         return json;
@@ -177,10 +180,11 @@ public class StockController {
 
     //-----------------------------------------------------------------------------------------------------------//
     @GetMapping("/mixedproduct")
-    public String toMixedProductIndex(Model model) {
-        List<MaterialCategory> materialCategories = materialCategoryService.getMaterialCategories();
-        List<MaterialUnit> materialUnits = materialUnitService.getMaterialUnits();
-        List<MaterialItem> materialItems = materialItemService.getAllMaterials();
+    public String toMixedProductIndex(Model model,HttpSession session) {
+        BranchUser branchUser = (BranchUser)(session.getAttribute("branchUser"));
+        List<MaterialCategory> materialCategories = materialCategoryService.getMaterialCategories(branchUser.getBranch().getRestNo());
+        List<MaterialUnit> materialUnits = materialUnitService.getMaterialUnits(branchUser.getBranch().getRestNo());
+        List<MaterialItem> materialItems = materialItemService.getAllMaterials(branchUser.getBranch().getRestNo());
         model.addAttribute("materialItems", materialItems);
         model.addAttribute("matCategories", materialCategories);
         model.addAttribute("units", materialUnits);
@@ -189,8 +193,9 @@ public class StockController {
 
     @PostMapping("/getmixedproducts")
     @ResponseBody
-    public String getMixedProducts() throws JsonProcessingException {
-        List<MaterialItem> materialItems = materialItemService.getMixedProducts();
+    public String getMixedProducts(HttpSession session) throws JsonProcessingException {
+        BranchUser branchUser = (BranchUser)(session.getAttribute("branchUser"));
+        List<MaterialItem> materialItems = materialItemService.getMixedProducts(branchUser.getBranch().getRestNo());
         ObjectMapper mapper = new ObjectMapper();
         String json = mapper.writeValueAsString(materialItems);
         return json;
@@ -211,8 +216,9 @@ public class StockController {
 
     @PostMapping("/getmaterials")
     @ResponseBody
-    public String getMaterials() throws JsonProcessingException {
-        List<MaterialItem> materials = materialItemService.getMaterials();
+    public String getMaterials(HttpSession session) throws JsonProcessingException {
+        BranchUser branchUser = (BranchUser)(session.getAttribute("branchUser"));
+        List<MaterialItem> materials = materialItemService.getAllMaterials(branchUser.getBranch().getRestNo());
         ObjectMapper mapper = new ObjectMapper();
         String json = mapper.writeValueAsString(materials);
         return json;
@@ -308,8 +314,9 @@ public class StockController {
 
     @PostMapping("/getmaterialunits")
     @ResponseBody
-    public String getMaterialUnits() throws JsonProcessingException {
-        List<MaterialUnit> materialUnits = materialUnitService.getMaterialUnits();
+    public String getMaterialUnits(HttpSession session) throws JsonProcessingException {
+        BranchUser branchUser = (BranchUser)(session.getAttribute("branchUser"));
+        List<MaterialUnit> materialUnits = materialUnitService.getMaterialUnits(branchUser.getBranch().getRestNo());
         ObjectMapper mapper = new ObjectMapper();
         String json = mapper.writeValueAsString(materialUnits);
         return json;

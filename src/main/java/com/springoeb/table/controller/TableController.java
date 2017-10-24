@@ -106,7 +106,6 @@ public class TableController {
         reservation.setBranchNo(branchNo);
         reservation.setDate(Date.valueOf(request.getParameter("dateformat")));
         reservation.setTime(Time.valueOf(request.getParameter("timeformat").substring(0,5) + ":00"));
-        System.out.println(reservation);
         reservationService.save(reservation);
     }
 

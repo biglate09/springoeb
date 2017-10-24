@@ -28,8 +28,10 @@ public class Promotion {
     private Date toDate;
     @Column(name = "proDay")
     private String day;
-    @Column(name = "available")
-    private boolean available;
+    @Column(name = "restNo")
+    private Integer restNo;
+//    @Column(name = "available")
+//    private boolean available;
 
     @JsonManagedReference
     @OneToMany(fetch = FetchType.LAZY, mappedBy = "promotion")
@@ -115,12 +117,12 @@ public class Promotion {
         this.day = day;
     }
 
-    public boolean isAvailable() {
-        return available;
+    public Integer getRestNo() {
+        return restNo;
     }
 
-    public void setAvailable(boolean available) {
-        this.available = available;
+    public void setRestNo(Integer restNo) {
+        this.restNo = restNo;
     }
 
     public List<MenuGroupPromotion> getMenuGroupPromotions() {

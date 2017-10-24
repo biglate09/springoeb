@@ -12,8 +12,8 @@ import java.util.List;
 public class MaterialCategoryService {
     @Autowired
     private MaterialCategoryRepository matCategoryRepository;
-    public List<MaterialCategory> getMaterialCategories(){
-        return matCategoryRepository.findAll();
+    public List<MaterialCategory> getMaterialCategories(int restNo){
+        return matCategoryRepository.findByRestNo(restNo);
     }
     public void save(MaterialCategory matCategory){ matCategoryRepository.save(matCategory);}
     public void delMaterialCategory(int matCatNo){ matCategoryRepository.removeByMatCatNo(matCatNo);}

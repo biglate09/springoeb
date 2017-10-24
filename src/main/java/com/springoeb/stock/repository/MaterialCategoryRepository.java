@@ -8,7 +8,8 @@ import java.util.List;
 
 @Repository
 public interface MaterialCategoryRepository extends CrudRepository<MaterialCategory,Integer> {
-    List<MaterialCategory> findAll();
+//    List<MaterialCategory> findAll();
+    List<MaterialCategory> findByRestNo(int restNo);
     void removeByMatCatNo(int matCatNo);
     MaterialCategory findByMatCatNo(int matCatNo);
     List<MaterialCategory> findByMatCatNameIgnoreCase(String matCatName);

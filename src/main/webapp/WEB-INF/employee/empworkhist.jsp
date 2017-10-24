@@ -506,7 +506,7 @@
                         workdate_d = new Date(work_obj.workDate);
                         workdate_display = (workdate_d.getDate() < 10 ? "0" + workdate_d.getDate() : workdate_d.getDate()) + "/" + ((workdate_d.getMonth() + 1) < 10 ? "0" + (workdate_d.getMonth() + 1) : (workdate_d.getMonth() + 1)) + "/" + workdate_d.getFullYear();
                         workdate_order = "" + workdate_d.getFullYear() + ((workdate_d.getMonth() + 1) < 10 ? "0" + (workdate_d.getMonth() + 1) : (workdate_d.getMonth() + 1)) + (workdate_d.getDate() < 10 ? "0" + workdate_d.getDate() : workdate_d.getDate());
-                        hour_display = "" + (work_obj.workHour > 0 ? work_obj.workHour + " ชั่วโมง " : "") + (work_obj.workMin > 0 ? work_obj.workMin + " นาที " : "");
+                        hour_display = "" + (work_obj.workHour + work_obj.workMin == 0 ? '0 นาที' : (work_obj.workHour > 0 ? work_obj.workHour + " ชั่วโมง " : "") + (work_obj.workMin > 0 ? work_obj.workMin + " นาที " : ""));
                         hour_order = "" + (work_obj.workHour < 10 ? "0" + work_obj.workHour : work_obj.workHour) + (work_obj.workMin < 10 ? "0" + work_obj.workMin : work_obj.workMin);
                         pay_display = "" + (work_obj.workPay.toFixed(2)).replace(/\B(?=(\d{3})+(?!\d))/g, ",") + " บาท";
                         pay_order = work_obj.workPay * 100;

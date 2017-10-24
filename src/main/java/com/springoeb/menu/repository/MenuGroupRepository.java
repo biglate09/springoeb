@@ -9,7 +9,8 @@ import java.util.List;
 @Repository
 public interface MenuGroupRepository extends CrudRepository<MenuGroup,Integer> {
     List<MenuGroup> findAll();
-    List<MenuGroup> findByMenuGroupNoIsNotNullOrderByMenuCatNo();
+    List<MenuGroup> findByRestNo(int restNo);
+    List<MenuGroup> findByMenuGroupNoIsNotNullAndRestNoOrderByMenuCatNo(int restNo);
     MenuGroup findByMenuGroupNo(int menuGroupNo);
     List<MenuGroup> findByMenuGroupNameTHIgnoreCaseOrMenuGroupNameENIgnoreCase(String menuGroupNameTH,String menuGroupNameEN);
     void removeByMenuGroupNo(int menuGroupNo);
