@@ -232,145 +232,72 @@
                                 <div class="modal-header">
                                     <!-- ปุ่มกดปิด (X) ตรงส่วนหัวของ Modal -->
                                     <button type="button" class="close" data-dismiss="modal">&times;</button>
-                                    <h4 class="modal-title">แก้ไขเมนูอาหาร <span id="show_menu_name_for_edit"></span>
+                                    <h4 class="modal-title">จ่ายเงิน <span id="show_menu_name_for_edit"></span>
                                     </h4>
                                 </div>
                                 <!-- ส่วนเนื้อหาของ Modal -->
                                 <div class="modal-body">
-                                    <form class="form-horizontal form-label-left input_mask" modelAttribute="menu"
-                                          id="edit_menu" enctype="multipart/form-data">
-                                        <input type="hidden" name="menuNo" id="hiddenmenuno">
-                                        <div class="form-group">
-                                            <img class="col-md-offset-3 col-sm-offset-3 col-md-6 col-sm-6 col-xs-12 img-resize"
-                                                 style="margin-bottom:20px;cursor:pointer;" id="showpic_edit"
-                                                 width="414" height="auto"
-                                                 src="../images/default_upload_image.png"/>
-
-                                            <div class="col-md-offset-3 col-sm-offset-3 col-md-6 col-sm-6 col-xs-12 has-feedback"
-                                                 style="margin-bottom: 12px">
-                                                <input type="file" accept="image/*"
-                                                       class="form-control" name="menuPicPath"
-                                                       id="edit_menu_pic"
-                                                       onchange="document.getElementById('showpic_edit').src = window.URL.createObjectURL(this.files[0])"
-                                                       placeholder="อัพโหลดรูปภาพ">
-                                            </div>
-                                            <div class="col-md-6 col-sm-6 col-xs-12 form-group has-feedback">
-                                                <label class="required">ชื่อเมนูอาหารภาษาไทย</label>
-                                                <input type="text" class="form-control" name="menuNameTH"
-                                                       id="edit_menu_nameTH"
-                                                       placeholder="ชื่อเมนูอาหารภาษาไทย" required>
-                                                <span class="fa fa-pencil form-control-feedback right"
-                                                      aria-hidden="true"></span>
-                                            </div>
-                                            <div class="col-md-6 col-sm-6 col-xs-12 form-group has-feedback">
-                                                <label class="required">ชื่อเมนูอาหารภาษาอังกฤษ</label>
-                                                <input type="text" class="form-control" name="menuNameEN"
-                                                       id="edit_menu_nameEN"
-                                                       placeholder="ชื่อเมนูอาหารภาษาอังกฤษ" required>
-                                                <span class="fa fa-pencil form-control-feedback right"
-                                                      aria-hidden="true"></span>
-                                            </div>
-                                            <div class="col-md-6 col-sm-6 col-xs-12 form-group has-feedback">
-                                                <label class="required">ราคา (บาท)</label>
-                                                <input type="number" class="form-control" name="menuPrice"
-                                                       id="edit_menu_price"
-                                                       placeholder="ราคา" min="0" step="0.25" required>
-                                                <span class="fa fa-money form-control-feedback right"
-                                                      aria-hidden="true"></span>
-                                            </div>
-                                            <div class="col-md-6 col-sm-6 col-xs-12 form-group has-feedback ">
-                                                <label class="required">หมวดหมู่ของเมนู</label>
-                                                <select name="menuGroupNo" id="edit_menu_stock_cat" class="form-control"
-                                                        required>
-                                                    <option disabled selected value="">เลือกหมวดหมู่เมนู</option>
-                                                    <c:forEach items="${menuGroups}" var="mc">
-                                                        <option value="${mc.menuGroupNo}">${mc.menuGroupNameTH}</option>
-                                                    </c:forEach>
-                                                </select>
-                                            </div>
-                                            <div class="col-md-12 col-sm-12 col-xs-12 form-group has-feedback">
-                                                <label>รายละเอียดของเมนู</label>
-                                                <textarea rows="4" cols="100" class="form-control" name="menuDesc"
-                                                          id="edit_menu_desc"
-                                                          placeholder="รายละเอียด"></textarea>
-
-                                            </div>
-                                            <div class="col-md-12 col-sm-12 col-xs-12">
-                                                <label>เลือกวัตถุดิบที่ใช้ในเมนูนี้</label>
-                                                <table class="table table-bordered table-striped"
-                                                       id="material-datatable-2">
-                                                    <thead>
-                                                    <tr>
-                                                        <th style="text-align:center;">ชื่อวัตถุดิบอาหาร</th>
-                                                        <th style="text-align:center;" class="order">ประเภท</th>
-                                                        <th style="text-align:center;"><span class="required">จำนวนที่ใช้</span></th>
-                                                        <th style="text-align:center;">add-on</th>
-                                                    </tr>
-                                                    </thead>
-                                                    <tbody style="text-align:center;">
-                                                    <c:forEach items="${materialItems}" var="mi">
+                                    <div class="row">
+                                        <div class="col-md-6 col-sm-6 col-xs-12">
+                                            <div class="x_panel">
+                                                <div class="x_title">
+                                                    <h2>โต๊ะ <small>#0002</small></h2>
+                                                    <div class="clearfix"></div>
+                                                </div>
+                                                <div class="x_content">
+                                                    <table style="width: 100%">
+                                                        <tbody>
                                                         <tr>
-                                                            <td style="width:30%;">${mi.matItemName}</td>
-                                                            <td style="width:20%;">${mi.materialCategory.matCatName}</td>
-                                                            <td style="width:20%;">
-                                                                <div class="col-md-6">
-                                                                    <input matItemNo="${mi.matItemNo}" type="number"
-                                                                           matItemName="${mi.matItemName}"
-                                                                           unit="${mi.unit.unitName}"
-                                                                           class="materialamount2"
-                                                                           name="materialamount${mi.matItemNo}"
-                                                                           style="text-align:center;"
-                                                                           value="0" min="0" max="1000"
-                                                                           step="0.001"
-                                                                           required>
-                                                                </div>
-                                                                <div class="col-md-6">
-                                                                        ${mi.unit.unitName}
-                                                                </div>
-                                                            </td>
-                                                            </td>
-                                                            <td style="width: 20%;">
-                                                                <div class="col-md-6">
-                                                                    <input type="number" min="0" step="0.01" style="width: 100%;text-align: center;">
-                                                                </div>
-                                                                <div class="col-md-6">
-                                                                        ${mi.unit.unitName}
-                                                                </div>
-                                                            </td>
+                                                            <td style="width: 33%">จำนวน</td>
+                                                            <td style="width: 33%">รายการอาหาร</td>
+                                                            <td style="width: 33%">ราคา</td>
                                                         </tr>
-                                                    </c:forEach>
-                                                    </tbody>
-                                                </table>
-                                            </div>
-                                            <div class="col-md-12" style="text-align:center;margin-top:20px;">
-                                                <div class="well" style="overflow: auto">
-                                                    <span style="font-weight:bold;">ส่วนผสมของเมนูอาหารมีดังนี้</span>
-                                                    <div id="display_material_desc2"
-                                                         style="margin-bottom:20px;margin-top:20px;"
-                                                         class="submit-clear"></div>
+                                                        </tbody>
+                                                    </table>
+                                                </div>
+                                                <div class="x_title">
+                                                    <div class="clearfix"></div>
+                                                    <div class="col-md-12 col-sm-12 col-xs-12">ราคารวม</div>
                                                 </div>
                                             </div>
                                         </div>
-                                        <div class="modal-footer">
-                                            <!-- ปุ่มกดปิด (Close) ตรงส่วนล่างของ Modal -->
-                                            <div class="col-md-9 col-sm-9 col-xs-12 col-md-offset-3">
-                                                <div class="checkbox" style="display:inline-block;margin-right:15px;">
-                                                    <label>
-                                                        <input type="checkbox" name="menuAvailable"
-                                                               id="edit_menu_available"
-                                                               class="flat">
-                                                        พร้อมจำหน่าย
-                                                    </label>
+                                        <div class="col-md-6 col-sm-6 col-xs-12">
+                                            <div class="x_panel">
+                                                <div class="x_title">
+                                                    <h2>โปรโมชั่น</h2>
+                                                    <div class="clearfix"></div>
                                                 </div>
-                                                <button type="submit" style="margin-left:5px;" class="btn btn-success">
-                                                    ตกลง
-                                                </button>
-                                                <button type="button" class="btn btn-default" data-dismiss="modal">
-                                                    ยกเลิก
-                                                </button>
+                                                <div class="x_content">
+                                                    <table style="width: 100%">
+                                                        <tbody>
+                                                        <tr>
+                                                            <td style="width: 100%"><input type="checkbox" class="flat"> โปรโมชั่น 1</td>
+                                                        </tr>
+                                                        <tr>
+                                                            <td style="width: 100%"><input type="checkbox" class="flat"> โปรโมชั่น 2</td>
+                                                        </tr>
+                                                        </tbody>
+                                                    </table>
+                                                </div>
+                                                <div class="x_title">
+                                                    <div class="clearfix"></div><br>
+                                                    <div class="col-md-12 col-sm-12 col-xs-12">ราคารวม</div>
+                                                    <div class="col-md-12 col-sm-12 col-xs-12">รับเงิน <input type="number" class=""></div>
+                                                    <div class="col-md-12 col-sm-12 col-xs-12">ราคารวม</div>
+                                                </div>
                                             </div>
                                         </div>
-                                    </form>
+                                    </div>
+                                    <div class="modal-footer">
+                                        <!-- ปุ่มกดปิด (Close) ตรงส่วนล่างของ Modal -->
+                                        <div class="col-md-9 col-sm-9 col-xs-12 col-md-offset-3">
+                                            <button type="submit" class="btn btn-success"><i class="fa fa-circle-o-notch fa-spin" id="loadingbtnedit" style="display:none"></i>
+                                                ตกลง</button>
+                                            <button type="button" class="btn btn-default" data-dismiss="modal">
+                                                ยกเลิก
+                                            </button>
+                                        </div>
+                                    </div>
                                 </div>
                             </div>
                         </div>
