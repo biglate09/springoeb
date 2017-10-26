@@ -134,11 +134,12 @@ public class BranchController {
 
     @PostMapping("/managemybranch")
     public void addOrEditMyBranch(@ModelAttribute("branch") Branch branch, HttpSession session, HttpServletRequest request, HttpServletResponse response) throws IOException {
-        int branchNo = ((BranchUser) (session.getAttribute("branchUser"))).getBranchNo();
+        BranchUser branchUser = (BranchUser) session.getAttribute("branchUser");
+        int branchNo = branchUser.getBranchNo();
         branch.setBranchNo(branchNo);
+        branch.setRestNo(branchUser.getBranch().getRestNo());
         branchService.save(branch);
 
-        BranchUser branchUser = (BranchUser) session.getAttribute("branchUser");
         branchUser.setBranch(branch);
         session.setAttribute("branchUser", branchUser);
 

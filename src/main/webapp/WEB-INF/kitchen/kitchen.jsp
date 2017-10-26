@@ -56,9 +56,9 @@
 <script>
     $(document).ready(function () {
         $("#datatable_kitchen_status").DataTable({
-            order: [[0, "asc"]],
+            order: [[3, "asc"]],
             columnDefs: [
-                {orderable: false, targets: [-1]}
+                { orderable: false, targets: '_all' }
             ],
             columns: [
                 {

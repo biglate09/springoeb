@@ -4,7 +4,7 @@ import com.springoeb.menu.model.Menu;
 
 import javax.persistence.*;
 
-@Entity(name = "Order")
+@Entity(name = "CustomerOrder")
 public class Order {
     @Id
     @Column(name = "orderNo")
@@ -13,7 +13,7 @@ public class Order {
     private Integer quantity;
     @Column(name = "amount")
     private Double amount;
-    @Column(name = "status")
+    @Column(name = "orderStatus")
     private String status;
     @Column(name = "billNo",updatable = true,insertable = true)
     private Integer billNo;
@@ -94,5 +94,12 @@ public class Order {
 
     public void setMenu(Menu menu) {
         this.menu = menu;
+    }
+
+    @Override
+    public String toString() {
+        return "Order{" +
+                menu.getMenuNameTH() + " : " + status + " โต๊ะ : " + bill.getTable().getTableName() +
+                '}';
     }
 }
