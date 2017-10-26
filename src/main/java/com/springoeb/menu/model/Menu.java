@@ -36,6 +36,9 @@ public class Menu implements Serializable{
     @OneToMany(fetch = FetchType.LAZY, mappedBy = "menu")
     private List<BranchMenu> branchMenu;
 
+    @OneToMany(fetch = FetchType.LAZY, mappedBy = "menu")
+    private List<AddOn> addOns;
+
     @ManyToOne
     @JoinColumn(name = "menuGroupNo",updatable = false,insertable = false)
     private MenuGroup menuGroup;
@@ -165,5 +168,13 @@ public class Menu implements Serializable{
 
     public void setRestNo(Integer restNo) {
         this.restNo = restNo;
+    }
+
+    public List<AddOn> getAddOns() {
+        return addOns;
+    }
+
+    public void setAddOns(List<AddOn> addOns) {
+        this.addOns = addOns;
     }
 }

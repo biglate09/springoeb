@@ -97,7 +97,7 @@
                         amountOrder = "0" + amountOrder;
                     }
                     var data_refresh = {
-                        menuName: obj.menu.menuNameTH + " / " + obj.menu.menuNameEN,
+                        menuName: obj.menu.menuNameTH ,
                         tableName: obj.bill.table.tableName + " (" + obj.quantity + " จาน)",
                         amount: obj.quantity + " จาน",
                         status: (obj.status == 'reserved' ? '<a onclick="change_status(' + obj.orderNo + ',\'' + obj.status + '\')" class="btn btn-secondary">จองไว้แล้ว</a>' :

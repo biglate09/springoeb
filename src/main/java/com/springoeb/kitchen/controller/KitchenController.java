@@ -53,11 +53,12 @@ public class KitchenController {
         String orderStatus = order.getStatus();
         if(orderStatus.equals(Order.WAITING)){
             order.setStatus(Order.COOKING);
-            orderService.save(order);
-        }else{
+        }else if(orderStatus.equals(Order.COOKING)) {
+            order.setStatus(Order.COOKED);
+        }else if(orderStatus.equals(Order.COOKED)){
             order.setStatus(Order.SERVED);
-            orderService.save(order);
         }
+        orderService.save(order);
     }
     //-----------------------------------------------------------------------------------------------------------//
     @GetMapping("/chefmonitor")

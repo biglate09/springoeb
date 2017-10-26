@@ -116,30 +116,32 @@ public class StockController {
     @Transactional
     @PostMapping("/managematerialitem")
     @ResponseBody
-    public void addAndEditMaterialItem(@ModelAttribute("materialItem") MaterialItem materialItem, HttpServletRequest request) throws Exception {
+    public void addAndEditMaterialItem(@ModelAttribute("materialItem") MaterialItem materialItem, HttpSession session, HttpServletRequest request) throws Exception {
+        BranchUser branchUser = (BranchUser)(session.getAttribute("branchUser"));
         MaterialItem insertedMaterialItem = null;
 
         if (materialItem.getMatFlag().equals(MaterialItem.flagForItem)) {
             materialItem.setQuantity(1.0);
         }
 
-        if (materialItem.getMatItemNo() != null) { // edit
-            if (!materialItemService.getMaterialItem(materialItem.getMatItemNo()).equals(materialItem)) {
-                if (!materialItemService.chkDuplicateMaterialItem(materialItem)) {
-                    insertedMaterialItem = materialItemService.save(materialItem);
-                } else {
-                    throw new Exception();
-                }
-            } else {
-                throw new Exception();
-            }
-        } else { // add
-            if (!materialItemService.chkDuplicateMaterialItem(materialItem)) {
-                insertedMaterialItem = materialItemService.save(materialItem);
-            } else {
-                throw new Exception();
-            }
-        }
+//        if (materialItem.getMatItemNo() != null) { // edit
+//            if (!materialItemService.getMaterialItem(materialItem.getMatItemNo()).equals(materialItem)) {
+//                if (!materialItemService.chkDuplicateMaterialItem(materialItem)) {
+            materialItem.setRestNo(branchUser.getBranch().getRestNo());
+            insertedMaterialItem = materialItemService.save(materialItem);
+//                } else {
+//                    throw new Exception();
+//                }
+//            } else {
+//                throw new Exception();
+//            }
+//        } else { // add
+//            if (!materialItemService.chkDuplicateMaterialItem(materialItem)) {
+//                insertedMaterialItem = materialItemService.save(materialItem);
+//            } else {
+//                throw new Exception();
+//            }
+//        }
 
         if (materialItem.getMatFlag().equals(MaterialItem.flagForMixed) && insertedMaterialItem != null) {
             materialMixedService.removeByMixedProdNo(insertedMaterialItem.getMatItemNo());

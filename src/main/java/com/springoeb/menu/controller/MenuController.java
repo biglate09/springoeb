@@ -49,12 +49,14 @@ public class MenuController {
     private MaterialItemService materialItemService;
     @Autowired
     private MenuMaterialService menuMaterialService;
+    @Autowired
+    private AddOnService addOnService;
 
     private static final String MENU_PATH = "/WEB-INF/menu/";
 
     //-----------------------------------------------------------------------------------------------------------//
     @GetMapping("/menu")
-    public String toMenuIndex(Model model,HttpSession session) {
+    public String toMenuIndex(Model model, HttpSession session) {
         BranchUser branchUser = (BranchUser) (session.getAttribute("branchUser"));
         List<MenuGroup> menuGroups = menuGroupService.getMenuGroupsOrderByMenuCatNo(branchUser.getBranch().getRestNo());
         List<MaterialItem> materialItems = materialItemService.getAllMaterials(branchUser.getBranch().getRestNo());
@@ -91,7 +93,7 @@ public class MenuController {
     @ResponseBody
     @PostMapping("/managemenu")
     public void addAndEditMenu(@RequestParam("menuPicPath") MultipartFile file, HttpServletRequest request, HttpSession session) throws Exception {
-        BranchUser branchUser = (BranchUser)(session.getAttribute("branchUser"));
+        BranchUser branchUser = (BranchUser) (session.getAttribute("branchUser"));
         int branchNo = branchUser.getBranchNo();
 
         Menu menu = new Menu();
@@ -119,68 +121,95 @@ public class MenuController {
         }
 
 //        if (!menuService.chkDuplicateMenu(menu)) {
-            if (!file.getOriginalFilename().equals("")) {
-                String menuPicPath = null;
-                if (menuNo != null) {
-                    Menu tmpMenu = menuService.getMenuByMenuNo(menuNo);
-                    if (tmpMenu != null) {
-                        menuService.getMenuByMenuNo(menuNo).getMenuPicPath();
-                    }
-                }
-                //pic path before change
-                String filename = System.currentTimeMillis() + file.getOriginalFilename().substring(file.getOriginalFilename().lastIndexOf('.'));
-                Path path = Paths.get(request.getServletContext().getRealPath("/images") + "/menu/" + filename);
-                Files.write(path, bytes);
-                menu.setMenuPicPath(filename);
-                if (menuNo != null) {
-                    File picFile = new File(request.getServletContext().getRealPath("/images") + "/menu/" + menuPicPath);
-                    picFile.delete();
+        if (!file.getOriginalFilename().equals("")) {
+            String menuPicPath = null;
+            if (menuNo != null) {
+                Menu tmpMenu = menuService.getMenuByMenuNo(menuNo);
+                if (tmpMenu != null) {
+                    menuService.getMenuByMenuNo(menuNo).getMenuPicPath();
                 }
             }
+            //pic path before change
+            String filename = System.currentTimeMillis() + file.getOriginalFilename().substring(file.getOriginalFilename().lastIndexOf('.'));
+            Path path = Paths.get(request.getServletContext().getRealPath("/images") + "/menu/" + filename);
+            Files.write(path, bytes);
+            menu.setMenuPicPath(filename);
+            if (menuNo != null) {
+                File picFile = new File(request.getServletContext().getRealPath("/images") + "/menu/" + menuPicPath);
+                picFile.delete();
+            }
+        }
 
-            Menu insertedMenu = menuService.save(menu);
+        Menu insertedMenu = menuService.save(menu);
 
-            if (request.getParameter("localFlag") != null) {
-                List<Branch> branches = branchService.getAllBranches(branchUser.getBranch().getRestNo());
-                for (Branch b : branches) {
-                    BranchMenu branchMenu = new BranchMenu();
-                    branchMenu.setBranchNo(b.getBranchNo());
-                    branchMenu.setMenuNo(insertedMenu.getMenuNo());
-                    if (b.getBranchNo() == branchNo) {
-                        branchMenu.setAvailable(request.getParameter("menuAvailable") == null ? false : true);
-                    } else {
-                        branchMenu.setAvailable(false);
-                    }
-                    branchMenuService.save(branchMenu);
-                }
-            } else {
+        if (request.getParameter("localFlag") != null) {
+            List<Branch> branches = branchService.getAllBranches(branchUser.getBranch().getRestNo());
+            for (Branch b : branches) {
                 BranchMenu branchMenu = new BranchMenu();
-                branchMenu.setBranchNo(branchNo);
+                branchMenu.setBranchNo(b.getBranchNo());
                 branchMenu.setMenuNo(insertedMenu.getMenuNo());
-                branchMenu.setAvailable(false);
-                branchMenu.setAvailable(request.getParameter("menuAvailable") == null ? false : true);
+                if (b.getBranchNo() == branchNo) {
+                    branchMenu.setAvailable(request.getParameter("menuAvailable") == null ? false : true);
+                } else {
+                    branchMenu.setAvailable(false);
+                }
                 branchMenuService.save(branchMenu);
             }
+        } else {
+            BranchMenu branchMenu = new BranchMenu();
+            branchMenu.setBranchNo(branchNo);
+            branchMenu.setMenuNo(insertedMenu.getMenuNo());
+            branchMenu.setAvailable(false);
+            branchMenu.setAvailable(request.getParameter("menuAvailable") == null ? false : true);
+            branchMenuService.save(branchMenu);
+        }
 
-            menuMaterialService.removeByMenuNo(insertedMenu.getMenuNo());
-            Map<String, String[]> parameterMap = request.getParameterMap();
-            List<MenuMaterial> menuMaterials = new LinkedList<MenuMaterial>();
-            for (String key : parameterMap.keySet()) {
-                if (key.indexOf("materialamount") != -1) {
-                    String amount = parameterMap.get(key)[0];
-                    if (amount != null && !amount.trim().equals("") && Double.parseDouble(amount) != 0) {
-                        MenuMaterial mm = new MenuMaterial();
-                        mm.setMatItemNo(Integer.parseInt(key.substring("materialamount".length(), key.length())));
-                        mm.setMenuNo(insertedMenu.getMenuNo());
-                        mm.setQuantity(Double.parseDouble(amount));
-                        menuMaterials.add(mm);
+        menuMaterialService.removeByMenuNo(insertedMenu.getMenuNo());
+        Map<String, String[]> parameterMap = request.getParameterMap();
+        List<MenuMaterial> menuMaterials = new LinkedList<MenuMaterial>();
+        for (String key : parameterMap.keySet()) {
+            if (key.indexOf("materialamount") != -1) {
+                String amount = parameterMap.get(key)[0];
+                if (amount != null && !amount.trim().equals("") && Double.parseDouble(amount) != 0) {
+                    MenuMaterial mm = new MenuMaterial();
+                    mm.setMatItemNo(Integer.parseInt(key.substring("materialamount".length(), key.length())));
+                    mm.setMenuNo(insertedMenu.getMenuNo());
+                    mm.setQuantity(Double.parseDouble(amount));
+                    menuMaterials.add(mm);
+                }
+            } else if (key.indexOf("addonqty") != -1) {
+                String addOnQty = parameterMap.get(key)[0];
+                if (addOnQty != null && !addOnQty.trim().equals("")) {
+                    if (Double.parseDouble(addOnQty) == 0) {
+                        addOnService.removeByMenuNoAndMatNo(menuNo==null?insertedMenu.getMenuNo():menuNo, Integer.parseInt(key.substring("addonqty".length(), key.length())));
+                    } else {
+                        AddOn addOn = addOnService.findByMenuNoAndMatNo(menuNo==null?insertedMenu.getMenuNo():menuNo, Integer.parseInt(key.substring("addonqty".length(), key.length())));
+                        if(addOn == null){
+                            addOn = new AddOn();
+                            addOn.setMenuNo(menuNo==null?insertedMenu.getMenuNo():menuNo);
+                            addOn.setMatNo(Integer.parseInt(key.substring("addonqty".length(), key.length())));
+                        }
+                        addOn.setQty(Double.parseDouble(addOnQty));
+                        addOnService.save(addOn);
+                    }
+                }
+            } else if (key.indexOf("addonprice") != -1) {
+                String addOnPrice = parameterMap.get(key)[0];
+                if (addOnPrice != null && !addOnPrice.trim().equals("") && Double.parseDouble(addOnPrice) != 0) {
+                    AddOn addOn = addOnService.findByMenuNoAndMatNo(menuNo==null?insertedMenu.getMenuNo():menuNo, Integer.parseInt(key.substring("addonprice".length(), key.length())));
+                    if (addOn != null) {
+                        addOn.setPrice(Double.parseDouble(addOnPrice));
                     }
                 }
             }
-            menuMaterialService.save(menuMaterials);
+        }
+        menuMaterialService.save(menuMaterials);
+
 //        } else {
 //            throw new Exception();
 //        }
+
+
     }
 
     @ResponseBody
@@ -196,7 +225,7 @@ public class MenuController {
     @ResponseBody
     @PostMapping("/promoteofficial")
     public Menu promoteOfficial(HttpServletRequest request, HttpSession session) throws Exception {
-        BranchUser branchUser = (BranchUser)(session.getAttribute("branchUser"));
+        BranchUser branchUser = (BranchUser) (session.getAttribute("branchUser"));
         int branchNo = branchUser.getBranchNo();
         Menu menu = menuService.getMenuByMenuNo(Integer.parseInt(request.getParameter("menuno")));
         List<MenuInSet> menuInSets = menu.getMenuInSets();
@@ -255,7 +284,7 @@ public class MenuController {
         String json = "[" + mapper.writeValueAsString(branchMenuSets) + ",";
 
         if (branchNo == Branch.MAIN_BRANCH) {
-            List<Menu> otherMenuSets = menuService.getMenuSetsOther(branchNo,branchUser.getBranch().getRestNo());
+            List<Menu> otherMenuSets = menuService.getMenuSetsOther(branchNo, branchUser.getBranch().getRestNo());
             if (otherMenuSets != null && otherMenuSets.size() != 0) {
                 String jsonOther = mapper.writeValueAsString(otherMenuSets);
                 json += jsonOther + "]";
@@ -282,7 +311,7 @@ public class MenuController {
     @ResponseBody
     @PostMapping("/managemenuset")
     public void addAndEditMenuSet(@RequestParam("menuPicPath") MultipartFile file, HttpServletRequest request, HttpSession session) throws Exception {
-        BranchUser branchUser = (BranchUser)(session.getAttribute("branchUser"));
+        BranchUser branchUser = (BranchUser) (session.getAttribute("branchUser"));
         int branchNo = branchUser.getBranchNo();
         Menu menuSet = new Menu();
         byte[] bytes = file.getBytes();
@@ -308,63 +337,63 @@ public class MenuController {
         }
 
 //        if (!menuService.chkDuplicateMenu(menuSet)) {
-            if (!file.getOriginalFilename().equals("")) {
-                String menuPicPath = null;
-                if (menuSetNo != null) {
-                    Menu tmpMenuSet = menuService.getMenuByMenuNo(menuSetNo);
-                    if (tmpMenuSet != null) {
-                        menuPicPath = tmpMenuSet.getMenuPicPath();
-                    }
-                }
-                //pic path before change
-                String filename = System.currentTimeMillis() + file.getOriginalFilename().substring(file.getOriginalFilename().lastIndexOf('.'));
-                Path path = Paths.get(request.getServletContext().getRealPath("/images") + "/menuset/" + filename);
-                Files.write(path, bytes);
-                menuSet.setMenuPicPath(filename);
-                if (menuSetNo != null) {
-                    File picFile = new File(request.getServletContext().getRealPath("/images") + "/menuset/" + menuPicPath);
-                    picFile.delete();
+        if (!file.getOriginalFilename().equals("")) {
+            String menuPicPath = null;
+            if (menuSetNo != null) {
+                Menu tmpMenuSet = menuService.getMenuByMenuNo(menuSetNo);
+                if (tmpMenuSet != null) {
+                    menuPicPath = tmpMenuSet.getMenuPicPath();
                 }
             }
-            Menu insertedMenuSet = menuService.save(menuSet);
-            menuInSetService.removeMenuSetMenuByMenuSetNo(insertedMenuSet.getMenuNo());
-            Map<String, String[]> parameterMap = request.getParameterMap();
-            List<MenuInSet> menuSetMenus = new LinkedList<MenuInSet>();
-            for (String key : parameterMap.keySet()) {
-                if (key.indexOf("menuamount") != -1) {
-                    String amount = parameterMap.get(key)[0];
-                    if (amount != null && !amount.trim().equals("") && Integer.parseInt(amount) != 0) {
-                        MenuInSet msm = new MenuInSet();
-                        msm.setMenuSubNo(Integer.parseInt(key.substring(10, key.length())));
-                        msm.setMenuNo(insertedMenuSet.getMenuNo());
-                        msm.setAmount(Integer.parseInt(amount));
-                        menuSetMenus.add(msm);
-                    }
+            //pic path before change
+            String filename = System.currentTimeMillis() + file.getOriginalFilename().substring(file.getOriginalFilename().lastIndexOf('.'));
+            Path path = Paths.get(request.getServletContext().getRealPath("/images") + "/menuset/" + filename);
+            Files.write(path, bytes);
+            menuSet.setMenuPicPath(filename);
+            if (menuSetNo != null) {
+                File picFile = new File(request.getServletContext().getRealPath("/images") + "/menuset/" + menuPicPath);
+                picFile.delete();
+            }
+        }
+        Menu insertedMenuSet = menuService.save(menuSet);
+        menuInSetService.removeMenuSetMenuByMenuSetNo(insertedMenuSet.getMenuNo());
+        Map<String, String[]> parameterMap = request.getParameterMap();
+        List<MenuInSet> menuSetMenus = new LinkedList<MenuInSet>();
+        for (String key : parameterMap.keySet()) {
+            if (key.indexOf("menuamount") != -1) {
+                String amount = parameterMap.get(key)[0];
+                if (amount != null && !amount.trim().equals("") && Integer.parseInt(amount) != 0) {
+                    MenuInSet msm = new MenuInSet();
+                    msm.setMenuSubNo(Integer.parseInt(key.substring(10, key.length())));
+                    msm.setMenuNo(insertedMenuSet.getMenuNo());
+                    msm.setAmount(Integer.parseInt(amount));
+                    menuSetMenus.add(msm);
                 }
             }
-            menuInSetService.save(menuSetMenus);
+        }
+        menuInSetService.save(menuSetMenus);
 
-            if (request.getParameter("localFlag") != null) {
-                List<Branch> branches = branchService.getAllBranches(branchUser.getBranch().getRestNo());
-                for (Branch b : branches) {
-                    BranchMenu branchMenu = new BranchMenu();
-                    branchMenu.setBranchNo(b.getBranchNo());
-                    branchMenu.setMenuNo(insertedMenuSet.getMenuNo());
-                    if (b.getBranchNo() == branchNo) {
-                        branchMenu.setAvailable(request.getParameter("available") == null ? false : true);
-                    } else {
-                        branchMenu.setAvailable(false);
-                    }
-                    branchMenuService.save(branchMenu);
-                }
-            } else {
+        if (request.getParameter("localFlag") != null) {
+            List<Branch> branches = branchService.getAllBranches(branchUser.getBranch().getRestNo());
+            for (Branch b : branches) {
                 BranchMenu branchMenu = new BranchMenu();
-                branchMenu.setBranchNo(branchNo);
+                branchMenu.setBranchNo(b.getBranchNo());
                 branchMenu.setMenuNo(insertedMenuSet.getMenuNo());
-                branchMenu.setAvailable(false);
-                branchMenu.setAvailable(request.getParameter("available") == null ? false : true);
+                if (b.getBranchNo() == branchNo) {
+                    branchMenu.setAvailable(request.getParameter("available") == null ? false : true);
+                } else {
+                    branchMenu.setAvailable(false);
+                }
                 branchMenuService.save(branchMenu);
             }
+        } else {
+            BranchMenu branchMenu = new BranchMenu();
+            branchMenu.setBranchNo(branchNo);
+            branchMenu.setMenuNo(insertedMenuSet.getMenuNo());
+            branchMenu.setAvailable(false);
+            branchMenu.setAvailable(request.getParameter("available") == null ? false : true);
+            branchMenuService.save(branchMenu);
+        }
 //        } else {
 //            throw new Exception();
 //        }
@@ -382,7 +411,7 @@ public class MenuController {
 
     //----------------------------------------------------------------------------------------------------------//
     @GetMapping("/menugroup")
-    public String toMenuGroup(Model model,HttpSession session) {
+    public String toMenuGroup(Model model, HttpSession session) {
         BranchUser branchUser = (BranchUser) (session.getAttribute("branchUser"));
         List<MenuCategory> menuCategories = menuCategoryService.getMenuCategories(branchUser.getBranch().getRestNo());
         model.addAttribute("menuCategories", menuCategories);
@@ -412,7 +441,7 @@ public class MenuController {
 //            }
 //        } else { // add
 //            if (!menuGroupService.chkDuplicateMenuGroup(menuGroup)) {
-                menuGroupService.save(menuGroup);
+            menuGroupService.save(menuGroup);
 //            } else {
 //                throw new Exception();
 //            }
@@ -467,7 +496,7 @@ public class MenuController {
 //            }
 //        } else { // add
 //            if (!menuCategoryService.chkDuplicateMenuCat(menuCategory)) {
-                menuCategoryService.save(menuCategory);
+            menuCategoryService.save(menuCategory);
 //            } else {
 //                throw new Exception();
 //            }

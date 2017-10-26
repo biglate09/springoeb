@@ -263,7 +263,7 @@
     function refresh_table() {
         $.ajax({
             type: "POST",
-            url: "${contextPath}/stock/getmaterialitems",
+            url: "${contextPath}/stock/getmaterials",
             dataType: "json",
             success: function (json) {
                 var data_array = [];
