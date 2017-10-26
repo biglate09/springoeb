@@ -149,11 +149,12 @@
                                                             <th style="text-align:center;" class="order">
                                                                 ประเภท
                                                             </th>
-                                                            <th style="text-align:center;"><span class="required">จำนวนที่ใช้</span></th>
-                                                            <th style="text-align:center;">add-on</th>
+                                                            <th style="text-align:center;"><span class="required">จำนวนที่ใช้</span>
+                                                            </th>
+                                                            <th style="text-align:center;">Add-on (ลูกค้าเพิ่มได้)</th>
                                                         </tr>
                                                         </thead>
-                                                        <tbody style="text-align:center;" >
+                                                        <tbody style="text-align:center;">
                                                         <c:forEach items="${materialItems}" var="mi">
                                                             <tr>
                                                                 <td style="width:30%;">${mi.matItemName}</td>
@@ -178,6 +179,7 @@
                                                                     <div class="col-md-4">
                                                                         <input type="number"
                                                                                style="text-align:center;width: 100%;"
+                                                                               name="addonqty${mi.matItemNo}"
                                                                                value="0" min="0"
                                                                                step="0.01">
                                                                     </div>
@@ -185,7 +187,10 @@
                                                                             ${mi.unit.unitName}
                                                                     </div>
                                                                     <div class="col-md-4">
-                                                                        <input type="number" min="0" placeholder="ราคา" step="0.01" style="width: 100%;text-align: center;">
+                                                                        <input type="number" min="0" placeholder="ราคา"
+                                                                               name="addonprice${mi.matItemNo}"
+                                                                               step="0.01"
+                                                                               style="width: 100%;text-align: center;">
                                                                     </div>
                                                                 </td>
                                                             </tr>
@@ -224,7 +229,9 @@
                                                         </label>
                                                     </div>
                                                     <button type="submit" style="margin-left:5px;"
-                                                            class="btn btn-success"><i class="fa fa-circle-o-notch fa-spin" id="loadingbtn" style="display:none"></i> ตกลง
+                                                            class="btn btn-success"><i
+                                                            class="fa fa-circle-o-notch fa-spin" id="loadingbtn"
+                                                            style="display:none"></i> ตกลง
                                                     </button>
                                                     <button type="button" class="btn btn-default" data-dismiss="modal">
                                                         ยกเลิก
@@ -316,8 +323,9 @@
                                                     <tr>
                                                         <th style="text-align:center;">ชื่อวัตถุดิบอาหาร</th>
                                                         <th style="text-align:center;" class="order">ประเภท</th>
-                                                        <th style="text-align:center;"><span class="required">จำนวนที่ใช้</span></th>
-                                                        <th style="text-align:center;">add-on</th>
+                                                        <th style="text-align:center;"><span class="required">จำนวนที่ใช้</span>
+                                                        </th>
+                                                        <th style="text-align:center;">Add-on (ลูกค้าเพิ่มได้)</th>
                                                         <%--<th style="text-align:center;">ราคา</th>--%>
                                                     </tr>
                                                     </thead>
@@ -345,13 +353,22 @@
                                                             </td>
                                                             <td style="width: 30%;">
                                                                 <div class="col-md-4">
-                                                                    <input type="number" value="0" min="0" step="0.01" style="width: 100%;text-align: center;">
+                                                                    <input type="number" value="0" min="0"
+                                                                           class="addonqty"
+                                                                           name="addonqty${mi.matItemNo}"
+                                                                           id="addonqty${mi.matItemNo}" step="0.01"
+                                                                           style="width: 100%;text-align: center;">
                                                                 </div>
                                                                 <div class="col-md-4">
                                                                         ${mi.unit.unitName}
                                                                 </div>
                                                                 <div class="col-md-4">
-                                                                    <input type="number" min="0" placeholder="ราคา" step="0.01" style="width: 100%;text-align: center;">
+                                                                    <input type="number" min="0"
+                                                                           class="addonprice"
+                                                                           name="addonprice${mi.matItemNo}"
+                                                                           id="addonprice${mi.matItemNo}"
+                                                                           placeholder="ราคา" step="0.01"
+                                                                           style="width: 100%;text-align: center;">
                                                                 </div>
                                                             </td>
                                                         </tr>
@@ -380,7 +397,8 @@
                                                     </label>
                                                 </div>
                                                 <button type="submit" style="margin-left:5px;" class="btn btn-success">
-                                                    <i class="fa fa-circle-o-notch fa-spin" id="loadingbtnedit" style="display:none"></i> ตกลง
+                                                    <i class="fa fa-circle-o-notch fa-spin" id="loadingbtnedit"
+                                                       style="display:none"></i> ตกลง
                                                 </button>
                                                 <button type="button" class="btn btn-default" data-dismiss="modal">
                                                     ยกเลิก
@@ -578,19 +596,19 @@
 
                         //Table
                         <%--var data_refresh = {--%>
-                            <%--menuName: '<p class="cardname col-md-12" style="text-align:center;font-weight:bold;white-space:nowrap;overflow:hidden;text-overflow: ellipsis;cursor:pointer;" data-toggle="modal" data-target="#editMenu" onclick="set_menu(' + menu.menuNo + ')">' + menu.menuNameTH + " / " + menu.menuNameEN + '</p>',--%>
-                            <%--branch: {--%>
-                                <%--display: menu.localFlag == 0 ? 'ทุกสาขา' : 'สาขาที่ ' + menu.localFlag,--%>
-                                <%--order: menu.localFlag--%>
-                            <%--},--%>
-                            <%--group: menu.menuGroup.menuGroupNameTH,--%>
-                            <%--menuPrice: {--%>
-                                <%--display: menu.menuPrice.toFixed(2).replace(/\B(?=(\d{3})+(?!\d))/g, ",") + " บาท",--%>
-                                <%--order: price_order--%>
-                            <%--},--%>
-                            <%--option: '<a onclick="change_available(' + menu.menuNo + ')" class="btn btn-info btn-sm"><i class="fa ' + (obj.available ? 'fa-check-square-o' : 'fa-square-o') + '"></i>&nbsp; พร้อมจำหน่าย </a>' +--%>
-                            <%--(menu.localFlag == 0 && ${branchUser.branchNo != Branch.MAIN_BRANCH} ? '' : ('<a onclick="set_menu(' + menu.menuNo + ')" class="btn btn-warning btn-sm" data-toggle="modal" data-target="#editMenu"><i class="fa fa-pencil"></i>&nbsp; แก้ไข </a>' +--%>
-                                <%--'<a onclick="del_menu(' + menu.menuNo + ',\'' + menu.menuNameTH + '\')" class="btn btn-danger btn-sm"> <i class="fa fa-trash"></i>&nbsp; ลบ</a>')),--%>
+                        <%--menuName: '<p class="cardname col-md-12" style="text-align:center;font-weight:bold;white-space:nowrap;overflow:hidden;text-overflow: ellipsis;cursor:pointer;" data-toggle="modal" data-target="#editMenu" onclick="set_menu(' + menu.menuNo + ')">' + menu.menuNameTH + " / " + menu.menuNameEN + '</p>',--%>
+                        <%--branch: {--%>
+                        <%--display: menu.localFlag == 0 ? 'ทุกสาขา' : 'สาขาที่ ' + menu.localFlag,--%>
+                        <%--order: menu.localFlag--%>
+                        <%--},--%>
+                        <%--group: menu.menuGroup.menuGroupNameTH,--%>
+                        <%--menuPrice: {--%>
+                        <%--display: menu.menuPrice.toFixed(2).replace(/\B(?=(\d{3})+(?!\d))/g, ",") + " บาท",--%>
+                        <%--order: price_order--%>
+                        <%--},--%>
+                        <%--option: '<a onclick="change_available(' + menu.menuNo + ')" class="btn btn-info btn-sm"><i class="fa ' + (obj.available ? 'fa-check-square-o' : 'fa-square-o') + '"></i>&nbsp; พร้อมจำหน่าย </a>' +--%>
+                        <%--(menu.localFlag == 0 && ${branchUser.branchNo != Branch.MAIN_BRANCH} ? '' : ('<a onclick="set_menu(' + menu.menuNo + ')" class="btn btn-warning btn-sm" data-toggle="modal" data-target="#editMenu"><i class="fa fa-pencil"></i>&nbsp; แก้ไข </a>' +--%>
+                        <%--'<a onclick="del_menu(' + menu.menuNo + ',\'' + menu.menuNameTH + '\')" class="btn btn-danger btn-sm"> <i class="fa fa-trash"></i>&nbsp; ลบ</a>')),--%>
                         <%--};--%>
                         <%--data_array.push(data_refresh);--%>
                         var list = '\
@@ -609,7 +627,7 @@
                         <p class="cardname col-md-12" style="font-weight:bold;white-space:nowrap;overflow:hidden;text-overflow: ellipsis;cursor:pointer;" data-toggle="modal" data-target="#editMenu" onclick="set_menu(' + menu.menuNo + ')">' + menu.menuNameTH + " / " + menu.menuNameEN + '</p>\
                         <p class="col-md-12" style="white-space: nowrap;overflow:hidden;text-overflow: ellipsis;">หมวดหมู่ : ' + menu.menuGroup.menuGroupNameTH + '</p>\
                         <p class="col-md-12" >' + "ราคา : " + menu.menuPrice.toFixed(2).replace(/\B(?=(\d{3})+(?!\d))/g, ",") + " บาท" + '</p>\
-                        <p class="col-md-12 description" >'+ "รายละเอียด : " + (menu.menuDesc==null?'-':menu.menuDesc) +'</p>\
+                        <p class="col-md-12 description" >' + "รายละเอียด : " + (menu.menuDesc == null ? '-' : menu.menuDesc) + '</p>\
                         <div style="text-align:right;bottom:0px;position: absolute;right:5px;" class="col-md-4">\
                         ' + (menu.localFlag == 0 && ${branchUser.branchNo != Branch.MAIN_BRANCH} ? '' : '<a title="แก้ไข" style="color:#73879C;cursor:pointer;margin-right:5px;" data-toggle="modal" data-target="#editMenu" onclick="set_menu(' + menu.menuNo + ')"><i class="fa fa-pencil"></i></a>') + '\
                         ' + (menu.localFlag != 0 && ${branchUser.branchNo == Branch.MAIN_BRANCH} ? ('<a title="ทำให้เป็นเมนูของทุกสาขา" onclick="turn_official(' + menu.menuNo + ')" style="color:#73879C;cursor:pointer;margin-right:5px;"><i class="fa fa-users"></i></a>') : '') + '\
@@ -662,17 +680,17 @@
                             }
 
                             <%--var data_refresh = {--%>
-                                <%--menuName: '<p class="cardname col-md-12" style="text-align:center;font-weight:bold;white-space:nowrap;overflow:hidden;text-overflow: ellipsis;cursor:pointer;" data-toggle="modal" data-target="#editMenu" onclick="set_menu(' + menu.menuNo + ')">' + menu.menuNameTH + " / " + menu.menuNameEN + '</p>',--%>
-                                <%--group: menu.menuGroup.menuGroupNameTH,--%>
-                                <%--branch: {--%>
-                                    <%--display: menu.localFlag == 0 ? 'ทุกสาขา' : 'สาขาที่ ' + menu.localFlag,--%>
-                                    <%--order: menu.localFlag--%>
-                                <%--},--%>
-                                <%--menuPrice: {--%>
-                                    <%--display: menu.menuPrice.toFixed(2).replace(/\B(?=(\d{3})+(?!\d))/g, ",") + " บาท",--%>
-                                    <%--order: price_order--%>
-                                <%--},--%>
-                                <%--option: (menu.localFlag != 0 && ${branchUser.branchNo == Branch.MAIN_BRANCH} ? '<a onclick="turn_official(' + menu.menuNo + ')" class="btn btn-primary btn-sm"><i class="fa fa-users"></i>&nbsp; ทำให้เป็นเมนูของทุกสาขา </a>' : '')--%>
+                            <%--menuName: '<p class="cardname col-md-12" style="text-align:center;font-weight:bold;white-space:nowrap;overflow:hidden;text-overflow: ellipsis;cursor:pointer;" data-toggle="modal" data-target="#editMenu" onclick="set_menu(' + menu.menuNo + ')">' + menu.menuNameTH + " / " + menu.menuNameEN + '</p>',--%>
+                            <%--group: menu.menuGroup.menuGroupNameTH,--%>
+                            <%--branch: {--%>
+                            <%--display: menu.localFlag == 0 ? 'ทุกสาขา' : 'สาขาที่ ' + menu.localFlag,--%>
+                            <%--order: menu.localFlag--%>
+                            <%--},--%>
+                            <%--menuPrice: {--%>
+                            <%--display: menu.menuPrice.toFixed(2).replace(/\B(?=(\d{3})+(?!\d))/g, ",") + " บาท",--%>
+                            <%--order: price_order--%>
+                            <%--},--%>
+                            <%--option: (menu.localFlag != 0 && ${branchUser.branchNo == Branch.MAIN_BRANCH} ? '<a onclick="turn_official(' + menu.menuNo + ')" class="btn btn-primary btn-sm"><i class="fa fa-users"></i>&nbsp; ทำให้เป็นเมนูของทุกสาขา </a>' : '')--%>
                             <%--};--%>
                             <%--data_array.push(data_refresh);--%>
                             var list = '\
@@ -691,7 +709,7 @@
                             <p class="col-md-12" style="font-weight:bold;white-space:nowrap;overflow:hidden;text-overflow: ellipsis;">' + menu.menuNameTH + " / " + menu.menuNameEN + '</p>\
                             <p class="col-md-12" style="white-space: nowrap;overflow:hidden;text-overflow: ellipsis;">หมวดหมู่ : ' + menu.menuGroup.menuGroupNameTH + '</p>\
                             <p class="col-md-12" >' + "ราคา : " + menu.menuPrice.toFixed(2).replace(/\B(?=(\d{3})+(?!\d))/g, ",") + " บาท" + '</p>\
-                            <p class="col-md-12 description" >'+ "รายละเอียด : " + menu.menuDesc +'</p>\
+                            <p class="col-md-12 description" >' + "รายละเอียด : " + menu.menuDesc + '</p>\
                             <div style="text-align:right;position:absolute;right:5px;bottom:0px;" class="col-md-4">\
                             <a title="ทำให้เป็นเมนูของทุกสาขา" onclick="turn_official(' + menu.menuNo + ')" style="color:#73879C;cursor:pointer;margin-right:5px;"><i class="fa fa-users"></i></a>\
                             </div>\
@@ -739,7 +757,6 @@
         });
         return false;
     });
-
 
 
     $('.modal').on('hidden.bs.modal', function () {
@@ -808,6 +825,15 @@
                 menuMaterials = menu.menuMaterials;
                 for (var i = 0; i < menuMaterials.length; i++) {
                     $(".materialamount2[matitemno='" + menuMaterials[i].matItemNo + "']").val(menuMaterials[i].quantity);
+                }
+
+                $(".addonqty").val(0);
+                $(".addonprice").val('');
+                addOns = menu.addOns;
+                console.log(addOns);
+                for (var i = 0; i < addOns.length; i++) {
+                    $("#addonqty" + addOns[i].matNo).val(addOns[i].qty);
+                    $('#addonprice' + addOns[i].matNo).val(addOns[i].price);
                 }
 
                 $("#display_material_desc2").empty();
@@ -919,17 +945,18 @@
     }
 
 
-
 </script>
 
 <style>
     .thumbnail_inline {
         height: 250px !important;
     }
+
     .thumbnail_inline_list {
         height: 200px !important;
     }
-    .description{
+
+    .description {
         line-height: 1.5em;
         display: -webkit-box;
         -webkit-line-clamp: 3;

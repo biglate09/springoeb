@@ -6,5 +6,6 @@ import org.springframework.stereotype.Repository;
 
 @Repository
 public interface AddOnRepository extends CrudRepository<AddOn,Integer> {
-
+    AddOn findByMenuNoAndMatNo(int menuNo,int matNo);
+    void removeByMenuNoAndMatNo(int menuNo,int matNo);
 }

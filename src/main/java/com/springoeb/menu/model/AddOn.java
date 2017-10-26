@@ -1,15 +1,16 @@
 package com.springoeb.menu.model;
 
-import javax.persistence.Column;
-import javax.persistence.Entity;
-import javax.persistence.Id;
+import com.fasterxml.jackson.annotation.JsonIgnore;
+
+import javax.persistence.*;
 
 @Entity(name = "Addon")
 public class AddOn {
     @Id
+    @GeneratedValue(strategy = GenerationType.AUTO)
     @Column(name = "addOnNo")
     private Integer addOnNo;
-    @Column(name = "menuNo")
+    @Column(name = "menuNo",updatable = true,insertable = true)
     private Integer menuNo;
     @Column(name = "matNo")
     private Integer matNo;
@@ -17,6 +18,10 @@ public class AddOn {
     private Double qty;
     @Column(name = "price")
     private Double price;
+    @ManyToOne
+    @JsonIgnore
+    @JoinColumn(name = "menuNo",updatable = false,insertable = false)
+    private Menu menu;
 
     public Integer getAddOnNo() {
         return addOnNo;
@@ -56,5 +61,13 @@ public class AddOn {
 
     public void setPrice(Double price) {
         this.price = price;
+    }
+
+    public Menu getMenu() {
+        return menu;
+    }
+
+    public void setMenu(Menu menu) {
+        this.menu = menu;
     }
 }
