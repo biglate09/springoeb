@@ -10,6 +10,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 
 import javax.servlet.http.HttpSession;
@@ -31,7 +32,7 @@ public class CashierController {
         return CASHIER_PATH + "cashier.jsp";
     }
 
-    @GetMapping("/getcashier")
+    @PostMapping("/getcashier")
     public String getCashier(HttpSession session) throws JsonProcessingException {
         BranchUser branchUser = (BranchUser) (session.getAttribute("branchUser"));
         int branchNo = branchUser.getBranchNo();
@@ -39,7 +40,6 @@ public class CashierController {
         ObjectMapper mapper = new ObjectMapper();
         String json = mapper.writeValueAsString(bills);
         return json;
-
     }
     //-----------------------------------------------------------------------------------------------------------//
 }
