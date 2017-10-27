@@ -34,194 +34,28 @@
                             <form action="#">
                                 <div class="col-md-4 col-md-offset-8 form-group" style="padding:0px;margin-right: 5px;">
                                     <input type="text" class="form-control" id="myInput"
-                                           onkeyup="filterCard()" placeholder="ค้นหาด้วยชื่อเมนู...">
+                                           onkeyup="filterCard()" placeholder="ค้นหาโต๊ะ...">
                                     <span class="fa fa-search form-control-feedback right"
                                           aria-hidden="true"></span>
                                 </div>
                                 <div id="menu_thumbnail">
-                                    <div class="col-md-55">
-                                        <div class="thumbnail thumbnail_inline">
-                                            <div class="image view view-first">
-                                                <img style="width: 100%;position:relative;" src="${contextPath}/images/table.png" alt="image"/>
-                                                <div style="margin-left: auto;margin-right: auto;position: absolute;left: 50%;transform: translate(-50%, -50%);font-weight: bold; ">โต๊ะ 1</div>
-                                                <%--<div class="mask">--%>
-                                                    <%--<div class="tools tools-bottom">--%>
-                                                        <%--<a title="เมนูของทุกสาขา" style="color:white;margin-right:5px;"><i class="fa (menu.localFlag == 0 ? 'fa-users' : 'fa-user' )"></i> <span style="font-size:14px">(menu.localFlag == 0 ? ' เป็นเมนูของทุกสาขา' : ' เป็นเมนูเฉพาะสาขานี้')</span></a>--%>
-                                                    <%--</div>--%>
-                                                <%--</div>--%>
-                                            </div>
-                                            <div class="caption col-md-12" style="color:#73879C">
-                                                <p class="cardname col-md-12" style="white-space:nowrap;overflow:hidden;text-overflow: ellipsis;" onclick="set_menu(' + menu.menuNo + ')">ใช้บริการมาแล้ว : 15 นาที</p>
-                                                <p class="col-md-12" style="white-space: nowrap;overflow:hidden;text-overflow: ellipsis;">ราคาอาหาร : 135 บาท</p>
-                                                <p class="col-md-12" > สถานะอาหาร : ครบแล้ว</p>
-                                                <div style="text-align:center;" class="col-md-12"><button type="button" class="btn btn-success" data-toggle="modal" data-target="#editMenu" data-toggle="modal" data-target="#editMenu" style="width: 80%;">จ่ายเงิน</button></div>
-                                            </div>
-                                        </div>
-                                </div></div>
+                                    <%--<div class="col-md-55">--%>
+                                        <%--<div class="thumbnail thumbnail_inline">--%>
+                                            <%--<div class="image view view-first">--%>
+                                                <%--<img style="width: 100%;position:relative;" src="${contextPath}/images/table.png" alt="image"/>--%>
+                                                <%--<div style="margin-left: auto;margin-right: auto;position: absolute;left: 50%;transform: translate(-50%, -50%);font-weight: bold; " class="cardname">โต๊ะ 1</div>--%>
+                                            <%--</div>--%>
+                                            <%--<div class="caption col-md-12" style="color:#73879C">--%>
+                                                <%--<p class="col-md-12" style="white-space:nowrap;overflow:hidden;text-overflow: ellipsis;" onclick="set_menu(' + menu.menuNo + ')">ใช้บริการมาแล้ว : 15 นาที</p>--%>
+                                                <%--<p class="col-md-12" style="white-space: nowrap;overflow:hidden;text-overflow: ellipsis;">ราคาอาหาร : 135 บาท</p>--%>
+                                                <%--<p class="col-md-12" > สถานะอาหาร : ครบแล้ว</p>--%>
+                                                <%--<div style="text-align:center;" class="col-md-12"><button type="button" class="btn btn-success" data-toggle="modal" data-target="#editMenu" data-toggle="modal" data-target="#editMenu" style="width: 80%;">จ่ายเงิน</button></div>--%>
+                                            <%--</div>--%>
+                                        <%--</div>--%>
+                                    <%--</div>--%>
+                                </div>
                                 <div id="error_show"></div>
                                 </form>
-                        </div>
-                        <div class="modal fade" id="addMenu" role="dialog">
-                            <div class="modal-dialog">
-                                <!-- เนือหาของ Modal ทั้งหมด -->
-                                <div class="modal-content modal-body-test" style="overflow-y:hidden;">
-                                    <!-- ส่วนหัวของ Modal -->
-                                    <div class="modal-header">
-                                        <!-- ปุ่มกดปิด (X) ตรงส่วนหัวของ Modal -->
-                                        <button type="button" class="close" data-dismiss="modal">&times;</button>
-                                        <h4 class="modal-title">รายการจ่ายเงิน</h4>
-                                    </div>
-                                    <!-- ส่วนเนื้อหาของ Modal -->
-                                    <div class="modal-body">
-                                        <form class="form-horizontal form-label-left input_mask" modelAttribute="menu"
-                                              id="add_menu" enctype="multipart/form-data">
-                                            <div class="form-group">
-                                                <img class="col-md-offset-3 col-sm-offset-3 col-md-6 col-sm-6 col-xs-12 img-resize"
-                                                     id="showpic" style="margin-bottom:20px;cursor:pointer;"
-                                                     height="auto" width="414"
-                                                     src="../images/default_upload_image.png"/>
-                                                <div class="col-md-offset-3 col-sm-offset-3 col-md-6 col-sm-6 col-xs-12 has-feedback"
-                                                     style="margin-bottom: 12px">
-                                                    <input type="file" accept="image/*"
-                                                           class="form-control" name="menuPicPath"
-                                                           id="add_menu_pic"
-                                                           onchange="document.getElementById('showpic').src = window.URL.createObjectURL(this.files[0])"
-                                                           placeholder="อัพโหลดรูปภาพ">
-                                                </div>
-                                                <div class="col-md-6 col-sm-6 col-xs-12 form-group has-feedback ">
-                                                    <label class="required">ชื่อเมนูอาหารภาษาไทย</label>
-                                                    <input type="text" class="form-control" name="menuNameTH"
-                                                           id="add_menu_nameTH"
-                                                           placeholder="ชื่อเมนูอาหารภาษาไทย" required>
-                                                    <span class="fa fa-pencil form-control-feedback right"
-                                                          aria-hidden="true"></span>
-                                                </div>
-                                                <div class="col-md-6 col-sm-6 col-xs-12 form-group has-feedback">
-                                                    <label class="required">ชื่อเมนูอาหารภาษาอังกฤษ</label>
-                                                    <input type="text" class="form-control" name="menuNameEN"
-                                                           id="add_menu_nameEN"
-                                                           placeholder="ชื่อเมนูอาหารภาษาอังกฤษ" required>
-                                                    <span class="fa fa-pencil form-control-feedback right"
-                                                          aria-hidden="true"></span>
-                                                </div>
-                                                <div class="col-md-6 col-sm-6 col-xs-12 form-group has-feedback">
-                                                    <label class="required">ราคา (บาท)</label>
-                                                    <input type="number" class="form-control" name="menuPrice"
-                                                           id="add_menu_price"
-                                                           placeholder="ราคา" min="0" step="0.25" required>
-                                                    <span class="fa fa-money form-control-feedback right"
-                                                          aria-hidden="true"></span>
-                                                </div>
-                                                <div class="col-md-6 col-sm-6 col-xs-12 form-group has-feedback ">
-                                                    <label class="required">หมวดหมู่ของเมนู</label>
-                                                    <select name="menuGroupNo" id="add_menu_stock_cat"
-                                                            class="form-control" required>
-                                                        <option disabled selected value="">เลือกหมวดหมู่เมนู</option>
-                                                        <c:forEach items="${menuGroups}" var="mc">
-                                                            <option value="${mc.menuGroupNo}">${mc.menuGroupNameTH}</option>
-                                                        </c:forEach>
-                                                    </select>
-                                                </div>
-                                                <div class="col-md-12 col-sm-12 col-xs-12 form-group has-feedback">
-                                                    <label>รายละเอียดของเมนู</label>
-                                                    <textarea rows="4" cols="100" class="form-control" name="menuDesc"
-                                                              id="add_menu_desc"
-                                                              placeholder="รายละเอียด"></textarea>
-                                                </div>
-                                                <div class="col-md-12 col-sm-12 col-xs-12">
-                                                    <label>เลือกวัตถุดิบที่ใช้ในเมนูนี้</label>
-                                                    <table class="table table-bordered table-striped"
-                                                           id="material-datatable-1">
-                                                        <thead>
-                                                        <tr>
-                                                            <th style="text-align:center;">ชื่อวัตถุดิบอาหาร
-                                                            </th>
-                                                            <th style="text-align:center;" class="order">
-                                                                ประเภท
-                                                            </th>
-                                                            <th style="text-align:center;"><span class="required">จำนวนที่ใช้</span></th>
-                                                            <th style="text-align:center;">add-on</th>
-                                                        </tr>
-                                                        </thead>
-                                                        <tbody style="text-align:center;" >
-                                                        <c:forEach items="${materialItems}" var="mi">
-                                                            <tr>
-                                                                <td style="width:30%;">${mi.matItemName}</td>
-                                                                <td style="width:20%;">${mi.materialCategory.matCatName}</td>
-                                                                <td style="width:20%;">
-                                                                    <div class="col-md-6">
-                                                                        <input matItemNo="${mi.matItemNo}" type="number"
-                                                                               matItemName="${mi.matItemName}"
-                                                                               unit="${mi.unit.unitName}"
-                                                                               class="materialamount"
-                                                                               name="materialamount${mi.matItemNo}"
-                                                                               style="text-align:center;"
-                                                                               value="0" min="0" max="1000"
-                                                                               step="0.001"
-                                                                               required>
-                                                                    </div>
-                                                                    <div class="col-md-6">
-                                                                            ${mi.unit.unitName}
-                                                                    </div>
-                                                                </td>
-                                                                <td style="width:20%;">
-                                                                    <div class="col-md-6">
-                                                                        <input type="number"
-                                                                               style="text-align:center;width: 100%;"
-                                                                               value="0" min="0"
-                                                                               step="0.01">
-                                                                    </div>
-                                                                    <div class="col-md-6">
-                                                                            ${mi.unit.unitName}
-                                                                    </div>
-                                                                </td>
-                                                            </tr>
-                                                        </c:forEach>
-                                                        </tbody>
-                                                    </table>
-                                                </div>
-                                                <div class="col-md-12" style="text-align:center;margin-top:20px;">
-                                                    <div class="well" style="overflow: auto">
-                                                        <span style="font-weight:bold;">ส่วนผสมของเมนูอาหารมีดังนี้</span>
-                                                        <div id="display_material_desc"
-                                                             style="margin-bottom:20px;margin-top:20px;"
-                                                             class="submit-clear"></div>
-                                                    </div>
-                                                </div>
-                                            </div>
-                                            <div class="modal-footer">
-                                                <!-- ปุ่มกดปิด (Close) ตรงส่วนล่างของ Modal -->
-                                                <div class="col-md-9 col-sm-9 col-xs-12 col-md-offset-3">
-                                                    <div class="checkbox"
-                                                         style="display:inline-block;margin-right:15px;">
-                                                        <c:if test="${branchUser.branchNo == Branch.MAIN_BRANCH}">
-                                                            <label>
-                                                                <input type="checkbox" name="localFlag"
-                                                                       id="add_menu_official"
-                                                                       class="flat">
-                                                                เป็นเมนูของทุกสาขา
-                                                            </label>
-                                                        </c:if>
-
-                                                        <label>
-                                                            <input type="checkbox" name="menuAvailable"
-                                                                   id="add_menu_available"
-                                                                   class="flat">
-                                                            พร้อมจำหน่าย
-                                                        </label>
-                                                    </div>
-                                                    <button type="submit" style="margin-left:5px;"
-                                                            class="btn btn-success">ตกลง
-                                                    </button>
-                                                    <button type="button" class="btn btn-default" data-dismiss="modal">
-                                                        ยกเลิก
-                                                    </button>
-                                                </div>
-                                            </div>
-                                        </form>
-                                    </div>
-                                </div>
-                            </div>
                         </div>
                     </div>
                     <div class="modal fade" id="editMenu" role="dialog">
@@ -271,10 +105,10 @@
                                                     <table style="width: 100%">
                                                         <tbody>
                                                         <tr>
-                                                            <td style="width: 100%"><input type="checkbox" class="flat"> โปรโมชั่น 1</td>
+                                                            <td style="width: 100%"><input type="radio" class="flat" name="promotion"> โปรโมชั่น 1</td>
                                                         </tr>
                                                         <tr>
-                                                            <td style="width: 100%"><input type="checkbox" class="flat"> โปรโมชั่น 2</td>
+                                                            <td style="width: 100%"><input type="radio" class="flat" name="promotion"> โปรโมชั่น 2</td>
                                                         </tr>
                                                         </tbody>
                                                     </table>
@@ -344,34 +178,29 @@
     function refresh_table() {
         $.ajax({
             type: "POST",
-            url: "${contextPath}/cashier/" + $("#filter_by_category").val(),
+            url: "${contextPath}/cashier/getcashier" ,
             dataType: "json",
             success: function (json) {
                 //remove
                 $("#menu_thumbnail").empty();
                 $("#menu_thumbnail_list").empty();
                 var data_array = [];
-                var menu = obj.menu;
+                var bill = obj.bill;
                 //Gallery
+                console.log(json);
                 var div = '\
                     <div class="col-md-55">\
                     <div class="thumbnail thumbnail_inline">\
                     <div class="image view view-first">\
-                    <div style="position:relative;">\
-                    <img style="width: 100%; display: block;" src="${contextPath}/images/table.png" alt="image"/>\
-                    <div style="position:absolute;top:0px;left:0px;z-index:200;">ชื่อโต๊ะ</div>\
-                    </div>\
-                    <div class="mask">\
-                    <div class="tools tools-bottom">\
-                    <a title="เมนูของทุกสาขา" style="color:white;margin-right:5px;"><i class="fa ' + (menu.localFlag == 0 ? 'fa-users' : 'fa-user' ) + '"></i> <span style="font-size:14px">' + (menu.localFlag == 0 ? ' เป็นเมนูของทุกสาขา' : ' เป็นเมนูเฉพาะสาขานี้') + '</span></a>\
-                    </div>\
-                    </div>\
+                    <img style="width: 100%;position:relative;" src="${contextPath}/images/table.png" alt="image"/>\
+                    <div style="margin-left: auto;margin-right: auto;position: absolute;left: 50%;transform: translate(-50%, -50%);font-weight: bold; " class="cardname"></div>\
                     </div>\
                     <div class="caption col-md-12" style="color:#73879C">\
-                    <p class="cardname col-md-12" style="text-align:center;font-weight:bold;white-space:nowrap;overflow:hidden;text-overflow: ellipsis;cursor:pointer;" data-toggle="modal" data-target="#editMenu" onclick="set_menu(' + menu.menuNo + ')">ใช้บริการมาแล้ว : ... นาที</p>\
-                    <p class="col-md-12" style="text-align:center;white-space: nowrap;overflow:hidden;text-overflow: ellipsis;">ราคาอาหาร : ' + menu.menuGroup.menuGroupNameTH + ' บาท</p>\
-                    <p class="col-md-12" style="text-align:center"> สถานะอาหาร : </p>\
-                    <div style="text-align:center;" class="col-md-12"><button type="button" class="btn btn-success" data-toggle="modal" data-target="#editMenu" onclick="set_menu(' + menu.menuNo + ')">จ่ายเงิน</button></div>\
+                    <p class="col-md-12" style="white-space:nowrap;overflow:hidden;text-overflow: ellipsis;" onclick="set_menu(' + menu.menuNo + ')">ใช้บริการมาแล้ว : 15 นาที</p>\
+                    <p class="col-md-12" style="white-space: nowrap;overflow:hidden;text-overflow: ellipsis;">ราคาอาหาร : 135 บาท</p>\
+                    <p class="col-md-12" > สถานะอาหาร : ครบแล้ว</p>\
+                    <div style="text-align:center;" class="col-md-12"><button type="button" class="btn btn-success" data-toggle="modal" data-target="#editMenu" data-toggle="modal" data-target="#editMenu" style="width: 80%;">จ่ายเงิน</button></div>\
+                    </div>\
                     </div>\
                     </div>\
                     ';
@@ -467,7 +296,7 @@
         if (!hascard) {
             $("#error_show").html('\
                     <div class="well col-md-12" style="overflow: auto">\
-                        <p style="text-align:center;font-weight:bold;"> ไม่พบข้อมูลเมนูอาหารแบบเดี่ยว จากการค้นหาหมวดหมู่อาหาร ' + $("#filter_by_category option:selected").text() + ($("#myInput").val() != '' ? (' ด้วยคำค้นหา \"' + $("#myInput").val() + '\"') : '') + ' </p>\
+                        <p style="text-align:center;font-weight:bold;"> ไม่พบข้อมูลโต๊ะ ' + $("#filter_by_category option:selected").text() + ($("#myInput").val() != '' ? (' ด้วยคำค้นหา \"' + $("#myInput").val() + '\"') : '') + ' </p>\
                     </div>\
                     ');
         } else {
