@@ -31,4 +31,14 @@ public class ReportController {
         String json = mapper.writeValueAsString(menus);
         return json;
     }
+
+    @PostMapping("/bestsalemenuset")
+    public String getBestSaleMenuSet(HttpSession session) throws JsonProcessingException {
+        BranchUser branchUser = (BranchUser) (session.getAttribute("branchUser"));
+        int branchNo = branchUser.getBranchNo();
+        Map<Menu,Long> menus = branchMenuService.getBestSaleMenuSet(branchNo);
+        ObjectMapper mapper = new ObjectMapper();
+        String json = mapper.writeValueAsString(menus);
+        return json;
+    }
 }

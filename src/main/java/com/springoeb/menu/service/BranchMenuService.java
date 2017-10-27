@@ -58,4 +58,14 @@ public class BranchMenuService {
         }
         return menuMaps;
     }
+
+    public Map<Menu,Long> getBestSaleMenuSet(int branchNo){
+        Map<Menu,Long> menuMaps = new LinkedHashMap<Menu,Long>();
+        List<BranchMenu> branchMenus = branchMenuRepository.findByBranchNoAndMenu_MenuFlagOrderByMenu_LocalFlagAsc(branchNo,Menu.flagForMenuSet);
+        for(BranchMenu bm : branchMenus){
+            long count = orderRepository.countByMenuNo(bm.getMenuNo());
+            menuMaps.put(bm.getMenu(),count);
+        }
+        return menuMaps;
+    }
 }
