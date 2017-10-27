@@ -35,8 +35,9 @@ public class LedgerController {
 
     @PostMapping("/getledgertypes")
     @ResponseBody
-    public String getledgerTypes() throws JsonProcessingException {
-        List<LedgerType> ledgerTypes = ledgerTypeService.findAllNotDefault();
+    public String getledgerTypes(HttpSession session) throws JsonProcessingException {
+        BranchUser branchUser = (BranchUser)(session.getAttribute("branchUser"));
+        List<LedgerType> ledgerTypes = ledgerTypeService.findAllNotDefault(branchUser.getBranch().getRestNo());
         ObjectMapper mapper = new ObjectMapper();
         String json = mapper.writeValueAsString(ledgerTypes);
         return json;
@@ -66,8 +67,9 @@ public class LedgerController {
     }
     //-----------------------------------------------------------------------------------------------------------//
     @GetMapping("/ledger")
-    public String toLedgerIndex(Model model){
-        model.addAttribute("ledgerType",ledgerTypeService.findAllNotDefault());
+    public String toLedgerIndex(Model model,HttpSession session){
+        BranchUser branchUser = (BranchUser)(session.getAttribute("branchUser"));
+        model.addAttribute("ledgerType",ledgerTypeService.findAllNotDefault(branchUser.getBranch().getRestNo()));
         return LEDGER_PATH + "ledger.jsp";
     }
 

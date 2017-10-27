@@ -136,7 +136,7 @@
                     </c:if>
                     <c:if test="${branchUser.roleNo == Role.MANAGER}">
                         <li>
-                            <a style="color:black;"><i class="fa fa-line-chart"></i> รายงานผลประกอบการ</a>
+                            <a><i class="fa fa-line-chart"></i> รายงานผลประกอบการ</a>
                         </li>
                     </c:if>
                     <c:if test="${branchUser.roleNo == Role.MANAGER || branchUser.roleNo == Role.KITCHEN}">

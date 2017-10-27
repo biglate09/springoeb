@@ -8,7 +8,7 @@ import java.util.List;
 
 @Repository
 public interface LedgerTypeRepository extends CrudRepository<LedgerType,Integer>{
-    List<LedgerType> findByDefaultType(boolean defaultType);
+    List<LedgerType> findByDefaultTypeAndRestNo(boolean defaultType,int restNo);
     LedgerType findByLedgerTypeNo(int ledgerTypeNo);
     void removeByLedgerTypeNo(int ledgerTypeNo);
 }
