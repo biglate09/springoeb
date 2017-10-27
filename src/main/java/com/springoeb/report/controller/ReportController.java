@@ -44,4 +44,15 @@ public class ReportController {
         String json = mapper.writeValueAsString(menus);
         return json;
     }
+
+//    @ResponseBody
+//    @PostMapping("/bestsalemenugroup")
+//    public String getBestSaleMenuGroup(HttpSession session){
+//        BranchUser branchUser = (BranchUser) (session.getAttribute("branchUser"));
+//        int branchNo = branchUser.getBranchNo();
+//        Map<Menu,Long> menuGroups = MenuGroupService
+//        ObjectMapper mapper = new ObjectMapper();
+//        String json = mapper.writeValueAsString(menuGroups);
+//        return json;
+//    }
 }
