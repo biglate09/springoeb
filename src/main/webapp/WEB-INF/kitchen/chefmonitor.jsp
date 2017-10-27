@@ -35,26 +35,6 @@
                                     </tr>
                                     </thead>
                                     <tbody style="text-align:center;font-size: 250%">
-                                    <tr>
-                                        <th style="font-weight: bold">บะหมี่ฮ่องกงหมูแดง หมูกรอบ ไม่หนัง ไม่มัน หมี่สองก้อน</th>
-                                        <th style="text-align: center">2 จาน</th>
-                                        <th style="text-align: center;width:20%;"><img src="${contextPath}/images/ordered.png" style="width: 30%;"></th>
-                                    </tr>
-                                    <tr>
-                                        <th style="font-weight: bold">บิงซูมันม่วง ถ้วยใหญ่พิเศษ</th>
-                                        <th style="text-align: center">1 จาน</th>
-                                        <th style="text-align: center;width:20%;"><img src="${contextPath}/images/cooking.png" style="width: 30%;"></th>
-                                    </tr>
-                                    <tr>
-                                        <th style="font-weight: bold">บะหมี่ฮ่องกงหมูแดง หมูกรอบ ไม่หนัง ไม่มัน หมี่สองก้อน</th>
-                                        <th style="text-align: center">2 จาน</th>
-                                        <th style="text-align: center;width:20%;"><img src="${contextPath}/images/ordered.png" style="width: 30%;"></th>
-                                    </tr>
-                                    <tr>
-                                        <th style="font-weight: bold">บิงซูมันม่วง ถ้วยใหญ่พิเศษ</th>
-                                        <th style="text-align: center">1 จาน</th>
-                                        <th style="text-align: center;width:20%;"><img src="${contextPath}/images/cooking.png" style="width: 30%;"></th>
-                                    </tr>
                                     </tbody>
                                 </table>
                             </div>
@@ -108,11 +88,9 @@
                         amountOrder = "0" + amountOrder;
                     }
                     var data_refresh = {
-                        menuName: '<b>obj.menu.menuNameTH + " / " + obj.menu.menuNameEN</b>',
+                        menuName: '<p style="font-weight: bold;text-align: left;">' + obj.menu.menuNameTH + '</p>',
                         amount: obj.quantity + " จาน",
-                        status: (obj.status ? '<a onclick="change_status(' + obj.orderNo + ',\'' + obj.status + '\')" class="btn btn-default">เมนูที่ได้รับมา</a>' :
-                            '<a onclick="change_status(' + obj.orderNo + ',\'' + obj.status + '\')" class="btn btn-primary">เมนูที่กำลังปรุง</a>') +
-                        '<a onclick="cancel_menu(' + obj.orderNo + ',\'' + obj.status + '\' )" class="btn btn-danger">ยกเลิกเมนู</a>'
+                        status: (obj.status == 'waiting' ? ('<img src="../images/ordered.png" style="width: 100px;height: auto;">') : ('<img src="../images/cooking.png" style="width: 100px;height: auto;">'))
                     };
                     data_array.push(data_refresh);
                 }
