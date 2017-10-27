@@ -17,6 +17,8 @@ public class LedgerType {
     private boolean defaultType;
     @Column(name = "ledgerPayNo")
     private int ledgerPayNo;
+    @Column(name = "restNo")
+    private int restNo;
 
     @JsonIgnore
     @OneToMany(fetch = FetchType.LAZY, mappedBy = "ledgerType")
@@ -55,5 +57,13 @@ public class LedgerType {
 
     public void setLedgerPayNo(int ledgerPayNo) {
         this.ledgerPayNo = ledgerPayNo;
+    }
+
+    public int getRestNo() {
+        return restNo;
+    }
+
+    public void setRestNo(int restNo) {
+        this.restNo = restNo;
     }
 }

@@ -12,8 +12,8 @@ public class LedgerTypeService {
     @Autowired
     private LedgerTypeRepository ledgerTypeRepository;
 
-    public List<LedgerType> findAllNotDefault(){
-        return ledgerTypeRepository.findByDefaultType(false);
+    public List<LedgerType> findAllNotDefault(int restNo){
+        return ledgerTypeRepository.findByDefaultTypeAndRestNo(false,restNo);
     }
 
     public LedgerType findByLedgerTypeNo(int ledgerTypeNo){
