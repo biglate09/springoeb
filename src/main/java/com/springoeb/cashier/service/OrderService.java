@@ -28,4 +28,8 @@ public class OrderService {
     public void save(Order order) {
         orderRepository.save(order);
     }
+
+    public long countByMenuNo(int menuNo){
+        return orderRepository.countByMenuNo(menuNo);
+    }
 }

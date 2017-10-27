@@ -8,8 +8,8 @@ import java.util.List;
 
 @Repository
 public interface OrderRepository extends CrudRepository<Order,Integer>{
-    List<Order> findAll();
     List<Order> findByBill_StatusAndBill_Table_BranchNoOrderByStatusDescOrderNoAsc(String status,int branchNo);
     Order findByOrderNo(int orderNo);
     void removeByOrderNo(int orderNo);
+    long countByMenuNo(int menuNo);
 }

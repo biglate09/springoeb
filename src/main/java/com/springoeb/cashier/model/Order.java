@@ -1,5 +1,6 @@
 package com.springoeb.cashier.model;
 
+import com.fasterxml.jackson.annotation.JsonBackReference;
 import com.springoeb.menu.model.Menu;
 
 import javax.persistence.*;

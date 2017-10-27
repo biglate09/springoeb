@@ -1,5 +1,6 @@
 package com.springoeb.menu.service;
 
+import com.springoeb.cashier.repository.OrderRepository;
 import com.springoeb.menu.model.BranchMenu;
 import com.springoeb.menu.model.Menu;
 import com.springoeb.menu.model.MenuGroup;
@@ -7,13 +8,17 @@ import com.springoeb.menu.repository.BranchMenuRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import java.util.LinkedHashMap;
 import java.util.List;
+import java.util.Map;
 import java.util.Set;
 
 @Service
 public class BranchMenuService {
     @Autowired
     private BranchMenuRepository branchMenuRepository;
+    @Autowired
+    private OrderRepository orderRepository;
 
     public List<BranchMenu> getMenuSets(int branchNo) {
         return branchMenuRepository.findByBranchNoAndMenu_MenuFlagOrderByMenu_LocalFlagAsc(branchNo, Menu.flagForMenuSet);
@@ -42,5 +47,15 @@ public class BranchMenuService {
 
     public void save(List<BranchMenu> branchMenus){
         branchMenuRepository.save(branchMenus);
+    }
+
+    public Map<Menu,Long> getBestSaleMenu(int branchNo){
+        Map<Menu,Long> menuMaps = new LinkedHashMap<Menu,Long>();
+        List<BranchMenu> branchMenus = branchMenuRepository.findByBranchNoAndMenu_MenuFlagOrderByMenu_LocalFlagAsc(branchNo,Menu.flagForMenu);
+        for(BranchMenu bm : branchMenus){
+            long count = orderRepository.countByMenuNo(bm.getMenuNo());
+            menuMaps.put(bm.getMenu(),count);
+        }
+        return menuMaps;
     }
 }

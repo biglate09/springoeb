@@ -1,6 +1,7 @@
 package com.springoeb.menu.model;
 
 import com.fasterxml.jackson.annotation.JsonIgnore;
+import com.springoeb.cashier.model.Order;
 import com.springoeb.stock.model.MenuMaterial;
 
 import javax.persistence.*;
@@ -31,6 +32,10 @@ public class Menu implements Serializable{
     private Integer menuGroupNo;
     @Column(name = "restNo",insertable = true,updatable = true)
     private Integer restNo;
+
+    @JsonIgnore
+    @OneToMany(fetch = FetchType.LAZY, mappedBy = "menu")
+    private List<Order> orders;
 
     @JsonIgnore
     @OneToMany(fetch = FetchType.LAZY, mappedBy = "menu")
@@ -176,5 +181,13 @@ public class Menu implements Serializable{
 
     public void setAddOns(List<AddOn> addOns) {
         this.addOns = addOns;
+    }
+
+    public List<Order> getOrders() {
+        return orders;
+    }
+
+    public void setOrders(List<Order> orders) {
+        this.orders = orders;
     }
 }
