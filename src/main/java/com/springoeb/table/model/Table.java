@@ -18,7 +18,6 @@ public class Table {
     private boolean isAvailable;
     @Column(name = "branchNo",updatable = true,insertable = true)
     private Integer branchNo;
-
     @ManyToOne
     @JoinColumn(name = "branchNo",updatable = false,insertable = false)
     private Branch branch;

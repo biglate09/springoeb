@@ -1,5 +1,6 @@
 package com.springoeb.cashier.model;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.springoeb.table.model.Table;
 
 import javax.persistence.*;
@@ -21,6 +22,7 @@ public class Bill {
     private String status;
     @Column(name = "tableNo",updatable = true,insertable = true)
     private Integer tableNo;
+    @JsonIgnore
     @ManyToOne
     @JoinColumn(name = "tableNo",updatable = false,insertable = false)
     private Table table;

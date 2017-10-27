@@ -13,6 +13,6 @@ public class BillService {
     private BillRepository billRepository;
 
     public List<Bill> findByTable_BranchNo(int branchNo){
-        return findByTable_BranchNo(branchNo);
+        return billRepository.findByTable_BranchNo(branchNo);
     }
 }
