@@ -5,7 +5,9 @@ import com.springoeb.menu.repository.MenuGroupRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import java.util.LinkedHashMap;
 import java.util.List;
+import java.util.Map;
 
 @Service
 public class MenuGroupService {
@@ -46,5 +48,11 @@ public class MenuGroupService {
         }else{
             return false;
         }
+    }
+
+    public Map<MenuGroup,Integer> getBestSaleMenuGroup(int restNo){
+        Map<MenuGroup,Integer> menuGroupMaps = new LinkedHashMap<MenuGroup,Integer>();
+        List<MenuGroup> menuGroups = menuGroupRepository.findByRestNo(restNo);
+        return menuGroupMaps;
     }
 }

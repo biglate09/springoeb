@@ -34,7 +34,7 @@ public class CashierController {
     }
 
     @ResponseBody
-    @PostMapping("/getcashier")
+    @PostMapping("/getcashiers")
     public String getCashier(HttpSession session) throws JsonProcessingException {
         BranchUser branchUser = (BranchUser) (session.getAttribute("branchUser"));
         int branchNo = branchUser.getBranchNo();

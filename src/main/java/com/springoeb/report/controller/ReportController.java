@@ -3,7 +3,9 @@ package com.springoeb.report.controller;
 import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.springoeb.menu.model.Menu;
+import com.springoeb.menu.model.MenuGroup;
 import com.springoeb.menu.service.BranchMenuService;
+import com.springoeb.menu.service.MenuGroupService;
 import com.springoeb.system.model.BranchUser;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
@@ -21,6 +23,8 @@ public class ReportController {
 
     @Autowired
     private BranchMenuService branchMenuService;
+    @Autowired
+    private MenuGroupService menuGroupService;
     //-----------------------------------------------------------------------------------------------------------//
 
     @ResponseBody
@@ -45,14 +49,14 @@ public class ReportController {
         return json;
     }
 
-//    @ResponseBody
-//    @PostMapping("/bestsalemenugroup")
-//    public String getBestSaleMenuGroup(HttpSession session){
-//        BranchUser branchUser = (BranchUser) (session.getAttribute("branchUser"));
-//        int branchNo = branchUser.getBranchNo();
-//        Map<Menu,Long> menuGroups = MenuGroupService
-//        ObjectMapper mapper = new ObjectMapper();
-//        String json = mapper.writeValueAsString(menuGroups);
-//        return json;
-//    }
+    @ResponseBody
+    @PostMapping("/bestsalemenugroup")
+    public String getBestSaleMenuGroup(HttpSession session) throws JsonProcessingException {
+        BranchUser branchUser = (BranchUser) (session.getAttribute("branchUser"));
+        int restNo = branchUser.getBranch().getRestNo();
+        Map<MenuGroup,Integer> menuGroups = menuGroupService.getBestSaleMenuGroup(restNo);
+        ObjectMapper mapper = new ObjectMapper();
+        String json = mapper.writeValueAsString(menuGroups);
+        return json;
+    }
 }
