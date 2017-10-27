@@ -12,6 +12,7 @@ import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.ResponseBody;
 
 import javax.servlet.http.HttpSession;
 import java.util.List;
@@ -32,6 +33,7 @@ public class CashierController {
         return CASHIER_PATH + "cashier.jsp";
     }
 
+    @ResponseBody
     @PostMapping("/getcashier")
     public String getCashier(HttpSession session) throws JsonProcessingException {
         BranchUser branchUser = (BranchUser) (session.getAttribute("branchUser"));
