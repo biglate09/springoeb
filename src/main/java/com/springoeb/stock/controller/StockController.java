@@ -46,7 +46,7 @@ public class StockController {
     @PostMapping("/getmaterialcategories")
     @ResponseBody
     public String getMaterialCategories(HttpSession session) throws JsonProcessingException {
-        BranchUser branchUser = (BranchUser)(session.getAttribute("branchUser"));
+        BranchUser branchUser = (BranchUser) (session.getAttribute("branchUser"));
         List<MaterialCategory> materialCategories = materialCategoryService.getMaterialCategories(branchUser.getBranch().getRestNo());
         ObjectMapper mapper = new ObjectMapper();
         String json = mapper.writeValueAsString(materialCategories);
@@ -55,24 +55,27 @@ public class StockController {
 
     @PostMapping("/managematerialcategory")
     @ResponseBody
-    public void addAndEditMaterialCategory(@ModelAttribute("materialcategory") MaterialCategory materialCategory) throws Exception {
-        if (materialCategory.getMatCatNo() != null) { // edit
-            if (!materialCategoryService.getMaterialCategory(materialCategory.getMatCatNo()).equals(materialCategory)) {
-                if (!materialCategoryService.chkDuplicateMaterialCategory(materialCategory)) {
-                    materialCategoryService.save(materialCategory);
-                } else {
-                    throw new Exception();
-                }
-            } else {
-                throw new Exception();
-            }
-        } else { // add
-            if (!materialCategoryService.chkDuplicateMaterialCategory(materialCategory)) {
-                materialCategoryService.save(materialCategory);
-            } else {
-                throw new Exception();
-            }
-        }
+    public void addAndEditMaterialCategory(@ModelAttribute("materialcategory") MaterialCategory materialCategory, HttpSession session) throws Exception {
+//        if (materialCategory.getMatCatNo() != null) { // edit
+//            if (!materialCategoryService.getMaterialCategory(materialCategory.getMatCatNo()).equals(materialCategory)) {
+//                if (!materialCategoryService.chkDuplicateMaterialCategory(materialCategory)) {
+        BranchUser branchUser = (BranchUser) (session.getAttribute("branchUser"));
+        materialCategory.setRestNo(branchUser.getBranch().getRestNo());
+        materialCategoryService.save(materialCategory);
+//                } else {
+//                    throw new Exception();
+//                }
+//            } else {
+//                throw new Exception();
+//            }
+//        } else { // add
+//            if (!materialCategoryService.chkDuplicateMaterialCategory(materialCategory)) {
+//                materialCategoryService.save(materialCategory);
+//            } else {
+//                throw new Exception();
+//            }
+//        }
+
     }
 
     @Transactional
@@ -94,8 +97,8 @@ public class StockController {
 
     //-----------------------------------------------------------------------------------------------------------//
     @GetMapping("/materialitem")
-    public String toMaterialItem(Model model,HttpSession session) {
-        BranchUser branchUser = (BranchUser)(session.getAttribute("branchUser"));
+    public String toMaterialItem(Model model, HttpSession session) {
+        BranchUser branchUser = (BranchUser) (session.getAttribute("branchUser"));
         List<MaterialCategory> materialCategories = materialCategoryService.getMaterialCategories(branchUser.getBranch().getRestNo());
         List<MaterialUnit> materialUnits = materialUnitService.getMaterialUnits(branchUser.getBranch().getRestNo());
         model.addAttribute("matCategories", materialCategories);
@@ -106,7 +109,7 @@ public class StockController {
     @PostMapping("/getmaterialitems")
     @ResponseBody
     public String getMaterialItems(HttpSession session) throws JsonProcessingException {
-        BranchUser branchUser = (BranchUser)(session.getAttribute("branchUser"));
+        BranchUser branchUser = (BranchUser) (session.getAttribute("branchUser"));
         List<MaterialItem> materialItems = materialItemService.getMaterialItems(branchUser.getBranch().getRestNo());
         ObjectMapper mapper = new ObjectMapper();
         String json = mapper.writeValueAsString(materialItems);
@@ -117,7 +120,7 @@ public class StockController {
     @PostMapping("/managematerialitem")
     @ResponseBody
     public void addAndEditMaterialItem(@ModelAttribute("materialItem") MaterialItem materialItem, HttpSession session, HttpServletRequest request) throws Exception {
-        BranchUser branchUser = (BranchUser)(session.getAttribute("branchUser"));
+        BranchUser branchUser = (BranchUser) (session.getAttribute("branchUser"));
         MaterialItem insertedMaterialItem = null;
 
         if (materialItem.getMatFlag().equals(MaterialItem.flagForItem)) {
@@ -127,8 +130,8 @@ public class StockController {
 //        if (materialItem.getMatItemNo() != null) { // edit
 //            if (!materialItemService.getMaterialItem(materialItem.getMatItemNo()).equals(materialItem)) {
 //                if (!materialItemService.chkDuplicateMaterialItem(materialItem)) {
-            materialItem.setRestNo(branchUser.getBranch().getRestNo());
-            insertedMaterialItem = materialItemService.save(materialItem);
+        materialItem.setRestNo(branchUser.getBranch().getRestNo());
+        insertedMaterialItem = materialItemService.save(materialItem);
 //                } else {
 //                    throw new Exception();
 //                }
@@ -182,8 +185,8 @@ public class StockController {
 
     //-----------------------------------------------------------------------------------------------------------//
     @GetMapping("/mixedproduct")
-    public String toMixedProductIndex(Model model,HttpSession session) {
-        BranchUser branchUser = (BranchUser)(session.getAttribute("branchUser"));
+    public String toMixedProductIndex(Model model, HttpSession session) {
+        BranchUser branchUser = (BranchUser) (session.getAttribute("branchUser"));
         List<MaterialCategory> materialCategories = materialCategoryService.getMaterialCategories(branchUser.getBranch().getRestNo());
         List<MaterialUnit> materialUnits = materialUnitService.getMaterialUnits(branchUser.getBranch().getRestNo());
         List<MaterialItem> materialItems = materialItemService.getAllMaterials(branchUser.getBranch().getRestNo());
@@ -196,7 +199,7 @@ public class StockController {
     @PostMapping("/getmixedproducts")
     @ResponseBody
     public String getMixedProducts(HttpSession session) throws JsonProcessingException {
-        BranchUser branchUser = (BranchUser)(session.getAttribute("branchUser"));
+        BranchUser branchUser = (BranchUser) (session.getAttribute("branchUser"));
         List<MaterialItem> materialItems = materialItemService.getMixedProducts(branchUser.getBranch().getRestNo());
         ObjectMapper mapper = new ObjectMapper();
         String json = mapper.writeValueAsString(materialItems);
@@ -219,7 +222,7 @@ public class StockController {
     @PostMapping("/getmaterials")
     @ResponseBody
     public String getMaterials(HttpSession session) throws JsonProcessingException {
-        BranchUser branchUser = (BranchUser)(session.getAttribute("branchUser"));
+        BranchUser branchUser = (BranchUser) (session.getAttribute("branchUser"));
         List<MaterialItem> materials = materialItemService.getAllMaterials(branchUser.getBranch().getRestNo());
         ObjectMapper mapper = new ObjectMapper();
         String json = mapper.writeValueAsString(materials);
@@ -228,9 +231,9 @@ public class StockController {
 
     @PutMapping("/getmaterialhistory/{matItemNo}")
     @ResponseBody
-    public String getMaterialHistories(@PathVariable("matItemNo") int matNo,HttpSession session) throws JsonProcessingException {
-        int branchNo = ((BranchUser)(session.getAttribute("branchUser"))).getBranchNo();
-        List<MaterialHistory> materialHistories = materialHistoryService.getMaterialHistoriesByMaterialNo(matNo,branchNo);
+    public String getMaterialHistories(@PathVariable("matItemNo") int matNo, HttpSession session) throws JsonProcessingException {
+        int branchNo = ((BranchUser) (session.getAttribute("branchUser"))).getBranchNo();
+        List<MaterialHistory> materialHistories = materialHistoryService.getMaterialHistoriesByMaterialNo(matNo, branchNo);
         ObjectMapper mapper = new ObjectMapper();
         String json = mapper.writeValueAsString(materialHistories);
         return json;
@@ -239,18 +242,18 @@ public class StockController {
     @Transactional
     @PostMapping("/managematerialhistory")
     @ResponseBody
-    public void AddOrEditMaterialHistory(HttpServletRequest request,HttpSession session){
-        int branchNo = ((BranchUser)(session.getAttribute("branchUser"))).getBranchNo();
-        String importer = ((BranchUser)(session.getAttribute("branchUser"))).getEmployee() == null ? "แอดมินสาขา" : ((BranchUser)(session.getAttribute("branchUser"))).getEmployee().getEmpName();
+    public void AddOrEditMaterialHistory(HttpServletRequest request, HttpSession session) {
+        int branchNo = ((BranchUser) (session.getAttribute("branchUser"))).getBranchNo();
+        String importer = ((BranchUser) (session.getAttribute("branchUser"))).getEmployee() == null ? "แอดมินสาขา" : ((BranchUser) (session.getAttribute("branchUser"))).getEmployee().getEmpName();
         String supplier = request.getParameter("supplier");
-        if(supplier != null) {
+        if (supplier != null) {
             supplier = supplier.trim();
         }
         Integer matItemNo = Integer.parseInt(request.getParameter("mat_item_no"));
         String incPack = request.getParameter("inc_pack");
         String decPack = request.getParameter("dec_pack");
 
-        if(incPack != null && Double.parseDouble(incPack) > 0) {
+        if (incPack != null && Double.parseDouble(incPack) > 0) {
             String incQuantity = request.getParameter("inc_quantity");
             if (incQuantity != null && Double.parseDouble(incQuantity) > 0) {
                 MaterialHistory materialHistory = new MaterialHistory();
@@ -268,7 +271,7 @@ public class StockController {
             }
         }
 
-        if(decPack != null && Integer.parseInt(decPack) > 0){
+        if (decPack != null && Integer.parseInt(decPack) > 0) {
             String decQuantity = request.getParameter("dec_quantity");
             if (decQuantity != null && Double.parseDouble(decQuantity) > 0) {
                 MaterialHistory materialHistory = new MaterialHistory();
@@ -278,36 +281,37 @@ public class StockController {
                 materialHistory.setMatName(materialItemService.getMaterialItem(matItemNo).getMatItemName());
                 materialHistory.setDate(new Date(System.currentTimeMillis()));
                 materialHistory.setTime(new Time(System.currentTimeMillis()));
-                materialHistory.setMatQuantity(-1*(Double.parseDouble(decPack) * Double.parseDouble(decQuantity)));
+                materialHistory.setMatQuantity(-1 * (Double.parseDouble(decPack) * Double.parseDouble(decQuantity)));
                 materialHistoryService.save(materialHistory);
             }
         }
     }
 
-    private void addRecursiveMaterialHistory(MaterialHistory materialHistory){
+    private void addRecursiveMaterialHistory(MaterialHistory materialHistory) {
         materialHistory = materialHistoryService.save(materialHistory);
         materialHistory.setMaterialItem(materialItemService.getMaterialItem(materialHistory.getMatItemNo()));
-        if(materialHistory.getMaterialItem().getMatFlag().equals(MaterialItem.flagForMixed)){
+        if (materialHistory.getMaterialItem().getMatFlag().equals(MaterialItem.flagForMixed)) {
             List<MaterialMixed> materialMixeds = materialHistory.getMaterialItem().getMaterialItemList();
-            for(MaterialMixed mm : materialMixeds){
+            for (MaterialMixed mm : materialMixeds) {
                 MaterialItem materialItem = mm.getMaterialItem();
                 MaterialHistory newMaterialHistory = clone(materialHistory);
                 newMaterialHistory.setOfMatHistNo(materialHistory.getMatHistNo());
                 newMaterialHistory.setMatName(materialItem.getMatItemName());
-                newMaterialHistory.setMatQuantity((-1)*((materialHistory.getMatQuantity()/materialHistory.getMaterialItem().getQuantity())*mm.getQuantity()));
+                newMaterialHistory.setMatQuantity((-1) * ((materialHistory.getMatQuantity() / materialHistory.getMaterialItem().getQuantity()) * mm.getQuantity()));
                 newMaterialHistory.setMatItemNo(mm.getItemNo());
                 materialHistoryService.save(newMaterialHistory);
             }
         }
     }
 
-    private MaterialHistory clone(MaterialHistory materialHistory){
+    private MaterialHistory clone(MaterialHistory materialHistory) {
         MaterialHistory newMaterialHistory = new MaterialHistory();
         newMaterialHistory.setDate(materialHistory.getDate());
         newMaterialHistory.setTime(materialHistory.getTime());
         newMaterialHistory.setBranchNo(materialHistory.getBranchNo());
         return newMaterialHistory;
     }
+
     //-----------------------------------------------------------------------------------------------------------//
     @GetMapping("/materialunit")
     public String toMaterialUnitIndex() {
@@ -317,7 +321,7 @@ public class StockController {
     @PostMapping("/getmaterialunits")
     @ResponseBody
     public String getMaterialUnits(HttpSession session) throws JsonProcessingException {
-        BranchUser branchUser = (BranchUser)(session.getAttribute("branchUser"));
+        BranchUser branchUser = (BranchUser) (session.getAttribute("branchUser"));
         List<MaterialUnit> materialUnits = materialUnitService.getMaterialUnits(branchUser.getBranch().getRestNo());
         ObjectMapper mapper = new ObjectMapper();
         String json = mapper.writeValueAsString(materialUnits);
@@ -326,24 +330,26 @@ public class StockController {
 
     @PostMapping("/managematerialunit")
     @ResponseBody
-    public void addAndEditMaterialUnit(@ModelAttribute("materialunit") MaterialUnit materialUnit) throws Exception {
-        if (materialUnit.getUnitNo() != null) { // edit
-            if (!materialUnitService.getMaterialUnit(materialUnit.getUnitNo()).equals(materialUnit)) {
-                if (!materialUnitService.chkDuplicateMaterialUnit(materialUnit)) {
-                    materialUnitService.save(materialUnit);
-                } else {
-                    throw new Exception();
-                }
-            } else {
-                throw new Exception();
-            }
-        } else { // add
-            if (!materialUnitService.chkDuplicateMaterialUnit(materialUnit)) {
-                materialUnitService.save(materialUnit);
-            } else {
-                throw new Exception();
-            }
-        }
+    public void addAndEditMaterialUnit(@ModelAttribute("materialunit") MaterialUnit materialUnit,HttpSession session) throws Exception {
+        BranchUser branchUser = (BranchUser)(session.getAttribute("branchUser"));
+//        if (materialUnit.getUnitNo() != null) { // edit
+//            if (!materialUnitService.getMaterialUnit(materialUnit.getUnitNo()).equals(materialUnit)) {
+//                if (!materialUnitService.chkDuplicateMaterialUnit(materialUnit)) {
+        materialUnit.setRestNo(branchUser.getBranch().getRestNo());
+        materialUnitService.save(materialUnit);
+//                } else {
+//                    throw new Exception();
+//                }
+//            } else {
+//                throw new Exception();
+//            }
+//        } else { // add
+//            if (!materialUnitService.chkDuplicateMaterialUnit(materialUnit)) {
+//                materialUnitService.save(materialUnit);
+//            } else {
+//                throw new Exception();
+//            }
+//        }
     }
 
     @Transactional
