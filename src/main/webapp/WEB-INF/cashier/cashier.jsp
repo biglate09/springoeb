@@ -178,38 +178,52 @@
     function refresh_table() {
         $.ajax({
             type: "POST",
-            url: "${contextPath}/cashier/getcashier" ,
+            url: "${contextPath}/cashier/getcashiers" ,
             dataType: "json",
             success: function (json) {
                 //remove
                 $("#menu_thumbnail").empty();
                 $("#menu_thumbnail_list").empty();
                 var data_array = [];
-                var bill = obj.bill;
-                //Gallery
-                console.log(json);
-                var div = '\
-                    <div class="col-md-55">\
-                    <div class="thumbnail thumbnail_inline">\
-                    <div class="image view view-first">\
-                    <img style="width: 100%;position:relative;" src="${contextPath}/images/table.png" alt="image"/>\
-                    <div style="margin-left: auto;margin-right: auto;position: absolute;left: 50%;transform: translate(-50%, -50%);font-weight: bold; " class="cardname"></div>\
-                    </div>\
-                    <div class="caption col-md-12" style="color:#73879C">\
-                    <p class="col-md-12" style="white-space:nowrap;overflow:hidden;text-overflow: ellipsis;" onclick="set_menu(' + menu.menuNo + ')">ใช้บริการมาแล้ว : 15 นาที</p>\
-                    <p class="col-md-12" style="white-space: nowrap;overflow:hidden;text-overflow: ellipsis;">ราคาอาหาร : 135 บาท</p>\
-                    <p class="col-md-12" > สถานะอาหาร : ครบแล้ว</p>\
-                    <div style="text-align:center;" class="col-md-12"><button type="button" class="btn btn-success" data-toggle="modal" data-target="#editMenu" data-toggle="modal" data-target="#editMenu" style="width: 80%;">จ่ายเงิน</button></div>\
-                    </div>\
-                    </div>\
-                    </div>\
-                    ';
-                        $("#menu_thumbnail").append(div);
-                        var price_order = (menu.menuPrice.toFixed(2) * 100000) + "";
-                        for (var j = price_order.length; j < 20; j++) {
-                            price_order = "0" + price_order;
-                        }
+                for (var i = 0; i < json.length; i++) {
+                    var obj = json[i];
 
+//                    // using static methods
+//                    var start = Date.now();
+//                    // the event you'd like to time goes here:
+//    //                doSomethingForALongTime();
+//                    var end = Date.now();
+//                    var elapsed = end - start; // time in milliseconds
+//                    var difference = new Date(elapsed);
+//                    //If you really want the hours/minutes,
+//                    //Date has functions for that too:
+//                    var diff_hours = difference.getHours();
+//                    var diff_mins = difference.getMinutes();
+                    //Gallery
+                    console.log(json);
+                    var div = '\
+                        <div class="col-md-55">\
+                        <div class="thumbnail thumbnail_inline">\
+                        <div class="image view view-first" style="height:auto;">\
+                        <img style="width: 100%;position:relative;" src="${contextPath}/images/table.png" alt="image"/>\
+                        <div style="margin-left: auto;margin-right: auto;position: absolute;bottom:0;left: 50%;transform: translate(-50%, -50%);font-weight: bold; " class="cardname">' + obj.table.tableName + '</div>\
+                        </div>\
+                        <div class="caption col-md-12" style="color:#73879C">\
+                        <p class="col-md-12" style="white-space:nowrap;overflow:hidden;text-overflow: ellipsis;" ">ใช้บริการมาแล้ว : ' + obj.billTime + ' นาที</p>\
+                        <p class="col-md-12" style="white-space: nowrap;overflow:hidden;text-overflow: ellipsis;">ราคาอาหาร : ' + obj.totalAmount + ' บาท</p>\
+                        <p class="col-md-12" > สถานะอาหาร : ครบแล้ว</p>\
+                        <div style="text-align:center;" class="col-md-12"><button type="button" class="btn btn-success" data-toggle="modal" data-target="#editMenu" data-toggle="modal" \
+                        data-target="#editMenu" style="width: 80%;" onclick="set_bill(' + obj.billNo + ')">จ่ายเงิน</button></div>\
+                        </div>\
+                        </div>\
+                        </div>\
+                        ';
+                            $("#menu_thumbnail").append(div);
+                            var price_order = (menu.menuPrice.toFixed(2) * 100000) + "";
+                            for (var j = price_order.length; j < 20; j++) {
+                                price_order = "0" + price_order;
+                            }
+                }
                     $("#error_show").html('');
 //                    $("#datatable-menu").DataTable().clear();
 //                    $("#datatable-menu").DataTable().rows.add(data_array).draw(false);
@@ -233,10 +247,10 @@
         $("#display_material_desc").empty();
     }
 
-    function set_menu(menuNo) {
+    function set_bill(billNo) {
         $.ajax({
             type: "PUT",
-            url: "${contextPath}/menu/getmenu/" + menuNo,
+            url: "${contextPath}/cashier/getcashier/" + billNo,
             dataType: "json",
             success: function (result) {
                 menu = result.menu;
@@ -309,7 +323,7 @@
 
 <style>
     .thumbnail_inline {
-        height: 250px !important;
+        height: 280px !important;
     }
     /*.description{*/
         /*line-height: 1.5em;*/
