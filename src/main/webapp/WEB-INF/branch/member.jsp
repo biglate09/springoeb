@@ -211,6 +211,7 @@
                     $("#addMember").modal('toggle');
                     refresh_table();
                 }, error: function (result) {
+                    $('#loadingbtn').hide();
                     swal("ไม่สำเร็จ", "กรุณาลองใหม่อีกครั้ง", "error");
                 }
             });

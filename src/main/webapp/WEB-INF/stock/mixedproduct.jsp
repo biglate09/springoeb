@@ -150,7 +150,7 @@
                                             <div class="modal-footer">
                                                 <!-- ปุ่มกดปิด (Close) ตรงส่วนล่างของ Modal -->
                                                 <div class="col-md-9 col-sm-9 col-xs-12 col-md-offset-3">
-                                                    <button type="submit" class="btn btn-success">ตกลง</button>
+                                                    <button type="submit" class="btn btn-success" id="loadingbtn">ตกลง</button>
                                                     <button type="button" class="btn btn-default" data-dismiss="modal">
                                                         ยกเลิก
                                                     </button>
@@ -265,7 +265,7 @@
                                             <div class="modal-footer">
                                                 <!-- ปุ่มกดปิด (Close) ตรงส่วนล่างของ Modal -->
                                                 <div class="col-md-9 col-sm-9 col-xs-12 col-md-offset-3">
-                                                    <button type="submit" class="btn btn-success">ตกลง</button>
+                                                    <button type="submit" class="btn btn-success" id="loadingbtnedit">ตกลง</button>
                                                     <button type="button" class="btn btn-default" data-dismiss="modal">
                                                         ยกเลิก
                                                     </button>
@@ -410,11 +410,13 @@
 
         if (hassubmaterial) {
             var object = $("#add_mat_item").serialize();
+            $('#loadingbtn').show();
             $.ajax({
                 type: "POST",
                 data: object,
                 url: "${contextPath}/stock/managematerialitem",
                 success: function (result) {
+                    $('#loadingbtn').hide();
                     swal("สำเร็จ", "ชื่อวัตถุดิบ " + $("#add_mat_item").val() + " ถูกเพิ่มเรียบร้อยแล้ว", "success");
                     reset_field();
                     $("#addMatItem").modal('toggle');
@@ -424,6 +426,7 @@
                 }
             });
         } else {
+            $('#loadingbtn').hide();
             swal("ไม่สำเร็จ", "กรุณาเลือกส่วนผสมของวัตถุดิบก่อน", "error");
         }
         return false;
@@ -449,20 +452,24 @@
 
         if (hassubmaterial) {
             var object = $("#edit_mat_item").serialize();
+            $('#loadingbtnedit').show();
             $.ajax({
                 type: "POST",
                 data: object,
                 url: "${contextPath}/stock/managematerialitem",
                 success: function (result) {
+                    $('#loadingbtnedit').hide();
                     swal("สำเร็จ", "ชื่อวัตถุดิบ " + $("#add_mat_item").val() + " ถูกแก้ไขเรียบร้อยแล้ว", "success");
                     $("#edit_mat_item")[0].reset();
                     $("#editMatItem").modal('toggle');
                     refresh_table();
                 }, error: function (result) {
+                    $('#loadingbtnedit').hide();
                     swal("ไม่สำเร็จ", "ชื่ออาจซ้ำ กรุณาลองใหม่ในภายหลัง", "error");
                 }
             });
         } else {
+            $('#loadingbtnedit').hide();
             swal("ไม่สำเร็จ", "กรุณาเลือกส่วนผสมของวัตถุดิบก่อน", "error");
         }
         return false;

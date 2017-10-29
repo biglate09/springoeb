@@ -189,6 +189,7 @@
                 $("#addLedgerType").modal('toggle');
                 refresh_table();
             }, error: function (result) {
+                $('#loadingbtn').hide();
                 swal("ไม่สำเร็จ", "ชื่อประเภทอาจซ้ำหรือเซิร์ฟเวอร์มีปัญหา", "error");
             }
         });
@@ -232,6 +233,7 @@
                 $("#editLedgerType").modal('toggle');
                 refresh_table();
             }, error: function (result) {
+                $('#loadingbtnedit').hide();
                 swal("ไม่สำเร็จ", "เซิร์ฟเวอร์อาจมีปัญหา", "error");
             }
         });

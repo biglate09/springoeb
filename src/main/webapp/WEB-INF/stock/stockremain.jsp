@@ -182,7 +182,7 @@
                                                     <span id="update_remain"></span> <span class="unit"></span></h2>
                                                 </div>
                                                 <div class="col-md-8 col-sm-8 col-xs-12">
-                                                    <button type="submit" class="btn btn-success">ตกลง</button>
+                                                    <button type="submit" class="btn btn-success" id="loadingbtnedit">ตกลง</button>
                                                     <button type="button" class="btn btn-default" data-dismiss="modal">
                                                         ยกเลิก
                                                     </button>
@@ -313,16 +313,19 @@
 
     $("#update").submit(function () {
         var object = $("#update").serialize();
+        $('#loadingbtnedit').show();
         $.ajax({
             type: "POST",
             data: object,
             url: "${contextPath}/stock/managematerialhistory",
             success: function (result) {
+                $('#loadingbtnedit').hide();
                 swal("สำเร็จ", "วัตถุดิบนี้ถูกอัปเดตเรียบร้อยแล้ว", "success");
                 reset_field();
                 $("#updateStockRemain").modal('toggle');
                 refresh_table();
             }, error: function (result) {
+                $('#loadingbtnedit').hide();
                 swal("ไม่สำเร็จ", "เซิร์ฟเวอร์อาจมีปัญหา", "error");
             }
         });

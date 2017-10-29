@@ -334,6 +334,7 @@
                 reset_field();
                 refresh_table();
             }, error: function (result) {
+                $('#loadingbtn').hide();
                 swal("ไม่สำเร็จ", "กรุณาลองใหม่อีกครั้ง", "error");
             }
         });
@@ -353,6 +354,7 @@
                 reset_field();
                 refresh_table();
             }, error: function (result) {
+                $('#loadingbtnedit').hide();
                 swal("ไม่สำเร็จ", "กรุณาลองใหม่อีกครั้ง", "error");
             }
         });

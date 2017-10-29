@@ -73,7 +73,7 @@
                                     <div class="modal-footer">
                                         <!-- ปุ่มกดปิด (Close) ตรงส่วนล่างของ Modal -->
                                         <div class="col-md-9 col-sm-9 col-xs-12 col-md-offset-3">
-                                            <button type="submit" class="btn btn-success">ตกลง</button>
+                                            <button type="submit" class="btn btn-success" id="loadingbtn">ตกลง</button>
                                             <button type="button" class="btn btn-default" data-dismiss="modal">
                                                 ยกเลิก
                                             </button>
@@ -114,7 +114,7 @@
                                     <div class="modal-footer">
                                         <!-- ปุ่มกดปิด (Close) ตรงส่วนล่างของ Modal -->
                                         <div class="col-md-9 col-sm-9 col-xs-12 col-md-offset-3">
-                                            <button type="submit" class="btn btn-success">ตกลง</button>
+                                            <button type="submit" class="btn btn-success" id="loadingbtnedit">ตกลง</button>
                                             <button type="button" class="btn btn-default" data-dismiss="modal">
                                                 ยกเลิก
                                             </button>
@@ -153,16 +153,19 @@
 
     $("#material_unit").submit(function(){
         var object = $("#material_unit").serialize();
+        $('#loadingbtn').show();
         $.ajax({
             type: "POST",
             data: object,
             url: "${contextPath}/stock/managematerialunit",
             success: function (result) {
+                $('#loadingbtn').hide();
                 swal("สำเร็จ", "ประเภท " + $("#mat_unit_name").val() + " ถูกเพิ่มเรียบร้อยแล้ว", "success");
                 reset_field();
                 $("#addMaterialUnit").modal('toggle');
                 refresh_table();
             },error: function(result){
+                $('#loadingbtn').hide();
                 swal("ไม่สำเร็จ", "ชื่อประเภทอาจซ้ำหรือเซิร์ฟเวอร์มีปัญหา", "error");
             }
         });
@@ -192,16 +195,19 @@
 
     $("#material_unit_edit").submit(function(){
         var object = $("#material_unit_edit").serialize();
+        $('#loadingbtnedit').show();
         $.ajax({
             type: "POST",
             data: object,
             url: "${contextPath}/stock/managematerialunit",
             success: function (result) {
+                $('#loadingbtnedit').hide();
                 swal("สำเร็จ", "แก้ไขเรียบร้อยแล้ว", "success");
                 $("#material_unit_edit")[0].reset();
                 $("#editMaterialUnit").modal('toggle');
                 refresh_table();
             },error: function(result){
+                $('#loadingbtnedit').hide();
                 swal("ไม่สำเร็จ", "ชื่อหน่วยวัตถุดิบอาจซ้ำหรือเซิร์ฟเวอร์มีปัญหา", "error");
             }
         });

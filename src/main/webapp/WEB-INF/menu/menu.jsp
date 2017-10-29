@@ -752,6 +752,7 @@
                 $("#addMenu").modal('toggle');
                 refresh_table();
             }, error: function (result) {
+                $('#loadingbtn').hide();
                 swal("ไม่สำเร็จ", "ชื่อภาษาไทยหรืออังกฤษอาจซ้ำ กรุณาลองใหม่ในภายหลัง", "error");
             }
         });
@@ -791,6 +792,7 @@
                 $("#editMenu").modal('toggle');
                 refresh_table();
             }, error: function (result) {
+                $('#loadingbtnedit').hide();
                 swal("ไม่สำเร็จ", "ชื่อภาษาไทยหรืออังกฤษอาจซ้ำ กรุณาลองใหม่ในภายหลัง", "error");
             }
         });

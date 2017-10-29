@@ -374,6 +374,7 @@
                 $(".workdate").val('' + dateformat);
                 refresh_table(true);
             }, error: function (result) {
+                $('#loadingbtn').hide();
                 swal("ไม่สำเร็จ", "กรุณาลองใหม่ในภายหลัง", "error");
             }
         });
@@ -402,6 +403,7 @@
                 swal("สำเร็จ", "แก้ไขการทำงานเรียบร้อยแล้ว", "success");
                 refresh_table(true);
             }, error: function (result) {
+                $('#loadingbtnedit').hide();
                 swal("ไม่สำเร็จ", "กรุณาลองใหม่ในภายหลัง", "error");
             }
         });
