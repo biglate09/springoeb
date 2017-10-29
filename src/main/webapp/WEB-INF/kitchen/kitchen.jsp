@@ -76,7 +76,7 @@
             ]
         });
         refresh_table();
-        setInterval(refresh_table, 5000);
+//        setInterval(refresh_table, 5000);
     });
 
     function refresh_table() {
@@ -85,7 +85,6 @@
             url: "${contextPath}/kitchen/getorders",
             dataType: "json",
             success: function (json) {
-                console.log(json);
                 var data_array = [];
                 for (var i = 0; i < json.length; i++) {
                     var obj = json[i];
@@ -100,11 +99,11 @@
                         menuName: obj.menu.menuNameTH ,
                         tableName: obj.bill.table.tableName + " (" + obj.quantity + " จาน)",
                         amount: obj.quantity + " จาน",
-                        status: (obj.status == 'reserved' ? '<a onclick="change_status(' + obj.orderNo + ',\'' + obj.status + '\')" class="btn btn-secondary">จองไว้แล้ว</a>' :
-                         obj.status == 'waiting' ? '<a onclick="change_status(' + obj.orderNo + ',\'' + obj.status + '\')" class="btn btn-default">เมนูที่ได้รับมา</a>' :
-                         obj.status == 'cooking' ? '<a onclick="change_status(' + obj.orderNo + ',\'' + obj.status + '\')" class="btn btn-primary">กำลังปรุงอาหาร</a>' :
-                         obj.status == 'cooked' ? '<a onclick="change_status(' + obj.orderNo + ',\'' + obj.status + '\')" class="btn btn-success">ปรุงอาหารเสร็จแล้ว</a>' :
-                         obj.status == 'served' ? '<a onclick="change_status(' + obj.orderNo + ',\'' + obj.status + '\')" class="btn btn-info">ลูกค้าได้รับอาหารแล้ว</a>' : '') +
+                        status: (obj.status == 'reserved' ? '<a onclick="change_status(' + obj.orderNo + ')" class="btn btn-secondary">จองไว้แล้ว</a>' :
+                         obj.status == 'waiting' ? '<a onclick="change_status(' + obj.orderNo + ')" class="btn btn-default">เมนูที่ได้รับมา</a>' :
+                         obj.status == 'cooking' ? '<a onclick="change_status(' + obj.orderNo + ')" class="btn btn-primary">กำลังปรุงอาหาร</a>' :
+                         obj.status == 'cooked' ? '<a onclick="change_status(' + obj.orderNo + ')" class="btn btn-success">ปรุงอาหารเสร็จแล้ว</a>' :
+                         obj.status == 'served' ? '<a onclick="change_status(' + obj.orderNo + ')" class="btn btn-info">ลูกค้าได้รับอาหารแล้ว</a>' : '') +
                         '<a onclick="cancel_menu(' + obj.orderNo + ')" class="btn btn-danger">ยกเลิกเมนู</a>'
                     };
                     data_array.push(data_refresh);
@@ -118,14 +117,15 @@
         });
     }
 
-    function change_status(orderNo, status) {
+    function change_status(orderNo) {
         $.ajax({
             type: "POST",
             url: "${contextPath}/kitchen/changestatus/" + orderNo,
             dataType: "json",
             success: function (result) {
-                swal("ออเดอร์เปลี่ยนสถานะเป็น "+ status + " แล้ว", "success");
                 refresh_table();
+            },error : function(result){
+                refresh_table()
             }
         });
     }

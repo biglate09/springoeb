@@ -12,4 +12,5 @@ public interface OrderRepository extends CrudRepository<Order,Integer>{
     Order findByOrderNo(int orderNo);
     void removeByOrderNo(int orderNo);
     long countByMenuNo(int menuNo);
+    long countByMenu_MenuGroupNo(int menuGroupNo);
 }

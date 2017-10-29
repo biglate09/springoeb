@@ -15100,7 +15100,7 @@
 
 	// With a capital `D` we return a DataTables API instance rather than a
 	// jQuery object
-	$.fn.DataTable = function ( opts ) {
+	c$.fn.DataTable = function ( opts ) {
 		return $(this).dataTable( opts ).api();
 	};
 

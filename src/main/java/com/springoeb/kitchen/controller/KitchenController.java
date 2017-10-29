@@ -29,7 +29,6 @@ public class KitchenController {
     public String getOrders(HttpSession session) throws JsonProcessingException {
         int branchNo = ((BranchUser) (session.getAttribute("branchUser"))).getBranchNo();
         List<Order> orders = orderService.getOrders(branchNo);
-        System.out.println(orders);
         ObjectMapper mapper = new ObjectMapper();
         String json = mapper.writeValueAsString(orders);
         return json;

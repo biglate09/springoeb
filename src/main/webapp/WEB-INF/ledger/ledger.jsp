@@ -67,6 +67,7 @@
                                         <div class="col-md-6 col-sm-6 col-xs-12 form-group has-feedback">
                                             <label class="required">ประเภทรายการบัญชี</label>
                                             <select name="ledgerTypeNo" id="ledgerTypeNo" class="form-control" required>
+                                                <option disabled selected value="">เลือกประเภทรายการ</option>
                                                 <c:forEach items="${ledgerType}" var="l">
                                                     <option value="${l.ledgerTypeNo}">${l.ledgerTypeName}</option>
                                                 </c:forEach>

@@ -54,8 +54,10 @@ public class LedgerController {
 
     @PostMapping("manageledgertype")
     @ResponseBody
-    public void manageLedgerType(@ModelAttribute("ledgerType") LedgerType ledgerType){
+    public void manageLedgerType(@ModelAttribute("ledgerType") LedgerType ledgerType, HttpSession session){
+        BranchUser branchUser = (BranchUser)(session.getAttribute("branchUser"));
         ledgerType.setDefaultType(false);
+        ledgerType.setRestNo(branchUser.getBranch().getRestNo());
         ledgerTypeService.save(ledgerType);
     }
 

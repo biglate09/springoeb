@@ -1,5 +1,6 @@
 package com.springoeb.menu.service;
 
+import com.springoeb.cashier.repository.OrderRepository;
 import com.springoeb.menu.model.MenuGroup;
 import com.springoeb.menu.repository.MenuGroupRepository;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -13,6 +14,8 @@ import java.util.Map;
 public class MenuGroupService {
     @Autowired
     private MenuGroupRepository menuGroupRepository;
+    @Autowired
+    private OrderRepository orderRepository;
 
     public List<MenuGroup> getMenuGroups(int restNo){
         return menuGroupRepository.findByRestNo(restNo);
@@ -50,9 +53,13 @@ public class MenuGroupService {
         }
     }
 
-    public Map<MenuGroup,Integer> getBestSaleMenuGroup(int restNo){
-        Map<MenuGroup,Integer> menuGroupMaps = new LinkedHashMap<MenuGroup,Integer>();
+    public Map<MenuGroup,Long> getBestSaleMenuGroup(int restNo){
+        Map<MenuGroup,Long> menuGroupMaps = new LinkedHashMap<MenuGroup,Long>();
         List<MenuGroup> menuGroups = menuGroupRepository.findByRestNo(restNo);
+        for(MenuGroup mg : menuGroups){
+            long count = orderRepository.countByMenu_MenuGroupNo(mg.getMenuGroupNo());
+            menuGroupMaps.put(mg,count);
+        }
         return menuGroupMaps;
     }
 }

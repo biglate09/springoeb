@@ -54,7 +54,7 @@ public class ReportController {
     public String getBestSaleMenuGroup(HttpSession session) throws JsonProcessingException {
         BranchUser branchUser = (BranchUser) (session.getAttribute("branchUser"));
         int restNo = branchUser.getBranch().getRestNo();
-        Map<MenuGroup,Integer> menuGroups = menuGroupService.getBestSaleMenuGroup(restNo);
+        Map<MenuGroup,Long> menuGroups = menuGroupService.getBestSaleMenuGroup(restNo);
         ObjectMapper mapper = new ObjectMapper();
         String json = mapper.writeValueAsString(menuGroups);
         return json;
