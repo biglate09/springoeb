@@ -58,7 +58,41 @@
     var menuset_data_series = [];
     //***********CONFIG BY BIGHEAD*************//
 
-    if ($('#pie_menu').length ){
+    $(document).ready(function () {
+        $.ajax({
+            type: "POST",
+            dataType: "json",
+            url: "${contextPath}/report//bestsalemenu",
+            success: function (menuArray) {
+                console.log(menuArray);
+                var index_menu = 0; 
+                var break_loop = false;
+                for (var i = 0; i < menuArray.length; i++) { // loop menu
+                    var menu = menuArray[i];
+                    if (index_menu < limit_of_menu) {
+                        for (key in menu) { // get key
+                            value = menu[key];
+                            if (value > 0) {
+                                //push into array for display
+                                menu_data_legends.push(key);
+                                menu_data_series.push({
+                                    name: key,
+                                    value: value
+                                });
+                                index_menu++;
+                            } else {
+                                break_loop = true;
+                            }
+                        }
+                    } else {
+                        break_loop = true;
+                    }
+
+                    if (break_loop) {
+                        break;
+                    }
+                }
+                if ($('#pie_menu').length) {
 
                     var echartPie = echarts.init(document.getElementById('pie_menu'));
 
