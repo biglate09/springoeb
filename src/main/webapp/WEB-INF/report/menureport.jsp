@@ -71,7 +71,7 @@
         title: {
             text: 'Customized Pie',
             left: 'center',
-            top: 20,
+            top: 30,
             textStyle: {
                 color: '#ccc'
             }
