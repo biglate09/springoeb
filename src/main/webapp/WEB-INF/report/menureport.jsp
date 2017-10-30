@@ -52,7 +52,7 @@
 
     if ($('#pie_menu').length ){
 
-        var echartPie = echarts.init(document.getElementById('pie_menu'), theme);
+        var echartPie = echarts.init(document.getElementById('pie_menu'));
 
         echartPie.setOption({
             tooltip: {
@@ -62,7 +62,7 @@
             legend: {
                 x: 'center',
                 y: 'bottom',
-                data: ['ขนมจีบกุ้ง', 'ขนมจีบหมูสับ', 'ขนมจีบปู', 'ซาลาเปาไส้หมูแดง', 'บะหมี่ฮ่องกงหมูแดง', 'เกี๊ยวซ่า']
+                data: ['ขนมจีบกุ้ง', 'ขนมจีบหมูสับ', 'ขนมจีบปู', 'ซาลาเปาไส้หมูแดง', 'บะหมี่ฮ่องกงหมูแดง', 'เกี๊ยวซ่า', 'ก๋วยเตี๋ยวหลอด', 'ซาลาเปาถั่วแดง']
             },
             toolbox: {
                 show: true,
@@ -81,7 +81,12 @@
                     },
                     dataView: {
                         show: true,
-                        title: "ดูข้อมูล"
+                        title: "ดูข้อมูล",
+                        lang: [
+                            "ดูข้อมูล",
+                            "Close",
+                            "Refresh",
+                        ]
                     },
                     saveAsImage: {
                         show: true,
@@ -113,6 +118,12 @@
                 }, {
                     value: 204,
                     name: 'เกี๊ยวซ่า'
+                }, {
+                    value: 206,
+                    name: 'ก๋วยเตี๋ยวหลอด'
+                }, {
+                    value: 315,
+                    name: 'ซาลาเปาถั่วแดง'
                 }]
             }]
         });
