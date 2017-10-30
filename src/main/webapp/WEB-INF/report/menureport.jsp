@@ -65,7 +65,7 @@
             url: "${contextPath}/report//bestsalemenu",
             success: function (menuArray) {
                 console.log(menuArray);
-                var index_menu = 0;
+                var index_menu = 0; 
                 var break_loop = false;
                 for (var i = 0; i < menuArray.length; i++) { // loop menu
                     var menu = menuArray[i];
