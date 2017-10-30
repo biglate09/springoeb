@@ -9,6 +9,7 @@ import com.springoeb.menu.service.MenuGroupService;
 import com.springoeb.system.model.BranchUser;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
+import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.ResponseBody;
@@ -27,35 +28,35 @@ public class ReportController {
     private MenuGroupService menuGroupService;
     //-----------------------------------------------------------------------------------------------------------//
 
-//    @GetMapping("/")
-//    public String toMenuReport(){
-//        return REPORT_PATH + ".jsp";
-//    }
-//
-//    @GetMapping("/")
-//    public String toTotalReport(){
-//        return REPORT_PATH + ".jsp";
-//    }
-//
-//    @GetMapping("/")
-//    public String toEmployeeReport(){
-//        return REPORT_PATH + ".jsp";
-//    }
-//
-//    @GetMapping("/")
-//    public String toMaterialReport(){
-//        return REPORT_PATH + ".jsp";
-//    }
-//
-//    @GetMapping("/")
-//    public String toBillReport(){
-//        return REPORT_PATH + ".jsp";
-//    }
-//
-//    @GetMapping("/")
-//    public String toOtherReport(){
-//        return REPORT_PATH + ".jsp";
-//    }
+    @GetMapping("/menureport")
+    public String toMenuReport(){
+        return REPORT_PATH + "menureport.jsp";
+    }
+
+    @GetMapping("/totalincome")
+    public String toTotalReport(){
+        return REPORT_PATH + "totalincome.jsp";
+    }
+
+    @GetMapping("/emppayreport")
+    public String toEmployeeReport(){
+        return REPORT_PATH + "emppayreport.jsp";
+    }
+
+    @GetMapping("/matreport")
+    public String toMaterialReport(){
+        return REPORT_PATH + "matreport.jsp";
+    }
+
+    @GetMapping("/billreport")
+    public String toBillReport(){
+        return REPORT_PATH + "billreport.jsp";
+    }
+
+    @GetMapping("/other")
+    public String toOtherReport(){
+        return REPORT_PATH + "other.jsp";
+    }
 
     @ResponseBody
     @PostMapping("/bestsalemenu")
@@ -89,4 +90,6 @@ public class ReportController {
         String json = mapper.writeValueAsString(menuGroups);
         return json;
     }
+
+
 }

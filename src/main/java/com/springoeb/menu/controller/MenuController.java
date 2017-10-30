@@ -430,8 +430,10 @@ public class MenuController {
 
     @PostMapping("/managemenugroup")
     @ResponseBody
-    public void addAndEditMenuGroup(@ModelAttribute("menugroup") MenuGroup menuGroup) throws Exception {
-        if (menuGroup.getMenuGroupNo() != null) { // edit
+    public void addAndEditMenuGroup(@ModelAttribute("menugroup") MenuGroup menuGroup,HttpSession session) throws Exception {
+        BranchUser branchUser = (BranchUser) (session.getAttribute("branchUser"));
+        int restNo = branchUser.getBranch().getRestNo();
+//        if (menuGroup.getMenuGroupNo() != null) { // edit
 //            if (!menuGroupService.getMenuGroup(menuGroup.getMenuGroupNo()).equals(menuGroup)) {
 //                if (!menuGroupService.chkDuplicateMenuGroup(menuGroup)) {
 //                    menuGroupService.save(menuGroup);
@@ -441,11 +443,12 @@ public class MenuController {
 //            }
 //        } else { // add
 //            if (!menuGroupService.chkDuplicateMenuGroup(menuGroup)) {
-            menuGroupService.save(menuGroup);
+        menuGroup.setRestNo(restNo);
+        menuGroupService.save(menuGroup);
 //            } else {
 //                throw new Exception();
 //            }
-        }
+//        }
     }
 
     @Transactional
@@ -483,8 +486,10 @@ public class MenuController {
 
     @PostMapping("/managemenucategory")
     @ResponseBody
-    public void addAndEditMenuCategory(@ModelAttribute("menucategory") MenuCategory menuCategory) throws Exception {
-        if (menuCategory.getMenuCatNo() != null) { // edit
+    public void addAndEditMenuCategory(@ModelAttribute("menucategory") MenuCategory menuCategory,HttpSession session) throws Exception {
+        BranchUser branchUser = (BranchUser) (session.getAttribute("branchUser"));
+        int restNo = branchUser.getBranch().getRestNo();
+        //        if (menuCategory.getMenuCatNo() != null) { // edit
 //            if (!menuCategoryService.getMenuCategory(menuCategory.getMenuCatNo()).equals(menuCategory)) {
 //                if (!menuCategoryService.chkDuplicateMenuCat(menuCategory)) {
 //                    menuCategoryService.save(menuCategory);
@@ -496,11 +501,12 @@ public class MenuController {
 //            }
 //        } else { // add
 //            if (!menuCategoryService.chkDuplicateMenuCat(menuCategory)) {
+            menuCategory.setRestNo(restNo);
             menuCategoryService.save(menuCategory);
 //            } else {
 //                throw new Exception();
 //            }
-        }
+//        }
     }
 
     @Transactional
