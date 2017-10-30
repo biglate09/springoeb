@@ -1,7 +1,6 @@
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 <%@ taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt" %>
 <%@page contentType="text/html" pageEncoding="UTF-8" %>
-<%@ page import="com.springoeb.promotion.model.Promotion" %>
 <c:set var="contextPath" value="${pageContext.request.contextPath}"/>
 <!DOCTYPE html>
 <html style="height: 100%">
@@ -24,7 +23,7 @@
             </div>
             <div class="clearfix"></div>
             <div class="row">
-                    <div class="col-md-8 col-sm-8 col-xs-12">
+                    <div class="col-md-6 col-sm-6 col-xs-12">
                         <div class="x_panel">
                             <div class="x_title">
                                 <h2>Pie Graph</h2>
@@ -46,7 +45,7 @@
                                 <div class="clearfix"></div>
                             </div>
                             <div class="x_content">
-                                <div id="container" style="height:300px;"></div>
+                                <div id="container" style="height:400px;"></div>
                             </div>
                         </div>
                     </div>
@@ -94,14 +93,19 @@
             {
                 name:'访问来源',
                 type:'pie',
-                radius : '55%',
+                radius : '80%',
                 center: ['50%', '50%'],
                 data:[
                     {value:335, name:'直接访问'},
                     {value:310, name:'邮件营销'},
                     {value:274, name:'联盟广告'},
                     {value:235, name:'视频广告'},
-                    {value:400, name:'搜索引擎'}
+                    {value:400, name:'ทดสอบ'},
+                    {value:300, name:'ทดสอบจ้า'},
+                    {value:300, name:'ทดสอบจ้า'},
+                    {value:300, name:'ทดสอบจ้า'},
+                    {value:300, name:'ทดสอบจ้า'},
+                    {value:300, name:'ทดสอบจ้า'}
                 ].sort(function (a, b) { return a.value - b.value; }),
                 roseType: 'radius',
                 label: {
@@ -141,6 +145,53 @@
     if (option && typeof option === "object") {
         myChart.setOption(option, true);
     }
+
+    //***********CONFIG BY BIGHEAD*************//
+    var limit_of_menu = 10;
+    var limit_of_menuset = 10;
+    //***********CONFIG BY BIGHEAD*************//
+
+    $( document ).ready(function() {
+        $.ajax({
+            type: "POST",
+            dataType: "json",
+            url: "${contextPath}/report//bestsalemenu",
+            success: function (menuArray) {
+                console.log(menuArray);
+                var index_menu = 0;
+                var break_loop = false;
+                var data_legends = [];
+                var data_series = [];
+                for(var i = 0 ; i < menuArray.length ; i++){ // loop menu
+                    var menu = menuArray[i];
+                    if(index_menu < limit_of_menu) {
+                        for (key in menu) { // get key
+                            value = menu[key];
+                            if (value > 0) {
+                                //push into array for display
+                                data_legends.push(key);
+                                data_series.push({
+                                    name : key,
+                                    value : value
+                                });
+                                index_menu++;
+                            }else{
+                                break_loop = true;
+                            }
+                        }
+                    }else{
+                        break_loop = true;
+                    }
+
+                    if(break_loop){
+                        break;
+                    }
+                }
+                console.log(data_series);
+                console.log(data_legends);
+            }
+        });
+    });
 </script>
 </body>
 </html>
