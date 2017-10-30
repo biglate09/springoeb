@@ -73,7 +73,9 @@
                                     <div class="modal-footer">
                                         <!-- ปุ่มกดปิด (Close) ตรงส่วนล่างของ Modal -->
                                         <div class="col-md-9 col-sm-9 col-xs-12 col-md-offset-3">
-                                            <button type="submit" class="btn btn-success"  id="loadingbtn">ตกลง</button>
+                                            <button type="submit" class="btn btn-success">
+                                                <i class="fa fa-circle-o-notch fa-spin" id="loadingbtn"
+                                                   style="display:none"></i> ตกลง</button>
                                             <button type="button" class="btn btn-default" data-dismiss="modal">
                                                 ยกเลิก
                                             </button>
@@ -114,7 +116,9 @@
                                     <div class="modal-footer">
                                         <!-- ปุ่มกดปิด (Close) ตรงส่วนล่างของ Modal -->
                                         <div class="col-md-9 col-sm-9 col-xs-12 col-md-offset-3">
-                                            <button type="submit" class="btn btn-success" id="loadingbtnedit">ตกลง</button>
+                                            <button type="submit" class="btn btn-success">
+                                                <i class="fa fa-circle-o-notch fa-spin" id="loadingbtnedit"
+                                                   style="display:none"></i> ตกลง</button>
                                             <button type="button" class="btn btn-default" data-dismiss="modal">
                                                 ยกเลิก
                                             </button>
