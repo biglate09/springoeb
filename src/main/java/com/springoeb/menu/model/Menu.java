@@ -190,23 +190,4 @@ public class Menu implements Serializable{
     public void setOrders(List<Order> orders) {
         this.orders = orders;
     }
-
-    public static Map<Menu, Long> sortByValue(Map<Menu, Long> unsortMap) {
-
-        List<Map.Entry<Menu, Long>> list =
-                new LinkedList<Map.Entry<Menu, Long>>(unsortMap.entrySet());
-
-        Collections.sort(list, new Comparator<Map.Entry<Menu, Long>>() {
-            public int compare(Map.Entry<Menu, Long> o1,
-                               Map.Entry<Menu, Long> o2) {
-                return (o1.getValue()).compareTo(o2.getValue());
-            }
-        });
-
-        Map<Menu, Long> sortedMap = new LinkedHashMap<Menu, Long>();
-        for (Map.Entry<Menu, Long> entry : list) {
-            sortedMap.put(entry.getKey(), entry.getValue());
-        }
-        return sortedMap;
-    }
 }

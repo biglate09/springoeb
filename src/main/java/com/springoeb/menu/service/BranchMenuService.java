@@ -1,5 +1,7 @@
 package com.springoeb.menu.service;
 
+import com.fasterxml.jackson.core.JsonProcessingException;
+import com.fasterxml.jackson.databind.ObjectMapper;
 import com.springoeb.cashier.repository.OrderRepository;
 import com.springoeb.menu.model.BranchMenu;
 import com.springoeb.menu.model.Menu;
@@ -49,22 +51,22 @@ public class BranchMenuService {
         branchMenuRepository.save(branchMenus);
     }
 
-    public Map<Menu,Long> getBestSaleMenu(int branchNo){
-        Map<Menu,Long> menuMaps = new LinkedHashMap<Menu,Long>();
+    public Map<String,Long> getBestSaleMenu(int branchNo) throws JsonProcessingException {
+        Map<String,Long> menuMaps = new LinkedHashMap<String,Long>();
         List<BranchMenu> branchMenus = branchMenuRepository.findByBranchNoAndMenu_MenuFlagOrderByMenu_LocalFlagAsc(branchNo,Menu.flagForMenu);
         for(BranchMenu bm : branchMenus){
             long count = orderRepository.countByMenuNo(bm.getMenuNo());
-            menuMaps.put(bm.getMenu(),count);
+            menuMaps.put(bm.getMenu().getMenuNameTH(),count);
         }
         return menuMaps;
     }
 
-    public Map<Menu,Long> getBestSaleMenuSet(int branchNo){
-        Map<Menu,Long> menuMaps = new LinkedHashMap<Menu,Long>();
+    public Map<String,Long> getBestSaleMenuSet(int branchNo) throws JsonProcessingException {
+        Map<String,Long> menuMaps = new LinkedHashMap<String,Long>();
         List<BranchMenu> branchMenus = branchMenuRepository.findByBranchNoAndMenu_MenuFlagOrderByMenu_LocalFlagAsc(branchNo,Menu.flagForMenuSet);
         for(BranchMenu bm : branchMenus){
             long count = orderRepository.countByMenuNo(bm.getMenuNo());
-            menuMaps.put(bm.getMenu(),count);
+            menuMaps.put(bm.getMenu().getMenuNameTH(),count);
         }
         return menuMaps;
     }

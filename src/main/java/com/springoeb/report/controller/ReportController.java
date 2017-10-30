@@ -2,7 +2,6 @@ package com.springoeb.report.controller;
 
 import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.databind.ObjectMapper;
-import com.springoeb.menu.model.Menu;
 import com.springoeb.menu.model.MenuGroup;
 import com.springoeb.menu.service.BranchMenuService;
 import com.springoeb.menu.service.MenuGroupService;
@@ -63,10 +62,9 @@ public class ReportController {
     public String getBestSaleMenu(HttpSession session) throws JsonProcessingException {
         BranchUser branchUser = (BranchUser) (session.getAttribute("branchUser"));
         int branchNo = branchUser.getBranchNo();
-        Map<Menu,Long> menus = branchMenuService.getBestSaleMenu(branchNo);
-        menus = Menu.sortByValue(menus);
+        Map<String,Long> menus = branchMenuService.getBestSaleMenu(branchNo);
         ObjectMapper mapper = new ObjectMapper();
-        String json = mapper.writeValueAsString(menus);
+        String json = mapper.writeValueAsString(sortByValue(menus));
         return json;
     }
 
@@ -75,10 +73,9 @@ public class ReportController {
     public String getBestSaleMenuSet(HttpSession session) throws JsonProcessingException {
         BranchUser branchUser = (BranchUser) (session.getAttribute("branchUser"));
         int branchNo = branchUser.getBranchNo();
-        Map<Menu,Long> menus = branchMenuService.getBestSaleMenuSet(branchNo);
-        menus = Menu.sortByValue(menus);
+        Map<String,Long> menus = branchMenuService.getBestSaleMenuSet(branchNo);
         ObjectMapper mapper = new ObjectMapper();
-        String json = mapper.writeValueAsString(menus);
+        String json = mapper.writeValueAsString(sortByValue(menus));
         return json;
     }
 
@@ -89,7 +86,24 @@ public class ReportController {
         int restNo = branchUser.getBranch().getRestNo();
         Map<MenuGroup,Long> menuGroups = menuGroupService.getBestSaleMenuGroup(restNo);
         ObjectMapper mapper = new ObjectMapper();
-        String json = mapper.writeValueAsString(menuGroups);
+        String json = mapper.writeValueAsString(sortByValue(menuGroups));
         return json;
+    }
+
+    static <K,V extends Comparable<? super V>>
+    List<Map.Entry<K, V>> sortByValue(Map<K,V> map) {
+
+        List<Map.Entry<K,V>> sortedEntries = new ArrayList<Map.Entry<K,V>>(map.entrySet());
+
+        Collections.sort(sortedEntries,
+                new Comparator<Map.Entry<K,V>>() {
+                    @Override
+                    public int compare(Map.Entry<K,V> e1, Map.Entry<K,V> e2) {
+                        return e2.getValue().compareTo(e1.getValue());
+                    }
+                }
+        );
+
+        return sortedEntries;
     }
 }
