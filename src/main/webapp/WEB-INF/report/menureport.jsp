@@ -98,7 +98,7 @@
 
                     echartPie.setOption({
                         tooltip: {
-                            trigger: 'ite',
+                            trigger: 'item',
                             formatter: "{a} <br/>{b} : {c} ({d}%)"
                         },
                         legend: {
