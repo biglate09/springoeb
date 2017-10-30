@@ -24,30 +24,32 @@
             </div>
             <div class="clearfix"></div>
             <div class="row">
-                <div class="col-md-6 col-sm-6 col-xs-12">
-                    <div class="x_panel">
-                        <div class="x_title">
-                            <h2>Bar Graph</h2>
-                            <div class="clearfix"></div>
-                        </div>
-                        <div class="x_content" style="height: 100%; margin: 0">
-                            <div id="container" style="height: 100%"></div>
+                    <div class="col-md-8 col-sm-8 col-xs-12">
+                        <div class="x_panel">
+                            <div class="x_title">
+                                <h2>Pie Graph</h2>
+                                <ul class="nav navbar-right panel_toolbox">
+                                    <li><a class="collapse-link"><i class="fa fa-chevron-up"></i></a>
+                                    </li>
+                                    <li class="dropdown">
+                                        <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-expanded="false"><i class="fa fa-wrench"></i></a>
+                                        <ul class="dropdown-menu" role="menu">
+                                            <li><a href="#">Settings 1</a>
+                                            </li>
+                                            <li><a href="#">Settings 2</a>
+                                            </li>
+                                        </ul>
+                                    </li>
+                                    <li><a class="close-link"><i class="fa fa-close"></i></a>
+                                    </li>
+                                </ul>
+                                <div class="clearfix"></div>
+                            </div>
+                            <div class="x_content">
+                                <div id="container" style="height:300px;"></div>
+                            </div>
                         </div>
                     </div>
-                </div>
-
-                <div class="col-md-6 col-sm-6 col-xs-12">
-                    <div class="x_panel">
-                        <div class="x_title">
-                            <h2>Bar Graph</h2>
-                            <div class="clearfix"></div>
-                        </div>
-                        <div class="x_content">
-                            <div id="container_of_pieChart" style="height: 100%"></div>
-                        </div>
-                    </div>
-                </div>
-
             </div>
         </div>
     </div>
@@ -57,271 +59,81 @@
 <script src="${contextPath}/vendors/bootstrap-daterangepicker/daterangepicker.js"></script>
 <script type="text/javascript" src="http://echarts.baidu.com/gallery/vendors/echarts/echarts-all-3.js"></script>
 <script>
-    $(document).ready(function () {
-        $('.date').daterangepicker({
-                locale: 'DD-MM-YYYY',
-                singleDatePicker: true,
-                showDropdowns: true
-            }
-        );
-
-        var addfirsttime = true;
-
-        $("#promotion_modal").on('shown.bs.modal', function () {
-            if (addfirsttime) {
-                addfirsttime = false;
-                $("#datatable-menugroup").DataTable({
-                    scrollY: "40vh",
-                    paging: false,
-                    order: [[2, "desc"]],
-                    columnDefs: [
-                        {orderable: false, targets: [0]}
-                    ]
-                });
-            }
-        });
-
-        $("#promotionPicture").click(function () {
-            $("#promotionPicPath").click();
-        });
-
-        $("#promotionPicPath").change(function () {
-            if ($(this).val() == '') {
-                $("#promotionPicture").attr('src', '../images/default_upload_image.png');
-            }
-        });
-
-        refresh_table();
-    });
-
-    $('.modal').on('hidden.bs.modal', function () {
-        reset_field();
-    });
-
-    function reset_field() {
-        $("#managePromotion")[0].reset();
-        $("#promotionPicture").attr('src', '../images/default_upload_image.png');
-        $(".flat").parent().removeClass('checked');
-        $(".flat").attr('checked', false);
-    }
-
-    function filterCard() {
-        var input = $("#myInput").val();
-        var hascard = false;
-        $(".cardname").each(function () {
-            if (($(this).text().toLowerCase()).indexOf(input.toLowerCase()) == -1) {
-                $(this).parent().parent().parent().css('display', 'none');
-            } else {
-                $(this).parent().parent().parent().css('display', '');
-                hascard = true;
-            }
-        });
-
-        if (!hascard) {
-            $("#error_show").html('\
-                    <div class="well col-md-12" style="overflow: auto">\
-                        <p style="text-align:center;font-weight:bold;">ไม่พบข้อมูลโปรโมชั่น' + (input == '' ? '' : 'ด้วยคำค้นหา ' + '"' + input + '"') + '</p>\
-                    </div>\
-                    ');
-        } else {
-            $("#error_show").html('');
-        }
-    }
-
-    function set_promotion(promotionNo){
-        $.ajax({
-            type: "PUT",
-            url: "${contextPath}/promotion/getpromotion/" + promotionNo,
-            dataType: "json",
-            success: function (promo) {
-                $("#promotionNameTH").val(promo.promotionNameTH);
-                $("#promotionNameEN").val(promo.promotionNameEN);
-                $("#fromDate").val(promo.fromDate.substr(8,2) + "-" + promo.fromDate.substr(5,2) + "-" +promo.fromDate.substr(0,4));
-                $("#toDate").val(promo.toDate.substr(8,2) + "-" + promo.toDate.substr(5,2) + "-" +promo.toDate.substr(0,4));
-                $("#day").val(promo.day);
-                $("#discount").val(promo.discount);
-                $("#promotionDesc").val(promo.promotionDesc);
-                $("#promotionNo").val(promo.promotionNo);
-                $("#promotionPicture").attr('src','../images/promotion/'+promo.promotionPicPath);
-//                if(promo.available == true){
-//                    $("#available").iCheck("check");
-//                }
-
-                var menugroups = promo.menuGroupPromotions;
-                for(var i = 0 ; i < menugroups.length ; i++){
-                    $("input[value="+menugroups[i].menuGroupNo+"]").iCheck("check");
-                }
-            }
-        });
-    }
-
-    function del_promotion(promotionNo){
-        swal({
-                title: "ยืนยันการลบโปรโมชั่น",
-                text: "เมื่อยืนยัน จะไม่สามารถนำข้อมูลกลับมาได้",
-                type: "warning",
-                showCancelButton: true,
-                cancelButtonText: "ยกเลิก",
-                confirmButtonText: "ใช่, ต้องการลบ",
-                confirmButtonColor: "#DD6B55",
-                closeOnConfirm: false
-
-            },
-            function () {
-                $.ajax({
-                    type: "DELETE",
-                    url: "${contextPath}/promotion/deletepromotion/" + promotionNo,
-                    success: function (json) {
-                        swal("สำเร็จ","โปรโมชั่นถูกลบเรียบร้อยแล้ว", "success");
-                        refresh_table();
-                    },
-                    error: function (json) {
-                        swal("ไม่สำเร็จ", "กรุณาลองใหม่อีกครั้ง", "error");
-                    }
-                });
-            });
-    }
-
-
-    $("#managePromotion").submit(function () {
-        $('#loadingbtn').show();
-        $.ajax({
-            type: "POST",
-            data: new FormData($("#managePromotion")[0]),
-            enctype: 'multipart/form-data',
-            cache: false,
-            contentType: false,
-            processData: false,
-            url: "${contextPath}/promotion/managepromotion",
-            success: function (result) {
-                $('#loadingbtn').hide();
-                swal("สำเร็จ", "โปรโมชั่นถูก"+($("#promotionNo").val() == '' ? 'เพิ่ม' : 'แก้ไข')+"เรียบร้อยแล้ว", "success");
-                reset_field();
-                $("#promotion_modal").modal('toggle');
-                refresh_table();
-            }, error: function (result) {
-                $('#loadingbtn').hide();
-                swal("ไม่สำเร็จ", "ชื่อโปรโมชั่นอาจซ้ำ กรุณาลองใหม่ในภายหลัง", "error");
-            }
-        });
-        return false;
-    });
-
-    function refresh_table() {
-        $.ajax({
-            type: "POST",
-            url: "${contextPath}/promotion/getpromotions",
-            dataType: "json",
-            success: function (json) {
-                $("#promotion_thumbnail").empty();
-                if (json.length != 0) {
-                    for (var i = 0; i < json.length; i++) {
-                        var promotion = json[i];
-                        var menugroup = promotion.menuGroupPromotions;
-                        var menugroup_txt = "";
-                        for(var j = 0; j < menugroup.length; j++){
-                            menugroup_txt += "<span style='white-space:nowrap;overflow:hidden;text-overflow: ellipsis;'>" + menugroup[j].menuGroup.menuGroupNameTH + "</span><br>";
-                        }
-                        var div = '<div class="col-md-6 col-sm-6 col-xs-12">\
-                            <div class="thumbnail">\
-                            <div class="col-md-6 image view view-first" style="height:100%;">\
-                            <img style="width: 100%; display: block;" src="' + (promotion.promotionPicPath == null ? ('../images/default_upload_image.png') : ('../images/promotion/' + promotion.promotionPicPath) ) + '" alt="image"/>\
-                            <div class="mask">\
-                            <p>' + (promotion.promotionDesc == null ? 'ไม่มีรายละเอียด' : promotion.promotionDesc) + '</p>\
-                            <div class="tools tools-bottom" style="margin-top:200px;">\
-                            </div>\
-                            </div>\
-                            </div>\
-                            <div class="col-md-6 caption" style="height:100%;color:#73879C">\
-                            <div class="col-md-12 cardname" data-toggle="modal" data-target="#promotion_modal" onclick="set_promotion(' + promotion.promotionNo + ')" style="font-weight:bold;white-space:nowrap;overflow:hidden;text-overflow: ellipsis;cursor:pointer;">' + promotion.promotionNameTH + ' / ' + promotion.promotionNameEN + '</div>\
-                            <div class="col-md-12 foodDesc">\
-                            <div>\
-                            <p style="text-align:center;font-weight:bold;">รายละเอียดโปรโมชั่น</p>\
-                            <span class="col-md-offset-1 col-md-4" style="font-weight:bold">ลดราคา </span> <span class="col-md-7">' + promotion.discount  + '%</span>\
-                            <span class="col-md-offset-1 col-md-4" style="font-weight:bold">เริ่มต้น </span> <span class="col-md-7">' + promotion.fromDate  + '</span>\
-                            <span class="col-md-offset-1 col-md-4" style="font-weight:bold">สิ้นสุด </span> <span class="col-md-7">' + promotion.toDate  + '</span>\
-                            <span class="col-md-offset-1 col-md-4" style="font-weight:bold">วัน </span> <span class="col-md-7">' + (promotion.day == '${Promotion.MONDAY}' ? 'วันจันทร์' : promotion.day == '${Promotion.TUESDAY}' ? 'วันอังคาร' : promotion.day == '${Promotion.WEDNESDAY}' ? 'วันพุธ' : promotion.day == '${Promotion.THURSDAY}' ? 'วันพฤหัสบดี' : promotion.day == '${Promotion.FRIDAY}' ? 'วันศุกร์' : promotion.day == '${Promotion.SATURDAY}' ? 'วันเสาร์' : promotion.day == '${Promotion.SUNDAY}' ? 'วันอาทิตย์' : 'ทุกวัน')  + '</span>\
-                            <p style="text-align:center;font-weight:bold;">------------------------------</p>\
-                            <p style="text-align:center;font-weight:bold;">หมวดหมู่เมนูที่ร่วมโปรโมชั่น</p>\
-                            <span class="col-md-offset-1 col-md-10" style="text-align:center;">\
-                            '+ menugroup_txt +'\
-                            </span>\
-                            </div>\
-                            </div>\
-                            <div class="col-md-12" style="font-weight:bold;text-align:right;"> \
-                            <a title="แก้ไข" style="color:#73879C;cursor:pointer;margin-right:5px;" data-toggle="modal" data-target="#promotion_modal" onclick="set_promotion(' + promotion.promotionNo + ')"><i class="fa fa-pencil"></i></a>' + '\
-                            <a title="ลบ" onclick="del_promotion(' + promotion.promotionNo + ')" style="color:#73879C;cursor:pointer;"><i class="fa fa-trash"></i></a>' + '\
-                            </div>\
-                            </div>\
-                            </div>\
-                            </div>';
-
-                        //<a title="โปรโมชั่นนี้' + (promotion.available == true ? '' : 'ไม่' ) + 'พร้อมให้บริการ คลิกเพื่อเปลี่ยน" onclick="change_available(' + promotion.promotionNo + ')" style="color:#73879C;cursor:pointer;margin-right:5px;"><i class="fa ' + (promotion.available == true ? 'fa-check-square-o' : 'fa-square-o' ) + '"></i></a>\
-                        $("#promotion_thumbnail").append(div);
-                        $("#error_show").html('');
-                    }
-                } else {
-                    $("#error_show").html('\
-                    <div class="well col-md-12" style="overflow: auto">\
-                        <p style="text-align:center;font-weight:bold;"> ไม่พบข้อมูลโปรโมชั่น </p>\
-                    </div>\
-                    ');
-                }
-            }
-        });
-    }
 //    JS FOR PIE AREA-------------------------------------------------
     var dom = document.getElementById("container");
     var myChart = echarts.init(dom);
+
     var app = {};
     option = null;
     option = {
-        title : {
-            text: 'เมนูเดี่ยว (ขายดี)',
-            subtext: 'เมนูอาหารเดี่ยวที่ขายดีที่สุด 10 อันดับแรก',
-            x:'left'
+        backgroundColor: '#2c343c',
+
+        title: {
+            text: 'Customized Pie',
+            left: 'center',
+            top: 20,
+            textStyle: {
+                color: '#ccc'
+            }
         },
+
         tooltip : {
             trigger: 'item',
             formatter: "{a} <br/>{b} : {c} ({d}%)"
         },
-        legend: {
-            height : '100%',
-            x : 'center',
-            y : 'bottom',
-            data:['rose1','rose2','rose3','rose4','rose5','rose6','rose7','rose8']
-        },
-        toolbox: {
-            show : true,
-            feature : {
-                mark : {show: true},
-                dataView : {show: true, readOnly: false},
-                magicType : {
-                    show: true,
-                    type: ['pie', 'funnel']
-                },
-                restore : {show: true},
-                saveAsImage : {show: true}
+
+        visualMap: {
+            show: false,
+            min: 80,
+            max: 600,
+            inRange: {
+                colorLightness: [0, 1]
             }
         },
-        calculable : true,
         series : [
             {
-                name:'เมนูเดี่ยว',
+                name:'访问来源',
                 type:'pie',
-                radius : [30, 110],
-                center : ['50%', '50%'],
-                roseType : 'area',
+                radius : '55%',
+                center: ['50%', '50%'],
                 data:[
-                    {value:10, name:'rose1'},
-                    {value:5, name:'rose2'},
-                    {value:15, name:'rose3'},
-                    {value:25, name:'rose4'},
-                    {value:20, name:'rose5'},
-                    {value:35, name:'rose6'},
-                    {value:30, name:'rose7'},
-                    {value:40, name:'rose8'}
-                ]
+                    {value:335, name:'直接访问'},
+                    {value:310, name:'邮件营销'},
+                    {value:274, name:'联盟广告'},
+                    {value:235, name:'视频广告'},
+                    {value:400, name:'搜索引擎'}
+                ].sort(function (a, b) { return a.value - b.value; }),
+                roseType: 'radius',
+                label: {
+                    normal: {
+                        textStyle: {
+                            color: 'rgba(255, 255, 255, 0.3)'
+                        }
+                    }
+                },
+                labelLine: {
+                    normal: {
+                        lineStyle: {
+                            color: 'rgba(255, 255, 255, 0.3)'
+                        },
+                        smooth: 0.2,
+                        length: 10,
+                        length2: 20
+                    }
+                },
+                itemStyle: {
+                    normal: {
+                        color: '#c23531',
+                        shadowBlur: 200,
+                        shadowColor: 'rgba(0, 0, 0, 0.5)'
+                    }
+                },
+
+                animationType: 'scale',
+                animationEasing: 'elasticOut',
+                animationDelay: function (idx) {
+                    return Math.random() * 200;
+                }
             }
         ]
     };

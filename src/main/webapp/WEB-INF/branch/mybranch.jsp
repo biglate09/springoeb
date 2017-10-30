@@ -166,6 +166,7 @@
                 }
 
                 for (var i = 0; i < provides.length; i++) {
+                    console.log('loop');
                     var provide = provides[i];
                     $(".depend-field").eq(progress).append('\
                     <option value="' + provide[progressAttName + "No"] + '">' + provide[progressAttName + "Name"] + '</option>\

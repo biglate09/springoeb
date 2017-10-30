@@ -15,7 +15,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.ResponseBody;
 
 import javax.servlet.http.HttpSession;
-import java.util.Map;
+import java.util.*;
 
 @RequestMapping("/report")
 @Controller
@@ -64,6 +64,7 @@ public class ReportController {
         BranchUser branchUser = (BranchUser) (session.getAttribute("branchUser"));
         int branchNo = branchUser.getBranchNo();
         Map<Menu,Long> menus = branchMenuService.getBestSaleMenu(branchNo);
+        menus = Menu.sortByValue(menus);
         ObjectMapper mapper = new ObjectMapper();
         String json = mapper.writeValueAsString(menus);
         return json;
@@ -75,6 +76,7 @@ public class ReportController {
         BranchUser branchUser = (BranchUser) (session.getAttribute("branchUser"));
         int branchNo = branchUser.getBranchNo();
         Map<Menu,Long> menus = branchMenuService.getBestSaleMenuSet(branchNo);
+        menus = Menu.sortByValue(menus);
         ObjectMapper mapper = new ObjectMapper();
         String json = mapper.writeValueAsString(menus);
         return json;
@@ -90,6 +92,4 @@ public class ReportController {
         String json = mapper.writeValueAsString(menuGroups);
         return json;
     }
-
-
 }
