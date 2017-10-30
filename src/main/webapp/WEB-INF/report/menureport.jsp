@@ -35,7 +35,7 @@
                                 <div class="clearfix"></div>
                             </div>
                             <div class="x_content">
-                                <div id="container" style="height:400px;"></div>
+                                <div id="pie_menu" style="height:400px;"></div>
                             </div>
                         </div>
                     </div>
@@ -48,7 +48,103 @@
 <script src="${contextPath}/vendors/bootstrap-daterangepicker/daterangepicker.js"></script>
 <script type="text/javascript" src="http://echarts.baidu.com/gallery/vendors/echarts/echarts-all-3.js"></script>
 <script>
-//    JS FOR PIE AREA-------------------------------------------------
+    //echart Pie
+
+    if ($('#pie_menu').length ){
+
+        var echartPie = echarts.init(document.getElementById('pie_menu'), theme);
+
+        echartPie.setOption({
+            tooltip: {
+                trigger: 'item',
+                formatter: "{a} <br/>{b} : {c} ({d}%)"
+            },
+            legend: {
+                x: 'center',
+                y: 'bottom',
+                data: ['ขนมจีบกุ้ง', 'ขนมจีบหมูสับ', 'ขนมจีบปู', 'ซาลาเปาไส้หมูแดง', 'บะหมี่ฮ่องกงหมูแดง', 'เกี๊ยวซ่า']
+            },
+            toolbox: {
+                show: true,
+                feature: {
+                    magicType: {
+                        show: true,
+                        type: ['pie', 'funnel'],
+                        option: {
+                            funnel: {
+                                x: '25%',
+                                width: '50%',
+                                funnelAlign: 'left',
+                                max: 1548
+                            }
+                        }
+                    },
+                    dataView: {
+                        show: true,
+                        title: "ดูข้อมูล"
+                    },
+                    saveAsImage: {
+                        show: true,
+                        title: "Save Image"
+                    }
+                }
+            },
+            calculable: true,
+            series: [{
+                name: 'เมนูอาหารแบบเดี่ยว',
+                type: 'pie',
+                radius: '55%',
+                center: ['50%', '48%'],
+                data: [{
+                    value: 335,
+                    name: 'ขนมจีบกุ้ง'
+                }, {
+                    value: 310,
+                    name: 'ขนมจีบหมูสับ'
+                }, {
+                    value: 234,
+                    name: 'ขนมจีบปู'
+                }, {
+                    value: 200,
+                    name: 'ซาลาเปาไส้หมูแดง'
+                }, {
+                    value: 189,
+                    name: 'บะหมี่ฮ่องกงหมูแดง'
+                }, {
+                    value: 204,
+                    name: 'เกี๊ยวซ่า'
+                }]
+            }]
+        });
+
+        var dataStyle = {
+            normal: {
+                label: {
+                    show: false
+                },
+                labelLine: {
+                    show: false
+                }
+            }
+        };
+
+        var placeHolderStyle = {
+            normal: {
+                color: 'rgba(0,0,0,0)',
+                label: {
+                    show: false
+                },
+                labelLine: {
+                    show: false
+                }
+            },
+            emphasis: {
+                color: 'rgba(0,0,0,0)'
+            }
+        };
+
+    }
+    //    JS FOR PIE AREA-------------------------------------------------
     var dom = document.getElementById("container");
     var myChart = echarts.init(dom);
 
