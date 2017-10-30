@@ -221,6 +221,7 @@
                 $("#addMenuGroup").modal('toggle');
                 refresh_table();
             },error: function(result){
+                $('#loadingbtn').hide();
                 swal("ไม่สำเร็จ", "ชื่ออาจซ้ำ กรุณาลองใหม่ในภายหลัง", "error");
             }
         });
@@ -249,6 +250,7 @@
                 $("#editMenuGroup").modal('toggle');
                 refresh_table();
             },error: function(result){
+                $('#loadingbtnedit').hide();
                 swal("ไม่สำเร็จ", "ชื่ออาจซ้ำ กรุณาลองใหม่ในภายหลัง", "error");
             }
         });

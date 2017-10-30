@@ -198,6 +198,7 @@
                 $("#addEmpPos").modal('toggle');
                 refresh_table();
             },error: function(result){
+                $('#loadingbtn').hide();
                 swal("ไม่สำเร็จ", "กรุณาลองใหม่ในภายหลัง", "error");
             }
         });
@@ -241,6 +242,7 @@
                 $("#editEmpPos").modal('toggle');
                 refresh_table();
             },error: function(result){
+                $('#loadingbtnedit').hide();
                 swal("ไม่สำเร็จ", "ชื่อตำแหน่งอาจซ้ำหรือเซิร์ฟเวอร์มีปัญหา", "error");
             }
         });

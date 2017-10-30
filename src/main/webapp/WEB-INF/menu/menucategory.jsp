@@ -165,6 +165,7 @@
                 $("#addMenuCat").modal('toggle');
                 refresh_table();
             },error: function(result){
+                $('#loadingbtn').hide();
                 swal("ไม่สำเร็จ", "ชื่อประเภทอาจซ้ำหรือเซิร์ฟเวอร์มีปัญหา", "error");
             }
         });
@@ -207,6 +208,7 @@
                 $("#editMenuCat").modal('toggle');
                 refresh_table();
             },error: function(result){
+                $('#loadingbtnedit').hide();
                 swal("ไม่สำเร็จ", "ชื่อประเภทอาหารอาจซ้ำหรือเซิร์ฟเวอร์มีปัญหา", "error");
             }
         });

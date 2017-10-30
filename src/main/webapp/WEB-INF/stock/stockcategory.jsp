@@ -88,7 +88,7 @@
                                             <div class="modal-footer">
                                                 <!-- ปุ่มกดปิด (Close) ตรงส่วนล่างของ Modal -->
                                                 <div class="col-md-9 col-sm-9 col-xs-12 col-md-offset-3">
-                                                    <button type="submit" class="btn btn-success">ตกลง</button>
+                                                    <button type="submit" class="btn btn-success" id="loadingbtn">ตกลง</button>
                                                     <button type="button" class="btn btn-default" data-dismiss="modal">
                                                         ยกเลิก
                                                     </button>
@@ -141,7 +141,7 @@
                                             <div class="modal-footer">
                                                 <!-- ปุ่มกดปิด (Close) ตรงส่วนล่างของ Modal -->
                                                 <div class="col-md-9 col-sm-9 col-xs-12 col-md-offset-3">
-                                                    <button type="submit" class="btn btn-success">ตกลง</button>
+                                                    <button type="submit" class="btn btn-success" id="loadingbtnedit">ตกลง</button>
                                                     <button type="button" class="btn btn-default" data-dismiss="modal">
                                                         ยกเลิก
                                                     </button>
@@ -208,16 +208,19 @@
 
     $("#add_stock_category").submit(function(){
         var object = $("#add_stock_category").serialize();
+        $('#loadingbtn').show();
         $.ajax({
             type: "POST",
             data: object,
             url: "${contextPath}/stock/managestockcategory",
             success: function (result) {
+                $('#loadingbtn').hide();
                 swal("สำเร็จ", "ชื่อประเภท " + $("#add_stock_category").val() + " ถูกเพิ่มเรียบร้อยแล้ว", "success");
                 reset_field();
                 $("#addStockCat").modal('toggle');
                 refresh_table();
             },error: function(result){
+                $('#loadingbtn').hide();
                 swal("ไม่สำเร็จ", "ชื่ออาจซ้ำ กรุณาลองใหม่ในภายหลัง", "error");
             }
         });
@@ -234,16 +237,19 @@
 
     $("#edit_stock_category").submit(function(){
         var object = $("#edit_stock_category").serialize();
+        $('#loadingbtnedit').show();
         $.ajax({
             type: "POST",
             data: object,
             url: "${contextPath}/stock/managestockcategory",
             success: function (result) {
+                $('#loadingbtnedit').hide();
                 swal("สำเร็จ", "ชื่อประเภท " + $("#add_stock_category").val() + " ถูกแก้ไขเรียบร้อยแล้ว", "success");
                 $("#edit_stock_category")[0].reset();
                 $("#editStockCat").modal('toggle');
                 refresh_table();
             },error: function(result){
+                $('#loadingbtnedit').hide();
                 swal("ไม่สำเร็จ", "ชื่ออาจซ้ำ กรุณาลองใหม่ในภายหลัง", "error");
             }
         });

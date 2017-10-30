@@ -777,6 +777,7 @@ console.log(hasmymenu);
                     $("#addMenuSet").modal('toggle');
                     refresh_table();
                 }, error: function (result) {
+                    $('#loadingbtn').hide();
                     swal("ไม่สำเร็จ", "ชื่อภาษาไทยหรืออังกฤษอาจซ้ำ กรุณาลองใหม่ในภายหลัง", "error");
                 }
             });
@@ -888,6 +889,7 @@ console.log(hasmymenu);
                     $("#edit_menuset_available").attr('checked', false);
                     refresh_table();
                 }, error: function (result) {
+                    $('#loadingbtnedit').hide();
                     swal("ไม่สำเร็จ", "ชื่อภาษาไทยหรืออังกฤษอาจซ้ำ กรุณาลองใหม่ในภายหลัง", "error");
                 }
             });
