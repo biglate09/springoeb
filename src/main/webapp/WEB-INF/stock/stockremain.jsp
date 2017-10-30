@@ -182,7 +182,9 @@
                                                     <span id="update_remain"></span> <span class="unit"></span></h2>
                                                 </div>
                                                 <div class="col-md-8 col-sm-8 col-xs-12">
-                                                    <button type="submit" class="btn btn-success" id="loadingbtnedit">ตกลง</button>
+                                                    <button type="submit" class="btn btn-success">
+                                                        <i class="fa fa-circle-o-notch fa-spin" id="loadingbtnedit"
+                                                           style="display:none"></i> ตกลง</button>
                                                     <button type="button" class="btn btn-default" data-dismiss="modal">
                                                         ยกเลิก
                                                     </button>
