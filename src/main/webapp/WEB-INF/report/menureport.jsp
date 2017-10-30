@@ -29,7 +29,7 @@
                         <div class="x_title">
                             <h2>เมนูเดี่ยว (ขายดี)</h2>
                             <ul class="nav navbar-right panel_toolbox">
-                                <li><a class="collapse-link"><i class="fa fa-chevron-up"></i></a>
+                                <li><a class="collapse-link"><i class="fa fa-chevron-up right"></i></a>
                                 </li>
                             </ul>
                             <div class="clearfix"></div>
@@ -65,7 +65,7 @@
             url: "${contextPath}/report//bestsalemenu",
             success: function (menuArray) {
                 console.log(menuArray);
-                var index_menu = 0; 
+                var index_menu = 0;
                 var break_loop = false;
                 for (var i = 0; i < menuArray.length; i++) { // loop menu
                     var menu = menuArray[i];
@@ -123,7 +123,8 @@
                                 },
                                 dataView: {
                                     show: true,
-                                    title: "ดูข้อมูล"
+                                    title: "ดูข้อมูล",
+                                    lang: ['ดูข้อมูล', 'ปิด' , 'รีเฟรช']
                                 },
                                 saveAsImage: {
                                     show: true,
@@ -133,7 +134,7 @@
                         },
                         calculable: true,
                         series: [{
-                            name: 'เมนูอาหารแบบเดี่ยว',
+                            name: 'เมนูอาหารแบบเดี่ยว (ขายดี)',
                             type: 'pie',
                             radius: '55%',
                             center: ['50%', '48%'],
@@ -166,11 +167,11 @@
                             color: 'rgba(0,0,0,0)'
                         }
                     };
-
                 }
             }
         });
     });
+
 </script>
 </body>
 </html>
