@@ -136,7 +136,19 @@
                     </c:if>
                     <c:if test="${branchUser.roleNo == Role.MANAGER}">
                         <li>
-                            <a><i class="fa fa-line-chart"></i> รายงานผลประกอบการ</a>
+                            <a><i class="fa fa-line-chart"></i> รายงาน <span class="fa fa-chevron-down"></span></a>
+                            <ul class="nav child_menu">
+                                <li><a>รายรับ/รายจ่าย <span class="fa fa-chevron-down"></a></li>
+                                <ul class="nav child_menu">
+                                    <li class="sub_menu"><a id="totalincome" href="${contextPath}/report/totalincome">ทั้งหมด</a></li>
+                                    <li class="sub_menu"><a id="emppayreport" href="${contextPath}/report/emppayreport">ค่าจ้างพนักงาน</a></li>
+                                    <li class="sub_menu"><a id="matreport" href="${contextPath}/report/matreport">วัตถุดิบ</a></li>
+                                    <li class="sub_menu"><a id="billreport" href="${contextPath}/report/billreport">ใบเสร็จอาหาร</a></li>
+                                    <li class="sub_menu"><a id="other" href="${contextPath}/report/other">อื่นๆ</a></li>
+                                </ul>
+
+                                <li><a id="menureport" href="${contextPath}/report/menureport">เมนูอาหาร</a></li>
+                            </ul>
                         </li>
                     </c:if>
                     <c:if test="${branchUser.roleNo == Role.MANAGER || branchUser.roleNo == Role.KITCHEN}">
