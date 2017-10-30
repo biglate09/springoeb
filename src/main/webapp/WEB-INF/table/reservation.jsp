@@ -251,7 +251,7 @@
                         numberOfPerson_order = "0" + numberOfPerson_order;
                     }
                     var date = new Date(obj.date + " " + obj.time);
-                    var datetime_display = (date.getDate() < 10 ? '0' + date.getDate() : date.getDate()) + '/' + ((date.getMonth() + 1) < 10 ? '0' + (date.getMonth() + 1) : date.getMonth()) + '/' + date.getFullYear();
+                    var datetime_display = (date.getDate() < 10 ? '0' + date.getDate() : date.getDate()) + '/' + ((date.getMonth() + 1) < 10 ? '0' + (date.getMonth() + 1) : date.getMonth()+1) + '/' + date.getFullYear();
                     datetime_display += ' ' + date.getHours() + '.' + (date.getMinutes() < 10 ? '0' + date.getMinutes() : date.getMinutes()) + ' น.';
                     var datetime_order = '' + date.getFullYear() + ((date.getMonth() + 1) < 10 ? '0' + (date.getMonth() + 1) : (date.getMonth() + 1)) + (date.getDate() < 10 ? '0' + date.getDate() : date.getDate()) + (date.getHours() < 10 ? "0" + date.getHours() : date.getHours()) + (date.getMinutes() < 10 ? "0" + date.getMinutes() : date.getMinutes());
                     ///////////////////

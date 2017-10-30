@@ -24,6 +24,8 @@ public class Reservation {
     private String tel;
     @Column(name = "branchNo")
     private Integer branchNo;
+    @Column(name = "queCode")
+    private String queCode;
 
     public Integer getReserveNo() {
         return reserveNo;
@@ -87,6 +89,14 @@ public class Reservation {
 
     public void setUserName(String userName) {
         this.userName = userName;
+    }
+
+    public String getQueCode() {
+        return queCode;
+    }
+
+    public void setQueCode(String queCode) {
+        this.queCode = queCode;
     }
 
     @Override

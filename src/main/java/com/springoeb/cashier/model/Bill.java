@@ -17,7 +17,7 @@ public class Bill {
     private Date billDate;
     @Column(name = "billTime")
     private Time billTime;
-    @Column(name = "status")
+    @Column(name = "billStatus")
     private String status;
     @Column(name = "tableNo",updatable = true,insertable = true)
     private Integer tableNo;
