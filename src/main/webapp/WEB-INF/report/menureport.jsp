@@ -7,8 +7,7 @@
 <html style="height: 100%">
 <head>
     <jsp:include page="../_include/topenv.jsp"/>
-    <title>จัดการโปรโมชั่นเมนูอาหาร</title>
-    <link href="${contextPath}/vendors/bootstrap-daterangepicker/daterangepicker.css" rel="stylesheet">
+    <title>ภาพรวมเมนูอาหาร</title>
 </head>
 <body class="nav-md">
 <div class="container body">

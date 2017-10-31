@@ -1,14 +1,12 @@
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 <%@ taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt" %>
 <%@page contentType="text/html" pageEncoding="UTF-8" %>
-<%@ page import="com.springoeb.promotion.model.Promotion" %>
 <c:set var="contextPath" value="${pageContext.request.contextPath}"/>
 <!DOCTYPE html>
 <html>
 <head>
     <jsp:include page="../_include/topenv.jsp"/>
-    <title>จัดการโปรโมชั่นเมนูอาหาร</title>
-    <link href="${contextPath}/vendors/bootstrap-daterangepicker/daterangepicker.css" rel="stylesheet">
+    <title>ภาพรวมค่าจ้างพนักงาน</title>
 </head>
 <body class="nav-md">
 <div class="container body">
