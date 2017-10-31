@@ -35,7 +35,7 @@ public class Order {
     public static String RESERVED = "reserved";
     public static String WAITING = "waiting";
     public static String COOKING = "cooking";
-    public static String COOKED = "cooked";
+    public static String COOKED = "ready";
     public static String SERVED = "served";
     public static String CANCELLED = "cancelled";
 

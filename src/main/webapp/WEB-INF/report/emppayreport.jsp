@@ -25,9 +25,16 @@
                 <div class="col-md-12 col-sm-12 col-xs-12">
                     <div class="x_panel">
                         <div class="x_title">
-                            <div class="col-md-7"><h2>เมนูเดี่ยว (ขายดี)</h2></div>
+                            <div class="col-md-7"><h2>ค่าจ้างพนักงาน</h2></div>
                             <div class="col-md-2">
-                                <select name="month" class="form-control">
+                                <select name="year" class="form-control menuchange" id="empyear">
+                                    <option value="" disabled>ปี พ.ศ.</option>
+                                    <option value="0">ทุกปี</option>
+                                    <option value="2017">2560</option>
+                                </select>
+                            </div>
+                            <div class="col-md-2">
+                                <select name="month" class="form-control menuchange" id="empmonth" disabled>
                                     <option value="" disabled>เดือน</option>
                                     <option value="0">ทุกเดือน</option>
                                     <option value="1">มกราคม</option>
@@ -44,13 +51,6 @@
                                     <option value="12">ธันวาคม</option>
                                 </select>
                             </div>
-                            <div class="col-md-2">
-                                <select id="days" name="day" class="form-control">
-                                    <option value="" disabled>วันที่</option>
-                                    <option value="0">ทุกวัน</option>
-
-                                </select>
-                            </div>
 
                             <ul class="nav navbar-right panel_toolbox" style="min-width: 0px">
                                 <li><a class="collapse-link"><i class="fa fa-chevron-up right"></i></a>
@@ -59,7 +59,7 @@
                             <div class="clearfix"></div>
                         </div>
                         <div class="x_content">
-                            <div id="pie_emppay" style="height:400px;"></div>
+                            <div id="echart_line_emppay" style="height:400px;"></div>
                         </div>
                     </div>
                 </div>
@@ -75,39 +75,37 @@
 <script>
     //echart Pie
     //***********CONFIG BY BIGHEAD*************//
-    var limit_of_menu = 10;
-    var menu_data_legends = [];
-    var menu_data_series = [];
-    var limit_of_menuset = 10;
-    var menuset_data_legends = [];
-    var menuset_data_series = [];
+    var limit_of_paid = 10;
+    var emp_data_legends = [];
+    var emp_data_series = [];
     //***********CONFIG BY BIGHEAD*************//
 
     $(document).ready(function () {
-        emppaid();
+        emppaid(0,0);
     });
 
-    function emppaid() {
+    function emppaid(month, year) {
         $.ajax({
             type: "POST",
             dataType: "json",
             url: "${contextPath}/report/",
+            data: {month: month, year: year},
             success: function (menuArray) {
-                var index_menu = 0;
+                var index = 0;
                 var break_loop = false;
                 for (var i = 0; i < menuArray.length; i++) { // loop menu
                     var menu = menuArray[i];
-                    if (index_menu < limit_of_menu) {
+                    if (index < limit_of_paid) {
                         for (key in menu) { // get key
                             value = menu[key];
                             if (value > 0) {
                                 //push into array for display
-                                menu_data_legends.push(key);
-                                menu_data_series.push({
+                                emp_data_legends.push(key);
+                                emp_data_series.push({
                                     name: key,
                                     value: value
                                 });
-                                index_menu++;
+                                index++;
                             } else {
                                 break_loop = true;
                             }
@@ -120,39 +118,29 @@
                         break;
                     }
                 }
-                if ($('#pie_emppay').length) {
+                if ($('#echart_line_emppay').length ){
 
-                    var echartPie = echarts.init(document.getElementById('pie_emppay'));
+                    var echartLine = echarts.init(document.getElementById('echart_line_emppay'));
 
-                    echartPie.setOption({
+                    echartLine.setOption({
                         tooltip: {
-                            trigger: 'item',
-                            formatter: "{a} <br/>{b} : {c} ({d}%)"
+                            trigger: 'axis'
                         },
                         legend: {
-                            x: 'center',
-                            y: 'bottom',
-                            data: menu_data_legends
+                            x: 220,
+                            y: 40,
+                            data: emp_data_legends
                         },
                         toolbox: {
                             show: true,
                             feature: {
                                 magicType: {
-                                    show: true,
-                                    type: ['pie', 'funnel'],
-                                    option: {
-                                        funnel: {
-                                            x: '25%',
-                                            width: '50%',
-                                            funnelAlign: 'left',
-                                            max: 1548
-                                        }
-                                    }
+                                    show: true
                                 },
                                 dataView: {
                                     show: true,
                                     title: "ดูข้อมูล",
-                                    lang: ['ดูข้อมูล','ปิด','รีเฟรช']
+                                    lang: ['ดูข้อมูล', 'ปิด', 'รีเฟรช']
                                 },
                                 saveAsImage: {
                                     show: true,
@@ -162,44 +150,50 @@
                             }
                         },
                         calculable: true,
+                        xAxis: [{
+                            type: 'category',
+                            boundaryGap: false,
+                            data: ['Mon', 'Tue', 'Wed', 'Thu', 'Fri', 'Sat', 'Sun']
+                        }],
+                        yAxis: [{
+                            type: 'value'
+                        }],
                         series: [{
                             name: 'ค่าจ้างพนักงาน',
-                            type: 'pie',
-                            radius: '55%',
-                            center: ['50%', '48%'],
-                            data: menu_data_series
+                            type: 'line',
+                            smooth: true,
+                            itemStyle: {
+                                normal: {
+                                    areaStyle: {
+                                        type: 'default'
+                                    }
+                                }
+                            },
+                            data: emp_data_series
                         }]
                     });
 
-                    var dataStyle = {
-                        normal: {
-                            label: {
-                                show: false
-                            },
-                            labelLine: {
-                                show: false
-                            }
-                        }
-                    };
-
-                    var placeHolderStyle = {
-                        normal: {
-                            color: 'rgba(0,0,0,0)',
-                            label: {
-                                show: false
-                            },
-                            labelLine: {
-                                show: false
-                            }
-                        },
-                        emphasis: {
-                            color: 'rgba(0,0,0,0)'
-                        }
-                    };
+                }
+                if (index == 0) {
+                    $("#echart_line_emppay").html("ไม่มีข้อมูลการขายเมนูเดี่ยว "+ $("#empmonth option:selected").text() + " " + $("#empyear option:selected").text());
                 }
             }
         });
     }
+    $("#empyear").change(function(){
+        if($(this).val() == 0){
+            $("#empmonth").val(0);
+            $("#empmonth").attr('disabled',true);
+        }else{
+            $("#empmonth").attr('disabled',false);
+        }
+    });
+
+    $(".menuchange").change(function(){
+        year = $("#empyear").val();
+        month = $("#empmonth").val();
+        init_bestsalemenu(month,year);
+    });
 
 </script>
 </body>

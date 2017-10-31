@@ -6,9 +6,7 @@ import com.springoeb.menu.repository.MenuGroupRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
-import java.util.LinkedHashMap;
 import java.util.List;
-import java.util.Map;
 
 @Service
 public class MenuGroupService {
@@ -53,13 +51,13 @@ public class MenuGroupService {
         }
     }
 
-    public Map<MenuGroup,Long> getBestSaleMenuGroup(int restNo){
-        Map<MenuGroup,Long> menuGroupMaps = new LinkedHashMap<MenuGroup,Long>();
-        List<MenuGroup> menuGroups = menuGroupRepository.findByRestNo(restNo);
-        for(MenuGroup mg : menuGroups){
-            long count = orderRepository.countByMenu_MenuGroupNo(mg.getMenuGroupNo());
-            menuGroupMaps.put(mg,count);
-        }
-        return menuGroupMaps;
-    }
+//    public Map<MenuGroup,Long> getBestSaleMenuGroup(int restNo){
+//        Map<MenuGroup,Long> menuGroupMaps = new LinkedHashMap<MenuGroup,Long>();
+//        List<MenuGroup> menuGroups = menuGroupRepository.findByRestNo(restNo);
+//        for(MenuGroup mg : menuGroups){
+//            long count = orderRepository.sumByMenu_MenuGroupNo(mg.getMenuGroupNo());
+//            menuGroupMaps.put(mg,count);
+//        }
+//        return menuGroupMaps;
+//    }
 }
