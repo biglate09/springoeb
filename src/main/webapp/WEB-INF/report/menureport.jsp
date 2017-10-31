@@ -30,14 +30,14 @@
                         <div class="x_title">
                             <div class="col-md-7"><h2>เมนูเดี่ยว (ขายดี)</h2></div>
                             <div class="col-md-2">
-                                <select name="year" class="form-control">
+                                <select name="year" class="form-control menuchange" id="menuyear">
                                     <option value="" disabled>ปี พ.ศ.</option>
                                     <option value="0">ทุกปี</option>
                                     <option value="2017">2560</option>
                                 </select>
                             </div>
                             <div class="col-md-2">
-                                <select name="month" class="form-control">
+                                <select name="month" class="form-control menuchange" id="menumonth" disabled>
                                     <option value="" disabled>เดือน</option>
                                     <option value="0">ทุกเดือน</option>
                                     <option value="1">มกราคม</option>
@@ -72,14 +72,14 @@
                         <div class="x_title">
                             <div class="col-md-7"><h2>เมนูชุด (ขายดี)</h2></div>
                             <div class="col-md-2">
-                                <select name="year" class="form-control">
+                                <select name="year" class="form-control" id="menusetyear" class="menusetchange">
                                     <option value="" disabled>ปี พ.ศ.</option>
-                                    <option>ทุกปี</option>
-                                    <option>2560</option>
+                                    <option value="0">ทุกปี</option>
+                                    <option value="2017">2560</option>
                                 </select>
                             </div>
                             <div class="col-md-2">
-                                <select name="month" class="form-control">
+                                <select name="month" class="form-control" id="menusetmonth" class="menusetchange" disabled>
                                     <option value="" disabled>เดือน</option>
                                     <option value="0">ทุกเดือน</option>
                                     <option value="1">มกราคม</option>
@@ -243,7 +243,7 @@
                 }
 
                 if (index_menu == 0) {
-                    $("#pie_menu").html("ไม่มีข้อมูลการขายเมนูเดี่ยว");
+                    $("#pie_menu").html("ไม่มีข้อมูลการขายเมนูเดี่ยว "+ $("#menumonth option:selected").text() + " " + $("#menuyear option:selected").text());
                 }
             }
         });
@@ -362,11 +362,41 @@
                 }
 
                 if (index_menu == 0) {
-                    $("#pie_menuset").html("ไม่มีข้อมูลการขายเมนูชุด");
+                    $("#pie_menuset").html("ไม่มีข้อมูลการขายเมนูชุด "+ $("#menusetmonth option:selected").text() + " " + $("#menusetyear option:selected").text());
                 }
             }
         });
     }
+
+    $("#menuyear").change(function(){
+        if($(this).val() == 0){
+            $("#menumonth").val(0);
+            $("#menumonth").attr('disabled',true);
+        }else{
+            $("#menumonth").attr('disabled',false);
+        }
+    });
+
+    $("#menusetyear").change(function(){
+        if($(this).val() == 0){
+            $("#menusetmonth").val(0);
+            $("#menusetmonth").attr('disabled',true);
+        }else{
+            $("#menusetmonth").attr('disabled',false);
+        }
+    });
+
+    $(".menuchange").change(function(){
+        year = $("#menuyear").val();
+        month = $("#menumonth").val();
+        init_bestsalemenu(month,year);
+    });
+
+    $(".menusetchange").change(function(){
+        year = $("#menusetyear").val();
+        month = $("#menusetmonth").val();
+        init_bestsalemenuset(month,year);
+    });
 </script>
 </body>
 </html>
