@@ -72,54 +72,70 @@
                                 <!-- ส่วนเนื้อหาของ Modal -->
                                 <div class="modal-body">
                                     <div class="row">
-                                        <div class="col-md-6 col-sm-6 col-xs-12">
+                                        <div class="col-md-6 col-xs-12">
                                             <div class="x_panel">
                                                 <div class="x_title">
-                                                    <h2>โต๊ะ <small>#0002</small></h2>
+                                                    <h2>โต๊ะ <small>#002</small></h2>
                                                     <div class="clearfix"></div>
                                                 </div>
                                                 <div class="x_content">
-                                                    <table style="width: 100%">
-                                                        <tbody>
-                                                        <tr>
-                                                            <td style="width: 33%">จำนวน</td>
-                                                            <td style="width: 33%">รายการอาหาร</td>
-                                                            <td style="width: 33%">ราคา</td>
-                                                        </tr>
-                                                        </tbody>
-                                                    </table>
-                                                </div>
-                                                <div class="x_title">
-                                                    <div class="clearfix"></div>
-                                                    <div class="col-md-12 col-sm-12 col-xs-12">ราคารวม</div>
+                                                    <form class="form-horizontal form-label-left">
+                                                        <div class="form-group">
+                                                            <table style="width: 100%">
+                                                                <tbody>
+                                                                <tr>
+                                                                    <td style="width: 33%">จำนวน</td>
+                                                                    <td style="width: 33%">รายการอาหาร</td>
+                                                                    <td style="width: 33%">ราคา</td>
+                                                                </tr>
+                                                                </tbody>
+                                                            </table>
+                                                        </div>
+                                                        <div class="ln_solid"></div>
+                                                        <div class="form-group">
+                                                            <div class="col-md-9 col-sm-9 col-xs-12 col-md-offset-3">
+                                                                <div class="col-md-12 col-sm-12 col-xs-12">ราคารวม</div>
+                                                            </div>
+                                                        </div>
+                                                    </form>
                                                 </div>
                                             </div>
                                         </div>
-                                        <div class="col-md-6 col-sm-6 col-xs-12">
+
+                                        <div class="col-md-6 col-xs-12">
                                             <div class="x_panel">
                                                 <div class="x_title">
                                                     <h2>โปรโมชั่น</h2>
                                                     <div class="clearfix"></div>
                                                 </div>
                                                 <div class="x_content">
-                                                    <table style="width: 100%">
-                                                        <tbody>
-                                                        <tr>
-                                                            <td style="width: 100%"><input type="radio" class="flat" name="promotion"> โปรโมชั่น 1</td>
-                                                        </tr>
-                                                        <tr>
-                                                            <td style="width: 100%"><input type="radio" class="flat" name="promotion"> โปรโมชั่น 2</td>
-                                                        </tr>
-                                                        </tbody>
-                                                    </table>
-                                                </div>
-                                                <div class="x_title">
-                                                    <div class="clearfix"></div><br>
-                                                    <div class="col-md-12 col-sm-12 col-xs-12">ราคารวม</div>
-                                                    <div class="col-md-12 col-sm-12 col-xs-12">รับเงิน <input type="number" class=""></div>
-                                                    <div class="col-md-12 col-sm-12 col-xs-12">ราคารวม</div>
+                                                    <form class="form-horizontal form-label-left">
+                                                        <div class="form-group">
+                                                            <label class="control-label col-md-3 col-sm-3 col-xs-12">กรุณาเลือกโปรโมชั่น</label>
+                                                            <div class="col-md-9 col-sm-9 col-xs-12">
+                                                                <div class="radio">
+                                                                    <label>
+                                                                        <input type="radio" class="flat" name="iCheck"> โปรโมชั่น 1
+                                                                    </label>
+                                                                </div>
+                                                                <div class="radio">
+                                                                    <label>
+                                                                        <input type="radio" class="flat" name="iCheck"> โปรโมชั่น 2
+                                                                    </label>
+                                                                </div>
+                                                            </div>
+                                                        </div>
+                                                        <div class="ln_solid"></div>
+                                                        <div class="form-group">
+                                                            <div class="col-md-9 col-sm-9 col-xs-12 col-md-offset-3">
+                                                                <div class="col-md-12 col-sm-12 col-xs-12">ราคารวม</div>
+                                                            </div>
+                                                        </div>
+                                                    </form>
                                                 </div>
                                             </div>
+                                        </div>
+
                                         </div>
                                     </div>
                                     <div class="modal-footer">
