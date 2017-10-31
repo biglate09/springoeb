@@ -110,7 +110,7 @@
 
     var labelOption = {
         normal: {
-            show: true,
+            show: false,
             position: app.config.position,
             distance: app.config.distance,
             align: app.config.align,
@@ -135,7 +135,7 @@
             }
         },
         legend: {
-            data: ['Income', 'Expenses']
+            data: ['รายรับ', 'รายจ่าย']
         },
         toolbox: {
             show: true,
@@ -164,14 +164,14 @@
         ],
         series: [
             {
-                name: 'Income',
+                name: 'รายรับ',
                 type: 'bar',
                 barGap: 0,
                 label: labelOption,
                 data: [320, 332, 301, 334, 890, 320, 332, 301, 334, 890, 320, 332]
             },
             {
-                name: 'Expenses',
+                name: 'รายจ่าย',
                 type: 'bar',
                 label: labelOption,
                 data: [220, 182, 191, 234, 290, 220, 182, 191, 234, 290, 220, 182]
