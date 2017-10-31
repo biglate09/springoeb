@@ -222,23 +222,19 @@
                         <div class="thumbnail thumbnail_inline">\
                         <div class="image view view-first" style="height:auto;">\
                         <img style="width: 100%;position:relative;" src="${contextPath}/images/table.png" alt="image"/>\
-                        <div style="margin-left: auto;margin-right: auto;position: absolute;bottom:0;left: 50%;transform: translate(-50%, -50%);font-weight: bold; " class="cardname">' + obj.table.tableName + '</div>\
+                        <div style="margin-left: auto;margin-right: auto;position: absolute;bottom:-14px;left: 50%;transform: translate(-50%, -50%);font-weight: bold; " class="cardname">' + obj.table.tableName + '</div>\
                         </div>\
                         <div class="caption col-md-12" style="color:#73879C">\
-                        <p class="col-md-12" style="white-space:nowrap;overflow:hidden;text-overflow: ellipsis;" ">ใช้บริการมาแล้ว : ' + obj.billTime + ' นาที</p>\
-                        <p class="col-md-12" style="white-space: nowrap;overflow:hidden;text-overflow: ellipsis;">ราคาอาหาร : ' + obj.totalAmount + ' บาท</p>\
-                        <p class="col-md-12" > สถานะอาหาร : ครบแล้ว</p>\
+                        <p class="col-md-12" style="white-space:nowrap;overflow:hidden;text-overflow: ellipsis;padding:0px;" >ใช้บริการมาแล้ว : ' + obj.billTime + ' นาที</p>\
+                        <p class="col-md-12" style="white-space: nowrap;overflow:hidden;text-overflow: ellipsis;padding:0px;">ราคาอาหาร : ' + obj.totalAmount + ' บาท</p>\
+                        <p class="col-md-12" style="padding:0px;"> สถานะอาหาร : ครบแล้ว</p>\
                         <div style="text-align:center;" class="col-md-12"><button type="button" class="btn btn-success" data-toggle="modal" data-target="#editMenu" data-toggle="modal" \
                         data-target="#editMenu" style="width: 80%;" onclick="set_bill(' + obj.billNo + ')">จ่ายเงิน</button></div>\
                         </div>\
                         </div>\
                         </div>\
                         ';
-                            $("#menu_thumbnail").append(div);
-                            var price_order = (menu.menuPrice.toFixed(2) * 100000) + "";
-                            for (var j = price_order.length; j < 20; j++) {
-                                price_order = "0" + price_order;
-                            }
+                        $("#menu_thumbnail").append(div);
                 }
                     $("#error_show").html('');
 //                    $("#datatable-menu").DataTable().clear();
@@ -339,15 +335,10 @@
 
 <style>
     .thumbnail_inline {
-        height: 280px !important;
+        height: 257px !important;
+        width: 210px;
     }
-    /*.description{*/
-        /*line-height: 1.5em;*/
-        /*display: -webkit-box;*/
-        /*-webkit-line-clamp: 3;*/
-        /*-webkit-box-orient: vertical;*/
-        /*overflow: hidden;*/
-    /*}*/
+
 
 </style>
 </body>
