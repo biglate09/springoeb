@@ -1,9 +1,10 @@
 package com.springoeb.cashier.model;
 
-import com.fasterxml.jackson.annotation.JsonBackReference;
 import com.springoeb.menu.model.Menu;
 
 import javax.persistence.*;
+import java.sql.Date;
+import java.sql.Time;
 
 @Entity(name = "CustomerOrder")
 public class Order {
@@ -16,6 +17,10 @@ public class Order {
     private Double amount;
     @Column(name = "orderStatus")
     private String status;
+    @Column(name = "date")
+    private Date date;
+    @Column(name = "time")
+    private Time time;
     @Column(name = "billNo",updatable = true,insertable = true)
     private Integer billNo;
     @Column(name = "menuNo",updatable = true,insertable = true)
@@ -96,6 +101,22 @@ public class Order {
 
     public void setMenu(Menu menu) {
         this.menu = menu;
+    }
+
+    public Date getDate() {
+        return date;
+    }
+
+    public void setDate(Date date) {
+        this.date = date;
+    }
+
+    public Time getTime() {
+        return time;
+    }
+
+    public void setTime(Time time) {
+        this.time = time;
     }
 
     @Override
