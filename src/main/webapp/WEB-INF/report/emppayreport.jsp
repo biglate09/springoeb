@@ -122,7 +122,7 @@
                         break;
                     }
                 }
-                if ($('#pie_menu').length) {
+                if ($('#pie_emppay').length) {
 
                     var echartPie = echarts.init(document.getElementById('pie_emppay'));
 

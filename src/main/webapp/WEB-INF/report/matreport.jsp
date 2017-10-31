@@ -29,13 +29,6 @@
                         <div class="x_title">
                             <div class="col-md-7"><h2>เมนูเดี่ยว (ขายดี)</h2></div>
                             <div class="col-md-2">
-                                <select name="year" class="form-control">
-                                    <option value="" disabled>ปี พ.ศ.</option>
-                                    <option>ทุกปี</option>
-                                    <option>2560</option>
-                                </select>
-                            </div>
-                            <div class="col-md-2">
                                 <select name="month" class="form-control">
                                     <option value="" disabled>เดือน</option>
                                     <option value="0">ทุกเดือน</option>
@@ -53,6 +46,13 @@
                                     <option value="12">ธันวาคม</option>
                                 </select>
                             </div>
+                            <div class="col-md-2">
+                            <select name="day" class="form-control">
+                                <option value="" disabled>วันที่</option>
+                                <option>ทุกวัน</option>
+                                <option></option>
+                            </select>
+                        </div>
                             <ul class="nav navbar-right panel_toolbox" style="min-width: 0px">
                                 <li><a class="collapse-link"><i class="fa fa-chevron-up right"></i></a>
                                 </li>
@@ -74,7 +74,134 @@
 <script src="${contextPath}/vendors/bootstrap-daterangepicker/daterangepicker.js"></script>
 <script type="text/javascript" src="http://echarts.baidu.com/gallery/vendors/echarts/echarts-all-3.js"></script>
 <script>
+    //echart Pie
+    //***********CONFIG BY BIGHEAD*************//
+    var limit_of_menu = 10;
+    var menu_data_legends = [];
+    var menu_data_series = [];
+    var limit_of_menuset = 10;
+    var menuset_data_legends = [];
+    var menuset_data_series = [];
+    //***********CONFIG BY BIGHEAD*************//
 
+    $(document).ready(function () {
+        materialtype();
+        materials();
+    });
+
+    function materialtype() {
+        $.ajax({
+            type: "POST",
+            dataType: "json",
+            url: "${contextPath}/report/",
+            success: function (menuArray) {
+                var index_menu = 0;
+                var break_loop = false;
+                for (var i = 0; i < menuArray.length; i++) { // loop menu
+                    var menu = menuArray[i];
+                    if (index_menu < limit_of_menu) {
+                        for (key in menu) { // get key
+                            value = menu[key];
+                            if (value > 0) {
+                                //push into array for display
+                                menu_data_legends.push(key);
+                                menu_data_series.push({
+                                    name: key,
+                                    value: value
+                                });
+                                index_menu++;
+                            } else {
+                                break_loop = true;
+                            }
+                        }
+                    } else {
+                        break_loop = true;
+                    }
+
+                    if (break_loop) {
+                        break;
+                    }
+                }
+                if ($('#pie_mattype').length) {
+
+                    var echartPie = echarts.init(document.getElementById('pie_mattype'));
+
+                    echartPie.setOption({
+                        tooltip: {
+                            trigger: 'item',
+                            formatter: "{a} <br/>{b} : {c} ({d}%)"
+                        },
+                        legend: {
+                            x: 'center',
+                            y: 'bottom',
+                            data: menu_data_legends
+                        },
+                        toolbox: {
+                            show: true,
+                            feature: {
+                                magicType: {
+                                    show: true,
+                                    type: ['pie', 'funnel'],
+                                    option: {
+                                        funnel: {
+                                            x: '25%',
+                                            width: '50%',
+                                            funnelAlign: 'left',
+                                            max: 1548
+                                        }
+                                    }
+                                },
+                                dataView: {
+                                    show: true,
+                                    title: "ดูข้อมูล",
+                                    lang: ['ดูข้อมูล','ปิด','รีเฟรช']
+                                },
+                                saveAsImage: {
+                                    show: true,
+                                    title: "Save Image",
+                                    pixelRatio: 2
+                                }
+                            }
+                        },
+                        calculable: true,
+                        series: [{
+                            name: 'ค่าจ้างพนักงาน',
+                            type: 'pie',
+                            radius: '55%',
+                            center: ['50%', '48%'],
+                            data: menu_data_series
+                        }]
+                    });
+
+                    var dataStyle = {
+                        normal: {
+                            label: {
+                                show: false
+                            },
+                            labelLine: {
+                                show: false
+                            }
+                        }
+                    };
+
+                    var placeHolderStyle = {
+                        normal: {
+                            color: 'rgba(0,0,0,0)',
+                            label: {
+                                show: false
+                            },
+                            labelLine: {
+                                show: false
+                            }
+                        },
+                        emphasis: {
+                            color: 'rgba(0,0,0,0)'
+                        }
+                    };
+                }
+            }
+        });
+    }
 </script>
 </body>
 </html>
