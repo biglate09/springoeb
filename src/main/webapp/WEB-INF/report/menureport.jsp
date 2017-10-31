@@ -60,7 +60,10 @@
                             <div class="clearfix"></div>
                         </div>
                         <div class="x_content">
-                            <div id="pie_menu" style="height:400px;"></div>
+                            <div id="pie_menu" style="height:400px;">
+                            </div>
+                            <div id="loadingmenu" style="position:absolute;top:50%;left:50%;transform:translate(-50%,-50%);"><i class="fa-li fa fa-spinner fa-spin"></i></div>
+                            <div id="menu_null" style="display:none;position:absolute;top:50%;left:50%;transform:translate(-50%,-50%);z-index:99999;">ไม่พบข้อมูลจากเงื่อนไขที่ท่านค้นหา</div>
                         </div>
                     </div>
                 </div>
@@ -71,14 +74,14 @@
                         <div class="x_title">
                             <div class="col-md-7"><h2>เมนูชุด (ขายดี)</h2></div>
                             <div class="col-md-2">
-                                <select name="year" class="form-control" id="menusetyear" class="menusetchange">
+                                <select name="year" class="form-control menusetchange" id="menusetyear">
                                     <option value="" disabled>ปี พ.ศ.</option>
                                     <option value="0">ทุกปี</option>
                                     <option value="2017">2560</option>
                                 </select>
                             </div>
                             <div class="col-md-2">
-                                <select name="month" class="form-control" id="menusetmonth" class="menusetchange" disabled>
+                                <select name="month" class="form-control menusetchange" id="menusetmonth" disabled>
                                     <option value="" disabled>เดือน</option>
                                     <option value="0">ทุกเดือน</option>
                                     <option value="1">มกราคม</option>
@@ -102,7 +105,10 @@
                             <div class="clearfix"></div>
                         </div>
                         <div class="x_content">
-                            <div id="pie_menuset" style="height:400px;"></div>
+                            <div id="pie_menuset" style="height:400px;">
+                            </div>
+                            <div id="loadingmenuset" style="position:absolute;top:50%;left:50%;transform:translate(-50%,-50%);"><i class="fa-li fa fa-spinner fa-spin"></i></div>
+                            <div id="menuset_null" style="display:none;position:absolute;top:50%;left:50%;transform:translate(-50%,-50%);">ไม่พบข้อมูลจากเงื่อนไขที่ท่านค้นหา</div>
                         </div>
                     </div>
                 </div>
@@ -131,12 +137,16 @@
     });
 
     function init_bestsalemenu(month, year) {
+        $("#loadingmenu").css('display','inline-block');
         $.ajax({
             type: "POST",
             dataType: "json",
             url: "${contextPath}/report/bestsalemenu",
             data: {month: month, year: year},
             success: function (menuArray) {
+                $("#loadingmenu").css('display','none');
+                menu_data_legends = [];
+                menu_data_series = [];
                 var index_menu = 0;
                 var break_loop = false;
                 for (var i = 0; i < menuArray.length; i++) { // loop menu
@@ -165,9 +175,7 @@
                     }
                 }
                 if ($('#pie_menu').length) {
-
                     var echartPie = echarts.init(document.getElementById('pie_menu'));
-
                     echartPie.setOption({
                         tooltip: {
                             trigger: 'item',
@@ -213,52 +221,32 @@
                             data: menu_data_series
                         }]
                     });
-
-                    var dataStyle = {
-                        normal: {
-                            label: {
-                                show: false
-                            },
-                            labelLine: {
-                                show: false
-                            }
-                        }
-                    };
-
-                    var placeHolderStyle = {
-                        normal: {
-                            color: 'rgba(0,0,0,0)',
-                            label: {
-                                show: false
-                            },
-                            labelLine: {
-                                show: false
-                            }
-                        },
-                        emphasis: {
-                            color: 'rgba(0,0,0,0)'
-                        }
-                    };
                 }
 
-                if (index_menu == 0) {
-                    $("#pie_menu").html("ไม่มีข้อมูลการขายเมนูเดี่ยว "+ $("#menumonth option:selected").text() + " " + $("#menuyear option:selected").text());
+                if (menu_data_legends.length == 0) {
+                    $("#menu_null").css("display", "inline-block");
+                } else {
+                    $("#menu_null").css("display", "none");
                 }
             }
         });
     }
     function init_bestsalemenuset(month, year) {
+        $("#loadingmenuset").css('display','inline-block');
         $.ajax({
             type: "POST",
             dataType: "json",
             url: "${contextPath}/report/bestsalemenuset",
             data: {month: month, year: year},
             success: function (menuArray) {
-                var index_menu = 0;
+                $("#loadingmenuset").css('display','none');
+                menuset_data_legends = [];
+                menuset_data_series = [];
+                var index_menuset = 0;
                 var break_loop = false;
                 for (var i = 0; i < menuArray.length; i++) { // loop menu
                     var menu = menuArray[i];
-                    if (index_menu < limit_of_menuset) {
+                    if (index_menuset < limit_of_menuset) {
                         for (key in menu) { // get key
                             value = menu[key];
                             if (value > 0) {
@@ -268,7 +256,7 @@
                                     name: key,
                                     value: value
                                 });
-                                index_menu++;
+                                index_menuset++;
                             } else {
                                 break_loop = true;
                             }
@@ -332,69 +320,45 @@
                             data: menuset_data_series
                         }]
                     });
-
-                    var dataStyle = {
-                        normal: {
-                            label: {
-                                show: false
-                            },
-                            labelLine: {
-                                show: false
-                            }
-                        }
-                    };
-
-                    var placeHolderStyle = {
-                        normal: {
-                            color: 'rgba(0,0,0,0)',
-                            label: {
-                                show: false
-                            },
-                            labelLine: {
-                                show: false
-                            }
-                        },
-                        emphasis: {
-                            color: 'rgba(0,0,0,0)'
-                        }
-                    };
                 }
 
-                if (index_menu == 0) {
-                    $("#pie_menuset").html("ไม่มีข้อมูลการขายเมนูชุด "+ $("#menusetmonth option:selected").text() + " " + $("#menusetyear option:selected").text());
+                if (menuset_data_legends.length == 0) {
+                    $("#menuset_null").css("display", "inline-block");
+                } else {
+                    $("#menuset_null").css("display", "none");
                 }
             }
         });
     }
 
-    $("#menuyear").change(function(){
-        if($(this).val() == 0){
+    $("#menuyear").change(function () {
+        if ($(this).val() == 0) {
             $("#menumonth").val(0);
-            $("#menumonth").attr('disabled',true);
-        }else{
-            $("#menumonth").attr('disabled',false);
+            $("#menumonth").attr('disabled', true);
+        } else {
+            $("#menumonth").attr('disabled', false);
         }
     });
 
-    $("#menusetyear").change(function(){
-        if($(this).val() == 0){
-            $("#menusetmonth").val(0);
-            $("#menusetmonth").attr('disabled',true);
-        }else{
-            $("#menusetmonth").attr('disabled',false);
-        }
-    });
-
-    $(".menuchange").change(function(){
+    $(".menuchange").change(function () {
         year = $("#menuyear").val();
         month = $("#menumonth").val();
-        init_bestsalemenu(month,year);
+        init_bestsalemenu(month, year);
     });
 
-    $(".menusetchange").change(function(){
+    $("#menusetyear").change(function () {
+        if ($(this).val() == 0) {
+            $("#menusetmonth").val(0);
+            $("#menusetmonth").attr('disabled', true);
+        } else {
+            $("#menusetmonth").attr('disabled', false);
+        }
+    });
+
+    $(".menusetchange").change(function () {
         year = $("#menusetyear").val();
         month = $("#menusetmonth").val();
-        init_bestsalemenuset(month,year);
+        init_bestsalemenuset(month, year);
     });
 </script>
 </body>

@@ -27,12 +27,30 @@
                 <div class="col-md-12 col-sm-12 col-xs-12">
                     <div class="x_panel">
                         <div class="x_title">
-                            <div class="col-md-9"><h2>ภาพรวมผลกระกอบการ</h2></div>
+                            <div class="col-md-7"><h2>ภาพรวมผลประกอบการ</h2></div>
                             <div class="col-md-2">
                                 <select name="year" class="form-control">
                                     <option value="" disabled>ปี พ.ศ.</option>
                                     <option>ทุกปี</option>
                                     <option>2560</option>
+                                </select>
+                            </div>
+                            <div class="col-md-2">
+                                <select name="month" class="form-control menuchange" id="menumonth">
+                                    <option value="" disabled>เดือน</option>
+                                    <option value="0">ทุกเดือน</option>
+                                    <option value="1">มกราคม</option>
+                                    <option value="2">กุมภาพันธ์</option>
+                                    <option value="3">มีนาคม</option>
+                                    <option value="4">เมษายน</option>
+                                    <option value="5">พฤษภาคม</option>
+                                    <option value="6">มิถุนายน</option>
+                                    <option value="7">กรกฎาคม</option>
+                                    <option value="8">สิงหาคม</option>
+                                    <option value="9">กันยายน</option>
+                                    <option value="10">ตุลาคม</option>
+                                    <option value="11">พฤศจิกายน</option>
+                                    <option value="12">ธันวาคม</option>
                                 </select>
                             </div>
                             <ul class="nav navbar-right panel_toolbox">
