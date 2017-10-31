@@ -3,6 +3,7 @@ package com.springoeb.branch.model;
 import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.springoeb.employee.model.Employee;
 import com.springoeb.system.model.BranchUser;
+import com.springoeb.system.model.Restaurant;
 
 import javax.persistence.*;
 import java.util.List;
@@ -37,7 +38,7 @@ public class Branch {
     private String fb;
     @Column(name = "hasAdmin")
     private boolean hasAdmin;
-    @Column(name = "restNo")
+    @Column(name = "restNo",updatable = true,insertable = true)
     private Integer restNo;
 
     public static int MAIN_BRANCH = 1;
@@ -49,6 +50,10 @@ public class Branch {
     @JsonIgnore
     @OneToMany(fetch = FetchType.LAZY, mappedBy = "branch")
     private List<Employee> employees;
+
+    @ManyToOne
+    @JoinColumn(name = "restNo",updatable = false,insertable = false)
+    private Restaurant restaurant;
 
     public Integer getBranchNo() {
         return branchNo;
@@ -168,5 +173,13 @@ public class Branch {
 
     public void setRestNo(Integer restNo) {
         this.restNo = restNo;
+    }
+
+    public Restaurant getRestaurant() {
+        return restaurant;
+    }
+
+    public void setRestaurant(Restaurant restaurant) {
+        this.restaurant = restaurant;
     }
 }
