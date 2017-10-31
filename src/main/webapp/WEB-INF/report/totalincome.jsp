@@ -27,19 +27,7 @@
                 <div class="col-md-12 col-sm-12 col-xs-12">
                     <div class="x_panel">
                         <div class="x_title">
-                            <div class="col-md-6"><h2>ภาพรวมผลประกอบการ</h2></div>
-                            <div class="col-md-2">
-                                <div class="btn-group" data-toggle="buttons">
-                                    <label id="displayAsYear" class="btn btn-default display_toggle active"
-                                           type="button" title="แสดงแบบรายปี">
-                                        รายปี
-                                    </label>
-                                    <label id="displayAsMonth" class="btn btn-default display_toggle" type="button"
-                                           title="แสดงแบบรายเดือน">
-                                        รายเดือน
-                                    </label>
-                                </div>
-                            </div>
+                            <div class="col-md-7"><h2>ภาพรวมผลประกอบการ</h2></div>
                             <div class="col-md-2">
                                 <select name="year" class="form-control">
                                     <option value="" disabled>ปี พ.ศ.</option>
@@ -86,10 +74,6 @@
 <script src="${contextPath}/vendors/bootstrap-daterangepicker/daterangepicker.js"></script>
 <script type="text/javascript" src="http://echarts.baidu.com/gallery/vendors/echarts/echarts-all-3.js"></script>
 <script>
-    $(".display_toggle").click(function () {
-        $(".display_toggle").removeClass("active");
-        $(this).addClass("active");
-    });
 //Script for bar chart----------------------------------------
     var dom = document.getElementById("container");
     var myChart = echarts.init(dom);
