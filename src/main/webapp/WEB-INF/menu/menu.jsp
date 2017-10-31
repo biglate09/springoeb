@@ -566,7 +566,7 @@
                         <div class="col-md-55">\
                         <div class="thumbnail thumbnail_inline">\
                         <div class="image view view-first">\
-                        <img style="width: 100%; display: block;" src="' + (menu.menuPicPath != null ? ('../images/menu/' + menu.menuPicPath) : ('../images/default_upload_image.png')) + '" alt="image"/>\
+                        <img style="width: 100%; display: block;" src="' + (menu.menuPicPath != null ? ('../images/' + menu.menuPicPath) : ('../images/default_upload_image.png')) + '" alt="image"/>\
                         <div class="mask">\
                         <p style="white-space: nowrap;overflow:hidden;text-overflow: ellipsis;">' + (menu.menuDesc == '' || menu.menuDesc == null ? 'ไม่มีรายละเอียด' : menu.menuDesc) + '</p>\
                         <div class="tools tools-bottom">\
@@ -615,7 +615,7 @@
                         <div class="col-md-12">\
                         <div class="thumbnail thumbnail_list">\
                         <div class="image view view-first col-md-4" style="height:100%">\
-                        <img style="height: 100%; display: block;margin:auto;" src="' + (menu.menuPicPath != null ? ('../images/menu/' + menu.menuPicPath) : ('../images/default_upload_image.png')) + '" alt="image"/>\
+                        <img style="height: 100%; display: block;margin:auto;" src="' + (menu.menuPicPath != null ? ('../images/' + menu.menuPicPath) : ('../images/default_upload_image.png')) + '" alt="image"/>\
                         <div class="mask" style="height:100%">\
                         <p style="white-space: nowrap;overflow:hidden;text-overflow: ellipsis;">' + (menu.menuDesc == '' || menu.menuDesc == null ? 'ไม่มีรายละเอียด' : menu.menuDesc) + '</p>\
                         <div class="tools tools-bottom" style="margin: 100px 0 0;">\
@@ -653,7 +653,7 @@
                             <div class="col-md-55">\
                             <div class="thumbnail thumbnail_inline">\
                             <div class="image view view-first">\
-                            <img style="width: 100%; display: block;" src="' + (menu.menuPicPath != null ? ('../images/menu/' + menu.menuPicPath) : ('../images/default_upload_image.png')) + '" alt="image"/>\
+                            <img style="width: 100%; display: block;" src="' + (menu.menuPicPath != null ? ('../images/' + menu.menuPicPath) : ('../images/default_upload_image.png')) + '" alt="image"/>\
                             <div class="mask">\
                             <p style="white-space: nowrap;overflow:hidden;text-overflow: ellipsis;">' + (menu.menuDesc == '' || menu.menuDesc == null ? 'ไม่มีรายละเอียด' : menu.menuDesc) + '</p>\
                             <div class="tools tools-bottom">\
@@ -697,7 +697,7 @@
                             <div class="col-md-12">\
                             <div class="thumbnail thumbnail_inline_list">\
                             <div class="image view view-first col-md-4" style="height:100%"">\
-                            <img style="height: 100%; display: block;margin:auto;" src="' + (menu.menuPicPath != null ? ('../images/menu/' + menu.menuPicPath) : ('../images/default_upload_image.png')) + '" alt="image"/>\
+                            <img style="height: 100%; display: block;margin:auto;" src="' + (menu.menuPicPath != null ? ('../images/' + menu.menuPicPath) : ('../images/default_upload_image.png')) + '" alt="image"/>\
                             <div class="mask" style="height:100%">\
                             <p style="white-space: nowrap;overflow:hidden;text-overflow: ellipsis;">' + (menu.menuDesc == '' || menu.menuDesc == null ? 'ไม่มีรายละเอียด' : menu.menuDesc) + '</p>\
                             <div class="tools tools-bottom" style="margin: 110px 0 0;" >\
@@ -851,7 +851,7 @@
                 });
                 /////////////////////
 
-                $("#showpic_edit").attr('src', menu.menuPicPath == null ? '../images/default_upload_image.png' : ('../images/menu/' + menu.menuPicPath));
+                $("#showpic_edit").attr('src', menu.menuPicPath == null ? '../images/default_upload_image.png' : ('../images/' + menu.menuPicPath));
             }
         });
     }

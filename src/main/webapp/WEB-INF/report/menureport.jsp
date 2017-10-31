@@ -39,6 +39,21 @@
                         </div>
                     </div>
                 </div>
+                <div class="col-md-12 col-sm-12 col-xs-12">
+                    <div class="x_panel">
+                        <div class="x_title">
+                            <h2>เมนูชุด (ขายดี)</h2>
+                            <ul class="nav navbar-right panel_toolbox">
+                                <li><a class="collapse-link"><i class="fa fa-chevron-up"></i></a>
+                                </li>
+                            </ul>
+                            <div class="clearfix"></div>
+                        </div>
+                        <div class="x_content">
+                            <div id="pie_menuset" style="height:400px;"></div>
+                        </div>
+                    </div>
+                </div>
             </div>
         </div>
     </div>
@@ -59,12 +74,16 @@
     //***********CONFIG BY BIGHEAD*************//
 
     $(document).ready(function () {
+        init_bestsalemenu();
+        init_bestsalemenuset();
+    });
+
+    function init_bestsalemenu() {
         $.ajax({
             type: "POST",
             dataType: "json",
-            url: "${contextPath}/report//bestsalemenu",
+            url: "${contextPath}/report/bestsalemenu",
             success: function (menuArray) {
-                console.log(menuArray);
                 var index_menu = 0;
                 var break_loop = false;
                 for (var i = 0; i < menuArray.length; i++) { // loop menu
@@ -170,7 +189,120 @@
                 }
             }
         });
-    });
+    }
+    function init_bestsalemenuset() {
+        $.ajax({
+            type: "POST",
+            dataType: "json",
+            url: "${contextPath}/report/bestsalemenuset",
+            success: function (menuArray) {
+                var index_menu = 0;
+                var break_loop = false;
+                for (var i = 0; i < menuArray.length; i++) { // loop menu
+                    var menu = menuArray[i];
+                    if (index_menu < limit_of_menu) {
+                        for (key in menu) { // get key
+                            value = menu[key];
+                            if (value > 0) {
+                                //push into array for display
+                                menu_data_legends.push(key);
+                                menu_data_series.push({
+                                    name: key,
+                                    value: value
+                                });
+                                index_menu++;
+                            } else {
+                                break_loop = true;
+                            }
+                        }
+                    } else {
+                        break_loop = true;
+                    }
+
+                    if (break_loop) {
+                        break;
+                    }
+                }
+
+                if ($('#pie_menuset').length) {
+
+                    var echartPie = echarts.init(document.getElementById('pie_menuset'));
+
+                    echartPie.setOption({
+                        tooltip: {
+                            trigger: 'item',
+                            formatter: "{a} <br/>{b} : {c} ({d}%)"
+                        },
+                        legend: {
+                            x: 'center',
+                            y: 'bottom',
+                            data: menu_data_legends
+                        },
+                        toolbox: {
+                            show: true,
+                            feature: {
+                                magicType: {
+                                    show: true,
+                                    type: ['pie', 'funnel'],
+                                    option: {
+                                        funnel: {
+                                            x: '25%',
+                                            width: '50%',
+                                            funnelAlign: 'left',
+                                            max: 1548
+                                        }
+                                    }
+                                },
+                                dataView: {
+                                    show: true,
+                                    title: "ดูข้อมูล"
+                                },
+                                saveAsImage: {
+                                    show: true,
+                                    title: "Save Image"
+                                }
+                            }
+                        },
+                        calculable: true,
+                        series: [{
+                            name: 'เมนูอาหารแบบชุด',
+                            type: 'pie',
+                            radius: '55%',
+                            center: ['50%', '48%'],
+                            data: menu_data_series
+                        }]
+                    });
+
+                    var dataStyle = {
+                        normal: {
+                            label: {
+                                show: false
+                            },
+                            labelLine: {
+                                show: false
+                            }
+                        }
+                    };
+
+                    var placeHolderStyle = {
+                        normal: {
+                            color: 'rgba(0,0,0,0)',
+                            label: {
+                                show: false
+                            },
+                            labelLine: {
+                                show: false
+                            }
+                        },
+                        emphasis: {
+                            color: 'rgba(0,0,0,0)'
+                        }
+                    };
+
+                }
+            }
+        });
+    }
 </script>
 </body>
 </html>

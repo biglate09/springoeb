@@ -1,7 +1,6 @@
 package com.springoeb.menu.service;
 
 import com.fasterxml.jackson.core.JsonProcessingException;
-import com.fasterxml.jackson.databind.ObjectMapper;
 import com.springoeb.cashier.repository.OrderRepository;
 import com.springoeb.menu.model.BranchMenu;
 import com.springoeb.menu.model.Menu;
@@ -56,6 +55,7 @@ public class BranchMenuService {
         List<BranchMenu> branchMenus = branchMenuRepository.findByBranchNoAndMenu_MenuFlagOrderByMenu_LocalFlagAsc(branchNo,Menu.flagForMenu);
         for(BranchMenu bm : branchMenus){
             long count = orderRepository.countByMenuNo(bm.getMenuNo());
+            System.out.println(bm.getMenu().getMenuNameTH());
             menuMaps.put(bm.getMenu().getMenuNameTH(),count);
         }
         return menuMaps;

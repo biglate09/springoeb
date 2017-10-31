@@ -311,7 +311,7 @@
                 $("#discount").val(promo.discount);
                 $("#promotionDesc").val(promo.promotionDesc);
                 $("#promotionNo").val(promo.promotionNo);
-                $("#promotionPicture").attr('src','../images/promotion/'+promo.promotionPicPath);
+                $("#promotionPicture").attr('src','../images/'+promo.promotionPicPath);
 //                if(promo.available == true){
 //                    $("#available").iCheck("check");
 //                }
@@ -407,7 +407,7 @@
                         var div = '<div class="col-md-6 col-sm-6 col-xs-12">\
                             <div class="thumbnail">\
                             <div class="col-md-6 image view view-first" style="height:100%;">\
-                            <img style="width: 100%; display: block;" src="' + (promotion.promotionPicPath == null ? ('../images/default_upload_image.png') : ('../images/promotion/' + promotion.promotionPicPath) ) + '" alt="image"/>\
+                            <img style="width: 100%; display: block;" src="' + (promotion.promotionPicPath == null ? ('../images/default_upload_image.png') : ('../images/' + promotion.promotionPicPath) ) + '" alt="image"/>\
                             <div class="mask">\
                             <p>' + (promotion.promotionDesc == null ? 'ไม่มีรายละเอียด' : promotion.promotionDesc) + '</p>\
                             <div class="tools tools-bottom" style="margin-top:200px;">\

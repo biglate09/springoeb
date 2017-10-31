@@ -131,11 +131,11 @@ public class MenuController {
             }
             //pic path before change
             String filename = System.currentTimeMillis() + file.getOriginalFilename().substring(file.getOriginalFilename().lastIndexOf('.'));
-            Path path = Paths.get(request.getServletContext().getRealPath("/images") + "/menu/" + filename);
+            Path path = Paths.get(request.getServletContext().getRealPath("/images/") + filename);
             Files.write(path, bytes);
             menu.setMenuPicPath(filename);
             if (menuNo != null) {
-                File picFile = new File(request.getServletContext().getRealPath("/images") + "/menu/" + menuPicPath);
+                File picFile = new File(request.getServletContext().getRealPath("/images/") + menuPicPath);
                 picFile.delete();
             }
         }
@@ -259,7 +259,7 @@ public class MenuController {
         String menuPicPath = menuService.getMenuByMenuNo(menuNo).getMenuPicPath();
         menuService.delMenu(menuNo);
         if (menuService.getMenuByMenuNo(menuNo) == null) {
-            File file = new File(request.getServletContext().getRealPath("/images") + "/menu/" + menuPicPath);
+            File file = new File(request.getServletContext().getRealPath("/images/") + menuPicPath);
             file.delete();
         }
     }
@@ -347,11 +347,11 @@ public class MenuController {
             }
             //pic path before change
             String filename = System.currentTimeMillis() + file.getOriginalFilename().substring(file.getOriginalFilename().lastIndexOf('.'));
-            Path path = Paths.get(request.getServletContext().getRealPath("/images") + "/menuset/" + filename);
+            Path path = Paths.get(request.getServletContext().getRealPath("/images/") + filename);
             Files.write(path, bytes);
             menuSet.setMenuPicPath(filename);
             if (menuSetNo != null) {
-                File picFile = new File(request.getServletContext().getRealPath("/images") + "/menuset/" + menuPicPath);
+                File picFile = new File(request.getServletContext().getRealPath("/images/")  + menuPicPath);
                 picFile.delete();
             }
         }
@@ -405,7 +405,7 @@ public class MenuController {
     public void delMenuSet(@PathVariable("menuSetNo") int menuSetNo, HttpServletRequest request) {
         String menuSetPicPath = menuService.getMenuByMenuNo(menuSetNo).getMenuPicPath();
         menuService.delMenu(menuSetNo);
-        File file = new File(request.getServletContext().getRealPath("/images") + "/menuset/" + menuSetPicPath);
+        File file = new File(request.getServletContext().getRealPath("/images/") + menuSetPicPath);
         file.delete();
     }
 

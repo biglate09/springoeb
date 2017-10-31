@@ -521,7 +521,7 @@
                         var div = '<div class="col-md-6 col-sm-6 col-xs-12">\
                             <div class="thumbnail">\
                             <div class="col-md-6 image view view-first" style="height:100%;">\
-                            <img style="width: 100%; display: block;" src="' + (menu.menuPicPath == null ? ('../images/default_upload_image.png') : ('../images/menuset/' + menu.menuPicPath) ) + '" alt="image"/>\
+                            <img style="width: 100%; display: block;" src="' + (menu.menuPicPath == null ? ('../images/default_upload_image.png') : ('../images/' + menu.menuPicPath) ) + '" alt="image"/>\
                             <div class="mask">\
                             <p style="white-space:nowrap;overflow:hidden;text-overflow: ellipsis;">' + (menu.menuDesc == null ? 'ไม่มีรายละเอียด' : menu.menuDesc) + '</p>\
                             <div class="tools tools-bottom" style="margin-top:100px;">\
@@ -580,7 +580,7 @@
                         var list = '<div class="col-md-12 col-sm-12 col-xs-12">\
                             <div class="thumbnail thumbnail_table">\
                             <div class="col-md-5 image view view-first" style="height:100%;">\
-                            <img style="height: 100%; display: block;margin:auto;" src="' + (menu.menuPicPath == null ? ('../images/default_upload_image.png') : ('../images/menuset/' + menu.menuPicPath) ) + '" alt="image"/>\
+                            <img style="height: 100%; display: block;margin:auto;" src="' + (menu.menuPicPath == null ? ('../images/default_upload_image.png') : ('../images/' + menu.menuPicPath) ) + '" alt="image"/>\
                             <div class="mask" style="height:100%;">\
                             <p style="white-space:nowrap;overflow:hidden;text-overflow: ellipsis;">' + (menu.menuDesc == null ? 'ไม่มีรายละเอียด' : menu.menuDesc) + '</p>\
                             <div class="tools tools-bottom" style="margin-top:110px;">\
@@ -630,7 +630,7 @@
                             var div = '<div class="col-md-6 col-sm-6 col-xs-12">\
                             <div class="thumbnail">\
                             <div class="col-md-6 image view view-first" style="height:100%;">\
-                            <img style="width: 100%; display: block;" src="' + (menu.menuPicPath == null ? ('../images/default_upload_image.png') : ('../images/menuset/' + menu.menuPicPath) ) + '" alt="image"/>\
+                            <img style="width: 100%; display: block;" src="' + (menu.menuPicPath == null ? ('../images/default_upload_image.png') : ('../images/' + menu.menuPicPath) ) + '" alt="image"/>\
                             <div class="mask">\
                             <p style="white-space:nowrap;overflow:hidden;text-overflow: ellipsis;">' + (menu.menuDesc == null ? 'ไม่มีรายละเอียด' : menu.menuDesc) + '</p>\
                             <div class="tools tools-bottom" style="margin-top:100px;">\
@@ -683,7 +683,7 @@
                             var list = '<div class="col-md-12 col-sm-12 col-xs-12">\
                             <div class="thumbnail thumbnail_table">\
                             <div class="col-md-5 image view view-first" style="height:100%;">\
-                            <img style="height: 100%; display: block;margin: auto;" src="' + (menu.menuPicPath == null ? ('../images/default_upload_image.png') : ('../images/menuset/' + menu.menuPicPath) ) + '" alt="image"/>\
+                            <img style="height: 100%; display: block;margin: auto;" src="' + (menu.menuPicPath == null ? ('../images/default_upload_image.png') : ('../images/' + menu.menuPicPath) ) + '" alt="image"/>\
                             <div class="mask" style="height: 100%">\
                             <p style="white-space:nowrap;overflow:hidden;text-overflow: ellipsis;">' + (menu.menuDesc == null ? 'ไม่มีรายละเอียด' : menu.menuDesc) + '</p>\
                             <div class="tools tools-bottom" style="margin-top:110px;">\
@@ -827,7 +827,7 @@ console.log(hasmymenu);
                     $("#edit_menuset_available").attr('checked', false);
                 }
 
-                $("#showpic_menuset_edit").attr('src', menu.menuPicPath == null ? '../images/default_upload_image.png' : ('../images/menuset/' + menu.menuPicPath));
+                $("#showpic_menuset_edit").attr('src', menu.menuPicPath == null ? '../images/default_upload_image.png' : ('../images/' + menu.menuPicPath));
 
                 $(".menusetamount_edit").val(0);
                 var menu_in_menuset = menu.menuInSets;

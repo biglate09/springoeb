@@ -67,7 +67,8 @@ public class PromotionController {
     @Transactional
     @PostMapping("/managepromotion")
     @ResponseBody
-    public void managePromotion(@RequestParam("promotionPicPath") MultipartFile file, HttpServletRequest request) throws IOException {
+    public void managePromotion(@RequestParam("promotionPicPath") MultipartFile file, HttpServletRequest request,HttpSession session) throws IOException {
+        BranchUser branchUser = (BranchUser) (session.getAttribute("branchUser"));
         Promotion promotion = null;
         if (!request.getParameter("promotionNo").equals("")) {
             promotion = promotionService.findByPromotionNo(Integer.parseInt(request.getParameter("promotionNo")));
@@ -78,16 +79,17 @@ public class PromotionController {
         if (!file.getOriginalFilename().equals("")) {
             String filename = System.currentTimeMillis() + file.getOriginalFilename().substring(file.getOriginalFilename().lastIndexOf('.'));
             String picPath = promotion.getPromotionPicPath();
-            Path path = Paths.get(request.getServletContext().getRealPath("/images") + "/promotion/" + filename);
+            Path path = Paths.get(request.getServletContext().getRealPath("/images/") + filename);
             byte[] bytes = file.getBytes();
             Files.write(path, bytes);
             promotion.setPromotionPicPath(filename);
             if (promotion.getPromotionNo() != null) {
-                File picFile = new File(request.getServletContext().getRealPath("/images") + "/promotion/" + picPath);
+                File picFile = new File(request.getServletContext().getRealPath("/images/") + picPath);
                 picFile.delete();
             }
         }
 
+        promotion.setRestNo(branchUser.getBranch().getRestNo());
         promotionService.save(promotion);
 
         //manage menu_group_promotion
@@ -129,7 +131,7 @@ public class PromotionController {
         Promotion promotion = promotionService.removeByPromotionNo(promotionNo);
         String picPath = promotion.getPromotionPicPath();
         if(picPath != null) {
-            File file = new File(request.getServletContext().getRealPath("/images") + "/promotion/" + picPath);
+            File file = new File(request.getServletContext().getRealPath("/images/") + picPath);
             file.delete();
         }
     }
