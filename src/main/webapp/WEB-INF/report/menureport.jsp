@@ -127,16 +127,16 @@
     //***********CONFIG BY BIGHEAD*************//
 
     $(document).ready(function () {
-        init_bestsalemenu(0,0);
-        init_bestsalemenuset(0,0);
+        init_bestsalemenu(0, 0);
+        init_bestsalemenuset(0, 0);
     });
 
-    function init_bestsalemenu(month,year) {
+    function init_bestsalemenu(month, year) {
         $.ajax({
             type: "POST",
             dataType: "json",
             url: "${contextPath}/report/bestsalemenu",
-            data: {month : month, year : year},
+            data: {month: month, year: year},
             success: function (menuArray) {
                 var index_menu = 0;
                 var break_loop = false;
@@ -241,17 +241,20 @@
                         }
                     };
                 }
+
+                if (index_menu == 0) {
+                    $("#pie_menu").html("ไม่มีข้อมูลการขายเมนูเดี่ยว");
+                }
             }
         });
     }
-    function init_bestsalemenuset(month,year) {
+    function init_bestsalemenuset(month, year) {
         $.ajax({
             type: "POST",
             dataType: "json",
             url: "${contextPath}/report/bestsalemenuset",
-            data: {month : month, year : year},
+            data: {month: month, year: year},
             success: function (menuArray) {
-                console.log(menuArray);
                 var index_menu = 0;
                 var break_loop = false;
                 for (var i = 0; i < menuArray.length; i++) { // loop menu
@@ -312,7 +315,7 @@
                                 dataView: {
                                     show: true,
                                     title: "ดูข้อมูล",
-                                    lang: ['ดูข้อมูล', 'ปิด' , 'รีเฟรช']
+                                    lang: ['ดูข้อมูล', 'ปิด', 'รีเฟรช']
                                 },
                                 saveAsImage: {
                                     show: true,
@@ -356,6 +359,10 @@
                             color: 'rgba(0,0,0,0)'
                         }
                     };
+                }
+
+                if (index_menu == 0) {
+                    $("#pie_menuset").html("ไม่มีข้อมูลการขายเมนูชุด");
                 }
             }
         });
