@@ -2,7 +2,6 @@ package com.springoeb.report.controller;
 
 import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.databind.ObjectMapper;
-import com.springoeb.menu.model.MenuGroup;
 import com.springoeb.menu.service.BranchMenuService;
 import com.springoeb.menu.service.MenuGroupService;
 import com.springoeb.system.model.BranchUser;
@@ -84,16 +83,16 @@ public class ReportController {
         return json;
     }
 
-    @ResponseBody
-    @PostMapping("/bestsalemenugroup")
-    public String getBestSaleMenuGroup(HttpSession session) throws JsonProcessingException {
-        BranchUser branchUser = (BranchUser) (session.getAttribute("branchUser"));
-        int restNo = branchUser.getBranch().getRestNo();
-        Map<MenuGroup,Long> menuGroups = menuGroupService.getBestSaleMenuGroup(restNo);
-        ObjectMapper mapper = new ObjectMapper();
-        String json = mapper.writeValueAsString(sortByValue(menuGroups));
-        return json;
-    }
+//    @ResponseBody
+//    @PostMapping("/bestsalemenugroup")
+//    public String getBestSaleMenuGroup(HttpSession session) throws JsonProcessingException {
+//        BranchUser branchUser = (BranchUser) (session.getAttribute("branchUser"));
+//        int restNo = branchUser.getBranch().getRestNo();
+//        Map<MenuGroup,Long> menuGroups = menuGroupService.getBestSaleMenuGroup(restNo);
+//        ObjectMapper mapper = new ObjectMapper();
+//        String json = mapper.writeValueAsString(sortByValue(menuGroups));
+//        return json;
+//    }
 
     static <K,V extends Comparable<? super V>>
     List<Map.Entry<K, V>> sortByValue(Map<K,V> map) {

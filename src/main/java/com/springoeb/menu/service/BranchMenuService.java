@@ -54,23 +54,23 @@ public class BranchMenuService {
         branchMenus = branchMenuRepository.findByBranchNoAndMenu_MenuFlagOrderByMenu_LocalFlagAsc(branchNo, Menu.flagForMenu);
         for (BranchMenu bm : branchMenus) {
             int menuNo = bm.getMenuNo();
-            long count = 0;
+            Long sum = new Long(0);
             if (month == 0 && year == 0) {
-                count = orderRepository.countByMenuNo(menuNo);
+                sum = orderRepository.sumByMenuNo(menuNo);
             } else {
-                Date fromDate,toDate;
-                if(month == 0 && year != 0) {
+                Date fromDate, toDate;
+                if (month == 0 && year != 0) {
                     fromDate = Date.valueOf(year + "-01-01");
                     toDate = Date.valueOf(year + "-12-31");
-                }else{
+                } else {
                     fromDate = Date.valueOf(year + "-" + month + "-01");
                     toDate = Date.valueOf(year + "-" + month + "-31");
                 }
-                count = orderRepository.countByMenuNoAndDateIsBetween(menuNo, fromDate, toDate);
+                sum = orderRepository.sumByMenuNoAndDateIsBetween(menuNo, fromDate, toDate);
             }
 
-            if (count > 0) {
-                menuMaps.put(bm.getMenu().getMenuNameTH(), count);
+            if (sum != null && sum > 0) {
+                menuMaps.put(bm.getMenu().getMenuNameTH(), sum);
             }
         }
         return menuMaps;
@@ -80,9 +80,24 @@ public class BranchMenuService {
         Map<String, Long> menuMaps = new LinkedHashMap<String, Long>();
         List<BranchMenu> branchMenus = branchMenuRepository.findByBranchNoAndMenu_MenuFlagOrderByMenu_LocalFlagAsc(branchNo, Menu.flagForMenuSet);
         for (BranchMenu bm : branchMenus) {
-            long count = orderRepository.countByMenuNo(bm.getMenuNo());
-            if (count > 0) {
-                menuMaps.put(bm.getMenu().getMenuNameTH(), count);
+            int menuNo = bm.getMenuNo();
+            Long sum = new Long(0);
+            if (month == 0 && year == 0) {
+                sum = orderRepository.sumByMenuNo(menuNo);
+            } else {
+                Date fromDate, toDate;
+                if (month == 0 && year != 0) {
+                    fromDate = Date.valueOf(year + "-01-01");
+                    toDate = Date.valueOf(year + "-12-31");
+                } else {
+                    fromDate = Date.valueOf(year + "-" + month + "-01");
+                    toDate = Date.valueOf(year + "-" + month + "-31");
+                }
+                sum = orderRepository.sumByMenuNoAndDateIsBetween(menuNo, fromDate, toDate);
+            }
+
+            if (sum != null && sum > 0) {
+                menuMaps.put(bm.getMenu().getMenuNameTH(), sum);
             }
         }
         return menuMaps;
