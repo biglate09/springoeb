@@ -29,43 +29,6 @@
                         <div class="x_title">
                             <div class="col-md-7"><h2>เมนูเดี่ยว (ขายดี)</h2></div>
                             <div class="col-md-2">
-                                <select name="year" class="form-control">
-                                    <option value="" disabled>วันที่</option>
-                                    <option>ทุกวัน</option>
-                                    <option>1</option>
-                                    <option>2</option>
-                                    <option>3</option>
-                                    <option>4</option>
-                                    <option>5</option>
-                                    <option>6</option>
-                                    <option>7</option>
-                                    <option>8</option>
-                                    <option>9</option>
-                                    <option>10</option>
-                                    <option>11</option>
-                                    <option>12</option>
-                                    <option>13</option>
-                                    <option>14</option>
-                                    <option>15</option>
-                                    <option>16</option>
-                                    <option>17</option>
-                                    <option>18</option>
-                                    <option>19</option>
-                                    <option>20</option>
-                                    <option>21</option>
-                                    <option>22</option>
-                                    <option>23</option>
-                                    <option>24</option>
-                                    <option>25</option>
-                                    <option>26</option>
-                                    <option>27</option>
-                                    <option>28</option>
-                                    <option>29</option>
-                                    <option>30</option>
-                                    <option>31</option>
-                                </select>
-                            </div>
-                            <div class="col-md-2">
                                 <select name="month" class="form-control">
                                     <option value="" disabled>เดือน</option>
                                     <option value="0">ทุกเดือน</option>
@@ -83,6 +46,14 @@
                                     <option value="12">ธันวาคม</option>
                                 </select>
                             </div>
+                            <div class="col-md-2">
+                                <select id="days" name="day" class="form-control">
+                                    <option value="" disabled>วันที่</option>
+                                    <option value="0">ทุกวัน</option>
+
+                                </select>
+                            </div>
+
                             <ul class="nav navbar-right panel_toolbox" style="min-width: 0px">
                                 <li><a class="collapse-link"><i class="fa fa-chevron-up right"></i></a>
                                 </li>
@@ -90,7 +61,7 @@
                             <div class="clearfix"></div>
                         </div>
                         <div class="x_content">
-                            <div id="pie_menu" style="height:400px;"></div>
+                            <div id="pie_emppay" style="height:400px;"></div>
                         </div>
                     </div>
                 </div>
@@ -115,27 +86,14 @@
     //***********CONFIG BY BIGHEAD*************//
 
     $(document).ready(function () {
-        init_bestsalemenu();
-        init_bestsalemenuset();
+        emppaid();
     });
 
-
-    $("#days").change(function() {
-        var d = 0 ;
-        if(month = 1 && 3 && 5 && 7 && 8 && 10 && 12) {
-            d = 31;
-        } else if(month = 4 && 6 && 9 && 11) {
-            d = 30;
-        } else {
-            d = 29;
-        }
-    });
-
-    function init_bestsalemenu() {
+    function emppaid() {
         $.ajax({
             type: "POST",
             dataType: "json",
-            url: "${contextPath}/report/bestsalemenu",
+            url: "${contextPath}/report/",
             success: function (menuArray) {
                 var index_menu = 0;
                 var break_loop = false;
@@ -166,7 +124,7 @@
                 }
                 if ($('#pie_menu').length) {
 
-                    var echartPie = echarts.init(document.getElementById('pie_menu'));
+                    var echartPie = echarts.init(document.getElementById('pie_emppay'));
 
                     echartPie.setOption({
                         tooltip: {
@@ -195,7 +153,8 @@
                                 },
                                 dataView: {
                                     show: true,
-                                    title: "ดูข้อมูล"
+                                    title: "ดูข้อมูล",
+                                    lang: ['ดูข้อมูล','ปิด','รีเฟรช']
                                 },
                                 saveAsImage: {
                                     show: true,
@@ -206,7 +165,7 @@
                         },
                         calculable: true,
                         series: [{
-                            name: 'เมนูอาหารแบบเดี่ยว',
+                            name: 'ค่าจ้างพนักงาน',
                             type: 'pie',
                             radius: '55%',
                             center: ['50%', '48%'],
