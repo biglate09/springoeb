@@ -171,7 +171,8 @@
                                 },
                                 saveAsImage: {
                                     show: true,
-                                    title: "Save Image"
+                                    title: "Save Image",
+                                    pixelRatio: 2
                                 }
                             }
                         },
@@ -220,17 +221,18 @@
             dataType: "json",
             url: "${contextPath}/report/bestsalemenuset",
             success: function (menuArray) {
+                console.log(menuArray);
                 var index_menu = 0;
                 var break_loop = false;
                 for (var i = 0; i < menuArray.length; i++) { // loop menu
                     var menu = menuArray[i];
-                    if (index_menu < limit_of_menu) {
+                    if (index_menu < limit_of_menuset) {
                         for (key in menu) { // get key
                             value = menu[key];
                             if (value > 0) {
                                 //push into array for display
-                                menu_data_legends.push(key);
-                                menu_data_series.push({
+                                menuset_data_legends.push(key);
+                                menuset_data_series.push({
                                     name: key,
                                     value: value
                                 });
@@ -260,7 +262,7 @@
                         legend: {
                             x: 'center',
                             y: 'bottom',
-                            data: menu_data_legends
+                            data: menuset_data_legends
                         },
                         toolbox: {
                             show: true,
@@ -283,7 +285,8 @@
                                 },
                                 saveAsImage: {
                                     show: true,
-                                    title: "Save Image"
+                                    title: "Save Image",
+                                    pixelRatio: 2
                                 }
                             }
                         },
@@ -293,7 +296,7 @@
                             type: 'pie',
                             radius: '55%',
                             center: ['50%', '48%'],
-                            data: menu_data_series
+                            data: menuset_data_series
                         }]
                     });
 
@@ -327,8 +330,6 @@
             }
         });
     }
-    });
-
 </script>
 </body>
 </html>
