@@ -13,6 +13,7 @@ import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.ResponseBody;
 
+import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpSession;
 import java.util.*;
 
@@ -59,10 +60,12 @@ public class ReportController {
 
     @ResponseBody
     @PostMapping("/bestsalemenu")
-    public String getBestSaleMenu(HttpSession session) throws JsonProcessingException {
+    public String getBestSaleMenu(HttpSession session, HttpServletRequest request) throws JsonProcessingException {
+        int year = Integer.parseInt(request.getParameter("year"));
+        int month = Integer.parseInt(request.getParameter("month"));
         BranchUser branchUser = (BranchUser) (session.getAttribute("branchUser"));
         int branchNo = branchUser.getBranchNo();
-        Map<String,Long> menus = branchMenuService.getBestSaleMenu(branchNo);
+        Map<String,Long> menus = branchMenuService.getBestSaleMenu(branchNo,year,month);
         ObjectMapper mapper = new ObjectMapper();
         String json = mapper.writeValueAsString(sortByValue(menus));
         return json;
@@ -70,10 +73,12 @@ public class ReportController {
 
     @ResponseBody
     @PostMapping("/bestsalemenuset")
-    public String getBestSaleMenuSet(HttpSession session) throws JsonProcessingException {
+    public String getBestSaleMenuSet(HttpSession session, HttpServletRequest request) throws JsonProcessingException {
+        int year = Integer.parseInt(request.getParameter("year"));
+        int month = Integer.parseInt(request.getParameter("month"));
         BranchUser branchUser = (BranchUser) (session.getAttribute("branchUser"));
         int branchNo = branchUser.getBranchNo();
-        Map<String,Long> menus = branchMenuService.getBestSaleMenuSet(branchNo);
+        Map<String,Long> menus = branchMenuService.getBestSaleMenuSet(branchNo,year,month);
         ObjectMapper mapper = new ObjectMapper();
         String json = mapper.writeValueAsString(sortByValue(menus));
         return json;

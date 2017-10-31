@@ -4,6 +4,7 @@ import com.springoeb.cashier.model.Order;
 import org.springframework.data.repository.CrudRepository;
 import org.springframework.stereotype.Repository;
 
+import java.util.Date;
 import java.util.List;
 
 @Repository
@@ -12,5 +13,6 @@ public interface OrderRepository extends CrudRepository<Order,Integer>{
     Order findByOrderNo(int orderNo);
     void removeByOrderNo(int orderNo);
     long countByMenuNo(int menuNo);
+    long countByMenuNoAndDateIsBetween(int menuNo, Date fromDate, Date toDate);
     long countByMenu_MenuGroupNo(int menuGroupNo);
 }

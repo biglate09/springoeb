@@ -32,8 +32,8 @@
                             <div class="col-md-2">
                                 <select name="year" class="form-control">
                                     <option value="" disabled>ปี พ.ศ.</option>
-                                    <option>ทุกปี</option>
-                                    <option>2560</option>
+                                    <option value="0">ทุกปี</option>
+                                    <option value="2017">2560</option>
                                 </select>
                             </div>
                             <div class="col-md-2">
@@ -127,15 +127,16 @@
     //***********CONFIG BY BIGHEAD*************//
 
     $(document).ready(function () {
-        init_bestsalemenu();
-        init_bestsalemenuset();
+        init_bestsalemenu(0, 0);
+        init_bestsalemenuset(0, 0);
     });
 
-    function init_bestsalemenu() {
+    function init_bestsalemenu(month, year) {
         $.ajax({
             type: "POST",
             dataType: "json",
             url: "${contextPath}/report/bestsalemenu",
+            data: {month: month, year: year},
             success: function (menuArray) {
                 var index_menu = 0;
                 var break_loop = false;
@@ -240,16 +241,20 @@
                         }
                     };
                 }
+
+                if (index_menu == 0) {
+                    $("#pie_menu").html("ไม่มีข้อมูลการขายเมนูเดี่ยว");
+                }
             }
         });
     }
-    function init_bestsalemenuset() {
+    function init_bestsalemenuset(month, year) {
         $.ajax({
             type: "POST",
             dataType: "json",
             url: "${contextPath}/report/bestsalemenuset",
+            data: {month: month, year: year},
             success: function (menuArray) {
-                console.log(menuArray);
                 var index_menu = 0;
                 var break_loop = false;
                 for (var i = 0; i < menuArray.length; i++) { // loop menu
@@ -310,7 +315,7 @@
                                 dataView: {
                                     show: true,
                                     title: "ดูข้อมูล",
-                                    lang: ['ดูข้อมูล', 'ปิด' , 'รีเฟรช']
+                                    lang: ['ดูข้อมูล', 'ปิด', 'รีเฟรช']
                                 },
                                 saveAsImage: {
                                     show: true,
@@ -354,7 +359,10 @@
                             color: 'rgba(0,0,0,0)'
                         }
                     };
+                }
 
+                if (index_menu == 0) {
+                    $("#pie_menuset").html("ไม่มีข้อมูลการขายเมนูชุด");
                 }
             }
         });

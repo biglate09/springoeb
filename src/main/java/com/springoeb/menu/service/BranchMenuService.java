@@ -9,10 +9,8 @@ import com.springoeb.menu.repository.BranchMenuRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
-import java.util.LinkedHashMap;
-import java.util.List;
-import java.util.Map;
-import java.util.Set;
+import java.util.*;
+import java.sql.Date;
 
 @Service
 public class BranchMenuService {
@@ -46,26 +44,46 @@ public class BranchMenuService {
         }
     }
 
-    public void save(List<BranchMenu> branchMenus){
+    public void save(List<BranchMenu> branchMenus) {
         branchMenuRepository.save(branchMenus);
     }
 
-    public Map<String,Long> getBestSaleMenu(int branchNo) throws JsonProcessingException {
-        Map<String,Long> menuMaps = new LinkedHashMap<String,Long>();
-        List<BranchMenu> branchMenus = branchMenuRepository.findByBranchNoAndMenu_MenuFlagOrderByMenu_LocalFlagAsc(branchNo,Menu.flagForMenu);
-        for(BranchMenu bm : branchMenus){
-            long count = orderRepository.countByMenuNo(bm.getMenuNo());
-            menuMaps.put(bm.getMenu().getMenuNameTH(),count);
+    public Map<String, Long> getBestSaleMenu(int branchNo, int year, int month) throws JsonProcessingException {
+        Map<String, Long> menuMaps = new LinkedHashMap<String, Long>();
+        List<BranchMenu> branchMenus = null;
+        branchMenus = branchMenuRepository.findByBranchNoAndMenu_MenuFlagOrderByMenu_LocalFlagAsc(branchNo, Menu.flagForMenu);
+        for (BranchMenu bm : branchMenus) {
+            int menuNo = bm.getMenuNo();
+            long count = 0;
+            if (month == 0 && year == 0) {
+                count = orderRepository.countByMenuNo(menuNo);
+            } else {
+                Date fromDate,toDate;
+                if(month == 0 && year != 0) {
+                    fromDate = Date.valueOf(year + "-01-01");
+                    toDate = Date.valueOf(year + "-12-31");
+                }else{
+                    fromDate = Date.valueOf(year + "-" + month + "-01");
+                    toDate = Date.valueOf(year + "-" + month + "-31");
+                }
+                count = orderRepository.countByMenuNoAndDateIsBetween(menuNo, fromDate, toDate);
+            }
+
+            if (count > 0) {
+                menuMaps.put(bm.getMenu().getMenuNameTH(), count);
+            }
         }
         return menuMaps;
     }
 
-    public Map<String,Long> getBestSaleMenuSet(int branchNo) throws JsonProcessingException {
-        Map<String,Long> menuMaps = new LinkedHashMap<String,Long>();
-        List<BranchMenu> branchMenus = branchMenuRepository.findByBranchNoAndMenu_MenuFlagOrderByMenu_LocalFlagAsc(branchNo,Menu.flagForMenuSet);
-        for(BranchMenu bm : branchMenus){
+    public Map<String, Long> getBestSaleMenuSet(int branchNo, int year, int month) throws JsonProcessingException {
+        Map<String, Long> menuMaps = new LinkedHashMap<String, Long>();
+        List<BranchMenu> branchMenus = branchMenuRepository.findByBranchNoAndMenu_MenuFlagOrderByMenu_LocalFlagAsc(branchNo, Menu.flagForMenuSet);
+        for (BranchMenu bm : branchMenus) {
             long count = orderRepository.countByMenuNo(bm.getMenuNo());
-            menuMaps.put(bm.getMenu().getMenuNameTH(),count);
+            if (count > 0) {
+                menuMaps.put(bm.getMenu().getMenuNameTH(), count);
+            }
         }
         return menuMaps;
     }
