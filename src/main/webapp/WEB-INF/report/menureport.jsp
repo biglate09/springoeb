@@ -28,8 +28,33 @@
                     <div class="x_panel">
                         <div class="x_title">
                             <h2>เมนูเดี่ยว (ขายดี)</h2>
-                            <ul class="nav navbar-right panel_toolbox">
-                                <li><a class="collapse-link"><i class="fa fa-chevron-up"></i></a>
+                            <div class="col-md-offset-6 col-md-2">
+                                <select name="year" class="form-control">
+                                    <option value="" disabled>ปี พ.ศ.</option>
+                                    <option>ทุกปี</option>
+                                    <option>2560</option>
+                                </select>
+                            </div>
+                            <div class="col-md-2">
+                                <select name="month" class="form-control">
+                                    <option value="" disabled>เดือน</option>
+                                    <option value="0">ทุกเดือน</option>
+                                    <option value="1">มกราคม</option>
+                                    <option value="2">กุมภาพันธ์</option>
+                                    <option value="3">มีนาคม</option>
+                                    <option value="4">เมษายน</option>
+                                    <option value="5">พฤษภาคม</option>
+                                    <option value="6">มิถุนายน</option>
+                                    <option value="7">กรกฎาคม</option>
+                                    <option value="8">สิงหาคม</option>
+                                    <option value="9">กันยายน</option>
+                                    <option value="10">ตุลาคม</option>
+                                    <option value="11">พฤศจิกายน</option>
+                                    <option value="12">ธันวาคม</option>
+                                </select>
+                            </div>
+                            <ul class="nav navbar-right panel_toolbox" style="min-width: 0px">
+                                <li><a class="collapse-link"><i class="fa fa-chevron-up right"></i></a>
                                 </li>
                             </ul>
                             <div class="clearfix"></div>
@@ -185,7 +210,6 @@
                             color: 'rgba(0,0,0,0)'
                         }
                     };
-
                 }
             }
         });
@@ -303,6 +327,8 @@
             }
         });
     }
+    });
+
 </script>
 </body>
 </html>
