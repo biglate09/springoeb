@@ -329,10 +329,10 @@
             position: absolute;
             left: 0;
             top: 0;
+            width: 57mm;
         }
         body {
             width: 57mm;
-            height: 80mm;
         }
     }
     @page {
