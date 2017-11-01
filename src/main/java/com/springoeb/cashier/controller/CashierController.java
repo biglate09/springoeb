@@ -42,7 +42,7 @@ public class CashierController {
     }
 
     @ResponseBody
-    @PostMapping("/getbill/{billNo}")
+    @PutMapping("/getbill/{billNo}")
     public String getCashier(@PathVariable("billNo") int billNo) throws JsonProcessingException {
         Bill bill = billService.findByBillNo(billNo);
         ObjectMapper mapper = new ObjectMapper();
