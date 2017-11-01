@@ -67,6 +67,8 @@
 <script type="text/javascript" src="http://echarts.baidu.com/gallery/vendors/echarts/echarts-all-3.js"></script>
 <script>
     //Script for bar chart----------------------------------------
+    var month_array = ['ม.ค.','ก.พ.','มี.ค.','ม.ย.','พ.ค.','มิ.ย.','ก.ค.','ส.ค.','ก.ย.','ต.ค.','พ.ย.','ธ.ค.'];
+
     $(document).ready(function () {
         $(".daterange").daterangepicker();
         var d = new Date();
@@ -75,9 +77,19 @@
 
     function init_totalincome(fromDate, toDate) {
         var xAxisName = 'วันที่';
+        if(fromDate.substr(6,4) != toDate.substr(6,4)){
+            xAxisName = 'ปี'
+        }else{
+            if(fromDate.substr(3,2) != toDate.substr(3,2)){
+                xAxisName = 'เดือน';
+            }else{
+                xAxisName = 'วันที่';
+            }
+        }
         var incomeDataSeries = [];
         var expenseDataSeries = [];
         var dataxAxis = [];
+        var key_number = 0;
         $.ajax({
             type: "PUT",
             dataType: "json",
@@ -86,10 +98,15 @@
             success: function (dataArray) {
                 $("#loading").css('display','none');
                 for (key in dataArray) {
+                    key_number++;
                     value = dataArray[key];
                     incomeDataSeries.push(value.income);
                     expenseDataSeries.push(-value.expense);
-                    dataxAxis.push(key);
+                    if(xAxisName == 'เดือน') {
+                        dataxAxis.push(month_array[key-1]);
+                    }else{
+                        dataxAxis.push(key);
+                    }
                 }
                 var dom = document.getElementById("container");
                 var myChart = echarts.init(dom);
@@ -204,7 +221,7 @@
                     myChart.setOption(option, true);
                 }
 
-                if (dataArray.length == 0) {
+                if (key_number == 0) {
                     $("#null").css("display", "inline-block");
                 } else {
                     $("#null").css("display", "none");
@@ -219,6 +236,7 @@
     ///////////////////////////////
 
     $("#reportfilter").click(function(){
+        $("#loading").css("display", "inline-block");
         init_totalincome($("#filterdate").val().substr(0,10),$("#filterdate").val().substr(13,10));
     });
 </script>
