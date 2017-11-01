@@ -98,7 +98,7 @@
 
                     <c:if test="${branchUser.roleNo == Role.MANAGER}">
                         <li>
-                            <a><i class="fa fa-home"></i> จัดการสาขาและสมาชิก <span
+                            <a><i class="fa fa-home"></i> จัดการสาขา <span
                                     class="fa fa-chevron-down"></span></a>
                             <ul class="nav child_menu">
                                 <c:if test="${branchUser.branchNo == Branch.MAIN_BRANCH}">
