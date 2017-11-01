@@ -15,4 +15,8 @@ public class BillService {
     public List<Bill> findByTable_BranchNo(int branchNo){
         return billRepository.findByTable_BranchNo(branchNo);
     }
+
+    public Bill findByBillNo(int billNo){
+        return billRepository.findByBillNo(billNo);
+    }
 }

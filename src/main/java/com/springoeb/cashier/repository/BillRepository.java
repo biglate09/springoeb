@@ -9,4 +9,5 @@ import java.util.List;
 @Repository
 public interface BillRepository extends CrudRepository<Bill,Integer>{
     List<Bill> findByTable_BranchNo(int branchNo);
+    Bill findByBillNo(int billNo);
 }

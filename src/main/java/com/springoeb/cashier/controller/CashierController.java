@@ -9,10 +9,7 @@ import com.springoeb.system.model.BranchUser;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.ResponseBody;
+import org.springframework.web.bind.annotation.*;
 
 import javax.servlet.http.HttpSession;
 import java.util.List;
@@ -34,8 +31,8 @@ public class CashierController {
     }
 
     @ResponseBody
-    @PostMapping("/getcashiers")
-    public String getCashier(HttpSession session) throws JsonProcessingException {
+    @PostMapping("/getbills")
+    public String getCashiers(HttpSession session) throws JsonProcessingException {
         BranchUser branchUser = (BranchUser) (session.getAttribute("branchUser"));
         int branchNo = branchUser.getBranchNo();
         List<Bill> bills = billService.findByTable_BranchNo(branchNo);
@@ -43,5 +40,15 @@ public class CashierController {
         String json = mapper.writeValueAsString(bills);
         return json;
     }
+
+    @ResponseBody
+    @PostMapping("/getbill/{billNo}")
+    public String getCashier(@PathVariable("billNo") int billNo) throws JsonProcessingException {
+        Bill bill = billService.findByBillNo(billNo);
+        ObjectMapper mapper = new ObjectMapper();
+        String json = mapper.writeValueAsString(bill);
+        return json;
+    }
+
     //-----------------------------------------------------------------------------------------------------------//
 }
