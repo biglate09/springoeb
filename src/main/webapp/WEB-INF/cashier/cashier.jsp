@@ -57,8 +57,7 @@
                                 </div>
                                 <!-- ส่วนเนื้อหาของ Modal -->
                                 <div class="modal-body" >
-                                    <form class="form-horizontal form-label-left input_mask" modelAttribute="bill"
-                                          id="paybill" enctype="multipart/form-data">
+                                    <form class="form-horizontal form-label-left input_mask" id="paybill">
                                     <input type="hidden" name="billNo" id="hiddenbillno">
                                     <div class="row">
                                         <div class="col-md-6 col-xs-12">
@@ -127,7 +126,7 @@
                                                                 </div>
                                                                 <div class="radio">
                                                                     <label class="inline-label">
-                                                                        <input type="radio" class="flat" name="iCheck" for="other"> อื่นๆ <input type="number" id="other" style="width:100px;margin-left: 10px;margin-bottom: 9px">
+                                                                        <input type="radio" class="flat" name="iCheck" for="other"> อื่นๆ <input class="reset_field" type="number" id="other" style="width:100px;margin-left: 10px;margin-bottom: 9px">
                                                                     </label>
                                                                 </div>
                                                             </div>
@@ -139,9 +138,9 @@
                                                                 <label class=" inline-label" for="totalprice" style="margin-left: 10%;color: green">ยอดสุทธิ </label>
                                                                 <div id="totalprice" name="totalprice" style="margin-left: 75%;text-align: right">120.00 บาท</div>
                                                             </div>
-                                                            <div class="col-md-11 inline-label" for="recieve">
+                                                            <div class="col-md-11 inline-label" for="receive">
                                                                 <label style="margin-left: 10%;">รับเงินมา</label>
-                                                                <input type="number" name="recieve" id="recieve" style="width: 100px;margin-left: 36%;text-align: right"> บาท
+                                                                <input type="number" class="reset_field" name="receive" id="receive" style="width: 100px;margin-left: 36%;text-align: right"> บาท
                                                             </div>
                                                             <div class="col-md-11 inline-label" >
                                                                 <label class=" inline-label" for="change" style="margin-left: 10%;color: crimson">ทอนเงิน </label>
@@ -250,15 +249,12 @@
     }
 
     $('.modal').on('hidden.bs.modal', function () {
-        console.log(alert("wowowow"));
         reset_field();
     });
 
     function reset_field() {
-        console.log(alert("wowowow"));
-        $("#paybill")[0].reset();
-        $("#recieve").empty();
-        console.log(alert("/////"));
+        $(".reset_field").val('');
+        $(".flat").iCheck('uncheck');
     }
 
     function set_bill(billNo) {
