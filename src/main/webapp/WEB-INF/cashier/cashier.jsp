@@ -267,20 +267,13 @@
             url: "${contextPath}/cashier/getbill/" + billNo,
             dataType: "json",
             success: function (result) {
-//                bill = result.bill;
                 $("#hiddenbillno").html(result.billNo);
                 $("#billdate").html(result.billDate);
                 $("#billtime").html(result.billTime);
                 $("#tablename").html(result.table.tableName);
                 $("#show_table_name").html(result.table.tableName);
-//                $("#edit_menu_stock_cat").val(menu.menuGroupNo);
-//                if (result.available) {
-//                    $("#edit_menu_available").parent().addClass('checked');
-//                    $("#edit_menu_available").attr('checked', true);
-//                } else {
-//                    $("#edit_menu_available").parent().removeClass('checked');
-//                    $("#edit_menu_available").attr('checked', false);
-//                }
+
+                for ()
 
             }
         });
