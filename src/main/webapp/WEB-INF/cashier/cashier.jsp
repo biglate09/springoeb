@@ -44,29 +44,32 @@
                                 </form>
                         </div>
                     </div>
-                    <div class="modal fade" id="editMenu" role="dialog">
+                    <div class="modal fade" id="cashier" role="dialog">
                         <div class="modal-dialog">
                             <!-- เนือหาของ Modal ทั้งหมด -->
-                            <div class="modal-content modal-body-test" style="overflow-y:hidden;">
+                            <div class="modal-content modal-body-test" style="overflow-y:hidden;font-size: large">
                                 <!-- ส่วนหัวของ Modal -->
                                 <div class="modal-header">
                                     <!-- ปุ่มกดปิด (X) ตรงส่วนหัวของ Modal -->
                                     <button type="button" class="close" data-dismiss="modal">&times;</button>
-                                    <h4 class="modal-title">จ่ายเงิน <span id="show_menu_name_for_edit"></span>
-                                    </h4>
+                                    <h3 class="modal-title">จ่ายเงิน <span id="show_table_name"></span>
+                                    </h3>
                                 </div>
                                 <!-- ส่วนเนื้อหาของ Modal -->
-                                <div class="modal-body">
+                                <div class="modal-body" >
+                                    <form class="form-horizontal form-label-left input_mask" modelAttribute="bill"
+                                          id="paybill" enctype="multipart/form-data">
+                                    <input type="hidden" name="billNo" id="hiddenbillno">
                                     <div class="row">
                                         <div class="col-md-6 col-xs-12">
                                             <div class="x_panel">
                                                 <div class="x_title">
-                                                    <h4 style="text-align: center;">ใบเสร็จรับเงิน</h4>
-                                                    <div style="text-align: center;">${branchUser.branch.restaurant.restName} ${branchUser.branch.branchName}</div>
+                                                    <div style="text-align: center;font-size: larger">ใบเสร็จรับเงิน</div>
+                                                    <div style="text-align: center;font-size: larger">${branchUser.branch.restaurant.restName} ${branchUser.branch.branchName}</div>
                                                     <div style="text-align: center;">
-                                                        วันที่ <span id="billdate"></span> เวลา <span id="billtime"></span> น.
+                                                        วันที่ <span id="billdate" style="color: #73879C"></span>  เวลา <span id="billtime" style="color: #73879C"></span> น.
                                                     </div>
-                                                    <div id="tablename">โต๊ะที่ 1</div>
+                                                    <div id="tablename"></div>
                                                     <div class="clearfix"></div>
                                                 </div>
                                                 <div class="x_content">
@@ -82,24 +85,9 @@
                                                                 </thead>
                                                                 <tbody>
                                                                 <tr name="menu_lists">
-                                                                    <td name="amount" style="width: 15%">1</td>
-                                                                    <td name="menu" style="width: 65%">ผัดกะเพราหมูสับ</td>
-                                                                    <td name="price" style="width: 20%;text-align: center;">40</td>
-                                                                </tr>
-                                                                <tr name="menu_lists">
-                                                                    <td name="amount" style="width: 15%">1</td>
-                                                                    <td name="menu" style="width: 65%">ขนมจีบกุ้ง</td>
-                                                                    <td name="price" style="width: 20%;text-align: center;">25</td>
-                                                                </tr>
-                                                                <tr name="menu_lists">
-                                                                    <td name="amount" style="width: 15%">1</td>
-                                                                    <td name="menu" style="width: 65%">ขนมจีบปู</td>
-                                                                    <td name="price" style="width: 20%;text-align: center;">25</td>
-                                                                </tr>
-                                                                <tr name="menu_lists">
-                                                                    <td name="amount" style="width: 15%">2</td>
-                                                                    <td name="menu" style="width: 65%">เก็กฮวย</td>
-                                                                    <td name="price" style="width: 20%;text-align: center;">30</td>
+                                                                    <td class="quantity" style="width: 15%"></td>
+                                                                    <td class="menu" style="width: 65%"></td>
+                                                                    <td class="price" style="width: 20%;text-align: center;"></td>
                                                                 </tr>
                                                                 </tbody>
                                                             </table>
@@ -107,8 +95,8 @@
                                                         <div class="ln_solid"></div>
                                                         <div class="form-group">
                                                             <div class="col-md-12 col-sm-12 col-xs-12">
-                                                                <label class="inline-label" for="price">ราคารวม </label>
-                                                                <div name="totalprice" id="price" style="margin-left: 75%;">120.00 บาท</div>
+                                                                <label class="inline-label" for="price">ยอดสุทธิ </label>
+                                                                <div class="totalprice" id="price" style="margin-left: 75%;"></div>
                                                             </div>
                                                             <div class="col-md-12 col-sm-12 col-xs-12" id="promotion"></div>
                                                             <div class="col-md-12 col-sm-12 col-xs-12" style="text-align: center">**** ขอบคุณที่ใช้บริการ ****</div>
@@ -139,7 +127,7 @@
                                                                 </div>
                                                                 <div class="radio">
                                                                     <label class="inline-label">
-                                                                        <input type="radio" class="flat" name="iCheck" for="other"> อื่นๆ <input type="number" id="other" style="width:100px;margin-left: 10px">
+                                                                        <input type="radio" class="flat" name="iCheck" for="other"> อื่นๆ <input type="number" id="other" style="width:100px;margin-left: 10px;margin-bottom: 9px">
                                                                     </label>
                                                                 </div>
                                                             </div>
@@ -148,19 +136,19 @@
                                                         <div class="form-group">
                                                             <%--<form oninput="x.value=parseInt(a.value)+parseInt(b.value)">--%>
                                                             <div class="col-md-11">
-                                                                <label class=" inline-label" for="totalprice" style="margin-left: 10%;">ราคารวม </label>
+                                                                <label class=" inline-label" for="totalprice" style="margin-left: 10%;color: green">ยอดสุทธิ </label>
                                                                 <div id="totalprice" name="totalprice" style="margin-left: 75%;text-align: right">120.00 บาท</div>
                                                             </div>
                                                             <div class="col-md-11 inline-label" for="recieve">
                                                                 <label style="margin-left: 10%;">รับเงินมา</label>
-                                                                <input type="number" name="recieve" id="recieve" style="width: 100px;margin-left: 41%;text-align: right"> บาท
+                                                                <input type="number" name="recieve" id="recieve" style="width: 100px;margin-left: 36%;text-align: right"> บาท
                                                             </div>
                                                             <div class="col-md-11 inline-label" >
-                                                                <label class=" inline-label" for="change" style="margin-left: 10%;">ทอนเงิน </label>
+                                                                <label class=" inline-label" for="change" style="margin-left: 10%;color: crimson">ทอนเงิน </label>
                                                                 <div id="change" name="change" style="margin-left: 75%;text-align: right">0.00 บาท</div>
                                                             </div>
                                                             <div class="col-md-offset-5 col-md-3">
-                                                                <button type="submit" class="btn btn-warning" style="width: 100%;text-align: right"><i class="fa fa-circle-o-notch fa-spin"  style="display:none"></i>
+                                                                <button type="submit" class="btn btn-warning" style="width: 100%;text-align: center"><i class="fa fa-circle-o-notch fa-spin"  style="display:none"></i>
                                                                     ยืนยัน</button>
                                                             </div>
                                                             <%--</form>--%>
@@ -169,8 +157,8 @@
                                                 </div>
                                             </div>
                                         </div>
-
                                         </div>
+                                    </form>
                                     </div>
                                     <div class="modal-footer">
                                         <!-- ปุ่มกดปิด (Close) ตรงส่วนล่างของ Modal -->
@@ -195,35 +183,19 @@
 <jsp:include page="../_include/bottomenv.jsp"/>
 <script>
     $(document).ready(function () {
-        var editfirsttime = true;
-
-        $("#editMenu").on('shown.bs.modal', function () {
-            if (editfirsttime) {
-                editfirsttime = false;
-                $("#material-datatable-2").DataTable({
-                    scrollY: "40vh",
-                    paging: false,
-                    order: [[1, "desc"]]
-                });
-            }
+        $('.price').change(function(){
+            var total = 0;
+            $('.price').each(function(){
+                if($(this).val() != '')
+                {
+                    total += parseInt($(this).val()) + " บาท";
+                }
+            });
+            $('.totalprice').html(total);
         });
-
-        $(".display_toggle").click(function () {
-            $(".display_toggle").removeClass("active");
-            $(this).addClass("active");
-        });
-
-        $("#displayThumbnail").click(function () {
-            $("#menu_thumbnail_list").css('display', 'none');
-            $("#menu_thumbnail").css('display', '');
-            $('.pagination').css('display', 'none');
-            $("#filter_by_category").css('visibility', '');
-            $("#myInput").parent().css('visibility', '');
-            refresh_table();
-        });
-
-        refresh_table();
+        refresh_table()
     });
+
 
     function refresh_table() {
         $.ajax({
@@ -262,8 +234,8 @@
                         <p class="col-md-12" style="white-space:nowrap;overflow:hidden;text-overflow: ellipsis;padding:0px;" >ใช้บริการมาแล้ว : ' + obj.billTime + ' นาที</p>\
                         <p class="col-md-12" style="white-space: nowrap;overflow:hidden;text-overflow: ellipsis;padding:0px;">ราคาอาหาร : ' + obj.totalAmount + ' บาท</p>\
                         <p class="col-md-12" style="padding:0px;"> สถานะอาหาร : ครบแล้ว</p>\
-                        <div style="text-align:center;" class="col-md-12"><button type="button" class="btn btn-success" data-toggle="modal" data-target="#editMenu" data-toggle="modal" \
-                        data-target="#editMenu" style="width: 80%;" onclick="set_bill(' + obj.billNo + ')">จ่ายเงิน</button></div>\
+                        <div style="text-align:center;" class="col-md-12"><button type="button" class="btn btn-success" data-toggle="modal" data-target="#cashier" \
+                        style="width: 80%;" onclick="set_bill(' + obj.billNo + ')">จ่ายเงิน</button></div>\
                         </div>\
                         </div>\
                         </div>\
@@ -278,17 +250,15 @@
     }
 
     $('.modal').on('hidden.bs.modal', function () {
+        console.log(alert("wowowow"));
         reset_field();
     });
 
     function reset_field() {
-        $("#add_menu")[0].reset();
-        $("#showpic").attr('src', '../images/table.png');
-        $("#add_menu_available").parent().removeClass('checked');
-        $("#add_menu_available").attr('checked', false);
-        $("#add_menu_official").parent().removeClass('checked');
-        $("#add_menu_official").attr('checked', false);
-        $("#display_material_desc").empty();
+        console.log(alert("wowowow"));
+        $("#paybill")[0].reset();
+        $("#recieve").empty();
+        console.log(alert("/////"));
     }
 
     function set_bill(billNo) {
@@ -297,22 +267,20 @@
             url: "${contextPath}/cashier/getbill/" + billNo,
             dataType: "json",
             success: function (result) {
-                menu = result.menu;
-                $("#hiddenmenuno").val(menu.menuNo);
-                $("#edit_menu_nameTH").val(menu.menuNameTH);
-                $("#edit_menu_nameEN").val(menu.menuNameEN);
-                $("#show_menu_name_for_edit").html(menu.menuNameTH + " / " + menu.menuNameEN);
-                $("#edit_menu_desc").val(menu.menuDesc);
-                $("#edit_menu_price").val(menu.menuPrice.toFixed(2));
-                $("#edit_menu_available").val(menu.menuAvailable);
-                $("#edit_menu_stock_cat").val(menu.menuGroupNo);
-                if (result.available) {
-                    $("#edit_menu_available").parent().addClass('checked');
-                    $("#edit_menu_available").attr('checked', true);
-                } else {
-                    $("#edit_menu_available").parent().removeClass('checked');
-                    $("#edit_menu_available").attr('checked', false);
-                }
+//                bill = result.bill;
+                $("#hiddenbillno").html(result.billNo);
+                $("#billdate").html(result.billDate);
+                $("#billtime").html(result.billTime);
+                $("#tablename").html(result.table.tableName);
+                $("#show_table_name").html(result.table.tableName);
+//                $("#edit_menu_stock_cat").val(menu.menuGroupNo);
+//                if (result.available) {
+//                    $("#edit_menu_available").parent().addClass('checked');
+//                    $("#edit_menu_available").attr('checked', true);
+//                } else {
+//                    $("#edit_menu_available").parent().removeClass('checked');
+//                    $("#edit_menu_available").attr('checked', false);
+//                }
 
             }
         });
