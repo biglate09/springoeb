@@ -64,9 +64,9 @@ public class BranchMenuService {
                 sum = orderRepository.sumByMenuNoAndDateIsBetween(menuNo,fromDate,toDate,Order.SERVED);
             }
 
-            if (sum != null && sum > 0) {
-                menuMaps.put(bm.getMenu().getMenuNameTH(), sum);
-            }
+//            if (sum != null && sum > 0) {
+                menuMaps.put(bm.getMenu().getMenuNameTH(), sum == null ? 0 : sum);
+//            }
         }
         return menuMaps;
     }
@@ -87,9 +87,9 @@ public class BranchMenuService {
                 sum = orderRepository.sumByMenuNoAndDateIsBetween(menuNo,fromDate,toDate,Order.SERVED);
             }
 
-            if (sum != null && sum > 0) {
-                menuMaps.put(bm.getMenu().getMenuNameTH(), sum);
-            }
+//            if (sum != null && sum > 0) {
+                menuMaps.put(bm.getMenu().getMenuNameTH(), sum == null ? 0 : sum);
+//            }
         }
         return menuMaps;
     }

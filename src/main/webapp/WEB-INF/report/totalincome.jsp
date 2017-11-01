@@ -27,30 +27,20 @@
                 <div class="col-md-12 col-sm-12 col-xs-12">
                     <div class="x_panel">
                         <div class="x_title">
-                            <div class="col-md-7"><h2>ภาพรวมผลประกอบการ</h2></div>
-                            <div class="col-md-2">
-                                <select name="year" class="form-control eventchange" id="year">
-                                    <option value="" disabled>ปี พ.ศ.</option>
-                                    <option value="2017">2560</option>
-                                </select>
+                            <div class="col-md-7">
+                                <h2>ภาพรวมผลประกอบการ</h2>
                             </div>
-                            <div class="col-md-2">
-                                <select name="month" class="form-control eventchange" id="month">
-                                    <option value="" disabled>เดือน</option>
-                                    <option value="0">ทุกเดือน</option>
-                                    <option value="1">มกราคม</option>
-                                    <option value="2">กุมภาพันธ์</option>
-                                    <option value="3">มีนาคม</option>
-                                    <option value="4">เมษายน</option>
-                                    <option value="5">พฤษภาคม</option>
-                                    <option value="6">มิถุนายน</option>
-                                    <option value="7">กรกฎาคม</option>
-                                    <option value="8">สิงหาคม</option>
-                                    <option value="9">กันยายน</option>
-                                    <option value="10">ตุลาคม</option>
-                                    <option value="11">พฤศจิกายน</option>
-                                    <option value="12">ธันวาคม</option>
-                                </select>
+                            <div class="col-md-4">
+                                <div class="col-md-9" style="padding-right:0px;">
+                                    <input type="text" id="filterdate"
+                                           class="form-control daterange" required value="${minDateTotal != null ? minDateTotal : 'ไม่พบข้อมูลในการค้นหา'} ${minDateTotal != null ? " - " : ''} ${maxDateTotal != null ? maxDateTotal : ''}">
+                                </div>
+                                <div class="input-group-btn">
+                                    <button class="btn btn-default"
+                                            type="submit" id="reportfilter">
+                                        <i class="glyphicon glyphicon-search fa fa-search"></i>
+                                    </button>
+                                </div>
                             </div>
                             <ul class="nav navbar-right panel_toolbox" style="min-width: 0px">
                                 <li><a class="collapse-link"><i class="fa fa-chevron-up right"></i></a>
@@ -73,26 +63,21 @@
 <script src="${contextPath}/vendors/bootstrap-daterangepicker/daterangepicker.js"></script>
 <script type="text/javascript" src="http://echarts.baidu.com/gallery/vendors/echarts/echarts-all-3.js"></script>
 <script>
-    var month_array = ['มกราคม','กุมภาพันธ์','มีนาคม','เมษายน','พฤษภาคม','มิถุนายนส','กรกฎาคม','สิงหาคม','กันยายน','ตุลาคม','พฤศจิกายน','ธันวาคม'];
     //Script for bar chart----------------------------------------
     $(document).ready(function () {
+        $(".daterange").daterangepicker();
         var d = new Date();
         init_totalincome(0,d.getFullYear());
     });
 
-    function init_totalincome(month, year) {
-        var xAxisName = 'เดือน';
+    function init_totalincome(fromDate, toDate) {
+        var xAxisName = 'วัน';
         $.ajax({
-            type: "POST",
+            type: "PUT",
             dataType: "json",
             url: "${contextPath}/report/totalincome",
-            data: {month: month, year: year},
+            data: {fromDate: fromDate, toDate: toDate},
             success: function (dataArray) {
-                if(month != 0){
-                    xAxisName = 'วันที่'
-                }else{
-                    xAxisName = 'เดือน'
-                }
                 var dom = document.getElementById("container");
                 var myChart = echarts.init(dom);
                 var app = {};

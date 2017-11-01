@@ -24,7 +24,7 @@
             <div class="clearfix"></div>
             <div class="row">
                 <%--Menu Report--%>
-                <div class="col-md-6 col-sm-6 col-xs-12">
+                <div class="col-md-6 col-sm-12 col-xs-12">
                     <div class="x_panel">
                         <div class="x_title">
                             <div class="col-md-5"><h2>เมนูเดี่ยวขายดี (10 อันดับ)</h2></div>
@@ -56,7 +56,7 @@
                 </div>
 
                 <%--Menuset Report--%>
-                <div class="col-md-6 col-sm-6 col-xs-12">
+                <div class="col-md-6 col-sm-12 col-xs-12">
                     <div class="x_panel">
                         <div class="x_title">
                             <div class="col-md-5"><h2>เมนูชุดขายดี (10 อันดับ)</h2></div>
