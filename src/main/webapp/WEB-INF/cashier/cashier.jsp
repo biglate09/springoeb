@@ -147,20 +147,20 @@
                                                         <div class="ln_solid"></div>
                                                         <div class="form-group">
                                                             <%--<form oninput="x.value=parseInt(a.value)+parseInt(b.value)">--%>
-                                                            <div class="col-md-12">
+                                                            <div class="col-md-11">
                                                                 <label class=" inline-label" for="totalprice" style="margin-left: 10%;">ราคารวม </label>
-                                                                <div id="totalprice" name="totalprice" style="margin-left: 75%;">120.00 บาท</div>
+                                                                <div id="totalprice" name="totalprice" style="margin-left: 75%;text-align: right">120.00 บาท</div>
                                                             </div>
-                                                            <div class="col-md-12 inline-label" for="recieve">
+                                                            <div class="col-md-11 inline-label" for="recieve">
                                                                 <label style="margin-left: 10%;">รับเงินมา</label>
-                                                                <input type="number" name="recieve" id="recieve" style="width: 100px;margin-left: 40%"> บาท
+                                                                <input type="number" name="recieve" id="recieve" style="width: 100px;margin-left: 41%;text-align: right"> บาท
                                                             </div>
-                                                            <div class="col-md-12 inline-label" >
+                                                            <div class="col-md-11 inline-label" >
                                                                 <label class=" inline-label" for="change" style="margin-left: 10%;">ทอนเงิน </label>
-                                                                <div id="change" name="change" style="margin-left: 75%;">80.00 บาท</div>
+                                                                <div id="change" name="change" style="margin-left: 75%;text-align: right">0.00 บาท</div>
                                                             </div>
                                                             <div class="col-md-offset-5 col-md-3">
-                                                                <button type="submit" class="btn btn-warning" style="width: 100%"><i class="fa fa-circle-o-notch fa-spin"  style="display:none"></i>
+                                                                <button type="submit" class="btn btn-warning" style="width: 100%;text-align: right"><i class="fa fa-circle-o-notch fa-spin"  style="display:none"></i>
                                                                     ยืนยัน</button>
                                                             </div>
                                                             <%--</form>--%>
