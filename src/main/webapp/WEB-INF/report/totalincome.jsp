@@ -76,7 +76,8 @@
     var month_array = ['มกราคม','กุมภาพันธ์','มีนาคม','เมษายน','พฤษภาคม','มิถุนายนส','กรกฎาคม','สิงหาคม','กันยายน','ตุลาคม','พฤศจิกายน','ธันวาคม'];
     //Script for bar chart----------------------------------------
     $(document).ready(function () {
-        init_totalincome(0, 0);
+        var d = new Date();
+        init_totalincome(0,d.getFullYear());
     });
 
     function init_totalincome(month, year) {
@@ -84,10 +85,10 @@
         $.ajax({
             type: "POST",
             dataType: "json",
-            url: "${contextPath}/report/bestsalemenu",
+            url: "${contextPath}/report/totalincome",
             data: {month: month, year: year},
-            success: function (menuArray) {
-                if(month != 0 && year != 0){
+            success: function (dataArray) {
+                if(month != 0){
                     xAxisName = 'วันที่'
                 }else{
                     xAxisName = 'เดือน'

@@ -30,7 +30,6 @@
                         <div class="x_panel">
                             <div class="x_title">
                                 <h4>ประวัติการทำงาน</h4>
-                                <!-- <button type="submit" class="btn btn-success" data-toggle="modal" data-target="#addEmp">เพิ่มพนักงาน</button> -->
                             </div>
                             <div class="x_content">
                                 <p>
@@ -70,8 +69,6 @@
                                 <tr>
                                     <th style="text-align:center;width:14.28%;">วัน/เดือน/ปี</th>
                                     <th style="text-align:center;width:14.28%;">ชื่อ</th>
-                                    <%--<th style="text-align:center;width:14.28%;">เวลาเข้างาน</th>--%>
-                                    <%--<th style="text-align:center;width:14.28%;">เวลาออกงาน</th>--%>
                                     <th style="text-align:center;width:14.28%;">ชั่วโมงงาน</th>
                                     <th style="text-align:center;width:14.28%;">ค่าจ้างวันนี้</th>
                                     <th style="text-align:center;width:14.28%;">ตัวเลือก</th>
@@ -79,60 +76,6 @@
                                 </thead>
 
                                 <tbody style="text-align:center;">
-                                <%--<c:forEach items="${workHistories}" var="wh">--%>
-                                <%--<tr style="text-align:center;">--%>
-                                <%--<fmt:formatDate pattern="yyyyMMdd" value="${wh.workDate}" var="timeorder"/>--%>
-                                <%--<td data-order="${timeorder}">--%>
-                                <%--<fmt:formatDate pattern="dd/MM/yyyy" value="${wh.workDate}"/>--%>
-                                <%--</td>--%>
-                                <%--<td>--%>
-                                <%--${wh.employee.empName}--%>
-                                <%--</td>--%>
-                                <%--<fmt:formatDate pattern="HHmm" value="${wh.workStart}" var="workStartOrder"/>--%>
-                                <%--<td data-order="${workStartOrder}">--%>
-                                <%--<c:choose>--%>
-                                <%--<c:when test="${wh.workStart != null}">--%>
-                                <%--<fmt:formatDate pattern="HH.mm" value="${wh.workStart}"/> น.--%>
-                                <%--</c:when>--%>
-                                <%--<c:otherwise>--%>
-                                <%-----%>
-                                <%--</c:otherwise>--%>
-                                <%--</c:choose>--%>
-                                <%--</td>--%>
-                                <%--<fmt:formatDate pattern="HHmm" value="${wh.workEnd}" var="workEndOrder"/>--%>
-                                <%--<td data-order="${workEndOrder}">--%>
-                                <%--<c:choose>--%>
-                                <%--<c:when test="${wh.workEnd != null}">--%>
-                                <%--<fmt:formatDate pattern="HH.mm" value="${wh.workEnd}"/> น.--%>
-                                <%--</c:when>--%>
-                                <%--<c:otherwise>--%>
-                                <%-----%>
-                                <%--</c:otherwise>--%>
-                                <%--</c:choose>--%>
-                                <%--</td>--%>
-                                <%--<td data-order="${wh.workHour}${wh.workMin}">--%>
-                                <%--<c:if test="${wh.workHour > 0}">--%>
-                                <%--<fmt:formatNumber type="number" pattern="#0" value="${wh.workHour}"/>--%>
-                                <%--ชั่วโมง--%>
-                                <%--</c:if>--%>
-                                <%--<fmt:formatNumber type="number" pattern="#0" value="${wh.workMin}"/>--%>
-                                <%--นาที--%>
-                                <%--</td>--%>
-                                <%--<td data-order="${wh.workPay}">--%>
-                                <%--<fmt:formatNumber type="number" pattern="#,###,###0.00"--%>
-                                <%--value="${wh.workPay}"/> บาท--%>
-                                <%--</td>--%>
-                                <%--<td>--%>
-                                <%--<a onclick="editEmp(${e.empNo})" class="btn btn-warning btn-sm"--%>
-                                <%--data-toggle="modal"--%>
-                                <%--data-target="#editEmp" disabled=""><i class="fa fa-pencil"></i>&nbsp;--%>
-                                <%--แก้ไข </a>--%>
-                                <%--<a href="${contextPath}/employee/deleteworkhistory/${wh.workHistNo}" )--%>
-                                <%--class="btn btn-danger btn-sm"><i--%>
-                                <%--class="fa fa-trash"></i>&nbsp; ลบ</a>--%>
-                                <%--</td>--%>
-                                <%--</tr>--%>
-                                <%--</c:forEach>--%>
                                 </tbody>
                             </table>
                         </div>

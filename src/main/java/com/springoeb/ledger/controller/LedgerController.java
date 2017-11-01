@@ -3,6 +3,7 @@ package com.springoeb.ledger.controller;
 import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.springoeb.ledger.model.Ledger;
+import com.springoeb.ledger.model.LedgerPay;
 import com.springoeb.ledger.model.LedgerType;
 import com.springoeb.ledger.service.LedgerService;
 import com.springoeb.ledger.service.LedgerTypeService;
@@ -99,7 +100,7 @@ public class LedgerController {
         int branchNo = ((BranchUser)(session.getAttribute("branchUser"))).getBranchNo();
         String date = request.getParameter("date_unformat");
         LedgerType ledgerType = ledgerTypeService.findByLedgerTypeNo(ledger.getLedgerTypeNo());
-        if(ledgerType.getLedgerPayNo() == LedgerType.EXPENSE){
+        if(ledgerType.getLedgerPayNo() == LedgerPay.EXPENSE){
             ledger.setAmount(-1 * ledger.getAmount());
         }
         ledger.setDate(Date.valueOf(date.substring(6, 10) + "-" + date.substring(3, 5) + "-" + date.substring(0, 2)));

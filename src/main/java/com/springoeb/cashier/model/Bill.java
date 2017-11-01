@@ -1,10 +1,12 @@
 package com.springoeb.cashier.model;
 
+import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import com.springoeb.table.model.Table;
 
 import javax.persistence.*;
 import java.sql.Date;
 import java.sql.Time;
+import java.util.List;
 
 @Entity(name = "Bill")
 public class Bill {
@@ -24,6 +26,9 @@ public class Bill {
     @ManyToOne
     @JoinColumn(name = "tableNo",updatable = false,insertable = false)
     private Table table;
+    @OneToMany(fetch = FetchType.LAZY, mappedBy = "bill")
+    @JsonIgnoreProperties("bill")
+    private List<Order> orders;
 
     public static String PAID = "paid";
     public static String UNPAID = "unpaid";
@@ -82,5 +87,13 @@ public class Bill {
 
     public void setTable(Table table) {
         this.table = table;
+    }
+
+    public List<Order> getOrders() {
+        return orders;
+    }
+
+    public void setOrders(List<Order> orders) {
+        this.orders = orders;
     }
 }

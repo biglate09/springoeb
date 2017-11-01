@@ -11,6 +11,9 @@ public class LedgerPay {
     @Column(name = "ledgerPayName")
     private String ledgerPayName;
 
+    public static int INCOME = 1;
+    public static int EXPENSE = 2;
+
     public Integer getLedgerPayNo() {
         return ledgerPayNo;
     }

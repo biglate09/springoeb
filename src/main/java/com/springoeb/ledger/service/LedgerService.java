@@ -27,4 +27,25 @@ public class LedgerService {
     public Ledger findByLedgerNo(int ledgerNo){
         return ledgerRepository.findByLedgerNo(ledgerNo);
     }
+
+//    public Map<Integer,IncomeExpenseBean> findTotalIncomeExpense(int branchNo, int month, int year){
+//        Map<Integer,IncomeExpenseBean> incomeExpenseBeanMap = new LinkedHashMap<Integer,IncomeExpenseBean>();
+//        Date fromDate,toDate;
+//        if(month == 0){
+//            fromDate = Date.valueOf(year+"-01-01");
+//            toDate = Date.valueOf(year+"-12-31");
+//        }else{
+//            fromDate = Date.valueOf(year+"-"+month+"-01");
+//            toDate = Date.valueOf(year+"-"+month+"-31");
+//        }
+//        LinkedList<Ledger> ledgers = ledgerRepository.findByBranchNoAndDateIsBetween(branchNo,fromDate,toDate);
+//        for(Ledger l : ledgers) {
+//            IncomeExpenseBean incomeExpenseBean = new IncomeExpenseBean();
+//            double income = 0, expense = 0;
+//            incomeExpenseBean.setIncome(income);
+//            incomeExpenseBean.setExpense(expense);
+//            incomeExpenseBeanMap.put(iterator, incomeExpenseBean);
+//        }
+//        return incomeExpenseBeanMap;
+//    }
 }

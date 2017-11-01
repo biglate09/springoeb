@@ -1,12 +1,12 @@
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 <%@ taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt" %>
 <%@page contentType="text/html" pageEncoding="UTF-8" %>
-<%@ page import="com.springoeb.promotion.model.Promotion" %>
 <c:set var="contextPath" value="${pageContext.request.contextPath}"/>
 <!DOCTYPE html>
 <html style="height: 100%">
 <head>
     <jsp:include page="../_include/topenv.jsp"/>
+    <link href="${contextPath}/vendors/bootstrap-daterangepicker/daterangepicker.css" rel="stylesheet">
     <title>ภาพรวมเมนูอาหาร</title>
 </head>
 <body class="nav-md">
@@ -24,34 +24,21 @@
             <div class="clearfix"></div>
             <div class="row">
                 <%--Menu Report--%>
-                <div class="col-md-12 col-sm-12 col-xs-12">
+                <div class="col-md-6 col-sm-6 col-xs-12">
                     <div class="x_panel">
                         <div class="x_title">
-                            <div class="col-md-7"><h2>เมนูเดี่ยวขายดี (10 อันดับ)</h2></div>
-                            <div class="col-md-2">
-                                <select name="year" class="form-control menuchange" id="menuyear">
-                                    <option value="" disabled>ปี พ.ศ.</option>
-                                    <option value="0">ทุกปี</option>
-                                    <option value="2017">2560</option>
-                                </select>
-                            </div>
-                            <div class="col-md-2">
-                                <select name="month" class="form-control menuchange" id="menumonth" disabled>
-                                    <option value="" disabled>เดือน</option>
-                                    <option value="0">ทุกเดือน</option>
-                                    <option value="1">มกราคม</option>
-                                    <option value="2">กุมภาพันธ์</option>
-                                    <option value="3">มีนาคม</option>
-                                    <option value="4">เมษายน</option>
-                                    <option value="5">พฤษภาคม</option>
-                                    <option value="6">มิถุนายน</option>
-                                    <option value="7">กรกฎาคม</option>
-                                    <option value="8">สิงหาคม</option>
-                                    <option value="9">กันยายน</option>
-                                    <option value="10">ตุลาคม</option>
-                                    <option value="11">พฤศจิกายน</option>
-                                    <option value="12">ธันวาคม</option>
-                                </select>
+                            <div class="col-md-5"><h2>เมนูเดี่ยวขายดี (10 อันดับ)</h2></div>
+                            <div class="col-md-6">
+                                <div class="col-md-9" style="padding-right:0px;">
+                                    <input type="text" name="filterdate" id="filterdate_menu"
+                                           class="form-control daterange" value="${minDateMenu} - ${maxDateMenu}" required>
+                                </div>
+                                <div class="input-group-btn">
+                                    <button class="btn btn-default"
+                                            type="submit">
+                                        <i class="glyphicon glyphicon-search fa fa-search"></i>
+                                    </button>
+                                </div>
                             </div>
                             <ul class="nav navbar-right panel_toolbox" style="min-width: 0px">
                                 <li><a class="collapse-link"><i class="fa fa-chevron-up right"></i></a>
@@ -69,34 +56,21 @@
                 </div>
 
                 <%--Menuset Report--%>
-                <div class="col-md-12 col-sm-12 col-xs-12">
+                <div class="col-md-6 col-sm-6 col-xs-12">
                     <div class="x_panel">
                         <div class="x_title">
-                            <div class="col-md-7"><h2>เมนูชุดขายดี (10 อันดับ)</h2></div>
-                            <div class="col-md-2">
-                                <select name="year" class="form-control menusetchange" id="menusetyear">
-                                    <option value="" disabled>ปี พ.ศ.</option>
-                                    <option value="0">ทุกปี</option>
-                                    <option value="2017">2560</option>
-                                </select>
-                            </div>
-                            <div class="col-md-2">
-                                <select name="month" class="form-control menusetchange" id="menusetmonth" disabled>
-                                    <option value="" disabled>เดือน</option>
-                                    <option value="0">ทุกเดือน</option>
-                                    <option value="1">มกราคม</option>
-                                    <option value="2">กุมภาพันธ์</option>
-                                    <option value="3">มีนาคม</option>
-                                    <option value="4">เมษายน</option>
-                                    <option value="5">พฤษภาคม</option>
-                                    <option value="6">มิถุนายน</option>
-                                    <option value="7">กรกฎาคม</option>
-                                    <option value="8">สิงหาคม</option>
-                                    <option value="9">กันยายน</option>
-                                    <option value="10">ตุลาคม</option>
-                                    <option value="11">พฤศจิกายน</option>
-                                    <option value="12">ธันวาคม</option>
-                                </select>
+                            <div class="col-md-5"><h2>เมนูชุดขายดี (10 อันดับ)</h2></div>
+                            <div class="col-md-6">
+                                <div class="col-md-9" style="padding-right:0px;">
+                                    <input type="text" name="filterdate" id="filterdate_menuset"
+                                           class="form-control daterange" required>
+                                </div>
+                                <div class="input-group-btn">
+                                    <button class="btn btn-default"
+                                            type="submit">
+                                        <i class="glyphicon glyphicon-search fa fa-search"></i>
+                                    </button>
+                                </div>
                             </div>
                             <ul class="nav navbar-right panel_toolbox" style="min-width: 0px">
                                 <li><a class="collapse-link"><i class="fa fa-chevron-up right"></i></a>
@@ -132,6 +106,7 @@
     //***********CONFIG BY BIGHEAD*************//
 
     $(document).ready(function () {
+        $(".daterange").daterangepicker();
         init_bestsalemenu(0, 0);
         init_bestsalemenuset(0, 0);
     });
@@ -203,7 +178,8 @@
                                 },
                                 dataView: {
                                     show: true,
-                                    title: "ดูข้อมูล"
+                                    title: "ดูข้อมูล",
+                                    lang: ['ดูข้อมูล', 'ปิด', 'รีเฟรช']
                                 },
                                 saveAsImage: {
                                     show: true,
@@ -337,35 +313,35 @@
         });
     }
 
-    $("#menuyear").change(function () {
-        if ($(this).val() == 0) {
-            $("#menumonth").val(0);
-            $("#menumonth").attr('disabled', true);
-        } else {
-            $("#menumonth").attr('disabled', false);
-        }
-    });
-
-    $(".menuchange").change(function () {
-        year = $("#menuyear").val();
-        month = $("#menumonth").val();
-        init_bestsalemenu(month, year);
-    });
-
-    $("#menusetyear").change(function () {
-        if ($(this).val() == 0) {
-            $("#menusetmonth").val(0);
-            $("#menusetmonth").attr('disabled', true);
-        } else {
-            $("#menusetmonth").attr('disabled', false);
-        }
-    });
-
-    $(".menusetchange").change(function () {
-        year = $("#menusetyear").val();
-        month = $("#menusetmonth").val();
-        init_bestsalemenuset(month, year);
-    });
+//    $("#menuyear").change(function () {
+//        if ($(this).val() == 0) {
+//            $("#menumonth").val(0);
+//            $("#menumonth").attr('disabled', true);
+//        } else {
+//            $("#menumonth").attr('disabled', false);
+//        }
+//    });
+//
+//    $(".menuchange").change(function () {
+//        year = $("#menuyear").val();
+//        month = $("#menumonth").val();
+//        init_bestsalemenu(month, year);
+//    });
+//
+//    $("#menusetyear").change(function () {
+//        if ($(this).val() == 0) {
+//            $("#menusetmonth").val(0);
+//            $("#menusetmonth").attr('disabled', true);
+//        } else {
+//            $("#menusetmonth").attr('disabled', false);
+//        }
+//    });
+//
+//    $(".menusetchange").change(function () {
+//        year = $("#menusetyear").val();
+//        month = $("#menusetmonth").val();
+//        init_bestsalemenuset(month, year);
+//    });
 </script>
 </body>
 </html>

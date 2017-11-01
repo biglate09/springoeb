@@ -24,8 +24,9 @@ public class LedgerType {
     @OneToMany(fetch = FetchType.LAZY, mappedBy = "ledgerType")
     private List<Ledger> ledgers;
 
-    public static int INCOME = 1;
-    public static int EXPENSE = 2;
+    public static int PROFIT = 1;
+    public static int EMPLOYEE = 2;
+    public static int MATERIAL = 2;
 
     public Integer getLedgerTypeNo() {
         return ledgerTypeNo;

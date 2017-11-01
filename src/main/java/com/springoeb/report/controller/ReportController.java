@@ -2,11 +2,13 @@ package com.springoeb.report.controller;
 
 import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.databind.ObjectMapper;
+import com.springoeb.cashier.service.OrderService;
+import com.springoeb.ledger.service.LedgerService;
 import com.springoeb.menu.service.BranchMenuService;
-import com.springoeb.menu.service.MenuGroupService;
 import com.springoeb.system.model.BranchUser;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
+import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -14,6 +16,7 @@ import org.springframework.web.bind.annotation.ResponseBody;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpSession;
+import java.text.SimpleDateFormat;
 import java.util.*;
 
 @RequestMapping("/report")
@@ -24,11 +27,23 @@ public class ReportController {
     @Autowired
     private BranchMenuService branchMenuService;
     @Autowired
-    private MenuGroupService menuGroupService;
+    private LedgerService ledgerService;
+    @Autowired
+    private OrderService orderService;
     //-----------------------------------------------------------------------------------------------------------//
 
     @GetMapping("/menureport")
-    public String toMenuReport(){
+    public String toMenuReport(HttpSession session,Model model){
+        BranchUser branchUser = (BranchUser) (session.getAttribute("branchUser"));
+        int branchNo = branchUser.getBranchNo();
+        Date minDateMenu = orderService.findMinMenuOrderDateByBranchNo(branchNo);
+        Date maxDateMenu = orderService.findMaxMenuOrderDateByBranchNo(branchNo);
+        Date minDateMenuSet = orderService.findMinMenuSetOrderDateByBranchNo(branchNo);
+        Date maxDateMenuSet = orderService.findMaxMenuSetOrderDateByBranchNo(branchNo);
+        model.addAttribute("minDateMenu",new SimpleDateFormat("dd-MM-YYYY").format(minDateMenu));
+        model.addAttribute("maxDateMenu",new SimpleDateFormat("dd-MM-YYYY").format(maxDateMenu));
+        model.addAttribute("minDateMenu",new SimpleDateFormat("dd-MM-YYYY").format(minDateMenuSet));
+        model.addAttribute("maxDateMenu",new SimpleDateFormat("dd-MM-YYYY").format(maxDateMenuSet));
         return REPORT_PATH + "menureport.jsp";
     }
 
@@ -84,17 +99,19 @@ public class ReportController {
     }
 
 //    @ResponseBody
-//    @PostMapping("/bestsalemenugroup")
-//    public String getBestSaleMenuGroup(HttpSession session) throws JsonProcessingException {
+//    @PostMapping("/totalincome")
+//    public String getTotalIncome(HttpSession session, HttpServletRequest request) throws JsonProcessingException {
+//        int year = Integer.parseInt(request.getParameter("year"));
+//        int month = Integer.parseInt(request.getParameter("month"));
 //        BranchUser branchUser = (BranchUser) (session.getAttribute("branchUser"));
-//        int restNo = branchUser.getBranch().getRestNo();
-//        Map<MenuGroup,Long> menuGroups = menuGroupService.getBestSaleMenuGroup(restNo);
+//        int branchNo = branchUser.getBranchNo();
+//        Map<Integer,IncomeExpenseBean> totalIncome = ledgerService.findTotalIncomeExpense(branchNo,month,year);
 //        ObjectMapper mapper = new ObjectMapper();
-//        String json = mapper.writeValueAsString(sortByValue(menuGroups));
+//        String json = mapper.writeValueAsString(totalIncome);
 //        return json;
 //    }
 
-    static <K,V extends Comparable<? super V>>
+    private static <K,V extends Comparable<? super V>>
     List<Map.Entry<K, V>> sortByValue(Map<K,V> map) {
 
         List<Map.Entry<K,V>> sortedEntries = new ArrayList<Map.Entry<K,V>>(map.entrySet());
