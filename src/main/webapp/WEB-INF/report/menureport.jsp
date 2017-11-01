@@ -27,7 +27,7 @@
                 <div class="col-md-12 col-sm-12 col-xs-12">
                     <div class="x_panel">
                         <div class="x_title">
-                            <div class="col-md-7"><h2>เมนูเดี่ยว (ขายดี)</h2></div>
+                            <div class="col-md-7"><h2>เมนูเดี่ยวขายดี (10 อันดับ)</h2></div>
                             <div class="col-md-2">
                                 <select name="year" class="form-control menuchange" id="menuyear">
                                     <option value="" disabled>ปี พ.ศ.</option>
@@ -72,7 +72,7 @@
                 <div class="col-md-12 col-sm-12 col-xs-12">
                     <div class="x_panel">
                         <div class="x_title">
-                            <div class="col-md-7"><h2>เมนูชุด (ขายดี)</h2></div>
+                            <div class="col-md-7"><h2>เมนูชุดขายดี (10 อันดับ)</h2></div>
                             <div class="col-md-2">
                                 <select name="year" class="form-control menusetchange" id="menusetyear">
                                     <option value="" disabled>ปี พ.ศ.</option>
@@ -228,6 +228,9 @@
                 } else {
                     $("#menu_null").css("display", "none");
                 }
+            },error : function(){
+                $("#loadingmenu").css('display','none');
+                swal("ผิดพลาด", "เซิร์ฟเวอร์มีปัญหา", "error");
             }
         });
     }
@@ -327,6 +330,9 @@
                 } else {
                     $("#menuset_null").css("display", "none");
                 }
+            },error : function(){
+                $("#loadingmenuset").css('display','none');
+                swal("ผิดพลาด", "เซิร์ฟเวอร์มีปัญหา", "error");
             }
         });
     }
