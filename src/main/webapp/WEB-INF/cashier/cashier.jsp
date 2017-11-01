@@ -82,12 +82,7 @@
                                                                     <td style="width: 20%;text-align: center;">ราคา</td>
                                                                 </tr>
                                                                 </thead>
-                                                                <tbody>
-                                                                <tr name="menu_lists">
-                                                                    <td class="quantity" style="width: 15%"></td>
-                                                                    <td class="menu" style="width: 65%"></td>
-                                                                    <td class="price" style="width: 20%;text-align: center;"></td>
-                                                                </tr>
+                                                                <tbody class="menu_lists">
                                                                 </tbody>
                                                             </table>
                                                         </div>
@@ -221,7 +216,6 @@
 //                    var diff_hours = difference.getHours();
 //                    var diff_mins = difference.getMinutes();
                     //Gallery
-                    console.log(json);
                     var div = '\
                         <div class="col-md-55">\
                         <div class="thumbnail thumbnail_inline">\
@@ -263,20 +257,29 @@
             url: "${contextPath}/cashier/getbill/" + billNo,
             dataType: "json",
             success: function (result) {
-//                bill = result.bill;
                 $("#hiddenbillno").html(result.billNo);
                 $("#billdate").html(result.billDate);
                 $("#billtime").html(result.billTime);
                 $("#tablename").html(result.table.tableName);
                 $("#show_table_name").html(result.table.tableName);
-//                $("#edit_menu_stock_cat").val(menu.menuGroupNo);
-//                if (result.available) {
-//                    $("#edit_menu_available").parent().addClass('checked');
-//                    $("#edit_menu_available").attr('checked', true);
-//                } else {
-//                    $("#edit_menu_available").parent().removeClass('checked');
-//                    $("#edit_menu_available").attr('checked', false);
-//                }
+
+                result.orders.forEach(function (order) {
+                    order = result.orders;
+                    console.log(order);
+                    var str = '<tr>' +
+                        '<td class="quantity" style="width: 15%">' + order.quantity + '</td>' +
+                        '<td class="menu" style="width: 65%">' + order.menu.menuNameTH + '</td>' +
+                        '<td class="price" style="width: 20%;text-align: center;">' + order.amount + '</td>' +
+                        '</tr>';
+
+                    str += '<tr>' +
+                        '<td class="quantity" style="width: 15%">' + order.quantity + '</td>' +
+                        '<td class="menu" style="width: 65%">' + order.menu.menuNameTH + '</td>' +
+                    '<td class="price" style="width: 20%;text-align: center;">' + order.amount + '</td>' +
+                    '</tr>' ;
+
+                    $('.menu_lists').html(str);
+                })
 
             }
         });
