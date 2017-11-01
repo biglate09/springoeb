@@ -1,6 +1,7 @@
 package com.springoeb.menu.service;
 
 import com.fasterxml.jackson.core.JsonProcessingException;
+import com.springoeb.cashier.model.Order;
 import com.springoeb.cashier.repository.OrderRepository;
 import com.springoeb.menu.model.BranchMenu;
 import com.springoeb.menu.model.Menu;
@@ -56,7 +57,7 @@ public class BranchMenuService {
             int menuNo = bm.getMenuNo();
             Long sum = new Long(0);
             if (month == 0 && year == 0) {
-                sum = orderRepository.sumByMenuNo(menuNo);
+                sum = orderRepository.sumByMenuNo(menuNo, Order.SERVED);
             } else {
                 Date fromDate, toDate;
                 if (month == 0 && year != 0) {
@@ -66,7 +67,7 @@ public class BranchMenuService {
                     fromDate = Date.valueOf(year + "-" + month + "-01");
                     toDate = Date.valueOf(year + "-" + month + "-31");
                 }
-                sum = orderRepository.sumByMenuNoAndDateIsBetween(menuNo, fromDate, toDate);
+                sum = orderRepository.sumByMenuNoAndDateIsBetween(menuNo, fromDate, toDate, Order.SERVED);
             }
 
             if (sum != null && sum > 0) {
@@ -83,7 +84,7 @@ public class BranchMenuService {
             int menuNo = bm.getMenuNo();
             Long sum = new Long(0);
             if (month == 0 && year == 0) {
-                sum = orderRepository.sumByMenuNo(menuNo);
+                sum = orderRepository.sumByMenuNo(menuNo,Order.SERVED);
             } else {
                 Date fromDate, toDate;
                 if (month == 0 && year != 0) {
@@ -93,7 +94,7 @@ public class BranchMenuService {
                     fromDate = Date.valueOf(year + "-" + month + "-01");
                     toDate = Date.valueOf(year + "-" + month + "-31");
                 }
-                sum = orderRepository.sumByMenuNoAndDateIsBetween(menuNo, fromDate, toDate);
+                sum = orderRepository.sumByMenuNoAndDateIsBetween(menuNo, fromDate, toDate, Order.SERVED);
             }
 
             if (sum != null && sum > 0) {
