@@ -173,7 +173,7 @@
 <div class="login-form">
     <form action="${contextPath}/system/login" method="POST" modelAttribute="branchUser">
         <div class="col-xs-2 col-xs-0ffset-2">
-            <img class="logo" src="${contextPath}/images/OEB_LOGO_TEST.png">
+            <img class="logo" src="${contextPath}/images/OEB_LOGO.png">
         </div>
 
         <div class="form-group ">
@@ -188,7 +188,7 @@
         </div>
         <div class="remember checkbox">
             <label>
-                <input type="checkbox" name="remember-me" ${rememberme?'checked':''}>จำรหัสผ่าน
+                <input type="checkbox" name="remember-me" ${rememberme?'checked':''} >จำรหัสผ่าน
             </label>
         </div>
         <button type="submit" class="log-btn">ลงชื่อเข้าใช้</button>

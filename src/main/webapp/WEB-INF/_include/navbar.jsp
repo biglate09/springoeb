@@ -5,26 +5,12 @@
 <c:set scope="page" var="contextPath" value="${pageContext.request.contextPath}"/>
 <div class="col-md-3 left_col">
     <div class="left_col scroll-view">
-        <div class="navbar nav_title" style="border: 0;">
-            <a href="#" class="site_title">
-                <img src="${contextPath}/images/OEB_LOGO.png" style="width:50px;margin-right:5px;" alt="...">
-                <span>Order Eat Bill</span>
+        <div class="navbar" style="border: 0;">
+            <a href="#">
+                <img src="${contextPath}/images/OEB_LOGO.png" style="width:70%;margin-left:17%;margin-top:15%" alt="...">
             </a>
         </div>
         <div class="clearfix"></div>
-        <!-- menu profile quick info -->
-        <div class="profile clearfix">
-            <div class="profile_pic">
-                <img src="${contextPath}/images/img.png" alt="..." class="img-circle profile_img">
-            </div>
-            <div class="profile_info">
-                <span>ยินดีต้อนรับ,</span>
-                <h2 style="white-space:nowrap;overflow:hidden;text-overflow: ellipsis;margin-bottom:5px;">
-                    สาขา${branchUser.branch.branchName}</h2>
-                <h2 style="white-space:nowrap;overflow:hidden;text-overflow: ellipsis;">
-                    (สาขาที่ ${branchUser.branch.branchNo})</h2>
-            </div>
-        </div>
         <!-- /menu profile quick info -->
         <br/>
         <!-- sidebar menu -->
@@ -97,7 +83,6 @@
                             <ul class="nav child_menu">
                                 <li><a id="promotion" href="${contextPath}/promotion/promotion">โปรโมชั่นเมนูอาหาร</a>
                                 </li>
-                                    <%--<li><a id="api" href="${contextPath}/promotion/promotion">โฆษณาผ่าน API</a></li>--%>
                             </ul>
                         </li>
                     </c:if>
@@ -175,11 +160,8 @@
         <!-- /sidebar menu -->
         <!-- /menu footer buttons -->
         <div class="sidebar-footer hidden-small">
-            <%--<a data-toggle="tooltip" data-placement="top" title="Settings">--%>
-            <%--<span class="glyphicon glyphicon-cog" aria-hidden="true"></span>--%>
-            <%--</a>--%>
             <a data-toggle="tooltip" data-placement="top" title="ออกจากระบบ" href="${contextPath}/system/logout">
-                <span class="glyphicon glyphicon-off" aria-hidden="true"></span>
+                <span class="glyphicon glyphicon-off" aria-hidden="true" style="color:white"></span>
             </a>
         </div>
         <!-- /menu footer buttons -->
@@ -191,24 +173,16 @@
     <div class="nav_menu">
         <nav>
             <div class="nav toggle">
-                <a id="menu_toggle"><i class="fa fa-bars"></i></a>
+                <a id="menu_toggle"><i class="fa fa-bars"  style="color:white"></i></a>
             </div>
             <ul class="nav navbar-nav navbar-right">
                 <li class="">
                     <a href="javascript:;" class="user-profile dropdown-toggle" data-toggle="dropdown"
                        aria-expanded="false">
-                        <img src="${contextPath}/images/img.png" alt=""> ${branchUser.username}
-                        <span class=" fa fa-angle-down"></span>
+                        <img src="${contextPath}/images/img.png" alt=""> <span style="color:white">ยินดีต้อนรับ ${branchUser.role.roleName} ของสาขา${branchUser.branch.branchName}(สาขาที่ ${branchUser.branch.branchNo})</span>
+                         <span class=" fa fa-angle-down" style="color:white"></span>
                     </a>
                     <ul class="dropdown-menu dropdown-usermenu pull-right">
-                        <%--<li><a href="javascript:;"> Profile</a></li>--%>
-                        <%--<li>--%>
-                        <%--<a href="javascript:;">--%>
-                        <%--<span class="badge bg-red pull-right">50%</span>--%>
-                        <%--<span>Settings</span>--%>
-                        <%--</a>--%>
-                        <%--</li>--%>
-                        <%--<li><a href="javascript:;">Help</a></li>--%>
                         <li><a href="${contextPath}/system/logout">
                             <i class="fa fa-sign-out pull-right"></i>ออกจากระบบ</a>
                         </li>
