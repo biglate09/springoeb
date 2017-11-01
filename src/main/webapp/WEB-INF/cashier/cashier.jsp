@@ -89,11 +89,15 @@
                                                         </div>
                                                         <div class="ln_solid"></div>
                                                         <div class="form-group">
-                                                            <div class="col-md-12 col-sm-12 col-xs-12">
+                                                            <div class="col-md-12 col-sm-12 col-xs-12 inline-label">
                                                                 <label class="inline-label" for="price">ยอดสุทธิ </label>
-                                                                <div class="totalprice" id="price" style="margin-left: 75%;"></div>
+                                                                <div id="price" style="margin-right: 5%;text-align: right"><span class="totalprice"></span> บาท</div>
                                                             </div>
                                                             <div class="col-md-12 col-sm-12 col-xs-12" id="promotion"></div>
+                                                            <div class="col-md-12 col-sm-12 col-xs-12 inline-label">
+                                                                <label class="inline-label" for="bill_change">ทอนเงิน </label>
+                                                                <div id="bill_change" style="margin-right: 5%;text-align: right"><span class="change"></span> บาท</div>
+                                                            </div>
                                                             <div class="col-md-12 col-sm-12 col-xs-12" style="text-align: center">**** ขอบคุณที่ใช้บริการ ****</div>
                                                         </div>
                                                     </form>
@@ -133,15 +137,15 @@
                                                         <div class="form-group">
                                                             <div class="col-md-12">
                                                                 <label class="inline-label" style="margin-left: 10%;color: green" for="totalprice">ยอดสุทธิ</label>
-                                                                <div class="totalprice" id="totalprice" style="margin-right: 5%;text-align: right"></div>
+                                                                <div id="totalprice" style="margin-right: 5%;text-align: right"><span class="totalprice"></span> บาท</div>
                                                             </div>
                                                             <div class="col-md-12 inline-label" for="receive">
                                                                 <label style="margin-left: 10%;">รับเงินมา</label>
-                                                                <input type="number" class="reset_field" name="receive" id="receive" style="width: 100px;margin-left: 34%;text-align: right"> บาท
+                                                                <input type="number" class="reset_field receive" name="receive" id="receive" style="width: 100px;margin-left: 34%;text-align: right"> บาท
                                                             </div>
                                                             <div class="col-md-12 inline-label" >
                                                                 <label class="inline-label" for="change" style="margin-left: 10%;color: crimson">ทอนเงิน </label>
-                                                                <div id="change" name="change" style="margin-right: 5%;text-align: right" ></div>
+                                                                <div id="change" style="margin-right: 5%;text-align: right" ><span class="change"></span> บาท</div>
                                                             </div>
                                                             <div class="col-md-offset-4 col-md-4">
                                                                 <button id="comfirm" class="btn btn-warning" style="width: 100%;text-align: center;font-size: initial;"><i class="fa fa-circle-o-notch fa-spin"  style="display:none"></i>ยืนยันจ่ายเงิน</button>
@@ -256,12 +260,12 @@
                     $('.menu_lists').html(str);
                 })
 
-                $("#receive").keyup(function () {
-                    var total = $("#totalprice").html();
+                $(".receive").keyup(function () {
+                    var total = $(".totalprice").html();
                     var money = $(this).val();
                     var change = (money-total).toFixed(2);
 
-                    $("#change").html(change);
+                    $(".change").html(change);
                 })
 
             }
@@ -316,16 +320,24 @@
         text-overflow: ellipsis;
         float:left;
     }
-    .totalprice::after {
-        content: " บาท";
+    @media print{
+        body * {
+            visibility: hidden;
+        }
+        #printableArea * {
+            visibility: visible;
+            position: absolute;
+            left: 0;
+            top: 0;
+        }
+        body {
+            width: 57mm;
+            height: 80mm;
+        }
     }
-    #change::after {
-        content: " บาท";
-    }
-
-    @media print {
-        @page { margin: 0; }
-        body { margin: 1.6cm; }
+    @page {
+        margin: 0;
+        size: auto;
     }
 </style>
 </body>
