@@ -33,7 +33,8 @@
                             <div class="col-md-4">
                                 <div class="col-md-9" style="padding-right:0px;">
                                     <input type="text" id="filterdate"
-                                           class="form-control daterange" required value="${minDateTotal != null ? minDateTotal : 'ไม่พบข้อมูลในการค้นหา'} ${minDateTotal != null ? " - " : ''} ${maxDateTotal != null ? maxDateTotal : ''}">
+                                           class="form-control daterange" required
+                                           value="${minDateTotal != null ? minDateTotal : 'ไม่พบข้อมูลในการค้นหา'} ${minDateTotal != null ? " - " : ''} ${maxDateTotal != null ? maxDateTotal : ''}">
                                 </div>
                                 <div class="input-group-btn">
                                     <button class="btn btn-default"
@@ -67,17 +68,26 @@
     $(document).ready(function () {
         $(".daterange").daterangepicker();
         var d = new Date();
-        init_totalincome(0,d.getFullYear());
+        init_totalincome("${minDateTotal}", "${maxDateTotal}");
     });
 
     function init_totalincome(fromDate, toDate) {
-        var xAxisName = 'วัน';
+        var xAxisName = 'วันที่';
+        var incomeDataSeries = [];
+        var expenseDataSeries = [];
+        var dataxAxis = [];
         $.ajax({
             type: "PUT",
             dataType: "json",
             url: "${contextPath}/report/totalincome",
             data: {fromDate: fromDate, toDate: toDate},
             success: function (dataArray) {
+                for (key in dataArray) {
+                    value = dataArray[key];
+                    incomeDataSeries.push(value.income);
+                    expenseDataSeries.push(-value.expense);
+                    dataxAxis.push(key);
+                }
                 var dom = document.getElementById("container");
                 var myChart = echarts.init(dom);
                 var app = {};
@@ -159,9 +169,9 @@
                     xAxis: [
                         {
                             type: 'category',
-                            name: 'วันที่',
+                            name: xAxisName,
                             axisTick: {show: false},
-                            data: [1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14, 15, 16, 17, 18, 19, 20, 21, 22, 23, 24, 25, 26, 27, 28, 29, 30]
+                            data: dataxAxis
                         }
                     ],
                     yAxis: [
@@ -176,13 +186,13 @@
                             type: 'bar',
                             barGap: 0,
                             label: labelOption,
-                            data: [320, 332, 301, 334, 890, 320, 332, 301, 334, 890, 320, 332, 332, 332, 332, 332, 332, 332, 332, 332, 332, 332, 332, 332, 332, 332, 332, 332, 332, 332]
+                            data: incomeDataSeries
                         },
                         {
                             name: 'รายจ่าย',
                             type: 'bar',
                             label: labelOption,
-                            data: [220, 182, 191, 234, 290, 220, 182, 191, 234, 290, 220, 182, 182, 182, 182, 182, 182, 182, 182, 182, 182, 182, 182, 182, 182, 182, 182, 182, 182, 182]
+                            data: expenseDataSeries
                         }
                     ]
                 };

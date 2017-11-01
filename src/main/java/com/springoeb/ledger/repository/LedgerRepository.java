@@ -18,6 +18,6 @@ public interface LedgerRepository extends CrudRepository<Ledger,Integer>{
     Date findMinLedgerDateByBranchNo(int branchNo);
     @Query("select max(l.date) from Ledger l where branchNo = ?1")
     Date findMaxLedgerDateByBranchNo(int branchNo);
-    @Query("select sum(l.amount) from Ledger l join l.ledgerType lt where branchNo = ?1 and lt.ledgerPayNo = ?2")
-    Double sumLedgerByBranchNoAndLedgerPayType(int branchNo,int ledgerPayNo);
+    @Query("select sum(l.amount) from Ledger l join l.ledgerType lt where branchNo = ?1 and lt.ledgerPayNo = ?2 and l.date between ?3 and ?4")
+    Double sumLedgerByBranchNoAndLedgerPayTypeAndDateIsBetween(int branchNo,int ledgerPayNo, Date fromDate, Date toDate);
 }
