@@ -51,6 +51,8 @@
                         </div>
                         <div class="x_content">
                             <div id="container" style="height:400px;"></div>
+                            <div id="loading" style="position:absolute;top:50%;left:50%;transform:translate(-50%,-50%);"><i class="fa-li fa fa-spinner fa-spin"></i></div>
+                            <div id="null" style="display:none;position:absolute;top:50%;left:50%;transform:translate(-50%,-50%);z-index:99999;">ไม่พบข้อมูลจากเงื่อนไขที่ท่านค้นหา</div>
                         </div>
                     </div>
                 </div>
@@ -82,6 +84,7 @@
             url: "${contextPath}/report/totalincome",
             data: {fromDate: fromDate, toDate: toDate},
             success: function (dataArray) {
+                $("#loading").css('display','none');
                 for (key in dataArray) {
                     value = dataArray[key];
                     incomeDataSeries.push(value.income);
@@ -200,25 +203,23 @@
                 if (option && typeof option === "object") {
                     myChart.setOption(option, true);
                 }
+
+                if (dataArray.length == 0) {
+                    $("#null").css("display", "inline-block");
+                } else {
+                    $("#null").css("display", "none");
+                }
+            },error : function(){
+                $("#loading").css('display','none');
+                swal("ผิดพลาด", "กรุณาลองใหม่อีกครั้ง", "error");
             }
         });
     }
 
     ///////////////////////////////
 
-    $("#year").change(function () {
-        if ($(this).val() == 0) {
-            $("#month").val(0);
-            $("#month").attr('disabled', true);
-        } else {
-            $("#month").attr('disabled', false);
-        }
-    });
-
-    $(".eventchange").change(function () {
-        year = $("#year").val();
-        month = $("#month").val();
-        init_totalincome(month, year);
+    $("#reportfilter").click(function(){
+        init_totalincome($("#filterdate").val().substr(0,10),$("#filterdate").val().substr(13,10));
     });
 </script>
 </body>

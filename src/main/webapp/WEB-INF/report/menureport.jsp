@@ -206,7 +206,7 @@
                 }
             },error : function(){
                 $("#loadingmenu").css('display','none');
-                swal("ผิดพลาด", "เซิร์ฟเวอร์มีปัญหา", "error");
+                swal("ผิดพลาด", "กรุณาลองใหม่อีกครั้ง", "error");
             }
         });
     }
@@ -308,7 +308,7 @@
                 }
             },error : function(){
                 $("#loadingmenuset").css('display','none');
-                swal("ผิดพลาด", "เซิร์ฟเวอร์มีปัญหา", "error");
+                swal("ผิดพลาด", "กรุณาลองใหม่อีกครั้ง", "error");
             }
         });
     }
