@@ -42,8 +42,8 @@ public class ReportController {
         Date maxDateMenuSet = orderService.findMaxMenuSetOrderDateByBranchNo(branchNo);
         model.addAttribute("minDateMenu",new SimpleDateFormat("dd-MM-YYYY").format(minDateMenu));
         model.addAttribute("maxDateMenu",new SimpleDateFormat("dd-MM-YYYY").format(maxDateMenu));
-        model.addAttribute("minDateMenu",new SimpleDateFormat("dd-MM-YYYY").format(minDateMenuSet));
-        model.addAttribute("maxDateMenu",new SimpleDateFormat("dd-MM-YYYY").format(maxDateMenuSet));
+        model.addAttribute("minDateMenuSet",new SimpleDateFormat("dd-MM-YYYY").format(minDateMenuSet));
+        model.addAttribute("maxDateMenuSet",new SimpleDateFormat("dd-MM-YYYY").format(maxDateMenuSet));
         return REPORT_PATH + "menureport.jsp";
     }
 
@@ -75,11 +75,11 @@ public class ReportController {
     @ResponseBody
     @PostMapping("/bestsalemenu")
     public String getBestSaleMenu(HttpSession session, HttpServletRequest request) throws JsonProcessingException {
-        int year = Integer.parseInt(request.getParameter("year"));
-        int month = Integer.parseInt(request.getParameter("month"));
+        String fromDate = request.getParameter("fromDate");
+        String toDate = request.getParameter("toDate");
         BranchUser branchUser = (BranchUser) (session.getAttribute("branchUser"));
         int branchNo = branchUser.getBranchNo();
-        Map<String,Long> menus = branchMenuService.getBestSaleMenu(branchNo,year,month);
+        Map<String,Long> menus = branchMenuService.getBestSaleMenu(branchNo,fromDate,toDate);
         ObjectMapper mapper = new ObjectMapper();
         String json = mapper.writeValueAsString(sortByValue(menus));
         return json;
@@ -88,11 +88,11 @@ public class ReportController {
     @ResponseBody
     @PostMapping("/bestsalemenuset")
     public String getBestSaleMenuSet(HttpSession session, HttpServletRequest request) throws JsonProcessingException {
-        int year = Integer.parseInt(request.getParameter("year"));
-        int month = Integer.parseInt(request.getParameter("month"));
+        String fromDate = request.getParameter("fromDate");
+        String toDate = request.getParameter("toDate");
         BranchUser branchUser = (BranchUser) (session.getAttribute("branchUser"));
         int branchNo = branchUser.getBranchNo();
-        Map<String,Long> menus = branchMenuService.getBestSaleMenuSet(branchNo,year,month);
+        Map<String,Long> menus = branchMenuService.getBestSaleMenuSet(branchNo,fromDate,toDate);
         ObjectMapper mapper = new ObjectMapper();
         String json = mapper.writeValueAsString(sortByValue(menus));
         return json;

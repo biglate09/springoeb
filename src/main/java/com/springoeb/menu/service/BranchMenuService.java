@@ -49,25 +49,19 @@ public class BranchMenuService {
         branchMenuRepository.save(branchMenus);
     }
 
-    public Map<String, Long> getBestSaleMenu(int branchNo, int year, int month) throws JsonProcessingException {
+    public Map<String, Long> getBestSaleMenu(int branchNo, String fromDateUnformat, String toDateUnformat) throws JsonProcessingException {
         Map<String, Long> menuMaps = new LinkedHashMap<String, Long>();
-        List<BranchMenu> branchMenus = null;
-        branchMenus = branchMenuRepository.findByBranchNoAndMenu_MenuFlagOrderByMenu_LocalFlagAsc(branchNo, Menu.flagForMenu);
+        Date fromDate = null, toDate = null;
+        if(!fromDateUnformat.equals("0") && !toDateUnformat.equals("0")) {
+            fromDate = Date.valueOf(fromDateUnformat.substring(6, 10) + fromDateUnformat.substring(2, 5) + "-" + fromDateUnformat.substring(0, 2));
+            toDate = Date.valueOf(toDateUnformat.substring(6, 10) + toDateUnformat.substring(2, 5) + "-" + toDateUnformat.substring(0, 2));
+        }
+        List<BranchMenu> branchMenus = branchMenuRepository.findByBranchNoAndMenu_MenuFlagOrderByMenu_LocalFlagAsc(branchNo, Menu.flagForMenu);
         for (BranchMenu bm : branchMenus) {
             int menuNo = bm.getMenuNo();
             Long sum = new Long(0);
-            if (month == 0 && year == 0) {
-                sum = orderRepository.sumByMenuNo(menuNo, Order.SERVED);
-            } else {
-                Date fromDate, toDate;
-                if (month == 0 && year != 0) {
-                    fromDate = Date.valueOf(year + "-01-01");
-                    toDate = Date.valueOf(year + "-12-31");
-                } else {
-                    fromDate = Date.valueOf(year + "-" + month + "-01");
-                    toDate = Date.valueOf(year + "-" + month + "-31");
-                }
-                sum = orderRepository.sumByMenuNoAndDateIsBetween(menuNo, fromDate, toDate, Order.SERVED);
+            if(fromDate != null && toDate != null){
+                sum = orderRepository.sumByMenuNoAndDateIsBetween(menuNo,fromDate,toDate,Order.SERVED);
             }
 
             if (sum != null && sum > 0) {
@@ -77,24 +71,20 @@ public class BranchMenuService {
         return menuMaps;
     }
 
-    public Map<String, Long> getBestSaleMenuSet(int branchNo, int year, int month) throws JsonProcessingException {
+    public Map<String, Long> getBestSaleMenuSet(int branchNo, String fromDateUnformat, String toDateUnformat) throws JsonProcessingException {
         Map<String, Long> menuMaps = new LinkedHashMap<String, Long>();
+        Date fromDate = null, toDate = null;
+
+        if(!fromDateUnformat.equals("0") && !toDateUnformat.equals("0")) {
+            fromDate = Date.valueOf(fromDateUnformat.substring(6, 10) + fromDateUnformat.substring(2, 5) + "-" + fromDateUnformat.substring(0, 2));
+            toDate = Date.valueOf(toDateUnformat.substring(6, 10) + toDateUnformat.substring(2, 5) + "-" + toDateUnformat.substring(0, 2));
+        }
         List<BranchMenu> branchMenus = branchMenuRepository.findByBranchNoAndMenu_MenuFlagOrderByMenu_LocalFlagAsc(branchNo, Menu.flagForMenuSet);
         for (BranchMenu bm : branchMenus) {
             int menuNo = bm.getMenuNo();
             Long sum = new Long(0);
-            if (month == 0 && year == 0) {
-                sum = orderRepository.sumByMenuNo(menuNo,Order.SERVED);
-            } else {
-                Date fromDate, toDate;
-                if (month == 0 && year != 0) {
-                    fromDate = Date.valueOf(year + "-01-01");
-                    toDate = Date.valueOf(year + "-12-31");
-                } else {
-                    fromDate = Date.valueOf(year + "-" + month + "-01");
-                    toDate = Date.valueOf(year + "-" + month + "-31");
-                }
-                sum = orderRepository.sumByMenuNoAndDateIsBetween(menuNo, fromDate, toDate, Order.SERVED);
+            if(fromDate != null && toDate != null){
+                sum = orderRepository.sumByMenuNoAndDateIsBetween(menuNo,fromDate,toDate,Order.SERVED);
             }
 
             if (sum != null && sum > 0) {
