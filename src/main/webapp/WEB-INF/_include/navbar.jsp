@@ -98,7 +98,7 @@
 
                     <c:if test="${branchUser.roleNo == Role.MANAGER}">
                         <li>
-                            <a><i class="fa fa-home"></i> จัดการสาขาและสมาชิก <span
+                            <a><i class="fa fa-home"></i> จัดการสาขา <span
                                     class="fa fa-chevron-down"></span></a>
                             <ul class="nav child_menu">
                                 <c:if test="${branchUser.branchNo == Branch.MAIN_BRANCH}">
@@ -179,7 +179,7 @@
                 <li class="">
                     <a href="javascript:;" class="user-profile dropdown-toggle" data-toggle="dropdown"
                        aria-expanded="false">
-                        <img src="${contextPath}/images/img.png" alt=""> <span style="color:white">ยินดีต้อนรับ ${branchUser.role.roleName} ของสาขา${branchUser.branch.branchName}(สาขาที่ ${branchUser.branch.branchNo})</span>
+                        <img src="${contextPath}/images/img.png" alt=""> <span style="color:white">ยินดีต้อนรับ ${branchUser.role.roleName} ของสาขา${branchUser.branch.branchName} (สาขาที่ ${branchUser.branch.branchNo})</span>
                          <span class=" fa fa-angle-down" style="color:white"></span>
                     </a>
                     <ul class="dropdown-menu dropdown-usermenu pull-right">
