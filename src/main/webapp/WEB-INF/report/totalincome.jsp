@@ -27,30 +27,21 @@
                 <div class="col-md-12 col-sm-12 col-xs-12">
                     <div class="x_panel">
                         <div class="x_title">
-                            <div class="col-md-7"><h2>ภาพรวมผลประกอบการ</h2></div>
-                            <div class="col-md-2">
-                                <select name="year" class="form-control eventchange" id="year">
-                                    <option value="" disabled>ปี พ.ศ.</option>
-                                    <option value="2017">2560</option>
-                                </select>
+                            <div class="col-md-7">
+                                <h2>ภาพรวมผลประกอบการ</h2>
                             </div>
-                            <div class="col-md-2">
-                                <select name="month" class="form-control eventchange" id="month">
-                                    <option value="" disabled>เดือน</option>
-                                    <option value="0">ทุกเดือน</option>
-                                    <option value="1">มกราคม</option>
-                                    <option value="2">กุมภาพันธ์</option>
-                                    <option value="3">มีนาคม</option>
-                                    <option value="4">เมษายน</option>
-                                    <option value="5">พฤษภาคม</option>
-                                    <option value="6">มิถุนายน</option>
-                                    <option value="7">กรกฎาคม</option>
-                                    <option value="8">สิงหาคม</option>
-                                    <option value="9">กันยายน</option>
-                                    <option value="10">ตุลาคม</option>
-                                    <option value="11">พฤศจิกายน</option>
-                                    <option value="12">ธันวาคม</option>
-                                </select>
+                            <div class="col-md-4">
+                                <div class="col-md-9" style="padding-right:0px;">
+                                    <input type="text" id="filterdate"
+                                           class="form-control daterange" required
+                                           value="${minDateTotal != null ? minDateTotal : 'ไม่พบข้อมูลในการค้นหา'} ${minDateTotal != null ? " - " : ''} ${maxDateTotal != null ? maxDateTotal : ''}">
+                                </div>
+                                <div class="input-group-btn">
+                                    <button class="btn btn-default"
+                                            type="submit" id="reportfilter">
+                                        <i class="glyphicon glyphicon-search fa fa-search"></i>
+                                    </button>
+                                </div>
                             </div>
                             <ul class="nav navbar-right panel_toolbox" style="min-width: 0px">
                                 <li><a class="collapse-link"><i class="fa fa-chevron-up right"></i></a>
@@ -60,6 +51,8 @@
                         </div>
                         <div class="x_content">
                             <div id="container" style="height:400px;"></div>
+                            <div id="loading" style="position:absolute;top:50%;left:50%;transform:translate(-50%,-50%);"><i class="fa-li fa fa-spinner fa-spin"></i></div>
+                            <div id="null" style="display:none;position:absolute;top:50%;left:50%;transform:translate(-50%,-50%);z-index:99999;">ไม่พบข้อมูลจากเงื่อนไขที่ท่านค้นหา</div>
                         </div>
                     </div>
                 </div>
@@ -73,25 +66,47 @@
 <script src="${contextPath}/vendors/bootstrap-daterangepicker/daterangepicker.js"></script>
 <script type="text/javascript" src="http://echarts.baidu.com/gallery/vendors/echarts/echarts-all-3.js"></script>
 <script>
-    var month_array = ['มกราคม','กุมภาพันธ์','มีนาคม','เมษายน','พฤษภาคม','มิถุนายนส','กรกฎาคม','สิงหาคม','กันยายน','ตุลาคม','พฤศจิกายน','ธันวาคม'];
     //Script for bar chart----------------------------------------
+    var month_array = ['ม.ค.','ก.พ.','มี.ค.','ม.ย.','พ.ค.','มิ.ย.','ก.ค.','ส.ค.','ก.ย.','ต.ค.','พ.ย.','ธ.ค.'];
+
     $(document).ready(function () {
+        $(".daterange").daterangepicker();
         var d = new Date();
-        init_totalincome(0,d.getFullYear());
+        init_totalincome("${minDateTotal}", "${maxDateTotal}");
     });
 
-    function init_totalincome(month, year) {
-        var xAxisName = 'เดือน';
+    function init_totalincome(fromDate, toDate) {
+        var xAxisName = 'วันที่';
+        if(fromDate.substr(6,4) != toDate.substr(6,4)){
+            xAxisName = 'ปี'
+        }else{
+            if(fromDate.substr(3,2) != toDate.substr(3,2)){
+                xAxisName = 'เดือน';
+            }else{
+                xAxisName = 'วันที่';
+            }
+        }
+        var incomeDataSeries = [];
+        var expenseDataSeries = [];
+        var dataxAxis = [];
+        var key_number = 0;
         $.ajax({
-            type: "POST",
+            type: "PUT",
             dataType: "json",
             url: "${contextPath}/report/totalincome",
-            data: {month: month, year: year},
+            data: {fromDate: fromDate, toDate: toDate},
             success: function (dataArray) {
-                if(month != 0){
-                    xAxisName = 'วันที่'
-                }else{
-                    xAxisName = 'เดือน'
+                $("#loading").css('display','none');
+                for (key in dataArray) {
+                    key_number++;
+                    value = dataArray[key];
+                    incomeDataSeries.push(value.income);
+                    expenseDataSeries.push(-value.expense);
+                    if(xAxisName == 'เดือน') {
+                        dataxAxis.push(month_array[key-1]);
+                    }else{
+                        dataxAxis.push(key);
+                    }
                 }
                 var dom = document.getElementById("container");
                 var myChart = echarts.init(dom);
@@ -174,9 +189,9 @@
                     xAxis: [
                         {
                             type: 'category',
-                            name: 'วันที่',
+                            name: xAxisName,
                             axisTick: {show: false},
-                            data: [1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14, 15, 16, 17, 18, 19, 20, 21, 22, 23, 24, 25, 26, 27, 28, 29, 30]
+                            data: dataxAxis
                         }
                     ],
                     yAxis: [
@@ -191,13 +206,13 @@
                             type: 'bar',
                             barGap: 0,
                             label: labelOption,
-                            data: [320, 332, 301, 334, 890, 320, 332, 301, 334, 890, 320, 332, 332, 332, 332, 332, 332, 332, 332, 332, 332, 332, 332, 332, 332, 332, 332, 332, 332, 332]
+                            data: incomeDataSeries
                         },
                         {
                             name: 'รายจ่าย',
                             type: 'bar',
                             label: labelOption,
-                            data: [220, 182, 191, 234, 290, 220, 182, 191, 234, 290, 220, 182, 182, 182, 182, 182, 182, 182, 182, 182, 182, 182, 182, 182, 182, 182, 182, 182, 182, 182]
+                            data: expenseDataSeries
                         }
                     ]
                 };
@@ -205,25 +220,24 @@
                 if (option && typeof option === "object") {
                     myChart.setOption(option, true);
                 }
+
+                if (key_number == 0) {
+                    $("#null").css("display", "inline-block");
+                } else {
+                    $("#null").css("display", "none");
+                }
+            },error : function(){
+                $("#loading").css('display','none');
+                swal("ผิดพลาด", "กรุณาลองใหม่อีกครั้ง", "error");
             }
         });
     }
 
     ///////////////////////////////
 
-    $("#year").change(function () {
-        if ($(this).val() == 0) {
-            $("#month").val(0);
-            $("#month").attr('disabled', true);
-        } else {
-            $("#month").attr('disabled', false);
-        }
-    });
-
-    $(".eventchange").change(function () {
-        year = $("#year").val();
-        month = $("#month").val();
-        init_totalincome(month, year);
+    $("#reportfilter").click(function(){
+        $("#loading").css("display", "inline-block");
+        init_totalincome($("#filterdate").val().substr(0,10),$("#filterdate").val().substr(13,10));
     });
 </script>
 </body>

@@ -10,7 +10,7 @@ import java.util.List;
 
 @Repository
 public interface OrderRepository extends CrudRepository<Order,Integer>{
-    List<Order> findByBill_StatusAndBill_Table_BranchNoOrderByStatusDescOrderNoAsc(String status,int branchNo);
+    List<Order> findByBill_StatusAndStatusInAndBill_Table_BranchNoOrderByStatusDescOrderNoAsc(String status,List<String> orderStatus,int branchNo);
     Order findByOrderNo(int orderNo);
     void removeByOrderNo(int orderNo);
     @Query("select sum(o.quantity) from CustomerOrder o where o.menuNo = ?1 and status = ?2")

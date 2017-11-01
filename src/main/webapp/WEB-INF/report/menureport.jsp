@@ -24,7 +24,7 @@
             <div class="clearfix"></div>
             <div class="row">
                 <%--Menu Report--%>
-                <div class="col-md-6 col-sm-6 col-xs-12">
+                <div class="col-md-6 col-sm-12 col-xs-12">
                     <div class="x_panel">
                         <div class="x_title">
                             <div class="col-md-5"><h2>เมนูเดี่ยวขายดี (10 อันดับ)</h2></div>
@@ -35,7 +35,7 @@
                                 </div>
                                 <div class="input-group-btn">
                                     <button class="btn btn-default"
-                                            type="submit">
+                                            type="submit" id="menureportfilter">
                                         <i class="glyphicon glyphicon-search fa fa-search"></i>
                                     </button>
                                 </div>
@@ -56,18 +56,18 @@
                 </div>
 
                 <%--Menuset Report--%>
-                <div class="col-md-6 col-sm-6 col-xs-12">
+                <div class="col-md-6 col-sm-12 col-xs-12">
                     <div class="x_panel">
                         <div class="x_title">
                             <div class="col-md-5"><h2>เมนูชุดขายดี (10 อันดับ)</h2></div>
                             <div class="col-md-6">
                                 <div class="col-md-9" style="padding-right:0px;">
                                     <input type="text" name="filterdate" id="filterdate_menuset"
-                                           class="form-control daterange" required>
+                                           class="form-control daterange" required value="${minDateMenuSet} - ${maxDateMenuSet}">
                                 </div>
                                 <div class="input-group-btn">
                                     <button class="btn btn-default"
-                                            type="submit">
+                                            type="submit" id="menusetreportfilter">
                                         <i class="glyphicon glyphicon-search fa fa-search"></i>
                                     </button>
                                 </div>
@@ -107,17 +107,17 @@
 
     $(document).ready(function () {
         $(".daterange").daterangepicker();
-        init_bestsalemenu(0, 0);
-        init_bestsalemenuset(0, 0);
+        init_bestsalemenu('${minDateMenu}', '${maxDateMenu}');
+        init_bestsalemenuset('${minDateMenuSet}', '${maxDateMenuSet}');
     });
 
-    function init_bestsalemenu(month, year) {
+    function init_bestsalemenu(fromDate, toDate) {
         $("#loadingmenu").css('display','inline-block');
         $.ajax({
             type: "POST",
             dataType: "json",
             url: "${contextPath}/report/bestsalemenu",
-            data: {month: month, year: year},
+            data: {fromDate: fromDate, toDate: toDate},
             success: function (menuArray) {
                 $("#loadingmenu").css('display','none');
                 menu_data_legends = [];
@@ -206,17 +206,17 @@
                 }
             },error : function(){
                 $("#loadingmenu").css('display','none');
-                swal("ผิดพลาด", "เซิร์ฟเวอร์มีปัญหา", "error");
+                swal("ผิดพลาด", "กรุณาลองใหม่อีกครั้ง", "error");
             }
         });
     }
-    function init_bestsalemenuset(month, year) {
+    function init_bestsalemenuset(fromDate, toDate) {
         $("#loadingmenuset").css('display','inline-block');
         $.ajax({
             type: "POST",
             dataType: "json",
             url: "${contextPath}/report/bestsalemenuset",
-            data: {month: month, year: year},
+            data: {fromDate: fromDate, toDate: toDate},
             success: function (menuArray) {
                 $("#loadingmenuset").css('display','none');
                 menuset_data_legends = [];
@@ -308,40 +308,18 @@
                 }
             },error : function(){
                 $("#loadingmenuset").css('display','none');
-                swal("ผิดพลาด", "เซิร์ฟเวอร์มีปัญหา", "error");
+                swal("ผิดพลาด", "กรุณาลองใหม่อีกครั้ง", "error");
             }
         });
     }
 
-//    $("#menuyear").change(function () {
-//        if ($(this).val() == 0) {
-//            $("#menumonth").val(0);
-//            $("#menumonth").attr('disabled', true);
-//        } else {
-//            $("#menumonth").attr('disabled', false);
-//        }
-//    });
-//
-//    $(".menuchange").change(function () {
-//        year = $("#menuyear").val();
-//        month = $("#menumonth").val();
-//        init_bestsalemenu(month, year);
-//    });
-//
-//    $("#menusetyear").change(function () {
-//        if ($(this).val() == 0) {
-//            $("#menusetmonth").val(0);
-//            $("#menusetmonth").attr('disabled', true);
-//        } else {
-//            $("#menusetmonth").attr('disabled', false);
-//        }
-//    });
-//
-//    $(".menusetchange").change(function () {
-//        year = $("#menusetyear").val();
-//        month = $("#menusetmonth").val();
-//        init_bestsalemenuset(month, year);
-//    });
+    $("#menureportfilter").click(function(){
+        init_bestsalemenu($("#filterdate_menu").val().substr(0,10),$("#filterdate_menu").val().substr(13,10));
+    });
+
+    $("#menusetreportfilter").click(function(){
+        init_bestsalemenuset($("#filterdate_menuset").val().substr(0,10),$("#filterdate_menuset").val().substr(13,10));
+    });
 </script>
 </body>
 </html>

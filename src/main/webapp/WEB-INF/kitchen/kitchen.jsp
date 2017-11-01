@@ -82,7 +82,7 @@
     function refresh_table() {
         $.ajax({
             type: "PUT",
-            url: "${contextPath}/kitchen/getorders",
+            url: "${contextPath}/kitchen/getmonitororders",
             dataType: "json",
             success: function (json) {
                 var data_array = [];
@@ -102,8 +102,7 @@
                         status: (obj.status == 'reserved' ? '<a onclick="change_status(' + obj.orderNo + ')" class="btn btn-secondary">จองไว้แล้ว</a>' :
                          obj.status == 'waiting' ? '<a onclick="change_status(' + obj.orderNo + ')" class="btn btn-default">เมนูที่ได้รับมา</a>' :
                          obj.status == 'cooking' ? '<a onclick="change_status(' + obj.orderNo + ')" class="btn btn-primary">กำลังปรุงอาหาร</a>' :
-                         obj.status == 'ready' ? '<a onclick="change_status(' + obj.orderNo + ')" class="btn btn-success">ปรุงอาหารเสร็จแล้ว</a>' :
-                         obj.status == 'served' ? '<a onclick="change_status(' + obj.orderNo + ')" class="btn btn-info">ลูกค้าได้รับอาหารแล้ว</a>' : '') +
+                         obj.status == 'ready' ? '<a onclick="change_status(' + obj.orderNo + ')" class="btn btn-success">ปรุงอาหารเสร็จแล้ว</a>' : '' )+
                         '<a onclick="cancel_menu(' + obj.orderNo + ')" class="btn btn-danger">ยกเลิกเมนู</a>'
                     };
                     data_array.push(data_refresh);

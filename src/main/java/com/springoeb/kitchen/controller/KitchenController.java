@@ -25,14 +25,25 @@ public class KitchenController {
         return KITCHEN_PATH + "kitchen.jsp";
     }
     @ResponseBody
-    @PutMapping("/getorders")
-    public String getOrders(HttpSession session) throws JsonProcessingException {
+    @PutMapping("/getmonitororders")
+    public String getMonitorOrders(HttpSession session) throws JsonProcessingException {
         int branchNo = ((BranchUser) (session.getAttribute("branchUser"))).getBranchNo();
-        List<Order> orders = orderService.getOrders(branchNo);
+        List<Order> orders = orderService.getMonitorOrders(branchNo);
         ObjectMapper mapper = new ObjectMapper();
         String json = mapper.writeValueAsString(orders);
         return json;
     }
+
+    @ResponseBody
+    @PutMapping("/getcheforders")
+    public String getChefOrders(HttpSession session) throws JsonProcessingException {
+        int branchNo = ((BranchUser) (session.getAttribute("branchUser"))).getBranchNo();
+        List<Order> orders = orderService.getChefOrders(branchNo);
+        ObjectMapper mapper = new ObjectMapper();
+        String json = mapper.writeValueAsString(orders);
+        return json;
+    }
+
     @ResponseBody
     @DeleteMapping("/cancelorder/{orderNo}")
     public void cancelOrder(@PathVariable("orderNo")int orderNo){

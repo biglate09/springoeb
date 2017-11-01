@@ -24,6 +24,10 @@ public class LedgerType {
     @OneToMany(fetch = FetchType.LAZY, mappedBy = "ledgerType")
     private List<Ledger> ledgers;
 
+    @ManyToOne
+    @JoinColumn(name = "ledgerPayNo",updatable = false,insertable = false)
+    private LedgerPay ledgerPay;
+
     public static int PROFIT = 1;
     public static int EMPLOYEE = 2;
     public static int MATERIAL = 2;
@@ -66,5 +70,21 @@ public class LedgerType {
 
     public void setRestNo(int restNo) {
         this.restNo = restNo;
+    }
+
+    public List<Ledger> getLedgers() {
+        return ledgers;
+    }
+
+    public void setLedgers(List<Ledger> ledgers) {
+        this.ledgers = ledgers;
+    }
+
+    public LedgerPay getLedgerPay() {
+        return ledgerPay;
+    }
+
+    public void setLedgerPay(LedgerPay ledgerPay) {
+        this.ledgerPay = ledgerPay;
     }
 }

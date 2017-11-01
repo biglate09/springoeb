@@ -8,6 +8,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import java.sql.Date;
+import java.util.LinkedList;
 import java.util.List;
 
 @Service
@@ -15,8 +16,19 @@ public class OrderService {
     @Autowired
     private OrderRepository orderRepository;
 
-    public List<Order> getOrders(int branchNo) {
-        return orderRepository.findByBill_StatusAndBill_Table_BranchNoOrderByStatusDescOrderNoAsc(Bill.UNPAID, branchNo);
+    public List<Order> getMonitorOrders(int branchNo) {
+        List<String> status = new LinkedList<String>();
+        status.add(Order.WAITING);
+        status.add(Order.COOKING);
+        status.add(Order.COOKED);
+        return orderRepository.findByBill_StatusAndStatusInAndBill_Table_BranchNoOrderByStatusDescOrderNoAsc(Bill.UNPAID,status,branchNo);
+    }
+
+    public List<Order> getChefOrders(int branchNo) {
+        List<String> status = new LinkedList<String>();
+        status.add(Order.WAITING);
+        status.add(Order.COOKING);
+        return orderRepository.findByBill_StatusAndStatusInAndBill_Table_BranchNoOrderByStatusDescOrderNoAsc(Bill.UNPAID,status,branchNo);
     }
 
     public Order findByOrderNo(int orderNo) {
