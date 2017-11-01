@@ -24,36 +24,43 @@
                     <div class="col-md-12 col-sm-12 col-xs-12">
                         <div class="x_panel">
                             <div class="x_title">
-                                <h2>เมนูอาหาร</h2>
+                                <h2>เมนูอาหาร</h2><h2 style="float: right">บิลที่ <small>#0001</small></h2>
                                 <div class="clearfix"></div>
                             </div>
                             <div class="x_content">
+                                <form method="POST">
                                 <table class="table">
                                     <thead>
                                     <tr>
                                         <th>ชื่ออาหาร</th>
+                                        <th>ราคา</th>
                                         <th>จำนวน</th>
                                     </tr>
                                     </thead>
                                     <tbody>
                                     <tr>
                                         <td>-</td>
-                                        <td><input type="number" name="" value="1"></td>
-                                    </tr>
-                                    <tr>
                                         <td>-</td>
                                         <td><input type="number" name="" value="1"></td>
                                     </tr>
                                     <tr>
                                         <td>-</td>
+                                        <td>-</td>
                                         <td><input type="number" name="" value="1"></td>
                                     </tr>
                                     <tr>
+                                        <td>-</td>
+                                        <td>-</td>
+                                        <td><input type="number" name="" value="1"></td>
+                                    </tr>
+                                    <tr>
+                                        <td>-</td>
                                         <td>-</td>
                                         <td><input type="number" name="" value="1"></td>
                                     </tr>
                                     </tbody>
                                 </table>
+                                </form>>
                                 <button type="submit" class="btn btn-success">สั่งอาหาร</button>
                             </div>
                         </div>

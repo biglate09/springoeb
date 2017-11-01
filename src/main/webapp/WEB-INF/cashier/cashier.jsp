@@ -61,6 +61,7 @@
                                     <input type="hidden" name="billNo" id="hiddenbillno">
                                     <div class="row">
                                         <div class="col-md-6 col-xs-12">
+                                            <div id="printableArea">
                                             <div class="x_panel">
                                                 <div class="x_title">
                                                     <div style="text-align: center;font-size: larger">ใบเสร็จรับเงิน</div>
@@ -98,6 +99,8 @@
                                                     </form>
                                                 </div>
                                             </div>
+                                            </div>
+                                            <button onclick="printDiv('printableArea')" class="btn btn-success"><i class="fa fa-print" aria-hidden="true"></i> พิมพ์ใบเสร็จ</button>
                                         </div>
                                         <div class="col-md-6 col-xs-12">
                                             <div class="x_panel">
@@ -300,7 +303,18 @@
         }
     }
 
+    function printDiv(divName) {
+        var printContents = document.getElementById(divName).innerHTML;
+        var originalContents = document.body.innerHTML;
 
+        document.body.innerHTML = printContents;
+
+        window.print();
+
+        document.body.innerHTML = originalContents;
+
+        location.reload(true);
+    }
 </script>
 
 <style>
@@ -321,6 +335,10 @@
         content: " บาท";
     }
 
+    @media print {
+        @page { margin: 0; }
+        body { margin: 1.6cm; }
+    }
 </style>
 </body>
 </html>
