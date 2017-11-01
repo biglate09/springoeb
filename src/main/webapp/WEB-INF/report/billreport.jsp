@@ -1,13 +1,12 @@
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 <%@ taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt" %>
 <%@page contentType="text/html" pageEncoding="UTF-8" %>
-<%@ page import="com.springoeb.promotion.model.Promotion" %>
 <c:set var="contextPath" value="${pageContext.request.contextPath}"/>
 <!DOCTYPE html>
 <html>
 <head>
     <jsp:include page="../_include/topenv.jsp"/>
-    <title>จัดการโปรโมชั่นเมนูอาหาร</title>
+    <title>ภาพรวมผลประกอบการ</title>
     <link href="${contextPath}/vendors/bootstrap-daterangepicker/daterangepicker.css" rel="stylesheet">
 </head>
 <body class="nav-md">
@@ -28,31 +27,19 @@
                 <div class="col-md-12 col-sm-12 col-xs-12">
                     <div class="x_panel">
                         <div class="x_title">
-                            <div class="col-md-7"><h2>เมนูเดี่ยว (ขายดี)</h2></div>
-                            <div class="col-md-2">
-                                <select name="year" class="form-control menuchange" id="menuyear">
-                                    <option value="" disabled>ปี พ.ศ.</option>
-                                    <option value="0">ทุกปี</option>
-                                    <option value="2017">2560</option>
-                                </select>
-                            </div>
-                            <div class="col-md-2">
-                                <select name="month" class="form-control menuchange" id="menumonth">
-                                    <option value="" disabled>เดือน</option>
-                                    <option value="0">ทุกเดือน</option>
-                                    <option value="1">มกราคม</option>
-                                    <option value="2">กุมภาพันธ์</option>
-                                    <option value="3">มีนาคม</option>
-                                    <option value="4">เมษายน</option>
-                                    <option value="5">พฤษภาคม</option>
-                                    <option value="6">มิถุนายน</option>
-                                    <option value="7">กรกฎาคม</option>
-                                    <option value="8">สิงหาคม</option>
-                                    <option value="9">กันยายน</option>
-                                    <option value="10">ตุลาคม</option>
-                                    <option value="11">พฤศจิกายน</option>
-                                    <option value="12">ธันวาคม</option>
-                                </select>
+                            <div class="col-md-7"><h2>รายได้ผลประกอบการ</h2></div>
+                            <div class="col-md-4">
+                                <div class="col-md-9" style="padding-right:0px;">
+                                    <input type="text" name="filterdate" id="filterdate_menuset"
+                                           class="form-control daterange" required
+                                           value="${minDateBill} - ${maxDateBill}">
+                                </div>
+                                <div class="input-group-btn">
+                                    <button class="btn btn-default"
+                                            type="submit" id="menusetreportfilter">
+                                        <i class="glyphicon glyphicon-search fa fa-search"></i>
+                                    </button>
+                                </div>
                             </div>
                             <ul class="nav navbar-right panel_toolbox" style="min-width: 0px">
                                 <li><a class="collapse-link"><i class="fa fa-chevron-up right"></i></a>
@@ -75,52 +62,97 @@
 <script src="${contextPath}/vendors/bootstrap-daterangepicker/daterangepicker.js"></script>
 <script type="text/javascript" src="http://echarts.baidu.com/gallery/vendors/echarts/echarts-all-3.js"></script>
 <script>
-    var dom = document.getElementById("container");
-    var myChart = echarts.init(dom);
-    var app = {};
-    option = null;
-    option = {
-        tooltip: {
-            trigger: 'axis'
-        },
+    var month_array = ['ม.ค.','ก.พ.','มี.ค.','ม.ย.','พ.ค.','มิ.ย.','ก.ค.','ส.ค.','ก.ย.','ต.ค.','พ.ย.','ธ.ค.'];
 
-        grid: {
-            left: '3%',
-            right: '4%',
-            bottom: '3%',
-            containLabel: true
-        },
-        toolbox: {
-            show: true,
-            feature: {
-                mark: {show: true},
-                dataView: {show: true,
-                    title: 'ดูข้อมูล',
-                    lang: ['ดูข้อมูล', 'ปิด' , 'รีเฟรช']
-                },
-                saveAsImage: {show: true,
-                    title: 'บันทึกภาพ'}
+    $(document).ready(function () {
+        init_billreport('${minDateBill}','${maxDateBill}');
+        $(".daterange").daterangepicker();
+    });
+
+    function init_billreport(fromDate, toDate) {
+        var xAxisName = 'วันที่';
+        var xAxis_data = [];
+        var series_data = [];
+        if(fromDate.substr(6,4) != toDate.substr(6,4)){
+            xAxisName = 'ปี'
+        }else{
+            if(fromDate.substr(3,2) != toDate.substr(3,2)){
+                xAxisName = 'เดือน';
+            }else{
+                xAxisName = 'วันที่';
             }
-        },
-        xAxis: {
-            type: 'category',
-            boundaryGap: false,
-            data: [ 'January', 'February', 'March', 'April', 'May', 'June', 'July', 'August', 'September', 'October', 'November', 'December']
-        },
-        yAxis: {
-            type: 'value'
-        },
-        series: [
-            {
-                name:'รายได้จากค่าอาหาร',
-                type:'line',
-                data: [320, 332, 301, 334, 420, 320, 332, 301, 334, 233, 320, 332]
+        }
+        $("#loading").css('display', 'inline-block');
+        $.ajax({
+            type: "PUT",
+            dataType: "json",
+            url: "${contextPath}/report/getbillreport",
+            data: {fromDate: fromDate, toDate: toDate},
+            success: function (billArray) {
+                console.log(billArray);
+                $("#loading").css('display', 'none');
+                for (key in billArray) {
+                    value = billArray[key];
+                    if(xAxisName == 'เดือน') {
+                        xAxis_data.push(month_array[key-1]);
+                    }else{
+                        xAxis_data.push(key);
+                    }
+                    series_data.push(value);
+                }
+                var dom = document.getElementById("container");
+                var myChart = echarts.init(dom);
+                var app = {};
+                option = null;
+                option = {
+                    tooltip: {
+                        trigger: 'axis'
+                    },
+                    grid: {
+                        left: '3%',
+                        right: '4%',
+                        bottom: '3%',
+                        containLabel: true
+                    },
+                    toolbox: {
+                        show: true,
+                        feature: {
+                            mark: {show: true},
+                            dataView: {
+                                show: true,
+                                title: 'ดูข้อมูล',
+                                lang: ['ดูข้อมูล', 'ปิด', 'รีเฟรช']
+                            },
+                            saveAsImage: {
+                                show: true,
+                                title: 'บันทึกภาพ'
+                            }
+                        }
+                    },
+                    xAxis: {
+                        name: xAxisName,
+                        type: 'category',
+                        boundaryGap: false,
+                        data: xAxis_data
+                    },
+                    yAxis: {
+                        name: 'จำนวนเงิน (บาท)',
+                        type: 'value'
+                    },
+                    series: [
+                        {
+                            name: 'รายได้จากค่าอาหาร',
+                            type: 'line',
+                            data: series_data
+                        }
+                    ]
+                };
+                ;
+                if (option && typeof option === "object") {
+                    myChart.setOption(option, true);
+                }
             }
-        ]
-    };
-    ;
-    if (option && typeof option === "object") {
-        myChart.setOption(option, true);
+        });
     }
 </script>
 </body>

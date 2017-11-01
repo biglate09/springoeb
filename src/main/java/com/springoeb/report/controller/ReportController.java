@@ -2,6 +2,7 @@ package com.springoeb.report.controller;
 
 import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.databind.ObjectMapper;
+import com.springoeb.cashier.service.BillService;
 import com.springoeb.cashier.service.OrderService;
 import com.springoeb.ledger.service.LedgerService;
 import com.springoeb.menu.service.BranchMenuService;
@@ -28,6 +29,8 @@ public class ReportController {
     private LedgerService ledgerService;
     @Autowired
     private OrderService orderService;
+    @Autowired
+    private BillService billService;
     //-----------------------------------------------------------------------------------------------------------//
 
     @GetMapping("/menureport")
@@ -73,7 +76,15 @@ public class ReportController {
     }
 
     @GetMapping("/billreport")
-    public String toBillReport() {
+    public String toBillReport(HttpSession session,Model model) {
+        BranchUser branchUser = (BranchUser) (session.getAttribute("branchUser"));
+        int branchNo = branchUser.getBranchNo();
+        Date minDateBill = billService.findMinDateByBranchNo(branchNo);
+        Date maxDateBill = billService.findMaxDateByBranchNo(branchNo);
+        if(maxDateBill != null && minDateBill != null){
+            model.addAttribute("minDateBill", new SimpleDateFormat("dd-MM-YYYY").format(minDateBill));
+            model.addAttribute("maxDateBill", new SimpleDateFormat("dd-MM-YYYY").format(maxDateBill));
+        }
         return REPORT_PATH + "billreport.jsp";
     }
 
@@ -116,6 +127,19 @@ public class ReportController {
         BranchUser branchUser = (BranchUser) (session.getAttribute("branchUser"));
         int branchNo = branchUser.getBranchNo();
         Map<Integer,IncomeExpenseBean> totalIncome = ledgerService.findTotalIncomeExpense(branchNo,fromDate,toDate);
+        ObjectMapper mapper = new ObjectMapper();
+        String json = mapper.writeValueAsString(totalIncome);
+        return json;
+    }
+
+    @ResponseBody
+    @PutMapping("/getbillreport")
+    public String getBillReport(HttpSession session, HttpServletRequest request) throws JsonProcessingException {
+        String fromDate = request.getParameter("fromDate");
+        String toDate = request.getParameter("toDate");
+        BranchUser branchUser = (BranchUser) (session.getAttribute("branchUser"));
+        int branchNo = branchUser.getBranchNo();
+        Map<Integer,Double> totalIncome = billService.getBillReport(branchNo,fromDate,toDate);
         ObjectMapper mapper = new ObjectMapper();
         String json = mapper.writeValueAsString(totalIncome);
         return json;
