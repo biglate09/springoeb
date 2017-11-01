@@ -128,24 +128,22 @@
                                                         </div>
                                                         <div class="ln_solid"></div>
                                                         <div class="form-group">
-                                                            <%--<form oninput="x.value=parseInt(a.value)+parseInt(b.value)">--%>
-                                                            <div class="col-md-11">
-                                                                <label class=" inline-label" for="totalprice" style="margin-left: 10%;color: green">ยอดสุทธิ </label>
-                                                                <div class="totalprice" id="totalprice" style="margin-left: 75%;text-align: right"> </div>
+                                                            <div class="col-md-12">
+                                                                <label class="inline-label" style="margin-left: 10%;color: green" for="totalprice">ยอดสุทธิ</label>
+                                                                <div class="totalprice" id="totalprice" style="margin-right: 5%;text-align: right"></div>
                                                             </div>
-                                                            <div class="col-md-11 inline-label" for="receive">
+                                                            <div class="col-md-12 inline-label" for="receive">
                                                                 <label style="margin-left: 10%;">รับเงินมา</label>
-                                                                <input type="number" class="reset_field" name="receive" id="receive" style="width: 100px;margin-left: 36%;text-align: right"> บาท
+                                                                <input type="number" class="reset_field" name="receive" id="receive" style="width: 100px;margin-left: 34%;text-align: right"> บาท
                                                             </div>
-                                                            <div class="col-md-11 inline-label" >
-                                                                <label class=" inline-label" for="change" style="margin-left: 10%;color: crimson">ทอนเงิน </label>
-                                                                <div id="change" name="change" style="margin-left: 75%;text-align: right" > </div>
+                                                            <div class="col-md-12 inline-label" >
+                                                                <label class="inline-label" for="change" style="margin-left: 10%;color: crimson">ทอนเงิน </label>
+                                                                <div id="change" name="change" style="margin-right: 5%;text-align: right" ></div>
                                                             </div>
                                                             <div class="col-md-offset-5 col-md-3">
                                                                 <button type="submit" class="btn btn-warning" style="width: 100%;text-align: center"><i class="fa fa-circle-o-notch fa-spin"  style="display:none"></i>
                                                                     ยืนยัน</button>
                                                             </div>
-                                                            <%--</form>--%>
                                                         </div>
                                                     </form>
                                                 </div>
@@ -239,6 +237,7 @@
     function reset_field() {
         $(".reset_field").val('');
         $(".flat").iCheck('uncheck');
+        $('.menu_lists').empty();
     }
 
     function set_bill(billNo) {
@@ -267,7 +266,7 @@
                 })
 
                 $("#receive").keyup(function () {
-                    var total = $("#totalprice").value;
+                    var total = $("#totalprice").html();
                     var money = $(this).val();
                     var change = (money-total).toFixed(2);
 
@@ -315,7 +314,12 @@
         text-overflow: ellipsis;
         float:left;
     }
-
+    .totalprice::after {
+        content: " บาท";
+    }
+    #change::after {
+        content: " บาท";
+    }
 
 </style>
 </body>
