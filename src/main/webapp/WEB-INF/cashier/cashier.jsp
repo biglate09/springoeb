@@ -131,7 +131,7 @@
                                                             <%--<form oninput="x.value=parseInt(a.value)+parseInt(b.value)">--%>
                                                             <div class="col-md-11">
                                                                 <label class=" inline-label" for="totalprice" style="margin-left: 10%;color: green">ยอดสุทธิ </label>
-                                                                <div id="totalprice" name="totalprice" style="margin-left: 75%;text-align: right">120.00 บาท</div>
+                                                                <div class="totalprice" id="totalprice" style="margin-left: 75%;text-align: right"> </div>
                                                             </div>
                                                             <div class="col-md-11 inline-label" for="receive">
                                                                 <label style="margin-left: 10%;">รับเงินมา</label>
@@ -139,7 +139,7 @@
                                                             </div>
                                                             <div class="col-md-11 inline-label" >
                                                                 <label class=" inline-label" for="change" style="margin-left: 10%;color: crimson">ทอนเงิน </label>
-                                                                <div id="change" name="change" style="margin-left: 75%;text-align: right">0.00 บาท</div>
+                                                                <div id="change" name="change" style="margin-left: 75%;text-align: right" > </div>
                                                             </div>
                                                             <div class="col-md-offset-5 col-md-3">
                                                                 <button type="submit" class="btn btn-warning" style="width: 100%;text-align: center"><i class="fa fa-circle-o-notch fa-spin"  style="display:none"></i>
@@ -177,16 +177,6 @@
 <jsp:include page="../_include/bottomenv.jsp"/>
 <script>
     $(document).ready(function () {
-        $('.price').change(function(){
-            var total = 0;
-            $('.price').each(function(){
-                if($(this).val() != '')
-                {
-                    total += parseInt($(this).val()) + " บาท";
-                }
-            });
-            $('.totalprice').html(total);
-        });
         refresh_table()
     });
 
@@ -203,7 +193,7 @@
                 var data_array = [];
                 for (var i = 0; i < json.length; i++) {
                     var obj = json[i];
-
+                    console.log(json);
 //                    // using static methods
 //                    var start = Date.now();
 //                    // the event you'd like to time goes here:
@@ -262,23 +252,26 @@
                 $("#billtime").html(result.billTime);
                 $("#tablename").html(result.table.tableName);
                 $("#show_table_name").html(result.table.tableName);
+                $('.totalprice').html(result.totalAmount.toFixed(2));
+
+                var str = '';
 
                 result.orders.forEach(function (order) {
-                    order = result.orders;
-                    console.log(order);
-                    var str = '<tr>' +
-                        '<td class="quantity" style="width: 15%">' + order.quantity + '</td>' +
-                        '<td class="menu" style="width: 65%">' + order.menu.menuNameTH + '</td>' +
-                        '<td class="price" style="width: 20%;text-align: center;">' + order.amount + '</td>' +
-                        '</tr>';
-
                     str += '<tr>' +
                         '<td class="quantity" style="width: 15%">' + order.quantity + '</td>' +
                         '<td class="menu" style="width: 65%">' + order.menu.menuNameTH + '</td>' +
-                    '<td class="price" style="width: 20%;text-align: center;">' + order.amount + '</td>' +
+                    '<td class="price_all_unit" style="width: 20%;text-align: center;">' + order.amount + '</td>' +
                     '</tr>' ;
 
                     $('.menu_lists').html(str);
+                })
+
+                $("#receive").keyup(function () {
+                    var total = $("#totalprice").value;
+                    var money = $(this).val();
+                    var change = (money-total).toFixed(2);
+
+                    $("#change").html(change);
                 })
 
             }
