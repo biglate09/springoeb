@@ -143,9 +143,8 @@
                                                                 <label class="inline-label" for="change" style="margin-left: 10%;color: crimson">ทอนเงิน </label>
                                                                 <div id="change" name="change" style="margin-right: 5%;text-align: right" ></div>
                                                             </div>
-                                                            <div class="col-md-offset-5 col-md-3">
-                                                                <button type="submit" class="btn btn-warning" style="width: 100%;text-align: center"><i class="fa fa-circle-o-notch fa-spin"  style="display:none"></i>
-                                                                    ยืนยัน</button>
+                                                            <div class="col-md-offset-4 col-md-4">
+                                                                <button id="comfirm" class="btn btn-warning" style="width: 100%;text-align: center;font-size: initial;"><i class="fa fa-circle-o-notch fa-spin"  style="display:none"></i>ยืนยันจ่ายเงิน</button>
                                                             </div>
                                                         </div>
                                                     </form>
@@ -158,9 +157,9 @@
                                     <div class="modal-footer">
                                         <!-- ปุ่มกดปิด (Close) ตรงส่วนล่างของ Modal -->
                                         <div class="col-md-9 col-sm-9 col-xs-12 col-md-offset-3">
-                                            <button type="submit" class="btn btn-success"><i class="fa fa-circle-o-notch fa-spin" id="loadingbtnedit" style="display:none"></i>
+                                            <button  class="btn btn-success" style="font-size: initial;"><i class="fa fa-circle-o-notch fa-spin" id="loadingbtnedit" style="display:none"></i>
                                                 ตกลง</button>
-                                            <button type="button" class="btn btn-default" data-dismiss="modal">
+                                            <button type="button" class="btn btn-default" data-dismiss="modal" style="font-size: initial;">
                                                 ยกเลิก
                                             </button>
                                         </div>
@@ -195,18 +194,6 @@
                 for (var i = 0; i < json.length; i++) {
                     var obj = json[i];
                     console.log(json);
-//                    // using static methods
-//                    var start = Date.now();
-//                    // the event you'd like to time goes here:
-//    //                doSomethingForALongTime();
-//                    var end = Date.now();
-//                    var elapsed = end - start; // time in milliseconds
-//                    var difference = new Date(elapsed);
-//                    //If you really want the hours/minutes,
-//                    //Date has functions for that too:
-//                    var diff_hours = difference.getHours();
-//                    var diff_mins = difference.getMinutes();
-                    //Gallery
                     var div = '\
                         <div class="col-md-55">\
                         <div class="thumbnail thumbnail_inline">\
@@ -241,6 +228,7 @@
         $(".reset_field").val('');
         $(".flat").iCheck('uncheck');
         $('.menu_lists').empty();
+        $("#change").empty();
     }
 
     function set_bill(billNo) {
