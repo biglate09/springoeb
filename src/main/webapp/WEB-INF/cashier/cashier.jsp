@@ -39,20 +39,6 @@
                                           aria-hidden="true"></span>
                                 </div>
                                 <div id="menu_thumbnail">
-                                    <%--<div class="col-md-55">--%>
-                                        <%--<div class="thumbnail thumbnail_inline">--%>
-                                            <%--<div class="image view view-first">--%>
-                                                <%--<img style="width: 100%;position:relative;" src="${contextPath}/images/table.png" alt="image"/>--%>
-                                                <%--<div style="margin-left: auto;margin-right: auto;position: absolute;left: 50%;transform: translate(-50%, -50%);font-weight: bold; " class="cardname">โต๊ะ 1</div>--%>
-                                            <%--</div>--%>
-                                            <%--<div class="caption col-md-12" style="color:#73879C">--%>
-                                                <%--<p class="col-md-12" style="white-space:nowrap;overflow:hidden;text-overflow: ellipsis;" onclick="set_menu(' + menu.menuNo + ')">ใช้บริการมาแล้ว : 15 นาที</p>--%>
-                                                <%--<p class="col-md-12" style="white-space: nowrap;overflow:hidden;text-overflow: ellipsis;">ราคาอาหาร : 135 บาท</p>--%>
-                                                <%--<p class="col-md-12" > สถานะอาหาร : ครบแล้ว</p>--%>
-                                                <%--<div style="text-align:center;" class="col-md-12"><button type="button" class="btn btn-success" data-toggle="modal" data-target="#editMenu" data-toggle="modal" data-target="#editMenu" style="width: 80%;">จ่ายเงิน</button></div>--%>
-                                            <%--</div>--%>
-                                        <%--</div>--%>
-                                    <%--</div>--%>
                                 </div>
                                 <div id="error_show"></div>
                                 </form>
@@ -75,43 +61,71 @@
                                         <div class="col-md-6 col-xs-12">
                                             <div class="x_panel">
                                                 <div class="x_title">
-                                                    <h2>โต๊ะ <small>#002</small></h2>
+                                                    <h4 style="text-align: center;">ใบเสร็จรับเงิน</h4>
+                                                    <div style="text-align: center;">${branchUser.branch.restaurant.restName} ${branchUser.branch.branchName}</div>
+                                                    <div style="text-align: center;">
+                                                        วันที่ <span id="billdate"></span> เวลา <span id="billtime"></span> น.
+                                                    </div>
+                                                    <div id="tablename">โต๊ะที่ 1</div>
                                                     <div class="clearfix"></div>
                                                 </div>
                                                 <div class="x_content">
                                                     <form class="form-horizontal form-label-left">
                                                         <div class="form-group">
                                                             <table style="width: 100%">
-                                                                <tbody>
+                                                                <thead>
                                                                 <tr>
-                                                                    <td style="width: 33%">จำนวน</td>
-                                                                    <td style="width: 33%">รายการอาหาร</td>
-                                                                    <td style="width: 33%">ราคา</td>
+                                                                    <td style="width: 15%;">จำนวน</td>
+                                                                    <td style="width: 65%;text-align: center;">รายการอาหาร</td>
+                                                                    <td style="width: 20%;text-align: center;">ราคา</td>
+                                                                </tr>
+                                                                </thead>
+                                                                <tbody>
+                                                                <tr name="menu_lists">
+                                                                    <td name="amount" style="width: 15%">1</td>
+                                                                    <td name="menu" style="width: 65%">ผัดกะเพราหมูสับ</td>
+                                                                    <td name="price" style="width: 20%;text-align: center;">40</td>
+                                                                </tr>
+                                                                <tr name="menu_lists">
+                                                                    <td name="amount" style="width: 15%">1</td>
+                                                                    <td name="menu" style="width: 65%">ขนมจีบกุ้ง</td>
+                                                                    <td name="price" style="width: 20%;text-align: center;">25</td>
+                                                                </tr>
+                                                                <tr name="menu_lists">
+                                                                    <td name="amount" style="width: 15%">1</td>
+                                                                    <td name="menu" style="width: 65%">ขนมจีบปู</td>
+                                                                    <td name="price" style="width: 20%;text-align: center;">25</td>
+                                                                </tr>
+                                                                <tr name="menu_lists">
+                                                                    <td name="amount" style="width: 15%">2</td>
+                                                                    <td name="menu" style="width: 65%">เก็กฮวย</td>
+                                                                    <td name="price" style="width: 20%;text-align: center;">30</td>
                                                                 </tr>
                                                                 </tbody>
                                                             </table>
                                                         </div>
                                                         <div class="ln_solid"></div>
                                                         <div class="form-group">
-                                                            <div class="col-md-9 col-sm-9 col-xs-12 col-md-offset-3">
-                                                                <div class="col-md-12 col-sm-12 col-xs-12">ราคารวม</div>
+                                                            <div class="col-md-12 col-sm-12 col-xs-12">
+                                                                <label class="inline-label" for="price">ราคารวม </label>
+                                                                <div name="totalprice" id="price" style="margin-left: 75%;">120.00 บาท</div>
                                                             </div>
+                                                            <div class="col-md-12 col-sm-12 col-xs-12" id="promotion"></div>
+                                                            <div class="col-md-12 col-sm-12 col-xs-12" style="text-align: center">**** ขอบคุณที่ใช้บริการ ****</div>
                                                         </div>
                                                     </form>
                                                 </div>
                                             </div>
                                         </div>
-
                                         <div class="col-md-6 col-xs-12">
                                             <div class="x_panel">
                                                 <div class="x_title">
-                                                    <h2>โปรโมชั่น</h2>
+                                                    <h4>โปรโมชั่น</h4>
                                                     <div class="clearfix"></div>
                                                 </div>
                                                 <div class="x_content">
                                                     <form class="form-horizontal form-label-left">
                                                         <div class="form-group">
-                                                            <label class="control-label col-md-3 col-sm-3 col-xs-12">กรุณาเลือกโปรโมชั่น</label>
                                                             <div class="col-md-9 col-sm-9 col-xs-12">
                                                                 <div class="radio">
                                                                     <label>
@@ -123,13 +137,33 @@
                                                                         <input type="radio" class="flat" name="iCheck"> โปรโมชั่น 2
                                                                     </label>
                                                                 </div>
+                                                                <div class="radio">
+                                                                    <label class="inline-label">
+                                                                        <input type="radio" class="flat" name="iCheck" for="other"> อื่นๆ <input type="number" id="other" style="width:100px;margin-left: 10px">
+                                                                    </label>
+                                                                </div>
                                                             </div>
                                                         </div>
                                                         <div class="ln_solid"></div>
                                                         <div class="form-group">
-                                                            <div class="col-md-9 col-sm-9 col-xs-12 col-md-offset-3">
-                                                                <div class="col-md-12 col-sm-12 col-xs-12">ราคารวม</div>
+                                                            <%--<form oninput="x.value=parseInt(a.value)+parseInt(b.value)">--%>
+                                                            <div class="col-md-11">
+                                                                <label class=" inline-label" for="totalprice" style="margin-left: 10%;">ราคารวม </label>
+                                                                <div id="totalprice" name="totalprice" style="margin-left: 75%;text-align: right">120.00 บาท</div>
                                                             </div>
+                                                            <div class="col-md-11 inline-label" for="recieve">
+                                                                <label style="margin-left: 10%;">รับเงินมา</label>
+                                                                <input type="number" name="recieve" id="recieve" style="width: 100px;margin-left: 41%;text-align: right"> บาท
+                                                            </div>
+                                                            <div class="col-md-11 inline-label" >
+                                                                <label class=" inline-label" for="change" style="margin-left: 10%;">ทอนเงิน </label>
+                                                                <div id="change" name="change" style="margin-left: 75%;text-align: right">0.00 บาท</div>
+                                                            </div>
+                                                            <div class="col-md-offset-5 col-md-3">
+                                                                <button type="submit" class="btn btn-warning" style="width: 100%;text-align: right"><i class="fa fa-circle-o-notch fa-spin"  style="display:none"></i>
+                                                                    ยืนยัน</button>
+                                                            </div>
+                                                            <%--</form>--%>
                                                         </div>
                                                     </form>
                                                 </div>
@@ -194,7 +228,7 @@
     function refresh_table() {
         $.ajax({
             type: "POST",
-            url: "${contextPath}/cashier/getcashiers" ,
+            url: "${contextPath}/cashier/getbills" ,
             dataType: "json",
             success: function (json) {
                 //remove
@@ -237,8 +271,6 @@
                         $("#menu_thumbnail").append(div);
                 }
                     $("#error_show").html('');
-//                    $("#datatable-menu").DataTable().clear();
-//                    $("#datatable-menu").DataTable().rows.add(data_array).draw(false);
 
                 filterCard();
             }
@@ -262,7 +294,7 @@
     function set_bill(billNo) {
         $.ajax({
             type: "PUT",
-            url: "${contextPath}/cashier/getcashier/" + billNo,
+            url: "${contextPath}/cashier/getbill/" + billNo,
             dataType: "json",
             success: function (result) {
                 menu = result.menu;
@@ -282,27 +314,6 @@
                     $("#edit_menu_available").attr('checked', false);
                 }
 
-                /////////////////////
-                $(".materialamount2").val(0);
-                menuMaterials = menu.menuMaterials;
-                for (var i = 0; i < menuMaterials.length; i++) {
-                    $(".materialamount2[matitemno='" + menuMaterials[i].matItemNo + "']").val(menuMaterials[i].quantity);
-                }
-
-                $("#display_material_desc2").empty();
-                $(".materialamount2").attr('disabled', false);
-                $(".materialamount2").each(function () {
-                    if ($(this).val() > 0) {
-                        $("#display_material_desc2").append('<div class="col-md-4 col-md-offset-2" style="text-align:left;white-space:nowrap;overflow:hidden;text-overflow: ellipsis;">' + $(this).attr('matItemName') + '</div><div class="col-md-3 col-md-offset-2" style="text-align:left;">' + $(this).val() + ' ' + $(this).attr('unit') + '</div><br>');
-                    }
-
-                    if ($(this).attr('matitemno') == menuMaterials.matItemNo) {
-                        $(this).attr('disabled', true);
-                    }
-                });
-                /////////////////////
-
-                $("#showpic_edit").attr('src', menu.menuPicPath == null ? '../images/default_upload_image.png' : ('../images/menu/' + menu.menuPicPath));
             }
         });
     }
@@ -337,6 +348,12 @@
     .thumbnail_inline {
         height: 257px !important;
         width: 210px;
+    }
+    .inline-label {
+        white-space: nowrap;
+        overflow: hidden;
+        text-overflow: ellipsis;
+        float:left;
     }
 
 
