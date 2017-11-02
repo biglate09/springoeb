@@ -118,17 +118,18 @@
                                                             <div class="col-md-9 col-sm-9 col-xs-12">
                                                                 <div class="radio">
                                                                     <label>
-                                                                        <input type="radio" class="flat" name="iCheck"> โปรโมชั่น 1
-                                                                    </label>
-                                                                </div>
-                                                                <div class="radio">
-                                                                    <label>
-                                                                        <input type="radio" class="flat" name="iCheck"> โปรโมชั่น 2
+                                                                        <input type="radio" class="flat selected_pro" name="iCheck" for="select_promotion">
+                                                                        <select name="promotion" id="select_promotion" class="form-control" style="width: 220px;">
+                                                                            <option disabled selected value="">เลือกโปรโมชั่น</option>
+                                                                            <c:forEach items="${promotions}" var="p">
+                                                                                <option value="${p.promotionNo}">${p.promotionNameTH}</option>
+                                                                            </c:forEach>
+                                                                        </select>
                                                                     </label>
                                                                 </div>
                                                                 <div class="radio">
                                                                     <label class="inline-label">
-                                                                        <input type="radio" class="flat" name="iCheck" for="other"> อื่นๆ <input class="reset_field" type="number" id="other" style="width:100px;margin-left: 10px;margin-bottom: 9px">
+                                                                        <input type="radio" class="flat selected_other" name="iCheck" for="other"> อื่นๆ <input class="reset_field" type="number" id="other" style="width:100px;margin-left: 10px;margin-bottom: 9px">
                                                                     </label>
                                                                 </div>
                                                             </div>
@@ -181,6 +182,16 @@
 <jsp:include page="../_include/bottomenv.jsp"/>
 <script>
     $(document).ready(function () {
+        $(".selected_pro").click(function () {
+            $('#select_promotion').attr("disabled",false);
+            $('#other').attr("disabled",true);
+        });
+
+        $(".selected_other").click(function () {
+            $('#select_promotion').attr("disabled",true);
+            $('#other').attr("disabled",false);
+        });
+
         refresh_table()
     });
 
