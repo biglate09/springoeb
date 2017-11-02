@@ -35,9 +35,10 @@
                                     <thead>
                                     <tr>
                                         <th class="table-rows" style="width: 30%">ชื่ออาหาร</th>
-                                        <th class="table-rows" style="width: 20%">โต๊ะที่สั่ง</th>
-                                        <th class="table-rows" style="width: 20%">จำนวน</th>
-                                        <th class="table-rows" style="width: 30%">สถานะอาหาร</th>
+                                        <th class="table-rows" style="width: 10%">โต๊ะที่สั่ง</th>
+                                        <th class="table-rows" style="width: 10%">จำนวน</th>
+                                        <th class="table-rows" style="width: 20%">สถานะอาหาร</th>
+                                        <th class="table-rows" style="width: 30%">ตัวเลือก</th>
                                     </tr>
                                     </thead>
                                     <tbody style="text-align:center;">
@@ -71,12 +72,15 @@
                     data: "amount"
                 },
                 {
+                    data: "currentStatus"
+                },
+                {
                     data: "status"
                 }
             ]
         });
         refresh_table();
-//        setInterval(refresh_table, 5000);
+        setInterval(refresh_table, 5000);
     });
 
     function refresh_table() {
@@ -99,10 +103,15 @@
                         menuName: obj.menu.menuNameTH ,
                         tableName: obj.bill.table.tableName + " (" + obj.quantity + " จาน)",
                         amount: obj.quantity + " จาน",
-                        status: (obj.status == 'reserved' ? '<a onclick="change_status(' + obj.orderNo + ')" class="btn btn-secondary">จองไว้แล้ว</a>' :
-                         obj.status == 'waiting' ? '<a onclick="change_status(' + obj.orderNo + ')" class="btn btn-default">เมนูที่ได้รับมา</a>' :
-                         obj.status == 'cooking' ? '<a onclick="change_status(' + obj.orderNo + ')" class="btn btn-primary">กำลังปรุงอาหาร</a>' :
-                         obj.status == 'ready' ? '<a onclick="change_status(' + obj.orderNo + ')" class="btn btn-success">ปรุงอาหารเสร็จแล้ว</a>' : '' )+
+                        currentStatus: (obj.status == 'reserved' ? 'จองไว้แล้ว' :
+                            obj.status == 'waiting' ? 'เมนูที่ได้รับมา' :
+                                obj.status == 'cooking' ? ' กำลังปรุงอาหาร' :
+                                    obj.status == 'ready' ? 'ปรุงอาหารเสร็จแล้ว' : '' ),
+
+                        status: (obj.status == 'reserved' ? '<a onclick="change_status(' + obj.orderNo + ')" class="btn btn-secondary"><i class="fa fa-circle-o-notch fa-spin" id="loadingbtn" style="display:none"></i> จองไว้แล้ว</a>' :
+                         obj.status == 'waiting' ? '<a onclick="change_status(' + obj.orderNo + ')" class="btn btn-default"><i class="fa fa-circle-o-notch fa-spin" id="loadingbtn" style="display:none"></i> เมนูที่ได้รับมา</a>' :
+                         obj.status == 'cooking' ? '<a onclick="change_status(' + obj.orderNo + ')" class="btn btn-primary"><i class="fa fa-circle-o-notch fa-spin" id="loadingbtn" style="display:none"></i> กำลังปรุงอาหาร</a>' :
+                         obj.status == 'ready' ? '<a onclick="change_status(' + obj.orderNo + ')" class="btn btn-success"><i class="fa fa-circle-o-notch fa-spin" id="loadingbtn" style="display:none"></i> ปรุงอาหารเสร็จแล้ว</a>' : '' )+
                         '<a onclick="cancel_menu(' + obj.orderNo + ')" class="btn btn-danger">ยกเลิกเมนู</a>'
                     };
                     data_array.push(data_refresh);
@@ -117,13 +126,16 @@
     }
 
     function change_status(orderNo) {
+        $('#loadingbtn').show();
         $.ajax({
             type: "POST",
             url: "${contextPath}/kitchen/changestatus/" + orderNo,
             dataType: "json",
             success: function (result) {
+                $('#loadingbtn').hide();
                 refresh_table();
             },error : function(result){
+                $('#loadingbtn').hide();
                 refresh_table()
             }
         });
