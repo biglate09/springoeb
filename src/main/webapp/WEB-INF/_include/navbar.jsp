@@ -79,11 +79,7 @@
                     </c:if>
                     <c:if test="${branchUser.roleNo == Role.MANAGER}">
                         <li>
-                            <a><i class="fa fa-tags"></i> จัดการโปรโมชั่น <span class="fa fa-chevron-down"></span></a>
-                            <ul class="nav child_menu">
-                                <li><a id="promotion" href="${contextPath}/promotion/promotion">โปรโมชั่นเมนูอาหาร</a>
-                                </li>
-                            </ul>
+                            <a id="promotion" href="${contextPath}/promotion/promotion"><i class="fa fa-tags"></i> จัดการโปรโมชั่น</a>
                         </li>
                     </c:if>
                     <c:if test="${branchUser.roleNo == Role.MANAGER}">
