@@ -48,6 +48,53 @@
                         </div>
                     </div>
                 </div>
+                <!-- Modal Content (cancel menu)-->
+                <div class="modal fade" id="cancelmenu" role="dialog">
+                    <div class="modal-dialog modal-sm">
+                        <!-- เนือหาของ Modal ทั้งหมด -->
+                        <div class="modal-content">
+                            <!-- ส่วนหัวของ Modal -->
+                            <div class="modal-header">
+                                <!-- ปุ่มกดปิด (X) ตรงส่วนหัวของ Modal -->
+                                <button type="button" class="close" data-dismiss="modal">&times;</button>
+                                <h4 class="modal-title">ยกเลิกเมนู <span id="display_menu_name"></span></h4>
+                            </div>
+                            <!-- ส่วนเนื้อหาของ Modal -->
+                            <div class="modal-body">
+                                <form class="form-horizontal form-label-left input_mask" modelAttribute="cancelMenu" id="cancel_menu">
+                                    <input type="hidden" name="orderNo" id="hiddenorderno">
+                                    <div class="form-group">
+                                        <div class="col-md-6 col-sm-6col-xs-12 form-group has-feedback">
+                                            <label class="required">ยกเลิกของโต๊ะ</label>
+                                            <select id="cancel_table" class="form-control">
+                                                <option disabled selected value="">เลือกโต๊ะ</option>
+
+                                            </select>
+                                        </div>
+                                        <div class="col-md-6 col-sm-6col-xs-12 form-group has-feedback">
+                                            <label class="required">จำนวนที่ยกเลิก</label>
+                                            <select id="quantity" class="form-control">
+                                                <option>1</option>
+                                                <option>2</option>
+                                                <option>3</option>
+                                            </select>
+                                        </div>
+                                    </div>
+                                    <div class="modal-footer">
+                                        <!-- ปุ่มกดปิด (Close) ตรงส่วนล่างของ Modal -->
+                                        <div class="col-md-9 col-sm-9 col-xs-12 col-md-offset-3">
+                                            <button type="submit" class="btn btn-success"><i class="fa fa-circle-o-notch fa-spin" id="loadingbtnedit" style="display:none"></i> ตกลง</button>
+                                            <button type="button" class="btn btn-default" data-dismiss="modal">
+                                                ยกเลิก
+                                            </button>
+                                        </div>
+                                    </div>
+                                </form>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <!-- /Modal Content (cancel menu)-->
             </div>
         </div>
     </div>
@@ -104,14 +151,14 @@
                         }
                         orderNo += val.orderNo;
                     });
-
+                    console.log(json);
                     var addon_str = "";
                     obj.addOns.forEach(function(addOn){
                         addon_str += " (" + (addOn.addOn.materialItem.matItemName + " " + addOn.addOn.qty + " " + addOn.addOn.materialItem.unit.unitName) + ")";
                     });
 
                     var data_refresh = {
-                        menuName: obj.menu.menuNameTH + " " + addon_str,
+                        menuName: '<div style="text-align: left">'+ obj.menu.menuNameTH + " " + addon_str + '</div>',
                         tableName: table_str,
                         amount: qty + " ที่",
                         currentStatus: (obj.status == 'reserved' ? 'จองไว้แล้ว' :
@@ -122,7 +169,7 @@
                         status: (obj.status == 'reserved' ? '<a onclick="change_status(\'' + orderNo + '\')" class="btn btn-secondary"><i class="fa fa-circle-o-notch fa-spin" id="loading'+orderNo+'" style="display:none"></i> จองไว้แล้ว</a>' :
                             obj.status == 'waiting' ? '<a onclick="change_status(\'' + orderNo + '\')" class="btn btn-default"><i class="fa fa-circle-o-notch fa-spin" id="loading'+orderNo+'" style="display:none"></i> ปรุงอาหาร</a>' :
                                 obj.status == 'cooking' ? '<a onclick="change_status(\'' + orderNo + '\')" class="btn btn-primary"><i class="fa fa-circle-o-notch fa-spin" id="loading'+orderNo+'" style="display:none"></i> ปรุงสำเร็จ</a>' : '' ) +
-                        '<a onclick="cancel_menu(\'' + orderNo + '\')" class="btn btn-danger">ยกเลิกเมนู</a>'
+                        '<a onclick="cancel_menu(\'' + orderNo + '\')" class="btn btn-danger" data-toggle="modal" data-target="#cancelmenu">ยกเลิกเมนู</a>'
                     };
                     data_array.push(data_refresh);
                 }
@@ -148,30 +195,7 @@
     }
 
     function cancel_menu(orderNo) {
-        swal({
-                title: "ยืนยันการยกเลิกออเดอร์ที่ " + orderNo,
-                text: "เมื่อยืนยัน ออเดอร์ที่ " + orderNo + " ของโต๊ะ " + tableName + " จะถูกยกเลิก",
-                type: "warning",
-                showCancelButton: true,
-                confirmButtonColor: "#DD6B55",
-                confirmButtonText: "ใช่, ต้องการยกเลิก",
-                cancelButtonText: "ไม่",
-                closeOnConfirm: false
-            },
-            function () {
-                $.ajax({
-                    type: "DELETE",
-                    url: "${contextPath}/kitchen/cancelorder/" + orderNo,
-                    dataType: "json",
-                    success: function (result) {
-                        swal("สำเร็จ", "ออเดอร์ที่ " + orderNo + " ถูกยกเลิกเรียบร้อยแล้ว", "success");
-                        refresh_table();
-                    }, error: function (xhr, status, error) {
-                        swal("ไม่สำเร็จ", "กรุณาลองใหม่ในภายหลัง", "error");
-                    }
-                });
-            }
-        );
+
     }
 </script>
 </html>
