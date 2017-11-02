@@ -1,4 +1,5 @@
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
+<%@ taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt" %>
 <%@page contentType="text/html" pageEncoding="UTF-8" %>
 <c:set var="contextPath" value="${pageContext.request.contextPath}"/>
 <!DOCTYPE html>
@@ -39,48 +40,18 @@
                                     </tr>
                                     </thead>
                                     <tbody>
+                                    <c:forEach var="m" items="${menus}">
                                     <tr>
-                                        <td>-</td>
+                                        <td>${m.menu.menuNameTH}</td>
                                         <td>
-                                            <input type="checkbox" name="" value="" required class="flat" /> add-ons 1
-                                            <br />
+                                            <c:forEach var="a" items="${m.menu.addOns}">
+                                                <input type="checkbox" name="" value="" required class="flat" /> ${a.materialItem.matItemName} <br/>
+                                            </c:forEach>
                                         </td>
-                                        <td>-</td>
-                                        <td><input type="number" name="" value="1"></td>
+                                        <td><fmt:formatNumber pattern="#,###,###.00" value="${m.menu.menuPrice}"/></td>
+                                        <td><input type="number" name="" value="0"></td>
                                     </tr>
-                                    <tr>
-                                        <td>-</td>
-                                        <td>
-                                            <input type="checkbox" name="" value="" required class="flat" /> add-ons 1
-                                            <br />
-                                            <input type="checkbox" name="" value="" required class="flat" /> add-ons 1
-                                            <br />
-                                        </td>
-                                        <td>-</td>
-                                        <td><input type="number" name="" value="1"></td>
-                                    </tr>
-                                    <tr>
-                                        <td>-</td>
-                                        <td>
-                                            <input type="checkbox" name="" value="" required class="flat" /> add-ons 1
-                                            <br />
-                                            <input type="checkbox" name="" value="" required class="flat" /> add-ons 1
-                                            <br />
-                                        </td>
-                                        <td>-</td>
-                                        <td><input type="number" name="" value="1"></td>
-                                    </tr>
-                                    <tr>
-                                        <td>-</td>
-                                        <td>
-                                            <input type="checkbox" name="" value="" required class="flat" /> add-ons 1
-                                            <br />
-                                            <input type="checkbox" name="" value="" required class="flat" /> add-ons 1
-                                            <br />
-                                        </td>
-                                        <td>-</td>
-                                        <td><input type="number" name="" value="1"></td>
-                                    </tr>
+                                    </c:forEach>
                                     </tbody>
                                 </table>
                                 </form>

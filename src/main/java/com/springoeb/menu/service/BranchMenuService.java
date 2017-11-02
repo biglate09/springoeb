@@ -93,4 +93,8 @@ public class BranchMenuService {
         }
         return menuMaps;
     }
+
+    public List<BranchMenu> getMenuByBranchNo(int branchNo){
+        return branchMenuRepository.findByBranchNoAndAvailable(branchNo, true);
+    }
 }

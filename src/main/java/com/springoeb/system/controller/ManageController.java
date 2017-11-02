@@ -6,6 +6,8 @@ import com.springoeb.branch.model.Branch;
 import com.springoeb.branch.service.BranchService;
 import com.springoeb.employee.model.Employee;
 import com.springoeb.employee.service.EmployeeService;
+import com.springoeb.menu.model.BranchMenu;
+import com.springoeb.menu.service.BranchMenuService;
 import com.springoeb.system.model.*;
 import com.springoeb.system.service.BranchUserService;
 import com.springoeb.system.service.DistrictService;
@@ -41,6 +43,8 @@ public class ManageController {
     private BranchService branchService;
     @Autowired
     private EmployeeService employeeService;
+    @Autowired
+    private BranchMenuService branchMenuService;
 
     @PostMapping("/login")
     public String login(@ModelAttribute("branchUser") BranchUser branchUser, HttpServletRequest request, HttpServletResponse response, HttpSession session, Model model) {
@@ -194,7 +198,11 @@ public class ManageController {
     }
 
     @GetMapping("/dummyorder")
-    public String dummyorder(HttpSession session, HttpServletRequest request, HttpServletResponse response) {
+    public String dummyorder(HttpSession session, Model model) {
+        BranchUser branchUser = (BranchUser) (session.getAttribute("branchUser"));
+        int branchNo = branchUser.getBranchNo();
+        List<BranchMenu> branchMenus = branchMenuService.getMenuByBranchNo(branchNo);
+        model.addAttribute("menus",branchMenus);
         return "/WEB-INF/_include/orderTest.jsp";
     }
 
