@@ -1,6 +1,7 @@
 package com.springoeb.menu.model;
 
 import com.fasterxml.jackson.annotation.JsonIgnore;
+import com.springoeb.stock.model.MaterialItem;
 
 import javax.persistence.*;
 
@@ -22,6 +23,9 @@ public class AddOn {
     @JsonIgnore
     @JoinColumn(name = "menuNo",updatable = false,insertable = false)
     private Menu menu;
+    @ManyToOne
+    @JoinColumn(name = "matNo",updatable = false,insertable = false)
+    private MaterialItem materialItem;
 
     public Integer getAddOnNo() {
         return addOnNo;
@@ -69,6 +73,14 @@ public class AddOn {
 
     public void setMenu(Menu menu) {
         this.menu = menu;
+    }
+
+    public MaterialItem getMaterialItem() {
+        return materialItem;
+    }
+
+    public void setMaterialItem(MaterialItem materialItem) {
+        this.materialItem = materialItem;
     }
 
     @Override

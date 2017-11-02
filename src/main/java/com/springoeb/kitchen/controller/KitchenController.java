@@ -31,7 +31,7 @@ public class KitchenController {
     @PutMapping("/getmonitororders")
     public String getMonitorOrders(HttpSession session) throws JsonProcessingException {
         int branchNo = ((BranchUser) (session.getAttribute("branchUser"))).getBranchNo();
-        Map<String,LinkedList<ValueBean>> orders = orderService.getMonitorOrders(branchNo);
+        Map<String,LinkedList<ValueBean>> orders = orderService.getMonitorOrders(branchNo,false);
         ObjectMapper mapper = new ObjectMapper();
         String json = mapper.writeValueAsString(orders);
         return json;
@@ -41,7 +41,7 @@ public class KitchenController {
     @PutMapping("/getcheforders")
     public String getChefOrders(HttpSession session) throws JsonProcessingException {
         int branchNo = ((BranchUser) (session.getAttribute("branchUser"))).getBranchNo();
-        List<Order> orders = orderService.getChefOrders(branchNo);
+        Map<String,LinkedList<ValueBean>> orders = orderService.getMonitorOrders(branchNo,true);
         ObjectMapper mapper = new ObjectMapper();
         String json = mapper.writeValueAsString(orders);
         return json;
@@ -49,29 +49,45 @@ public class KitchenController {
 
     @ResponseBody
     @DeleteMapping("/cancelorder/{orderNo}")
-    public void cancelOrder(@PathVariable("orderNo")int orderNo){
-        Order order = orderService.findByOrderNo(orderNo);
-        String orderStatus = order.getStatus();
-        if(orderStatus.equals(Order.RESERVED) || orderStatus.equals(Order.WAITING)){
-            orderService.removeByOrderNo(orderNo);
-        }else{
-            order.setStatus(Order.CANCELLED);
-            orderService.save(order);
+    public void cancelOrder(@PathVariable("orderNo")String orderNo){
+        String[] orderNos = orderNo.split(",");
+        List<Order> orders = new LinkedList<Order>();
+        List<Integer> deleteOrder = new LinkedList<Integer>();
+        for(String o : orderNos) {
+            Order order = orderService.findByOrderNo(Integer.parseInt(o));
+            String orderStatus = order.getStatus();
+            if (orderStatus.equals(Order.RESERVED) || orderStatus.equals(Order.WAITING)) {
+                deleteOrder.add(Integer.parseInt(o));
+            } else {
+                order.setStatus(Order.CANCELLED);
+                orders.add(order);
+            }
         }
+
+        orderService.removeByOrderNo(deleteOrder);
+        orderService.save(orders);
     }
     @ResponseBody
     @PostMapping("/changestatus/{orderNo}")
-    public void changeStatus(@PathVariable("orderNo")int orderNo){
-        Order order = orderService.findByOrderNo(orderNo);
-        String orderStatus = order.getStatus();
-        if(orderStatus.equals(Order.WAITING)){
-            order.setStatus(Order.COOKING);
-        }else if(orderStatus.equals(Order.COOKING)) {
-            order.setStatus(Order.COOKED);
-        }else if(orderStatus.equals(Order.COOKED)){
-            order.setStatus(Order.SERVED);
+    public void changeStatus(@PathVariable("orderNo")String orderNo){
+        String[] orderNos = orderNo.split(",");
+        List<Order> orders = new LinkedList<Order>();
+        for(String o : orderNos){
+            Order order = orderService.findByOrderNo(Integer.parseInt(o));
+            String orderStatus = order.getStatus();
+            if(orderStatus.equals(Order.WAITING)){
+                order.setStatus(Order.COOKING);
+            }else if(orderStatus.equals(Order.COOKING)) {
+                order.setStatus(Order.COOKED);
+            }else if(orderStatus.equals(Order.COOKED)){
+                order.setStatus(Order.SERVED);
+            }
+            orders.add(order);
         }
-        orderService.save(order);
+
+        if(orders.size() > 0){
+            orderService.save(orders);
+        }
     }
     //-----------------------------------------------------------------------------------------------------------//
     @GetMapping("/chefmonitor")
