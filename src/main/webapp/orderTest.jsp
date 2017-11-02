@@ -33,6 +33,7 @@
                                     <thead>
                                     <tr>
                                         <th>ชื่ออาหาร</th>
+                                        <th>add-ons</th>
                                         <th>ราคา</th>
                                         <th>จำนวน</th>
                                     </tr>
@@ -40,27 +41,49 @@
                                     <tbody>
                                     <tr>
                                         <td>-</td>
+                                        <td>
+                                            <input type="checkbox" name="" value="" required class="flat" /> add-ons 1
+                                            <br />
+                                        </td>
                                         <td>-</td>
                                         <td><input type="number" name="" value="1"></td>
                                     </tr>
                                     <tr>
                                         <td>-</td>
+                                        <td>
+                                            <input type="checkbox" name="" value="" required class="flat" /> add-ons 1
+                                            <br />
+                                            <input type="checkbox" name="" value="" required class="flat" /> add-ons 1
+                                            <br />
+                                        </td>
                                         <td>-</td>
                                         <td><input type="number" name="" value="1"></td>
                                     </tr>
                                     <tr>
                                         <td>-</td>
+                                        <td>
+                                            <input type="checkbox" name="" value="" required class="flat" /> add-ons 1
+                                            <br />
+                                            <input type="checkbox" name="" value="" required class="flat" /> add-ons 1
+                                            <br />
+                                        </td>
                                         <td>-</td>
                                         <td><input type="number" name="" value="1"></td>
                                     </tr>
                                     <tr>
                                         <td>-</td>
+                                        <td>
+                                            <input type="checkbox" name="" value="" required class="flat" /> add-ons 1
+                                            <br />
+                                            <input type="checkbox" name="" value="" required class="flat" /> add-ons 1
+                                            <br />
+                                        </td>
                                         <td>-</td>
                                         <td><input type="number" name="" value="1"></td>
                                     </tr>
                                     </tbody>
                                 </table>
-                                </form>>
+                                </form>
                                 <button type="submit" class="btn btn-success">สั่งอาหาร</button>
                             </div>
                         </div>
@@ -69,8 +92,7 @@
             </div>
         </div>
         <!-- /page content -->
-
-1    </div>
+    </div>
 </div>
 <jsp:include page="WEB-INF/_include/bottomenv.jsp"/>
 </body>
