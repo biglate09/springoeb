@@ -2,6 +2,7 @@ package com.springoeb.cashier.model;
 
 import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.springoeb.cashier.model_key.OrderAddOnId;
+import com.springoeb.menu.model.AddOn;
 
 import javax.persistence.*;
 
@@ -12,13 +13,17 @@ public class OrderAddOn {
     @Column(name = "orderNo")
     private Integer orderNo;
     @Id
-    @Column(name = "addOnNo")
+    @Column(name = "addOnNo",updatable = true,insertable = true)
     private Integer addOnNo;
 
     @JsonIgnore
     @ManyToOne
     @JoinColumn(name = "orderNo",updatable = false,insertable = false)
     private Order order;
+
+    @ManyToOne
+    @JoinColumn(name = "addOnNo",updatable = false,insertable = false)
+    private AddOn addOn;
 
     public Integer getOrderNo() {
         return orderNo;
@@ -42,6 +47,14 @@ public class OrderAddOn {
 
     public void setOrder(Order order) {
         this.order = order;
+    }
+
+    public AddOn getAddOn() {
+        return addOn;
+    }
+
+    public void setAddOn(AddOn addOn) {
+        this.addOn = addOn;
     }
 
     @Override

@@ -104,8 +104,14 @@
                         }
                         orderNo += val.orderNo;
                     });
+
+                    var addon_str = "";
+                    obj.addOns.forEach(function(addOn){
+                        addon_str += "(" + (addOn.addOn.materialItem.matItemName + " " + addOn.addOn.qty + " " + addOn.addOn.materialItem.unit.unitName) + ")";
+                    });
+
                     var data_refresh = {
-                        menuName: obj.menu.menuNameTH,
+                        menuName: obj.menu.menuNameTH + " " + addon_str,
                         tableName: table_str,
                         amount: qty + " ที่",
                         currentStatus: (obj.status == 'reserved' ? 'จองไว้แล้ว' :
