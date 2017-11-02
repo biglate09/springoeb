@@ -31,7 +31,7 @@
                             <div class="col-md-6">
                                 <div class="col-md-9" style="padding-right:0px;">
                                     <input type="text" name="filterdate" id="filterdate_menu"
-                                           class="form-control daterange" value="${minDateMenu} - ${maxDateMenu}" required>
+                                           class="form-control daterange" value="${minDateMenu != null ? minDateMenu : today} - ${maxDateMenu != null ? maxDateMenu : today}" required>
                                 </div>
                                 <div class="input-group-btn">
                                     <button class="btn btn-default"
@@ -63,7 +63,7 @@
                             <div class="col-md-6">
                                 <div class="col-md-9" style="padding-right:0px;">
                                     <input type="text" name="filterdate" id="filterdate_menuset"
-                                           class="form-control daterange" required value="${minDateMenuSet} - ${maxDateMenuSet}">
+                                           class="form-control daterange" required value="${minDateMenuSet != null ? minDateMenuSet : today} - ${maxDateMenuSet != null ? maxDateMenuSet : today}">
                                 </div>
                                 <div class="input-group-btn">
                                     <button class="btn btn-default"
@@ -107,8 +107,8 @@
 
     $(document).ready(function () {
         $(".daterange").daterangepicker();
-        init_bestsalemenu('${minDateMenu}', '${maxDateMenu}');
-        init_bestsalemenuset('${minDateMenuSet}', '${maxDateMenuSet}');
+        init_bestsalemenu('${minDateMenu != null ? minDateMenu : today}', '${maxDateMenu != null ? maxDateMenu : today}');
+        init_bestsalemenuset('${minDateMenuSet != null ? minDateMenuSet : today}', '${maxDateMenuSet != null ? maxDateMenuSet : today}');
     });
 
     function init_bestsalemenu(fromDate, toDate) {
@@ -269,7 +269,7 @@
                                 magicType: {
                                     show: true,
                                     type: ['pie', 'funnel'],
-                                    title: [''],
+
                                     option: {
                                         funnel: {
                                             x: '25%',

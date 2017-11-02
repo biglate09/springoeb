@@ -147,7 +147,7 @@
                         table_str += val.table.tableName + " (" + val.qty + " ที่)<br>";
                         qty += val.qty;
                         if(orderNo != ""){
-                            orderNo += ",";
+                            orderNo += "-";
                         }
                         orderNo += val.orderNo;
                     });
