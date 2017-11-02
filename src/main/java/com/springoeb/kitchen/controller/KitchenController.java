@@ -50,7 +50,7 @@ public class KitchenController {
     @ResponseBody
     @DeleteMapping("/cancelorder/{orderNo}")
     public void cancelOrder(@PathVariable("orderNo")String orderNo){
-        String[] orderNos = orderNo.split(",");
+        String[] orderNos = orderNo.split("-");
         List<Order> orders = new LinkedList<Order>();
         List<Integer> deleteOrder = new LinkedList<Integer>();
         for(String o : orderNos) {
@@ -70,7 +70,7 @@ public class KitchenController {
     @ResponseBody
     @PostMapping("/changestatus/{orderNo}")
     public void changeStatus(@PathVariable("orderNo")String orderNo){
-        String[] orderNos = orderNo.split(",");
+        String[] orderNos = orderNo.split("-");
         List<Order> orders = new LinkedList<Order>();
         for(String o : orderNos){
             Order order = orderService.findByOrderNo(Integer.parseInt(o));
