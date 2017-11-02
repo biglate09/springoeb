@@ -67,7 +67,7 @@
                                                     <div style="text-align: center;font-size: larger">ใบเสร็จรับเงิน</div>
                                                     <div style="text-align: center;font-size: larger">${branchUser.branch.restaurant.restName} ${branchUser.branch.branchName}</div>
                                                     <div style="text-align: center;">
-                                                        วันที่ <span id="billdate" style="color: #73879C"></span>  เวลา <span id="billtime" style="color: #73879C"></span> น.
+                                                        วันที่ <span id="showBillDate" style="color: #73879C"></span>  เวลา <span id="billtime" style="color: #73879C"></span> น.
                                                     </div>
                                                     <div id="tablename"></div>
                                                     <div class="clearfix"></div>
@@ -290,12 +290,13 @@
             dataType: "json",
             success: function (result) {
                 $("#hiddenbillno").html(result.billNo);
-                $("#billdate").html(result.billDate);
-                $("#billtime").html(result.billTime);
                 $("#tablename").html(result.table.tableName);
                 $("#show_table_name").html(result.table.tableName);
-
-
+                var showDate = result.billDate.substr(8,2)+"/"+result.billDate.substr(5,2)+"/"+result.billDate.substr(0,4);
+                $("#showBillDate").html(showDate);
+                var showTime = result.billTime.substr(0,2)+":"+result.billTime.substr(3,2);
+                $("#billtime").html(showTime);
+                console.log(showDate);
                 var str = '';
                 price = 0;
                 var totalPerUnit = 0;
