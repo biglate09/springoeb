@@ -5,6 +5,7 @@ import com.springoeb.menu.model.Menu;
 import javax.persistence.*;
 import java.sql.Date;
 import java.sql.Time;
+import java.util.List;
 
 @Entity(name = "CustomerOrder")
 public class Order {
@@ -31,6 +32,8 @@ public class Order {
     @ManyToOne
     @JoinColumn(name = "menuNo",updatable = false,insertable = false)
     private Menu menu;
+    @OneToMany(fetch = FetchType.LAZY, mappedBy = "order")
+    private List<OrderAddOn> orderAddOnList;
 
     public static String RESERVED = "reserved";
     public static String WAITING = "waiting";
@@ -119,10 +122,22 @@ public class Order {
         this.time = time;
     }
 
+    public List<OrderAddOn> getOrderAddOnList() {
+        return orderAddOnList;
+    }
+
+    public void setOrderAddOnList(List<OrderAddOn> orderAddOnList) {
+        this.orderAddOnList = orderAddOnList;
+    }
+
     @Override
-    public String toString() {
-        return "Order{" +
-                menu.getMenuNameTH() + " : " + status + " โต๊ะ : " + bill.getTable().getTableName() +
-                '}';
+    public boolean equals(Object obj) {
+        boolean eq = false;
+        Order order = (Order)obj;
+
+        if(order.getMenuNo() == menuNo && order.getStatus() == status && order.getOrderAddOnList().containsAll(orderAddOnList)){
+            eq = true;
+        }
+        return eq;
     }
 }

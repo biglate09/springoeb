@@ -70,4 +70,14 @@ public class AddOn {
     public void setMenu(Menu menu) {
         this.menu = menu;
     }
+
+    @Override
+    public boolean equals(Object obj) {
+        boolean eq = false;
+        AddOn ao = (AddOn)obj;
+        if(addOnNo == ao.getAddOnNo()){
+            eq = true;
+        }
+        return eq;
+    }
 }
