@@ -595,22 +595,6 @@
                         }
 
                         //Table
-                        <%--var data_refresh = {--%>
-                        <%--menuName: '<p class="cardname col-md-12" style="text-align:center;font-weight:bold;white-space:nowrap;overflow:hidden;text-overflow: ellipsis;cursor:pointer;" data-toggle="modal" data-target="#editMenu" onclick="set_menu(' + menu.menuNo + ')">' + menu.menuNameTH + " / " + menu.menuNameEN + '</p>',--%>
-                        <%--branch: {--%>
-                        <%--display: menu.localFlag == 0 ? 'ทุกสาขา' : 'สาขาที่ ' + menu.localFlag,--%>
-                        <%--order: menu.localFlag--%>
-                        <%--},--%>
-                        <%--group: menu.menuGroup.menuGroupNameTH,--%>
-                        <%--menuPrice: {--%>
-                        <%--display: menu.menuPrice.toFixed(2).replace(/\B(?=(\d{3})+(?!\d))/g, ",") + " บาท",--%>
-                        <%--order: price_order--%>
-                        <%--},--%>
-                        <%--option: '<a onclick="change_available(' + menu.menuNo + ')" class="btn btn-info btn-sm"><i class="fa ' + (obj.available ? 'fa-check-square-o' : 'fa-square-o') + '"></i>&nbsp; พร้อมจำหน่าย </a>' +--%>
-                        <%--(menu.localFlag == 0 && ${branchUser.branchNo != Branch.MAIN_BRANCH} ? '' : ('<a onclick="set_menu(' + menu.menuNo + ')" class="btn btn-warning btn-sm" data-toggle="modal" data-target="#editMenu"><i class="fa fa-pencil"></i>&nbsp; แก้ไข </a>' +--%>
-                        <%--'<a onclick="del_menu(' + menu.menuNo + ',\'' + menu.menuNameTH + '\')" class="btn btn-danger btn-sm"> <i class="fa fa-trash"></i>&nbsp; ลบ</a>')),--%>
-                        <%--};--%>
-                        <%--data_array.push(data_refresh);--%>
                         var list = '\
                         <div class="col-md-12">\
                         <div class="thumbnail thumbnail_list">\
@@ -679,20 +663,6 @@
                                 price_order = "0" + price_order;
                             }
 
-                            <%--var data_refresh = {--%>
-                            <%--menuName: '<p class="cardname col-md-12" style="text-align:center;font-weight:bold;white-space:nowrap;overflow:hidden;text-overflow: ellipsis;cursor:pointer;" data-toggle="modal" data-target="#editMenu" onclick="set_menu(' + menu.menuNo + ')">' + menu.menuNameTH + " / " + menu.menuNameEN + '</p>',--%>
-                            <%--group: menu.menuGroup.menuGroupNameTH,--%>
-                            <%--branch: {--%>
-                            <%--display: menu.localFlag == 0 ? 'ทุกสาขา' : 'สาขาที่ ' + menu.localFlag,--%>
-                            <%--order: menu.localFlag--%>
-                            <%--},--%>
-                            <%--menuPrice: {--%>
-                            <%--display: menu.menuPrice.toFixed(2).replace(/\B(?=(\d{3})+(?!\d))/g, ",") + " บาท",--%>
-                            <%--order: price_order--%>
-                            <%--},--%>
-                            <%--option: (menu.localFlag != 0 && ${branchUser.branchNo == Branch.MAIN_BRANCH} ? '<a onclick="turn_official(' + menu.menuNo + ')" class="btn btn-primary btn-sm"><i class="fa fa-users"></i>&nbsp; ทำให้เป็นเมนูของทุกสาขา </a>' : '')--%>
-                            <%--};--%>
-                            <%--data_array.push(data_refresh);--%>
                             var list = '\
                             <div class="col-md-12">\
                             <div class="thumbnail thumbnail_inline_list">\

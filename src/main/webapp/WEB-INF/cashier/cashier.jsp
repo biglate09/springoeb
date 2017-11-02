@@ -104,7 +104,7 @@
                                                 </div>
                                             </div>
                                             </div>
-                                            <button onclick="printDiv('printableArea')" class="btn btn-success"><i class="fa fa-print" aria-hidden="true"></i> พิมพ์ใบเสร็จ</button>
+                                            <button onclick="printDiv('printableArea')" class="btn btn-success" style="margin-left: 40%"><i class="fa fa-print" aria-hidden="true"></i> พิมพ์ใบเสร็จ</button>
                                         </div>
                                         <div class="col-md-6 col-xs-12">
                                             <div class="x_panel">
@@ -116,19 +116,26 @@
                                                     <form class="form-horizontal form-label-left">
                                                         <div class="form-group">
                                                             <div class="col-md-9 col-sm-9 col-xs-12">
-                                                                <div class="radio">
-                                                                    <label>
-                                                                        <input type="radio" class="flat" name="iCheck"> โปรโมชั่น 1
+                                                                <div class="radio" style="height: 41px">
+                                                                    <label class="not_use_pro" >
+                                                                        <p class="not_use_pro"><input type="radio" class="flat not_use_pro" name="iCheck" checked> ไม่ใช้</p>
+                                                                    </label>
+                                                                </div>
+                                                                <div class="radio" >
+                                                                    <label class="selected_pro">
+                                                                        <input type="radio" class="flat selected_pro inline-label" name="iCheck" for="select_promotion">
+                                                                        <select name="promotion" id="select_promotion" class="form-control selected_pro" style="width: 220px;float: right;margin-left: 7px" disabled="disabled">
+                                                                            <option disabled selected value="">เลือกโปรโมชั่น</option>
+                                                                            <c:forEach items="${promotions}" var="p">
+                                                                                <option value="${p.promotionNo}" >${p.promotionNameTH} (ลดราคา ${p.discount} %)</option>
+                                                                            </c:forEach>
+                                                                        </select>
                                                                     </label>
                                                                 </div>
                                                                 <div class="radio">
-                                                                    <label>
-                                                                        <input type="radio" class="flat" name="iCheck"> โปรโมชั่น 2
-                                                                    </label>
-                                                                </div>
-                                                                <div class="radio">
-                                                                    <label class="inline-label">
-                                                                        <input type="radio" class="flat" name="iCheck" for="other"> อื่นๆ <input class="reset_field" type="number" id="other" style="width:100px;margin-left: 10px;margin-bottom: 9px">
+                                                                    <label class="inline-label selected_other">
+                                                                        <input type="radio" class="flat selected_other" name="iCheck" for="other"> อื่นๆ
+                                                                        <input class="reset_field selected_other" type="text" id="other" style="width:100px;margin-left: 10px;margin-bottom: 9px" disabled="disabled">
                                                                     </label>
                                                                 </div>
                                                             </div>
@@ -141,7 +148,7 @@
                                                             </div>
                                                             <div class="col-md-12 inline-label" for="receive">
                                                                 <label style="margin-left: 10%;">รับเงินมา</label>
-                                                                <input type="number" class="reset_field receive" id="receive" placeholder="0.00" style="width: 100px;margin-left: 35%;text-align: right"> บาท
+                                                                <input type="number" class="reset_field receive" id="receive" placeholder="0.00" step="0.01" style="width: 100px;margin-left: 35%;text-align: right"> บาท
                                                             </div>
                                                             <div class="col-md-12 inline-label" >
                                                                 <label class="inline-label" for="change" style="margin-left: 10%;color: crimson">ทอนเงิน </label>
@@ -161,9 +168,9 @@
                                     <div class="modal-footer">
                                         <!-- ปุ่มกดปิด (Close) ตรงส่วนล่างของ Modal -->
                                         <div class="col-md-9 col-sm-9 col-xs-12 col-md-offset-3">
-                                            <button  class="btn btn-success" style="font-size: initial;"><i class="fa fa-circle-o-notch fa-spin" id="loadingbtnedit" style="display:none"></i>
+                                            <button  class="btn btn-success" style="font-size: initial;"><i class="fa fa-circle-o-notch fa-spin" style="display:none"></i>
                                                 ตกลง</button>
-                                            <button type="button" class="btn btn-default" data-dismiss="modal" style="font-size: initial;" id="closeModal">
+                                            <button type="button" class="btn btn-default" style="font-size: initial" id="closeModal">
                                                 ยกเลิก
                                             </button>
                                         </div>
@@ -180,7 +187,24 @@
 </div>
 <jsp:include page="../_include/bottomenv.jsp"/>
 <script>
+    var price = 0;
+
     $(document).ready(function () {
+        $(".selected_pro , input:radio[class='selected_pro']").click(function () {
+            $(".selected_pro").attr("disabled",false);
+            $(".selected_other").attr("disabled",true);
+        });
+
+        $(".selected_other , input:radio[class='selected_other']").click(function () {
+            $(".selected_other").attr("disabled",false);
+            $(".selected_pro").attr("disabled",true);
+        });
+
+        $(".not_use_pro , input:radio[class='not_use_pro']").click(function () {
+            $(".selected_other").attr("disabled",true);
+            $(".selected_pro").attr("disabled",true);
+        });
+
         refresh_table()
     });
 
@@ -197,7 +221,25 @@
                 var data_array = [];
                 for (var i = 0; i < json.length; i++) {
                     var obj = json[i];
+                    var currentTime = new Date();
+                    curhours = currentTime.getHours();
+                    curmins = currentTime.getMinutes();
+                    cursec = currentTime.getSeconds();
+                    usedHours = parseInt(obj.billTime.substr(0,2));
+                    usedMins = parseInt(obj.billTime.substr(3,2));
+                    usedSecs = parseInt(obj.billTime.substr(6,2));
+                    hrs = curhours - usedHours;
+                    mins = curmins - usedMins;
+                    sec = cursec - usedSecs;
+                    times = ((Math.abs(hrs)*60)+Math.abs(mins))+" นาที";
+                    console.log(times)
                     console.log(json);
+                    price = 0;
+                    var totalPerUnit = 0;
+                    obj.orders.forEach(function (order) {
+                        totalPerUnit = order.quantity * order.amount;
+                        price += totalPerUnit;
+                    })
                     var div = '\
                         <div class="col-md-55">\
                         <div class="thumbnail thumbnail_inline">\
@@ -206,8 +248,8 @@
                         <div style="margin-left: auto;margin-right: auto;position: absolute;bottom:-14px;left: 50%;transform: translate(-50%, -50%);font-weight: bold; " class="cardname">' + obj.table.tableName + '</div>\
                         </div>\
                         <div class="caption col-md-12" style="color:#73879C">\
-                        <p class="col-md-12" style="white-space:nowrap;overflow:hidden;text-overflow: ellipsis;padding:0px;" >ใช้บริการมาแล้ว : ' + obj.billTime + ' นาที</p>\
-                        <p class="col-md-12" style="white-space: nowrap;overflow:hidden;text-overflow: ellipsis;padding:0px;">ราคาอาหาร : ' + obj.totalAmount + ' บาท</p>\
+                        <p class="col-md-12" style="white-space:nowrap;overflow:hidden;text-overflow: ellipsis;padding:0px;" >ใช้บริการมาแล้ว : ' + times +'</p>\
+                        <p class="col-md-12" style="white-space: nowrap;overflow:hidden;text-overflow: ellipsis;padding:0px;">ราคาอาหาร : ' + price + ' บาท</p>\
                         <p class="col-md-12" style="padding:0px;"> สถานะอาหาร : ครบแล้ว</p>\
                         <div style="text-align:center;" class="col-md-12"><button type="button" class="btn btn-success" data-toggle="modal" data-target="#cashier" \
                         style="width: 80%;" onclick="set_bill(' + obj.billNo + ')">จ่ายเงิน</button></div>\
@@ -219,7 +261,7 @@
                 }
                     $("#error_show").html('');
 
-                filterCard();
+                filterCard(); 
             }
         });
     }
@@ -231,6 +273,9 @@
     function reset_field() {
         $(".reset_field").val('');
         $(".flat").iCheck('uncheck');
+        $(".not_use_pro").iCheck('check');
+        $(".selected_pro").attr("disabled",true);
+        $(".selected_other").attr("disabled",true);
         $('.menu_lists').empty();
         $(".change").empty();
     }
@@ -246,19 +291,24 @@
                 $("#billtime").html(result.billTime);
                 $("#tablename").html(result.table.tableName);
                 $("#show_table_name").html(result.table.tableName);
-                $('.totalprice').html(result.totalAmount.toFixed(2));
+
 
                 var str = '';
-
+                price = 0;
+                var totalPerUnit = 0;
                 result.orders.forEach(function (order) {
+                    totalPerUnit = order.quantity * order.amount;
                     str += '<tr>' +
                         '<td class="quantity" style="width: 15%">' + order.quantity + '</td>' +
                         '<td class="menu" style="width: 65%">' + order.menu.menuNameTH + '</td>' +
-                    '<td class="price_all_unit" style="width: 20%;text-align: center;">' + order.amount + '</td>' +
+                    '<td class="price_all_unit" style="width: 20%;text-align: center;">' + (totalPerUnit).toFixed(2) + '</td>' +
                     '</tr>' ;
+
+                    price += totalPerUnit;
 
                     $('.menu_lists').html(str);
                 })
+                $('.totalprice').html(price.toFixed(2));
 
                 $(".receive").keyup(function () {
                     var total = $(".totalprice").html();
@@ -267,7 +317,20 @@
 
                     $(".change").html(change);
                 })
-
+//
+//                var dis = 0;
+//                $("input:radio[class='selected_other']").change(function () {
+//                    if ($("input:radio[class='selected_other']").is(":checked") == true){
+//                        console.log(alert("12334"));
+//                        if ($(this).val().substr(length()-1,1) == "%") {
+//                            dis = price * ( 100 - parseInt($(this).val()) ) / 100;
+//                        } else {
+//                            dis = price - parseInt($(this).val());
+//                        }
+//                        $('#promotion').html(dis);
+//                    }
+//
+//                })
             }
         });
     }
@@ -298,16 +361,13 @@
     function printDiv(divName) {
         var printContents = document.getElementById(divName).innerHTML;
         var originalContents = document.body.innerHTML;
-
         document.body.innerHTML = printContents;
-
         window.print();
-
         document.body.innerHTML = originalContents;
-
+//        location.reload(true);
     }
     $("#closeModal").click(function(){
-        $("#cashier").modal('hide');
+        $("#cashier").modal("hide");
     });
 </script>
 
