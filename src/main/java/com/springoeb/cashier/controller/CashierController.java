@@ -4,6 +4,7 @@ import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.springoeb.cashier.model.Bill;
 import com.springoeb.cashier.service.BillService;
+import com.springoeb.promotion.model.Promotion;
 import com.springoeb.promotion.service.PromotionService;
 import com.springoeb.system.model.BranchUser;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -24,9 +25,11 @@ public class CashierController {
     private BillService billService;
     //-----------------------------------------------------------------------------------------------------------//
     @GetMapping("/cashier")
-    public String toCashierIndex(Model model) {
-//        List<Promotion> promotions = promotionService.findAvailablePromotion();
-//        model.addAttribute("promotions",promotions);
+    public String toCashierIndex(Model model, HttpSession session) {
+        BranchUser branchUser = (BranchUser) (session.getAttribute("branchUser"));
+        int restNo = branchUser.getBranch().getRestNo();
+        List<Promotion> promotions = promotionService.findAvailablePromotion(restNo);
+        model.addAttribute("promotions",promotions);
         return CASHIER_PATH + "cashier.jsp";
     }
 
