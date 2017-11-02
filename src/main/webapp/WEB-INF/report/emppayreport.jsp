@@ -7,6 +7,7 @@
 <head>
     <jsp:include page="../_include/topenv.jsp"/>
     <title>ภาพรวมค่าจ้างพนักงาน</title>
+    <link href="${contextPath}/vendors/bootstrap-daterangepicker/daterangepicker.css" rel="stylesheet">
 </head>
 <body class="nav-md">
 <div class="container body">
@@ -22,36 +23,24 @@
             </div>
             <div class="clearfix"></div>
             <div class="row">
+
                 <div class="col-md-12 col-sm-12 col-xs-12">
                     <div class="x_panel">
                         <div class="x_title">
-                            <div class="col-md-7"><h2>ค่าจ้างพนักงาน</h2></div>
-                            <div class="col-md-2">
-                                <select name="year" class="form-control menuchange" id="empyear">
-                                    <option value="" disabled>ปี พ.ศ.</option>
-                                    <option value="0">ทุกปี</option>
-                                    <option value="2017">2560</option>
-                                </select>
+                            <div class="col-md-7"><h2>ภาพรวมค่าจ้างพนักงาน</h2></div>
+                            <div class="col-md-4">
+                                <div class="col-md-9" style="padding-right:0px;">
+                                    <input type="text" name="filterdate" id="filterdate"
+                                           class="form-control daterange" required
+                                           value="${minDateWorkHist} - ${maxDateWorkHist}">
+                                </div>
+                                <div class="input-group-btn">
+                                    <button class="btn btn-default"
+                                            type="submit" id="reportfilter">
+                                        <i class="glyphicon glyphicon-search fa fa-search"></i>
+                                    </button>
+                                </div>
                             </div>
-                            <div class="col-md-2">
-                                <select name="month" class="form-control menuchange" id="empmonth" disabled>
-                                    <option value="" disabled>เดือน</option>
-                                    <option value="0">ทุกเดือน</option>
-                                    <option value="1">มกราคม</option>
-                                    <option value="2">กุมภาพันธ์</option>
-                                    <option value="3">มีนาคม</option>
-                                    <option value="4">เมษายน</option>
-                                    <option value="5">พฤษภาคม</option>
-                                    <option value="6">มิถุนายน</option>
-                                    <option value="7">กรกฎาคม</option>
-                                    <option value="8">สิงหาคม</option>
-                                    <option value="9">กันยายน</option>
-                                    <option value="10">ตุลาคม</option>
-                                    <option value="11">พฤศจิกายน</option>
-                                    <option value="12">ธันวาคม</option>
-                                </select>
-                            </div>
-
                             <ul class="nav navbar-right panel_toolbox" style="min-width: 0px">
                                 <li><a class="collapse-link"><i class="fa fa-chevron-up right"></i></a>
                                 </li>
@@ -59,7 +48,9 @@
                             <div class="clearfix"></div>
                         </div>
                         <div class="x_content">
-                            <div id="echart_line_emppay" style="height:400px;"></div>
+                            <div id="container" style="height:400px;"></div>
+                            <div id="loading" style="position:absolute;top:50%;left:50%;transform:translate(-50%,-50%);"><i class="fa-li fa fa-spinner fa-spin"></i></div>
+                            <div id="null" style="display:none;position:absolute;top:50%;left:50%;transform:translate(-50%,-50%);z-index:99999;">ไม่พบข้อมูลจากเงื่อนไขที่ท่านค้นหา</div>
                         </div>
                     </div>
                 </div>
@@ -73,128 +64,115 @@
 <script src="${contextPath}/vendors/bootstrap-daterangepicker/daterangepicker.js"></script>
 <script type="text/javascript" src="http://echarts.baidu.com/gallery/vendors/echarts/echarts-all-3.js"></script>
 <script>
-    //echart Pie
-    //***********CONFIG BY BIGHEAD*************//
-    var limit_of_paid = 10;
-    var emp_data_legends = [];
-    var emp_data_series = [];
-    //***********CONFIG BY BIGHEAD*************//
+    var month_array = ['ม.ค.','ก.พ.','มี.ค.','ม.ย.','พ.ค.','มิ.ย.','ก.ค.','ส.ค.','ก.ย.','ต.ค.','พ.ย.','ธ.ค.'];
 
     $(document).ready(function () {
-        emppaid(0,0);
+        init_empreport('${minDateWorkHist}','${maxDateWorkHist}');
+        $(".daterange").daterangepicker();
     });
 
-    function emppaid(month, year) {
+    function init_empreport(fromDate, toDate) {
+        var count = 0;
+        var xAxisName = 'วันที่';
+        var xAxis_data = [];
+        var series_data = [];
+        if(fromDate.substr(6,4) != toDate.substr(6,4)){
+            xAxisName = 'ปี'
+        }else{
+            if(fromDate.substr(3,2) != toDate.substr(3,2)){
+                xAxisName = 'เดือน';
+            }else{
+                xAxisName = 'วันที่';
+            }
+        }
+        $("#loading").css('display', 'inline-block');
         $.ajax({
-            type: "POST",
+            type: "PUT",
             dataType: "json",
-            url: "${contextPath}/report/",
-            data: {month: month, year: year},
-            success: function (menuArray) {
-                var index = 0;
-                var break_loop = false;
-                for (var i = 0; i < menuArray.length; i++) { // loop menu
-                    var menu = menuArray[i];
-                    if (index < limit_of_paid) {
-                        for (key in menu) { // get key
-                            value = menu[key];
-                            if (value > 0) {
-                                //push into array for display
-                                emp_data_legends.push(key);
-                                emp_data_series.push({
-                                    name: key,
-                                    value: value
-                                });
-                                index++;
-                            } else {
-                                break_loop = true;
+            url: "${contextPath}/report/getempreport",
+            data: {fromDate: fromDate, toDate: toDate},
+            success: function (payArray) {
+                $("#loading").css('display', 'none');
+                for (key in payArray) {
+                    value = payArray[key];
+                    if(xAxisName == 'เดือน') {
+                        xAxis_data.push(month_array[key-1]);
+                    }else{
+                        xAxis_data.push(key);
+                    }
+                    series_data.push(value);
+                    count++;
+                }
+                var dom = document.getElementById("container");
+                var myChart = echarts.init(dom);
+                var app = {};
+                option = null;
+                option = {
+                    tooltip: {
+                        trigger: 'axis'
+                    },
+                    grid: {
+                        left: '3%',
+                        right: '4%',
+                        bottom: '3%',
+                        containLabel: true
+                    },
+                    toolbox: {
+                        show: true,
+                        feature: {
+                            mark: {show: true},
+                            dataView: {
+                                show: true,
+                                title: 'ดูข้อมูล',
+                                lang: ['ดูข้อมูล', 'ปิด', 'รีเฟรช']
+                            },
+                            saveAsImage: {
+                                show: true,
+                                title: 'บันทึกภาพ'
                             }
                         }
-                    } else {
-                        break_loop = true;
-                    }
-
-                    if (break_loop) {
-                        break;
-                    }
-                }
-                if ($('#echart_line_emppay').length ){
-
-                    var echartLine = echarts.init(document.getElementById('echart_line_emppay'));
-
-                    echartLine.setOption({
-                        tooltip: {
-                            trigger: 'axis'
-                        },
-                        legend: {
-                            x: 220,
-                            y: 40,
-                            data: emp_data_legends
-                        },
-                        toolbox: {
-                            show: true,
-                            feature: {
-                                magicType: {
-                                    show: true
-                                },
-                                dataView: {
-                                    show: true,
-                                    title: "ดูข้อมูล",
-                                    lang: ['ดูข้อมูล', 'ปิด', 'รีเฟรช']
-                                },
-                                saveAsImage: {
-                                    show: true,
-                                    title: "Save Image",
-                                    pixelRatio: 2
-                                }
-                            }
-                        },
-                        calculable: true,
-                        xAxis: [{
-                            type: 'category',
-                            boundaryGap: false,
-                            data: ['Mon', 'Tue', 'Wed', 'Thu', 'Fri', 'Sat', 'Sun']
-                        }],
-                        yAxis: [{
-                            type: 'value'
-                        }],
-                        series: [{
+                    },
+                    xAxis: {
+                        name: xAxisName,
+                        type: 'category',
+                        boundaryGap: false,
+                        data: xAxis_data
+                    },
+                    yAxis: {
+                        name: 'จำนวนเงิน (บาท)',
+                        type: 'value'
+                    },
+                    series: [
+                        {
                             name: 'ค่าจ้างพนักงาน',
                             type: 'line',
-                            smooth: true,
-                            itemStyle: {
-                                normal: {
-                                    areaStyle: {
-                                        type: 'default'
-                                    }
-                                }
-                            },
-                            data: emp_data_series
-                        }]
-                    });
+                            data: series_data
+                        }
+                    ]
+                };
+                
+                if (option && typeof option === "object") {
+                    myChart.setOption(option, true);
+                }
 
+                if (count == 0) {
+                    $("#null").css("display", "inline-block");
+                } else {
+                    $("#null").css("display", "none");
                 }
-                if (index == 0) {
-                    $("#echart_line_emppay").html("ไม่มีข้อมูลการขายเมนูเดี่ยว "+ $("#empmonth option:selected").text() + " " + $("#empyear option:selected").text());
-                }
+            },error : function(){
+                $("#loading").css('display','none');
+                swal("ผิดพลาด", "กรุณาลองใหม่อีกครั้ง", "error");
             }
         });
     }
-    $("#empyear").change(function(){
-        if($(this).val() == 0){
-            $("#empmonth").val(0);
-            $("#empmonth").attr('disabled',true);
-        }else{
-            $("#empmonth").attr('disabled',false);
-        }
-    });
 
-    $(".menuchange").change(function(){
-        year = $("#empyear").val();
-        month = $("#empmonth").val();
-        init_bestsalemenu(month,year);
-    });
+    //////////////////////////////////////////////////////////////
 
+    $("#reportfilter").click(function(){
+        $("#loading").css("display", "inline-block");
+        init_empreport($("#filterdate").val().substr(0,10),$("#filterdate").val().substr(13,10));
+    });
 </script>
 </body>
 </html>

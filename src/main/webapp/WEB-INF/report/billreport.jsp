@@ -30,13 +30,13 @@
                             <div class="col-md-7"><h2>รายได้ผลประกอบการ</h2></div>
                             <div class="col-md-4">
                                 <div class="col-md-9" style="padding-right:0px;">
-                                    <input type="text" name="filterdate" id="filterdate_menuset"
+                                    <input type="text" name="filterdate" id="filterdate"
                                            class="form-control daterange" required
                                            value="${minDateBill} - ${maxDateBill}">
                                 </div>
                                 <div class="input-group-btn">
                                     <button class="btn btn-default"
-                                            type="submit" id="menusetreportfilter">
+                                            type="submit" id="reportfilter">
                                         <i class="glyphicon glyphicon-search fa fa-search"></i>
                                     </button>
                                 </div>
@@ -49,6 +49,8 @@
                         </div>
                         <div class="x_content">
                             <div id="container" style="height:400px;"></div>
+                            <div id="loading" style="position:absolute;top:50%;left:50%;transform:translate(-50%,-50%);"><i class="fa-li fa fa-spinner fa-spin"></i></div>
+                            <div id="null" style="display:none;position:absolute;top:50%;left:50%;transform:translate(-50%,-50%);z-index:99999;">ไม่พบข้อมูลจากเงื่อนไขที่ท่านค้นหา</div>
                         </div>
                     </div>
                 </div>
@@ -73,6 +75,7 @@
         var xAxisName = 'วันที่';
         var xAxis_data = [];
         var series_data = [];
+        var count = 0;
         if(fromDate.substr(6,4) != toDate.substr(6,4)){
             xAxisName = 'ปี'
         }else{
@@ -89,7 +92,6 @@
             url: "${contextPath}/report/getbillreport",
             data: {fromDate: fromDate, toDate: toDate},
             success: function (billArray) {
-                console.log(billArray);
                 $("#loading").css('display', 'none');
                 for (key in billArray) {
                     value = billArray[key];
@@ -99,6 +101,7 @@
                         xAxis_data.push(key);
                     }
                     series_data.push(value);
+                    count++;
                 }
                 var dom = document.getElementById("container");
                 var myChart = echarts.init(dom);
@@ -147,13 +150,29 @@
                         }
                     ]
                 };
-                ;
+
                 if (option && typeof option === "object") {
                     myChart.setOption(option, true);
                 }
+
+                if (count == 0) {
+                    $("#null").css("display", "inline-block");
+                } else {
+                    $("#null").css("display", "none");
+                }
+            },error : function(){
+                $("#loading").css('display','none');
+                swal("ผิดพลาด", "กรุณาลองใหม่อีกครั้ง", "error");
             }
         });
     }
+
+    //////////////////////////////////////////////////////////////
+
+    $("#reportfilter").click(function(){
+        $("#loading").css("display", "inline-block");
+        init_billreport($("#filterdate").val().substr(0,10),$("#filterdate").val().substr(13,10));
+    });
 </script>
 </body>
 </html>

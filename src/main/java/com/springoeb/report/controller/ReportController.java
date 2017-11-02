@@ -4,6 +4,7 @@ import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.springoeb.cashier.service.BillService;
 import com.springoeb.cashier.service.OrderService;
+import com.springoeb.employee.service.WorkHistoryService;
 import com.springoeb.ledger.service.LedgerService;
 import com.springoeb.menu.service.BranchMenuService;
 import com.springoeb.report.model.IncomeExpenseBean;
@@ -31,6 +32,8 @@ public class ReportController {
     private OrderService orderService;
     @Autowired
     private BillService billService;
+    @Autowired
+    private WorkHistoryService workHistoryService;
     //-----------------------------------------------------------------------------------------------------------//
 
     @GetMapping("/menureport")
@@ -66,7 +69,15 @@ public class ReportController {
     }
 
     @GetMapping("/emppayreport")
-    public String toEmployeeReport() {
+    public String toEmployeeReport(HttpSession session,Model model) {
+        BranchUser branchUser = (BranchUser) (session.getAttribute("branchUser"));
+        int branchNo = branchUser.getBranchNo();
+        Date minDateWorkHist = workHistoryService.findMinWorkHistDateByBranchNo(branchNo);
+        Date maxDateWorkHist = workHistoryService.findMaxWorkHistDateByBranchNo(branchNo);
+        if(maxDateWorkHist != null && minDateWorkHist != null){
+            model.addAttribute("minDateWorkHist", new SimpleDateFormat("dd-MM-YYYY").format(minDateWorkHist));
+            model.addAttribute("maxDateWorkHist", new SimpleDateFormat("dd-MM-YYYY").format(maxDateWorkHist));
+        }
         return REPORT_PATH + "emppayreport.jsp";
     }
 
@@ -142,6 +153,19 @@ public class ReportController {
         Map<Integer,Double> totalIncome = billService.getBillReport(branchNo,fromDate,toDate);
         ObjectMapper mapper = new ObjectMapper();
         String json = mapper.writeValueAsString(totalIncome);
+        return json;
+    }
+
+    @ResponseBody
+    @PutMapping("/getempreport")
+    public String getEmpReport(HttpSession session, HttpServletRequest request) throws JsonProcessingException {
+        String fromDate = request.getParameter("fromDate");
+        String toDate = request.getParameter("toDate");
+        BranchUser branchUser = (BranchUser) (session.getAttribute("branchUser"));
+        int branchNo = branchUser.getBranchNo();
+        Map<Integer,Double> getEmpReport = workHistoryService.getEmpPayReport(branchNo,fromDate,toDate);
+        ObjectMapper mapper = new ObjectMapper();
+        String json = mapper.writeValueAsString(getEmpReport);
         return json;
     }
 

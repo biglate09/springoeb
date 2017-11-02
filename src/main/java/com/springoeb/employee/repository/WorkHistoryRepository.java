@@ -1,15 +1,13 @@
 package com.springoeb.employee.repository;
 
 import com.springoeb.employee.model.WorkHistory;
+import org.springframework.data.jpa.repository.Query;
 import org.springframework.data.repository.CrudRepository;
 import org.springframework.stereotype.Repository;
 
 import java.sql.Date;
 import java.util.List;
 
-/**
- * Created by bighead on 6/9/17.
- */
 @Repository
 public interface WorkHistoryRepository extends CrudRepository<WorkHistory,Integer>{
     WorkHistory findByWorkHistNoAndEmployee_BranchNo(int workHistNo, int branchNo);
@@ -20,4 +18,10 @@ public interface WorkHistoryRepository extends CrudRepository<WorkHistory,Intege
     List<WorkHistory> findByWorkDateBetween(Date d1, Date d2);
     List<WorkHistory> findByEmpNoAndWorkDateBetween(int empNo,Date d1, Date d2);
     void removeByWorkHistNoAndEmployee_BranchNo(int workHistNo,int branchNo);
+    @Query("select min(w.workDate) from WorkHistory w join w.employee e where e.branchNo = ?1")
+    Date findMinWorkHistDateByBranchNo(int branchNo);
+    @Query("select max(w.workDate) from WorkHistory w join w.employee e where e.branchNo = ?1")
+    Date findMaxWorkHistDateByBranchNo(int branchNo);
+    @Query("select sum(w.workPay) from WorkHistory w join w.employee e where e.branchNo = ?1 and w.workDate between ?2 and ?3")
+    Double sumWorkPayByBranchNoAndDateIsBetween(int branchNo, Date fromDate, Date toDate);
 }
