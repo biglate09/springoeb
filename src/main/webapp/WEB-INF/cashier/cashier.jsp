@@ -264,7 +264,7 @@
                 }
                     $("#error_show").html('');
 
-                filterCard();
+                filterCard(); 
             }
         });
     }
