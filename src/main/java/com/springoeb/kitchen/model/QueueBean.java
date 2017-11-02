@@ -1,24 +1,14 @@
 package com.springoeb.kitchen.model;
 
-import com.springoeb.cashier.model.Bill;
 import com.springoeb.cashier.model.OrderAddOn;
 import com.springoeb.menu.model.Menu;
 
 import java.util.List;
 
 public class QueueBean {
-    private List<Bill> bill;
     private List<OrderAddOn> addOns;
     private Menu menu;
     private String status;
-
-    public List<Bill> getBill() {
-        return bill;
-    }
-
-    public void setBill(List<Bill> bill) {
-        this.bill = bill;
-    }
 
     public List<OrderAddOn> getAddOns() {
         return addOns;

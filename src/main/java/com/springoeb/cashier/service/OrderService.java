@@ -6,6 +6,7 @@ import com.springoeb.cashier.model.Bill;
 import com.springoeb.cashier.model.Order;
 import com.springoeb.cashier.repository.OrderRepository;
 import com.springoeb.kitchen.model.QueueBean;
+import com.springoeb.kitchen.model.ValueBean;
 import com.springoeb.menu.model.Menu;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -21,38 +22,40 @@ public class OrderService {
     @Autowired
     private OrderRepository orderRepository;
 
-    public Map<String, Integer> getMonitorOrders(int branchNo) throws JsonProcessingException {
-        Map<QueueBean, Integer> queueBeans = null;
-        Map<String, Integer> jsonQueueBeans = null;
+    public Map<String, LinkedList<ValueBean>> getMonitorOrders(int branchNo) throws JsonProcessingException {
+        Map<QueueBean, LinkedList<ValueBean>> queueBeans = null;
+        Map<String, LinkedList<ValueBean>> jsonQueueBeans = null;
         List<String> status = new LinkedList<String>();
         status.add(Order.WAITING);
         status.add(Order.COOKING);
         status.add(Order.COOKED);
         List<Order> orders = orderRepository.findByBill_StatusAndStatusInAndBill_Table_BranchNoOrderByStatusDescOrderNoAsc(Bill.UNPAID, status, branchNo);
         if (orders != null && orders.size() > 0) {
-            queueBeans = new LinkedHashMap<QueueBean, Integer>();
+            queueBeans = new LinkedHashMap<QueueBean, LinkedList<ValueBean>>();
             for (Order o : orders) {
                 QueueBean qb = new QueueBean();
                 qb.setMenu(o.getMenu());
                 ////////////////////
                 LinkedList<Bill> bills = new LinkedList<Bill>();
                 bills.add(o.getBill());
-                qb.setBill(bills);
                 ////////////////////
                 qb.setStatus(o.getStatus());
                 qb.setAddOns(o.getOrderAddOnList());
 
-                Integer qty = queueBeans.get(qb);
+                LinkedList<ValueBean> valueBeans = queueBeans.get(qb);
+                ValueBean valueBean = new ValueBean();
+                valueBean.setTable(o.getBill().getTable());
+                valueBean.setQty(o.getQuantity());
 
-                if (qty != null) {
-                    queueBeans.put(qb, qty + o.getQuantity());
-                } else {
-                    queueBeans.put(qb, o.getQuantity());
+                if (valueBeans == null || valueBeans.size() == 0) {
+                    valueBeans = new LinkedList<ValueBean>();
                 }
+                valueBeans.add(valueBean);
+                queueBeans.put(qb, valueBeans);
             }
 
             if(queueBeans.size() != 0) {
-                jsonQueueBeans = new LinkedHashMap<String,Integer>();
+                jsonQueueBeans = new LinkedHashMap<String,LinkedList<ValueBean>>();
                 for (QueueBean qb : queueBeans.keySet()) {
                     ObjectMapper mapper = new ObjectMapper();
                     String json = mapper.writeValueAsString(qb);

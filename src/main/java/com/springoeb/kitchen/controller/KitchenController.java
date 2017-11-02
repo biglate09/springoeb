@@ -4,12 +4,14 @@ import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.springoeb.cashier.model.Order;
 import com.springoeb.cashier.service.OrderService;
+import com.springoeb.kitchen.model.ValueBean;
 import com.springoeb.system.model.BranchUser;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.*;
 
 import javax.servlet.http.HttpSession;
+import java.util.LinkedList;
 import java.util.List;
 import java.util.Map;
 
@@ -29,7 +31,7 @@ public class KitchenController {
     @PutMapping("/getmonitororders")
     public String getMonitorOrders(HttpSession session) throws JsonProcessingException {
         int branchNo = ((BranchUser) (session.getAttribute("branchUser"))).getBranchNo();
-        Map<String,Integer> orders = orderService.getMonitorOrders(branchNo);
+        Map<String,LinkedList<ValueBean>> orders = orderService.getMonitorOrders(branchNo);
         ObjectMapper mapper = new ObjectMapper();
         String json = mapper.writeValueAsString(orders);
         return json;
