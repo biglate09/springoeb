@@ -116,20 +116,26 @@
                                                     <form class="form-horizontal form-label-left">
                                                         <div class="form-group">
                                                             <div class="col-md-9 col-sm-9 col-xs-12">
-                                                                <div class="radio">
-                                                                    <label>
-                                                                        <input type="radio" class="flat selected_pro" name="iCheck" for="select_promotion">
-                                                                        <select name="promotion" id="select_promotion" class="form-control" style="width: 220px;">
+                                                                <div class="radio" style="height: 41px">
+                                                                    <label class="not_use_pro" >
+                                                                        <p class="not_use_pro"><input type="radio" class="flat not_use_pro" name="iCheck" checked> ไม่ใช้</p>
+                                                                    </label>
+                                                                </div>
+                                                                <div class="radio" >
+                                                                    <label class="selected_pro">
+                                                                        <input type="radio" class="flat selected_pro inline-label" name="iCheck" for="select_promotion">
+                                                                        <select name="promotion" id="select_promotion" class="form-control selected_pro" style="width: 220px;float: right;margin-left: 7px" disabled="disabled">
                                                                             <option disabled selected value="">เลือกโปรโมชั่น</option>
                                                                             <c:forEach items="${promotions}" var="p">
-                                                                                <option value="${p.promotionNo}">${p.promotionNameTH}</option>
+                                                                                <option value="${p.promotionNo}" dc="${p.discount}">${p.promotionNameTH} (ลดราคา ${p.discount} %)</option>
                                                                             </c:forEach>
                                                                         </select>
                                                                     </label>
                                                                 </div>
                                                                 <div class="radio">
-                                                                    <label class="inline-label">
-                                                                        <input type="radio" class="flat selected_other" name="iCheck" for="other"> อื่นๆ <input class="reset_field" type="number" id="other" style="width:100px;margin-left: 10px;margin-bottom: 9px">
+                                                                    <label class="inline-label selected_other">
+                                                                        <input type="radio" class="flat selected_other" name="iCheck" for="other"> อื่นๆ
+                                                                        <input class="reset_field selected_other" type="text" id="other" style="width:100px;margin-left: 10px;margin-bottom: 9px" disabled="disabled">
                                                                     </label>
                                                                 </div>
                                                             </div>
@@ -142,7 +148,7 @@
                                                             </div>
                                                             <div class="col-md-12 inline-label" for="receive">
                                                                 <label style="margin-left: 10%;">รับเงินมา</label>
-                                                                <input type="number" class="reset_field receive" id="receive" step="any" style="width: 100px;margin-left: 35%;text-align: right"> บาท
+                                                                <input type="number" class="reset_field receive" id="receive" placeholder="0.00" step="1.00" style="width: 100px;margin-left: 35%;text-align: right"> บาท
                                                             </div>
                                                             <div class="col-md-12 inline-label" >
                                                                 <label class="inline-label" for="change" style="margin-left: 10%;color: crimson">ทอนเงิน </label>
@@ -181,15 +187,26 @@
 </div>
 <jsp:include page="../_include/bottomenv.jsp"/>
 <script>
+    var price = 0;
+
     $(document).ready(function () {
         $(".selected_pro").click(function () {
-            $('#select_promotion').attr("disabled",false);
-            $('#other').attr("disabled",true);
+//            $(".not_use_pro[name='icheck']").iCheck('uncheck');
+            $('.selected_pro').iCheck('enable');
+            $(".selected_pro").attr("disabled",false);
+            $(".selected_other").attr("disabled",true);
         });
 
         $(".selected_other").click(function () {
-            $('#select_promotion').attr("disabled",true);
-            $('#other').attr("disabled",false);
+//            $(".not_use_pro[name='icheck']").iCheck('uncheck');
+            $('.selected_other').iCheck('enable');
+            $(".selected_other").attr("disabled",false);
+            $(".selected_pro").attr("disabled",true);
+        });
+
+        $(".not_use_pro , .not_use_pro[name='icheck']").click(function () {
+            $(".selected_other").attr("disabled",true);
+            $(".selected_pro").attr("disabled",true);
         });
 
         refresh_table()
@@ -209,6 +226,12 @@
                 for (var i = 0; i < json.length; i++) {
                     var obj = json[i];
                     console.log(json);
+                    price = 0;
+                    var totalPerUnit = 0;
+                    obj.orders.forEach(function (order) {
+                        totalPerUnit = order.quantity * order.amount;
+                        price += totalPerUnit;
+                    })
                     var div = '\
                         <div class="col-md-55">\
                         <div class="thumbnail thumbnail_inline">\
@@ -218,7 +241,7 @@
                         </div>\
                         <div class="caption col-md-12" style="color:#73879C">\
                         <p class="col-md-12" style="white-space:nowrap;overflow:hidden;text-overflow: ellipsis;padding:0px;" >ใช้บริการมาแล้ว : ' + obj.billTime + ' นาที</p>\
-                        <p class="col-md-12" style="white-space: nowrap;overflow:hidden;text-overflow: ellipsis;padding:0px;">ราคาอาหาร : ' + obj.totalAmount + ' บาท</p>\
+                        <p class="col-md-12" style="white-space: nowrap;overflow:hidden;text-overflow: ellipsis;padding:0px;">ราคาอาหาร : ' + price + ' บาท</p>\
                         <p class="col-md-12" style="padding:0px;"> สถานะอาหาร : ครบแล้ว</p>\
                         <div style="text-align:center;" class="col-md-12"><button type="button" class="btn btn-success" data-toggle="modal" data-target="#cashier" \
                         style="width: 80%;" onclick="set_bill(' + obj.billNo + ')">จ่ายเงิน</button></div>\
@@ -242,6 +265,9 @@
     function reset_field() {
         $(".reset_field").val('');
         $(".flat").iCheck('uncheck');
+        $(".not_use_pro").iCheck('check');
+        $(".selected_pro").attr("disabled",true);
+        $(".selected_other").attr("disabled",true);
         $('.menu_lists').empty();
         $(".change").empty();
     }
@@ -257,19 +283,24 @@
                 $("#billtime").html(result.billTime);
                 $("#tablename").html(result.table.tableName);
                 $("#show_table_name").html(result.table.tableName);
-                $('.totalprice').html(result.totalAmount.toFixed(2));
+
 
                 var str = '';
-
+                price = 0;
+                var totalPerUnit = 0;
                 result.orders.forEach(function (order) {
+                    totalPerUnit = order.quantity * order.amount;
                     str += '<tr>' +
                         '<td class="quantity" style="width: 15%">' + order.quantity + '</td>' +
                         '<td class="menu" style="width: 65%">' + order.menu.menuNameTH + '</td>' +
-                    '<td class="price_all_unit" style="width: 20%;text-align: center;">' + order.amount + '</td>' +
+                    '<td class="price_all_unit" style="width: 20%;text-align: center;">' + (totalPerUnit).toFixed(2) + '</td>' +
                     '</tr>' ;
+
+                    price += totalPerUnit;
 
                     $('.menu_lists').html(str);
                 })
+                $('.totalprice').html(price.toFixed(2));
 
                 $(".receive").keyup(function () {
                     var total = $(".totalprice").html();
@@ -278,6 +309,19 @@
 
                     $(".change").html(change);
                 })
+
+                var selected_option = $('.selected_other option:selected');
+                var discount = 0;
+                $("#other").keyup(function () {
+                    if (selected_option){
+                        if ( $(this).val().substr(length()-1,1) == "%") {
+                        discount = price * ( 100 - $(".selected_other").val() ) / 100;
+                        }
+                    }
+                    $('#promotion').html(discount);
+
+                })
+
 
             }
         });
