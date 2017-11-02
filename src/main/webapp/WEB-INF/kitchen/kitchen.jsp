@@ -107,7 +107,7 @@
 
                     var addon_str = "";
                     obj.addOns.forEach(function(addOn){
-                        addon_str += "(" + (addOn.addOn.materialItem.matItemName + " " + addOn.addOn.qty + " " + addOn.addOn.materialItem.unit.unitName) + ")";
+                        addon_str += " (" + (addOn.addOn.materialItem.matItemName + " " + addOn.addOn.qty + " " + addOn.addOn.materialItem.unit.unitName) + ")";
                     });
 
                     var data_refresh = {

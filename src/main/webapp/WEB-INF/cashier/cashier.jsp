@@ -116,11 +116,11 @@
                                                     <form class="form-horizontal form-label-left">
                                                         <div class="form-group">
                                                             <div class="col-md-9 col-sm-9 col-xs-12">
-                                                                <%--<div class="radio" style="height: 41px">--%>
+                                                                <div class="radio" style="height: 41px">
                                                                     <label class="radio not_use_pro" >
-                                                                        <p class="not_use_pro"><input type="radio" class="flat not_use_pro" name="iCheck" checked> ไม่ใช้</p>
+                                                                        <div class="not_use_pro"><input type="radio" class="flat not_use_pro" name="iCheck" checked> ไม่ใช้</div>
                                                                     </label>
-                                                                <%--</div>--%>
+                                                                </div>
                                                                 <div class="radio" >
                                                                     <label class="selected_pro">
                                                                         <input type="radio" class="flat selected_pro inline-label" name="iCheck" for="select_promotion">
