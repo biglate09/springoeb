@@ -8,6 +8,7 @@ import org.springframework.stereotype.Service;
 import javax.transaction.Transactional;
 import java.sql.Date;
 import java.util.Calendar;
+import java.util.LinkedList;
 import java.util.List;
 
 @Service
@@ -24,11 +25,14 @@ public class PromotionService {
     }
 
     public List<Promotion> findAvailablePromotion(int restNo){
-        String[] dayArray = {"MON","TUE","WED","THU","FRI","SAT","SUN"};
+        String[] dayArray = {"SUN","MON","TUE","WED","THU","FRI","SAT"};
         Calendar calendar = Calendar.getInstance();
         int day = calendar.get(Calendar.DAY_OF_WEEK);
+        List<String> days = new LinkedList<String>();
+        days.add("EVE");
+        days.add(dayArray[day-1]);
 
-        return promotionRepository.findByFromDateLessThanEqualAndToDateGreaterThanEqualAndDayAndRestNo(new Date(System.currentTimeMillis()),new Date(System.currentTimeMillis()), dayArray[day-1], restNo);
+        return promotionRepository.findByFromDateLessThanEqualAndToDateGreaterThanEqualAndDayInAndRestNo(new Date(System.currentTimeMillis()),new Date(System.currentTimeMillis()), days ,restNo);
     }
 
     public Promotion findByPromotionNo(int promotionNo){
