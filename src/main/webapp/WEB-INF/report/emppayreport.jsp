@@ -126,6 +126,7 @@
                                 title: 'ดูข้อมูล',
                                 lang: ['ดูข้อมูล', 'ปิด', 'รีเฟรช']
                             },
+                            magicType: {show: true, type: ['line', 'bar'],title: ['']},
                             saveAsImage: {
                                 show: true,
                                 title: 'บันทึกภาพ'

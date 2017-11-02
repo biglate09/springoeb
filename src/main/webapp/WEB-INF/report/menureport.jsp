@@ -269,6 +269,7 @@
                                 magicType: {
                                     show: true,
                                     type: ['pie', 'funnel'],
+                                    title: [''],
                                     option: {
                                         funnel: {
                                             x: '25%',
