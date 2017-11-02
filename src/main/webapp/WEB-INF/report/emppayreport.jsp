@@ -32,7 +32,7 @@
                                 <div class="col-md-9" style="padding-right:0px;">
                                     <input type="text" name="filterdate" id="filterdate"
                                            class="form-control daterange" required
-                                           value="${minDateWorkHist} - ${maxDateWorkHist}">
+                                           value="${minDateWorkHist != null ? minDateWorkHist : today} - ${maxDateWorkHist != null ? maxDateWorkHist : today}">
                                 </div>
                                 <div class="input-group-btn">
                                     <button class="btn btn-default"
@@ -67,7 +67,7 @@
     var month_array = ['ม.ค.','ก.พ.','มี.ค.','ม.ย.','พ.ค.','มิ.ย.','ก.ค.','ส.ค.','ก.ย.','ต.ค.','พ.ย.','ธ.ค.'];
 
     $(document).ready(function () {
-        init_empreport('${minDateWorkHist}','${maxDateWorkHist}');
+        init_empreport('${minDateWorkHist != null ? minDateWorkHist : today}','${maxDateWorkHist != null ? maxDateWorkHist : today}');
         $(".daterange").daterangepicker();
     });
 

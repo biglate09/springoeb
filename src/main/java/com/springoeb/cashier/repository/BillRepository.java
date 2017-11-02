@@ -12,7 +12,7 @@ import java.util.List;
 public interface BillRepository extends CrudRepository<Bill,Integer>{
     List<Bill> findByTable_BranchNo(int branchNo);
     Bill findByBillNo(int billNo);
-    @Query("select min(b.billDate) from Bill b join b.table t where t.branchNo = ?1 and b.status = ?2")
+    @Query("select min(b.billDate) from Bill b join b.table t where t.branchNo = ?1 and b.status = ?2 order by t.tableName asc")
     Date findMinDateByBranchNo(int branchNo,String status);
     @Query("select max(b.billDate) from Bill b join b.table t where t.branchNo = ?1 and b.status = ?2")
     Date findMaxDateByBranchNo(int branchNo,String status);

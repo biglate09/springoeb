@@ -150,6 +150,9 @@
                                     class="fa fa-money"></i> ระบบแคชเชียร์ </a>
                         </li>
                     </c:if>
+                    <li>
+                        <a href="${contextPath}/orderTest.jsp"><i class="fa fa-american-sign-language-interpreting"></i> Dummy สั่งอาหาร </a>
+                    </li>
                 </ul>
             </div>
         </div>

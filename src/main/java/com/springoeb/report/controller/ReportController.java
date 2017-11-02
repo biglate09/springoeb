@@ -52,6 +52,8 @@ public class ReportController {
             model.addAttribute("minDateMenuSet", new SimpleDateFormat("dd-MM-YYYY").format(minDateMenuSet));
             model.addAttribute("maxDateMenuSet", new SimpleDateFormat("dd-MM-YYYY").format(maxDateMenuSet));
         }
+
+        model.addAttribute("today", new SimpleDateFormat("dd-MM-YYYY").format(new Date()));
         return REPORT_PATH + "menureport.jsp";
     }
 
@@ -65,6 +67,7 @@ public class ReportController {
             model.addAttribute("minDateTotal", new SimpleDateFormat("dd-MM-YYYY").format(minDateTotal));
             model.addAttribute("maxDateTotal", new SimpleDateFormat("dd-MM-YYYY").format(maxDateTotal));
         }
+        model.addAttribute("today", new SimpleDateFormat("dd-MM-YYYY").format(new Date()));
         return REPORT_PATH + "totalincome.jsp";
     }
 
@@ -78,12 +81,8 @@ public class ReportController {
             model.addAttribute("minDateWorkHist", new SimpleDateFormat("dd-MM-YYYY").format(minDateWorkHist));
             model.addAttribute("maxDateWorkHist", new SimpleDateFormat("dd-MM-YYYY").format(maxDateWorkHist));
         }
+        model.addAttribute("today", new SimpleDateFormat("dd-MM-YYYY").format(new Date()));
         return REPORT_PATH + "emppayreport.jsp";
-    }
-
-    @GetMapping("/matreport")
-    public String toMaterialReport() {
-        return REPORT_PATH + "matreport.jsp";
     }
 
     @GetMapping("/billreport")
@@ -96,6 +95,7 @@ public class ReportController {
             model.addAttribute("minDateBill", new SimpleDateFormat("dd-MM-YYYY").format(minDateBill));
             model.addAttribute("maxDateBill", new SimpleDateFormat("dd-MM-YYYY").format(maxDateBill));
         }
+        model.addAttribute("today", new SimpleDateFormat("dd-MM-YYYY").format(new Date()));
         return REPORT_PATH + "billreport.jsp";
     }
 
