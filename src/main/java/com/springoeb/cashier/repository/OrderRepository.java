@@ -13,6 +13,7 @@ public interface OrderRepository extends CrudRepository<Order,Integer>{
     List<Order> findByBill_StatusAndStatusInAndBill_Table_BranchNoOrderByStatusDescOrderNoAsc(String status,List<String> orderStatus,int branchNo);
     Order findByOrderNo(int orderNo);
     void removeByOrderNo(int orderNo);
+    void removeByOrderNo(List<Integer> orderNo);
     @Query("select sum(o.quantity) from CustomerOrder o where o.menuNo = ?1 and status = ?2")
     Long sumByMenuNo(int menuNo,String servedStatus);
     @Query("select sum(o.quantity) from CustomerOrder o where o.menuNo = ?1 and o.date between ?2 and ?3 and status = ?4")

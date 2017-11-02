@@ -73,7 +73,7 @@
     function refresh_table() {
         $.ajax({
             type: "PUT",
-            url: "${contextPath}/kitchen/getorders",
+            url: "${contextPath}/kitchen/getcheforders",
             dataType: "json",
             success: function (json) {
                 console.log(json);
