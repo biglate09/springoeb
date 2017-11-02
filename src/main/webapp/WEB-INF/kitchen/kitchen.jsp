@@ -80,7 +80,7 @@
             ]
         });
         refresh_table();
-//        setInterval(refresh_table, 5000);
+//        setInterval(refresh_table, 10000);
     });
 
     function refresh_table() {
@@ -94,10 +94,15 @@
                     var obj = JSON.parse(key);
                     var vals = json[key];
                     var table_str = "";
+                    var orderNo = "";
                     var qty = 0;
                     vals.forEach(function(val){
                         table_str += val.table.tableName + " (" + val.qty + " ที่)<br>";
                         qty += val.qty;
+                        if(orderNo != ""){
+                            orderNo += ",";
+                        }
+                        orderNo += val.orderNo;
                     });
                     var data_refresh = {
                         menuName: obj.menu.menuNameTH,
@@ -108,10 +113,10 @@
                                 obj.status == 'cooking' ? ' กำลังปรุงอาหาร' :
                                     obj.status == 'ready' ? 'ปรุงอาหารเสร็จแล้ว' : '' ),
 
-                        status: (obj.status == 'reserved' ? '<a onclick="change_status(' + obj.orderNo + ')" class="btn btn-secondary"><i class="fa fa-circle-o-notch fa-spin" id="loadingbtn" style="display:none"></i> จองไว้แล้ว</a>' :
-                            obj.status == 'waiting' ? '<a onclick="change_status(' + obj.orderNo + ')" class="btn btn-default"><i class="fa fa-circle-o-notch fa-spin" id="loadingbtn" style="display:none"></i> ปรุงอาหาร</a>' :
-                                obj.status == 'cooking' ? '<a onclick="change_status(' + obj.orderNo + ')" class="btn btn-primary"><i class="fa fa-circle-o-notch fa-spin" id="loadingbtn" style="display:none"></i> ปรุงสำเร็จ</a>' : '' ) +
-                        '<a onclick="cancel_menu(' + obj.orderNo + ')" class="btn btn-danger">ยกเลิกเมนู</a>'
+                        status: (obj.status == 'reserved' ? '<a onclick="change_status(\'' + orderNo + '\')" class="btn btn-secondary"><i class="fa fa-circle-o-notch fa-spin" id="loading'+orderNo+'" style="display:none"></i> จองไว้แล้ว</a>' :
+                            obj.status == 'waiting' ? '<a onclick="change_status(\'' + orderNo + '\')" class="btn btn-default"><i class="fa fa-circle-o-notch fa-spin" id="loading'+orderNo+'" style="display:none"></i> ปรุงอาหาร</a>' :
+                                obj.status == 'cooking' ? '<a onclick="change_status(\'' + orderNo + '\')" class="btn btn-primary"><i class="fa fa-circle-o-notch fa-spin" id="loading'+orderNo+'" style="display:none"></i> ปรุงสำเร็จ</a>' : '' ) +
+                        '<a onclick="cancel_menu(\'' + orderNo + '\')" class="btn btn-danger">ยกเลิกเมนู</a>'
                     };
                     data_array.push(data_refresh);
                 }
@@ -125,17 +130,13 @@
     }
 
     function change_status(orderNo) {
-        $('#loadingbtn').show();
+        $('#loading'+orderNo).show();
         $.ajax({
             type: "POST",
             url: "${contextPath}/kitchen/changestatus/" + orderNo,
-            dataType: "json",
             success: function (result) {
-                $('#loadingbtn').hide();
                 refresh_table();
-            }, error: function (result) {
-                $('#loadingbtn').hide();
-                refresh_table()
+//                $('#loading'+orderNo).hide();
             }
         });
     }

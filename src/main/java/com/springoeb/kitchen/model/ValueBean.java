@@ -5,6 +5,7 @@ import com.springoeb.table.model.Table;
 public class ValueBean {
     private Table table;
     private Integer qty;
+    private Integer orderNo;
 
     public Table getTable() {
         return table;
@@ -20,5 +21,13 @@ public class ValueBean {
 
     public void setQty(Integer qty) {
         this.qty = qty;
+    }
+
+    public Integer getOrderNo() {
+        return orderNo;
+    }
+
+    public void setOrderNo(Integer orderNo) {
+        this.orderNo = orderNo;
     }
 }

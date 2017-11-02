@@ -22,13 +22,15 @@ public class OrderService {
     @Autowired
     private OrderRepository orderRepository;
 
-    public Map<String, LinkedList<ValueBean>> getMonitorOrders(int branchNo) throws JsonProcessingException {
+    public Map<String, LinkedList<ValueBean>> getMonitorOrders(int branchNo,boolean forChef) throws JsonProcessingException {
         Map<QueueBean, LinkedList<ValueBean>> queueBeans = null;
         Map<String, LinkedList<ValueBean>> jsonQueueBeans = null;
         List<String> status = new LinkedList<String>();
         status.add(Order.WAITING);
         status.add(Order.COOKING);
-        status.add(Order.COOKED);
+        if(!forChef) {
+            status.add(Order.COOKED);
+        }
         List<Order> orders = orderRepository.findByBill_StatusAndStatusInAndBill_Table_BranchNoOrderByStatusDescOrderNoAsc(Bill.UNPAID, status, branchNo);
         if (orders != null && orders.size() > 0) {
             queueBeans = new LinkedHashMap<QueueBean, LinkedList<ValueBean>>();
@@ -46,6 +48,7 @@ public class OrderService {
                 ValueBean valueBean = new ValueBean();
                 valueBean.setTable(o.getBill().getTable());
                 valueBean.setQty(o.getQuantity());
+                valueBean.setOrderNo(o.getOrderNo());
 
                 if (valueBeans == null || valueBeans.size() == 0) {
                     valueBeans = new LinkedList<ValueBean>();
@@ -81,8 +84,16 @@ public class OrderService {
         orderRepository.removeByOrderNo(orderNo);
     }
 
+    public void removeByOrderNo(List<Integer> orderNo) {
+        orderRepository.removeByOrderNo(orderNo);
+    }
+
     public void save(Order order) {
         orderRepository.save(order);
+    }
+
+    public void save(List<Order> orders) {
+        orderRepository.save(orders);
     }
 
     public Date findMinMenuOrderDateByBranchNo(int branchNo) {
