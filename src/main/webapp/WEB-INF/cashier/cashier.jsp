@@ -141,7 +141,7 @@
                                                             </div>
                                                             <div class="col-md-12 inline-label" for="receive">
                                                                 <label style="margin-left: 10%;">รับเงินมา</label>
-                                                                <input type="number" class="reset_field receive" id="receive" placeholder="0.00" style="width: 100px;margin-left: 35%;text-align: right"> บาท
+                                                                <input type="number" class="reset_field receive" id="receive" step="any" style="width: 100px;margin-left: 35%;text-align: right"> บาท
                                                             </div>
                                                             <div class="col-md-12 inline-label" >
                                                                 <label class="inline-label" for="change" style="margin-left: 10%;color: crimson">ทอนเงิน </label>
