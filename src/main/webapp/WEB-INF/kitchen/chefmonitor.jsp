@@ -67,7 +67,7 @@
             ]
         });
         refresh_table();
-        setInterval(refresh_table, 5000);
+//        setInterval(refresh_table, 5000);
     });
 
     function refresh_table() {
@@ -78,18 +78,29 @@
             success: function (json) {
                 console.log(json);
                 var data_array = [];
-                for (var i = 0; i < json.length; i++) {
-                    var obj = json[i];
-                    var amountOrder = obj.quantity + "";
-                    for (var j = amountOrder.length; j < 10; j++) {
-                        if (status = "waiting"){
-                            amountOrder += amountOrder;
+                for (var key in json) {
+                    var obj = JSON.parse(key);
+                    var vals = json[key];
+                    var table_str = "";
+                    var orderNo = "";
+                    var qty = 0;
+                    vals.forEach(function(val){
+                        table_str += val.table.tableName + " (" + val.qty + " ที่)<br>";
+                        qty += val.qty;
+                        if(orderNo != ""){
+                            orderNo += ",";
                         }
-                        amountOrder = "0" + amountOrder;
-                    }
+                        orderNo += val.orderNo;
+                    });
+
+                    var addon_str = "";
+                    obj.addOns.forEach(function(addOn){
+                        addon_str += "(" + (addOn.addOn.materialItem.matItemName + " " + addOn.addOn.qty + " " + addOn.addOn.materialItem.unit.unitName) + ")";
+                    });
+
                     var data_refresh = {
-                        menuName: '<p style="font-weight: bold;text-align: left;">' + obj.menu.menuNameTH + '</p>',
-                        amount: obj.quantity + " จาน",
+                        menuName: '<p style="font-weight: bold;text-align: left;">' + obj.menu.menuNameTH + " " + addon_str + '</p>',
+                        amount: qty + " ที่",
                         status: (obj.status == 'waiting' ? ('<img src="../images/ordered.png" style="width: 100px;height: auto;">') : ('<img src="../images/cooking.png" style="width: 100px;height: auto;">'))
                     };
                     data_array.push(data_refresh);
@@ -107,7 +118,7 @@
             url: "${contextPath}/kitchen/changestatus/" + orderNo,
             dataType: "json",
             success: function (result) {
-                swal("ออเดอร์เปลี่ยนสถานะเป็น "+ status + " แล้ว", "success");
+                swal("ออเดอร์เปลี่ยนสถานะเป็น " + status + " แล้ว", "success");
                 refresh_table();
             }
         });
@@ -116,7 +127,7 @@
     function cancel_menu(orderNo, status) {
         swal({
                 title: "ยืนยันการยกเลิกออเดอร์ที่ " + orderNo,
-                text: "เมื่อยืนยัน ออเดอร์ที่ "+ orderNo +" ของโต๊ะ " + tableName + " จะถูกยกเลิก",
+                text: "เมื่อยืนยัน ออเดอร์ที่ " + orderNo + " ของโต๊ะ " + tableName + " จะถูกยกเลิก",
                 type: "warning",
                 showCancelButton: true,
                 confirmButtonColor: "#DD6B55",
