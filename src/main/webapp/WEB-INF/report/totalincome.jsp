@@ -34,7 +34,7 @@
                                 <div class="col-md-9" style="padding-right:0px;">
                                     <input type="text" id="filterdate"
                                            class="form-control daterange" required
-                                           value="${minDateTotal != null ? minDateTotal : 'ไม่พบข้อมูลในการค้นหา'} ${minDateTotal != null ? " - " : ''} ${maxDateTotal != null ? maxDateTotal : ''}">
+                                           value="${minDateTotal != null ? minDateTotal : today} - ${maxDateTotal != null ? maxDateTotal : today}">
                                 </div>
                                 <div class="input-group-btn">
                                     <button class="btn btn-default"
@@ -72,7 +72,7 @@
     $(document).ready(function () {
         $(".daterange").daterangepicker();
         var d = new Date();
-        init_totalincome("${minDateTotal}", "${maxDateTotal}");
+        init_totalincome("${minDateTotal != null ? minDateTotal : today}", "${maxDateTotal != null ? maxDateTotal : today}");
     });
 
     function init_totalincome(fromDate, toDate) {
