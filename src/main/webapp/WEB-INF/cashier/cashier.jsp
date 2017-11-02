@@ -197,12 +197,18 @@
                 var data_array = [];
                 for (var i = 0; i < json.length; i++) {
                     var obj = json[i];
-                    var currentTime = Date.now();
-                    h = currentTime.getHours();
-                    m = currentTime.getMinutes();
-                    s = currentTime.getSeconds();
-                    console.log(h);
-                    var usedTime = currentTime - obj.billTime;
+                    var currentTime = new Date();
+                    curhours = currentTime.getHours();
+                    curmins = currentTime.getMinutes();
+                    cursec = currentTime.getSeconds();
+                    usedHours = parseInt(obj.billTime.substr(0,2));
+                    usedMins = parseInt(obj.billTime.substr(3,2));
+                    usedSecs = parseInt(obj.billTime.substr(6,2));
+                    hrs = curhours - usedHours;
+                    mins = curmins - usedMins;
+                    sec = cursec - usedSecs;
+                    times = ((Math.abs(hrs)*60)+Math.abs(mins))+" นาที";
+                    console.log(times)
                     console.log(json);
                     var div = '\
                         <div class="col-md-55">\
@@ -212,7 +218,7 @@
                         <div style="margin-left: auto;margin-right: auto;position: absolute;bottom:-14px;left: 50%;transform: translate(-50%, -50%);font-weight: bold; " class="cardname">' + obj.table.tableName + '</div>\
                         </div>\
                         <div class="caption col-md-12" style="color:#73879C">\
-                        <p class="col-md-12" style="white-space:nowrap;overflow:hidden;text-overflow: ellipsis;padding:0px;" >ใช้บริการมาแล้ว : ' + usedTime + ' นาที</p>\
+                        <p class="col-md-12" style="white-space:nowrap;overflow:hidden;text-overflow: ellipsis;padding:0px;" >ใช้บริการมาแล้ว : ' + times +'</p>\
                         <p class="col-md-12" style="white-space: nowrap;overflow:hidden;text-overflow: ellipsis;padding:0px;">ราคาอาหาร : ' + obj.totalAmount + ' บาท</p>\
                         <p class="col-md-12" style="padding:0px;"> สถานะอาหาร : ครบแล้ว</p>\
                         <div style="text-align:center;" class="col-md-12"><button type="button" class="btn btn-success" data-toggle="modal" data-target="#cashier" \
