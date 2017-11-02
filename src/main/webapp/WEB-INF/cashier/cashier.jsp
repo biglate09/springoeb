@@ -127,7 +127,7 @@
                                                                         <select name="promotion" id="select_promotion" class="form-control selected_pro" style="width: 220px;float: right;margin-left: 7px" disabled="disabled">
                                                                             <option disabled selected value="">เลือกโปรโมชั่น</option>
                                                                             <c:forEach items="${promotions}" var="p">
-                                                                                <option value="${p.promotionNo}" dc="${p.discount}">${p.promotionNameTH} (ลดราคา ${p.discount} %)</option>
+                                                                                <option value="${p.promotionNo}" >${p.promotionNameTH} (ลดราคา ${p.discount} %)</option>
                                                                             </c:forEach>
                                                                         </select>
                                                                     </label>
@@ -148,7 +148,7 @@
                                                             </div>
                                                             <div class="col-md-12 inline-label" for="receive">
                                                                 <label style="margin-left: 10%;">รับเงินมา</label>
-                                                                <input type="number" class="reset_field receive" id="receive" placeholder="0.00" step="1.00" style="width: 100px;margin-left: 35%;text-align: right"> บาท
+                                                                <input type="number" class="reset_field receive" id="receive" placeholder="0.00" step="0.01" style="width: 100px;margin-left: 35%;text-align: right"> บาท
                                                             </div>
                                                             <div class="col-md-12 inline-label" >
                                                                 <label class="inline-label" for="change" style="margin-left: 10%;color: crimson">ทอนเงิน </label>
@@ -190,21 +190,17 @@
     var price = 0;
 
     $(document).ready(function () {
-        $(".selected_pro").click(function () {
-//            $(".not_use_pro[name='icheck']").iCheck('uncheck');
-            $('.selected_pro').iCheck('enable');
+        $(".selected_pro , input:radio[class='selected_pro']").click(function () {
             $(".selected_pro").attr("disabled",false);
             $(".selected_other").attr("disabled",true);
         });
 
-        $(".selected_other").click(function () {
-//            $(".not_use_pro[name='icheck']").iCheck('uncheck');
-            $('.selected_other').iCheck('enable');
+        $(".selected_other , input:radio[class='selected_other']").click(function () {
             $(".selected_other").attr("disabled",false);
             $(".selected_pro").attr("disabled",true);
         });
 
-        $(".not_use_pro , .not_use_pro[name='icheck']").click(function () {
+        $(".not_use_pro , input:radio[class='not_use_pro']").click(function () {
             $(".selected_other").attr("disabled",true);
             $(".selected_pro").attr("disabled",true);
         });
@@ -309,20 +305,20 @@
 
                     $(".change").html(change);
                 })
-
-                var selected_option = $('.selected_other option:selected');
-                var discount = 0;
-                $("#other").keyup(function () {
-                    if (selected_option){
-                        if ( $(this).val().substr(length()-1,1) == "%") {
-                        discount = price * ( 100 - $(".selected_other").val() ) / 100;
-                        }
-                    }
-                    $('#promotion').html(discount);
-
-                })
-
-
+//
+//                var dis = 0;
+//                $("input:radio[class='selected_other']").change(function () {
+//                    if ($("input:radio[class='selected_other']").is(":checked") == true){
+//                        console.log(alert("12334"));
+//                        if ($(this).val().substr(length()-1,1) == "%") {
+//                            dis = price * ( 100 - parseInt($(this).val()) ) / 100;
+//                        } else {
+//                            dis = price - parseInt($(this).val());
+//                        }
+//                        $('#promotion').html(dis);
+//                    }
+//
+//                })
             }
         });
     }
