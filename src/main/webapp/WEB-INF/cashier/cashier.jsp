@@ -104,7 +104,7 @@
                                                 </div>
                                             </div>
                                             </div>
-                                            <button onclick="printDiv('printableArea')" class="btn btn-success"><i class="fa fa-print" aria-hidden="true"></i> พิมพ์ใบเสร็จ</button>
+                                            <button onclick="printDiv('printableArea')" class="btn btn-success" style="margin-left: 40%"><i class="fa fa-print" aria-hidden="true"></i> พิมพ์ใบเสร็จ</button>
                                         </div>
                                         <div class="col-md-6 col-xs-12">
                                             <div class="x_panel">
@@ -161,9 +161,9 @@
                                     <div class="modal-footer">
                                         <!-- ปุ่มกดปิด (Close) ตรงส่วนล่างของ Modal -->
                                         <div class="col-md-9 col-sm-9 col-xs-12 col-md-offset-3">
-                                            <button  class="btn btn-success" style="font-size: initial;"><i class="fa fa-circle-o-notch fa-spin" id="loadingbtnedit" style="display:none"></i>
+                                            <button  class="btn btn-success" style="font-size: initial;"><i class="fa fa-circle-o-notch fa-spin" style="display:none"></i>
                                                 ตกลง</button>
-                                            <button type="button" class="btn btn-default" data-dismiss="modal" style="font-size: initial;" id="closeModal">
+                                            <button type="button" class="btn btn-default" style="font-size: initial" id="closeModal">
                                                 ยกเลิก
                                             </button>
                                         </div>
@@ -197,6 +197,12 @@
                 var data_array = [];
                 for (var i = 0; i < json.length; i++) {
                     var obj = json[i];
+                    var currentTime = Date.now();
+                    h = currentTime.getHours();
+                    m = currentTime.getMinutes();
+                    s = currentTime.getSeconds();
+                    console.log(h);
+                    var usedTime = currentTime - obj.billTime;
                     console.log(json);
                     var div = '\
                         <div class="col-md-55">\
@@ -206,7 +212,7 @@
                         <div style="margin-left: auto;margin-right: auto;position: absolute;bottom:-14px;left: 50%;transform: translate(-50%, -50%);font-weight: bold; " class="cardname">' + obj.table.tableName + '</div>\
                         </div>\
                         <div class="caption col-md-12" style="color:#73879C">\
-                        <p class="col-md-12" style="white-space:nowrap;overflow:hidden;text-overflow: ellipsis;padding:0px;" >ใช้บริการมาแล้ว : ' + obj.billTime + ' นาที</p>\
+                        <p class="col-md-12" style="white-space:nowrap;overflow:hidden;text-overflow: ellipsis;padding:0px;" >ใช้บริการมาแล้ว : ' + usedTime + ' นาที</p>\
                         <p class="col-md-12" style="white-space: nowrap;overflow:hidden;text-overflow: ellipsis;padding:0px;">ราคาอาหาร : ' + obj.totalAmount + ' บาท</p>\
                         <p class="col-md-12" style="padding:0px;"> สถานะอาหาร : ครบแล้ว</p>\
                         <div style="text-align:center;" class="col-md-12"><button type="button" class="btn btn-success" data-toggle="modal" data-target="#cashier" \
@@ -298,16 +304,13 @@
     function printDiv(divName) {
         var printContents = document.getElementById(divName).innerHTML;
         var originalContents = document.body.innerHTML;
-
         document.body.innerHTML = printContents;
-
         window.print();
-
         document.body.innerHTML = originalContents;
-
+//        location.reload(true);
     }
     $("#closeModal").click(function(){
-        $("#cashier").modal('hide');
+        $("#cashier").modal("hide");
     });
 </script>
 
