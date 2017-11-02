@@ -1,34 +1,73 @@
 package com.springoeb.cashier.service;
 
+import com.fasterxml.jackson.core.JsonProcessingException;
+import com.fasterxml.jackson.databind.ObjectMapper;
 import com.springoeb.cashier.model.Bill;
 import com.springoeb.cashier.model.Order;
 import com.springoeb.cashier.repository.OrderRepository;
+import com.springoeb.kitchen.model.QueueBean;
 import com.springoeb.menu.model.Menu;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import java.sql.Date;
+import java.util.LinkedHashMap;
 import java.util.LinkedList;
 import java.util.List;
+import java.util.Map;
 
 @Service
 public class OrderService {
     @Autowired
     private OrderRepository orderRepository;
 
-    public List<Order> getMonitorOrders(int branchNo) {
+    public Map<String, Integer> getMonitorOrders(int branchNo) throws JsonProcessingException {
+        Map<QueueBean, Integer> queueBeans = null;
+        Map<String, Integer> jsonQueueBeans = null;
         List<String> status = new LinkedList<String>();
         status.add(Order.WAITING);
         status.add(Order.COOKING);
         status.add(Order.COOKED);
-        return orderRepository.findByBill_StatusAndStatusInAndBill_Table_BranchNoOrderByStatusDescOrderNoAsc(Bill.UNPAID,status,branchNo);
+        List<Order> orders = orderRepository.findByBill_StatusAndStatusInAndBill_Table_BranchNoOrderByStatusDescOrderNoAsc(Bill.UNPAID, status, branchNo);
+        if (orders != null && orders.size() > 0) {
+            queueBeans = new LinkedHashMap<QueueBean, Integer>();
+            for (Order o : orders) {
+                QueueBean qb = new QueueBean();
+                qb.setMenu(o.getMenu());
+                ////////////////////
+                LinkedList<Bill> bills = new LinkedList<Bill>();
+                bills.add(o.getBill());
+                qb.setBill(bills);
+                ////////////////////
+                qb.setStatus(o.getStatus());
+                qb.setAddOns(o.getOrderAddOnList());
+
+                Integer qty = queueBeans.get(qb);
+
+                if (qty != null) {
+                    queueBeans.put(qb, qty + o.getQuantity());
+                } else {
+                    queueBeans.put(qb, o.getQuantity());
+                }
+            }
+
+            if(queueBeans.size() != 0) {
+                jsonQueueBeans = new LinkedHashMap<String,Integer>();
+                for (QueueBean qb : queueBeans.keySet()) {
+                    ObjectMapper mapper = new ObjectMapper();
+                    String json = mapper.writeValueAsString(qb);
+                    jsonQueueBeans.put(json,queueBeans.get(qb));
+                }
+            }
+        }
+        return jsonQueueBeans;
     }
 
     public List<Order> getChefOrders(int branchNo) {
         List<String> status = new LinkedList<String>();
         status.add(Order.WAITING);
         status.add(Order.COOKING);
-        return orderRepository.findByBill_StatusAndStatusInAndBill_Table_BranchNoOrderByStatusDescOrderNoAsc(Bill.UNPAID,status,branchNo);
+        return orderRepository.findByBill_StatusAndStatusInAndBill_Table_BranchNoOrderByStatusDescOrderNoAsc(Bill.UNPAID, status, branchNo);
     }
 
     public Order findByOrderNo(int orderNo) {
@@ -43,19 +82,19 @@ public class OrderService {
         orderRepository.save(order);
     }
 
-    public Date findMinMenuOrderDateByBranchNo(int branchNo){
+    public Date findMinMenuOrderDateByBranchNo(int branchNo) {
         return orderRepository.findMinOrderDateByBranchNo(branchNo, Menu.flagForMenu);
     }
 
-    public Date findMaxMenuOrderDateByBranchNo(int branchNo){
+    public Date findMaxMenuOrderDateByBranchNo(int branchNo) {
         return orderRepository.findMaxOrderDateByBranchNo(branchNo, Menu.flagForMenu);
     }
 
-    public Date findMinMenuSetOrderDateByBranchNo(int branchNo){
+    public Date findMinMenuSetOrderDateByBranchNo(int branchNo) {
         return orderRepository.findMinOrderDateByBranchNo(branchNo, Menu.flagForMenuSet);
     }
 
-    public Date findMaxMenuSetOrderDateByBranchNo(int branchNo){
+    public Date findMaxMenuSetOrderDateByBranchNo(int branchNo) {
         return orderRepository.findMaxOrderDateByBranchNo(branchNo, Menu.flagForMenuSet);
     }
 }

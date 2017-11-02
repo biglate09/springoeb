@@ -11,6 +11,7 @@ import org.springframework.web.bind.annotation.*;
 
 import javax.servlet.http.HttpSession;
 import java.util.List;
+import java.util.Map;
 
 @RequestMapping("/kitchen")
 @Controller
@@ -28,7 +29,7 @@ public class KitchenController {
     @PutMapping("/getmonitororders")
     public String getMonitorOrders(HttpSession session) throws JsonProcessingException {
         int branchNo = ((BranchUser) (session.getAttribute("branchUser"))).getBranchNo();
-        List<Order> orders = orderService.getMonitorOrders(branchNo);
+        Map<String,Integer> orders = orderService.getMonitorOrders(branchNo);
         ObjectMapper mapper = new ObjectMapper();
         String json = mapper.writeValueAsString(orders);
         return json;
