@@ -35,10 +35,10 @@
                                     <thead>
                                     <tr>
                                         <th class="table-rows" style="width: 30%">ชื่ออาหาร</th>
-                                        <th class="table-rows" style="width: 10%">โต๊ะที่สั่ง</th>
+                                        <th class="table-rows" style="width: 20%">โต๊ะที่สั่ง</th>
                                         <th class="table-rows" style="width: 10%">จำนวน</th>
                                         <th class="table-rows" style="width: 20%">สถานะอาหาร</th>
-                                        <th class="table-rows" style="width: 30%">ตัวเลือก</th>
+                                        <th class="table-rows" style="width: 20%">ตัวเลือก</th>
                                     </tr>
                                     </thead>
                                     <tbody style="text-align:center;">
@@ -57,9 +57,9 @@
 <script>
     $(document).ready(function () {
         $("#datatable_kitchen_status").DataTable({
-            order: [[3, "asc"]],
+            order: [[4, "asc"]],
             columnDefs: [
-                { orderable: false, targets: '_all' }
+                {orderable: false, targets: '_all'}
             ],
             columns: [
                 {
@@ -80,7 +80,7 @@
             ]
         });
         refresh_table();
-        setInterval(refresh_table, 5000);
+//        setInterval(refresh_table, 5000);
     });
 
     function refresh_table() {
@@ -90,28 +90,27 @@
             dataType: "json",
             success: function (json) {
                 var data_array = [];
-                for (var i = 0; i < json.length; i++) {
-                    var obj = json[i];
-                    var amountOrder = obj.quantity + "";
-                    for (var j = amountOrder.length; j < 10; j++) {
-                        if (status = "waiting"){
-                            amountOrder += amountOrder;
-                        }
-                        amountOrder = "0" + amountOrder;
-                    }
+                for (var key in json) {
+                    var obj = JSON.parse(key);
+                    var vals = json[key];
+                    var table_str = "";
+                    var qty = 0;
+                    vals.forEach(function(val){
+                        table_str += val.table.tableName + " (" + val.qty + " ที่)<br>";
+                        qty += val.qty;
+                    });
                     var data_refresh = {
-                        menuName: obj.menu.menuNameTH ,
-                        tableName: obj.bill.table.tableName + " (" + obj.quantity + " จาน)",
-                        amount: obj.quantity + " จาน",
+                        menuName: obj.menu.menuNameTH,
+                        tableName: table_str,
+                        amount: qty + " ที่",
                         currentStatus: (obj.status == 'reserved' ? 'จองไว้แล้ว' :
                             obj.status == 'waiting' ? 'เมนูที่ได้รับมา' :
                                 obj.status == 'cooking' ? ' กำลังปรุงอาหาร' :
                                     obj.status == 'ready' ? 'ปรุงอาหารเสร็จแล้ว' : '' ),
 
                         status: (obj.status == 'reserved' ? '<a onclick="change_status(' + obj.orderNo + ')" class="btn btn-secondary"><i class="fa fa-circle-o-notch fa-spin" id="loadingbtn" style="display:none"></i> จองไว้แล้ว</a>' :
-                         obj.status == 'waiting' ? '<a onclick="change_status(' + obj.orderNo + ')" class="btn btn-default"><i class="fa fa-circle-o-notch fa-spin" id="loadingbtn" style="display:none"></i> เมนูที่ได้รับมา</a>' :
-                         obj.status == 'cooking' ? '<a onclick="change_status(' + obj.orderNo + ')" class="btn btn-primary"><i class="fa fa-circle-o-notch fa-spin" id="loadingbtn" style="display:none"></i> กำลังปรุงอาหาร</a>' :
-                         obj.status == 'ready' ? '<a onclick="change_status(' + obj.orderNo + ')" class="btn btn-success"><i class="fa fa-circle-o-notch fa-spin" id="loadingbtn" style="display:none"></i> ปรุงอาหารเสร็จแล้ว</a>' : '' )+
+                            obj.status == 'waiting' ? '<a onclick="change_status(' + obj.orderNo + ')" class="btn btn-default"><i class="fa fa-circle-o-notch fa-spin" id="loadingbtn" style="display:none"></i> ปรุงอาหาร</a>' :
+                                obj.status == 'cooking' ? '<a onclick="change_status(' + obj.orderNo + ')" class="btn btn-primary"><i class="fa fa-circle-o-notch fa-spin" id="loadingbtn" style="display:none"></i> ปรุงสำเร็จ</a>' : '' ) +
                         '<a onclick="cancel_menu(' + obj.orderNo + ')" class="btn btn-danger">ยกเลิกเมนู</a>'
                     };
                     data_array.push(data_refresh);
@@ -119,7 +118,7 @@
 
                 $("#datatable_kitchen_status").DataTable().clear();
                 $("#datatable_kitchen_status").DataTable().rows.add(data_array).draw(false);
-            },error: function (json) {
+            }, error: function (json) {
                 swal("การเชื่อมต่อถูกตัดขาด", "กรุณาเช็คสัญญาณอินเทอร์เน็ต", "error");
             }
         });
@@ -134,7 +133,7 @@
             success: function (result) {
                 $('#loadingbtn').hide();
                 refresh_table();
-            },error : function(result){
+            }, error: function (result) {
                 $('#loadingbtn').hide();
                 refresh_table()
             }
@@ -144,7 +143,7 @@
     function cancel_menu(orderNo) {
         swal({
                 title: "ยืนยันการยกเลิกออเดอร์ที่ " + orderNo,
-                text: "เมื่อยืนยัน ออเดอร์ที่ "+ orderNo +" ของโต๊ะ " + tableName + " จะถูกยกเลิก",
+                text: "เมื่อยืนยัน ออเดอร์ที่ " + orderNo + " ของโต๊ะ " + tableName + " จะถูกยกเลิก",
                 type: "warning",
                 showCancelButton: true,
                 confirmButtonColor: "#DD6B55",
