@@ -4,14 +4,14 @@
 <!DOCTYPE html>
 <html>
 <head>
-    <jsp:include page="WEB-INF/_include/topenv.jsp"/>
+    <jsp:include page="topenv.jsp"/>
     <title>ตำแหน่งพนักงาน</title>
 
 </head>
 <body class="nav-md">
 <div class="container body">
     <div class="main_container">
-        <jsp:include page="WEB-INF/_include/navbar.jsp"/>
+        <jsp:include page="navbar.jsp"/>
 
         <!-- page content -->
         <div class="right_col" role="main">
@@ -94,6 +94,6 @@
         <!-- /page content -->
     </div>
 </div>
-<jsp:include page="WEB-INF/_include/bottomenv.jsp"/>
+<jsp:include page="bottomenv.jsp"/>
 </body>
 </html>

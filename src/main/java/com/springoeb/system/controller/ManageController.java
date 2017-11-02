@@ -193,6 +193,11 @@ public class ManageController {
         return target;
     }
 
+    @GetMapping("/dummyorder")
+    public String dummyorder(HttpSession session, HttpServletRequest request, HttpServletResponse response) {
+        return "/WEB-INF/_include/orderTest.jsp";
+    }
+
     @Transactional
     @PostMapping("/registerempprocess/{empNo}")
     @ResponseBody

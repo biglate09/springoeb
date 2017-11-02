@@ -151,7 +151,7 @@
                         </li>
                     </c:if>
                     <li>
-                        <a href="${contextPath}/orderTest.jsp"><i class="fa fa-american-sign-language-interpreting"></i> Dummy สั่งอาหาร </a>
+                        <a href="${contextPath}/system/dummyorder"><i class="fa fa-american-sign-language-interpreting"></i> Dummy สั่งอาหาร </a>
                     </li>
                 </ul>
             </div>
