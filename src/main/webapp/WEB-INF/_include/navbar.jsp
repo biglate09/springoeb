@@ -144,7 +144,6 @@
                         </li>
                     </c:if>
                     <c:if test="${branchUser.roleNo == Role.MANAGER || branchUser.roleNo == Role.CASHIER}">
-
                         <li>
                             <a href="${contextPath}/cashier/cashier"><i
                                     class="fa fa-money"></i> ระบบแคชเชียร์ </a>
@@ -178,7 +177,7 @@
                 <li class="">
                     <a href="javascript:;" class="user-profile dropdown-toggle" data-toggle="dropdown"
                        aria-expanded="false">
-                        <img src="${contextPath}/images/img.png" alt=""> <span style="color:white">ยินดีต้อนรับ ${branchUser.role.roleName} ของสาขา${branchUser.branch.branchName} (สาขาที่ ${branchUser.branch.branchNo})</span>
+                        <img src="${contextPath}/images/img.png" alt=""> <span style="color:white">ยินดีต้อนรับ, ${branchUser.role.roleName} ของสาขา${branchUser.branch.branchName} (สาขาที่ ${branchUser.branch.branchNo})</span>
                          <span class=" fa fa-angle-down" style="color:white"></span>
                     </a>
                     <ul class="dropdown-menu dropdown-usermenu pull-right">
