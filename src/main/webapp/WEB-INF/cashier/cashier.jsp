@@ -116,15 +116,15 @@
                                                     <form class="form-horizontal form-label-left">
                                                         <div class="form-group">
                                                             <div class="col-md-9 col-sm-9 col-xs-12">
-                                                                <div class="radio" style="height: 41px">
-                                                                    <label class="not_use_pro" >
+                                                                <%--<div class="radio" style="height: 41px">--%>
+                                                                    <label class="radio not_use_pro" >
                                                                         <p class="not_use_pro"><input type="radio" class="flat not_use_pro" name="iCheck" checked> ไม่ใช้</p>
                                                                     </label>
-                                                                </div>
+                                                                <%--</div>--%>
                                                                 <div class="radio" >
                                                                     <label class="selected_pro">
                                                                         <input type="radio" class="flat selected_pro inline-label" name="iCheck" for="select_promotion">
-                                                                        <select name="promotion" id="select_promotion" class="form-control selected_pro" style="width: 220px;float: right;margin-left: 7px" disabled="disabled">
+                                                                        <select name="promotion" id="select_promotion" class="form-control selected_pro" style="width: 220px;float: right;margin-left: 7px" >
                                                                             <option disabled selected value="">เลือกโปรโมชั่น</option>
                                                                             <c:forEach items="${promotions}" var="p">
                                                                                 <option value="${p.promotionNo}" >${p.promotionNameTH} (ลดราคา ${p.discount} %)</option>
@@ -135,7 +135,7 @@
                                                                 <div class="radio">
                                                                     <label class="inline-label selected_other">
                                                                         <input type="radio" class="flat selected_other" name="iCheck" for="other"> อื่นๆ
-                                                                        <input class="reset_field selected_other" type="text" id="other" style="width:100px;margin-left: 10px;margin-bottom: 9px" disabled="disabled">
+                                                                        <input class="reset_field selected_other" type="text" id="other" style="width:100px;margin-left: 10px;margin-bottom: 9px" >
                                                                     </label>
                                                                 </div>
                                                             </div>
@@ -291,6 +291,8 @@
                 $("#billtime").html(result.billTime);
                 $("#tablename").html(result.table.tableName);
                 $("#show_table_name").html(result.table.tableName);
+                $(".selected_pro").attr("disabled",true);
+                $(".selected_other").attr("disabled",true);
 
 
                 var str = '';
