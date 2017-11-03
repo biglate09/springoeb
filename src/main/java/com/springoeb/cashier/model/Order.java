@@ -10,6 +10,7 @@ import java.util.List;
 @Entity(name = "CustomerOrder")
 public class Order {
     @Id
+    @GeneratedValue(strategy = GenerationType.AUTO)
     @Column(name = "orderNo")
     private Integer orderNo;
     @Column(name = "quantity")

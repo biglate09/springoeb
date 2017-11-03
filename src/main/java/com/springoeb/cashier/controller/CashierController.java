@@ -12,6 +12,7 @@ import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
 
+import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpSession;
 import java.util.List;
 
@@ -53,5 +54,14 @@ public class CashierController {
         return json;
     }
 
+    @ResponseBody
+    @PostMapping("/checkbill/{billNo}")
+    public void checkBill(@PathVariable("billNo") int billNo, HttpServletRequest request){
+        Bill bill = billService.findByBillNo(billNo);
+        Double totalAmount = Double.parseDouble(request.getParameter("totalAmount"));
+        bill.setTotalAmount(totalAmount);
+        bill.setStatus(Bill.PAID);
+        billService.save(bill);
+    }
     //-----------------------------------------------------------------------------------------------------------//
 }

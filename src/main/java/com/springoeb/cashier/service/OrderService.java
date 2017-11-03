@@ -88,8 +88,8 @@ public class OrderService {
         orderRepository.removeByOrderNo(orderNo);
     }
 
-    public void save(Order order) {
-        orderRepository.save(order);
+    public Order save(Order order) {
+        return orderRepository.save(order);
     }
 
     public void save(List<Order> orders) {

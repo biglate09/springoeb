@@ -11,6 +11,7 @@ import java.util.List;
 @Entity(name = "Bill")
 public class Bill {
     @Id
+    @GeneratedValue(strategy = GenerationType.AUTO)
     @Column(name = "billNo")
     private Integer billNo;
     @Column(name = "totalAmount")

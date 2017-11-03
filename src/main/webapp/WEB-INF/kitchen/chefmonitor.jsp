@@ -67,7 +67,7 @@
             ]
         });
         refresh_table();
-//        setInterval(refresh_table, 5000);
+//        setInterval(refresh_table, 15000);
     });
 
     function refresh_table() {
@@ -95,7 +95,7 @@
 
                     var addon_str = "";
                     obj.addOns.forEach(function(addOn){
-                        addon_str += "(" + (addOn.addOn.materialItem.matItemName + " " + addOn.addOn.qty + " " + addOn.addOn.materialItem.unit.unitName) + ")";
+                        addon_str += "<br>+ " + (addOn.addOn.materialItem.matItemName + " " + addOn.addOn.qty + " " + addOn.addOn.materialItem.unit.unitName);
                     });
 
                     var data_refresh = {

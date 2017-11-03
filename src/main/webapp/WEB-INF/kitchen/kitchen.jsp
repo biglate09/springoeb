@@ -50,7 +50,7 @@
                 </div>
                 <!-- Modal Content (cancel menu)-->
                 <div class="modal fade" id="cancelmenu" role="dialog">
-                    <div class="modal-dialog modal-sm">
+                    <div class="modal-dialog">
                         <!-- เนือหาของ Modal ทั้งหมด -->
                         <div class="modal-content">
                             <!-- ส่วนหัวของ Modal -->
@@ -127,7 +127,7 @@
             ]
         });
         refresh_table();
-//        setInterval(refresh_table, 10000);
+//        setInterval(refresh_table, 15000);
     });
 
     function refresh_table() {
@@ -151,7 +151,6 @@
                         }
                         orderNo += val.orderNo;
                     });
-
                     var addon_str = "";
                     obj.addOns.forEach(function(addOn){
                         addon_str += "<br>+ " + (addOn.addOn.materialItem.matItemName + " " + addOn.addOn.qty + " " + addOn.addOn.materialItem.unit.unitName);

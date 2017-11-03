@@ -6,6 +6,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import java.sql.Date;
+import java.sql.Time;
 import java.util.LinkedHashMap;
 import java.util.List;
 import java.util.Map;
@@ -16,7 +17,7 @@ public class BillService {
     private BillRepository billRepository;
 
     public List<Bill> findByTable_BranchNo(int branchNo) {
-        return billRepository.findByTable_BranchNo(branchNo);
+        return billRepository.findByTable_BranchNoAndStatus(branchNo,Bill.UNPAID);
     }
 
     public Bill findByBillNo(int billNo) {
@@ -68,5 +69,18 @@ public class BillService {
         }
 
         return billMap;
+    }
+
+    public void save(Bill b){
+        billRepository.save(b);
+    }
+
+    public Bill createNewBill(int tableNo){
+        Bill bill = new Bill();
+        bill.setBillDate(new Date(System.currentTimeMillis()));
+        bill.setBillTime(new Time(System.currentTimeMillis()));
+        bill.setTableNo(tableNo);
+        bill.setStatus(Bill.UNPAID);
+        return billRepository.save(bill);
     }
 }

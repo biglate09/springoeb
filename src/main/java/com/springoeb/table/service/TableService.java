@@ -15,6 +15,9 @@ public class TableService {
     public List<Table> getTables(int branchNo){
         return tableRepository.findByBranchNo(branchNo);
     }
+    public List<Table> getTablesAvailable(int branchNo){
+        return tableRepository.findByBranchNoAndIsAvailable(branchNo,true);
+    }
     public void save(Table table){
         tableRepository.save(table);
     }

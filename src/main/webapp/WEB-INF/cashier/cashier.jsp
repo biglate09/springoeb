@@ -41,7 +41,7 @@
                                 <div id="menu_thumbnail">
                                 </div>
                                 <div id="error_show"></div>
-                                </form>
+                            </form>
                         </div>
                     </div>
                     <div class="modal fade" id="cashier" role="dialog">
@@ -56,124 +56,186 @@
                                     </h3>
                                 </div>
                                 <!-- ส่วนเนื้อหาของ Modal -->
-                                <div class="modal-body" >
+                                <div class="modal-body">
                                     <form class="form-horizontal form-label-left input_mask" id="paybill">
-                                    <input type="hidden" name="billNo" id="hiddenbillno">
-                                    <div class="row">
-                                        <div class="col-md-6 col-xs-12">
-                                            <div id="printableArea">
-                                            <div class="x_panel">
-                                                <div class="x_title">
-                                                    <div style="text-align: center;font-size: larger">ใบเสร็จรับเงิน</div>
-                                                    <div style="text-align: center;font-size: larger">${branchUser.branch.restaurant.restName} ${branchUser.branch.branchName}</div>
-                                                    <div style="text-align: center;">
-                                                        วันที่ <span id="showBillDate" style="color: #73879C"></span>  เวลา <span id="billtime" style="color: #73879C"></span> น.
+                                        <input type="hidden" name="billNo" id="hiddenbillno">
+                                        <div class="row">
+                                            <div class="col-md-6 col-xs-12">
+                                                <div id="printableArea">
+                                                    <div class="x_panel">
+                                                        <div class="x_title">
+                                                            <div style="text-align: center;font-size: larger">
+                                                                ใบเสร็จรับเงิน
+                                                            </div>
+                                                            <div style="text-align: center;font-size: larger">${branchUser.branch.restaurant.restName} ${branchUser.branch.branchName}</div>
+                                                            <div style="text-align: center;">
+                                                                วันที่ <span id="showBillDate"
+                                                                             style="color: #73879C"></span> เวลา <span
+                                                                    id="billtime" style="color: #73879C"></span> น.
+                                                            </div>
+                                                            <div id="tablename"></div>
+                                                            <div class="clearfix"></div>
+                                                        </div>
+                                                        <div class="x_content">
+                                                            <form class="form-horizontal form-label-left">
+                                                                <div class="form-group">
+                                                                    <table style="width: 100%">
+                                                                        <thead>
+                                                                        <tr>
+                                                                            <td style="width: 15%;">จำนวน</td>
+                                                                            <td style="width: 65%;text-align: center;">
+                                                                                รายการอาหาร
+                                                                            </td>
+                                                                            <td style="width: 20%;text-align: center;">
+                                                                                ราคา
+                                                                            </td>
+                                                                        </tr>
+                                                                        </thead>
+                                                                        <tbody class="menu_lists">
+                                                                        </tbody>
+                                                                    </table>
+                                                                </div>
+                                                                <div class="ln_solid"></div>
+                                                                <div class="form-group">
+                                                                    <div class="col-md-12 col-sm-12 col-xs-12">
+                                                                        <label class="inline-label"
+                                                                               for="price">ยอดสุทธิ </label>
+                                                                        <div id="price"
+                                                                             style="margin-right: 5%;text-align: right">
+                                                                            <span class="totalprice"></span> บาท
+                                                                        </div>
+                                                                    </div>
+                                                                    <div class="col-md-12 inline-label">
+                                                                        <label class="inline-label" for="change_bill">ทอนเงิน </label>
+                                                                        <div id="change_bill"
+                                                                             style="margin-right: 5%;text-align: right">
+                                                                            <span class="change"></span> บาท
+                                                                        </div>
+                                                                    </div>
+                                                                    <div class="col-md-12 col-sm-12 col-xs-12"
+                                                                         id="promotion"></div>
+                                                                    <div class="col-md-12 col-sm-12 col-xs-12"
+                                                                         style="text-align: center">****
+                                                                        ขอบคุณที่ใช้บริการ ****
+                                                                    </div>
+                                                                </div>
+                                                            </form>
+                                                        </div>
                                                     </div>
-                                                    <div id="tablename"></div>
-                                                    <div class="clearfix"></div>
                                                 </div>
-                                                <div class="x_content">
-                                                    <form class="form-horizontal form-label-left">
-                                                        <div class="form-group">
-                                                            <table style="width: 100%">
-                                                                <thead>
-                                                                <tr>
-                                                                    <td style="width: 15%;">จำนวน</td>
-                                                                    <td style="width: 65%;text-align: center;">รายการอาหาร</td>
-                                                                    <td style="width: 20%;text-align: center;">ราคา</td>
-                                                                </tr>
-                                                                </thead>
-                                                                <tbody class="menu_lists">
-                                                                </tbody>
-                                                            </table>
-                                                        </div>
-                                                        <div class="ln_solid"></div>
-                                                        <div class="form-group">
-                                                            <div class="col-md-12 col-sm-12 col-xs-12">
-                                                                <label class="inline-label" for="price">ยอดสุทธิ </label>
-                                                                <div id="price" style="margin-right: 5%;text-align: right"><span class="totalprice"></span> บาท</div>
-                                                            </div>
-                                                            <div class="col-md-12 inline-label" >
-                                                                <label class="inline-label" for="change_bill">ทอนเงิน </label>
-                                                                <div id="change_bill" style="margin-right: 5%;text-align: right"><span class="change"></span> บาท</div>
-                                                            </div>
-                                                            <div class="col-md-12 col-sm-12 col-xs-12" id="promotion"></div>
-                                                            <div class="col-md-12 col-sm-12 col-xs-12" style="text-align: center">**** ขอบคุณที่ใช้บริการ ****</div>
-                                                        </div>
-                                                    </form>
-                                                </div>
+                                                <button onclick="printDiv('printableArea')" class="btn btn-success"
+                                                        style="margin-left: 40%"><i class="fa fa-print"
+                                                                                    aria-hidden="true"></i> พิมพ์ใบเสร็จ
+                                                </button>
                                             </div>
-                                            </div>
-                                            <button onclick="printDiv('printableArea')" class="btn btn-success" style="margin-left: 40%"><i class="fa fa-print" aria-hidden="true"></i> พิมพ์ใบเสร็จ</button>
-                                        </div>
-                                        <div class="col-md-6 col-xs-12">
-                                            <div class="x_panel">
-                                                <div class="x_title">
-                                                    <h4>โปรโมชั่น</h4>
-                                                    <div class="clearfix"></div>
-                                                </div>
-                                                <div class="x_content">
-                                                    <form class="form-horizontal form-label-left">
-                                                        <div class="form-group">
-                                                            <div class="col-md-9 col-sm-9 col-xs-12">
-                                                                <div class="radio">
-                                                                    <label class="not_use_pro" >
-                                                                        <p class="not_use_pro"><input type="radio" class="flat not_use_pro" name="iCheck" checked> ไม่ใช้</p>
-                                                                    </label>
-                                                                </div>
-                                                                <div class="radio">
-                                                                    <label class="selected_pro">
-                                                                        <input type="radio" class="flat selected_pro inline-label" name="iCheck" for="select_promotion">
-                                                                        <select name="promotion" id="select_promotion" class="form-control selected_pro" style="width: 220px;float: right;margin-left: 7px">
-                                                                            <option disabled selected value="">เลือกโปรโมชั่น</option>
-                                                                            <c:forEach items="${promotions}" var="p">
-                                                                                <option value="${p.promotionNo}" >${p.promotionNameTH} (ลดราคา ${p.discount} %)</option>
-                                                                            </c:forEach>
-                                                                        </select>
-                                                                    </label>
-                                                                </div>
-                                                                <div class="radio">
-                                                                    <label class="inline-label selected_other">
-                                                                        <input type="radio" class="flat selected_other" name="iCheck" for="other"> อื่นๆ
-                                                                        <input class="reset_field selected_other" type="text" id="other" style="width:100px;margin-left: 10px;margin-bottom: 9px">
-                                                                    </label>
+                                            <div class="col-md-6 col-xs-12">
+                                                <div class="x_panel">
+                                                    <div class="x_title">
+                                                        <h4>โปรโมชั่น</h4>
+                                                        <div class="clearfix"></div>
+                                                    </div>
+                                                    <div class="x_content">
+                                                        <form class="form-horizontal form-label-left">
+                                                            <div class="form-group">
+                                                                <div class="col-md-9 col-sm-9 col-xs-12">
+                                                                    <div class="radio">
+                                                                        <label class="not_use_pro">
+                                                                            <p class="not_use_pro"><input type="radio"
+                                                                                                          class="flat not_use_pro"
+                                                                                                          name="iCheck"
+                                                                                                          value="0"
+                                                                                                          checked>
+                                                                                ไม่ใช้</p>
+                                                                        </label>
+                                                                    </div>
+                                                                    <div class="radio">
+                                                                        <label class="selected_pro">
+                                                                            <input type="radio"
+                                                                                   class="flat selected_pro inline-label"
+                                                                                   value="1" name="iCheck"
+                                                                                   for="select_promotion">
+                                                                            <select name="promotion"
+                                                                                    id="select_promotion"
+                                                                                    class="form-control selected_pro"
+                                                                                    style="width: 220px;float: right;margin-left: 7px">
+                                                                                <option disabled selected value="">
+                                                                                    เลือกโปรโมชั่น
+                                                                                </option>
+                                                                                <c:forEach items="${promotions}"
+                                                                                           var="p">
+                                                                                    <option value="${p.promotionNo}">${p.promotionNameTH}
+                                                                                        (ลดราคา ${p.discount} %)
+                                                                                    </option>
+                                                                                </c:forEach>
+                                                                            </select>
+                                                                        </label>
+                                                                    </div>
+                                                                    <div class="radio">
+                                                                        <label class="inline-label selected_other">
+                                                                            <input type="radio"
+                                                                                   class="flat selected_other" value="2"
+                                                                                   name="iCheck" for="other"> อื่นๆ
+                                                                            <input class="reset_field selected_other"
+                                                                                   type="text" id="other"
+                                                                                   style="width:100px;margin-left: 10px;margin-bottom: 9px">
+                                                                        </label>
+                                                                    </div>
                                                                 </div>
                                                             </div>
-                                                        </div>
-                                                        <div class="ln_solid"></div>
-                                                        <div class="form-group">
-                                                            <div class="col-md-12">
-                                                                <label class="inline-label" style="margin-left: 10%;color: green" for="totalprice">ยอดสุทธิ</label>
-                                                                <div id="totalprice" style="margin-right: 5%;text-align: right"><span class="totalprice"></span> บาท</div>
+                                                            <div class="ln_solid"></div>
+                                                            <div class="form-group">
+                                                                <div class="col-md-12">
+                                                                    <label class="inline-label"
+                                                                           style="margin-left: 10%;color: green"
+                                                                           for="totalprice">ยอดสุทธิ</label>
+                                                                    <div id="totalprice"
+                                                                         style="margin-right: 5%;text-align: right">
+                                                                        <span class="totalprice"></span> บาท
+                                                                    </div>
+                                                                </div>
+                                                                <div class="col-md-12 inline-label" for="receive">
+                                                                    <label style="margin-left: 10%;">รับเงินมา</label>
+                                                                    <input type="number" class="reset_field receive"
+                                                                           id="receive" placeholder="0.00" step="0.01"
+                                                                           style="width: 100px;margin-left: 35%;text-align: right">
+                                                                    บาท
+                                                                </div>
+                                                                <div class="col-md-12 inline-label">
+                                                                    <label class="inline-label" for="change"
+                                                                           style="margin-left: 10%;color: crimson">ทอนเงิน </label>
+                                                                    <div id="change"
+                                                                         style="margin-right: 5%;text-align: right">
+                                                                        <span class="change"></span> บาท
+                                                                    </div>
+                                                                </div>
+                                                                <div class="col-md-offset-4 col-md-4">
+                                                                    <button id="confirm" class="btn btn-warning"
+                                                                            style="width: 100%;text-align: center;font-size: initial;">
+                                                                        ยืนยันจ่ายเงิน <i class="fa fa-check"
+                                                                                          id="done"
+                                                                                          aria-hidden="true"
+                                                                                          style="display:none;"></i>
+                                                                    </button>
+                                                                </div>
                                                             </div>
-                                                            <div class="col-md-12 inline-label" for="receive">
-                                                                <label style="margin-left: 10%;">รับเงินมา</label>
-                                                                <input type="number" class="reset_field receive" id="receive" placeholder="0.00" step="0.01" style="width: 100px;margin-left: 35%;text-align: right"> บาท
-                                                            </div>
-                                                            <div class="col-md-12 inline-label" >
-                                                                <label class="inline-label" for="change" style="margin-left: 10%;color: crimson">ทอนเงิน </label>
-                                                                <div id="change" style="margin-right: 5%;text-align: right"><span class="change"></span> บาท</div>
-                                                            </div>
-                                                            <div class="col-md-offset-4 col-md-4">
-                                                                <button id="comfirm" class="btn btn-warning" style="width: 100%;text-align: center;font-size: initial;"><i class="fa fa-circle-o-notch fa-spin"  style="display:none"></i>ยืนยันจ่ายเงิน</button>
-                                                            </div>
-                                                        </div>
-                                                    </form>
+                                                        </form>
+                                                    </div>
                                                 </div>
                                             </div>
-                                        </div>
                                         </div>
                                     </form>
-                                    </div>
-                                    <div class="modal-footer">
-                                        <!-- ปุ่มกดปิด (Close) ตรงส่วนล่างของ Modal -->
-                                        <div class="col-md-9 col-sm-9 col-xs-12 col-md-offset-3">
-                                            <button  class="btn btn-success" style="font-size: initial;"><i class="fa fa-circle-o-notch fa-spin" style="display:none"></i>
-                                                ตกลง</button>
-                                            <button type="button" class="btn btn-default" style="font-size: initial" id="closeModal">
-                                                ยกเลิก
-                                            </button>
-                                        </div>
+                                </div>
+                                <div class="modal-footer">
+                                    <!-- ปุ่มกดปิด (Close) ตรงส่วนล่างของ Modal -->
+                                    <div class="col-md-9 col-sm-9 col-xs-12 col-md-offset-3">
+                                        <button class="btn btn-success" style="font-size: initial;"><i
+                                                class="fa fa-circle-o-notch fa-spin" style="display:none"></i>
+                                            ตกลง
+                                        </button>
+                                        <button type="button" class="btn btn-default" style="font-size: initial"
+                                                id="closeModal">
+                                            ยกเลิก
+                                        </button>
                                     </div>
                                 </div>
                             </div>
@@ -185,9 +247,12 @@
     </div>
 </div>
 </div>
+</div>
 <jsp:include page="../_include/bottomenv.jsp"/>
 <script>
+    var realprice = 0;
     var price = 0;
+    var billNoCurrent = 0;
 
     $(document).ready(function () {
 //        $(".selected_pro , input:radio[class='selected_pro']").click(function () {
@@ -215,7 +280,7 @@
     function refresh_table() {
         $.ajax({
             type: "POST",
-            url: "${contextPath}/cashier/getbills" ,
+            url: "${contextPath}/cashier/getbills",
             dataType: "json",
             success: function (json) {
                 //remove
@@ -228,21 +293,23 @@
                     curhours = currentTime.getHours();
                     curmins = currentTime.getMinutes();
                     cursec = currentTime.getSeconds();
-                    usedHours = parseInt(obj.billTime.substr(0,2));
-                    usedMins = parseInt(obj.billTime.substr(3,2));
-                    usedSecs = parseInt(obj.billTime.substr(6,2));
+                    usedHours = parseInt(obj.billTime.substr(0, 2));
+                    usedMins = parseInt(obj.billTime.substr(3, 2));
+                    usedSecs = parseInt(obj.billTime.substr(6, 2));
                     hrs = curhours - usedHours;
                     mins = curmins - usedMins;
                     sec = cursec - usedSecs;
-                    times = ((Math.abs(hrs)*60)+Math.abs(mins))+" นาที";
-                    console.log(times)
-                    console.log(json);
+                    times = ((Math.abs(hrs) * 60) + Math.abs(mins)) + " นาที";
                     price = 0;
                     var totalPerUnit = 0;
+                    var complete = 0;
                     obj.orders.forEach(function (order) {
                         totalPerUnit = order.quantity * order.amount;
                         price += totalPerUnit;
-                    })
+                        if (order.status == 'served' || order.status == 'cancelled') {
+                            complete++;
+                        }
+                    });
                     var div = '\
                         <div class="col-md-55">\
                         <div class="thumbnail thumbnail_inline">\
@@ -251,18 +318,18 @@
                         <div style="margin-left: auto;margin-right: auto;position: absolute;bottom:-14px;left: 50%;transform: translate(-50%, -50%);font-weight: bold; " class="cardname">' + obj.table.tableName + '</div>\
                         </div>\
                         <div class="caption col-md-12" style="color:#73879C">\
-                        <p class="col-md-12" style="white-space:nowrap;overflow:hidden;text-overflow: ellipsis;padding:0px;" >ใช้บริการมาแล้ว : ' + times +'</p>\
+                        <p class="col-md-12" style="white-space:nowrap;overflow:hidden;text-overflow: ellipsis;padding:0px;" >ใช้บริการมาแล้ว : ' + times + '</p>\
                         <p class="col-md-12" style="white-space: nowrap;overflow:hidden;text-overflow: ellipsis;padding:0px;">ราคาอาหาร : ' + price + ' บาท</p>\
-                        <p class="col-md-12" style="padding:0px;"> สถานะอาหาร : ครบแล้ว</p>\
+                        <p class="col-md-12" style="padding:0px;"> สถานะอาหาร : ' + (complete == obj.orders.length ? 'ครบแล้ว' : 'ยังไม่ครบ') + '</p>\
                         <div style="text-align:center;" class="col-md-12"><button type="button" class="btn btn-success" data-toggle="modal" data-target="#cashier" \
                         style="width: 80%;" onclick="set_bill(' + obj.billNo + ')">จ่ายเงิน</button></div>\
                         </div>\
                         </div>\
                         </div>\
                         ';
-                        $("#menu_thumbnail").append(div);
+                    $("#menu_thumbnail").append(div);
                 }
-                    $("#error_show").html('');
+                $("#error_show").html('');
 
                 filterCard();
             }
@@ -275,10 +342,11 @@
 
     function reset_field() {
         $(".reset_field").val('');
+        $("#done").css('display', 'none');
         $(".flat").iCheck('uncheck');
         $(".not_use_pro").iCheck('check');
-        $(".selected_pro").attr("disabled",true);
-        $(".selected_other").attr("disabled",true);
+        $(".selected_pro").attr("disabled", true);
+        $(".selected_other").attr("disabled", true);
         $('.menu_lists').empty();
         $(".change").empty();
     }
@@ -289,14 +357,14 @@
             url: "${contextPath}/cashier/getbill/" + billNo,
             dataType: "json",
             success: function (result) {
+                billNoCurrent = billNo;
                 $("#hiddenbillno").html(result.billNo);
                 $("#tablename").html(result.table.tableName);
                 $("#show_table_name").html(result.table.tableName);
-                var showDate = result.billDate.substr(8,2)+"/"+result.billDate.substr(5,2)+"/"+result.billDate.substr(0,4);
+                var showDate = result.billDate.substr(8, 2) + "/" + result.billDate.substr(5, 2) + "/" + result.billDate.substr(0, 4);
                 $("#showBillDate").html(showDate);
-                var showTime = result.billTime.substr(0,2)+":"+result.billTime.substr(3,2);
+                var showTime = result.billTime.substr(0, 2) + ":" + result.billTime.substr(3, 2);
                 $("#billtime").html(showTime);
-                console.log(showDate);
                 var str = '';
                 price = 0;
                 var totalPerUnit = 0;
@@ -305,27 +373,32 @@
                     str += '<tr>' +
                         '<td class="quantity" style="width: 15%">' + order.quantity + '</td>' +
                         '<td class="menu" style="width: 65%">' + order.menu.menuNameTH + '</td>' +
-                    '<td class="price_all_unit" style="width: 20%;text-align: center;">' + (totalPerUnit).toFixed(2) + '</td>' +
-                    '</tr>' ;
-
+                        '<td class="price_all_unit" style="width: 20%;text-align: center;">' + (totalPerUnit).toFixed(2) + '</td>' +
+                        '</tr>';
                     price += totalPerUnit;
-
+                    order.orderAddOnList.forEach(function (addon) {
+                        str += '<tr>'+
+                            '<td class="quantity" style="width: 15%"></td>' +
+                            '<td class="menu" style="width: 65%"> ++ ' + addon.materialItem.matItemName + '</td>' +
+                            '<td class="price_all_unit" style="width: 20%;text-align: center;">' + addon.addOn.price.toFixed(2) + '</td>' +
+                            '</tr>';
+                        price += parseFloat(addon.addOn.price);
+                    });
                     $('.menu_lists').html(str);
-                })
+                });
                 $('.totalprice').html(price.toFixed(2));
+                realprice = price;
 
                 $(".receive").keyup(function () {
                     var total = $(".totalprice").html();
                     var money = $(this).val();
-                    var change = (money-total).toFixed(2);
-
+                    var change = (money - total).toFixed(2);
                     $(".change").html(change);
                 })
 //
 //                var dis = 0;
 //                $("input:radio[class='selected_other']").change(function () {
 //                    if ($("input:radio[class='selected_other']").is(":checked") == true){
-//                        console.log(alert("12334"));
 //                        if ($(this).val().substr(length()-1,1) == "%") {
 //                            dis = price * ( 100 - parseInt($(this).val()) ) / 100;
 //                        } else {
@@ -370,9 +443,42 @@
         document.body.innerHTML = originalContents;
 //        location.reload(true);
     }
-    $("#closeModal").click(function(){
+    $("#closeModal").click(function () {
         $("#cashier").modal("hide");
     });
+
+    $("input").on('ifClicked', function (event) {
+        val = $(this).val();
+        if (val == 0) {
+            $(".totalprice").html(price.toFixed(2));
+        } else if (val == 1) {
+
+        } else {
+            var discount = $("#other").val();
+            if (discount != "") {
+                var percenttype = (discount.substr(discount.length - 1, 1) == '%');
+                if (percenttype) {
+                    $(".totalprice").html(price * (100 - parseInt(discount.substr(0, discount.length - 1))) / 100);
+                } else {
+                    $(".totalprice").html(price - parseInt(discount.substr(0, discount.length - 1)));
+                }
+            }
+        }
+    });
+
+    $("#confirm").click(function () {
+        $.ajax({
+            type: "POST",
+            url: "${contextPath}/cashier/checkbill/" + billNoCurrent,
+            data: {totalAmount: realprice},
+            success: function (result) {
+                swal("สำเร็จ", "ยืนยันการจ่ายเงินเรียบร้อย", "success");
+                $("#done").css('display', 'inline-block');
+            }
+        });
+        return false;
+    });
+
 </script>
 
 <style>
@@ -380,16 +486,19 @@
         height: 257px !important;
         width: 210px;
     }
+
     .inline-label {
         white-space: nowrap;
         overflow: hidden;
         text-overflow: ellipsis;
-        float:left;
+        float: left;
     }
-    @media print{
+
+    @media print {
         body * {
             visibility: hidden;
         }
+
         #printableArea * {
             visibility: visible;
             position: absolute;
@@ -397,10 +506,12 @@
             top: 0;
             width: 57mm;
         }
+
         body {
             width: 57mm;
         }
     }
+
     @page {
         margin: 0;
         size: auto;

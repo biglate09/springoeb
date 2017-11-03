@@ -4,15 +4,24 @@ import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.springoeb.branch.model.Branch;
 import com.springoeb.branch.service.BranchService;
+import com.springoeb.cashier.model.Bill;
+import com.springoeb.cashier.model.Order;
+import com.springoeb.cashier.model.OrderAddOn;
+import com.springoeb.cashier.service.BillService;
+import com.springoeb.cashier.service.OrderAddOnService;
+import com.springoeb.cashier.service.OrderService;
 import com.springoeb.employee.model.Employee;
 import com.springoeb.employee.service.EmployeeService;
 import com.springoeb.menu.model.BranchMenu;
 import com.springoeb.menu.service.BranchMenuService;
+import com.springoeb.menu.service.MenuService;
 import com.springoeb.system.model.*;
 import com.springoeb.system.service.BranchUserService;
 import com.springoeb.system.service.DistrictService;
 import com.springoeb.system.service.ProvinceService;
 import com.springoeb.system.service.SubDistrictService;
+import com.springoeb.table.model.Table;
+import com.springoeb.table.service.TableService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.stereotype.Controller;
@@ -26,6 +35,8 @@ import javax.servlet.http.HttpSession;
 import javax.transaction.Transactional;
 import java.io.UnsupportedEncodingException;
 import java.net.URLEncoder;
+import java.sql.Date;
+import java.sql.Time;
 import java.util.List;
 
 @Controller
@@ -45,6 +56,16 @@ public class ManageController {
     private EmployeeService employeeService;
     @Autowired
     private BranchMenuService branchMenuService;
+    @Autowired
+    private BillService billService;
+    @Autowired
+    private TableService tableService;
+    @Autowired
+    private OrderService orderService;
+    @Autowired
+    private MenuService menuService;
+    @Autowired
+    private OrderAddOnService orderAddOnService;
 
     @PostMapping("/login")
     public String login(@ModelAttribute("branchUser") BranchUser branchUser, HttpServletRequest request, HttpServletResponse response, HttpSession session, Model model) {
@@ -202,8 +223,49 @@ public class ManageController {
         BranchUser branchUser = (BranchUser) (session.getAttribute("branchUser"));
         int branchNo = branchUser.getBranchNo();
         List<BranchMenu> branchMenus = branchMenuService.getMenuByBranchNo(branchNo);
+        List<Table> tables = tableService.getTablesAvailable(branchNo);
+        model.addAttribute("tables",tables);
         model.addAttribute("menus",branchMenus);
         return "/WEB-INF/_include/orderTest.jsp";
+    }
+
+    @Transactional
+    @PostMapping("/order")
+    public String order(HttpSession session, Model model, HttpServletRequest request){
+        BranchUser branchUser = (BranchUser) (session.getAttribute("branchUser"));
+        int branchNo = branchUser.getBranchNo();
+        int tableNo = Integer.parseInt(request.getParameter("tableNo"));
+        Bill bill = billService.createNewBill(tableNo);
+        String menus[] = request.getParameterValues("menu");
+        if(menus != null) {
+            for (String menu : menus) {
+                String qty = request.getParameter(menu);
+                String addOns[] = request.getParameterValues("addon_" + menu);
+                Order order = new Order();
+                order.setMenuNo(Integer.parseInt(menu));
+                order.setQuantity(Integer.parseInt(qty));
+                order.setAmount(menuService.getMenuByMenuNo(Integer.parseInt(menu)).getMenuPrice() * Integer.parseInt(qty));
+                order.setDate(new Date(System.currentTimeMillis()));
+                order.setTime(new Time(System.currentTimeMillis()));
+                order.setBillNo(bill.getBillNo());
+                order.setStatus(Order.WAITING);
+                order = orderService.save(order);
+                if (addOns != null) {
+                    for (String addon : addOns) {
+                        OrderAddOn orderAddOn = new OrderAddOn();
+                        orderAddOn.setAddOnNo(Integer.parseInt(addon));
+                        orderAddOn.setOrderNo(order.getOrderNo());
+                        orderAddOnService.save(orderAddOn);
+                    }
+                }
+            }
+        }
+
+        List<BranchMenu> branchMenus = branchMenuService.getMenuByBranchNo(branchNo);
+        List<Table> tables = tableService.getTablesAvailable(branchNo);
+        model.addAttribute("tables",tables);
+        model.addAttribute("menus",branchMenus);
+        return "/WEB-INF/_include/orderTest.jsp?order=true";
     }
 
     @Transactional
