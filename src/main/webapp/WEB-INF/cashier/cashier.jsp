@@ -179,7 +179,7 @@
                                                                                            var="p">
                                                                                     <option value="${p.promotionNo}"
                                                                                             discount="${p.discount}"
-                                                                                            menu_discount="${}"
+                                                                                            menu_discount=""
                                                                                             name="${p.promotionNameTH}">${p.promotionNameTH}
                                                                                         (ลดราคา ${p.discount} %)
                                                                                     </option>
@@ -498,8 +498,10 @@
                 realprice = Math.floor(((100 - discount) / 100) * price);
                 $("#prodis").html(discount + ' %');
             } else {
-                realprice = Math.floor(price - discount);
-                $("#prodis").html(discount + ' บาท');
+                if(!isNaN(discount)) {
+                    realprice = Math.floor(price - discount);
+                    $("#prodis").html(discount + ' บาท');
+                }
             }
         } else {
             $("#proname").html("ไม่มีโปรโมชั่น");
