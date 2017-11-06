@@ -30,8 +30,6 @@ public class Promotion {
     private String day;
     @Column(name = "restNo")
     private Integer restNo;
-//    @Column(name = "available")
-//    private boolean available;
 
     @JsonManagedReference
     @OneToMany(fetch = FetchType.LAZY, mappedBy = "promotion")

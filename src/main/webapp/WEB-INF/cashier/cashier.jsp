@@ -179,7 +179,7 @@
                                                                                            var="p">
                                                                                     <option value="${p.promotionNo}"
                                                                                             discount="${p.discount}"
-                                                                                            menu_discount=""
+                                                                                            menu_discount="<c:forEach items="${p.menuGroupPromotions}" var="mg" varStatus="vs"><c:if test="${vs.index!=0}">|</c:if>${mg.menuGroupNo}</c:forEach>"
                                                                                             name="${p.promotionNameTH}">${p.promotionNameTH}
                                                                                         (ลดราคา ${p.discount} %)
                                                                                     </option>
@@ -247,13 +247,9 @@
                                 <div class="modal-footer">
                                     <!-- ปุ่มกดปิด (Close) ตรงส่วนล่างของ Modal -->
                                     <div class="col-md-9 col-sm-9 col-xs-12 col-md-offset-3">
-                                        <button class="btn btn-success" style="font-size: initial;"><i
-                                                class="fa fa-circle-o-notch fa-spin" style="display:none"></i>
-                                            ตกลง
-                                        </button>
                                         <button type="button" class="btn btn-default" style="font-size: initial"
                                                 id="closeModal">
-                                            ยกเลิก
+                                            ปิด
                                         </button>
                                     </div>
                                 </div>
@@ -370,7 +366,7 @@
                 price = 0;
                 var totalPerUnit = 0;
                 result.orders.forEach(function (order) {
-                    totalPerUnit = order.quantity * order.amount;
+                    totalPerUnit = order.amount;
                     str += '<tr>' +
                         '<td class="quantity" style="width: 15%">' + order.quantity + '</td>' +
                         '<td class="menu" style="width: 65%">' + order.menu.menuNameTH + '</td>' +
@@ -423,7 +419,6 @@
         document.body.innerHTML = printContents;
         window.print();
         document.body.innerHTML = originalContents;
-//        location.reload(true);
     }
     $("#closeModal").click(function () {
         $("#cashier").modal("hide");
@@ -475,10 +470,22 @@
         discount = chosen_pro.attr('discount');
         if (discount != null && discount != '' && discount != 0) {
             // แบบไม่รวมทุกเมนู
+            money_discount = 0;
+            menu_discount = chosen_pro.attr('menu_discount').split('|');
             $("#proname").html(chosen_pro.attr('name'));
-            $("#prodis").html(discount + " %");
-            realprice = ((100 - discount) / 100) * price;
-            console.log(current_bill);
+            $("#prodis").html(parseFloat(discount).toFixed(2) + " %");
+            orders_arr = current_bill.orders;
+            orders_arr.forEach(function (order) {
+                menugroupno = order.menu.menuGroupNo;
+                if(menu_discount.indexOf(""+menugroupno) != -1){
+                    money_discount += order.amount;
+//                    order.orderAddOnList.forEach(function(addon){
+//                        money_discount += addon.addOn.price;
+//                    });
+                }
+            });
+            money_discount = (discount/100) * money_discount;
+            realprice = Math.floor(price - money_discount);
         } else {
             $("#proname").html(chosen_pro.attr('name'));
             $("#prodis").empty();
@@ -496,11 +503,11 @@
             if (discount.substr(discount.length - 1, 1) == '%') {
                 discount = discount.substr(0, discount.length - 1);
                 realprice = Math.floor(((100 - discount) / 100) * price);
-                $("#prodis").html(discount + ' %');
+                $("#prodis").html(parseInt(discount).toFixed(2) + ' %');
             } else {
-                if(!isNaN(discount)) {
+                if (!isNaN(discount)) {
                     realprice = Math.floor(price - discount);
-                    $("#prodis").html(discount + ' บาท');
+                    $("#prodis").html(parseInt(discount).toFixed(2) + ' บาท');
                 }
             }
         } else {
