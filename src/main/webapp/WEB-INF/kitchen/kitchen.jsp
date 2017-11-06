@@ -144,7 +144,7 @@
                     var orderNo = "";
                     var qty = 0;
                     vals.forEach(function(val){
-                        table_str += val.table.tableName + " (" + val.qty + " ที่)<br>";
+                        table_str += val.table.tableName + " (" + val.qty + ")<br>";
                         qty += val.qty;
                         if(orderNo != ""){
                             orderNo += "-";
@@ -159,7 +159,7 @@
                     var data_refresh = {
                         menuName: '<div style="text-align: left">'+ obj.menu.menuNameTH + " " + addon_str + '</div>',
                         tableName: table_str,
-                        amount: qty + " ที่",
+                        amount: qty,
                         currentStatus: (obj.status == 'reserved' ? 'จองไว้แล้ว' :
                             obj.status == 'waiting' ? 'เมนูที่ได้รับมา' :
                                 obj.status == 'cooking' ? ' กำลังปรุงอาหาร' :

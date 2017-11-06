@@ -80,7 +80,7 @@
                                                             <form class="form-horizontal form-label-left">
                                                                 <div class="form-group">
                                                                     <table style="width: 100%">
-                                                                        <thead>
+                                                                        <thead style="font-weight: bold;">
                                                                         <tr>
                                                                             <td style="width: 15%;">จำนวน</td>
                                                                             <td style="width: 65%;text-align: center;">
@@ -94,9 +94,20 @@
                                                                         <tbody class="menu_lists">
                                                                         </tbody>
                                                                     </table>
+                                                                    <div class="col-md-12 col-sm-12 col-xs-12"
+                                                                         style="font-weight:bold;">
+                                                                        <span class="col-md-4">ยอดรวม</span>
+                                                                        <span class="col-md-8 sumprice"
+                                                                              style="text-align:right;"></span>
+                                                                    </div>
                                                                 </div>
                                                                 <div class="ln_solid"></div>
                                                                 <div class="form-group">
+                                                                    <span class="col-md-2">-----</span>
+                                                                    <span class="col-md-7" id="proname"
+                                                                          style="white-space:nowrap;overflow:hidden;text-overflow: ellipsis;padding:0px;">ไม่มีโปรโมชั่น</span>
+                                                                    <span class="col-md-3" id="prodis"
+                                                                          style="text-align:right;"></span>
                                                                     <div class="col-md-12 col-sm-12 col-xs-12">
                                                                         <label class="inline-label"
                                                                                for="price">ยอดสุทธิ </label>
@@ -106,7 +117,7 @@
                                                                         </div>
                                                                     </div>
                                                                     <div class="col-md-12 inline-label">
-                                                                        <label class="inline-label" for="change_bill">ทอนเงิน </label>
+                                                                        <label class="inline-label" for="change_bill">เงินทอน </label>
                                                                         <div id="change_bill"
                                                                              style="margin-right: 5%;text-align: right">
                                                                             <span class="change"></span> บาท
@@ -140,18 +151,21 @@
                                                                 <div class="col-md-9 col-sm-9 col-xs-12">
                                                                     <div class="radio">
                                                                         <label class="not_use_pro">
-                                                                            <p class="not_use_pro"><input type="radio"
-                                                                                                          class="flat not_use_pro"
-                                                                                                          name="iCheck"
-                                                                                                          value="0"
-                                                                                                          checked>
+                                                                            <p class="not_use_pro">
+                                                                                <input type="radio"
+                                                                                       class="flat not_use_pro pro_selected protype"
+                                                                                       protype="not_use_pro"
+                                                                                       name="iCheck"
+                                                                                       value="0"
+                                                                                       checked>
                                                                                 ไม่ใช้</p>
                                                                         </label>
                                                                     </div>
                                                                     <div class="radio">
                                                                         <label class="selected_pro">
                                                                             <input type="radio"
-                                                                                   class="flat selected_pro inline-label"
+                                                                                   class="flat selected_pro inline-label protype"
+                                                                                   protype="selected_pro"
                                                                                    value="1" name="iCheck"
                                                                                    for="select_promotion">
                                                                             <select name="promotion"
@@ -163,7 +177,10 @@
                                                                                 </option>
                                                                                 <c:forEach items="${promotions}"
                                                                                            var="p">
-                                                                                    <option value="${p.promotionNo}">${p.promotionNameTH}
+                                                                                    <option value="${p.promotionNo}"
+                                                                                            discount="${p.discount}"
+                                                                                            menu_discount="${}"
+                                                                                            name="${p.promotionNameTH}">${p.promotionNameTH}
                                                                                         (ลดราคา ${p.discount} %)
                                                                                     </option>
                                                                                 </c:forEach>
@@ -173,10 +190,12 @@
                                                                     <div class="radio">
                                                                         <label class="inline-label selected_other">
                                                                             <input type="radio"
-                                                                                   class="flat selected_other" value="2"
+                                                                                   class="flat selected_other protype"
+                                                                                   value="2"
+                                                                                   protype="selected_other"
                                                                                    name="iCheck" for="other"> อื่นๆ
                                                                             <input class="reset_field selected_other"
-                                                                                   type="text" id="other"
+                                                                                   type="text" id="distype"
                                                                                    style="width:100px;margin-left: 10px;margin-bottom: 9px">
                                                                         </label>
                                                                     </div>
@@ -253,26 +272,9 @@
     var realprice = 0;
     var price = 0;
     var billNoCurrent = 0;
+    var current_bill;
 
     $(document).ready(function () {
-//        $(".selected_pro , input:radio[class='selected_pro']").click(function () {
-//            alert('in select pro');
-//            $(".selected_pro").attr("disabled",false);
-//            $(".selected_other").attr("disabled",true);
-//        });
-//
-//        $(".selected_other , input:radio[class='selected_other']").click(function () {
-//            alert('in select other');
-//            $(".selected_other").attr("disabled",false);
-//            $(".selected_pro").attr("disabled",true);
-//        });
-//
-//        $(".not_use_pro , input:radio[class='not_use_pro']").click(function () {
-//            alert('in select not use');
-//            $(".selected_other").attr("disabled",true);
-//            $(".selected_pro").attr("disabled",true);
-//        });
-
         refresh_table()
     });
 
@@ -345,8 +347,6 @@
         $("#done").css('display', 'none');
         $(".flat").iCheck('uncheck');
         $(".not_use_pro").iCheck('check');
-        $(".selected_pro").attr("disabled", true);
-        $(".selected_other").attr("disabled", true);
         $('.menu_lists').empty();
         $(".change").empty();
     }
@@ -357,6 +357,7 @@
             url: "${contextPath}/cashier/getbill/" + billNo,
             dataType: "json",
             success: function (result) {
+                current_bill = result;
                 billNoCurrent = billNo;
                 $("#hiddenbillno").html(result.billNo);
                 $("#tablename").html(result.table.tableName);
@@ -377,37 +378,18 @@
                         '</tr>';
                     price += totalPerUnit;
                     order.orderAddOnList.forEach(function (addon) {
-                        str += '<tr>'+
+                        str += '<tr>' +
                             '<td class="quantity" style="width: 15%"></td>' +
-                            '<td class="menu" style="width: 65%"> ++ ' + addon.materialItem.matItemName + '</td>' +
+                            '<td class="menu" style="width: 65%"> ++ ' + addon.addOn.materialItem.matItemName + '</td>' +
                             '<td class="price_all_unit" style="width: 20%;text-align: center;">' + addon.addOn.price.toFixed(2) + '</td>' +
                             '</tr>';
                         price += parseFloat(addon.addOn.price);
                     });
                     $('.menu_lists').html(str);
                 });
+                $('.sumprice').html(price.toFixed(2));
                 $('.totalprice').html(price.toFixed(2));
                 realprice = price;
-
-                $(".receive").keyup(function () {
-                    var total = $(".totalprice").html();
-                    var money = $(this).val();
-                    var change = (money - total).toFixed(2);
-                    $(".change").html(change);
-                })
-//
-//                var dis = 0;
-//                $("input:radio[class='selected_other']").change(function () {
-//                    if ($("input:radio[class='selected_other']").is(":checked") == true){
-//                        if ($(this).val().substr(length()-1,1) == "%") {
-//                            dis = price * ( 100 - parseInt($(this).val()) ) / 100;
-//                        } else {
-//                            dis = price - parseInt($(this).val());
-//                        }
-//                        $('#promotion').html(dis);
-//                    }
-//
-//                })
             }
         });
     }
@@ -447,25 +429,6 @@
         $("#cashier").modal("hide");
     });
 
-    $("input").on('ifClicked', function (event) {
-        val = $(this).val();
-        if (val == 0) {
-            $(".totalprice").html(price.toFixed(2));
-        } else if (val == 1) {
-
-        } else {
-            var discount = $("#other").val();
-            if (discount != "") {
-                var percenttype = (discount.substr(discount.length - 1, 1) == '%');
-                if (percenttype) {
-                    $(".totalprice").html(price * (100 - parseInt(discount.substr(0, discount.length - 1))) / 100);
-                } else {
-                    $(".totalprice").html(price - parseInt(discount.substr(0, discount.length - 1)));
-                }
-            }
-        }
-    });
-
     $("#confirm").click(function () {
         $.ajax({
             type: "POST",
@@ -479,6 +442,73 @@
         return false;
     });
 
+    function cal_change() {
+        var money = $("#receive").val();
+        if (money == 0) {
+            $(".change").html('');
+        } else {
+            var change = (money - realprice).toFixed(2);
+            $(".change").html(change);
+        }
+    }
+
+    $(".protype").on('ifChanged', function () {
+        if ($(this).attr('protype') == 'not_use_pro') {
+            $("#proname").html("ไม่มีโปรโมชั่น");
+            $("#prodis").empty();
+            realprice = price;
+            cal_change();
+        } else if ($(this).attr('protype') == 'selected_pro') {
+            pro_chosen();
+        } else {
+            discount_chosen();
+        }
+        $(".totalprice").html(realprice.toFixed(2));
+    });
+
+    $("#select_promotion").change(pro_chosen);
+    $("#distype").keyup(discount_chosen);
+    $(".receive").keyup(cal_change);
+
+    function pro_chosen() {
+        chosen_pro = $("#select_promotion :checked");
+        discount = chosen_pro.attr('discount');
+        if (discount != null && discount != '' && discount != 0) {
+            // แบบไม่รวมทุกเมนู
+            $("#proname").html(chosen_pro.attr('name'));
+            $("#prodis").html(discount + " %");
+            realprice = ((100 - discount) / 100) * price;
+            console.log(current_bill);
+        } else {
+            $("#proname").html(chosen_pro.attr('name'));
+            $("#prodis").empty();
+            realprice = price;
+        }
+        cal_change();
+        $(".totalprice").html(realprice.toFixed(2));
+    }
+
+    function discount_chosen() {
+        chosen_discount = $("#distype");
+        discount = chosen_discount.val();
+        if (discount.length > 0) {
+            $("#proname").html('โปรโมชั่นลดพิเศษ');
+            if (discount.substr(discount.length - 1, 1) == '%') {
+                discount = discount.substr(0, discount.length - 1);
+                realprice = Math.floor(((100 - discount) / 100) * price);
+                $("#prodis").html(discount + ' %');
+            } else {
+                realprice = Math.floor(price - discount);
+                $("#prodis").html(discount + ' บาท');
+            }
+        } else {
+            $("#proname").html("ไม่มีโปรโมชั่น");
+            $("#prodis").empty();
+            realprice = price;
+        }
+        cal_change();
+        $(".totalprice").html(realprice.toFixed(2));
+    }
 </script>
 
 <style>

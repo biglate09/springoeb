@@ -87,7 +87,7 @@
                             <a><i class="fa fa-table"></i> จัดการโต๊ะและการจอง <span class="fa fa-chevron-down"></span></a>
                             <ul class="nav child_menu">
                                 <li><a id="table" href="${contextPath}/table/table">โต๊ะ</a></li>
-                                <li><a id="reservation" href="${contextPath}/table/reservation">การจอง</a></li>
+                                <li><a id="reserv" href="${contextPath}/table/reservation">การจอง</a></li>
                             </ul>
                         </li>
                     </c:if>
