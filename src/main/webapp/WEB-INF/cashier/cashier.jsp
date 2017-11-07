@@ -70,8 +70,8 @@
                                                             <div style="text-align: center;font-size: larger">${branchUser.branch.restaurant.restName} ${branchUser.branch.branchName}</div>
                                                             <div style="text-align: center;">
                                                                 วันที่ <span id="showBillDate"
-                                                                             style="color: #73879C"></span> เวลา <span
-                                                                    id="billtime" style="color: #73879C"></span> น.
+                                                                             style="color: #73879C"></span> <span
+                                                                    id="billtime" style="color: #73879C"></span>
                                                             </div>
                                                             <div id="tablename"></div>
                                                             <div class="clearfix"></div>
@@ -109,8 +109,8 @@
                                                                     <span class="col-md-3" id="prodis"
                                                                           style="text-align:right;"></span>
                                                                     <div class="col-md-12 col-sm-12 col-xs-12">
-                                                                        <label class="inline-label"
-                                                                               for="price">ยอดสุทธิ </label>
+                                                                        <label class="inline-label col"
+                                                                               for="price">ยอดเงินสุทธิ </label>
                                                                         <div id="price"
                                                                              style="margin-right: 5%;text-align: right">
                                                                             <span class="totalprice"></span> บาท
@@ -134,7 +134,7 @@
                                                         </div>
                                                     </div>
                                                 </div>
-                                                <button onclick="printDiv('printableArea')" class="btn btn-success"
+                                                <button <%--onclick="printDiv('printableArea')"--%> onClick="window.print();return false" class="btn btn-success"
                                                         style="margin-left: 40%"><i class="fa fa-print"
                                                                                     aria-hidden="true"></i> พิมพ์ใบเสร็จ
                                                 </button>
@@ -206,7 +206,7 @@
                                                                 <div class="col-md-12">
                                                                     <label class="inline-label"
                                                                            style="margin-left: 10%;color: green"
-                                                                           for="totalprice">ยอดสุทธิ</label>
+                                                                           for="totalprice">ยอดเงินสุทธิ</label>
                                                                     <div id="totalprice"
                                                                          style="margin-right: 5%;text-align: right">
                                                                         <span class="totalprice"></span> บาท
@@ -221,7 +221,7 @@
                                                                 </div>
                                                                 <div class="col-md-12 inline-label">
                                                                     <label class="inline-label" for="change"
-                                                                           style="margin-left: 10%;color: crimson">ทอนเงิน </label>
+                                                                           style="margin-left: 10%;color: crimson">เงินทอน </label>
                                                                     <div id="change"
                                                                          style="margin-right: 5%;text-align: right">
                                                                         <span class="change"></span> บาท
@@ -282,7 +282,7 @@
     function refresh_table() {
         $.ajax({
             type: "POST",
-            url: "${contextPath}/cashier/getbills",
+            url: "${contextPath}/cashier/getbills" ,
             dataType: "json",
             success: function (json) {
                 //remove
@@ -369,6 +369,7 @@
                 var str = '';
                 price = 0;
                 var totalPerUnit = 0;
+                console.log(result);
                 result.orders.forEach(function (order) {
                     totalPerUnit = order.quantity * order.amount;
                     str += '<tr>' +
@@ -417,14 +418,29 @@
         }
     }
 
-    function printDiv(divName) {
-        var printContents = document.getElementById(divName).innerHTML;
-        var originalContents = document.body.innerHTML;
-        document.body.innerHTML = printContents;
-        window.print();
-        document.body.innerHTML = originalContents;
-//        location.reload(true);
-    }
+    ( function($) {
+        $(document).ready(function(){
+            // Add Print Classes for Modal
+            $('.modal').on('shown.bs.modal',function() {
+                $('.modal,.modal-backdrop').addClass('toPrint');
+                $('body').addClass('non-print');
+            });
+            // Remove classes
+            $('.modal').on('hidden.bs.modal',function() {
+                $('.modal,.modal-backdrop').removeClass('toPrint');
+                $('body').removeClass('non-print');
+            });
+        });
+    })( jQuery );
+
+//    function printDiv(divName) {
+//        var printContents = document.getElementById(divName).innerHTML;
+//        var originalContents = document.body.innerHTML;
+//        document.body.innerHTML = printContents;
+//        window.print();
+//        document.body.innerHTML = originalContents;
+////        location.reload(true);
+//    }
     $("#closeModal").click(function () {
         $("#cashier").modal("hide");
     });
@@ -533,20 +549,69 @@
 
         #printableArea * {
             visibility: visible;
+        }
+        /*.modal{*/
+            /*position: absolute;*/
+            /*left: 0;*/
+            /*top: 0;*/
+            /*margin: 0;*/
+            /*padding: 0;*/
+            /*!*min-height:550px*!*/
+        /*}*/
+
+        #printableArea {
             position: absolute;
-            left: 0;
+            left: 3cm;
             top: 0;
-            width: 57mm;
+            margin: 0;
+            padding: 0;
+            width: 4in;
         }
 
         body {
-            width: 57mm;
+            width: 4in;
         }
+    }
+
+    @page :left {
+        margin-left: 1cm;
+    }
+    @page :right {
+        margin-right: 1cm;
     }
 
     @page {
         margin: 0;
-        size: auto;
+        size: 5.5in 8.5in;
+    }
+    @media only print, print {
+        body.non-print #product-nav,
+        body.non-print #product-content,
+        body.non-print #sales-forms-container,
+        body.non-print #tab-quote,
+        body.non-print #tab-upgrade,
+        body.non-print #tab-contact,
+        body.non-print #sales-form-phone,
+        body.non-print .product-jumbo-strech .bottom-wrapper,
+        body.non-print .panel-block-text,
+        body.non-print footer,
+        .modal-backdrop.toPrint {
+            display: none !important;
+            visibility: hidden !important;
+        }
+        .modal.toPrint {
+            position: relative;
+            overflow: hidden;
+            visibility:visible;
+            width: 100%;
+            font-size: 80%;
+        }
+        .modal.toPrint .nav .li {
+            visibility: hidden;
+        }
+        .modal.toPrint .nav .li.active {
+            visibility: visible;
+        }
     }
 </style>
 </body>
