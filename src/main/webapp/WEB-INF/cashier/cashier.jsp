@@ -1,4 +1,5 @@
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
+<%@ taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt" %>
 <%@page contentType="text/html" pageEncoding="UTF-8" %>
 <%@ page import="com.springoeb.branch.model.Branch" %>
 <c:set var="contextPath" value="${pageContext.request.contextPath}"/>
@@ -181,7 +182,7 @@
                                                                                             discount="${p.discount}"
                                                                                             menu_discount="<c:forEach items="${p.menuGroupPromotions}" var="mg" varStatus="vs"><c:if test="${vs.index!=0}">|</c:if>${mg.menuGroupNo}</c:forEach>"
                                                                                             name="${p.promotionNameTH}">${p.promotionNameTH}
-                                                                                        (ลดราคา ${p.discount} %)
+                                                                                        (-<fmt:formatNumber value="${p.discount}" pattern="#0.00" /> %)
                                                                                     </option>
                                                                                 </c:forEach>
                                                                             </select>
@@ -302,7 +303,7 @@
                     var totalPerUnit = 0;
                     var complete = 0;
                     obj.orders.forEach(function (order) {
-                        totalPerUnit = order.quantity * order.amount;
+                        totalPerUnit = order.amount;
                         price += totalPerUnit;
                         if (order.status == 'served' || order.status == 'cancelled') {
                             complete++;
@@ -370,7 +371,7 @@
                     str += '<tr>' +
                         '<td class="quantity" style="width: 15%">' + order.quantity + '</td>' +
                         '<td class="menu" style="width: 65%">' + order.menu.menuNameTH + '</td>' +
-                        '<td class="price_all_unit" style="width: 20%;text-align: center;">' + (totalPerUnit).toFixed(2) + '</td>' +
+                        '<td class="price_all_unit" style="width: 20%;text-align: center;">' + (order.menu.menuPrice * order.quantity).toFixed(2) + '</td>' +
                         '</tr>';
                     price += totalPerUnit;
                     order.orderAddOnList.forEach(function (addon) {
@@ -379,7 +380,6 @@
                             '<td class="menu" style="width: 65%"> ++ ' + addon.addOn.materialItem.matItemName + '</td>' +
                             '<td class="price_all_unit" style="width: 20%;text-align: center;">' + addon.addOn.price.toFixed(2) + '</td>' +
                             '</tr>';
-                        price += parseFloat(addon.addOn.price);
                     });
                     $('.menu_lists').html(str);
                 });
@@ -477,14 +477,14 @@
             orders_arr = current_bill.orders;
             orders_arr.forEach(function (order) {
                 menugroupno = order.menu.menuGroupNo;
-                if(menu_discount.indexOf(""+menugroupno) != -1){
+                if (menu_discount.indexOf("" + menugroupno) != -1) {
                     money_discount += order.amount;
 //                    order.orderAddOnList.forEach(function(addon){
 //                        money_discount += addon.addOn.price;
 //                    });
                 }
             });
-            money_discount = (discount/100) * money_discount;
+            money_discount = (discount / 100) * money_discount;
             realprice = Math.floor(price - money_discount);
         } else {
             $("#proname").html(chosen_pro.attr('name'));

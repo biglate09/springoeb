@@ -6,8 +6,11 @@ import com.springoeb.cashier.model.Order;
 import com.springoeb.cashier.service.OrderService;
 import com.springoeb.kitchen.model.ValueBean;
 import com.springoeb.system.model.BranchUser;
+import com.springoeb.table.model.Table;
+import com.springoeb.table.service.TableService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
+import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
 
 import javax.servlet.http.HttpSession;
@@ -21,10 +24,15 @@ public class KitchenController {
     private static final String KITCHEN_PATH = "/WEB-INF/kitchen/";
     @Autowired
     private OrderService orderService;
+    @Autowired
+    private TableService tableService;
 
     //-----------------------------------------------------------------------------------------------------------//
     @GetMapping("/kitchen")
-    public String toKitchenIndex() {
+    public String toKitchenIndex(HttpSession session, Model model) {
+        int branchNo = ((BranchUser) (session.getAttribute("branchUser"))).getBranchNo();
+        List<Table> tables = tableService.getTablesAvailable(branchNo);
+        model.addAttribute("tables",tables);
         return KITCHEN_PATH + "kitchen.jsp";
     }
     @ResponseBody
