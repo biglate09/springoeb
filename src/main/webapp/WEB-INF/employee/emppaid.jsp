@@ -281,7 +281,7 @@
 //                            order: workHistory.workEnd == null ? '-' : ("" + workHistory.workEnd.substr(0, 2) + workHistory.workEnd.substr(3, 2))
 //                        },
                         workTime: {
-                            display: (hour > 0 ? hour + ' ชั่วโมง ' : '') + (minute > 0 ? minute + ' นาที' : ''),
+                            display: hour+minute == 0 ? '0 นาที' : (hour > 0 ? hour + ' ชั่วโมง ' : '') + (minute > 0 ? minute + ' นาที' : ''),
                             order: "" + (hour < 10 ? '0' + hour : hour) + (minute < 10 ? '0' + minute : minute)
                         },
                         workPay: {

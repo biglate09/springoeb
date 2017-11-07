@@ -1,4 +1,5 @@
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
+<%@ taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt" %>
 <%@page contentType="text/html" pageEncoding="UTF-8" %>
 <%@ page import="com.springoeb.branch.model.Branch" %>
 <c:set var="contextPath" value="${pageContext.request.contextPath}"/>
@@ -179,9 +180,9 @@
                                                                                            var="p">
                                                                                     <option value="${p.promotionNo}"
                                                                                             discount="${p.discount}"
-                                                                                            menu_discount=""
+                                                                                            menu_discount="<c:forEach items="${p.menuGroupPromotions}" var="mg" varStatus="vs"><c:if test="${vs.index!=0}">|</c:if>${mg.menuGroupNo}</c:forEach>"
                                                                                             name="${p.promotionNameTH}">${p.promotionNameTH}
-                                                                                        (ลดราคา ${p.discount} %)
+                                                                                        (-<fmt:formatNumber value="${p.discount}" pattern="#0.00" /> %)
                                                                                     </option>
                                                                                 </c:forEach>
                                                                             </select>
@@ -247,13 +248,9 @@
                                 <div class="modal-footer">
                                     <!-- ปุ่มกดปิด (Close) ตรงส่วนล่างของ Modal -->
                                     <div class="col-md-9 col-sm-9 col-xs-12 col-md-offset-3">
-                                        <button class="btn btn-success" style="font-size: initial;"><i
-                                                class="fa fa-circle-o-notch fa-spin" style="display:none"></i>
-                                            ตกลง
-                                        </button>
                                         <button type="button" class="btn btn-default" style="font-size: initial"
                                                 id="closeModal">
-                                            ยกเลิก
+                                            ปิด
                                         </button>
                                     </div>
                                 </div>
@@ -282,7 +279,7 @@
     function refresh_table() {
         $.ajax({
             type: "POST",
-            url: "${contextPath}/cashier/getbills" ,
+            url: "${contextPath}/cashier/getbills",
             dataType: "json",
             success: function (json) {
                 //remove
@@ -306,7 +303,7 @@
                     var totalPerUnit = 0;
                     var complete = 0;
                     obj.orders.forEach(function (order) {
-                        totalPerUnit = order.quantity * order.amount;
+                        totalPerUnit = order.amount;
                         price += totalPerUnit;
                         if (order.status == 'served' || order.status == 'cancelled') {
                             complete++;
@@ -369,13 +366,12 @@
                 var str = '';
                 price = 0;
                 var totalPerUnit = 0;
-                console.log(result);
                 result.orders.forEach(function (order) {
-                    totalPerUnit = order.quantity * order.amount;
+                    totalPerUnit = order.amount;
                     str += '<tr>' +
                         '<td class="quantity" style="width: 15%">' + order.quantity + '</td>' +
                         '<td class="menu" style="width: 65%">' + order.menu.menuNameTH + '</td>' +
-                        '<td class="price_all_unit" style="width: 20%;text-align: center;">' + (totalPerUnit).toFixed(2) + '</td>' +
+                        '<td class="price_all_unit" style="width: 20%;text-align: center;">' + (order.menu.menuPrice * order.quantity).toFixed(2) + '</td>' +
                         '</tr>';
                     price += totalPerUnit;
                     order.orderAddOnList.forEach(function (addon) {
@@ -384,7 +380,6 @@
                             '<td class="menu" style="width: 65%"> ++ ' + addon.addOn.materialItem.matItemName + '</td>' +
                             '<td class="price_all_unit" style="width: 20%;text-align: center;">' + addon.addOn.price.toFixed(2) + '</td>' +
                             '</tr>';
-                        price += parseFloat(addon.addOn.price);
                     });
                     $('.menu_lists').html(str);
                 });
@@ -491,10 +486,22 @@
         discount = chosen_pro.attr('discount');
         if (discount != null && discount != '' && discount != 0) {
             // แบบไม่รวมทุกเมนู
+            money_discount = 0;
+            menu_discount = chosen_pro.attr('menu_discount').split('|');
             $("#proname").html(chosen_pro.attr('name'));
-            $("#prodis").html(discount + " %");
-            realprice = ((100 - discount) / 100) * price;
-            console.log(current_bill);
+            $("#prodis").html(parseFloat(discount).toFixed(2) + " %");
+            orders_arr = current_bill.orders;
+            orders_arr.forEach(function (order) {
+                menugroupno = order.menu.menuGroupNo;
+                if (menu_discount.indexOf("" + menugroupno) != -1) {
+                    money_discount += order.amount;
+//                    order.orderAddOnList.forEach(function(addon){
+//                        money_discount += addon.addOn.price;
+//                    });
+                }
+            });
+            money_discount = (discount / 100) * money_discount;
+            realprice = Math.floor(price - money_discount);
         } else {
             $("#proname").html(chosen_pro.attr('name'));
             $("#prodis").empty();
@@ -512,11 +519,11 @@
             if (discount.substr(discount.length - 1, 1) == '%') {
                 discount = discount.substr(0, discount.length - 1);
                 realprice = Math.floor(((100 - discount) / 100) * price);
-                $("#prodis").html(discount + ' %');
+                $("#prodis").html(parseInt(discount).toFixed(2) + ' %');
             } else {
-                if(!isNaN(discount)) {
+                if (!isNaN(discount)) {
                     realprice = Math.floor(price - discount);
-                    $("#prodis").html(discount + ' บาท');
+                    $("#prodis").html(parseInt(discount).toFixed(2) + ' บาท');
                 }
             }
         } else {
@@ -549,17 +556,6 @@
 
         #printableArea * {
             visibility: visible;
-        }
-        /*.modal{*/
-            /*position: absolute;*/
-            /*left: 0;*/
-            /*top: 0;*/
-            /*margin: 0;*/
-            /*padding: 0;*/
-            /*!*min-height:550px*!*/
-        /*}*/
-
-        #printableArea {
             position: absolute;
             left: 3cm;
             top: 0;
