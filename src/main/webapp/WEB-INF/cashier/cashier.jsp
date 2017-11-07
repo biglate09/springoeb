@@ -62,8 +62,8 @@
                                         <input type="hidden" name="billNo" id="hiddenbillno">
                                         <div class="row">
                                             <div class="col-md-6 col-xs-12">
-                                                <div id="printableArea">
-                                                    <div class="x_panel">
+                                                <div class="x_panel">
+                                                    <div id="printableArea">
                                                         <div class="x_title">
                                                             <div style="text-align: center;font-size: larger">
                                                                 ใบเสร็จรับเงิน
@@ -95,29 +95,31 @@
                                                                         <tbody class="menu_lists">
                                                                         </tbody>
                                                                     </table>
-                                                                    <div class="col-md-12 col-sm-12 col-xs-12"
-                                                                         style="font-weight:bold;">
-                                                                        <span class="col-md-4">ยอดรวม</span>
-                                                                        <span class="col-md-8 sumprice"
-                                                                              style="text-align:right;"></span>
-                                                                    </div>
                                                                 </div>
                                                                 <div class="ln_solid"></div>
                                                                 <div class="form-group">
-                                                                    <span class="col-md-2">-----</span>
-                                                                    <span class="col-md-7" id="proname"
-                                                                          style="white-space:nowrap;overflow:hidden;text-overflow: ellipsis;padding:0px;">ไม่มีโปรโมชั่น</span>
-                                                                    <span class="col-md-3" id="prodis"
-                                                                          style="text-align:right;"></span>
                                                                     <div class="col-md-12 col-sm-12 col-xs-12">
-                                                                        <label class="inline-label col"
+                                                                        <label class="inline-label">ยอดเงินรวม</label>
+                                                                        <div style="text-align:right;margin-right: 5%;">
+                                                                            <span class="sumprice"></span> บาท
+                                                                        </div>
+                                                                    </div>
+                                                                    <div class="col-md-12 col-sm-12 col-xs-12" style="text-align: right">
+                                                                        <%--<span class="col-md-2">-----</span>--%>
+                                                                        <span class="col-md-6" id="proname"
+                                                                              style="white-space:nowrap;overflow:hidden;text-overflow: ellipsis;padding:0px;text-align: left">ไม่มีโปรโมชั่น</span>
+                                                                        <span id="prodis"
+                                                                              style="text-align:right;margin-right: 5%;"></span>
+                                                                    </div>
+                                                                    <div class="col-md-12 col-sm-12 col-xs-12" style="font-size: larger">
+                                                                        <label class="inline-label"
                                                                                for="price">ยอดเงินสุทธิ </label>
                                                                         <div id="price"
                                                                              style="margin-right: 5%;text-align: right">
                                                                             <span class="totalprice"></span> บาท
                                                                         </div>
                                                                     </div>
-                                                                    <div class="col-md-12 inline-label">
+                                                                    <div class="col-md-12 col-sm-12 col-xs-12">
                                                                         <label class="inline-label" for="change_bill">เงินทอน </label>
                                                                         <div id="change_bill"
                                                                              style="margin-right: 5%;text-align: right">
@@ -127,8 +129,8 @@
                                                                     <div class="col-md-12 col-sm-12 col-xs-12"
                                                                          id="promotion"></div>
                                                                     <div class="col-md-12 col-sm-12 col-xs-12"
-                                                                         style="text-align: center">****
-                                                                        ขอบคุณที่ใช้บริการ ****
+                                                                         style="text-align: center">********
+                                                                        ขอบคุณที่ใช้บริการ ********
                                                                     </div>
                                                                 </div>
                                                             </form>
@@ -549,54 +551,66 @@
         float: left;
     }
 
+    /*@media print {*/
+        /*body * {*/
+            /*visibility: hidden;*/
+        /*}*/
+
+        /*#printableArea * {*/
+            /*visibility: visible;*/
+            /*position: absolute;*/
+            /*left: 0;*/
+            /*top: 0;*/
+            /*width: 57mm;*/
+        /*}*/
+
+        /*body {*/
+            /*width: 57mm;*/
+        /*}*/
+    /*}*/
+
     @media print {
         body * {
             visibility: hidden;
         }
-
-        #printableArea * {
+        #printableArea , #printableArea * {
             visibility: visible;
+        }
+        #printableArea {
             position: absolute;
-            left: 3cm;
+            left: 3.5cm;
             top: 0;
-            margin: 0;
             padding: 0;
-            width: 4in;
+            margin: 0;
+            width: 5in;
         }
 
-        body {
-            width: 4in;
-        }
-    }
 
-    @page :left {
-        margin-left: 1cm;
     }
     @page :right {
-        margin-right: 1cm;
+        margin-right: 0;
     }
-
     @page {
         margin: 0;
-        size: 5.5in 8.5in;
+        size: auto;
     }
     @media only print, print {
-        body.non-print #product-nav,
-        body.non-print #product-content,
-        body.non-print #sales-forms-container,
-        body.non-print #tab-quote,
-        body.non-print #tab-upgrade,
-        body.non-print #tab-contact,
-        body.non-print #sales-form-phone,
-        body.non-print .product-jumbo-strech .bottom-wrapper,
-        body.non-print .panel-block-text,
-        body.non-print footer,
+        /*body.non-print #product-nav,*/
+        /*body.non-print #product-content,*/
+        /*body.non-print #sales-forms-container,*/
+        /*body.non-print #tab-quote,*/
+        /*body.non-print #tab-upgrade,*/
+        /*body.non-print #tab-contact,*/
+        /*body.non-print #sales-form-phone,*/
+        /*body.non-print .product-jumbo-strech .bottom-wrapper,*/
+        /*body.non-print .panel-block-text,*/
+        /*body.non-print footer,*/
         .modal-backdrop.toPrint {
             display: none !important;
             visibility: hidden !important;
         }
         .modal.toPrint {
-            position: relative;
+            position: absolute;
             overflow: hidden;
             visibility:visible;
             width: 100%;
