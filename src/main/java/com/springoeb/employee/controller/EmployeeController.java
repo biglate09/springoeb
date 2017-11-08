@@ -50,9 +50,9 @@ public class EmployeeController {
     @RequestMapping("/index")
     public String toEmployeeIndex(HttpSession session) {
         BranchUser branchUser = (BranchUser) (session.getAttribute("branchUser"));
-        if(branchUser.getRoleNo() == Role.MANAGER) {
+        if (branchUser.getRoleNo() == Role.MANAGER) {
             return EMP_PATH + "empindex.jsp";
-        }else{
+        } else {
             return "/404error.jsp";
         }
     }
@@ -175,18 +175,19 @@ public class EmployeeController {
     @RequestMapping("/position")
     public String toEmployeePositionIndex(HttpSession session) {
         BranchUser branchUser = (BranchUser) (session.getAttribute("branchUser"));
-        if(branchUser.getRoleNo() == Role.MANAGER) {
+        if (branchUser.getRoleNo() == Role.MANAGER) {
             return EMP_PATH + "emppos.jsp";
-        }else{
+        } else {
             return "/404error.jsp";
         }
     }
 
     @PostMapping("/manageemployeeposition")
     public void addAndEditPosition(@ModelAttribute("employeePosition") EmployeePosition employeePosition, HttpServletRequest request, HttpServletResponse response, HttpSession session) throws Exception {
-        int branchNo = ((BranchUser) (session.getAttribute("branchUser"))).getBranchNo();
+        BranchUser branchUser = (BranchUser) (session.getAttribute("branchUser"));
 //        if (!employeePositionService.chkDuplicateEmpPosisitonName(employeePosition.getEmpPosName())) {
-            employeePositionService.save(employeePosition);
+        employeePosition.setRestNo(branchUser.getBranch().getRestNo());
+        employeePositionService.save(employeePosition);
 //        } else {
 //            throw new Exception();
 //        }
@@ -225,11 +226,11 @@ public class EmployeeController {
     public String toEmployeeWorkHistory(Model model, HttpSession session) {
         BranchUser branchUser = (BranchUser) (session.getAttribute("branchUser"));
         int branchNo = branchUser.getBranchNo();
-        if(branchUser.getRoleNo() == Role.MANAGER) {
+        if (branchUser.getRoleNo() == Role.MANAGER) {
             List<Employee> employees = employeeService.findByBranchNo(branchNo);
             model.addAttribute("employees", employees);
             return EMP_PATH + "empworkhist.jsp";
-        }else{
+        } else {
             return "/404error.jsp";
         }
     }
@@ -347,7 +348,7 @@ public class EmployeeController {
         String toddmmyyyy = filterDate.substring(13, 23);
         Date fromDate = Date.valueOf(fromddmmyyyy.substring(6, 10) + "-" + fromddmmyyyy.substring(3, 5) + "-" + fromddmmyyyy.substring(0, 2));
         Date toDate = Date.valueOf(toddmmyyyy.substring(6, 10) + "-" + toddmmyyyy.substring(3, 5) + "-" + toddmmyyyy.substring(0, 2));
-        List<WorkHistory> workHistories = (empNo == null || empNo.equals("") ? workHistoryService.findByWorkDate(fromDate, toDate) : workHistoryService.findByEmpNoAndWorkDate(Integer.parseInt(empNo),fromDate,toDate));
+        List<WorkHistory> workHistories = (empNo == null || empNo.equals("") ? workHistoryService.findByWorkDate(fromDate, toDate) : workHistoryService.findByEmpNoAndWorkDate(Integer.parseInt(empNo), fromDate, toDate));
         for (WorkHistory wh : workHistories) {
             wh.setEmpName(wh.getEmployee().getEmpName());
         }
@@ -361,11 +362,11 @@ public class EmployeeController {
     public String toEmployeePayIndex(Model model, HttpSession session) {
         BranchUser branchUser = (BranchUser) (session.getAttribute("branchUser"));
         int branchNo = branchUser.getBranchNo();
-        if(branchUser.getRoleNo() == Role.MANAGER || branchUser.getRoleNo() == Role.EMPLOYEE) {
+        if (branchUser.getRoleNo() == Role.MANAGER || branchUser.getRoleNo() == Role.EMPLOYEE) {
             List<Employee> employees = employeeService.findByBranchNo(branchNo);
             model.addAttribute("employees", employees);
             return EMP_PATH + "/emppaid.jsp";
-        }else{
+        } else {
             return "/404error.jsp";
         }
     }
@@ -396,7 +397,7 @@ public class EmployeeController {
             List<EmployeeTable> employeeTables = employeeTableService.findByEmpNo(branchUser.getEmpNo());
             model.addAttribute("employeeTables", employeeTables);
             return EMP_PATH + "/emptable.jsp";
-        } else if(branchUser.getRoleNo() == Role.MANAGER){
+        } else if (branchUser.getRoleNo() == Role.MANAGER) {
             List<EmployeeTable> employeeTables = employeeTableService.findAll(branchNo);
             List<Employee> employees = employeeService.findByBranchNo(branchNo);
             List<EmployeePosition> employeePositions = employeePositionService.findAll(branchUser.getBranch().getRestNo());
@@ -404,7 +405,7 @@ public class EmployeeController {
             model.addAttribute("employeePositions", employeePositions);
             model.addAttribute("employeeTables", employeeTables);
             return EMP_PATH + "/emptable.jsp";
-        }else{
+        } else {
             return EMP_PATH + "/404error.jsp";
         }
     }
@@ -451,18 +452,18 @@ public class EmployeeController {
     @RequestMapping("/check")
     public String toEmployeeCheck(Model model, HttpSession session) {
         BranchUser branchUser = ((BranchUser) (session.getAttribute("branchUser")));
-        if(branchUser.getRoleNo() == Role.MANAGER) {
+        if (branchUser.getRoleNo() == Role.MANAGER) {
             int branchNo = branchUser.getBranchNo();
             Date date = new Date(System.currentTimeMillis());
-            if(branchUser.getEmpNo() == null) {
+            if (branchUser.getEmpNo() == null) {
                 List<EmployeeTable> employeeTables = employeeTableService.findEmployeeTableNow(branchNo, date);
                 model.addAttribute("employeeTables", employeeTables);
-            }else{
-                List<EmployeeTable> employeeTables = employeeTableService.findEmployeeTableNowByEmpNo(branchNo, date,branchUser.getEmpNo());
+            } else {
+                List<EmployeeTable> employeeTables = employeeTableService.findEmployeeTableNowByEmpNo(branchNo, date, branchUser.getEmpNo());
                 model.addAttribute("employeeTables", employeeTables);
             }
             return EMP_PATH + "empcheck.jsp";
-        }else{
+        } else {
             return "/404error.jsp";
         }
     }
