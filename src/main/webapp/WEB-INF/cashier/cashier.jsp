@@ -101,22 +101,26 @@
                                                                     <div class="col-md-12 col-sm-12 col-xs-12">
                                                                         <label class="inline-label">ยอดเงินรวม</label>
                                                                         <div style="text-align:right;margin-right: 5%;">
-                                                                            <span class="sumprice"></span> บาท
+                                                                            <span class="sumprice reset_element"></span>
+                                                                            บาท
                                                                         </div>
                                                                     </div>
-                                                                    <div class="col-md-12 col-sm-12 col-xs-12" style="text-align: right">
+                                                                    <div class="col-md-12 col-sm-12 col-xs-12"
+                                                                         style="text-align: right;display:none;">
                                                                         <%--<span class="col-md-2">-----</span>--%>
                                                                         <span class="col-md-6" id="proname"
-                                                                              style="white-space:nowrap;overflow:hidden;text-overflow: ellipsis;padding:0px;text-align: left">ไม่มีโปรโมชั่น</span>
+                                                                              style="white-space:nowrap;overflow:hidden;text-overflow: ellipsis;padding:0px;text-align: left"></span>
                                                                         <span id="prodis"
                                                                               style="text-align:right;margin-right: 5%;"></span>
                                                                     </div>
-                                                                    <div class="col-md-12 col-sm-12 col-xs-12" style="font-size: larger">
+                                                                    <div class="col-md-12 col-sm-12 col-xs-12"
+                                                                         style="font-size: larger">
                                                                         <label class="inline-label"
                                                                                for="price">ยอดเงินสุทธิ </label>
                                                                         <div id="price"
                                                                              style="margin-right: 5%;text-align: right">
-                                                                            <span class="totalprice"></span> บาท
+                                                                            <span class="totalprice reset_element"></span>
+                                                                            บาท
                                                                         </div>
                                                                     </div>
                                                                     <div class="col-md-12 col-sm-12 col-xs-12">
@@ -137,7 +141,8 @@
                                                         </div>
                                                     </div>
                                                 </div>
-                                                <button <%--onclick="printDiv('printableArea')"--%> onClick="window.print();return false" class="btn btn-success"
+                                                <button <%--onclick="printDiv('printableArea')"--%>
+                                                        onClick="window.print();return false" class="btn btn-success"
                                                         style="margin-left: 40%"><i class="fa fa-print"
                                                                                     aria-hidden="true"></i> พิมพ์ใบเสร็จ
                                                 </button>
@@ -184,7 +189,9 @@
                                                                                             discount="${p.discount}"
                                                                                             menu_discount="<c:forEach items="${p.menuGroupPromotions}" var="mg" varStatus="vs"><c:if test="${vs.index!=0}">|</c:if>${mg.menuGroupNo}</c:forEach>"
                                                                                             name="${p.promotionNameTH}">${p.promotionNameTH}
-                                                                                        (-<fmt:formatNumber value="${p.discount}" pattern="#0.00" /> %)
+                                                                                        (-<fmt:formatNumber
+                                                                                                value="${p.discount}"
+                                                                                                pattern="#0.00"/> %)
                                                                                     </option>
                                                                                 </c:forEach>
                                                                             </select>
@@ -212,7 +219,8 @@
                                                                            for="totalprice">ยอดเงินสุทธิ</label>
                                                                     <div id="totalprice"
                                                                          style="margin-right: 5%;text-align: right">
-                                                                        <span class="totalprice"></span> บาท
+                                                                        <span class="totalprice reset_element"></span>
+                                                                        บาท
                                                                     </div>
                                                                 </div>
                                                                 <div class="col-md-12 inline-label" for="receive">
@@ -343,6 +351,8 @@
 
     function reset_field() {
         $(".reset_field").val('');
+        $(".reset_element").html('');
+        $("#select_promotion").val('');
         $("#done").css('display', 'none');
         $(".flat").iCheck('uncheck');
         $(".not_use_pro").iCheck('check');
@@ -371,7 +381,7 @@
                 result.orders.forEach(function (order) {
                     totalPerUnit = order.amount;
                     str += '<tr>' +
-                        '<td class="quantity" style="width: 15%">' + order.quantity + '</td>' +
+                        '<td class="quantity" style="width: 15%">' + (order.quantity == 0 ? '-' : order.quantity) + '</td>' +
                         '<td class="menu" style="width: 65%">' + order.menu.menuNameTH + '</td>' +
                         '<td class="price_all_unit" style="width: 20%;text-align: center;">' + (order.menu.menuPrice * order.quantity).toFixed(2) + '</td>' +
                         '</tr>';
@@ -388,6 +398,8 @@
                 $('.sumprice').html(price.toFixed(2));
                 $('.totalprice').html(price.toFixed(2));
                 realprice = price;
+            }, error: function () {
+                swal("ไม่สำเร็จ", "กรุณาเช็คสัญญาณอินเทอร์เน็ต", "error");
             }
         });
     }
@@ -415,43 +427,49 @@
         }
     }
 
-    ( function($) {
-        $(document).ready(function(){
+    (function ($) {
+        $(document).ready(function () {
             // Add Print Classes for Modal
-            $('.modal').on('shown.bs.modal',function() {
+            $('.modal').on('shown.bs.modal', function () {
                 $('.modal,.modal-backdrop').addClass('toPrint');
                 $('body').addClass('non-print');
             });
             // Remove classes
-            $('.modal').on('hidden.bs.modal',function() {
+            $('.modal').on('hidden.bs.modal', function () {
                 $('.modal,.modal-backdrop').removeClass('toPrint');
                 $('body').removeClass('non-print');
             });
         });
-    })( jQuery );
+    })(jQuery);
 
-//    function printDiv(divName) {
-//        var printContents = document.getElementById(divName).innerHTML;
-//        var originalContents = document.body.innerHTML;
-//        document.body.innerHTML = printContents;
-//        window.print();
-//        document.body.innerHTML = originalContents;
-////        location.reload(true);
-//    }
+    //    function printDiv(divName) {
+    //        var printContents = document.getElementById(divName).innerHTML;
+    //        var originalContents = document.body.innerHTML;
+    //        document.body.innerHTML = printContents;
+    //        window.print();
+    //        document.body.innerHTML = originalContents;
+    ////        location.reload(true);
+    //    }
     $("#closeModal").click(function () {
         $("#cashier").modal("hide");
     });
 
     $("#confirm").click(function () {
-        $.ajax({
-            type: "POST",
-            url: "${contextPath}/cashier/checkbill/" + billNoCurrent,
-            data: {totalAmount: realprice},
-            success: function (result) {
-                swal("สำเร็จ", "ยืนยันการจ่ายเงินเรียบร้อย", "success");
-                $("#done").css('display', 'inline-block');
-            }
-        });
+        if ($("receive").val() >= realprice) {
+            $.ajax({
+                type: "POST",
+                url: "${contextPath}/cashier/checkbill/" + billNoCurrent,
+                data: {totalAmount: realprice},
+                success: function (result) {
+                    swal("สำเร็จ", "ยืนยันการจ่ายเงินเรียบร้อย", "success");
+                    $("#done").css('display', 'inline-block');
+                }, error: function (result) {
+                    swal("ไม่สำเร็จ", "ออเดอร์ยังเสิร์ฟไม่ครบ กรุณาลองใหม่ภายหลัง", "error");
+                }
+            });
+        } else {
+            swal("ไม่สำเร็จ", "จำนวนเงินที่รับ น้อยกว่าค่าอาหารทั้งหมด", "error");
+        }
         return false;
     });
 
@@ -467,7 +485,8 @@
 
     $(".protype").on('ifChanged', function () {
         if ($(this).attr('protype') == 'not_use_pro') {
-            $("#proname").html("ไม่มีโปรโมชั่น");
+            $("#proname").parent().css('display', 'none');
+            $("#proname").html("");
             $("#prodis").empty();
             realprice = price;
             cal_change();
@@ -490,6 +509,7 @@
             // แบบไม่รวมทุกเมนู
             money_discount = 0;
             menu_discount = chosen_pro.attr('menu_discount').split('|');
+            $("#proname").parent().css('display', 'inline-block');
             $("#proname").html(chosen_pro.attr('name'));
             $("#prodis").html(parseFloat(discount).toFixed(2) + " %");
             orders_arr = current_bill.orders;
@@ -505,7 +525,8 @@
             money_discount = (discount / 100) * money_discount;
             realprice = Math.floor(price - money_discount);
         } else {
-            $("#proname").html(chosen_pro.attr('name'));
+            $("#proname").parent().css('display', 'none');
+            $("#proname").html('');
             $("#prodis").empty();
             realprice = price;
         }
@@ -517,6 +538,7 @@
         chosen_discount = $("#distype");
         discount = chosen_discount.val();
         if (discount.length > 0) {
+            $("#proname").parent().css('display','inline-block');
             $("#proname").html('โปรโมชั่นลดพิเศษ');
             if (discount.substr(discount.length - 1, 1) == '%') {
                 discount = discount.substr(0, discount.length - 1);
@@ -529,7 +551,8 @@
                 }
             }
         } else {
-            $("#proname").html("ไม่มีโปรโมชั่น");
+            $("#proname").parent().css('display', 'none');
+            $("#proname").html("");
             $("#prodis").empty();
             realprice = price;
         }
@@ -552,30 +575,32 @@
     }
 
     /*@media print {*/
-        /*body * {*/
-            /*visibility: hidden;*/
-        /*}*/
+    /*body * {*/
+    /*visibility: hidden;*/
+    /*}*/
 
-        /*#printableArea * {*/
-            /*visibility: visible;*/
-            /*position: absolute;*/
-            /*left: 0;*/
-            /*top: 0;*/
-            /*width: 57mm;*/
-        /*}*/
+    /*#printableArea * {*/
+    /*visibility: visible;*/
+    /*position: absolute;*/
+    /*left: 0;*/
+    /*top: 0;*/
+    /*width: 57mm;*/
+    /*}*/
 
-        /*body {*/
-            /*width: 57mm;*/
-        /*}*/
+    /*body {*/
+    /*width: 57mm;*/
+    /*}*/
     /*}*/
 
     @media print {
         body * {
             visibility: hidden;
         }
-        #printableArea , #printableArea * {
+
+        #printableArea, #printableArea * {
             visibility: visible;
         }
+
         #printableArea {
             position: absolute;
             left: 3.5cm;
@@ -585,15 +610,17 @@
             width: 5in;
         }
 
-
     }
+
     @page :right {
         margin-right: 0;
     }
+
     @page {
         margin: 0;
         size: auto;
     }
+
     @media only print, print {
         /*body.non-print #product-nav,*/
         /*body.non-print #product-content,*/
@@ -609,16 +636,19 @@
             display: none !important;
             visibility: hidden !important;
         }
+
         .modal.toPrint {
             position: absolute;
             overflow: hidden;
-            visibility:visible;
+            visibility: visible;
             width: 100%;
             font-size: 80%;
         }
+
         .modal.toPrint .nav .li {
             visibility: hidden;
         }
+
         .modal.toPrint .nav .li.active {
             visibility: visible;
         }

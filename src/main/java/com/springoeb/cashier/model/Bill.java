@@ -24,6 +24,8 @@ public class Bill {
     private String status;
     @Column(name = "tableNo",updatable = true,insertable = true)
     private Integer tableNo;
+    @Column(name = "promotionNo")
+    private Integer promotionNo;
     @ManyToOne
     @JoinColumn(name = "tableNo",updatable = false,insertable = false)
     private Table table;
@@ -96,5 +98,13 @@ public class Bill {
 
     public void setOrders(List<Order> orders) {
         this.orders = orders;
+    }
+
+    public Integer getPromotionNo() {
+        return promotionNo;
+    }
+
+    public void setPromotionNo(Integer promotionNo) {
+        this.promotionNo = promotionNo;
     }
 }

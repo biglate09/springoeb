@@ -3,6 +3,7 @@ package com.springoeb.cashier.controller;
 import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.springoeb.cashier.model.Bill;
+import com.springoeb.cashier.model.Order;
 import com.springoeb.cashier.service.BillService;
 import com.springoeb.promotion.model.Promotion;
 import com.springoeb.promotion.service.PromotionService;
@@ -56,12 +57,26 @@ public class CashierController {
 
     @ResponseBody
     @PostMapping("/checkbill/{billNo}")
-    public void checkBill(@PathVariable("billNo") int billNo, HttpServletRequest request){
+    public void checkBill(@PathVariable("billNo") int billNo, HttpServletRequest request) throws Exception {
         Bill bill = billService.findByBillNo(billNo);
-        Double totalAmount = Double.parseDouble(request.getParameter("totalAmount"));
-        bill.setTotalAmount(totalAmount);
-        bill.setStatus(Bill.PAID);
-        billService.save(bill);
+        List<Order> orders = bill.getOrders();
+        int order_count = 0;
+        for(Order o : orders){
+            if(o.getStatus().equals(Order.SERVED) || o.getStatus().equals(Order.CANCELLED)){
+                order_count++;
+            }else{
+                break;
+            }
+        }
+
+        if(order_count == orders.size()) {
+            Double totalAmount = Double.parseDouble(request.getParameter("totalAmount"));
+            bill.setTotalAmount(totalAmount);
+            bill.setStatus(Bill.PAID);
+            billService.save(bill);
+        }else{
+            throw new Exception();
+        }
     }
     //-----------------------------------------------------------------------------------------------------------//
 }

@@ -19,9 +19,9 @@ public class Order {
     private Double amount;
     @Column(name = "orderStatus")
     private String status;
-    @Column(name = "date")
+    @Column(name = "orderDate")
     private Date date;
-    @Column(name = "time")
+    @Column(name = "orderTime")
     private Time time;
     @Column(name = "billNo",updatable = true,insertable = true)
     private Integer billNo;
