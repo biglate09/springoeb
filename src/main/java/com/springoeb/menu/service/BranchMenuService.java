@@ -1,6 +1,7 @@
 package com.springoeb.menu.service;
 
 import com.fasterxml.jackson.core.JsonProcessingException;
+import com.fasterxml.jackson.databind.ObjectMapper;
 import com.springoeb.cashier.model.Order;
 import com.springoeb.cashier.repository.OrderRepository;
 import com.springoeb.menu.model.BranchMenu;
@@ -52,7 +53,7 @@ public class BranchMenuService {
     public Map<String, Long> getBestSaleMenu(int branchNo, String fromDateUnformat, String toDateUnformat) throws JsonProcessingException {
         Map<String, Long> menuMaps = new LinkedHashMap<String, Long>();
         Date fromDate = null, toDate = null;
-        if(!fromDateUnformat.equals("0") && !toDateUnformat.equals("0")) {
+        if (!fromDateUnformat.equals("0") && !toDateUnformat.equals("0")) {
             fromDate = Date.valueOf(fromDateUnformat.substring(6, 10) + fromDateUnformat.substring(2, 5) + "-" + fromDateUnformat.substring(0, 2));
             toDate = Date.valueOf(toDateUnformat.substring(6, 10) + toDateUnformat.substring(2, 5) + "-" + toDateUnformat.substring(0, 2));
         }
@@ -60,13 +61,13 @@ public class BranchMenuService {
         for (BranchMenu bm : branchMenus) {
             int menuNo = bm.getMenuNo();
             Long sum = new Long(0);
-            if(fromDate != null && toDate != null){
-                sum = orderRepository.sumByMenuNoAndDateIsBetween(menuNo,fromDate,toDate,Order.SERVED);
+            if (fromDate != null && toDate != null) {
+                sum = orderRepository.sumByMenuNoAndDateIsBetween(menuNo, fromDate, toDate, Order.SERVED);
             }
 
-//            if (sum != null && sum > 0) {
-                menuMaps.put(bm.getMenu().getMenuNameTH(), sum == null ? 0 : sum);
-//            }
+            ObjectMapper mapper = new ObjectMapper();
+            String json = mapper.writeValueAsString(bm.getMenu());
+            menuMaps.put(json, sum == null ? 0 : sum);
         }
         return menuMaps;
     }
@@ -75,7 +76,7 @@ public class BranchMenuService {
         Map<String, Long> menuMaps = new LinkedHashMap<String, Long>();
         Date fromDate = null, toDate = null;
 
-        if(!fromDateUnformat.equals("0") && !toDateUnformat.equals("0")) {
+        if (!fromDateUnformat.equals("0") && !toDateUnformat.equals("0")) {
             fromDate = Date.valueOf(fromDateUnformat.substring(6, 10) + fromDateUnformat.substring(2, 5) + "-" + fromDateUnformat.substring(0, 2));
             toDate = Date.valueOf(toDateUnformat.substring(6, 10) + toDateUnformat.substring(2, 5) + "-" + toDateUnformat.substring(0, 2));
         }
@@ -83,18 +84,18 @@ public class BranchMenuService {
         for (BranchMenu bm : branchMenus) {
             int menuNo = bm.getMenuNo();
             Long sum = new Long(0);
-            if(fromDate != null && toDate != null){
-                sum = orderRepository.sumByMenuNoAndDateIsBetween(menuNo,fromDate,toDate,Order.SERVED);
+            if (fromDate != null && toDate != null) {
+                sum = orderRepository.sumByMenuNoAndDateIsBetween(menuNo, fromDate, toDate, Order.SERVED);
             }
 
-//            if (sum != null && sum > 0) {
-                menuMaps.put(bm.getMenu().getMenuNameTH(), sum == null ? 0 : sum);
-//            }
+            ObjectMapper mapper = new ObjectMapper();
+            String json = mapper.writeValueAsString(bm.getMenu());
+            menuMaps.put(json, sum == null ? 0 : sum);
         }
         return menuMaps;
     }
 
-    public List<BranchMenu> getMenuByBranchNo(int branchNo){
+    public List<BranchMenu> getMenuByBranchNo(int branchNo) {
         return branchMenuRepository.findByBranchNoAndAvailable(branchNo, true);
     }
 }
