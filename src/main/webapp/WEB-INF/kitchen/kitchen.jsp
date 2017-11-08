@@ -70,7 +70,8 @@
                                             <select id="cancel_table" class="form-control">
                                                 <option disabled selected value="">เลือกโต๊ะ</option>
                                                 <c:forEach items="${tables}" var="t">
-                                                    <option value="${t.tableNo}" class="table_opt">${t.tableName}</option>
+                                                    <option value="${t.tableNo}"
+                                                            class="table_opt">${t.tableName}</option>
                                                 </c:forEach>
                                             </select>
                                         </div>
@@ -155,10 +156,10 @@
                             orderNo += "-";
                         }
                         orderNo += val.orderNo;
-                        if(cancelmenu != ""){
+                        if (cancelmenu != "") {
                             cancelmenu += "|";
                         }
-                        cancelmenu += val.table.tableNo + "," + val.qty;
+                        cancelmenu += val.table.tableNo + "," + val.qty + "," + val.orderNo;
                     });
                     var addon_str = "";
                     obj.addOns.forEach(function (addOn) {
@@ -177,7 +178,7 @@
                         status: (obj.status == 'reserved' ? '<a onclick="change_status(\'' + orderNo + '\')" class="btn btn-secondary"><i class="fa fa-circle-o-notch fa-spin" id="loading' + orderNo + '" style="display:none"></i> จองไว้แล้ว</a>' :
                             obj.status == 'waiting' ? '<a onclick="change_status(\'' + orderNo + '\')" class="btn btn-default"><i class="fa fa-circle-o-notch fa-spin" id="loading' + orderNo + '" style="display:none"></i> ปรุงอาหาร</a>' :
                                 obj.status == 'cooking' ? '<a onclick="change_status(\'' + orderNo + '\')" class="btn btn-primary"><i class="fa fa-circle-o-notch fa-spin" id="loading' + orderNo + '" style="display:none"></i> ปรุงสำเร็จ</a>' : '' ) +
-                        '<a class="btn btn-danger" data-toggle="modal" data-target="#cancelmenu" onclick="set_cancel_option(\''+cancelmenu+'\')">ยกเลิกเมนู</a>'
+                        '<a class="btn btn-danger" data-toggle="modal" data-target="#cancelmenu" onclick="set_cancel_option(\'' + cancelmenu + '\')">ยกเลิกเมนู</a>'
                     };
                     data_array.push(data_refresh);
                 }
@@ -202,29 +203,31 @@
         });
     }
 
-    function set_cancel_option(table_option){
+    function set_cancel_option(table_option) {
         var tb_option = table_option.split('|');
-        $(".table_opt").css('display','none');
-        $(".table_opt").attr('qty','');
-        tb_option.forEach(function(tb){
+        $(".table_opt").css('display', 'none');
+        $(".table_opt").attr('qty', '');
+        $(".table_opt").attr('orderNo', '');
+        tb_option.forEach(function (tb) {
             tb = tb.split(',');
-            $(".table_opt[value='" + tb[0] + "']").css('display','inline-block');
-            $(".table_opt[value='" + tb[0] + "']").attr('qty',tb[1]);
+            $(".table_opt[value='" + tb[0] + "']").css('display', 'inline-block');
+            $(".table_opt[value='" + tb[0] + "']").attr('orderNo', tb[2]);
+            $(".table_opt[value='" + tb[0] + "']").attr('qty', tb[1]);
         });
     }
 
-    $("#cancel_table").change(function(){
+    $("#cancel_table").change(function () {
         max = $("#cancel_table option:selected").attr('qty');
         $("#quantity").html('<option disabled="" selected="" value="">เลือกจำนวนที่ยกเลิก</option>');
-        for(var i = 1 ; i <= max ; i++){
-            $("#quantity").append('<option value="'+i+'">'+i+'</option>');
+        for (var i = 1; i <= max; i++) {
+            $("#quantity").append('<option value="' + i + '">' + i + '</option>');
         }
     });
 
-    function cancel_menu(orderNo) {
+    $("#cancel_menu").submit(function () {
         swal({
-                title: "ยืนยันการยกเลิกออเดอร์ที่ " + orderNo,
-                text: "เมื่อยืนยัน ออเดอร์ที่ " + orderNo + " ของโต๊ะ " + tableName + " จะถูกยกเลิก",
+                title: "ยืนยันการยกเลิกออเดอร์หรือไม่",
+                text: "เมื่อยืนยัน ออเดอร์ของจะถูกยกเลิก",
                 type: "warning",
                 showCancelButton: true,
                 confirmButtonColor: "#DD6B55",
@@ -233,12 +236,12 @@
                 closeOnConfirm: false
             },
             function () {
+                var a = $("#cancel_table option:selected").val();
                 $.ajax({
                     type: "DELETE",
-                    url: "${contextPath}/kitchen/cancelorder/" + orderNo,
-                    dataType: "json",
+                    url: "${contextPath}/kitchen/cancelorder/" + $("#cancel_table option:selected").attr('orderNo') + "-" + $("#quantity option:selected").val() + "-" + $("#cancel_table option:selected").val(),
                     success: function (result) {
-                        swal("สำเร็จ", "ออเดอร์ที่ " + orderNo + " ถูกยกเลิกเรียบร้อยแล้ว", "success");
+                        swal("สำเร็จ", "ออเดอร์ถูกยกเลิกเรียบร้อยแล้ว", "success");
                         refresh_table();
                     }, error: function (xhr, status, error) {
                         swal("ไม่สำเร็จ", "กรุณาลองใหม่ในภายหลัง", "error");
@@ -246,6 +249,7 @@
                 });
             }
         );
-    }
+        return false;
+    });
 </script>
 </html>
