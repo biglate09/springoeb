@@ -8,6 +8,11 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.test.context.junit4.SpringRunner;
 
+import javax.servlet.http.HttpServletRequest;
+import java.io.BufferedWriter;
+import java.io.FileWriter;
+import java.io.IOException;
+
 @RunWith(SpringRunner.class)
 @SpringBootTest
 public class SpringoebApplicationTests {
@@ -17,6 +22,6 @@ public class SpringoebApplicationTests {
 	private BranchMenuService branchMenuService;
 
 	@Test
-	public void setupTest() {
+	public void setupTest() throws IOException {
 	}
 }

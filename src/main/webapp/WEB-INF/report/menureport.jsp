@@ -30,8 +30,10 @@
                             <div class="col-md-5"><h2>เมนูเดี่ยวขายดี (10 อันดับ)</h2></div>
                             <div class="col-md-6">
                                 <div class="col-md-9" style="padding-right:0px;">
-                                    <input type="text" name="filterdate" id="filterdate_menu"
-                                           class="form-control daterange" value="${minDateMenu != null ? minDateMenu : today} - ${maxDateMenu != null ? maxDateMenu : today}" required>
+                                    <input name="menu" type="text" id="filterdate_menu"
+                                           class="form-control daterange"
+                                           value="${minDateMenu != null ? minDateMenu : today} - ${maxDateMenu != null ? maxDateMenu : today}"
+                                           required>
                                 </div>
                                 <div class="input-group-btn">
                                     <button class="btn btn-default"
@@ -41,20 +43,24 @@
                                 </div>
                             </div>
                             <ul class="nav navbar-right panel_toolbox" style="min-width: 0px">
-                                <li><a class="collapse-link"><i class="fa fa-chevron-up right"></i></a>
-                                </li>
+                                <li><a title="ออกรายงาน excel" class="download" download="menu"><i class="fa fa-file-excel-o right" style="color:black"></i></a></li>
+                                <li><a class="collapse-link"><i class="fa fa-chevron-up right"></i></a></li>
                             </ul>
                             <div class="clearfix"></div>
                         </div>
                         <div class="x_content">
                             <div id="pie_menu" style="height:400px;">
                             </div>
-                            <div id="loadingmenu" style="position:absolute;top:50%;left:50%;transform:translate(-50%,-50%);"><i class="fa-li fa fa-spinner fa-spin"></i></div>
-                            <div id="menu_null" style="display:none;position:absolute;top:50%;left:50%;transform:translate(-50%,-50%);z-index:99999;">ไม่พบข้อมูลจากเงื่อนไขที่ท่านค้นหา</div>
+                            <div id="loadingmenu"
+                                 style="position:absolute;top:50%;left:50%;transform:translate(-50%,-50%);"><i
+                                    class="fa-li fa fa-spinner fa-spin"></i></div>
+                            <div id="menu_null"
+                                 style="display:none;position:absolute;top:50%;left:50%;transform:translate(-50%,-50%);z-index:1;">
+                                ไม่พบข้อมูลจากเงื่อนไขที่ท่านค้นหา
+                            </div>
                         </div>
                     </div>
                 </div>
-
                 <%--Menuset Report--%>
                 <div class="col-md-6 col-sm-12 col-xs-12">
                     <div class="x_panel">
@@ -62,8 +68,9 @@
                             <div class="col-md-5"><h2>เมนูชุดขายดี (10 อันดับ)</h2></div>
                             <div class="col-md-6">
                                 <div class="col-md-9" style="padding-right:0px;">
-                                    <input type="text" name="filterdate" id="filterdate_menuset"
-                                           class="form-control daterange" required value="${minDateMenuSet != null ? minDateMenuSet : today} - ${maxDateMenuSet != null ? maxDateMenuSet : today}">
+                                    <input name="menuset" type="text" id="filterdate_menuset"
+                                           class="form-control daterange" required
+                                           value="${minDateMenuSet != null ? minDateMenuSet : today} - ${maxDateMenuSet != null ? maxDateMenuSet : today}">
                                 </div>
                                 <div class="input-group-btn">
                                     <button class="btn btn-default"
@@ -73,16 +80,68 @@
                                 </div>
                             </div>
                             <ul class="nav navbar-right panel_toolbox" style="min-width: 0px">
-                                <li><a class="collapse-link"><i class="fa fa-chevron-up right"></i></a>
-                                </li>
+                                <li><a title="ออกรายงาน excel" class="download" download="menuset"><i class="fa fa-file-excel-o right" style="color:black"></i></a></li>
+                                <li><a class="collapse-link"><i class="fa fa-chevron-up right"></i></a></li>
                             </ul>
                             <div class="clearfix"></div>
                         </div>
                         <div class="x_content">
                             <div id="pie_menuset" style="height:400px;">
                             </div>
-                            <div id="loadingmenuset" style="position:absolute;top:50%;left:50%;transform:translate(-50%,-50%);"><i class="fa-li fa fa-spinner fa-spin"></i></div>
-                            <div id="menuset_null" style="display:none;position:absolute;top:50%;left:50%;transform:translate(-50%,-50%);">ไม่พบข้อมูลจากเงื่อนไขที่ท่านค้นหา</div>
+                            <div id="loadingmenuset"
+                                 style="position:absolute;top:50%;left:50%;transform:translate(-50%,-50%);"><i
+                                    class="fa-li fa fa-spinner fa-spin"></i></div>
+                            <div id="menuset_null"
+                                 style="display:none;position:absolute;top:50%;left:50%;transform:translate(-50%,-50%);">
+                                ไม่พบข้อมูลจากเงื่อนไขที่ท่านค้นหา
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="col-md-6 col-sm-6 col-xs-12">
+                    <div class="x_panel">
+                        <div class="x_title">
+                            <h4>จำนวนการขายเมนูเดี่ยว</h4>
+                        </div>
+                        <div class="x_content">
+                            <form action="#">
+                                <table id="datatable-menupoorsales"
+                                       class="table table-striped table-bordered bulk_action1">
+                                    <thead>
+                                    <tr>
+                                        <th style="width:10%;text-align:center;">ลำดับ</th>
+                                        <th style="width:40%;text-align:center;">ชื่อ</th>
+                                        <th style="width:30%;text-align:center;">ประเภท</th>
+                                        <th style="width:20%;text-align:center;">ขายไป</th>
+                                    </tr>
+                                    </thead>
+                                    <tbody style="text-align:center;">
+                                    </tbody>
+                                </table>
+                            </form>
+                        </div>
+                    </div>
+                </div>
+                <div class="col-md-6 col-sm-6 col-xs-12">
+                    <div class="x_panel">
+                        <div class="x_title">
+                            <h4>จำนวนการขายเมนูชุด</h4>
+                        </div>
+                        <div class="x_content">
+                            <form action="#">
+                                <table id="datatable-menusetpoorsales"
+                                       class="table table-striped table-bordered bulk_action1">
+                                    <thead>
+                                    <tr>
+                                        <th style="width:10%;text-align:center;">ลำดับ</th>
+                                        <th style="width:40%;text-align:center;">ชื่อ</th>
+                                        <th style="width:20%;text-align:center;">ขายไป</th>
+                                    </tr>
+                                    </thead>
+                                    <tbody style="text-align:center;">
+                                    </tbody>
+                                </table>
+                            </form>
                         </div>
                     </div>
                 </div>
@@ -109,17 +168,51 @@
         $(".daterange").daterangepicker();
         init_bestsalemenu('${minDateMenu != null ? minDateMenu : today}', '${maxDateMenu != null ? maxDateMenu : today}');
         init_bestsalemenuset('${minDateMenuSet != null ? minDateMenuSet : today}', '${maxDateMenuSet != null ? maxDateMenuSet : today}');
+
+        $("#datatable-menupoorsales").DataTable({
+            order: [[3, "desc"]],
+            columns: [
+                {
+                    data: 'number'
+                },
+                {
+                    data: 'menuName'
+                },
+                {
+                    data: 'category'
+                },
+                {
+                    data: 'salesAmount'
+                }
+            ]
+        });
+
+        $("#datatable-menusetpoorsales").DataTable({
+            order: [[2, "desc"]],
+            columns: [
+                {
+                    data: 'number'
+                },
+                {
+                    data: 'menuName'
+                },
+                {
+                    data: 'salesAmount'
+                }
+            ]
+        });
     });
 
     function init_bestsalemenu(fromDate, toDate) {
-        $("#loadingmenu").css('display','inline-block');
+        $("#loadingmenu").css('display', 'inline-block');
         $.ajax({
             type: "POST",
             dataType: "json",
             url: "${contextPath}/report/bestsalemenu",
             data: {fromDate: fromDate, toDate: toDate},
             success: function (menuArray) {
-                $("#loadingmenu").css('display','none');
+                $("#loadingmenu").css('display', 'none');
+                menu_datatable = [];
                 menu_data_legends = [];
                 menu_data_series = [];
                 var index_menu = 0;
@@ -129,26 +222,35 @@
                     if (index_menu < limit_of_menu) {
                         for (key in menu) { // get key
                             value = menu[key];
-                            if (value > 0) {
+                            key = JSON.parse(key);
+                            //chart
+                            if (value > 0 && !break_loop) {
                                 //push into array for display
                                 menu_data_legends.push(key);
                                 menu_data_series.push({
-                                    name: key,
+                                    name: key.menuNameTH,
                                     value: value
                                 });
                                 index_menu++;
                             } else {
                                 break_loop = true;
                             }
+
+                            //datatable
+                            menu_datatable.push({
+                                number: i + 1,
+                                menuName: key.menuNameTH,
+                                category: key.menuGroup.menuGroupNameTH,
+                                salesAmount: value
+                            });
                         }
                     } else {
                         break_loop = true;
                     }
-
-                    if (break_loop) {
-                        break;
-                    }
                 }
+
+                $("#datatable-menupoorsales").DataTable().rows.add(menu_datatable).draw(false);
+
                 if ($('#pie_menu').length) {
                     var echartPie = echarts.init(document.getElementById('pie_menu'));
                     echartPie.setOption({
@@ -204,21 +306,22 @@
                 } else {
                     $("#menu_null").css("display", "none");
                 }
-            },error : function(){
-                $("#loadingmenu").css('display','none');
+            }, error: function () {
+                $("#loadingmenu").css('display', 'none');
                 swal("ผิดพลาด", "กรุณาลองใหม่อีกครั้ง", "error");
             }
         });
     }
     function init_bestsalemenuset(fromDate, toDate) {
-        $("#loadingmenuset").css('display','inline-block');
+        $("#loadingmenuset").css('display', 'inline-block');
         $.ajax({
             type: "POST",
             dataType: "json",
             url: "${contextPath}/report/bestsalemenuset",
             data: {fromDate: fromDate, toDate: toDate},
             success: function (menuArray) {
-                $("#loadingmenuset").css('display','none');
+                $("#loadingmenuset").css('display', 'none');
+                menuset_datatable = [];
                 menuset_data_legends = [];
                 menuset_data_series = [];
                 var index_menuset = 0;
@@ -228,26 +331,33 @@
                     if (index_menuset < limit_of_menuset) {
                         for (key in menu) { // get key
                             value = menu[key];
-                            if (value > 0) {
+                            key = JSON.parse(key);
+                            //graph
+                            if (value > 0 && !break_loop) {
                                 //push into array for display
                                 menuset_data_legends.push(key);
                                 menuset_data_series.push({
-                                    name: key,
+                                    name: key.menuNameTH,
                                     value: value
                                 });
                                 index_menuset++;
                             } else {
                                 break_loop = true;
                             }
+
+                            //datatable
+                            menuset_datatable.push({
+                                number: i + 1,
+                                menuName: key.menuNameTH,
+                                salesAmount: value
+                            });
                         }
                     } else {
                         break_loop = true;
                     }
-
-                    if (break_loop) {
-                        break;
-                    }
                 }
+
+                $("#datatable-menusetpoorsales").DataTable().rows.add(menuset_datatable).draw(false);
 
                 if ($('#pie_menuset').length) {
 
@@ -307,19 +417,38 @@
                 } else {
                     $("#menuset_null").css("display", "none");
                 }
-            },error : function(){
-                $("#loadingmenuset").css('display','none');
+            }, error: function () {
+                $("#loadingmenuset").css('display', 'none');
                 swal("ผิดพลาด", "กรุณาลองใหม่อีกครั้ง", "error");
             }
         });
     }
 
-    $("#menureportfilter").click(function(){
-        init_bestsalemenu($("#filterdate_menu").val().substr(0,10),$("#filterdate_menu").val().substr(13,10));
+    $("#menureportfilter").click(function () {
+        init_bestsalemenu($("#filterdate_menu").val().substr(0, 10), $("#filterdate_menu").val().substr(13, 10));
     });
 
-    $("#menusetreportfilter").click(function(){
-        init_bestsalemenuset($("#filterdate_menuset").val().substr(0,10),$("#filterdate_menuset").val().substr(13,10));
+    $("#menusetreportfilter").click(function () {
+        init_bestsalemenuset($("#filterdate_menuset").val().substr(0, 10), $("#filterdate_menuset").val().substr(13, 10));
+    });
+
+    $(".download").click(function(){
+        download = $(this).attr('download');
+        daterange = $("input[name='"+download+"']").val();
+        fromDate = daterange.substr(0, 10);
+        toDate = daterange.substr(13, 10);
+        if(daterange.length == 23){
+            $.ajax({
+                type: "POST",
+                url: "${contextPath}/report/exportreport/" + download,
+                data: {fromDate: fromDate, toDate: toDate},
+                success: function (result) {
+                    window.location = result;
+                },error: function(){
+                    swal("ผิดพลาด", "กรุณาลองใหม่อีกครั้ง", "error");
+                }
+            });
+        }
     });
 </script>
 </body>

@@ -98,4 +98,42 @@ public class BranchMenuService {
     public List<BranchMenu> getMenuByBranchNo(int branchNo) {
         return branchMenuRepository.findByBranchNoAndAvailable(branchNo, true);
     }
+
+    public Map<Menu, Long> getBestSaleMenuObject(int branchNo,String fromDateUnformat,String toDateUnformat){
+        Map<Menu, Long> menuMaps = new LinkedHashMap<Menu, Long>();
+        List<BranchMenu> branchMenus = branchMenuRepository.findByBranchNoAndMenu_MenuFlagOrderByMenu_LocalFlagAsc(branchNo, Menu.flagForMenu);
+        Date fromDate = null,toDate = null;
+        if (!fromDateUnformat.equals("0") && !toDateUnformat.equals("0")) {
+            fromDate = Date.valueOf(fromDateUnformat.substring(6, 10) + fromDateUnformat.substring(2, 5) + "-" + fromDateUnformat.substring(0, 2));
+            toDate = Date.valueOf(toDateUnformat.substring(6, 10) + toDateUnformat.substring(2, 5) + "-" + toDateUnformat.substring(0, 2));
+        }
+        for (BranchMenu bm : branchMenus) {
+            int menuNo = bm.getMenuNo();
+            Long sum = new Long(0);
+            if (fromDate != null && toDate != null) {
+                sum = orderRepository.sumByMenuNoAndDateIsBetween(menuNo, fromDate, toDate, Order.SERVED);
+            }
+            menuMaps.put(bm.getMenu(), sum == null ? 0 : sum);
+        }
+        return menuMaps;
+    }
+
+    public Map<Menu, Long> getBestSaleMenuSetObject(int branchNo,String fromDateUnformat,String toDateUnformat){
+        Map<Menu, Long> menuMaps = new LinkedHashMap<Menu, Long>();
+        List<BranchMenu> branchMenus = branchMenuRepository.findByBranchNoAndMenu_MenuFlagOrderByMenu_LocalFlagAsc(branchNo, Menu.flagForMenuSet);
+        Date fromDate = null,toDate = null;
+        if (!fromDateUnformat.equals("0") && !toDateUnformat.equals("0")) {
+            fromDate = Date.valueOf(fromDateUnformat.substring(6, 10) + fromDateUnformat.substring(2, 5) + "-" + fromDateUnformat.substring(0, 2));
+            toDate = Date.valueOf(toDateUnformat.substring(6, 10) + toDateUnformat.substring(2, 5) + "-" + toDateUnformat.substring(0, 2));
+        }
+        for (BranchMenu bm : branchMenus) {
+            int menuNo = bm.getMenuNo();
+            Long sum = new Long(0);
+            if (fromDate != null && toDate != null) {
+                sum = orderRepository.sumByMenuNoAndDateIsBetween(menuNo, fromDate, toDate, Order.SERVED);
+            }
+            menuMaps.put(bm.getMenu(), sum == null ? 0 : sum);
+        }
+        return menuMaps;
+    }
 }
