@@ -35,6 +35,11 @@ public class CashierController {
         return CASHIER_PATH + "cashier.jsp";
     }
 
+    @GetMapping("/billpage")
+    public String toBillPage(Model model, HttpSession session) {
+        return CASHIER_PATH + "billpage.jsp";
+    }
+
     @ResponseBody
     @PostMapping("/getbills")
     public String getCashiers(HttpSession session) throws JsonProcessingException {
