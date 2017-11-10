@@ -103,10 +103,7 @@
                                                                         บาท
                                                                     </div>
                                                                 </div>
-                                                                <div class="col-md-12 col-sm-12 col-xs-12"
-                                                                     style="text-align: right;">
-                                                                    <span class="col-md-8" id="prodesc"
-                                                                          style="white-space:nowrap;overflow:hidden;text-overflow: ellipsis;padding:0px;text-align: left"></span>
+                                                                <div class="col-md-12 col-sm-12 col-xs-12" id="prodesc">
                                                                 </div>
                                                                 <div class="col-md-12 col-sm-12 col-xs-12"
                                                                      style="font-size: larger">
@@ -238,7 +235,8 @@
                 var bill_change = result.receive - result.totalAmount;
                 $('.change').html(bill_change.toFixed(2).replace(/\B(?=(\d{3})+(?!\d))/g, ","));
                 $('.totalprice').html(result.totalAmount.toFixed(2).replace(/\B(?=(\d{3})+(?!\d))/g, ","));
-                $('#prodesc').html(result.promotionDesc == null ? '' : result.promotionDesc);
+                $('#prodesc').html(result.promotionDesc == null ? '' : '<label class="col-md-3">โปรโมชั่น</label>' +
+                    '<div style="white-space:nowrap;overflow:hidden;text-overflow: ellipsis;text-align:right;margin-right: 5%">' + result.promotionDesc + '</div>');
                 $('.receive_money').html(result.receive.toFixed(2).replace(/\B(?=(\d{3})+(?!\d))/g, ","));
                 var str = '';
                 result.orders.forEach(function (order) {

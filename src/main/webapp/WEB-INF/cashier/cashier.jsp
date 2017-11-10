@@ -124,6 +124,15 @@
                                                                         </div>
                                                                     </div>
                                                                     <div class="col-md-12 col-sm-12 col-xs-12">
+                                                                        <label class="inline-label"
+                                                                               for="receivemoney">รับเงิน </label>
+                                                                        <div id="receivemoney"
+                                                                             style="margin-right: 5%;text-align: right">
+                                                                            <span class="receive_money reset_element"></span>
+                                                                            บาท
+                                                                        </div>
+                                                                    </div>
+                                                                    <div class="col-md-12 col-sm-12 col-xs-12">
                                                                         <label class="inline-label" for="change_bill">เงินทอน </label>
                                                                         <div id="change_bill"
                                                                              style="margin-right: 5%;text-align: right">
@@ -327,7 +336,7 @@
                         </div>\
                         <div class="caption col-md-12" style="color:#73879C">\
                         <p class="col-md-12" style="white-space:nowrap;overflow:hidden;text-overflow: ellipsis;padding:0px;" >ใช้บริการมาแล้ว : ' + times + '</p>\
-                        <p class="col-md-12" style="white-space: nowrap;overflow:hidden;text-overflow: ellipsis;padding:0px;">ราคาอาหาร : ' + price + ' บาท</p>\
+                        <p class="col-md-12" style="white-space: nowrap;overflow:hidden;text-overflow: ellipsis;padding:0px;">ราคาอาหาร : ' + price.toFixed(2).replace(/\B(?=(\d{3})+(?!\d))/g, ",") + ' บาท</p>\
                         <p class="col-md-12" style="padding:0px;"> สถานะอาหาร : ' + (complete == obj.orders.length ? 'ครบแล้ว' : 'ยังไม่ครบ') + '</p>\
                         <div style="text-align:center;" class="col-md-12"><button type="button" class="btn btn-success" data-toggle="modal" data-target="#cashiermodal" \
                         style="width: 80%;" onclick="set_bill(' + obj.billNo + ')">จ่ายเงิน</button></div>\
@@ -382,20 +391,20 @@
                     str += '<tr>' +
                         '<td class="quantity" style="width: 15%">' + (order.quantity == 0 ? '-' : order.quantity) + '</td>' +
                         '<td class="menu" style="width: 65%">' + order.menu.menuNameTH + '</td>' +
-                        '<td class="price_all_unit" style="width: 20%;text-align: center;">' + (order.menu.menuPrice * order.quantity).toFixed(2) + '</td>' +
+                        '<td class="price_all_unit" style="width: 20%;text-align: center;">' + (order.menu.menuPrice * order.quantity).toFixed(2).replace(/\B(?=(\d{3})+(?!\d))/g, ",") + '</td>' +
                         '</tr>';
                     price += totalPerUnit;
                     order.orderAddOnList.forEach(function (addon) {
                         str += '<tr>' +
                             '<td class="quantity" style="width: 15%"></td>' +
                             '<td class="menu" style="width: 65%"> ++ ' + addon.addOn.materialItem.matItemName + '</td>' +
-                            '<td class="price_all_unit" style="width: 20%;text-align: center;">' + addon.addOn.price.toFixed(2) + '</td>' +
+                            '<td class="price_all_unit" style="width: 20%;text-align: center;">' + addon.addOn.price.toFixed(2).replace(/\B(?=(\d{3})+(?!\d))/g, ",") + '</td>' +
                             '</tr>';
                     });
                     $('.menu_lists').html(str);
                 });
-                $('.sumprice').html(price.toFixed(2));
-                $('.totalprice').html(price.toFixed(2));
+                $('.sumprice').html(price.toFixed(2).replace(/\B(?=(\d{3})+(?!\d))/g, ","));
+                $('.totalprice').html(price.toFixed(2).replace(/\B(?=(\d{3})+(?!\d))/g, ","));
                 realprice = price;
             }, error: function () {
                 swal("ไม่สำเร็จ", "กรุณาเช็คสัญญาณอินเทอร์เน็ต", "error");
@@ -467,10 +476,15 @@
         if (money == 0) {
             $(".change").html('');
         } else {
-            var change = (money - realprice).toFixed(2);
+            var change = (money - realprice).toFixed(2).replace(/\B(?=(\d{3})+(?!\d))/g, ",");
             $(".change").html(change);
         }
     }
+
+    $("#receive").keyup(function () {
+        var rm = $(this).val();
+        $('.receive_money').html(rm);
+    });
 
     $(".protype").on('ifChanged', function () {
         if ($(this).attr('protype') == 'not_use_pro') {
@@ -484,7 +498,7 @@
         } else {
             discount_chosen();
         }
-        $(".totalprice").html(realprice.toFixed(2));
+        $(".totalprice").html(realprice.toFixed(2).replace(/\B(?=(\d{3})+(?!\d))/g, ","));
     });
 
     $("#select_promotion").change(pro_chosen);
@@ -500,7 +514,7 @@
             menu_discount = chosen_pro.attr('menu_discount').split('|');
             $("#proname").parent().css('display', 'inline-block');
             $("#proname").html(chosen_pro.attr('name'));
-            $("#prodis").html(parseFloat(discount).toFixed(2) + " %");
+            $("#prodis").html(parseFloat(discount).toFixed(2).replace(/\B(?=(\d{3})+(?!\d))/g, ",") + " %");
             orders_arr = current_bill.orders;
             orders_arr.forEach(function (order) {
                 menugroupno = order.menu.menuGroupNo;
@@ -520,7 +534,7 @@
             realprice = price;
         }
         cal_change();
-        $(".totalprice").html(realprice.toFixed(2));
+        $(".totalprice").html(realprice.toFixed(2).replace(/\B(?=(\d{3})+(?!\d))/g, ","));
     }
 
     function discount_chosen() {
@@ -532,11 +546,11 @@
             if (discount.substr(discount.length - 1, 1) == '%') {
                 discount = discount.substr(0, discount.length - 1);
                 realprice = Math.floor(((100 - discount) / 100) * price);
-                $("#prodis").html(parseInt(discount).toFixed(2) + ' %');
+                $("#prodis").html(parseInt(discount).toFixed(2).replace(/\B(?=(\d{3})+(?!\d))/g, ",") + ' %');
             } else {
                 if (!isNaN(discount)) {
                     realprice = Math.floor(price - discount);
-                    $("#prodis").html(parseInt(discount).toFixed(2) + ' บาท');
+                    $("#prodis").html(parseInt(discount).toFixed(2).replace(/\B(?=(\d{3})+(?!\d))/g, ",") + ' บาท');
                 }
             }
         } else {
@@ -546,7 +560,7 @@
             realprice = price;
         }
         cal_change();
-        $(".totalprice").html(realprice.toFixed(2));
+        $(".totalprice").html(realprice.toFixed(2).replace(/\B(?=(\d{3})+(?!\d))/g, ","));
     }
 </script>
 
