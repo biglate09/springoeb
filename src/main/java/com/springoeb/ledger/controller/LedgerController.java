@@ -101,7 +101,7 @@ public class LedgerController {
         String date = request.getParameter("date_unformat");
         LedgerType ledgerType = ledgerTypeService.findByLedgerTypeNo(ledger.getLedgerTypeNo());
         if(ledgerType.getLedgerPayNo() == LedgerPay.EXPENSE){
-            ledger.setAmount(-1 * ledger.getAmount());
+            ledger.setAmount(ledger.getAmount());
         }
         ledger.setDate(Date.valueOf(date.substring(6, 10) + "-" + date.substring(3, 5) + "-" + date.substring(0, 2)));
         ledger.setBranchNo(branchNo);
