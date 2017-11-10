@@ -177,7 +177,8 @@
 
                         status: (obj.status == 'reserved' ? '<a onclick="change_status(\'' + orderNo + '\')" class="btn btn-secondary"><i class="fa fa-circle-o-notch fa-spin" id="loading' + orderNo + '" style="display:none"></i> จองไว้แล้ว</a>' :
                             obj.status == 'waiting' ? '<a onclick="change_status(\'' + orderNo + '\')" class="btn btn-default"><i class="fa fa-circle-o-notch fa-spin" id="loading' + orderNo + '" style="display:none"></i> ปรุงอาหาร</a>' :
-                                obj.status == 'cooking' ? '<a onclick="change_status(\'' + orderNo + '\')" class="btn btn-primary"><i class="fa fa-circle-o-notch fa-spin" id="loading' + orderNo + '" style="display:none"></i> ปรุงสำเร็จ</a>' : '' ) +
+                                obj.status == 'cooking' ? '<a onclick="change_status(\'' + orderNo + '\')" class="btn btn-primary"><i class="fa fa-circle-o-notch fa-spin" id="loading' + orderNo + '" style="display:none"></i> ปรุงสำเร็จ</a>' :
+                                    obj.status == 'ready' ? '<a onclick="change_status(\'' + orderNo + '\')" class="btn btn-info"><i class="fa fa-circle-o-notch fa-spin" id="loading' + orderNo + '" style="display:none"></i> เสิร์ฟอาหาร</a>' : '' ) +
                         '<a class="btn btn-danger" data-toggle="modal" data-target="#cancelmenu" onclick="set_cancel_option(\'' + cancelmenu + '\')">ยกเลิกเมนู</a>'
                     };
                     data_array.push(data_refresh);
