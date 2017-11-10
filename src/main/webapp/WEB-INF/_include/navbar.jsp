@@ -120,6 +120,7 @@
                         <li>
                             <a><i class="fa fa-line-chart"></i> รายงาน <span class="fa fa-chevron-down"></span></a>
                             <ul class="nav child_menu">
+                                <li><a id="menureport" href="${contextPath}/report/menureport">เมนูอาหาร</a></li>
                                 <li>
                                     <a>รายรับ/รายจ่าย <span class="fa fa-chevron-down"></span></a>
                                     <ul class="nav child_menu">
@@ -129,8 +130,6 @@
                                         <li class="sub_menu"><a id="other" href="${contextPath}/report/other">อื่นๆ</a></li>
                                     </ul>
                                 </li>
-
-                                <li><a id="menureport" href="${contextPath}/report/menureport">เมนูอาหาร</a></li>
                             </ul>
                         </li>
                     </c:if>
@@ -145,8 +144,11 @@
                     </c:if>
                     <c:if test="${branchUser.roleNo == Role.MANAGER || branchUser.roleNo == Role.CASHIER}">
                         <li>
-                            <a href="${contextPath}/cashier/cashier"><i
-                                    class="fa fa-money"></i> ระบบแคชเชียร์ </a>
+                            <a><i class="fa fa-money"></i> ระบบแคชเชียร์ <span class="fa fa-chevron-down"></span></a>
+                            <ul class="nav child_menu">
+                                <li><a id="cashier" href="${contextPath}/cashier/cashier">แคชเชียร์</a></li>
+                                <li><a id="billpage" href="${contextPath}/cashier/billpage">ประวัติใบเสร็จ</a></li>
+                        </ul>
                         </li>
                     </c:if>
                     <li>
