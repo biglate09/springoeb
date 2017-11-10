@@ -131,8 +131,6 @@
                                                                         </div>
                                                                     </div>
                                                                     <div class="col-md-12 col-sm-12 col-xs-12"
-                                                                         id="promotion"></div>
-                                                                    <div class="col-md-12 col-sm-12 col-xs-12"
                                                                          style="text-align: center">********
                                                                         ขอบคุณที่ใช้บริการ ********
                                                                     </div>
@@ -328,7 +326,7 @@
                         </div>\
                         <div class="caption col-md-12" style="color:#73879C">\
                         <p class="col-md-12" style="white-space:nowrap;overflow:hidden;text-overflow: ellipsis;padding:0px;" >ใช้บริการมาแล้ว : ' + times + '</p>\
-                        <p class="col-md-12" style="white-space: nowrap;overflow:hidden;text-overflow: ellipsis;padding:0px;">ราคาอาหาร : ' + price + ' บาท</p>\
+                        <p class="col-md-12" style="white-space: nowrap;overflow:hidden;text-overflow: ellipsis;padding:0px;">ราคาอาหาร : ' + price.toFixed(2).replace(/\B(?=(\d{3})+(?!\d))/g, ",") + " บาท" + ' บาท</p>\
                         <p class="col-md-12" style="padding:0px;"> สถานะอาหาร : ' + (complete == obj.orders.length ? 'ครบแล้ว' : 'ยังไม่ครบ') + '</p>\
                         <div style="text-align:center;" class="col-md-12"><button type="button" class="btn btn-success" data-toggle="modal" data-target="#cashier" \
                         style="width: 80%;" onclick="set_bill(' + obj.billNo + ')">จ่ายเงิน</button></div>\
@@ -395,8 +393,8 @@
                     });
                     $('.menu_lists').html(str);
                 });
-                $('.sumprice').html(price.toFixed(2));
-                $('.totalprice').html(price.toFixed(2));
+                $('.sumprice').html(price.toFixed(2).replace(/\B(?=(\d{3})+(?!\d))/g, ",") + " บาท");
+                $('.totalprice').html(price.toFixed(2).replace(/\B(?=(\d{3})+(?!\d))/g, ",") + " บาท");
                 realprice = price;
             }, error: function () {
                 swal("ไม่สำเร็จ", "กรุณาเช็คสัญญาณอินเทอร์เน็ต", "error");
@@ -478,7 +476,7 @@
         if (money == 0) {
             $(".change").html('');
         } else {
-            var change = (money - realprice).toFixed(2);
+            var change = (money - realprice).toFixed(2).replace(/\B(?=(\d{3})+(?!\d))/g, ",") + " บาท";
             $(".change").html(change);
         }
     }
