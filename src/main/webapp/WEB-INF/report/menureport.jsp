@@ -43,7 +43,7 @@
                                 </div>
                             </div>
                             <ul class="nav navbar-right panel_toolbox" style="min-width: 0px">
-                                <li><a title="ออกรายงาน excel" class="download" download="menu"><i class="fa fa-file-excel-o right" style="color:black;font-size:18px;"></i></a></li>
+                                <li><a title="ออกรายงาน excel" class="download" download="menu"><i class="fa fa-file-excel-o right" style="color:black;"></i></a></li>
                                 <li><a class="collapse-link"><i class="fa fa-chevron-up right"></i></a></li>
                             </ul>
                             <div class="clearfix"></div>
@@ -80,7 +80,7 @@
                                 </div>
                             </div>
                             <ul class="nav navbar-right panel_toolbox" style="min-width: 0px">
-                                <li><a title="ออกรายงาน excel" class="download" download="menuset"><i class="fa fa-file-excel-o right" style="color:black;font-size: 18px"></i></a></li>
+                                <li><a title="ออกรายงาน excel" class="download" download="menuset"><i class="fa fa-file-excel-o right" style="color:black;"></i></a></li>
                                 <li><a class="collapse-link"><i class="fa fa-chevron-up right"></i></a></li>
                             </ul>
                             <div class="clearfix"></div>

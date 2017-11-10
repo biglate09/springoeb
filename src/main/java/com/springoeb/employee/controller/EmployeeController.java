@@ -480,7 +480,7 @@ public class EmployeeController {
     @RequestMapping("/check")
     public String toEmployeeCheck(Model model, HttpSession session) {
         BranchUser branchUser = ((BranchUser) (session.getAttribute("branchUser")));
-        if (branchUser.getRoleNo() == Role.MANAGER) {
+        if (branchUser.getRoleNo() == Role.MANAGER || branchUser.getRoleNo() == Role.EMPLOYEE) {
             int branchNo = branchUser.getBranchNo();
             Date date = new Date(System.currentTimeMillis());
             if (branchUser.getEmpNo() == null) {
