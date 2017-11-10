@@ -29,11 +29,6 @@
                         </div>
                         <div class="x_content">
                             <form action="#">
-                                <p>
-                                    <a data-toggle="modal" data-target="#addEmpPos"
-                                       class="btn btn-success btn-sm"><i class="fa fa-plus-circle"></i>&nbsp;
-                                        เพิ่มตำแหน่ง</a>
-                                </p>
                                 <table id="datatable-bills"
                                        class="table table-striped table-bordered bulk_action1">
                                     <thead>
@@ -109,11 +104,9 @@
                                                                     </div>
                                                                 </div>
                                                                 <div class="col-md-12 col-sm-12 col-xs-12"
-                                                                     style="text-align: right;display:none;">
-                                                                    <%--<span class="col-md-2">-----</span>--%>
-                                                                    <span class="col-md-6" id="proname"
+                                                                     style="text-align: right;">
+                                                                    <span class="col-md-8" id="prodesc"
                                                                           style="white-space:nowrap;overflow:hidden;text-overflow: ellipsis;padding:0px;text-align: left"></span>
-                                                                        <span id="prodis" style="text-align:right;margin-right: 5%;"></span>
                                                                 </div>
                                                                 <div class="col-md-12 col-sm-12 col-xs-12"
                                                                      style="font-size: larger">
@@ -122,6 +115,15 @@
                                                                     <div id="price"
                                                                          style="margin-right: 5%;text-align: right">
                                                                         <span class="totalprice reset_element"></span>
+                                                                        บาท
+                                                                    </div>
+                                                                </div>
+                                                                <div class="col-md-12 col-sm-12 col-xs-12">
+                                                                    <label class="inline-label col-md-8"
+                                                                           for="receivemoney">รับเงิน </label>
+                                                                    <div id="receivemoney"
+                                                                         style="margin-right: 5%;text-align: right">
+                                                                        <span class="receive_money reset_element"></span>
                                                                         บาท
                                                                     </div>
                                                                 </div>
@@ -232,17 +234,19 @@
                 $("#showBillDate").html(showDate);
                 var showTime = result.billTime.substr(0, 2) + ":" + result.billTime.substr(3, 2);
                 $("#billtime").html(showTime);
+                $('.sumprice').html(result.amount.toFixed(2).replace(/\B(?=(\d{3})+(?!\d))/g, ","));
+                var bill_change = result.receive - result.totalAmount;
+                $('.change').html(bill_change.toFixed(2).replace(/\B(?=(\d{3})+(?!\d))/g, ","));
+                $('.totalprice').html(result.totalAmount.toFixed(2).replace(/\B(?=(\d{3})+(?!\d))/g, ","));
+                $('#prodesc').html(result.promotionDesc == null ? '' : result.promotionDesc);
+                $('.receive_money').html(result.receive.toFixed(2).replace(/\B(?=(\d{3})+(?!\d))/g, ","));
                 var str = '';
-                price = 0;
-                var totalPerUnit = 0;
                 result.orders.forEach(function (order) {
-                    totalPerUnit = order.amount;
                     str += '<tr>' +
                         '<td class="quantity" style="width: 15%">' + (order.quantity == 0 ? '-' : order.quantity) + '</td>' +
                         '<td class="menu" style="width: 65%">' + order.menu.menuNameTH + '</td>' +
                         '<td class="price_all_unit" style="width: 20%;text-align: center;">' + (order.menu.menuPrice * order.quantity).toFixed(2).replace(/\B(?=(\d{3})+(?!\d))/g, ",") + '</td>' +
                         '</tr>';
-                    price += totalPerUnit;
                     order.orderAddOnList.forEach(function (addon) {
                         str += '<tr>' +
                             '<td class="quantity" style="width: 15%"></td>' +
@@ -252,9 +256,6 @@
                     });
                     $('.menu_lists').html(str);
                 });
-                $('.sumprice').html(price.toFixed(2).replace(/\B(?=(\d{3})+(?!\d))/g, ","));
-                $('.totalprice').html(price.toFixed(2).replace(/\B(?=(\d{3})+(?!\d))/g, ","));
-                realprice = price;
             }, error: function () {
                 swal("ไม่สำเร็จ", "กรุณาเช็คสัญญาณอินเทอร์เน็ต", "error");
             }
