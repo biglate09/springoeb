@@ -188,8 +188,7 @@
                                                                                     <option value="${p.promotionNo}"
                                                                                             discount="${p.discount}"
                                                                                             menu_discount="<c:forEach items="${p.menuGroupPromotions}" var="mg" varStatus="vs"><c:if test="${vs.index!=0}">|</c:if>${mg.menuGroupNo}</c:forEach>"
-                                                                                            name="${p.promotionNameTH}">${p.promotionNameTH}
-                                                                                        (-<fmt:formatNumber
+                                                                                            name="${p.promotionNameTH}">${p.promotionNameTH} (-<fmt:formatNumber
                                                                                                 value="${p.discount}"
                                                                                                 pattern="#0.00"/> %)
                                                                                     </option>
