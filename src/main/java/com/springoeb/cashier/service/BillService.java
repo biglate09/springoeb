@@ -20,6 +20,10 @@ public class BillService {
         return billRepository.findByTable_BranchNoAndStatus(branchNo,Bill.UNPAID);
     }
 
+    public List<Bill> findByAllTable_BranchNo(int branchNo){
+        return billRepository.findByTable_BranchNoAndStatus(branchNo,Bill.PAID);
+    }
+
     public Bill findByBillNo(int billNo) {
         return billRepository.findByBillNo(billNo);
     }
