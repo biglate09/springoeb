@@ -258,7 +258,7 @@
                                 <div class="modal-footer">
                                     <!-- ปุ่มกดปิด (Close) ตรงส่วนล่างของ Modal -->
                                     <div class="col-md-9 col-sm-9 col-xs-12 col-md-offset-3">
-                                        <button type="button" class="btn btn-default" style="font-size: initial"
+                                        <button type="button" class="btn btn-default" style="font-size: initial" data-dismiss="modal"
                                                 id="closeModal">
                                             ปิด
                                         </button>
