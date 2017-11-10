@@ -21,7 +21,6 @@ import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 import javax.transaction.Transactional;
 import java.io.IOException;
-import java.io.UnsupportedEncodingException;
 import java.net.URLEncoder;
 import java.sql.Date;
 import java.sql.Time;
@@ -65,31 +64,36 @@ public class EmployeeController {
     @Transactional
     @PostMapping("/manageemployee")
     public void addAndEditEmployee(@ModelAttribute("employee") Employee employee, HttpSession session, HttpServletRequest request, HttpServletResponse response) throws Exception {
-        int branchNo = ((BranchUser) (session.getAttribute("branchUser"))).getBranchNo();
-        employee.setBranchNo(branchNo);
-        boolean isAdd = (employee.getEmpNo() == null);
-        boolean isDuplicate = true;
-        if (!employeeService.chkDuplicateEmpName(employee.getEmpName(), branchNo)) {
-            isDuplicate = false;
-        } else {
-            if (employee.getEmpNo() != null && employeeService.findByEmpNoAndBranchNo(employee.getEmpNo(), branchNo).getEmpName().equals(employee.getEmpName())) {
+        BranchUser branchUser = (BranchUser) (session.getAttribute("branchUser"));
+        if (branchUser.getRoleNo() == Role.MANAGER) {
+            int branchNo = branchUser.getBranchNo();
+            employee.setBranchNo(branchNo);
+            boolean isAdd = (employee.getEmpNo() == null);
+            boolean isDuplicate = true;
+            if (!employeeService.chkDuplicateEmpName(employee.getEmpName(), branchNo)) {
                 isDuplicate = false;
             } else {
-                throw new Exception();
+                if (employee.getEmpNo() != null && employeeService.findByEmpNoAndBranchNo(employee.getEmpNo(), branchNo).getEmpName().equals(employee.getEmpName())) {
+                    isDuplicate = false;
+                } else {
+                    throw new Exception();
+                }
             }
-        }
 
-        if (!isDuplicate) {
-            employee = employeeService.save(employee);
-            if (isAdd) {
-                String subject = "[ระบบ OrderEatBill] ตั้งค่าการลงชื่อเข้าใช้ระบบใบฐานะพนักงานร้านอาหาร";
-                String token = getBcrypt(employee.getEmpNo() + "|" + employee.getEmpName() + "|" + employee.getEmail());
-                String msg = "กรุณาคลิกลิงก์ด้านล่างเพื่อสร้าง บัญชีผู้ใช้ในการใช้งานระบบ\n" +
-                        "ตำแหน่ง : พนักงานร้านอาหารของสาขา " + ((BranchUser) (session.getAttribute("branchUser"))).getBranch().getBranchName() + "\n" +
-                        "ชื่อ : " + employee.getEmpName() + "\n" +
-                        request.getScheme() + "://" + request.getServerName() + ":" + request.getServerPort() + request.getContextPath() + "/system/registeremp?apiKey=" + URLEncoder.encode(token, "UTF-8");
-                emailService.sendMail(employee.getEmail(), subject, msg);
+            if (!isDuplicate) {
+                employee = employeeService.save(employee);
+                if (isAdd) {
+                    String subject = "[ระบบ OrderEatBill] ตั้งค่าการลงชื่อเข้าใช้ระบบใบฐานะพนักงานร้านอาหาร";
+                    String token = getBcrypt(employee.getEmpNo() + "|" + employee.getEmpName() + "|" + employee.getEmail());
+                    String msg = "กรุณาคลิกลิงก์ด้านล่างเพื่อสร้าง บัญชีผู้ใช้ในการใช้งานระบบ\n" +
+                            "ตำแหน่ง : พนักงานร้านอาหารของสาขา " + ((BranchUser) (session.getAttribute("branchUser"))).getBranch().getBranchName() + "\n" +
+                            "ชื่อ : " + employee.getEmpName() + "\n" +
+                            request.getScheme() + "://" + request.getServerName() + ":" + request.getServerPort() + request.getContextPath() + "/system/registeremp?apiKey=" + URLEncoder.encode(token, "UTF-8");
+                    emailService.sendMail(employee.getEmail(), subject, msg);
+                }
             }
+        } else {
+            throw new Exception();
         }
     }
 
@@ -105,38 +109,53 @@ public class EmployeeController {
     @Transactional
     @PostMapping("/confirmresent/{empNo}")
     @ResponseBody
-    public String confirmResent(@PathVariable("empNo") int empNo, HttpSession session) throws JsonProcessingException {
-        int branchNo = ((BranchUser) (session.getAttribute("branchUser"))).getBranchNo();
-        Employee employee = employeeService.findByEmpNoAndBranchNo(empNo, branchNo);
-        ObjectMapper mapper = new ObjectMapper();
-        String json = mapper.writeValueAsString(employee);
-        return json;
+    public String confirmResent(@PathVariable("empNo") int empNo, HttpSession session) throws Exception {
+        BranchUser branchUser = (BranchUser) (session.getAttribute("branchUser"));
+        if (branchUser.getRoleNo() == Role.MANAGER) {
+            int branchNo = branchUser.getBranchNo();
+            Employee employee = employeeService.findByEmpNoAndBranchNo(empNo, branchNo);
+            ObjectMapper mapper = new ObjectMapper();
+            String json = mapper.writeValueAsString(employee);
+            return json;
+        } else {
+            throw new Exception();
+        }
     }
 
     @Transactional
     @PostMapping("/resent")
     @ResponseBody
-    public void resent(HttpServletRequest request, HttpSession session) throws UnsupportedEncodingException {
-        String email = request.getParameter("email");
-        int branchNo = ((BranchUser) (session.getAttribute("branchUser"))).getBranchNo();
-        int empNo = Integer.parseInt(request.getParameter("empNo"));
-        Employee employee = employeeService.findByEmpNoAndBranchNo(empNo, branchNo);
-        employee.setEmail(email);
-        employee = employeeService.save(employee);
-        String subject = "[ระบบ OrderEatBill] ตั้งค่าการลงชื่อเข้าใช้ระบบใบฐานะพนักงานร้านอาหาร";
-        String token = getBcrypt(employee.getEmpNo() + "|" + employee.getEmpName() + "|" + employee.getEmail());
-        String msg = "กรุณาคลิกลิงก์ด้านล่างเพื่อสร้าง บัญชีผู้ใช้ในการใช้งานระบบ\n" +
-                "ตำแหน่ง : พนักงานร้านอาหารของสาขา " + ((BranchUser) (session.getAttribute("branchUser"))).getBranch().getBranchName() + "\n" +
-                "ชื่อ : " + employee.getEmpName() + "\n" +
-                request.getScheme() + "://" + request.getServerName() + ":" + request.getServerPort() + request.getContextPath() + "/system/registeremp?apiKey=" + URLEncoder.encode(token, "UTF-8");
-        emailService.sendMail(employee.getEmail(), subject, msg);
+    public void resent(HttpServletRequest request, HttpSession session) throws Exception {
+        BranchUser branchUser = (BranchUser) (session.getAttribute("branchUser"));
+        if (branchUser.getRoleNo() == Role.MANAGER) {
+            String email = request.getParameter("email");
+            int branchNo = ((BranchUser) (session.getAttribute("branchUser"))).getBranchNo();
+            int empNo = Integer.parseInt(request.getParameter("empNo"));
+            Employee employee = employeeService.findByEmpNoAndBranchNo(empNo, branchNo);
+            employee.setEmail(email);
+            employee = employeeService.save(employee);
+            String subject = "[ระบบ OrderEatBill] ตั้งค่าการลงชื่อเข้าใช้ระบบใบฐานะพนักงานร้านอาหาร";
+            String token = getBcrypt(employee.getEmpNo() + "|" + employee.getEmpName() + "|" + employee.getEmail());
+            String msg = "กรุณาคลิกลิงก์ด้านล่างเพื่อสร้าง บัญชีผู้ใช้ในการใช้งานระบบ\n" +
+                    "ตำแหน่ง : พนักงานร้านอาหารของสาขา " + ((BranchUser) (session.getAttribute("branchUser"))).getBranch().getBranchName() + "\n" +
+                    "ชื่อ : " + employee.getEmpName() + "\n" +
+                    request.getScheme() + "://" + request.getServerName() + ":" + request.getServerPort() + request.getContextPath() + "/system/registeremp?apiKey=" + URLEncoder.encode(token, "UTF-8");
+            emailService.sendMail(employee.getEmail(), subject, msg);
+        } else {
+            throw new Exception();
+        }
     }
 
     @Transactional
     @GetMapping("/deleteemployee/{empNo}")
-    public void delEmployee(@PathVariable("empNo") int empNo, HttpSession session, HttpServletRequest request, HttpServletResponse response) throws IOException {
-        int branchNo = ((BranchUser) (session.getAttribute("branchUser"))).getBranchNo();
-        employeeService.removeByEmpNoAndBranchNo(empNo, branchNo);
+    public void delEmployee(@PathVariable("empNo") int empNo, HttpSession session, HttpServletRequest request, HttpServletResponse response) throws Exception {
+        BranchUser branchUser = (BranchUser) (session.getAttribute("branchUser"));
+        if (branchUser.getRoleNo() == Role.MANAGER) {
+            int branchNo = ((BranchUser) (session.getAttribute("branchUser"))).getBranchNo();
+            employeeService.removeByEmpNoAndBranchNo(empNo, branchNo);
+        } else {
+            throw new Exception();
+        }
     }
 
     @GetMapping("/ajax/getemployee/{empNo}")
@@ -163,16 +182,22 @@ public class EmployeeController {
     @Transactional
     @PutMapping("/resetpassword/{empNo}")
     @ResponseBody
-    public void resetPassword(@PathVariable("empNo") int empNo, HttpServletRequest request, HttpSession session) throws UnsupportedEncodingException {
-        Employee employee = employeeService.findByEmpNo(empNo);
-        BranchUser branchUser = employee.getBranchUser();
-        String subject = "[ระบบ OrderEatBill] ตั้งค่าการลงชื่อเข้าใช้ระบบใบฐานะพนักงานร้านอาหาร";
-        String token = getBcrypt(branchUser.getUsername());
-        String msg = "กรุณาคลิกลิงก์ด้านล่างเพื่อสร้าง บัญชีผู้ใช้ในการใช้งานระบบ\n" +
-                "ตำแหน่ง : พนักงานร้านอาหารของสาขา " + ((BranchUser) (session.getAttribute("branchUser"))).getBranch().getBranchName() + "\n" +
-                "ชื่อ : " + employee.getEmpName() + "\n" +
-                request.getScheme() + "://" + request.getServerName() + ":" + request.getServerPort() + request.getContextPath() + "/system/reset?apiKey=" + URLEncoder.encode(token, "UTF-8");
-        emailService.sendMail(employee.getEmail(), subject, msg);
+    public void resetPassword(@PathVariable("empNo") int empNo, HttpServletRequest request, HttpSession session) throws Exception {
+        BranchUser branchUser = (BranchUser) (session.getAttribute("branchUser"));
+        if (branchUser.getRoleNo() == Role.MANAGER) {
+            int branchNo = branchUser.getBranchNo();
+            Employee employee = employeeService.findByEmpNo(empNo);
+            branchUser = employee.getBranchUser();
+            String subject = "[ระบบ OrderEatBill] ตั้งค่าการลงชื่อเข้าใช้ระบบใบฐานะพนักงานร้านอาหาร";
+            String token = getBcrypt(branchUser.getUsername());
+            String msg = "กรุณาคลิกลิงก์ด้านล่างเพื่อสร้าง บัญชีผู้ใช้ในการใช้งานระบบ\n" +
+                    "ตำแหน่ง : พนักงานร้านอาหารของสาขา " + ((BranchUser) (session.getAttribute("branchUser"))).getBranch().getBranchName() + "\n" +
+                    "ชื่อ : " + employee.getEmpName() + "\n" +
+                    request.getScheme() + "://" + request.getServerName() + ":" + request.getServerPort() + request.getContextPath() + "/system/reset?apiKey=" + URLEncoder.encode(token, "UTF-8");
+            emailService.sendMail(employee.getEmail(), subject, msg);
+        } else {
+            throw new Exception();
+        }
     }
 
     //----------------------------------------------------------------------------------------------------------//
@@ -292,7 +317,7 @@ public class EmployeeController {
     }
 
     private void updateLedger(Date date, int branchNo) {
-        Double sumPay = workHistoryService.sumWorkPayByWorkDateAndBranchNo(date,branchNo);
+        Double sumPay = workHistoryService.sumWorkPayByWorkDateAndBranchNo(date, branchNo);
         Ledger ledger = ledgerService.findByDateAndBranchNoAndLedgerTypeNo(date, branchNo, LedgerType.EMPLOYEE);
         if (ledger == null) {
             ledger = new Ledger();
@@ -551,7 +576,7 @@ public class EmployeeController {
         workHistory.setWorkMin(minute);
 
         workHistoryService.save(workHistory);
-        updateLedger(workHistory.getWorkDate(),branchNo);
+        updateLedger(workHistory.getWorkDate(), branchNo);
 
         response.sendRedirect(request.getContextPath() + "/employee/check");
     }

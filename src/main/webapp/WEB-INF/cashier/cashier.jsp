@@ -28,7 +28,7 @@
                     <div class="x_panel">
                         <div class="x_title">
                             <h4>
-                                แคชเชียร์
+                                ระบบแคชเชียร์
                             </h4>
                         </div>
                         <div class="x_content">
@@ -45,7 +45,7 @@
                             </form>
                         </div>
                     </div>
-                    <div class="modal fade" id="cashier" role="dialog">
+                    <div class="modal fade" id="cashiermodal" role="dialog">
                         <div class="modal-dialog">
                             <!-- เนือหาของ Modal ทั้งหมด -->
                             <div class="modal-content modal-body-test" style="overflow-y:hidden;font-size: large">
@@ -131,6 +131,8 @@
                                                                         </div>
                                                                     </div>
                                                                     <div class="col-md-12 col-sm-12 col-xs-12"
+                                                                         id="promotion"></div>
+                                                                    <div class="col-md-12 col-sm-12 col-xs-12"
                                                                          style="text-align: center">********
                                                                         ขอบคุณที่ใช้บริการ ********
                                                                     </div>
@@ -186,7 +188,10 @@
                                                                                     <option value="${p.promotionNo}"
                                                                                             discount="${p.discount}"
                                                                                             menu_discount="<c:forEach items="${p.menuGroupPromotions}" var="mg" varStatus="vs"><c:if test="${vs.index!=0}">|</c:if>${mg.menuGroupNo}</c:forEach>"
-                                                                                            name="${p.promotionNameTH}">${p.promotionNameTH} (-<fmt:formatNumber value="${p.discount}" pattern="#0.00"/> %)
+                                                                                            name="${p.promotionNameTH}">${p.promotionNameTH}
+                                                                                        (-<fmt:formatNumber
+                                                                                                value="${p.discount}"
+                                                                                                pattern="#0.00"/> %)
                                                                                     </option>
                                                                                 </c:forEach>
                                                                             </select>
@@ -323,9 +328,9 @@
                         </div>\
                         <div class="caption col-md-12" style="color:#73879C">\
                         <p class="col-md-12" style="white-space:nowrap;overflow:hidden;text-overflow: ellipsis;padding:0px;" >ใช้บริการมาแล้ว : ' + times + '</p>\
-                        <p class="col-md-12" style="white-space: nowrap;overflow:hidden;text-overflow: ellipsis;padding:0px;">ราคาอาหาร : ' + price.toFixed(2).replace(/\B(?=(\d{3})+(?!\d))/g, ",") + " บาท" + ' บาท</p>\
+                        <p class="col-md-12" style="white-space: nowrap;overflow:hidden;text-overflow: ellipsis;padding:0px;">ราคาอาหาร : ' + price + ' บาท</p>\
                         <p class="col-md-12" style="padding:0px;"> สถานะอาหาร : ' + (complete == obj.orders.length ? 'ครบแล้ว' : 'ยังไม่ครบ') + '</p>\
-                        <div style="text-align:center;" class="col-md-12"><button type="button" class="btn btn-success" data-toggle="modal" data-target="#cashier" \
+                        <div style="text-align:center;" class="col-md-12"><button type="button" class="btn btn-success" data-toggle="modal" data-target="#cashiermodal" \
                         style="width: 80%;" onclick="set_bill(' + obj.billNo + ')">จ่ายเงิน</button></div>\
                         </div>\
                         </div>\
@@ -390,8 +395,8 @@
                     });
                     $('.menu_lists').html(str);
                 });
-                $('.sumprice').html(price.toFixed(2).replace(/\B(?=(\d{3})+(?!\d))/g, ",") + " บาท");
-                $('.totalprice').html(price.toFixed(2).replace(/\B(?=(\d{3})+(?!\d))/g, ",") + " บาท");
+                $('.sumprice').html(price.toFixed(2));
+                $('.totalprice').html(price.toFixed(2));
                 realprice = price;
             }, error: function () {
                 swal("ไม่สำเร็จ", "กรุณาเช็คสัญญาณอินเทอร์เน็ต", "error");
@@ -437,28 +442,10 @@
         });
     })(jQuery);
 
-    //    function printDiv(divName) {
-    //        var printContents = document.getElementById(divName).innerHTML;
-    //        var originalContents = document.body.innerHTML;
-    //        document.body.innerHTML = printContents;
-    //        window.print();
-    //        document.body.innerHTML = originalContents;
-    ////        location.reload(true);
-    //    }
-    $("#closeModal").click(function () {
-        $("#cashier").modal("hide");
-    });
-
     $("#confirm").click(function () {
         type = $('input[name="iCheck"]:checked').val();
         if ($("#receive").val() >= realprice) {
-            billdata = {
-                totalAmount: realprice,
-                amount: price,
-                type: type,
-                value: (type == 0 ? null : type == 1 ? ($("#select_promotion option:selected").text()) : $("#distype").val()),
-                receive: $("#receive").val()
-            };
+            billdata = {totalAmount: realprice,amount: price,type:type,value:(type==0?null:type==1?$("#select_promotion option:selected").text():$("#distype").val()),receive:$("#receive").val()};
             $.ajax({
                 type: "POST",
                 url: "${contextPath}/cashier/checkbill/" + billNoCurrent,
@@ -481,7 +468,7 @@
         if (money == 0) {
             $(".change").html('');
         } else {
-            var change = (money - realprice).toFixed(2).replace(/\B(?=(\d{3})+(?!\d))/g, ",") + " บาท";
+            var change = (money - realprice).toFixed(2);
             $(".change").html(change);
         }
     }
@@ -541,7 +528,7 @@
         chosen_discount = $("#distype");
         discount = chosen_discount.val();
         if (discount.length > 0) {
-            $("#proname").parent().css('display', 'inline-block');
+            $("#proname").parent().css('display','inline-block');
             $("#proname").html('โปรโมชั่นลดพิเศษ');
             if (discount.substr(discount.length - 1, 1) == '%') {
                 discount = discount.substr(0, discount.length - 1);

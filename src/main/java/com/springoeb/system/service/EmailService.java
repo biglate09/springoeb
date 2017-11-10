@@ -20,7 +20,7 @@ public class EmailService {
         mailMessage.setTo(toEmail);
         mailMessage.setSubject(subject);
         mailMessage.setText(message);
-        mailMessage.setFrom("wiroaj.bighead@mail.kmutt.ac.th");
+        mailMessage.setFrom("oebproject@gmail.com");
         javaMailSender.send(mailMessage);
     }
 }
