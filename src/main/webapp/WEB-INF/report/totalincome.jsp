@@ -101,7 +101,7 @@
                     key_number++;
                     value = dataArray[key];
                     incomeDataSeries.push(value.income);
-                    expenseDataSeries.push(-value.expense);
+                    expenseDataSeries.push(value.expense);
                     if(xAxisName == 'เดือน') {
                         dataxAxis.push(month_array[key-1]);
                     }else{
