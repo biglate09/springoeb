@@ -2,6 +2,9 @@ package com.springoeb.stock.controller;
 
 import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.databind.ObjectMapper;
+import com.springoeb.ledger.model.Ledger;
+import com.springoeb.ledger.model.LedgerType;
+import com.springoeb.ledger.service.LedgerService;
 import com.springoeb.stock.model.*;
 import com.springoeb.stock.service.*;
 import com.springoeb.system.model.BranchUser;
@@ -34,6 +37,8 @@ public class StockController {
     private MaterialUnitService materialUnitService;
     @Autowired
     private MenuMaterialService menuMaterialService;
+    @Autowired
+    private LedgerService ledgerService;
 
     private static final String STOCK_PATH = "/WEB-INF/stock/";
 
@@ -284,6 +289,28 @@ public class StockController {
                 materialHistory.setMatQuantity(-1 * (Double.parseDouble(decPack) * Double.parseDouble(decQuantity)));
                 materialHistoryService.save(materialHistory);
             }
+        }
+
+        updateStock(new Date(System.currentTimeMillis()),branchNo);
+    }
+
+    private void updateStock(Date date,int branchNo){
+        Double sumPay = materialHistoryService.sumPriceByDate(date,branchNo);
+        Ledger ledger = ledgerService.findByDateAndBranchNoAndLedgerTypeNo(date, branchNo, LedgerType.MATERIAL);
+        if (ledger == null) {
+            ledger = new Ledger();
+            ledger.setLedgerTypeNo(LedgerType.MATERIAL);
+            ledger.setDate(date);
+            ledger.setBranchNo(branchNo);
+        }
+
+        if (sumPay == null || sumPay == 0) {
+            if (ledger != null && ledger.getLedgerNo() != null) {
+                ledgerService.removeByLedgerNoAndBranchNo(ledger.getLedgerNo(), branchNo);
+            }
+        } else {
+            ledger.setAmount(sumPay);
+            ledgerService.save(ledger);
         }
     }
 

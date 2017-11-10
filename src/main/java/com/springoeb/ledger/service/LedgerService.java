@@ -101,4 +101,8 @@ public class LedgerService {
 //        }
         return incomeExpenseBeanMap;
     }
+
+    public Ledger findByDateAndBranchNoAndLedgerTypeNo(Date date,int branchNo,int ledgerTypeNo){
+        return ledgerRepository.findByDateAndBranchNoAndLedgerTypeNo(date,branchNo,ledgerTypeNo);
+    }
 }

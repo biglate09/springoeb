@@ -18,6 +18,8 @@ public interface WorkHistoryRepository extends CrudRepository<WorkHistory,Intege
     List<WorkHistory> findByWorkDateBetween(Date d1, Date d2);
     List<WorkHistory> findByEmpNoAndWorkDateBetween(int empNo,Date d1, Date d2);
     void removeByWorkHistNoAndEmployee_BranchNo(int workHistNo,int branchNo);
+    @Query("select sum(w.workPay) from WorkHistory w join w.employee e where w.workDate = ?1 and e.branchNo = ?2")
+    Double sumWorkPayByWorkDateAndBranchNo(Date date,int branchNo);
     @Query("select min(w.workDate) from WorkHistory w join w.employee e where e.branchNo = ?1")
     Date findMinWorkHistDateByBranchNo(int branchNo);
     @Query("select max(w.workDate) from WorkHistory w join w.employee e where e.branchNo = ?1")

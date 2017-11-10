@@ -4,6 +4,9 @@ import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.springoeb.employee.model.*;
 import com.springoeb.employee.service.*;
+import com.springoeb.ledger.model.Ledger;
+import com.springoeb.ledger.model.LedgerType;
+import com.springoeb.ledger.service.LedgerService;
 import com.springoeb.system.model.BranchUser;
 import com.springoeb.system.model.Role;
 import com.springoeb.system.service.EmailService;
@@ -44,6 +47,8 @@ public class EmployeeController {
     private WorkHistoryService workHistoryService;
     @Autowired
     private EmailService emailService;
+    @Autowired
+    private LedgerService ledgerService;
 
     private final String EMP_PATH = "/WEB-INF/employee/";
 
@@ -281,14 +286,37 @@ public class EmployeeController {
         Iterable<WorkHistory> iWorkHistories = workHistories;
 
         workHistoryService.save(iWorkHistories);
+
+        updateLedger(workDate, branchNo);
         response.sendRedirect(request.getContextPath() + "/employee/workhistory");
+    }
+
+    private void updateLedger(Date date, int branchNo) {
+        Double sumPay = workHistoryService.sumWorkPayByWorkDateAndBranchNo(date,branchNo);
+        Ledger ledger = ledgerService.findByDateAndBranchNoAndLedgerTypeNo(date, branchNo, LedgerType.EMPLOYEE);
+        if (ledger == null) {
+            ledger = new Ledger();
+            ledger.setLedgerTypeNo(LedgerType.EMPLOYEE);
+            ledger.setDate(date);
+            ledger.setBranchNo(branchNo);
+        }
+
+        if (sumPay == null || sumPay == 0) {
+            if (ledger != null && ledger.getLedgerNo() != null) {
+                ledgerService.removeByLedgerNoAndBranchNo(ledger.getLedgerNo(), branchNo);
+            }
+        } else {
+            ledger.setAmount(sumPay);
+            ledgerService.save(ledger);
+        }
     }
 
     @Transactional
     @GetMapping("/deleteworkhistory/{workHistNo}")
     public void removeByWorkHistNo(@PathVariable("workHistNo") int workHistNo, HttpServletResponse response, HttpServletRequest request, HttpSession session) throws IOException {
         int branchNo = ((BranchUser) (session.getAttribute("branchUser"))).getBranchNo();
-        workHistoryService.removeByWorkHist(workHistNo, branchNo);
+        WorkHistory workHistory = workHistoryService.removeByWorkHist(workHistNo, branchNo);
+        updateLedger(workHistory.getWorkDate(), branchNo);
         response.sendRedirect(request.getContextPath() + "/employee/workhistory");
     }
 
@@ -523,6 +551,7 @@ public class EmployeeController {
         workHistory.setWorkMin(minute);
 
         workHistoryService.save(workHistory);
+        updateLedger(workHistory.getWorkDate(),branchNo);
 
         response.sendRedirect(request.getContextPath() + "/employee/check");
     }

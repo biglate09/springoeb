@@ -14,6 +14,10 @@ public class Bill {
     @GeneratedValue(strategy = GenerationType.AUTO)
     @Column(name = "billNo")
     private Integer billNo;
+    @Column(name = "amount")
+    private Double amount;
+    @Column(name = "promotionDesc")
+    private String promotionDesc;
     @Column(name = "totalAmount")
     private Double totalAmount;
     @Column(name = "billDate")
@@ -22,6 +26,8 @@ public class Bill {
     private Time billTime;
     @Column(name = "billStatus")
     private String status;
+    @Column(name = "receive")
+    private Double receive;
     @Column(name = "tableNo",updatable = true,insertable = true)
     private Integer tableNo;
     @ManyToOne
@@ -96,5 +102,29 @@ public class Bill {
 
     public void setOrders(List<Order> orders) {
         this.orders = orders;
+    }
+
+    public Double getAmount() {
+        return amount;
+    }
+
+    public void setAmount(Double amount) {
+        this.amount = amount;
+    }
+
+    public String getPromotionDesc() {
+        return promotionDesc;
+    }
+
+    public void setPromotionDesc(String promotionDesc) {
+        this.promotionDesc = promotionDesc;
+    }
+
+    public Double getReceive() {
+        return receive;
+    }
+
+    public void setReceive(Double receive) {
+        this.receive = receive;
     }
 }

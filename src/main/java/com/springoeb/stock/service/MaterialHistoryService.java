@@ -6,6 +6,7 @@ import com.springoeb.stock.repository.MaterialHistoryRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import java.sql.Date;
 import java.util.List;
 
 @Service
@@ -20,5 +21,9 @@ public class MaterialHistoryService {
     }
     public MaterialHistory save(MaterialHistory materialHistory){
         return materialHistoryRepository.save(materialHistory);
+    }
+
+    public Double sumPriceByDate(Date date,int branchNo){
+        return materialHistoryRepository.sumPriceByDate(date,branchNo);
     }
 }

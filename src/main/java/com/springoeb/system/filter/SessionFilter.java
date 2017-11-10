@@ -14,11 +14,10 @@ import javax.servlet.http.HttpSession;
 import java.io.IOException;
 import java.util.*;
 
-@WebFilter(urlPatterns = "/*")
 @Component("SessionFilter")
 public class SessionFilter implements Filter {
     private static final Set<String> ALLOW_PATHS = Collections.unmodifiableSet(new HashSet<>(
-            Arrays.asList("/login.jsp", "/404error.jsp", "/WEB-INF/setuser.jsp", "/loginpage", "/system/login", "/system/logout")));
+            Arrays.asList("/login.jsp", "/404error.jsp", "/WEB-INF/setuser.jsp", "/loginpage", "/system/login", "/system/logout", "/system/dummyorder")));
     private static final Set<String> START_PATHS = Collections.unmodifiableSet(new HashSet<>(
             Arrays.asList("/system/register","/system/registeruserprocess","/system/registeremp","/system/registerempprocess","/images","/vendors","/build")));
     private final static String SESSION_NAME = "branchUser";

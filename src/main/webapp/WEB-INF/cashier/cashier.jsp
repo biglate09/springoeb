@@ -188,10 +188,7 @@
                                                                                     <option value="${p.promotionNo}"
                                                                                             discount="${p.discount}"
                                                                                             menu_discount="<c:forEach items="${p.menuGroupPromotions}" var="mg" varStatus="vs"><c:if test="${vs.index!=0}">|</c:if>${mg.menuGroupNo}</c:forEach>"
-                                                                                            name="${p.promotionNameTH}">${p.promotionNameTH}
-                                                                                        (-<fmt:formatNumber
-                                                                                                value="${p.discount}"
-                                                                                                pattern="#0.00"/> %)
+                                                                                            name="${p.promotionNameTH}">${p.promotionNameTH} (-<fmt:formatNumber value="${p.discount}" pattern="#0.00"/> %)
                                                                                     </option>
                                                                                 </c:forEach>
                                                                             </select>
@@ -455,16 +452,24 @@
     });
 
     $("#confirm").click(function () {
-        if ($("receive").val() >= realprice) {
+        type = $('input[name="iCheck"]:checked').val();
+        if ($("#receive").val() >= realprice) {
+            billdata = {
+                totalAmount: realprice,
+                amount: price,
+                type: type,
+                value: (type == 0 ? null : type == 1 ? ($("#select_promotion option:selected").text()) : $("#distype").val()),
+                receive: $("#receive").val()
+            };
             $.ajax({
                 type: "POST",
                 url: "${contextPath}/cashier/checkbill/" + billNoCurrent,
-                data: {totalAmount: realprice},
+                data: billdata,
                 success: function (result) {
                     swal("สำเร็จ", "ยืนยันการจ่ายเงินเรียบร้อย", "success");
                     $("#done").css('display', 'inline-block');
                 }, error: function (result) {
-                    swal("ไม่สำเร็จ", "ออเดอร์ยังเสิร์ฟไม่ครบ กรุณาลองใหม่ภายหลัง", "error");
+                    swal("ไม่สำเร็จ", "ออเดอร์ยังเสิร์ฟไม่ครบหรือมีข้อผิดพลาด กรุณาลองใหม่ภายหลัง", "error");
                 }
             });
         } else {
@@ -538,7 +543,7 @@
         chosen_discount = $("#distype");
         discount = chosen_discount.val();
         if (discount.length > 0) {
-            $("#proname").parent().css('display','inline-block');
+            $("#proname").parent().css('display', 'inline-block');
             $("#proname").html('โปรโมชั่นลดพิเศษ');
             if (discount.substr(discount.length - 1, 1) == '%') {
                 discount = discount.substr(0, discount.length - 1);

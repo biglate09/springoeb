@@ -5,6 +5,9 @@ import com.fasterxml.jackson.databind.ObjectMapper;
 import com.springoeb.cashier.model.Bill;
 import com.springoeb.cashier.model.Order;
 import com.springoeb.cashier.service.BillService;
+import com.springoeb.ledger.model.Ledger;
+import com.springoeb.ledger.model.LedgerType;
+import com.springoeb.ledger.service.LedgerService;
 import com.springoeb.promotion.model.Promotion;
 import com.springoeb.promotion.service.PromotionService;
 import com.springoeb.system.model.BranchUser;
@@ -15,6 +18,9 @@ import org.springframework.web.bind.annotation.*;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpSession;
+import javax.transaction.Transactional;
+import java.sql.Date;
+import java.text.DecimalFormat;
 import java.util.List;
 
 @RequestMapping("/cashier")
@@ -25,6 +31,8 @@ public class CashierController {
     private PromotionService promotionService;
     @Autowired
     private BillService billService;
+    @Autowired
+    private LedgerService ledgerService;
     //-----------------------------------------------------------------------------------------------------------//
     @GetMapping("/cashier")
     public String toCashierIndex(Model model, HttpSession session) {
@@ -71,9 +79,10 @@ public class CashierController {
         return json;
     }
 
+    @Transactional
     @ResponseBody
     @PostMapping("/checkbill/{billNo}")
-    public void checkBill(@PathVariable("billNo") int billNo, HttpServletRequest request) throws Exception {
+    public void checkBill(@PathVariable("billNo") int billNo, HttpSession session, HttpServletRequest request) throws Exception {
         Bill bill = billService.findByBillNo(billNo);
         List<Order> orders = bill.getOrders();
         int order_count = 0;
@@ -87,11 +96,48 @@ public class CashierController {
 
         if(order_count == orders.size()) {
             Double totalAmount = Double.parseDouble(request.getParameter("totalAmount"));
+            Double amount = Double.parseDouble(request.getParameter("amount"));
+            Double receive = Double.parseDouble(request.getParameter("receive"));
             bill.setTotalAmount(totalAmount);
+            bill.setAmount(amount);
+            bill.setReceive(receive);
             bill.setStatus(Bill.PAID);
+            int type = Integer.parseInt(request.getParameter("type"));
+            String value = request.getParameter("value");
+
+            if(type == 1){
+                bill.setPromotionDesc(value.trim());
+            }else if(type == 2){
+                DecimalFormat df = new DecimalFormat("#,###,###,##0.00");
+                bill.setPromotionDesc("ลดพิเศษ : " + (value.indexOf("%") == -1 ? df.format(Double.parseDouble(value)) +" บาท" : df.format(Double.parseDouble(value.substring(0,value.length()-1)))+ " %"));
+            }
+
             billService.save(bill);
+            BranchUser branchUser = (BranchUser) (session.getAttribute("branchUser"));
+            int branchNo = branchUser.getBranchNo();
+            updateBillLedger(bill.getBillDate(),branchNo);
         }else{
             throw new Exception();
+        }
+    }
+
+    private void updateBillLedger(Date date, int branchNo){
+        Double sumPay = billService.sumTotalAmountByDateAndBranchNo(date,branchNo);
+        Ledger ledger = ledgerService.findByDateAndBranchNoAndLedgerTypeNo(date, branchNo, LedgerType.PROFIT);
+        if (ledger == null) {
+            ledger = new Ledger();
+            ledger.setLedgerTypeNo(LedgerType.PROFIT);
+            ledger.setDate(date);
+            ledger.setBranchNo(branchNo);
+        }
+
+        if (sumPay == null || sumPay == 0) {
+            if (ledger != null && ledger.getLedgerNo() != null) {
+                ledgerService.removeByLedgerNoAndBranchNo(ledger.getLedgerNo(), branchNo);
+            }
+        } else {
+            ledger.setAmount(sumPay);
+            ledgerService.save(ledger);
         }
     }
     //-----------------------------------------------------------------------------------------------------------//

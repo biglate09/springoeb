@@ -19,6 +19,10 @@ public class WorkHistoryService {
         return workHistoryRepository.findByEmployee_BranchNoAndWorkPayIsNotNullOrderByWorkDateDescWorkHistNoDesc(branchNo);
     }
 
+    public Double sumWorkPayByWorkDateAndBranchNo(Date date,int branchNo){
+        return workHistoryRepository.sumWorkPayByWorkDateAndBranchNo(date,branchNo);
+    }
+
 //    public WorkHistory findByWorkHistNo(int workHistNo){
 //        return workHistoryRepository.findByWorkHistNo(workHistNo);
 //    }
@@ -38,8 +42,10 @@ public class WorkHistoryService {
         return workHistoryRepository.findByEmpNoAndWorkDateBetween(empNo,date1,date2);
     }
 
-    public void removeByWorkHist(int workHistNo,int branchNo){
+    public WorkHistory removeByWorkHist(int workHistNo,int branchNo){
+        WorkHistory workHistory = workHistoryRepository.findByWorkHistNoAndEmployee_BranchNo(workHistNo,branchNo);
         workHistoryRepository.removeByWorkHistNoAndEmployee_BranchNo(workHistNo,branchNo);
+        return workHistory;
     }
 
     public void save(WorkHistory workHistory){

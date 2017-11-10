@@ -18,7 +18,7 @@ public class LedgerType {
     @Column(name = "ledgerPayNo")
     private int ledgerPayNo;
     @Column(name = "restNo")
-    private int restNo;
+    private Integer restNo;
 
     @JsonIgnore
     @OneToMany(fetch = FetchType.LAZY, mappedBy = "ledgerType")
@@ -28,9 +28,9 @@ public class LedgerType {
     @JoinColumn(name = "ledgerPayNo",updatable = false,insertable = false)
     private LedgerPay ledgerPay;
 
-    public static int PROFIT = 1;
-    public static int EMPLOYEE = 2;
-    public static int MATERIAL = 2;
+    public static final int PROFIT = 1;
+    public static final int EMPLOYEE = 2;
+    public static final int MATERIAL = 3;
 
     public Integer getLedgerTypeNo() {
         return ledgerTypeNo;
@@ -64,11 +64,11 @@ public class LedgerType {
         this.ledgerPayNo = ledgerPayNo;
     }
 
-    public int getRestNo() {
+    public Integer getRestNo() {
         return restNo;
     }
 
-    public void setRestNo(int restNo) {
+    public void setRestNo(Integer restNo) {
         this.restNo = restNo;
     }
 

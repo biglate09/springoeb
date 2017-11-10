@@ -87,4 +87,8 @@ public class BillService {
         bill.setStatus(Bill.UNPAID);
         return billRepository.save(bill);
     }
+
+    public Double sumTotalAmountByDateAndBranchNo(Date date,int branchNo){
+        return billRepository.sumTotalAmountByDateAndBranchNo(date, branchNo);
+    }
 }

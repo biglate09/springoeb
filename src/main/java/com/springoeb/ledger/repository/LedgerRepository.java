@@ -13,6 +13,7 @@ public interface LedgerRepository extends CrudRepository<Ledger,Integer>{
     List<Ledger> findByBranchNo(int branchNo);
     List<Ledger> findByBranchNoAndDateIsBetween(int branchNo,Date fromDate,Date toDate);
     Ledger findByLedgerNo(int ledgerNo);
+    Ledger findByDateAndBranchNoAndLedgerTypeNo(Date date,int branchNo,int ledgerTypeNo);
     void removeByLedgerNoAndBranchNo(int ledgerNo,int branchNo);
     @Query("select min(l.date) from Ledger l where branchNo = ?1")
     Date findMinLedgerDateByBranchNo(int branchNo);
