@@ -67,7 +67,7 @@
             ]
         });
         refresh_table();
-//        setInterval(refresh_table, 15000);
+        setInterval(refresh_table, 10000);
     });
 
     function refresh_table() {
