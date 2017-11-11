@@ -12,7 +12,7 @@
     <style>
         .foodDesc {
             width: 100%;
-            height: 60%;
+            height: 65%;
             overflow-y: scroll;
             margin-top: 10px;
             margin-bottom: 10px;

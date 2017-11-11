@@ -609,6 +609,9 @@
     /*}*/
 
     @media print {
+        Header, Footer {
+            display: none !important;
+        }
         body * {
             visibility: hidden;
         }
@@ -619,13 +622,11 @@
 
         #printableArea {
             position: absolute;
-            left: 3.5cm;
-            top: 0;
+            left: 3.3cm;
+            margin-top: -2.3cm;
             padding: 0;
-            margin: 0;
             width: 5in;
         }
-
     }
 
     @page :right {
@@ -658,7 +659,9 @@
             overflow: hidden;
             visibility: visible;
             width: 100%;
+            height: 20cm;
             font-size: 80%;
+            margin-top: 0%;
         }
 
         .modal.toPrint .nav .li {
