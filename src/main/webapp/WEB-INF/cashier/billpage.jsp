@@ -239,19 +239,24 @@
                     '<div style="white-space:nowrap;overflow:hidden;text-overflow: ellipsis;text-align:right;margin-right: 5%">' + result.promotionDesc + '</div>');
                 $('.receive_money').html(result.receive.toFixed(2).replace(/\B(?=(\d{3})+(?!\d))/g, ","));
                 var str = '';
-                result.orders.forEach(function (order) {
-                    str += '<tr>' +
-                        '<td class="quantity" style="width: 15%">' + (order.quantity == 0 ? '-' : order.quantity) + '</td>' +
-                        '<td class="menu" style="width: 65%">' + order.menu.menuNameTH + '</td>' +
-                        '<td class="price_all_unit" style="width: 20%;text-align: center;">' + (order.menu.menuPrice * order.quantity).toFixed(2).replace(/\B(?=(\d{3})+(?!\d))/g, ",") + '</td>' +
-                        '</tr>';
-                    order.orderAddOnList.forEach(function (addon) {
+                var sameordercount = 0;
+                result.orders.forEach(function (order,index,orders) {
+                    sameordercount += order.quantity;
+                    if(!orders[index+1] || order.menu.menuNo != orders[index+1].menu.menuNo) {
                         str += '<tr>' +
-                            '<td class="quantity" style="width: 15%"></td>' +
-                            '<td class="menu" style="width: 65%"> ++ ' + addon.addOn.materialItem.matItemName + '</td>' +
-                            '<td class="price_all_unit" style="width: 20%;text-align: center;">' + addon.addOn.price.toFixed(2).replace(/\B(?=(\d{3})+(?!\d))/g, ",") + '</td>' +
+                            '<td class="quantity" style="width: 15%">' + (order.quantity == 0 ? '-' : order.quantity) + '</td>' +
+                            '<td class="menu" style="width: 65%">' + order.menu.menuNameTH + '</td>' +
+                            '<td class="price_all_unit" style="width: 20%;text-align: center;">' + (order.menu.menuPrice * order.quantity).toFixed(2).replace(/\B(?=(\d{3})+(?!\d))/g, ",") + '</td>' +
                             '</tr>';
-                    });
+                        order.orderAddOnList.forEach(function (addon) {
+                            str += '<tr>' +
+                                '<td class="quantity" style="width: 15%"></td>' +
+                                '<td class="menu" style="width: 65%"> ++ ' + addon.addOn.materialItem.matItemName + '</td>' +
+                                '<td class="price_all_unit" style="width: 20%;text-align: center;">' + addon.addOn.price.toFixed(2).replace(/\B(?=(\d{3})+(?!\d))/g, ",") + '</td>' +
+                                '</tr>';
+                        });
+                        sameordercount = 0;
+                    }
                     $('.menu_lists').html(str);
                 });
             }, error: function () {
