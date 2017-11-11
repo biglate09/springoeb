@@ -110,6 +110,8 @@ public class CashierController {
             }else if(type == 2){
                 DecimalFormat df = new DecimalFormat("#,###,###,##0.00");
                 bill.setPromotionDesc("โปรโมชั่นพิเศษ : " + (value.indexOf("%") == -1 ? df.format(Double.parseDouble(value)) +" บาท" : df.format(Double.parseDouble(value.substring(0,value.length()-1)))+ " %"));
+            }else{
+                bill.setPromotionDesc(null);
             }
 
             billService.save(bill);

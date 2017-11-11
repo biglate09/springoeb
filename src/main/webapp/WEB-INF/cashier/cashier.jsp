@@ -387,21 +387,26 @@
                 var str = '';
                 price = 0;
                 var totalPerUnit = 0;
-                result.orders.forEach(function (order) {
+                var sameordercount = 0;
+                result.orders.forEach(function (order,index,orders) {
                     totalPerUnit = order.amount;
-                    str += '<tr>' +
-                        '<td class="quantity" style="width: 15%">' + (order.quantity == 0 ? '-' : order.quantity) + '</td>' +
-                        '<td class="menu" style="width: 65%">' + order.menu.menuNameTH + '</td>' +
-                        '<td class="price_all_unit" style="width: 20%;text-align: center;">' + (order.menu.menuPrice * order.quantity).toFixed(2).replace(/\B(?=(\d{3})+(?!\d))/g, ",") + '</td>' +
-                        '</tr>';
-                    price += totalPerUnit;
-                    order.orderAddOnList.forEach(function (addon) {
+                    sameordercount += order.quantity;
+                    if(!orders[index+1] || order.menu.menuNo != orders[index+1].menu.menuNo){
                         str += '<tr>' +
-                            '<td class="quantity" style="width: 15%"></td>' +
-                            '<td class="menu" style="width: 65%"> ++ ' + addon.addOn.materialItem.matItemName + '</td>' +
-                            '<td class="price_all_unit" style="width: 20%;text-align: center;">' + addon.addOn.price.toFixed(2).replace(/\B(?=(\d{3})+(?!\d))/g, ",") + '</td>' +
+                            '<td class="quantity" style="width: 15%">' + (sameordercount == 0 ? '-' : sameordercount) + '</td>' +
+                            '<td class="menu" style="width: 65%">' + order.menu.menuNameTH + '</td>' +
+                            '<td class="price_all_unit" style="width: 20%;text-align: center;">' + (order.menu.menuPrice * order.quantity).toFixed(2).replace(/\B(?=(\d{3})+(?!\d))/g, ",") + '</td>' +
                             '</tr>';
-                    });
+                        price += totalPerUnit;
+                        order.orderAddOnList.forEach(function (addon) {
+                            str += '<tr>' +
+                                '<td class="quantity" style="width: 15%"></td>' +
+                                '<td class="menu" style="width: 65%"> ++ ' + addon.addOn.materialItem.matItemName + '</td>' +
+                                '<td class="price_all_unit" style="width: 20%;text-align: center;">' + addon.addOn.price.toFixed(2).replace(/\B(?=(\d{3})+(?!\d))/g, ",") + '</td>' +
+                                '</tr>';
+                        });
+                        sameordercount = 0;
+                    }
                     $('.menu_lists').html(str);
                 });
                 $('.sumprice').html(price.toFixed(2).replace(/\B(?=(\d{3})+(?!\d))/g, ","));
@@ -468,6 +473,7 @@
                 success: function (result) {
                     swal("สำเร็จ", "ยืนยันการจ่ายเงินเรียบร้อย", "success");
                     $("#done").css('display', 'inline-block');
+                    refresh_table();
                 }, error: function (result) {
                     swal("ไม่สำเร็จ", "ออเดอร์ยังเสิร์ฟไม่ครบหรือมีข้อผิดพลาด กรุณาลองใหม่ภายหลัง", "error");
                 }
