@@ -257,7 +257,8 @@
                                 <div class="modal-footer">
                                     <!-- ปุ่มกดปิด (Close) ตรงส่วนล่างของ Modal -->
                                     <div class="col-md-9 col-sm-9 col-xs-12 col-md-offset-3">
-                                        <button type="button" class="btn btn-default" style="font-size: initial" data-dismiss="modal"
+                                        <button type="button" class="btn btn-default" style="font-size: initial"
+                                                data-dismiss="modal"
                                                 id="closeModal">
                                             ปิด
                                         </button>
@@ -444,7 +445,13 @@
     $("#confirm").click(function () {
         type = $('input[name="iCheck"]:checked').val();
         if ($("#receive").val() >= realprice) {
-            billdata = {totalAmount: realprice,amount: price,type:type,value:(type==0?null:type==1?$("#select_promotion option:selected").text():$("#distype").val()),receive:$("#receive").val()};
+            billdata = {
+                totalAmount: realprice,
+                amount: price,
+                type: type,
+                value: (type == 0 ? null : type == 1 ? $("#select_promotion option:selected").text() : $("#distype").val()),
+                receive: $("#receive").val()
+            };
             $.ajax({
                 type: "POST",
                 url: "${contextPath}/cashier/checkbill/" + billNoCurrent,
@@ -527,7 +534,7 @@
         chosen_discount = $("#distype");
         discount = chosen_discount.val();
         if (discount.length > 0) {
-            $("#proname").parent().css('display','inline-block');
+            $("#proname").parent().css('display', 'inline-block');
             $("#proname").html('โปรโมชั่นลดพิเศษ');
             if (discount.substr(discount.length - 1, 1) == '%') {
                 discount = discount.substr(0, discount.length - 1);
