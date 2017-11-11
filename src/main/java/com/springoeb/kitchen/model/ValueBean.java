@@ -30,4 +30,11 @@ public class ValueBean {
     public void setOrderNo(Integer orderNo) {
         this.orderNo = orderNo;
     }
+
+    @Override
+    public String toString() {
+        return "ValueBean{" +
+                "table=" + table.getTableName() +
+                '}';
+    }
 }

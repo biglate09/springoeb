@@ -149,17 +149,24 @@
                     var orderNo = "";
                     var qty = 0;
                     var cancelmenu = "";
-                    vals.forEach(function (val) {
-                        table_str += val.table.tableName + " (" + val.qty + ")<br>";
+                    var countsametable = 0;
+                    vals.forEach(function (val,index) {
+                        countsametable += val.qty;
+                        if(!vals[index+1] || val.table.tableNo != vals[index+1].table.tableNo){
+                            table_str += val.table.tableName + " (" + countsametable + ")<br>";
+
+                            if (orderNo != "") {
+                                orderNo += "-";
+                            }
+                            orderNo += val.orderNo;
+                            if (cancelmenu != "") {
+                                cancelmenu += "|";
+                            }
+                            cancelmenu += val.table.tableNo + "," + countsametable + "," + obj.menu.menuNo + "," + obj.status;
+
+                            countsametable = 0;
+                        }
                         qty += val.qty;
-                        if (orderNo != "") {
-                            orderNo += "-";
-                        }
-                        orderNo += val.orderNo;
-                        if (cancelmenu != "") {
-                            cancelmenu += "|";
-                        }
-                        cancelmenu += val.table.tableNo + "," + val.qty + "," + val.orderNo;
                     });
                     var addon_str = "";
                     obj.addOns.forEach(function (addOn) {
@@ -199,7 +206,6 @@
             url: "${contextPath}/kitchen/changestatus/" + orderNo,
             success: function (result) {
                 refresh_table();
-//                $('#loading'+orderNo).hide();
             }
         });
     }
@@ -208,11 +214,13 @@
         var tb_option = table_option.split('|');
         $(".table_opt").css('display', 'none');
         $(".table_opt").attr('qty', '');
-        $(".table_opt").attr('orderNo', '');
+        $(".table_opt").attr('menuNo', '');
+        $(".table_opt").attr('status', '');
         tb_option.forEach(function (tb) {
             tb = tb.split(',');
             $(".table_opt[value='" + tb[0] + "']").css('display', 'inline-block');
-            $(".table_opt[value='" + tb[0] + "']").attr('orderNo', tb[2]);
+            $(".table_opt[value='" + tb[0] + "']").attr('status', tb[3]);
+            $(".table_opt[value='" + tb[0] + "']").attr('menuNo', tb[2]);
             $(".table_opt[value='" + tb[0] + "']").attr('qty', tb[1]);
         });
     }
@@ -240,7 +248,7 @@
                 var a = $("#cancel_table option:selected").val();
                 $.ajax({
                     type: "DELETE",
-                    url: "${contextPath}/kitchen/cancelorder/" + $("#cancel_table option:selected").attr('orderNo') + "-" + $("#quantity option:selected").val() + "-" + $("#cancel_table option:selected").val(),
+                    url: "${contextPath}/kitchen/cancelorder/" + $("#cancel_table option:selected").attr('menuNo') + "-" + $("#quantity option:selected").val() + "-" + $("#cancel_table option:selected").val() + "-" + $("#cancel_table option:selected").attr('status'),
                     success: function (result) {
                         swal("สำเร็จ", "ออเดอร์ถูกยกเลิกเรียบร้อยแล้ว", "success");
                         refresh_table();
