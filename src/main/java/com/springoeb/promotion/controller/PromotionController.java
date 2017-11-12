@@ -2,9 +2,13 @@ package com.springoeb.promotion.controller;
 
 import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.databind.ObjectMapper;
+import com.springoeb.branch.model.Branch;
+import com.springoeb.branch.service.BranchService;
 import com.springoeb.menu.service.MenuGroupService;
+import com.springoeb.promotion.model.BranchPromotion;
 import com.springoeb.promotion.model.MenuGroupPromotion;
 import com.springoeb.promotion.model.Promotion;
+import com.springoeb.promotion.service.BranchPromotionService;
 import com.springoeb.promotion.service.MenuGroupPromotionService;
 import com.springoeb.promotion.service.PromotionService;
 import com.springoeb.system.model.BranchUser;
@@ -36,6 +40,10 @@ public class PromotionController {
     private PromotionService promotionService;
     @Autowired
     private MenuGroupPromotionService menuGroupPromotionService;
+    @Autowired
+    private BranchPromotionService branchPromotionService;
+    @Autowired
+    private BranchService branchService;
 
     //-----------------------------------------------------------------------------------------------------------//
     @GetMapping("/promotion")
@@ -58,7 +66,13 @@ public class PromotionController {
     @PostMapping("/getpromotions")
     public String getPromotions(Model model, HttpSession session) throws JsonProcessingException {
         BranchUser branchUser = (BranchUser) (session.getAttribute("branchUser"));
-        List<Promotion> promotions = promotionService.findPromotions(branchUser.getBranch().getRestNo());
+        int branchNo = branchUser.getBranchNo();
+        List<BranchPromotion> promotions = null;
+        if(branchNo != branchUser.getBranch().getMainBranchNo()) {
+            promotions = branchPromotionService.findByBranchNo(branchNo);
+        }else{
+            promotions = branchPromotionService.findAll(branchUser.getBranch().getRestNo());
+        }
         ObjectMapper mapper = new ObjectMapper();
         String json = mapper.writeValueAsString(promotions);
         return json;
@@ -103,6 +117,14 @@ public class PromotionController {
             list.add(menuGroupPromotion);
         }
 
+        BranchPromotion branchPromotion = new BranchPromotion();
+        branchPromotion.setPromotionNo(promotion.getPromotionNo());
+        branchPromotion.setBranchNo(branchUser.getBranchNo());
+        branchPromotion.setAvailable(false);
+        branchPromotionService.save(branchPromotion);
+
+        System.out.println("IN THIS");
+
         menuGroupPromotionService.save(list);
     }
 
@@ -138,13 +160,34 @@ public class PromotionController {
 
     @ResponseBody
     @PostMapping("/changeavailable/{promotionNo}")
-    public String changeAvailable(@PathVariable("promotionNo") int promotionNo) throws JsonProcessingException {
-        Promotion promotion = promotionService.findByPromotionNo(promotionNo);
-//        promotion.setAvailable(!promotion.isAvailable());
+    public void changeAvailable(@PathVariable("promotionNo") int promotionNo,HttpSession session) throws JsonProcessingException {
+        BranchUser branchUser = (BranchUser) (session.getAttribute("branchUser"));
+        int branchNo = branchUser.getBranchNo();
+        BranchPromotion branchPromotion = branchPromotionService.findByBranchNoAndPromotionNo(branchNo,promotionNo);
+        branchPromotion.setAvailable(!branchPromotion.isAvailable());
+        branchPromotionService.save(branchPromotion);
+    }
+
+    @Transactional
+    @ResponseBody
+    @PostMapping("/promoteofficial")
+    public void promoteOfficial(HttpServletRequest request, HttpSession session) throws Exception {
+        BranchUser branchUser = (BranchUser) (session.getAttribute("branchUser"));
+        int branchNo = branchUser.getBranchNo();
+        Promotion promotion = promotionService.findByPromotionNo(Integer.parseInt(request.getParameter("promotionno")));
+        promotion.setOfficial(true);
         promotionService.save(promotion);
-        ObjectMapper mapper = new ObjectMapper();
-        String json = mapper.writeValueAsString(promotion);
-        return json;
+        BranchPromotion branchPromotion = branchPromotionService.findByBranchNoAndPromotionNo(branchNo,Integer.parseInt(request.getParameter("promotionno")));
+        List<Branch> branches = branchService.getAllBranches(branchUser.getBranch().getRestNo());
+        for (Branch b : branches) {
+            if(b.getBranchNo() != branchPromotion.getBranchNo()){
+                BranchPromotion bp = new BranchPromotion();
+                bp.setBranchNo(b.getBranchNo());
+                bp.setPromotionNo(promotion.getPromotionNo());
+                bp.setAvailable(false);
+                branchPromotionService.save(bp);
+            }
+        }
     }
     //-----------------------------------------------------------------------------------------------------------//
 }

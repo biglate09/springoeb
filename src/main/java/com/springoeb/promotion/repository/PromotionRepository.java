@@ -15,4 +15,5 @@ public interface PromotionRepository extends CrudRepository<Promotion,MenuGroupP
     Promotion findByPromotionNo(int promotionNo);
     void removeByPromotionNo(int promotionNo);
     List<Promotion> findByRestNoOrderByFromDate(int restNo);
+    List<Promotion> findByOfficialAndRestNo(boolean official,int restNo);
 }

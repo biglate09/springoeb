@@ -37,8 +37,8 @@ public class CashierController {
     @GetMapping("/cashier")
     public String toCashierIndex(Model model, HttpSession session) {
         BranchUser branchUser = (BranchUser) (session.getAttribute("branchUser"));
-        int restNo = branchUser.getBranch().getRestNo();
-        List<Promotion> promotions = promotionService.findAvailablePromotion(restNo);
+        int branchNo = branchUser.getBranchNo();
+        List<Promotion> promotions = promotionService.findAvailablePromotion(branchNo);
         model.addAttribute("promotions",promotions);
         return CASHIER_PATH + "cashier.jsp";
     }

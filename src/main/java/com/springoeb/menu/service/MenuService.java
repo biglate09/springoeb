@@ -102,7 +102,7 @@ public class MenuService {
         }
     }
 
-    public List<Menu> getMenuOfficial(){
-        return menuRepository.findByLocalFlag(0);
+    public List<Menu> getMenuOfficial(int restNo){
+        return menuRepository.findByLocalFlagAndRestNo(0,restNo);
     }
 }

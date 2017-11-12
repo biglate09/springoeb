@@ -316,6 +316,7 @@
 
     $(document).ready(function () {
         refresh_table()
+        setInterval(refresh_table,10000);
     });
 
 

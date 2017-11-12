@@ -30,6 +30,8 @@ public class Promotion {
     private String day;
     @Column(name = "restNo")
     private Integer restNo;
+    @Column(name = "isOfficial")
+    private boolean official;
 
     @JsonManagedReference
     @OneToMany(fetch = FetchType.LAZY, mappedBy = "promotion")
@@ -129,5 +131,13 @@ public class Promotion {
 
     public void setMenuGroupPromotions(List<MenuGroupPromotion> menuGroupPromotions) {
         this.menuGroupPromotions = menuGroupPromotions;
+    }
+
+    public boolean isOfficial() {
+        return official;
+    }
+
+    public void setOfficial(boolean official) {
+        this.official = official;
     }
 }
