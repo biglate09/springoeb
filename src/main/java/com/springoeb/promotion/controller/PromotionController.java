@@ -123,8 +123,6 @@ public class PromotionController {
         branchPromotion.setAvailable(false);
         branchPromotionService.save(branchPromotion);
 
-        System.out.println("IN THIS");
-
         menuGroupPromotionService.save(list);
     }
 

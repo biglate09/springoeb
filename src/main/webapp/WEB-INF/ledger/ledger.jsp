@@ -140,10 +140,7 @@
             ],
             columns: [
                 {
-                    data: {
-                        _: 'date.display',
-                        sort: 'date.order'
-                    }
+                    data: 'date'
                 },
                 {
                     data: 'ledgerType'
@@ -171,12 +168,9 @@
                     var ledger = json[i];
                     var date = new Date(ledger.date);
                     var date_format = (date.getDate() < 10 ? '0' : '') + date.getDate() + "/" + (date.getMonth() + 1 < 10 ? '0' : '') + (date.getMonth() + 1) + "/" + date.getFullYear();
-                    var date_order = date.getFullYear() + (date.getMonth() + 1 < 10 ? '0' : '') + (date.getMonth() + 1) + (date.getDate() < 10 ? '0' : '') + date.getDate();
+//                    var date_order = date.getFullYear() + (date.getMonth() + 1 < 10 ? '0' : '') + (date.getMonth() + 1) + (date.getDate() < 10 ? '0' : '') + date.getDate();
                     var data_refresh = {
-                        date: {
-                            display: date_format,
-                            order: date_order
-                        },
+                        date: date_format,
                         ledgerType: ledger.ledgerType.ledgerTypeName,
                         amount: "<span style='color:" + (ledger.ledgerType.ledgerPayNo == 1 ? 'green' : 'red') + "'>" + ledger.amount.toFixed(2).replace(/\B(?=(\d{3})+(?!\d))/g, ",") + " บาท</span>",
                         option: (ledger.ledgerTypeNo <= 3 ? '' : '<a onclick = "set_ledger(' + ledger.ledgerNo + ')" class = "btn btn-warning btn-sm" data-toggle = "modal" data-target = "#ledger_modal"> <i class = "fa fa-pencil"> </i> &nbsp; แก้ไข </a>' +

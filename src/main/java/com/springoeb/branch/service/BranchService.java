@@ -56,7 +56,6 @@ public class BranchService {
         List<Promotion> promotions = promotionService.getPromotionOfficial(branch.getRestNo());
         List<BranchPromotion> branchPromotions = new LinkedList<BranchPromotion>();
         for(Promotion p : promotions){
-            System.out.println(p.getPromotionNo() + " : " + branch.getBranchNo());
             BranchPromotion bp = new BranchPromotion();
             bp.setPromotionNo(p.getPromotionNo());
             bp.setBranchNo(branch.getBranchNo());
