@@ -127,7 +127,7 @@
                                         <li class="sub_menu"><a id="totalincome" href="${contextPath}/report/totalincome">ทั้งหมด</a></li>
                                         <li class="sub_menu"><a id="emppayreport" href="${contextPath}/report/emppayreport">ค่าจ้างพนักงาน</a></li>
                                         <li class="sub_menu"><a id="billreport" href="${contextPath}/report/billreport">ผลประกอบการ</a></li>
-                                        <li class="sub_menu"><a id="other" href="${contextPath}/report/other">อื่นๆ</a></li>
+                                        <%--<li class="sub_menu"><a id="other" href="${contextPath}/report/other">อื่นๆ</a></li>--%>
                                     </ul>
                                 </li>
                             </ul>
