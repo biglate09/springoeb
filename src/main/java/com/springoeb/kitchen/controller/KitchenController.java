@@ -5,6 +5,9 @@ import com.fasterxml.jackson.databind.ObjectMapper;
 import com.springoeb.cashier.model.Order;
 import com.springoeb.cashier.service.OrderService;
 import com.springoeb.kitchen.model.ValueBean;
+import com.springoeb.stock.model.MaterialHistory;
+import com.springoeb.stock.model.MenuMaterial;
+import com.springoeb.stock.service.MaterialHistoryService;
 import com.springoeb.system.model.BranchUser;
 import com.springoeb.table.model.Table;
 import com.springoeb.table.service.TableService;
@@ -15,6 +18,8 @@ import org.springframework.web.bind.annotation.*;
 
 import javax.servlet.http.HttpSession;
 import javax.transaction.Transactional;
+import java.sql.Date;
+import java.sql.Time;
 import java.util.LinkedList;
 import java.util.List;
 import java.util.Map;
@@ -27,6 +32,8 @@ public class KitchenController {
     private OrderService orderService;
     @Autowired
     private TableService tableService;
+    @Autowired
+    private MaterialHistoryService materialHistoryService;
 
     //-----------------------------------------------------------------------------------------------------------//
     @GetMapping("/kitchen")
@@ -118,7 +125,8 @@ public class KitchenController {
 
     @ResponseBody
     @PostMapping("/changestatus/{orderNo}")
-    public void changeStatus(@PathVariable("orderNo")String orderNo){
+    public void changeStatus(@PathVariable("orderNo")String orderNo,HttpSession session){
+        int branchNo = ((BranchUser) (session.getAttribute("branchUser"))).getBranchNo();
         String[] orderNos = orderNo.split("-");
         List<Order> orders = new LinkedList<Order>();
         for(String o : orderNos){
@@ -126,6 +134,17 @@ public class KitchenController {
             String orderStatus = order.getStatus();
             if(orderStatus.equals(Order.WAITING)){
                 order.setStatus(Order.COOKING);
+                List<MenuMaterial> materials = order.getMenu().getMenuMaterials();
+                for(MenuMaterial m : materials){
+                    MaterialHistory mh = new MaterialHistory();
+                    mh.setMatName(m.getMaterialItem().getMatItemName());
+                    mh.setMatQuantity(-1 * (m.getMaterialItem().getQuantity() * order.getQuantity()));
+                    mh.setDate(new Date(System.currentTimeMillis()));
+                    mh.setTime(new Time(System.currentTimeMillis()));
+                    mh.setMatItemNo(m.getMatItemNo());
+                    mh.setBranchNo(branchNo);
+                    materialHistoryService.save(mh);
+                }
             }else if(orderStatus.equals(Order.COOKING)) {
                 order.setStatus(Order.COOKED);
             }else if(orderStatus.equals(Order.COOKED)){

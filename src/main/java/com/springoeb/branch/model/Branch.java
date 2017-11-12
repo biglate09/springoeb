@@ -45,7 +45,6 @@ public class Branch {
     @Column(name = "branchIndex")
     private Integer branchIndex;
 
-
     @JsonIgnore
     @OneToMany(fetch = FetchType.LAZY, mappedBy = "branch")
     private List<BranchUser> branchUsers;
