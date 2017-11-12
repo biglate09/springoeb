@@ -262,6 +262,28 @@
                                                     </div>
                                                 </div>
                                             </div>
+                                            <div class="col-md-6 col-xs-12">
+                                                <div class="x_panel">
+                                                    <div class="x_title">
+                                                        <h4>เมนูที่ยังไม่เสิร์ฟ</h4>
+                                                        <div class="clearfix"></div>
+                                                    </div>
+                                                    <div class="x_content">
+                                                        <table style="width: 100%">
+                                                            <thead style="font-weight: bold;">
+                                                            <tr>
+                                                                <td style="width: 30%;">จำนวน</td>
+                                                                <td style="width: 70%;text-align: center;">
+                                                                    รายการอาหาร
+                                                                </td>
+                                                            </tr>
+                                                            </thead>
+                                                            <tbody class="menu_unserve_lists">
+                                                            </tbody>
+                                                        </table>
+                                                    </div>
+                                                </div>
+                                            </div>
                                         </div>
                                     </form>
                                 </div>
@@ -389,17 +411,22 @@
                 var showTime = result.billTime.substr(0, 2) + ":" + result.billTime.substr(3, 2);
                 $("#billtime").html(showTime);
                 var str = '';
+                var str_unserve = '';
                 price = 0;
                 var sameordercount = 0;
                 var sameorderprice = 0;
+                var sameorderunserve = 0;
                 result.orders.forEach(function (order, index, orders) {
-                    if(order.status != '${Order.CANCELLED}') {
+                    if (order.status != '${Order.CANCELLED}') {
                         sameordercount += order.quantity;
                         sameorderprice += order.amount;
                     }
 
+                    if (order.status != '${Order.SERVED}' && order.status != '${Order.CANCELLED}') {
+                        sameorderunserve += order.quantity;
+                    }
+
                     if (!orders[index + 1] || order.menu.menuNo != orders[index + 1].menu.menuNo) {
-                        console.log('in ja ' + order.menu.menuNo);
                         price += sameorderprice;
                         str += '<tr>' +
                             '<td class="quantity" style="width: 15%;">' + sameordercount + '</td>' +
@@ -413,9 +440,19 @@
                                 '<td class="price_all_unit" style="width: 20%;text-align: center;">' + addon.addOn.price.toFixed(2).replace(/\B(?=(\d{3})+(?!\d))/g, ",") + '</td>' +
                                 '</tr>';
                         });
+
+                        if(sameorderunserve != 0) {
+                            str_unserve += '<tr>' +
+                                '<td class="quantity">' + sameorderunserve + '</td>' +
+                                '<td class="menu">' + order.menu.menuNameTH + '</td>' +
+                                '</tr>';
+                            sameorderunserve = 0;
+                        }
                         sameordercount = 0;
                         sameorderprice = 0;
                     }
+
+                    $(".menu_unserve_lists").html(str_unserve);
                     $('.menu_lists').html(str);
                 });
                 $('.sumprice').html(price.toFixed(2).replace(/\B(?=(\d{3})+(?!\d))/g, ","));
@@ -621,6 +658,7 @@
         Header, Footer {
             display: none !important;
         }
+
         body * {
             visibility: hidden;
         }

@@ -1,5 +1,6 @@
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 <%@page contentType="text/html" pageEncoding="UTF-8" %>
+<%@ page import="com.springoeb.cashier.model.Order" %>
 <c:set var="contextPath" value="${pageContext.request.contextPath}"/>
 <!DOCTYPE html>
 <html>
@@ -125,7 +126,8 @@
                                                                     </div>
                                                                 </div>
                                                                 <div class="col-md-12 col-sm-12 col-xs-12">
-                                                                    <label class="inline-label col-md-8" for="change_bill">เงินทอน </label>
+                                                                    <label class="inline-label col-md-8"
+                                                                           for="change_bill">เงินทอน </label>
                                                                     <div id="change_bill"
                                                                          style="margin-right: 5%;text-align: right">
                                                                         <span class="change"></span> บาท
@@ -240,13 +242,18 @@
                 $('.receive_money').html(result.receive.toFixed(2).replace(/\B(?=(\d{3})+(?!\d))/g, ","));
                 var str = '';
                 var sameordercount = 0;
-                result.orders.forEach(function (order,index,orders) {
-                    sameordercount += order.quantity;
-                    if(!orders[index+1] || order.menu.menuNo != orders[index+1].menu.menuNo) {
+                var sameorderprice = 0;
+                result.orders.forEach(function (order, index, orders) {
+                    if (order.status != '${Order.CANCELLED}') {
+                        sameordercount += order.quantity;
+                        sameorderprice += order.amount;
+                    }
+
+                    if (!orders[index + 1] || order.menu.menuNo != orders[index + 1].menu.menuNo) {
                         str += '<tr>' +
-                            '<td class="quantity" style="width: 15%">' + (order.quantity == 0 ? '-' : order.quantity) + '</td>' +
+                            '<td class="quantity" style="width: 15%">' + sameordercount + '</td>' +
                             '<td class="menu" style="width: 65%">' + order.menu.menuNameTH + '</td>' +
-                            '<td class="price_all_unit" style="width: 20%;text-align: center;">' + (order.menu.menuPrice * order.quantity).toFixed(2).replace(/\B(?=(\d{3})+(?!\d))/g, ",") + '</td>' +
+                            '<td class="price_all_unit" style="width: 20%;text-align: center;">' + (order.menu.menuPrice * sameordercount).toFixed(2).replace(/\B(?=(\d{3})+(?!\d))/g, ",") + '</td>' +
                             '</tr>';
                         order.orderAddOnList.forEach(function (addon) {
                             str += '<tr>' +
@@ -256,6 +263,7 @@
                                 '</tr>';
                         });
                         sameordercount = 0;
+                        sameorderprice = 0;
                     }
                     $('.menu_lists').html(str);
                 });
