@@ -57,7 +57,7 @@
                             <div class="modal-header">
                                 <!-- ปุ่มกดปิด (X) ตรงส่วนหัวของ Modal -->
                                 <button type="button" class="close" data-dismiss="modal">&times;</button>
-                                <h4 class="modal-title">ยกเลิกเมนู <span id="display_menu_name"></span></h4>
+                                <h4 class="modal-title">ยกเลิกออเดอร์ <span id="display_menu_name"></span></h4>
                             </div>
                             <!-- ส่วนเนื้อหาของ Modal -->
                             <div class="modal-body">
@@ -155,10 +155,6 @@
                         if(!vals[index+1] || val.table.tableNo != vals[index+1].table.tableNo){
                             table_str += val.table.tableName + " (" + countsametable + ")<br>";
 
-                            if (orderNo != "") {
-                                orderNo += "-";
-                            }
-                            orderNo += val.orderNo;
                             if (cancelmenu != "") {
                                 cancelmenu += "|";
                             }
@@ -166,6 +162,12 @@
 
                             countsametable = 0;
                         }
+
+                        if (orderNo != "") {
+                            orderNo += "-";
+                        }
+                        orderNo += val.orderNo;
+
                         qty += val.qty;
                     });
                     var addon_str = "";
@@ -186,7 +188,7 @@
                             obj.status == 'waiting' ? '<a onclick="change_status(\'' + orderNo + '\')" class="btn btn-default"><i class="fa fa-circle-o-notch fa-spin" id="loading' + orderNo + '" style="display:none"></i> ปรุงอาหาร</a>' :
                                 obj.status == 'cooking' ? '<a onclick="change_status(\'' + orderNo + '\')" class="btn btn-primary"><i class="fa fa-circle-o-notch fa-spin" id="loading' + orderNo + '" style="display:none"></i> ปรุงสำเร็จ</a>' :
                                     obj.status == 'ready' ? '<a onclick="change_status(\'' + orderNo + '\')" class="btn btn-info"><i class="fa fa-circle-o-notch fa-spin" id="loading' + orderNo + '" style="display:none"></i> เสิร์ฟอาหาร</a>' : '' ) +
-                        '<a class="btn btn-danger" data-toggle="modal" data-target="#cancelmenu" onclick="set_cancel_option(\'' + cancelmenu + '\')">ยกเลิกเมนู</a>'
+                        '<a class="btn btn-danger" data-toggle="modal" data-target="#cancelmenu" onclick="set_cancel_option(\'' + cancelmenu + '\')">ยกเลิกออเดอร์</a>'
                     };
                     data_array.push(data_refresh);
                 }
@@ -251,6 +253,7 @@
                     url: "${contextPath}/kitchen/cancelorder/" + $("#cancel_table option:selected").attr('menuNo') + "-" + $("#quantity option:selected").val() + "-" + $("#cancel_table option:selected").val() + "-" + $("#cancel_table option:selected").attr('status'),
                     success: function (result) {
                         swal("สำเร็จ", "ออเดอร์ถูกยกเลิกเรียบร้อยแล้ว", "success");
+                        $("#cancelmenu").modal('hide');
                         refresh_table();
                     }, error: function (xhr, status, error) {
                         swal("ไม่สำเร็จ", "กรุณาลองใหม่ในภายหลัง", "error");
@@ -259,6 +262,10 @@
             }
         );
         return false;
+    });
+
+    $('#cancelmenu').on('hidden.bs.modal', function(){
+        $(this).find('#cancel_menu')[0].reset();
     });
 </script>
 </html>

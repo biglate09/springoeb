@@ -2,6 +2,7 @@
 <%@ taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt" %>
 <%@page contentType="text/html" pageEncoding="UTF-8" %>
 <%@ page import="com.springoeb.branch.model.Branch" %>
+<%@ page import="com.springoeb.cashier.model.Order" %>
 <c:set var="contextPath" value="${pageContext.request.contextPath}"/>
 <!DOCTYPE html>
 <html>
@@ -197,7 +198,8 @@
                                                                                     <option value="${p.promotionNo}"
                                                                                             discount="${p.discount}"
                                                                                             menu_discount="<c:forEach items="${p.menuGroupPromotions}" var="mg" varStatus="vs"><c:if test="${vs.index!=0}">|</c:if>${mg.menuGroupNo}</c:forEach>"
-                                                                                            name="${p.promotionNameTH}">${p.promotionNameTH} (-<fmt:formatNumber
+                                                                                            name="${p.promotionNameTH}">${p.promotionNameTH}
+                                                                                        (-<fmt:formatNumber
                                                                                                 value="${p.discount}"
                                                                                                 pattern="#0.00"/> %)
                                                                                     </option>
@@ -323,8 +325,10 @@
                     var complete = 0;
                     obj.orders.forEach(function (order) {
                         totalPerUnit = order.amount;
-                        price += totalPerUnit;
-                        if (order.status == 'served' || order.status == 'cancelled') {
+                        if (order.status != '${Order.CANCELLED}') {
+                            price += totalPerUnit;
+                        }
+                        if (order.status == '${Order.SERVED}' || order.status == '${Order.CANCELLED}') {
                             complete++;
                         }
                     });
@@ -386,18 +390,22 @@
                 $("#billtime").html(showTime);
                 var str = '';
                 price = 0;
-                var totalPerUnit = 0;
                 var sameordercount = 0;
-                result.orders.forEach(function (order,index,orders) {
-                    totalPerUnit = order.amount;
-                    sameordercount += order.quantity;
-                    if(!orders[index+1] || order.menu.menuNo != orders[index+1].menu.menuNo){
+                var sameorderprice = 0;
+                result.orders.forEach(function (order, index, orders) {
+                    if(order.status != '${Order.CANCELLED}') {
+                        sameordercount += order.quantity;
+                        sameorderprice += order.amount;
+                    }
+
+                    if (!orders[index + 1] || order.menu.menuNo != orders[index + 1].menu.menuNo) {
+                        console.log('in ja ' + order.menu.menuNo);
+                        price += sameorderprice;
                         str += '<tr>' +
-                            '<td class="quantity" style="width: 15%">' + (sameordercount == 0 ? '-' : sameordercount) + '</td>' +
-                            '<td class="menu" style="width: 65%">' + order.menu.menuNameTH + '</td>' +
-                            '<td class="price_all_unit" style="width: 20%;text-align: center;">' + (order.menu.menuPrice * order.quantity).toFixed(2).replace(/\B(?=(\d{3})+(?!\d))/g, ",") + '</td>' +
+                            '<td class="quantity" style="width: 15%;">' + sameordercount + '</td>' +
+                            '<td class="menu" style="width: 65%;">' + order.menu.menuNameTH + '</td>' +
+                            '<td class="price_all_unit" style="width: 20%;text-align: center;">' + (order.menu.menuPrice * sameordercount).toFixed(2).replace(/\B(?=(\d{3})+(?!\d))/g, ",") + '</td>' +
                             '</tr>';
-                        price += totalPerUnit;
                         order.orderAddOnList.forEach(function (addon) {
                             str += '<tr>' +
                                 '<td class="quantity" style="width: 15%"></td>' +
@@ -406,6 +414,7 @@
                                 '</tr>';
                         });
                         sameordercount = 0;
+                        sameorderprice = 0;
                     }
                     $('.menu_lists').html(str);
                 });

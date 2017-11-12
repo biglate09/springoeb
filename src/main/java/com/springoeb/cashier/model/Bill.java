@@ -35,7 +35,7 @@ public class Bill {
     private Table table;
     @OneToMany(fetch = FetchType.LAZY, mappedBy = "bill")
     @JsonIgnoreProperties("bill")
-    @OrderBy("menuNo ASC")
+    @OrderBy("menuNo ASC,status DESC")
     private List<Order> orders;
 
     public static String PAID = "paid";

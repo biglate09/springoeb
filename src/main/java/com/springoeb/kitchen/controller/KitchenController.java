@@ -13,7 +13,6 @@ import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
 
-import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpSession;
 import javax.transaction.Transactional;
 import java.util.LinkedList;
@@ -60,21 +59,52 @@ public class KitchenController {
     @Transactional
     @ResponseBody
     @DeleteMapping("/cancelorder/{orderNo}")
-    public void cancelOrder(@PathVariable("orderNo")String fixedArray, HttpServletRequest request){
-        System.out.println(fixedArray);
+    public void cancelOrder(@PathVariable("orderNo")String fixedArray){
         String[] stringArr = fixedArray.split("-");
         // menuNo, qty, tableNo, status
         int menuNo = Integer.parseInt(stringArr[0]);
         int qty = Integer.parseInt(stringArr[1]);
         int tableNo = Integer.parseInt(stringArr[2]);
         String status = stringArr[3];
-
+        int delQty = 0;
+        List<Order> orders = orderService.findByMenuNoAndTableNoAndStatus(menuNo,tableNo,status);
         if(status.equals(Order.COOKING) || status.equals(Order.COOKED) || status.equals(Order.SERVED)){
+            for(Order order : orders){
+                if(delQty == qty){
+                    break;
+                }
 
+                if((qty-delQty) >= order.getQuantity()){
+                    order.setStatus(Order.CANCELLED);
+                    delQty += order.getQuantity();
+                }else{
+                    createCancelOrder(order,qty-delQty);
+                    order.setAmount((order.getAmount()/order.getQuantity())*(order.getQuantity()-(qty-delQty)));
+                    order.setQuantity(order.getQuantity() - (qty - delQty));
+                    delQty += (qty - delQty);
+                }
+            }
         }else{
+            for(Order order : orders){
 
+            }
         }
+
+        orderService.save(orders);
     }
+
+    private void createCancelOrder(Order order,int qty){
+        Order o = new Order();
+        o.setMenuNo(order.getMenuNo());
+        o.setQuantity(qty);
+        o.setDate(order.getDate());
+        o.setTime(order.getTime());
+        o.setBillNo(order.getBillNo());
+        o.setStatus(Order.CANCELLED);
+        o.setAmount((order.getAmount()/order.getQuantity())*qty);
+        orderService.save(o);
+    }
+
     @ResponseBody
     @PostMapping("/changestatus/{orderNo}")
     public void changeStatus(@PathVariable("orderNo")String orderNo){

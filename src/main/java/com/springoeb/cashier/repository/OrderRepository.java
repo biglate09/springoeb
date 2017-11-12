@@ -11,6 +11,7 @@ import java.util.List;
 @Repository
 public interface OrderRepository extends CrudRepository<Order,Integer>{
     List<Order> findByBill_StatusAndStatusInAndBill_Table_BranchNoOrderByStatusDescOrderNoAsc(String status,List<String> orderStatus,int branchNo);
+    List<Order> findByMenuNoAndBill_TableNoAndStatusOrderByQuantity(int menuNo,int tableNo,String status);
     Order save(Order order);
     Order findByOrderNo(int orderNo);
     void removeByOrderNo(int orderNo);

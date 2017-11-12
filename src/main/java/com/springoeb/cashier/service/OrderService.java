@@ -111,4 +111,8 @@ public class OrderService {
     public Date findMaxMenuSetOrderDateByBranchNo(int branchNo) {
         return orderRepository.findMaxOrderDateByBranchNo(branchNo, Menu.flagForMenuSet);
     }
+
+    public List<Order> findByMenuNoAndTableNoAndStatus(int menuNo,int tableNo,String status){
+        return orderRepository.findByMenuNoAndBill_TableNoAndStatusOrderByQuantity(menuNo,tableNo,status);
+    }
 }
