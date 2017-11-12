@@ -74,7 +74,7 @@ public class MenuController {
         Set<BranchMenu> menus = branchMenuService.getMenusByMenuGroupSubBranch(menuGroupNo, branchNo);
         String json = "[" + mapper.writeValueAsString(menus) + ",";
 
-        if (branchNo == Branch.MAIN_BRANCH) {
+        if (branchNo == branchUser.getBranch().getMainBranchNo()) {
             List<Menu> otherMenus = menuService.getMenusOtherByMenuGroupNo(menuGroupNo, branchNo, branchUser.getBranch().getRestNo());
             if (otherMenus != null && otherMenus.size() != 0) {
                 String jsonOther = mapper.writeValueAsString(otherMenus);
@@ -283,7 +283,7 @@ public class MenuController {
         List<BranchMenu> branchMenuSets = branchMenuService.getMenuSets(branchNo);
         String json = "[" + mapper.writeValueAsString(branchMenuSets) + ",";
 
-        if (branchNo == Branch.MAIN_BRANCH) {
+        if (branchNo == branchUser.getBranch().getMainBranchNo()) {
             List<Menu> otherMenuSets = menuService.getMenuSetsOther(branchNo, branchUser.getBranch().getRestNo());
             if (otherMenuSets != null && otherMenuSets.size() != 0) {
                 String jsonOther = mapper.writeValueAsString(otherMenuSets);

@@ -195,13 +195,15 @@
                                                     <!-- ปุ่มกดปิด (Close) ตรงส่วนล่างของ Modal -->
                                                     <div class="col-md-9 col-sm-9 col-xs-12 col-md-offset-3">
                                                         <%--<label style="margin-right:15px;">--%>
-                                                            <%--<input type="checkbox" name="available"--%>
-                                                                   <%--id="available"--%>
-                                                                   <%--class="flat">--%>
-                                                            <%--พร้อมให้บริการ--%>
+                                                        <%--<input type="checkbox" name="available"--%>
+                                                        <%--id="available"--%>
+                                                        <%--class="flat">--%>
+                                                        <%--พร้อมให้บริการ--%>
                                                         <%--</label>--%>
                                                         <button type="submit" style="margin-left:5px;"
-                                                                class="btn btn-success"><i class="fa fa-circle-o-notch fa-spin" id="loadingbtn" style="display:none"></i> ตกลง
+                                                                class="btn btn-success"><i
+                                                                class="fa fa-circle-o-notch fa-spin" id="loadingbtn"
+                                                                style="display:none"></i> ตกลง
                                                         </button>
                                                         <button type="button" class="btn btn-default"
                                                                 data-dismiss="modal">
@@ -297,7 +299,7 @@
         }
     }
 
-    function set_promotion(promotionNo){
+    function set_promotion(promotionNo) {
         $.ajax({
             type: "PUT",
             url: "${contextPath}/promotion/getpromotion/" + promotionNo,
@@ -305,26 +307,26 @@
             success: function (promo) {
                 $("#promotionNameTH").val(promo.promotionNameTH);
                 $("#promotionNameEN").val(promo.promotionNameEN);
-                $("#fromDate").val(promo.fromDate.substr(8,2) + "-" + promo.fromDate.substr(5,2) + "-" +promo.fromDate.substr(0,4));
-                $("#toDate").val(promo.toDate.substr(8,2) + "-" + promo.toDate.substr(5,2) + "-" +promo.toDate.substr(0,4));
+                $("#fromDate").val(promo.fromDate.substr(8, 2) + "-" + promo.fromDate.substr(5, 2) + "-" + promo.fromDate.substr(0, 4));
+                $("#toDate").val(promo.toDate.substr(8, 2) + "-" + promo.toDate.substr(5, 2) + "-" + promo.toDate.substr(0, 4));
                 $("#day").val(promo.day);
                 $("#discount").val(promo.discount);
                 $("#promotionDesc").val(promo.promotionDesc);
                 $("#promotionNo").val(promo.promotionNo);
-                $("#promotionPicture").attr('src','../images/'+promo.promotionPicPath);
+                $("#promotionPicture").attr('src', '../images/' + promo.promotionPicPath);
 //                if(promo.available == true){
 //                    $("#available").iCheck("check");
 //                }
 
                 var menugroups = promo.menuGroupPromotions;
-                for(var i = 0 ; i < menugroups.length ; i++){
-                    $("input[value="+menugroups[i].menuGroupNo+"]").iCheck("check");
+                for (var i = 0; i < menugroups.length; i++) {
+                    $("input[value=" + menugroups[i].menuGroupNo + "]").iCheck("check");
                 }
             }
         });
     }
 
-    function del_promotion(promotionNo){
+    function del_promotion(promotionNo) {
         swal({
                 title: "ยืนยันการลบโปรโมชั่น",
                 text: "เมื่อยืนยัน จะไม่สามารถนำข้อมูลกลับมาได้",
@@ -341,7 +343,7 @@
                     type: "DELETE",
                     url: "${contextPath}/promotion/deletepromotion/" + promotionNo,
                     success: function (json) {
-                        swal("สำเร็จ","โปรโมชั่นถูกลบเรียบร้อยแล้ว", "success");
+                        swal("สำเร็จ", "โปรโมชั่นถูกลบเรียบร้อยแล้ว", "success");
                         refresh_table();
                     },
                     error: function (json) {
@@ -352,17 +354,17 @@
     }
 
     <%--function change_available(promotionno) {--%>
-        <%--$.ajax({--%>
-            <%--type: "POST",--%>
-            <%--url: "${contextPath}/promotion/changeavailable/" + promotionno,--%>
-            <%--dataType: "json",--%>
-            <%--success: function (result) {--%>
-                <%--swal("สำเร็จ", "เปลี่ยนเป็น " + (result.available == false ? 'ไม่' : '') + "พร้อมให้บริการ เรียบร้อยแล้ว", "success");--%>
-                <%--refresh_table();--%>
-            <%--}, error: function (result) {--%>
-                <%--swal("ไม่สำเร็จ", "กรุณาลองใหม่ภายหลัง", "error");--%>
-            <%--}--%>
-        <%--});--%>
+    <%--$.ajax({--%>
+    <%--type: "POST",--%>
+    <%--url: "${contextPath}/promotion/changeavailable/" + promotionno,--%>
+    <%--dataType: "json",--%>
+    <%--success: function (result) {--%>
+    <%--swal("สำเร็จ", "เปลี่ยนเป็น " + (result.available == false ? 'ไม่' : '') + "พร้อมให้บริการ เรียบร้อยแล้ว", "success");--%>
+    <%--refresh_table();--%>
+    <%--}, error: function (result) {--%>
+    <%--swal("ไม่สำเร็จ", "กรุณาลองใหม่ภายหลัง", "error");--%>
+    <%--}--%>
+    <%--});--%>
     <%--}--%>
 
     $("#managePromotion").submit(function () {
@@ -377,13 +379,13 @@
             url: "${contextPath}/promotion/managepromotion",
             success: function (result) {
                 $('#loadingbtn').hide();
-                swal("สำเร็จ", "โปรโมชั่นถูก"+($("#promotionNo").val() == '' ? 'เพิ่ม' : 'แก้ไข')+"เรียบร้อยแล้ว", "success");
+                swal("สำเร็จ", "โปรโมชั่นถูก" + ($("#promotionNo").val() == '' ? 'เพิ่ม' : 'แก้ไข') + "เรียบร้อยแล้ว", "success");
                 reset_field();
                 $("#promotion_modal").modal('toggle');
                 refresh_table();
             }, error: function (result) {
                 $('#loadingbtn').hide();
-                swal("ไม่สำเร็จ", "ชื่อโปรโมชั่นอาจซ้ำ กรุณาลองใหม่ในภายหลัง", "error");
+                swal("ไม่สำเร็จ", "กรุณาเลือกหมวดเมนู กรุณาลองใหม่ในภายหลัง", "error");
             }
         });
         return false;
@@ -398,10 +400,11 @@
                 $("#promotion_thumbnail").empty();
                 if (json.length != 0) {
                     for (var i = 0; i < json.length; i++) {
-                        var promotion = json[i];
+                        var obj = json[i];
+                        var promotion = json[i].promotion;
                         var menugroup = promotion.menuGroupPromotions;
                         var menugroup_txt = "";
-                        for(var j = 0; j < menugroup.length; j++){
+                        for (var j = 0; j < menugroup.length; j++) {
                             menugroup_txt += "<span style='white-space:nowrap;overflow:hidden;text-overflow: ellipsis;'>" + menugroup[j].menuGroup.menuGroupNameTH + "</span><br>";
                         }
                         var div = '<div class="col-md-6 col-sm-6 col-xs-12">\
@@ -415,24 +418,27 @@
                             </div>\
                             </div>\
                             <div class="col-md-6 caption" style="height:100%;color:#73879C">\
-                            <div class="col-md-12 cardname" data-toggle="modal" data-target="#promotion_modal" onclick="set_promotion(' + promotion.promotionNo + ')" style="font-weight:bold;white-space:nowrap;overflow:hidden;text-overflow: ellipsis;cursor:pointer;">' + promotion.promotionNameTH + ' / ' + promotion.promotionNameEN + '</div>\
+                            <div class="col-md-8 cardname" data-toggle="modal" data-target="#promotion_modal" onclick="set_promotion(' + promotion.promotionNo + ')" style="font-weight:bold;white-space:nowrap;overflow:hidden;text-overflow: ellipsis;cursor:pointer;">' + promotion.promotionNameTH + ' / ' + promotion.promotionNameEN + '</div>\
+                            <div class="col-md-4" style="color:white;background-color:' + (promotion.official ? '#73879C' : obj.branchNo == ${branchUser.branchNo} ? 'red' : 'orange') + ';border-radius:4px;text-align:center;">' + (promotion.official ? 'ทุกสาขา' : obj.branchNo == ${branchUser.branchNo} ? 'สาขานี้' : 'สาขา ' + obj.branchNo) + '</div>\
                             <div class="col-md-12 foodDesc">\
                             <div>\
                             <p style="text-align:center;font-weight:bold;">รายละเอียดโปรโมชั่น</p>\
-                            <span class="col-md-offset-1 col-md-4" style="font-weight:bold">ลดราคา </span> <span class="col-md-7">' + promotion.discount  + '%</span>\
-                            <span class="col-md-offset-1 col-md-4" style="font-weight:bold">เริ่มต้น </span> <span class="col-md-7">' + promotion.fromDate  + '</span>\
-                            <span class="col-md-offset-1 col-md-4" style="font-weight:bold">สิ้นสุด </span> <span class="col-md-7">' + promotion.toDate  + '</span>\
-                            <span class="col-md-offset-1 col-md-4" style="font-weight:bold">วัน </span> <span class="col-md-7">' + (promotion.day == '${Promotion.MONDAY}' ? 'วันจันทร์' : promotion.day == '${Promotion.TUESDAY}' ? 'วันอังคาร' : promotion.day == '${Promotion.WEDNESDAY}' ? 'วันพุธ' : promotion.day == '${Promotion.THURSDAY}' ? 'วันพฤหัสบดี' : promotion.day == '${Promotion.FRIDAY}' ? 'วันศุกร์' : promotion.day == '${Promotion.SATURDAY}' ? 'วันเสาร์' : promotion.day == '${Promotion.SUNDAY}' ? 'วันอาทิตย์' : 'ทุกวัน')  + '</span>\
+                            <span class="col-md-offset-1 col-md-4" style="font-weight:bold">ลดราคา </span> <span class="col-md-7">' + promotion.discount + '%</span>\
+                            <span class="col-md-offset-1 col-md-4" style="font-weight:bold">เริ่มต้น </span> <span class="col-md-7">' + promotion.fromDate + '</span>\
+                            <span class="col-md-offset-1 col-md-4" style="font-weight:bold">สิ้นสุด </span> <span class="col-md-7">' + promotion.toDate + '</span>\
+                            <span class="col-md-offset-1 col-md-4" style="font-weight:bold">วัน </span> <span class="col-md-7">' + (promotion.day == '${Promotion.MONDAY}' ? 'วันจันทร์' : promotion.day == '${Promotion.TUESDAY}' ? 'วันอังคาร' : promotion.day == '${Promotion.WEDNESDAY}' ? 'วันพุธ' : promotion.day == '${Promotion.THURSDAY}' ? 'วันพฤหัสบดี' : promotion.day == '${Promotion.FRIDAY}' ? 'วันศุกร์' : promotion.day == '${Promotion.SATURDAY}' ? 'วันเสาร์' : promotion.day == '${Promotion.SUNDAY}' ? 'วันอาทิตย์' : 'ทุกวัน') + '</span>\
                             <p style="text-align:center;font-weight:bold;">------------------------------</p>\
                             <p style="text-align:center;font-weight:bold;">หมวดหมู่เมนูที่ร่วมโปรโมชั่น</p>\
                             <span class="col-md-offset-1 col-md-10" style="text-align:center;">\
-                            '+ menugroup_txt +'\
+                            ' + menugroup_txt + '\
                             </span>\
                             </div>\
                             </div>\
                             <div class="col-md-12" style="font-weight:bold;text-align:right;"> \
-                            <a title="แก้ไข" style="color:#73879C;cursor:pointer;margin-right:5px;" data-toggle="modal" data-target="#promotion_modal" onclick="set_promotion(' + promotion.promotionNo + ')"><i class="fa fa-pencil"></i></a>' + '\
-                            <a title="ลบ" onclick="del_promotion(' + promotion.promotionNo + ')" style="color:#73879C;cursor:pointer;"><i class="fa fa-trash"></i></a>' + '\
+                            ' + (promotion.official && ${branchUser.branchNo != branchUser.branch.mainBranchNo} ? '' : '<a title="แก้ไข" style="color:#73879C;cursor:pointer;margin-right:5px;" data-toggle="modal" data-target="#promotion_modal" onclick="set_promotion(' + promotion.promotionNo + ')"><i class="fa fa-pencil"></i></a>') + '\
+                            ' + (promotion.official ? '' : '<a title="ทำให้เป็นโปรโมชั่นของทุกสาขา" onclick="turn_official(' + promotion.promotionNo + ')" style="color:#73879C;cursor:pointer;margin-right:5px;"><i class="fa fa-users"></i></a>') + '\
+                            <a title="เมนูนี้' + (obj.available == true ? '' : 'ไม่' ) + 'พร้อมเปิดใช้ คลิกเพื่อเปลี่ยน" onclick="change_available(' + promotion.promotionNo + ')" style="color:#73879C;cursor:pointer;margin-right:5px;"><i class="fa ' + (obj.available == true ? 'fa-check-square-o' : 'fa-square-o' ) + '"></i></a>\
+                            ' + (promotion.official && ${branchUser.branchNo != branchUser.branch.mainBranchNo} ? '' : '<a title="ลบ" onclick="del_promotion(' + promotion.promotionNo + ')" style="color:#73879C;cursor:pointer;"><i class="fa fa-trash"></i></a>') + '\
                             </div>\
                             </div>\
                             </div>\
@@ -451,6 +457,45 @@
                 }
             }
         });
+    }
+
+    function change_available(promotionNo) {
+        $.ajax({
+            type: "POST",
+            url: "${contextPath}/promotion/changeavailable/" + promotionNo,
+            success: function (result) {
+                swal("สำเร็จ", "เปลี่ยนเป็น " + (result.available == false ? 'ไม่' : '') + "พร้อมให้บริการ เรียบร้อยแล้ว", "success");
+                refresh_table();
+            }, error: function (result) {
+                swal("ไม่สำเร็จ", "กรุณาลองใหม่ภายหลัง", "error");
+            }
+        });
+    }
+
+    function turn_official(promotionNo) {
+        swal({
+                title: "เปลี่ยนให้เป็นโปรโมชั่นของทุกสาขา",
+                text: "คุณจะไม่สามารถเปลี่ยนกลับได้",
+                type: "warning",
+                showCancelButton: true,
+                cancelButtonText: "ยกเลิก",
+                confirmButtonText: "ใช่, ต้องการเปลี่ยน",
+                confirmButtonColor: "#DD6B55",
+                closeOnConfirm: false
+            },
+            function () {
+                $.ajax({
+                    type: "POST",
+                    data: {promotionno : promotionNo},
+                    url: "${contextPath}/promotion/promoteofficial",
+                    success: function (result) {
+                        swal("สำเร็จ", "เปลี่ยนเป็น เมนูของทุกสาขา เรียบร้อยแล้ว", "success");
+                        refresh_table();
+                    }, error: function (result) {
+                        swal("ไม่สำเร็จ", "กรุณาลองใหม่ภายหลัง", "error");
+                    }
+                });
+            });
     }
 </script>
 </body>

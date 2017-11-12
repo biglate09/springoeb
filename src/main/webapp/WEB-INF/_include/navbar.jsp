@@ -97,7 +97,7 @@
                             <a><i class="fa fa-home"></i> จัดการสาขา <span
                                     class="fa fa-chevron-down"></span></a>
                             <ul class="nav child_menu">
-                                <c:if test="${branchUser.branchNo == Branch.MAIN_BRANCH}">
+                                <c:if test="${branchUser.branchNo == branchUser.branch.mainBranchNo}">
                                     <li><a id="branches" href="${contextPath}/branch/branches">สาขาทั้งหมด</a></li>
                                 </c:if>
                                 <li><a id="mybranch"
@@ -151,9 +151,9 @@
                         </ul>
                         </li>
                     </c:if>
-                    <li>
-                        <a href="${contextPath}/system/dummyorder"><i class="fa fa-american-sign-language-interpreting"></i> Dummy สั่งอาหาร </a>
-                    </li>
+                    <%--<li>--%>
+                        <%--<a href="${contextPath}/system/dummyorder"><i class="fa fa-american-sign-language-interpreting"></i> Dummy สั่งอาหาร </a>--%>
+                    <%--</li>--%>
                 </ul>
             </div>
         </div>

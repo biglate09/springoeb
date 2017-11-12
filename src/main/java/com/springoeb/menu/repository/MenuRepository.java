@@ -15,7 +15,7 @@ public interface MenuRepository extends CrudRepository<Menu,Integer>{
     public List<Menu> findByMenuNameTHIgnoreCaseOrMenuNameENIgnoreCase(String menuNameTH, String menuNameEN);
     public List<Menu> findByMenuFlagAndLocalFlagNotInAndRestNoOrderByLocalFlagAsc(String menuFlag,List<Integer> localFlag,int restNo);
     public List<Menu> findByMenuFlagAndMenuGroupNoAndLocalFlagNotInAndRestNoOrderByLocalFlagAsc(String menuFlag,int menuGroupNo, List<Integer> localFlag,int restNo);
-    public List<Menu> findByLocalFlag(int localFlag);
+    public List<Menu> findByLocalFlagAndRestNo(int localFlag,int restNo);
     public Menu findByMenuNameTH(String menuNameTH);
     public void deleteByMenuNo(int menuNo);
     public Menu findByMenuNo(int menuNo);

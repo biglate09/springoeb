@@ -40,8 +40,9 @@ public class Branch {
     private boolean hasAdmin;
     @Column(name = "restNo",updatable = true,insertable = true)
     private Integer restNo;
+    @Column(name = "mainBranchNo")
+    private Integer mainBranchNo;
 
-    public static int MAIN_BRANCH = 1;
 
     @JsonIgnore
     @OneToMany(fetch = FetchType.LAZY, mappedBy = "branch")
@@ -181,5 +182,13 @@ public class Branch {
 
     public void setRestaurant(Restaurant restaurant) {
         this.restaurant = restaurant;
+    }
+
+    public Integer getMainBranchNo() {
+        return mainBranchNo;
+    }
+
+    public void setMainBranchNo(Integer mainBranchNo) {
+        this.mainBranchNo = mainBranchNo;
     }
 }

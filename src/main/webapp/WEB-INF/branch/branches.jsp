@@ -63,7 +63,8 @@
                             <h4 class="modal-title">เพิ่มสาขาใหม่</h4>
                         </div>
                         <div class="modal-body">
-                            <form class="form-horizontal form-label-left input_mask" modelAttribute="branch" id="add_branch">
+                            <form class="form-horizontal form-label-left input_mask" modelAttribute="branch"
+                                  id="add_branch">
                                 <div class="form-group">
                                     <div class="col-md-12 col-sm-12 col-xs-12 form-group has-feedback">
                                         <label class="required">ชื่อสาขา</label>
@@ -90,7 +91,10 @@
                                 <div class="modal-footer">
                                     <!-- ปุ่มกดปิด (Close) ตรงส่วนล่างของ Modal -->
                                     <div class="col-md-9 col-sm-9 col-xs-12 col-md-offset-3">
-                                        <button type="submit" class="btn btn-success"><i class="fa fa-circle-o-notch fa-spin" id="loadingbtn" style="display:none"></i> ตกลง</button>
+                                        <button type="submit" class="btn btn-success"><i
+                                                class="fa fa-circle-o-notch fa-spin" id="loadingbtn"
+                                                style="display:none"></i> ตกลง
+                                        </button>
                                         <button type="button" class="btn btn-default" data-dismiss="modal">
                                             ยกเลิก
                                         </button>
@@ -116,8 +120,8 @@
             columns: [
                 {
                     data: {
-                        _ : 'No.display',
-                        sort : 'No.order'
+                        _: 'No.display',
+                        sort: 'No.order'
                     }
                 },
                 {
@@ -132,7 +136,7 @@
         refresh_table();
     });
 
-    $("#addBranch").submit(function(){
+    $("#addBranch").submit(function () {
         $('#loadingbtn').show();
         var object = $("#add_branch").serialize();
         $.ajax({
@@ -145,7 +149,7 @@
                 reset_field();
                 $("#addBranch").modal('toggle');
                 refresh_table();
-            },error: function(result){
+            }, error: function (result) {
                 $('#loadingbtn').hide();
                 swal("ไม่สำเร็จ", "กรุณาลองใหม่อีกครั้ง", "error");
             }
@@ -153,11 +157,11 @@
         return false;
     });
 
-    $('.modal').on('hidden.bs.modal', function(){
+    $('.modal').on('hidden.bs.modal', function () {
         reset_field();
     });
 
-    function reset_field(){
+    function reset_field() {
         $("#add_branch")[0].reset();
     }
 
@@ -171,18 +175,18 @@
                 for (var iterator = 0; iterator < json.length; iterator++) {
                     var obj = json[iterator];
                     branchsort = iterator;
-                    for(var i = (iterator+'').length ; i<10 ; i++){
+                    for (var i = (iterator + '').length; i < 10; i++) {
                         branchsort += "0" + branchsort;
                     }
 
                     var data_refresh = {
                         No: {
-                            display : iterator+1,
-                            order : branchsort
+                            display: iterator + 1,
+                            order: branchsort
                         },
                         branchName: obj.branchName,
                         option: (!obj.hasAdmin ? '<a onclick = "resent(' + obj.branchNo + ')" class = "btn btn-info btn-sm"> <i class = "fa fa-envelope"></i> &nbsp; ส่งอีกครั้ง </a>' : '') +
-                        '<a onclick = "del_branch(' + obj.branchNo + ',\'' + obj.branchName +'\')" class = "btn btn-danger btn-sm"> <i class = "fa fa-trash"></i> &nbsp; ลบ </a>'
+                        '<a onclick = "del_branch(' + obj.branchNo + ',\'' + obj.branchName + '\')" class = "btn btn-danger btn-sm"> <i class = "fa fa-trash"></i> &nbsp; ลบ </a>'
                     };
                     data_array.push(data_refresh);
                 }
@@ -196,7 +200,7 @@
     function resent(branchNo) {
         $.ajax({
             type: "POST",
-            url: "${contextPath}/branch/confirmresent/"+branchNo,
+            url: "${contextPath}/branch/confirmresent/" + branchNo,
             dataType: "json",
             success: function (result) {
                 swal({
@@ -214,7 +218,7 @@
                         return false;
                     }
                     var re = /^(([^<>()\[\]\\.,;:\s@"]+(\.[^<>()\[\]\\.,;:\s@"]+)*)|(".+"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/;
-                    if (!re.test(email)){
+                    if (!re.test(email)) {
                         swal.showInputError("กรุณากรอกรูปแบบอีเมลให้ถูกต้อง");
                         return false;
                     }
@@ -222,14 +226,14 @@
                     $.ajax({
                         type: "POST",
                         data: {
-                            'branchNo' : branchNo,
-                            'email' : email
+                            'branchNo': branchNo,
+                            'email': email
                         },
                         url: "${contextPath}/branch/resent",
-                        success: function(){
+                        success: function () {
                             swal("สำเร็จ", "ส่งซ้ำเรียบร้อยแล้ว", "success");
                         },
-                        error: function(){
+                        error: function () {
                             swal("ไม่สำเร็จ", "อีเมลอาจผิด กรุณาลองอีกครั้ง", "error");
                         }
                     });
@@ -240,16 +244,17 @@
 
     function del_branch(branchNo, branchName) {
         swal({
-                title: "ยืนยันการลบ " + branchName,
-                text: "เมื่อยืนยัน จะไม่สามารถนำข้อมูล " + branchName + " กลับมาได้",
-                type: "warning",
-                showCancelButton: true,
-                cancelButtonText: "ยกเลิก",
-                confirmButtonText: "ใช่, ต้องการลบ",
-                confirmButtonColor: "#DD6B55",
-                closeOnConfirm: false
-            },
-            function () {
+            title: "คุณต้องการลบสมาชิกใช่ไหม",
+            text: "กรุณาพิมพ์คำว่า \"ฉันต้องการลบ " + branchName + "\"",
+            type: "input",
+            cancelButtonText: 'ยกเลิก',
+            confirmButtonText: 'ต้องการลบ',
+            confirmButtonColor: "#DD6B55",
+            showCancelButton: true,
+            closeOnConfirm: false,
+            inputPlaceholder: "ฉันต้องการลบ username",
+        }, function (input) {
+            if (input == 'ฉันต้องการลบ ' + branchName) {
                 $.ajax({
                     type: "DELETE",
                     url: "${contextPath}/branch/deletebranch/" + branchNo,
@@ -261,7 +266,10 @@
                         swal("ไม่สำเร็จ", "เซิร์ฟเวอร์อาจมีปัญหา", "error");
                     }
                 });
-            });
+            }else{
+                swal("ไม่สำเร็จ", "คุณพิมพ์ผิด กรุณาลองใหม่อีกครั้ง", "error");
+            }
+        });
     }
 </script>
 </body>

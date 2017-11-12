@@ -66,21 +66,6 @@
                             <div id="menuset_thumbnail" style="clear:both">
                             </div>
                             <div id="datatable-menuset-div" style="display:none;">
-                                <%--<table id="datatable-menuset" class="table table-striped table-bordered">--%>
-                                    <%--<thead>--%>
-                                    <%--<tr>--%>
-                                        <%--<th style="text-align:center;">ชื่อเมนู</th>--%>
-                                        <%--<c:if test="${branchUser.branchNo == Branch.MAIN_BRANCH}">--%>
-                                            <%--<th style="text-align:center;">สาขา</th>--%>
-                                        <%--</c:if>--%>
-                                        <%--<th style="text-align:center;">ราคา</th>--%>
-                                        <%--<th style="text-align:center;">ตัวเลือก</th>--%>
-                                    <%--</tr>--%>
-                                    <%--</thead>--%>
-                                    <%--<tbody style="text-align:center;">--%>
-
-                                    <%--</tbody>--%>
-                                <%--</table>--%>
                             </div>
 
                             <div id="error_show">
@@ -197,7 +182,7 @@
                                                     <div class="col-md-9 col-sm-9 col-xs-12 col-md-offset-3">
                                                         <div class="checkbox"
                                                              style="display:inline-block;margin-right:15px;">
-                                                            <c:if test="${branchUser.branchNo == Branch.MAIN_BRANCH}">
+                                                            <c:if test="${branchUser.branchNo == branchUser.branch.mainBranchNo}">
                                                                 <label>
                                                                     <input type="checkbox" name="localFlag"
                                                                            id="add_menu_official"
@@ -414,7 +399,7 @@
                 {
                     data: 'menuName'
                 },
-                <c:if test="${branchUser.branchNo == Branch.MAIN_BRANCH}">
+                <c:if test="${branchUser.branchNo == branchUser.branch.mainBranchNo}">
                 {
                     data: {
                         _: 'branch.display',
@@ -545,10 +530,10 @@
                             <div class="col-md-7"> <span style="font-weight:bold;">ราคา</span> ' + menu.menuPrice.toFixed(2).replace(/\B(?=(\d{3})+(?!\d))/g, ",") + ' บาท</div>\
                             <div class="col-md-5" style="text-align:right;">\
                             <div class="panel_menuset">\
-                            ' + (menu.localFlag == 0 && ${branchUser.branchNo != Branch.MAIN_BRANCH} ? '' : '<a title="แก้ไข" style="color:#73879C;cursor:pointer;margin-right:5px;" data-toggle="modal" data-target="#editMenuSet" onclick="set_menuset(' + menu.menuNo + ')"><i class="fa fa-pencil"></i></a>') + '\
-                            ' + (menu.localFlag != 0 && ${branchUser.branchNo == Branch.MAIN_BRANCH} ? ('<a title="ทำให้เป็นเมนูของทุกสาขา" onclick="turn_official(' + menu.menuNo + ')" style="color:#73879C;cursor:pointer;margin-right:5px;"><i class="fa fa-users"></i></a>') : '') + '\
+                            ' + (menu.localFlag == 0 && ${branchUser.branchNo != branchUser.branch.mainBranchNo} ? '' : '<a title="แก้ไข" style="color:#73879C;cursor:pointer;margin-right:5px;" data-toggle="modal" data-target="#editMenuSet" onclick="set_menuset(' + menu.menuNo + ')"><i class="fa fa-pencil"></i></a>') + '\
+                            ' + (menu.localFlag != 0 && ${branchUser.branchNo == branchUser.branch.mainBranchNo} ? ('<a title="ทำให้เป็นเมนูของทุกสาขา" onclick="turn_official(' + menu.menuNo + ')" style="color:#73879C;cursor:pointer;margin-right:5px;"><i class="fa fa-users"></i></a>') : '') + '\
                             <a title="เมนูนี้' + (obj.available == true ? '' : 'ไม่' ) + 'พร้อมจำหน่าย คลิกเพื่อเปลี่ยน" onclick="change_available(' + menu.menuNo + ')" style="color:#73879C;cursor:pointer;margin-right:5px;"><i class="fa ' + (obj.available == true ? 'fa-check-square-o' : 'fa-square-o' ) + '"></i></a>\
-                            ' + (menu.localFlag == 0 && ${branchUser.branchNo != Branch.MAIN_BRANCH} ? '' : '<a title="ลบ" onclick="del_menuset(' + menu.menuNo + ',\'' + menu.menuNameTH + '\')" style="color:#73879C;cursor:pointer;"><i class="fa fa-trash"></i></a>') + '\
+                            ' + (menu.localFlag == 0 && ${branchUser.branchNo != branchUser.branch.mainBranchNo} ? '' : '<a title="ลบ" onclick="del_menuset(' + menu.menuNo + ',\'' + menu.menuNameTH + '\')" style="color:#73879C;cursor:pointer;"><i class="fa fa-trash"></i></a>') + '\
                             </div>\
                             </div>\
                             </div>\
@@ -561,23 +546,7 @@
                             price_order = "0" + price_order;
                         }
 
-
                         //Table
-                        <%--var data_refresh = {--%>
-                            <%--menuName: '<p class="cardname col-md-12" style="text-align:center;font-weight:bold;white-space:nowrap;overflow:hidden;text-overflow: ellipsis;cursor:pointer;" data-toggle="modal" data-target="#editMenu" onclick="set_menu(' + menu.menuNo + ')">' + menu.menuNameTH + " / " + menu.menuNameEN + '</p>',--%>
-                            <%--branch: {--%>
-                                <%--display: menu.localFlag == 0 ? 'ทุกสาขา' : 'สาขาที่ ' + menu.localFlag,--%>
-                                <%--order: menu.localFlag--%>
-                            <%--},--%>
-                            <%--menuPrice: {--%>
-                                <%--display: menu.menuPrice.toFixed(2).replace(/\B(?=(\d{3})+(?!\d))/g, ",") + " บาท",--%>
-                                <%--order: price_order--%>
-                            <%--},--%>
-                            <%--option: '<a onclick="change_available(' + menu.menuNo + ')" class="btn btn-info btn-sm"><i class="fa ' + (obj.available ? 'fa-check-square-o' : 'fa-square-o') + '"></i>&nbsp; พร้อมจำหน่าย </a>' +--%>
-                            <%--(menu.localFlag == 0 && ${branchUser.branchNo != Branch.MAIN_BRANCH} ? '' : ('<a onclick="set_menu(' + menu.menuNo + ')" class="btn btn-warning btn-sm" data-toggle="modal" data-target="#editMenu"><i class="fa fa-pencil"></i>&nbsp; แก้ไข </a>' +--%>
-                            <%--'<a onclick="del_menu(' + menu.menuNo + ',\'' + menu.menuNameTH + '\')" class="btn btn-danger btn-sm"> <i class="fa fa-trash"></i>&nbsp; ลบ</a>')),--%>
-                        <%--};--%>
-                        <%--data_array.push(data_refresh);--%>
                         var list = '<div class="col-md-12 col-sm-12 col-xs-12">\
                             <div class="thumbnail thumbnail_table">\
                             <div class="col-md-5 image view view-first" style="height:100%;">\
@@ -605,10 +574,10 @@
                             <div class="col-md-7"> <span style="font-weight:bold;">ราคา</span> ' + menu.menuPrice.toFixed(2).replace(/\B(?=(\d{3})+(?!\d))/g, ",") + ' บาท</div>\
                             <div class="col-md-5" style="text-align:right;position:absolute;right:5px;bottom:0px;">\
                             <div class="panel_menuset" >\
-                            ' + (menu.localFlag == 0 && ${branchUser.branchNo != Branch.MAIN_BRANCH} ? '' : '<a title="แก้ไข" style="color:#73879C;cursor:pointer;margin-right:5px;" data-toggle="modal" data-target="#editMenuSet" onclick="set_menuset(' + menu.menuNo + ')"><i class="fa fa-pencil"></i></a>') + '\
-                            ' + (menu.localFlag != 0 && ${branchUser.branchNo == Branch.MAIN_BRANCH} ? ('<a title="ทำให้เป็นเมนูของทุกสาขา" onclick="turn_official(' + menu.menuNo + ')" style="color:#73879C;cursor:pointer;margin-right:5px;"><i class="fa fa-users"></i></a>') : '') + '\
+                            ' + (menu.localFlag == 0 && ${branchUser.branchNo != branchUser.branch.mainBranchNo} ? '' : '<a title="แก้ไข" style="color:#73879C;cursor:pointer;margin-right:5px;" data-toggle="modal" data-target="#editMenuSet" onclick="set_menuset(' + menu.menuNo + ')"><i class="fa fa-pencil"></i></a>') + '\
+                            ' + (menu.localFlag != 0 && ${branchUser.branchNo == branchUser.branch.mainBranchNo} ? ('<a title="ทำให้เป็นเมนูของทุกสาขา" onclick="turn_official(' + menu.menuNo + ')" style="color:#73879C;cursor:pointer;margin-right:5px;"><i class="fa fa-users"></i></a>') : '') + '\
                             <a title="เมนูนี้' + (obj.available == true ? '' : 'ไม่' ) + 'พร้อมจำหน่าย คลิกเพื่อเปลี่ยน" onclick="change_available(' + menu.menuNo + ')" style="color:#73879C;cursor:pointer;margin-right:5px;"><i class="fa ' + (obj.available == true ? 'fa-check-square-o' : 'fa-square-o' ) + '"></i></a>\
-                            ' + (menu.localFlag == 0 && ${branchUser.branchNo != Branch.MAIN_BRANCH} ? '' : '<a title="ลบ" onclick="del_menuset(' + menu.menuNo + ',\'' + menu.menuNameTH + '\')" style="color:#73879C;cursor:pointer;"><i class="fa fa-trash"></i></a>') + '\
+                            ' + (menu.localFlag == 0 && ${branchUser.branchNo != branchUser.branch.mainBranchNo} ? '' : '<a title="ลบ" onclick="del_menuset(' + menu.menuNo + ',\'' + menu.menuNameTH + '\')" style="color:#73879C;cursor:pointer;"><i class="fa fa-trash"></i></a>') + '\
                             </div>\
                             </div>\
                             </div>\

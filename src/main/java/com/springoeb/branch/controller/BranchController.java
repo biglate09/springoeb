@@ -73,6 +73,7 @@ public class BranchController {
         String email = request.getParameter("email");
         BranchUser myBranchUser = (BranchUser) (session.getAttribute("branchUser"));
         branch.setRestNo(myBranchUser.getBranch().getRestNo());
+        branch.setMainBranchNo(myBranchUser.getBranchNo());
         Branch insertedBranch = branchService.save(branch);
         int branchNo = insertedBranch.getBranchNo();
         BranchUser branchUser = new BranchUser();

@@ -8,8 +8,8 @@
     }else if(roleNo == Role.EMPLOYEE){
         response.sendRedirect(request.getContextPath() + "/employee/table");
     }else if(roleNo == Role.KITCHEN){
-        response.sendRedirect(request.getContextPath() + "/system/blankkitchen");
+        response.sendRedirect(request.getContextPath() + "/kitchen/kitchen");
     }else if(roleNo == Role.CASHIER){
-        response.sendRedirect(request.getContextPath() + "/system/blankcashier");
+        response.sendRedirect(request.getContextPath() + "/cashier/cashier");
     }
 %>

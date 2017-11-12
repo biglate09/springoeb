@@ -6,6 +6,10 @@ import com.springoeb.menu.model.BranchMenu;
 import com.springoeb.menu.model.Menu;
 import com.springoeb.menu.service.BranchMenuService;
 import com.springoeb.menu.service.MenuService;
+import com.springoeb.promotion.model.BranchPromotion;
+import com.springoeb.promotion.model.Promotion;
+import com.springoeb.promotion.service.BranchPromotionService;
+import com.springoeb.promotion.service.PromotionService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -21,6 +25,10 @@ public class BranchService {
     private BranchMenuService branchMenuService;
     @Autowired
     private MenuService menuService;
+    @Autowired
+    private PromotionService promotionService;
+    @Autowired
+    private BranchPromotionService branchPromotionService;
 
     public Branch getBranch(int branchNo){
         return branchRepository.findByBranchNo(branchNo);
@@ -35,7 +43,7 @@ public class BranchService {
     @Transactional
     public Branch save(Branch b){
         Branch branch = branchRepository.save(b);
-        List<Menu> menus = menuService.getMenuOfficial();
+        List<Menu> menus = menuService.getMenuOfficial(branch.getRestNo());
         List<BranchMenu> branchMenus = new LinkedList<BranchMenu>();
         for(Menu m : menus){
             BranchMenu branchMenu = new BranchMenu();
@@ -45,6 +53,17 @@ public class BranchService {
             branchMenus.add(branchMenu);
         }
         branchMenuService.save(branchMenus);
+        List<Promotion> promotions = promotionService.getPromotionOfficial(branch.getRestNo());
+        List<BranchPromotion> branchPromotions = new LinkedList<BranchPromotion>();
+        for(Promotion p : promotions){
+            System.out.println(p.getPromotionNo() + " : " + branch.getBranchNo());
+            BranchPromotion bp = new BranchPromotion();
+            bp.setPromotionNo(p.getPromotionNo());
+            bp.setBranchNo(branch.getBranchNo());
+            bp.setAvailable(false);
+            branchPromotions.add(bp);
+        }
+        branchPromotionService.save(branchPromotions);
         return branch;
     }
 }
