@@ -670,7 +670,7 @@
 
         #printableArea {
             position: absolute;
-            left: 3.7cm;
+            left: 3.5cm;
             margin-top: -2.3cm;
             padding: 0;
             width: 5in;
