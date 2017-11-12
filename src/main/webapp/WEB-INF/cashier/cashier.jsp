@@ -262,7 +262,7 @@
                                                     </div>
                                                 </div>
                                             </div>
-                                            <div class="col-md-6 col-xs-12">
+                                            <div class="col-md-6 col-xs-12" id="unserve">
                                                 <div class="x_panel">
                                                     <div class="x_title">
                                                         <h4>เมนูที่ยังไม่เสิร์ฟ</h4>
@@ -316,7 +316,7 @@
 
     $(document).ready(function () {
         refresh_table();
-        setInterval(refresh_table,10000);
+        setInterval(refresh_table, 10000);
     });
 
     function refresh_table() {
@@ -333,15 +333,10 @@
                     var obj = json[i];
                     var currentTime = new Date();
                     curhours = currentTime.getHours();
-                    curmins = currentTime.getMinutes();
-                    cursec = currentTime.getSeconds();
+                    curmins = currentTime.getMinutes() == 0 ? 60 : currentTime.getMinutes();
                     usedHours = parseInt(obj.billTime.substr(0, 2));
-                    usedMins = parseInt(obj.billTime.substr(3, 2));
-                    usedSecs = parseInt(obj.billTime.substr(6, 2));
-                    hrs = curhours - usedHours;
-                    mins = curmins - usedMins;
-                    sec = cursec - usedSecs;
-                    times = ((Math.abs(hrs) * 60) + Math.abs(mins)) + " นาที";
+                    usedMins = parseInt(obj.billTime.substr(3, 2)) == 0 ? 60 : parseInt(obj.billTime.substr(3, 2));
+                    times = (usedMins <= curmins ? ((Math.abs(curhours-usedHours) * 60) + Math.abs(curmins-usedMins)) : ((curhours - usedHours)*60) - (usedMins - curmins)) + " นาที";
                     refresh_price = 0;
                     var totalPerUnit = 0;
                     var complete = 0;
@@ -401,6 +396,7 @@
             url: "${contextPath}/cashier/getbill/" + billNo,
             dataType: "json",
             success: function (result) {
+                $("#unserve").css('display','none');
                 current_bill = result;
                 billNoCurrent = billNo;
                 $("#hiddenbillno").html(result.billNo);
@@ -412,6 +408,7 @@
                 $("#billtime").html(showTime);
                 var str = '';
                 var str_unserve = '';
+                var str_addon = '';
                 price = 0;
                 var sameordercount = 0;
                 var sameorderprice = 0;
@@ -433,27 +430,31 @@
                             '<td class="menu" style="width: 65%;">' + order.menu.menuNameTH + '</td>' +
                             '<td class="price_all_unit" style="width: 20%;text-align: center;">' + (order.menu.menuPrice * sameordercount).toFixed(2).replace(/\B(?=(\d{3})+(?!\d))/g, ",") + '</td>' +
                             '</tr>';
-                        order.orderAddOnList.forEach(function (addon) {
-                            str += '<tr>' +
-                                '<td class="quantity" style="width: 15%"></td>' +
-                                '<td class="menu" style="width: 65%"> ++ ' + addon.addOn.materialItem.matItemName + '</td>' +
-                                '<td class="price_all_unit" style="width: 20%;text-align: center;">' + addon.addOn.price.toFixed(2).replace(/\B(?=(\d{3})+(?!\d))/g, ",") + '</td>' +
-                                '</tr>';
-                        });
 
-                        if(sameorderunserve != 0) {
+                        if (sameorderunserve != 0) {
+                            $("#unserve").css('display','inline-block');
                             str_unserve += '<tr>' +
                                 '<td class="quantity">' + sameorderunserve + '</td>' +
                                 '<td class="menu">' + order.menu.menuNameTH + '</td>' +
                                 '</tr>';
                             sameorderunserve = 0;
                         }
+
                         sameordercount = 0;
                         sameorderprice = 0;
                     }
 
+                    order.orderAddOnList.forEach(function (addon) {
+                        str_addon += '<tr>' +
+                            '<td class="quantity" style="width: 15%">' + 1 + '</td>' +
+                            '<td class="menu" style="width: 65%"> ++ ' + addon.addOn.materialItem.matItemName + '</td>' +
+                            '<td class="price_all_unit" style="width: 20%;text-align: center;">' + addon.addOn.price.toFixed(2).replace(/\B(?=(\d{3})+(?!\d))/g, ",") + '</td>' +
+                            '</tr>';
+                    });
+
                     $(".menu_unserve_lists").html(str_unserve);
                     $('.menu_lists').html(str);
+                    $('.menu_lists').append(str_addon);
                 });
                 $('.sumprice').html(price.toFixed(2).replace(/\B(?=(\d{3})+(?!\d))/g, ","));
                 $('.totalprice').html(price.toFixed(2).replace(/\B(?=(\d{3})+(?!\d))/g, ","));
@@ -579,9 +580,6 @@
                 menugroupno = order.menu.menuGroupNo;
                 if (menu_discount.indexOf("" + menugroupno) != -1) {
                     money_discount += order.amount;
-//                    order.orderAddOnList.forEach(function(addon){
-//                        money_discount += addon.addOn.price;
-//                    });
                 }
             });
             money_discount = (discount / 100) * money_discount;
