@@ -256,8 +256,10 @@ public class ManageController {
                         orderAddOn.setAddOnNo(Integer.parseInt(addon));
                         orderAddOn.setOrderNo(order.getOrderNo());
                         orderAddOnService.save(orderAddOn);
+                        order.setAmount(order.getAmount() + (orderAddOn.getAddOn().getPrice() * order.getQuantity()));
                     }
                 }
+                orderService.save(order);
             }
         }
 

@@ -333,10 +333,10 @@
                     var obj = json[i];
                     var currentTime = new Date();
                     curhours = currentTime.getHours();
-                    curmins = currentTime.getMinutes() == 0 ? 60 : currentTime.getMinutes();
+                    curmins = currentTime.getMinutes();
                     usedHours = parseInt(obj.billTime.substr(0, 2));
-                    usedMins = parseInt(obj.billTime.substr(3, 2)) == 0 ? 60 : parseInt(obj.billTime.substr(3, 2));
-                    times = (usedMins <= curmins ? ((Math.abs(curhours - usedHours) * 60) + Math.abs(curmins - usedMins)) : ((curhours - usedHours) * 60) - (usedMins - curmins)) + " นาที";
+                    usedMins = parseInt(obj.billTime.substr(3, 2));
+                    times = ((curhours - usedHours)*60) + (curmins - usedMins) + " นาที";
                     refresh_price = 0;
                     var totalPerUnit = 0;
                     var complete = 0;
