@@ -166,7 +166,7 @@
 <script>
     $(document).ready(function () {
         $("#datatable-bills").DataTable({
-            order: [[0, "asc"]],
+            order: [[1, "desc"]],
             columnDefs: [
                 {orderable: false, targets: [-1]}
             ],
@@ -200,7 +200,6 @@
                 var data_array = [];
                 for (var i = 0; i < json.length; i++) {
                     var obj = json[i];
-                    console.log(obj);
                     var showDate = obj.billDate.substr(8, 2) + "/" + obj.billDate.substr(5, 2) + "/" + obj.billDate.substr(0, 4);
                     var showTime = obj.billTime.substr(0, 2) + ":" + obj.billTime.substr(3, 2);
                     var data_refresh = {
@@ -240,33 +239,48 @@
                 $('#prodesc').html(result.promotionDesc == null ? '' : '<label class="col-md-3">โปรโมชั่น</label>' +
                     '<div style="white-space:nowrap;overflow:hidden;text-overflow: ellipsis;text-align:right;margin-right: 5%">' + result.promotionDesc + '</div>');
                 $('.receive_money').html(result.receive.toFixed(2).replace(/\B(?=(\d{3})+(?!\d))/g, ","));
-                var str = '';
-                var sameordercount = 0;
-                var sameorderprice = 0;
+                price = 0;
+                order_array = {};
                 result.orders.forEach(function (order, index, orders) {
                     if (order.status != '${Order.CANCELLED}') {
-                        sameordercount += order.quantity;
-                        sameorderprice += order.amount;
-                    }
-
-                    if (!orders[index + 1] || order.menu.menuNo != orders[index + 1].menu.menuNo) {
-                        str += '<tr>' +
-                            '<td class="quantity" style="width: 15%">' + sameordercount + '</td>' +
-                            '<td class="menu" style="width: 65%">' + order.menu.menuNameTH + '</td>' +
-                            '<td class="price_all_unit" style="width: 20%;text-align: center;">' + (order.menu.menuPrice * sameordercount).toFixed(2).replace(/\B(?=(\d{3})+(?!\d))/g, ",") + '</td>' +
-                            '</tr>';
-                        order.orderAddOnList.forEach(function (addon) {
-                            str += '<tr>' +
-                                '<td class="quantity" style="width: 15%"></td>' +
-                                '<td class="menu" style="width: 65%"> ++ ' + addon.addOn.materialItem.matItemName + '</td>' +
-                                '<td class="price_all_unit" style="width: 20%;text-align: center;">' + addon.addOn.price.toFixed(2).replace(/\B(?=(\d{3})+(?!\d))/g, ",") + '</td>' +
-                                '</tr>';
+                        var addon = '';
+                        order.orderAddOnList.forEach(function (ao) {
+                            if(addon != ''){
+                                addon += ' , ';
+                            }
+                            addon += ' { "name" : "' + ao.addOn.materialItem.matItemName + '" , "price" : ' + ao.addOn.price + ' } ';
                         });
-                        sameordercount = 0;
-                        sameorderprice = 0;
+                        var keyName = ' { "menuNameTH": "' + order.menu.menuNameTH + '" , "menuPrice" : ' + order.menu.menuPrice + ' , "orderPrice" : ' + order.amount + ' , "addons" : [ ' + addon + ' ] }';
+                        if (order_array[keyName]) {
+                            order_array[keyName] = order_array[keyName] + order.quantity;
+                        } else {
+                            order_array[keyName] = order.quantity;
+                        }
+
+                        price += order.amount;
                     }
-                    $('.menu_lists').html(str);
                 });
+
+                var str = "";
+                for (var key in order_array) {
+                    json_key = JSON.parse(key);
+                    str += '<tr>' +
+                        '<td class="quantity" style="width: 15%">' + order_array[key] + '</td>' +
+                        '<td class="menu" style="width: 65%">' + json_key.menuNameTH + '</td>' +
+                        '<td class="price_all_unit" style="width: 20%;text-align: center;">' + (json_key.menuPrice * order_array[key]).toFixed(2).replace(/\B(?=(\d{3})+(?!\d))/g, ",") + '</td>' +
+                        '</tr>';
+
+                    addons = json_key.addons;
+                    addons.forEach(function (addon) {
+                        str += '<tr>' +
+                            '<td class="quantity" style="width: 15%">' + order_array[key] + '</td>' +
+                            '<td class="menu" style="width: 65%">++ ' + addon.name + '</td>' +
+                            '<td class="price_all_unit" style="width: 20%;text-align: center;">' + (addon.price * order_array[key]).toFixed(2).replace(/\B(?=(\d{3})+(?!\d))/g, ",") + '</td>' +
+                            '</tr>';
+                    });
+                }
+
+                $(".menu_lists").html(str);
             }, error: function () {
                 swal("ไม่สำเร็จ", "กรุณาเช็คสัญญาณอินเทอร์เน็ต", "error");
             }

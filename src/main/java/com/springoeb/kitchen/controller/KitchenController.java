@@ -86,7 +86,18 @@ public class KitchenController {
             }
         }else{
             for(Order order : orders){
+                if(delQty == qty){
+                    break;
+                }
 
+                if((qty-delQty) >= order.getQuantity()){
+                    orderService.removeByOrderNo(order.getOrderNo());
+                    delQty += order.getQuantity();
+                }else{
+                    order.setAmount((order.getAmount()/order.getQuantity())*(order.getQuantity()-(qty-delQty)));
+                    order.setQuantity(order.getQuantity() - (qty - delQty));
+                    delQty += (qty - delQty);
+                }
             }
         }
 

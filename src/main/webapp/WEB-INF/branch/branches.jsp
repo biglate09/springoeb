@@ -181,7 +181,7 @@
 
                     var data_refresh = {
                         No: {
-                            display: iterator + 1,
+                            display: obj.branchIndex,
                             order: branchsort
                         },
                         branchName: obj.branchName,

@@ -34,6 +34,7 @@ public class Order {
     @JoinColumn(name = "menuNo",updatable = false,insertable = false)
     private Menu menu;
     @OneToMany(fetch = FetchType.LAZY, mappedBy = "order")
+    @OrderBy("addOnNo asc")
     private List<OrderAddOn> orderAddOnList;
 
     public static String RESERVED = "reserved";
