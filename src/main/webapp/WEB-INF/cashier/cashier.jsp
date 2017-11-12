@@ -315,10 +315,9 @@
     var current_bill;
 
     $(document).ready(function () {
-        refresh_table()
+        refresh_table();
         setInterval(refresh_table,10000);
     });
-
 
     function refresh_table() {
         $.ajax({
@@ -343,13 +342,13 @@
                     mins = curmins - usedMins;
                     sec = cursec - usedSecs;
                     times = ((Math.abs(hrs) * 60) + Math.abs(mins)) + " นาที";
-                    price = 0;
+                    refresh_price = 0;
                     var totalPerUnit = 0;
                     var complete = 0;
                     obj.orders.forEach(function (order) {
                         totalPerUnit = order.amount;
                         if (order.status != '${Order.CANCELLED}') {
-                            price += totalPerUnit;
+                            refresh_price += totalPerUnit;
                         }
                         if (order.status == '${Order.SERVED}' || order.status == '${Order.CANCELLED}') {
                             complete++;
@@ -364,7 +363,7 @@
                         </div>\
                         <div class="caption col-md-12" style="color:#73879C">\
                         <p class="col-md-12" style="white-space:nowrap;overflow:hidden;text-overflow: ellipsis;padding:0px;" >ใช้บริการมาแล้ว : ' + times + '</p>\
-                        <p class="col-md-12" style="white-space: nowrap;overflow:hidden;text-overflow: ellipsis;padding:0px;">ราคาอาหาร : ' + price.toFixed(2).replace(/\B(?=(\d{3})+(?!\d))/g, ",") + ' บาท</p>\
+                        <p class="col-md-12" style="white-space: nowrap;overflow:hidden;text-overflow: ellipsis;padding:0px;">ราคาอาหาร : ' + refresh_price.toFixed(2).replace(/\B(?=(\d{3})+(?!\d))/g, ",") + ' บาท</p>\
                         <p class="col-md-12" style="padding:0px;"> สถานะอาหาร : ' + (complete == obj.orders.length ? 'ครบแล้ว' : 'ยังไม่ครบ') + '</p>\
                         <div style="text-align:center;" class="col-md-12"><button type="button" class="btn btn-success" data-toggle="modal" data-target="#cashiermodal" \
                         style="width: 80%;" onclick="set_bill(' + obj.billNo + ')">จ่ายเงิน</button></div>\

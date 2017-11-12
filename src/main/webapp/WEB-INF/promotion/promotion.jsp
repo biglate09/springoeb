@@ -419,7 +419,7 @@
                             </div>\
                             <div class="col-md-6 caption" style="height:100%;color:#73879C">\
                             <div class="col-md-8 cardname" data-toggle="modal" data-target="#promotion_modal" onclick="set_promotion(' + promotion.promotionNo + ')" style="font-weight:bold;white-space:nowrap;overflow:hidden;text-overflow: ellipsis;cursor:pointer;">' + promotion.promotionNameTH + ' / ' + promotion.promotionNameEN + '</div>\
-                            <div class="col-md-4" style="color:white;background-color:' + (promotion.official ? '#73879C' : obj.branchNo == ${branchUser.branchNo} ? 'red' : 'orange') + ';border-radius:4px;text-align:center;">' + (promotion.official ? 'ทุกสาขา' : obj.branchNo == ${branchUser.branchNo} ? 'สาขานี้' : 'สาขา ' + obj.branchNo) + '</div>\
+                            <div class="col-md-4" style="color:white;background-color:' + (promotion.official ? '#73879C' : obj.branchNo == ${branchUser.branchNo} ? 'red' : 'orange') + ';border-radius:4px;text-align:center;">' + (promotion.official ? 'ทุกสาขา' : obj.branchNo == ${branchUser.branchNo} ? 'สาขานี้' : 'สาขา ' + obj.branchIndex) + '</div>\
                             <div class="col-md-12 foodDesc">\
                             <div>\
                             <p style="text-align:center;font-weight:bold;">รายละเอียดโปรโมชั่น</p>\

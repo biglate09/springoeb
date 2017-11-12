@@ -42,6 +42,8 @@ public class Branch {
     private Integer restNo;
     @Column(name = "mainBranchNo")
     private Integer mainBranchNo;
+    @Column(name = "branchIndex")
+    private Integer branchIndex;
 
 
     @JsonIgnore
@@ -190,5 +192,20 @@ public class Branch {
 
     public void setMainBranchNo(Integer mainBranchNo) {
         this.mainBranchNo = mainBranchNo;
+    }
+    public Integer getBranchIndex() {
+        return branchIndex;
+    }
+
+    public void setBranchIndex(Integer branchIndex) {
+        this.branchIndex = branchIndex;
+    }
+
+    public List<Employee> getEmployees() {
+        return employees;
+    }
+
+    public void setEmployees(List<Employee> employees) {
+        this.employees = employees;
     }
 }

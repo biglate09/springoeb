@@ -179,8 +179,8 @@
                         },
                         ledgerType: ledger.ledgerType.ledgerTypeName,
                         amount: "<span style='color:" + (ledger.ledgerType.ledgerPayNo == 1 ? 'green' : 'red') + "'>" + ledger.amount.toFixed(2).replace(/\B(?=(\d{3})+(?!\d))/g, ",") + " บาท</span>",
-                        option: '<a onclick = "set_ledger(' + ledger.ledgerNo + ')" class = "btn btn-warning btn-sm" data-toggle = "modal" data-target = "#ledger_modal"> <i class = "fa fa-pencil"> </i> &nbsp; แก้ไข </a>' +
-                        '<a onclick = "del_ledger(' + ledger.ledgerNo + ')" class = "btn btn-danger btn-sm"> <i class = "fa fa-trash"></i> &nbsp; ลบ </a>'
+                        option: (ledger.ledgerTypeNo <= 3 ? '' : '<a onclick = "set_ledger(' + ledger.ledgerNo + ')" class = "btn btn-warning btn-sm" data-toggle = "modal" data-target = "#ledger_modal"> <i class = "fa fa-pencil"> </i> &nbsp; แก้ไข </a>' +
+                        '<a onclick = "del_ledger(' + ledger.ledgerNo + ')" class = "btn btn-danger btn-sm"> <i class = "fa fa-trash"></i> &nbsp; ลบ </a>')
                     };
                     data_array.push(data_refresh);
                 }

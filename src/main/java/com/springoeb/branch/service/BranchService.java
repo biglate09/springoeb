@@ -66,4 +66,8 @@ public class BranchService {
         branchPromotionService.save(branchPromotions);
         return branch;
     }
+
+    public Integer getBranchIndex(int restNo){
+        return branchRepository.getBranchIndex(restNo) + 1;
+    }
 }
