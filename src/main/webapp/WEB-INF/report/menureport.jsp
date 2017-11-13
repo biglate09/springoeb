@@ -43,7 +43,8 @@
                                 </div>
                             </div>
                             <ul class="nav navbar-right panel_toolbox" style="min-width: 0px">
-                                <li><a title="ออกรายงาน excel" class="download" download="menu"><i class="fa fa-file-excel-o right" style="color:black;"></i></a></li>
+                                <li><a title="ออกรายงาน excel" class="download" download="menu"><i
+                                        class="fa fa-file-excel-o right" style="color:black;"></i></a></li>
                                 <li><a class="collapse-link"><i class="fa fa-chevron-up right"></i></a></li>
                             </ul>
                             <div class="clearfix"></div>
@@ -80,7 +81,8 @@
                                 </div>
                             </div>
                             <ul class="nav navbar-right panel_toolbox" style="min-width: 0px">
-                                <li><a title="ออกรายงาน excel" class="download" download="menuset"><i class="fa fa-file-excel-o right" style="color:black;"></i></a></li>
+                                <li><a title="ออกรายงาน excel" class="download" download="menuset"><i
+                                        class="fa fa-file-excel-o right" style="color:black;"></i></a></li>
                                 <li><a class="collapse-link"><i class="fa fa-chevron-up right"></i></a></li>
                             </ul>
                             <div class="clearfix"></div>
@@ -219,33 +221,29 @@
                 var break_loop = false;
                 for (var i = 0; i < menuArray.length; i++) { // loop menu
                     var menu = menuArray[i];
-                    if (index_menu < limit_of_menu) {
-                        for (key in menu) { // get key
-                            value = menu[key];
-                            key = JSON.parse(key);
-                            //chart
-                            if (value > 0 && !break_loop) {
-                                //push into array for display
-                                menu_data_legends.push(key);
-                                menu_data_series.push({
-                                    name: key.menuNameTH,
-                                    value: value
-                                });
-                                index_menu++;
-                            } else {
-                                break_loop = true;
-                            }
-
-                            //datatable
-                            menu_datatable.push({
-                                number: i + 1,
-                                menuName: key.menuNameTH,
-                                category: key.menuGroup.menuGroupNameTH,
-                                salesAmount: value
+                    for (key in menu) { // get key
+                        value = menu[key];
+                        key = JSON.parse(key);
+                        //chart
+                        if (index_menu < limit_of_menu && value > 0 && !break_loop) {
+                            //push into array for display
+                            menu_data_legends.push(key);
+                            menu_data_series.push({
+                                name: key.menuNameTH,
+                                value: value
                             });
+                            index_menu++;
+                        } else {
+                            break_loop = true;
                         }
-                    } else {
-                        break_loop = true;
+
+                        //datatable
+                        menu_datatable.push({
+                            number: i + 1,
+                            menuName: key.menuNameTH,
+                            category: key.menuGroup.menuGroupNameTH,
+                            salesAmount: value
+                        });
                     }
                 }
 
@@ -328,32 +326,28 @@
                 var break_loop = false;
                 for (var i = 0; i < menuArray.length; i++) { // loop menu
                     var menu = menuArray[i];
-                    if (index_menuset < limit_of_menuset) {
-                        for (key in menu) { // get key
-                            value = menu[key];
-                            key = JSON.parse(key);
-                            //graph
-                            if (value > 0 && !break_loop) {
-                                //push into array for display
-                                menuset_data_legends.push(key);
-                                menuset_data_series.push({
-                                    name: key.menuNameTH,
-                                    value: value
-                                });
-                                index_menuset++;
-                            } else {
-                                break_loop = true;
-                            }
-
-                            //datatable
-                            menuset_datatable.push({
-                                number: i + 1,
-                                menuName: key.menuNameTH,
-                                salesAmount: value
+                    for (key in menu) { // get key
+                        value = menu[key];
+                        key = JSON.parse(key);
+                        //graph
+                        if (index_menuset < limit_of_menuset && value > 0 && !break_loop) {
+                            //push into array for display
+                            menuset_data_legends.push(key);
+                            menuset_data_series.push({
+                                name: key.menuNameTH,
+                                value: value
                             });
+                            index_menuset++;
+                        } else {
+                            break_loop = true;
                         }
-                    } else {
-                        break_loop = true;
+
+                        //datatable
+                        menuset_datatable.push({
+                            number: i + 1,
+                            menuName: key.menuNameTH,
+                            salesAmount: value
+                        });
                     }
                 }
 
@@ -432,19 +426,19 @@
         init_bestsalemenuset($("#filterdate_menuset").val().substr(0, 10), $("#filterdate_menuset").val().substr(13, 10));
     });
 
-    $(".download").click(function(){
+    $(".download").click(function () {
         download = $(this).attr('download');
-        daterange = $("input[name='"+download+"']").val();
+        daterange = $("input[name='" + download + "']").val();
         fromDate = daterange.substr(0, 10);
         toDate = daterange.substr(13, 10);
-        if(daterange.length == 23){
+        if (daterange.length == 23) {
             $.ajax({
                 type: "POST",
                 url: "${contextPath}/report/exportreport/" + download,
                 data: {fromDate: fromDate, toDate: toDate},
                 success: function (result) {
                     window.location = result;
-                },error: function(){
+                }, error: function () {
                     swal("ผิดพลาด", "กรุณาลองใหม่อีกครั้ง", "error");
                 }
             });

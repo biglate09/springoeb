@@ -21,4 +21,8 @@ public class AddOnService {
     public void removeByMenuNoAndMatNo(int menuNo,int matNo){
         addOnRepository.removeByMenuNoAndMatNo(menuNo,matNo);
     }
+
+    public AddOn findByAddOnNo(int addOnNo){
+        return addOnRepository.findByAddOnNo(addOnNo);
+    }
 }

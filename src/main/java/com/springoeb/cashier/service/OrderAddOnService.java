@@ -16,7 +16,7 @@ public class OrderAddOnService {
         orderAddOnRepository.save(orderAddOns);
     }
 
-    public void save(OrderAddOn orderAddOn){
-        orderAddOnRepository.save(orderAddOn);
+    public OrderAddOn save(OrderAddOn orderAddOn){
+        return orderAddOnRepository.save(orderAddOn);
     }
 }

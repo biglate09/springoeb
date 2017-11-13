@@ -12,7 +12,9 @@ import com.springoeb.cashier.service.OrderAddOnService;
 import com.springoeb.cashier.service.OrderService;
 import com.springoeb.employee.model.Employee;
 import com.springoeb.employee.service.EmployeeService;
+import com.springoeb.menu.model.AddOn;
 import com.springoeb.menu.model.BranchMenu;
+import com.springoeb.menu.service.AddOnService;
 import com.springoeb.menu.service.BranchMenuService;
 import com.springoeb.menu.service.MenuService;
 import com.springoeb.system.model.*;
@@ -67,6 +69,8 @@ public class ManageController {
     private RestaurantService restaurantService;
     @Autowired
     private EmailService emailService;
+    @Autowired
+    private AddOnService addOnService;
 
     @PostMapping("/login")
     public String login(@ModelAttribute("branchUser") BranchUser branchUser, HttpServletRequest request, HttpServletResponse response, HttpSession session, Model model) {
@@ -256,8 +260,9 @@ public class ManageController {
                         OrderAddOn orderAddOn = new OrderAddOn();
                         orderAddOn.setAddOnNo(Integer.parseInt(addon));
                         orderAddOn.setOrderNo(order.getOrderNo());
-                        orderAddOnService.save(orderAddOn);
-                        order.setAmount(order.getAmount() + (orderAddOn.getAddOn().getPrice() * order.getQuantity()));
+                        orderAddOn = orderAddOnService.save(orderAddOn);
+                        AddOn ao = addOnService.findByAddOnNo(Integer.parseInt(addon));
+                        order.setAmount(order.getAmount() + (ao.getPrice() * order.getQuantity()));
                     }
                 }
                 orderService.save(order);
