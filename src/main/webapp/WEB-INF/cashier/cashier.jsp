@@ -336,7 +336,7 @@
                     curmins = currentTime.getMinutes();
                     usedHours = parseInt(obj.billTime.substr(0, 2));
                     usedMins = parseInt(obj.billTime.substr(3, 2));
-                    times = ((curhours - usedHours)*60) + (curmins - usedMins) + " นาที";
+                    times = ((curhours - usedHours) * 60) + (curmins - usedMins) + " นาที";
                     refresh_price = 0;
                     var totalPerUnit = 0;
                     var complete = 0;
@@ -408,32 +408,38 @@
                 $("#billtime").html(showTime);
                 price = 0;
                 order_array = {};
+                unserved_array = {};
                 result.orders.forEach(function (order, index, orders) {
                     if (order.status != '${Order.CANCELLED}') {
                         var addon = '';
                         order.orderAddOnList.forEach(function (ao) {
-                            if(addon != ''){
+                            if (addon != '') {
                                 addon += ' , ';
                             }
                             addon += ' { "name" : "' + ao.addOn.materialItem.matItemName + '" , "price" : ' + ao.addOn.price + ' } ';
                         });
-                        var keyName = ' { "menuNameTH": "' + order.menu.menuNameTH + '" , "menuPrice" : ' + order.menu.menuPrice + ' , "orderPrice" : ' + (order.amount/order.quantity) + ' , "addons" : [ ' + addon + ' ] }';
+                        var keyName = ' { "menuNameTH": "' + order.menu.menuNameTH + '" , "menuPrice" : ' + order.menu.menuPrice + ' , "orderPrice" : ' + (order.amount / order.quantity) + ' , "addons" : [ ' + addon + ' ] }';
+
                         if (order_array[keyName]) {
                             order_array[keyName] = order_array[keyName] + order.quantity;
                         } else {
                             order_array[keyName] = order.quantity;
                         }
 
-                        price += order.amount;
-
-                        if(order.status == '${Order.SERVED}'){
-                            $("#unserve").css('display', 'inline-block');
-
+                        if (order.status != '${Order.SERVED}') {
+                            unserved_key = ' { "menuNameTH" : "' + order.menu.menuNameTH + '" , "addons" : [ ' + addon + ' ] }';
+                            if (unserved_array[unserved_key]) {
+                                unserved_array[unserved_key] = unserved_array[unserved_key] + order.quantity;
+                            } else {
+                                unserved_array[unserved_key] = order.quantity;
+                            }
                         }
+                        price += order.amount;
                     }
                 });
 
                 var str = "";
+                var unserved_str = "";
                 for (var key in order_array) {
                     json_key = JSON.parse(key);
                     str += '<tr>' +
@@ -452,6 +458,22 @@
                     });
                 }
 
+                for (var key in unserved_array) {
+                    parse_key = JSON.parse(key);
+                    $("#unserve").css('display', 'inline-block');
+                    unserved_str += '<tr>' +
+                        '<td>' + unserved_array[key] + '</td>' +
+                        '<td>' + parse_key.menuNameTH + '</td>' +
+                        '</tr>';
+
+                    parse_key.addons.forEach(function (addon) {
+                        unserved_str += '<tr>' +
+                            '<td>' + unserved_array[key] + '</td>' +
+                            '<td>++ ' + addon.name + '</td>';
+                    });
+                }
+
+                $(".menu_unserve_lists").html(unserved_str);
                 $(".menu_lists").html(str);
                 $('.sumprice').html(price.toFixed(2).replace(/\B(?=(\d{3})+(?!\d))/g, ","));
                 $('.totalprice').html(price.toFixed(2).replace(/\B(?=(\d{3})+(?!\d))/g, ","));
