@@ -1,12 +1,11 @@
 package com.springoeb.system.model;
 
-import javax.persistence.Column;
-import javax.persistence.Entity;
-import javax.persistence.Id;
+import javax.persistence.*;
 
 @Entity(name = "Restaurant")
 public class Restaurant {
     @Id
+    @GeneratedValue(strategy = GenerationType.AUTO)
     @Column(name = "restNo")
     private Integer restNo;
     @Column(name = "restName")

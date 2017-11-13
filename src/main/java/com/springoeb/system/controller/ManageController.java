@@ -16,10 +16,7 @@ import com.springoeb.menu.model.BranchMenu;
 import com.springoeb.menu.service.BranchMenuService;
 import com.springoeb.menu.service.MenuService;
 import com.springoeb.system.model.*;
-import com.springoeb.system.service.BranchUserService;
-import com.springoeb.system.service.DistrictService;
-import com.springoeb.system.service.ProvinceService;
-import com.springoeb.system.service.SubDistrictService;
+import com.springoeb.system.service.*;
 import com.springoeb.table.model.Table;
 import com.springoeb.table.service.TableService;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -66,6 +63,10 @@ public class ManageController {
     private MenuService menuService;
     @Autowired
     private OrderAddOnService orderAddOnService;
+    @Autowired
+    private RestaurantService restaurantService;
+    @Autowired
+    private EmailService emailService;
 
     @PostMapping("/login")
     public String login(@ModelAttribute("branchUser") BranchUser branchUser, HttpServletRequest request, HttpServletResponse response, HttpSession session, Model model) {
@@ -330,5 +331,48 @@ public class ManageController {
         ObjectMapper mapper = new ObjectMapper();
         String json = mapper.writeValueAsString(subDistrict);
         return json;
+    }
+
+    @Transactional
+    @PostMapping("/createrestaurant")
+    public void createrestaurant(HttpServletRequest request) throws UnsupportedEncodingException {
+        String restName = request.getParameter("restName");
+        String branchName = request.getParameter("branchName");
+        String email = request.getParameter("email");
+        String username = request.getParameter("username");
+
+        Restaurant restaurant = new Restaurant();
+        restaurant.setRestName(restName);
+        restaurant = restaurantService.save(restaurant);
+
+        Branch b = new Branch();
+        b.setBranchName(branchName);
+        b.setBranchIndex(1);
+        b.setHasAdmin(true);
+        b.setRestNo(restaurant.getRestNo());
+        b = branchService.save(b);
+        b.setMainBranchNo(b.getBranchNo());
+        b = branchService.save(b);
+
+        int branchNo = b.getBranchNo();
+        BranchUser branchUser = new BranchUser();
+        branchUser.setBranchNo(branchNo);
+        branchUser.setSentEmail(email);
+        branchUser.setUsername(username);
+        branchUser.setRoleNo(Role.MANAGER);
+        branchUserService.save(branchUser);
+        String subject = "[ระบบ OrderEatBill] ตั้งค่าการลงชื่อเข้าใช้ระบบใบฐานะแอดมิน";
+        String tokenUsername = getBcrypt(username);
+        String msg = "Username : " + username + "\nกรุณาคลิกลิงก์ด้านล่างเพื่อสร้าง Password\n" + request.getScheme() + "://" + request.getServerName() + ":" + request.getServerPort() + request.getContextPath() + "/system/register?apiKey=" +  URLEncoder.encode(tokenUsername, "UTF-8");
+        emailService.sendMail(email, subject, msg);
+    }
+
+    private String getBcrypt(String username){
+        BCryptPasswordEncoder bCryptPasswordEncoder = new BCryptPasswordEncoder();
+        String bCrypt = bCryptPasswordEncoder.encode(username);
+        if(bCrypt.endsWith(".")){
+            bCrypt = bCryptPasswordEncoder.encode(username);
+        }
+        return bCrypt;
     }
 }

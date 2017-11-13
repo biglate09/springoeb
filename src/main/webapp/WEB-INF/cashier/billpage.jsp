@@ -250,7 +250,7 @@
                             }
                             addon += ' { "name" : "' + ao.addOn.materialItem.matItemName + '" , "price" : ' + ao.addOn.price + ' } ';
                         });
-                        var keyName = ' { "menuNameTH": "' + order.menu.menuNameTH + '" , "menuPrice" : ' + order.menu.menuPrice + ' , "orderPrice" : ' + order.amount + ' , "addons" : [ ' + addon + ' ] }';
+                        var keyName = ' { "menuNameTH": "' + order.menu.menuNameTH + '" , "menuPrice" : ' + order.menu.menuPrice + ' , "orderPrice" : ' + (order.amount/order.quantity) + ' , "addons" : [ ' + addon + ' ] }';
                         if (order_array[keyName]) {
                             order_array[keyName] = order_array[keyName] + order.quantity;
                         } else {
